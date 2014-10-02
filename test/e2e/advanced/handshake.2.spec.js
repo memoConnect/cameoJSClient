@@ -669,4 +669,9 @@ describe('Authentication requests -', function () {
             })
         })
     })
+
+    it("delete test users", function(){
+        util.deleteTestUser(testUser1)
+        util.deleteTestUser(testUser2)
+    })
 })

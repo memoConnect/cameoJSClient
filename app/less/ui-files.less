@@ -41,12 +41,6 @@ cm-message-file{
   .file-image, .file-html5{
     min-height:@cm-unit;
     position:relative;
-    cm-loader.spinner{
-      z-index:1;
-      position:absolute;
-      left:50%;
-      top:50%;
-    }
     img{
       .with-cursor;
       display:block;
@@ -128,13 +122,6 @@ cm-files-preview{
     position:relative;
     height:@cm-unit * 2;
     margin:0 auto;
-
-    cm-loader.spinner{
-      z-index:1;
-      position:absolute;
-      left:50%;
-      top:50%;
-    }
     img{
       .with-cursor;
       display:block;
@@ -155,10 +142,6 @@ cm-modal.modal-image-fullscreen{
     height:100%;
     z-index:2;
     position:relative;
-    cm-loader.spinner{
-      position: absolute;
-      top:50%;
-    }
     ng-transclude{
       display:table-cell;
       vertical-align:middle;
@@ -296,10 +279,6 @@ cm-upload-avatar {
     -webkit-box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2) !important;
     -moz-box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2) !important;
     box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2) !important;
-    cm-loader.spinner{
-      height:@cm-unit;
-      top:(@cm-unit/2);
-    }
     i {
       color:@cm-black;
       font-size: @cm-mega-font;

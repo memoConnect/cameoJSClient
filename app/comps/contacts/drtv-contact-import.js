@@ -14,20 +14,15 @@
 angular.module('cmContacts')
 .directive('cmContactImport', [
 
-    '$rootScope', '$q',
-    'cmContactsModel',
-    'cmUtil',
-    'cmModal',
-    'cmNotify',
-    'cmLocalContacts',
-    'cmConversationFactory',
-    'cmIdentityFactory',
-    'cmTranslate',
+    'cmContactsModel', 'cmUtil', 'cmModal', 'cmNotify',
+    'cmLocalContacts', 'cmConversationFactory', 'cmIdentityFactory', 'cmTranslate',
     'cmUserModel',
+    '$rootScope', '$q',
 
-    function($rootScope, $q,
-             cmContactsModel, cmUtil, cmModal,
-             cmNotify, cmLocalContacts, cmConversationFactory, cmIdentityFactory, cmTranslate, cmUserModel){
+    function(cmContactsModel, cmUtil, cmModal, cmNotify,
+             cmLocalContacts, cmConversationFactory, cmIdentityFactory, cmTranslate,
+             cmUserModel,
+             $rootScope, $q){
 
         return {
             restrict:       'AE',
@@ -36,6 +31,7 @@ angular.module('cmContacts')
 
             controller: function($scope, $element, $attrs){
                 $scope.cmUtil = cmUtil;
+                $scope.showSpinenr = false;
 
                 $scope.resetErrors = function(){
                     $scope.error = {
@@ -95,10 +91,16 @@ angular.module('cmContacts')
                 $scope.chooseItem = function(item, type){
                     switch(type){
                         case 'phone':
-                            $scope.identity.phoneNumber = item.value;
+                            if($scope.identity.phoneNumber != item.value)
+                                $scope.identity.phoneNumber = item.value;
+                            else
+                                $scope.identity.phoneNumber = '';
                         break;
                         case 'email':
-                            $scope.identity.email = item.value;
+                            if($scope.identity.email != item.value)
+                                $scope.identity.email = item.value;
+                            else
+                                $scope.identity.email = '';
                         break;
                     }
                 };
@@ -142,6 +144,11 @@ angular.module('cmContacts')
                 };
 
                 $scope.importContact = function(){
+                    if($scope.spinner('isIdle'))
+                        return false;
+
+                    $scope.spinner('start');
+
                     $scope.validateForm().then(
                         function() {
                             // declaration
@@ -171,60 +178,71 @@ angular.module('cmContacts')
                                 identity.email = null;
                             }
 
-//                            console.log(cmUtil.prettify(identity))
-//                            return false;
-
-
                             // everything is fine let's add the contact
                             cmContactsModel
-                                .addContact({
-                                    identity: identity,
-                                    groups: identity.groups
-                                })
-                                .then(
-                                    function (data) {
-                                        identity = cmIdentityFactory.create(data.identity, true)
+                            .addContact({
+                                identity: identity,
+                                groups: identity.groups
+                            })
+                            .then(
+                                function (data) {
+                                    $scope.spinner('stop');
+                                    identity = cmIdentityFactory.create(data.identity, true)
 
-                                        return  cmModal.confirm({
-                                                    title:      '',
-                                                    text:       'CONTACT.NOTIFICATION.CONFIRM',
-                                                    html:       '<textarea cm-resize-textarea cm-max-rows = "10" ng-model = "data.message"></textarea>',
-                                                    data:       {message: cmTranslate("CONTACT.IMPORT_NOTIFICATION", {from: cmUserModel.data.identity.getDisplayName(), to: identity.getDisplayName() })}
-                                                })
-                                    },
-                                    function () {
-                                        cmNotify.error('CONTACT.INFO.ERROR.SAVE', {ttl: 5000});
-                                        return $q.reject()
-                                    }
-                                )
-                                .then(function(modal_scope){
-
-                                    var conversation =  cmConversationFactory
-                                                        .create()
-                                                        .addRecipient(identity)
-                                                        .disableEncryption()
-
-                                    return  conversation
-                                            .save()
-                                            .then(function(){
-                                                return  conversation
-                                                        .messages
-                                                        .create({conversation:conversation})
-                                                        .setText(modal_scope.data.message)
-                                                        .setPublicData(['text'])
-                                                        .encrypt()
-                                                        .save()
+                                    return  cmModal.confirm({
+                                                title:      '',
+                                                text:       'CONTACT.NOTIFICATION.CONFIRM',
+                                                html:       '<textarea cm-resize-textarea cm-max-rows = "10" ng-model = "data.message"></textarea>',
+                                                data:       {message: cmTranslate("CONTACT.IMPORT_NOTIFICATION", {from: cmUserModel.data.identity.getDisplayName(), to: identity.getDisplayName() })}
                                             })
+                                },
+                                function () {
+                                    $scope.spinner('stop');
+                                    cmNotify.error('CONTACT.INFO.ERROR.SAVE', {ttl: 5000});
+                                    return $q.reject()
+                                }
+                            )
+                            .then(function(modal_scope){
+                                $scope.spinner('stop');
+                                var conversation =  cmConversationFactory
+                                                    .create()
+                                                    .addRecipient(identity)
+                                                    .disableEncryption()
 
-                                })
-                                .finally(function(){
-                                    $scope.gotoContactList();
-                                })
+                                return  conversation
+                                        .save()
+                                        .then(function(){
+                                            return  conversation
+                                                    .messages
+                                                    .create({conversation:conversation})
+                                                    .setText(modal_scope.data.message)
+                                                    .setPublicData(['text'])
+                                                    .encrypt()
+                                                    .save()
+                                        })
 
-                    });
+                            })
+                            .finally(function(){
+                                $scope.spinner('stop');
+                                $scope.gotoContactList();
+                            })
+
+                        },
+                         function(){
+                             $scope.spinner('stop');
+                         }
+                    );
                 };
 
                 $scope.reset();
+
+                $scope.spinner = function(action){
+                    if(action == 'isIdle'){
+                        return $scope.showSpinner;
+                    }
+
+                    $scope.showSpinner = action == 'stop' ? false : true;
+                };
 
                 // init
                 if(cmLocalContacts.canRead()) {

@@ -2,22 +2,22 @@
 
 /**
  * @ngdoc directive
- * @name cmWidgets.directive:cmWidgetIdentityCreate
+ * @name cmWidgets.directive:cmWidgetIdentityKeyImport
  * @description
  * List conversations.
  *
  * @restrict AE
  * @example
  */
-angular.module('cmWidgets').directive('cmWidgetIdentityCreate', [
+angular.module('cmWidgets').directive('cmWidgetIdentityKeyImport', [
     // no dependencies
     function(){
         return {
             restrict:       'AE',
             scope:          true,
-            templateUrl:    'widgets/identity/wdgt-identity-create.html',
+            templateUrl:    'widgets/settings/identity/key/wdgt-identity-key-import.html',
             controller: function(){
-                //console.log('cmWidgetIdentityCreate')
+                //console.log('cmWidgetIdentityKeyImport')
             }
         }
     }

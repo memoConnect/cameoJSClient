@@ -145,11 +145,23 @@ textarea[cm-resize-textarea]{
 cm-loader.spinner { /*spinner is part of loader now*/
   display:block;
   position:relative;
-  top:50%;
-  left:50%;
   z-index:1;
-  height: @cm-unit;
-  top:@cm-unit/2;
+  height:@cm-unit;
+  &.inline{
+    width:@cm-unit;
+  }
+  &.fullscreen{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+  .spinner-wrapper{
+    position:absolute;
+    top:50%;
+    left:50%;
+  }
 }
 
 cm-loader.balls{

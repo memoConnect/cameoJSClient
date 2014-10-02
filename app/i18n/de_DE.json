@@ -1,5 +1,4 @@
 {
-
     "YES":  "Ja",
     "NO":   "Nein",
 
@@ -568,6 +567,33 @@
         }
     },
 
+    "ACCOUNT": {
+        "PLACEHOLDER": {
+            "LOGINNAME": "Loginname",
+            "PHONENUMBER": "Telefonnummer",
+            "EMAIL": "E-Mail",
+            "PASSWORD_CHANGE": "Passwort ändern",
+            "OLD_PASSWORD": "Bisheriges Passwort"
+        },
+        "INFO": {
+            "EMPTY": {
+                "LOGINAME": "Bitte geben Sie einen Loginname ein.",
+                "OLD_PASSWORD": "Bitte geben Sie ihr bisheriges Passwort ein."
+            },
+            "INVALID": {
+                "EMAIL": "@:DRTV.VALIDATE_EMAIL.INFO.INVALID",
+                "PHONENUMBER": "@:DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER",
+                "OLD_PASSWORD": "Das von Ihnen eingegebene Passwort ist ungültig."
+            },
+            "NOTE_ABOUT_THIS_DATA": "Hier können Sie ihre Account-Zugangsdaten bearbeiten. Im Gegensatz zu den Identitätsdaten sind diese hier nicht Sichtbar. Die Telefonnummer oder E-Mail dienen zur Benachrichtigungen und zur Passwortrücksetzung.",
+            "LOGINAME": "Der Loginname kann nicht geändert werden."
+        },
+        "FOOTER": {
+            "BACK": "Fertig",
+            "SAVE": "Speichern"
+        }
+    },
+
     "NAVIGATION": {
         "TABS": {
             "BACK": "Zurück",
@@ -583,7 +609,7 @@
     "DRTV": {
         "PASSWORD": {
             "PASSWORD": "Passwort",
-            "PASSWORD_CONFIRM": "Passwort wiederholen!",
+            "PASSWORD_CONFIRM": "Passwort wiederholen",
             "INFO": {
                 "MIN_LETTER_COUNT": "Bitte mindestens {{count}} Zeichen verwenden!",
                 "EMPTY": "Bitte ein Passwort eingeben und bestätigen!"
@@ -664,16 +690,11 @@
     },
 
     "MENU": {
-        "HEADER": "Menü",
-        "NOTIFICATIONS": "@:NOTIFICATIONS.HEADER",
-        "CONTACTS": "Kontakte",
+        "NEW_CONTACT": "Neuer Kontakt",
+        "NEW_TALK": "Neuer Talk",
         "REQUESTS": "Kontaktanfragen",
-        "TALKS": "Talks",
-        "KEYMANAGEMENT": "@:IDENTITY.LABEL.KEYMANAGEMENT",
+        "OWN_KEYS": "Eigene Schlüssel",
         "SETTINGS": "@:SETTINGS.LABEL",
-        "MESSAGES": "Nachrichten",
-        "HINTS": "Sonstige Hinweise",
-        "ACTIVITY": "Aktivität",
         "LOGOUT": "Abmelden"
     },
 

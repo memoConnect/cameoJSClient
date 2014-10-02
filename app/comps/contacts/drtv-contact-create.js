@@ -13,15 +13,8 @@
 
 angular.module('cmContacts')
     .directive('cmContactCreate', [
-
-        '$rootScope',
-        'cmContactsModel',
-        'cmIdentityFactory',
-        'cmUtil',
-        'cmNotify',
-
-        function( $rootScope,
-                  cmContactsModel, cmIdentityFactory, cmUtil, cmNotify){
+        'cmContactsModel', 'cmIdentityFactory', 'cmUtil', 'cmNotify',
+        function(cmContactsModel, cmIdentityFactory, cmUtil, cmNotify){
 
             return {
                 restrict:       'AE',
@@ -30,7 +23,7 @@ angular.module('cmContacts')
 
                 controller: function($scope, $element, $attrs){
                     $scope.cmUtil = cmUtil;
-
+                    $scope.showSpinner = false;
                     $scope.formData = {
                         phoneNumbers: [{value:''}],
                         emails: [{value:''}]
@@ -58,6 +51,11 @@ angular.module('cmContacts')
                      */
 
                     $scope.saveUser = function(){
+                        if($scope.spinner('isIdle'))
+                            return false;
+
+                        $scope.spinner('start');
+
                         // declaration
                         var emptyIdentity = {
                                 displayName: null,
@@ -90,6 +88,7 @@ angular.module('cmContacts')
                         }
                         //////////////////////
                         if($scope.cmForm.$invalid){
+                            $scope.spinner('stop');
                             return false;
                         }
 
@@ -104,9 +103,18 @@ angular.module('cmContacts')
                                 $scope.gotoContactList();
                             },
                             function () {
+                                $scope.spinner('stop');
                                 cmNotify.error('CONTACT.INFO.ERROR.SAVE',{ttl:5000});
                             }
                         );
+                    };
+
+                    $scope.spinner = function(action){
+                        if(action == 'isIdle'){
+                            return $scope.showSpinner;
+                        }
+
+                        $scope.showSpinner = action == 'stop' ? false : true;
                     };
                 }
             }

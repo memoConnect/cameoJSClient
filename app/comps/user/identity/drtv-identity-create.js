@@ -14,6 +14,8 @@ angular.module('cmUser').directive('cmIdentityCreate', [
             templateUrl: 'comps/user/identity/drtv-identity-create.html',
             controller: function ($scope) {
 
+                $scope.showSpinner = false;
+
                 $scope.formData = {
                     cameoId: '',
                     password: '',
@@ -99,20 +101,36 @@ angular.module('cmUser').directive('cmIdentityCreate', [
                     return deferred.promise;
                 };
 
-                // save
                 $scope.addIdentity = function(){
+                    if($scope.spinner('isIdle'))
+                        return false;
+
+                    $scope.spinner('start');
+
                     $scope.validateForm().then(
                         function(data){
                             cmAuth.addIdentity(data).then(
                                 function(res){
+                                    $scope.spinner('stop');
                                     cmUserModel.switchToIdentity(res.identity, res.token.token);
                                 },
                                 function(){
-                                    cmNotify.warn('SETTINGS.PAGES.IDENTITY.CREATE.WARN.FAILED')
+                                    $scope.spinner('stop');
+                                    cmNotify.warn('SETTINGS.PAGES.IDENTITY.CREATE.WARN.FAILED');
                                 }
                             );
+                        }, function(){
+                            $scope.spinner('stop');
                         }
                     )
+                };
+
+                $scope.spinner = function(action){
+                    if(action == 'isIdle'){
+                        return $scope.showSpinner;
+                    }
+
+                    $scope.showSpinner = action == 'stop' ? false : true;
                 };
             }
         }

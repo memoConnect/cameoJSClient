@@ -13,7 +13,7 @@ module.exports = function(config) {
             'test/lib/angular/angular-mocks.js',
             'app/cameo*.js',
 
-            // specs
+            // all specs
             'test/unit/**/*.spec.js',
 
             'app/**/*.json',

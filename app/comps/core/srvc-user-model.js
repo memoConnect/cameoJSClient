@@ -21,26 +21,10 @@
 
 angular.module('cmCore')
 .service('cmUserModel',[
-    'cmBoot',
-    'cmAuth',
-    'cmLocalStorage',
-    'cmIdentityFactory',
-    'cmIdentityModel',
-    'cmFactory',
-    'cmCrypt',
-    'cmKeyFactory',
-    'cmKey',
-    'cmStateManagement',
-    'cmObject',
-    'cmUtil',
-    'cmNotify',
-    'cmLogger',
-    'cmCallbackQueue',
-    'cmPushNotificationAdapter',
-    'cmApi',
-    '$rootScope',
-    '$q',
-    '$location',
+    'cmBoot', 'cmAuth', 'cmLocalStorage', 'cmIdentityFactory', 'cmIdentityModel', 'cmFactory',
+    'cmCrypt', 'cmKeyFactory', 'cmKey', 'cmStateManagement', 'cmObject', 'cmUtil',
+    'cmNotify', 'cmLogger', 'cmCallbackQueue', 'cmPushNotificationAdapter', 'cmApi',
+    '$rootScope', '$q', '$location',
     function(cmBoot, cmAuth, cmLocalStorage, cmIdentityFactory, cmIdentityModel, cmFactory,
              cmCrypt, cmKeyFactory, cmKey, cmStateManagement, cmObject, cmUtil,
              cmNotify, cmLogger, cmCallbackQueue, cmPushNotificationAdapter, cmApi,
@@ -49,26 +33,30 @@ angular.module('cmCore')
             isAuth = false,
             initialize = ''; // empty, run, done ! important for isAuth check
 
-        var dataModel = {
-            isActive: false,
-            id: '',
-            userKey: '',
-            displayName: '',
-            cameoId: 'loading...',
-            email: {},
-            phoneNumber: {},
-            preferredMessageType: 'default',
-            created: '',
-            lastUpdated: '',
-            userType: '',
-            storage: {},
-            identity: {},
-            identities: []
-        };
-
         cmObject.addEventHandlingTo(this);
 
-        this.data = angular.extend({}, dataModel);
+        this.reset = function(){
+            this.data = {
+                isActive: false,
+                id: '',
+                userKey: '',
+                displayName: '',
+                cameoId: 'loading...',
+                email: {},
+                phoneNumber: {},
+                preferredMessageType: 'default',
+                created: '',
+                lastUpdated: '',
+                userType: '',
+                storage: {},
+                identity: {},
+                identities: [],
+                account: {}
+            };
+        }
+
+        this.reset();
+
         this.state = new cmStateManagement(['signing']);
 
         this.comesFromRegistration = false;
@@ -101,16 +89,14 @@ angular.module('cmCore')
         }
 
         this.importData = function(activeIdentity, data_identities){
-            //Todo: dont extend!
-            angular.extend(this.data, activeIdentity);
 
             this.data.identity = activeIdentity;
             this.data.identity.isAppOwner = true;
-            // new factory for own identities
+            this.data.id = activeIdentity.id || this.data.id;
+            this.data.userKey = activeIdentity.userKey || this.data.userKey;
+            this.data.userType = activeIdentity.userType || this.data.userType;
 
-            /**
-             * @todo may an own factory but not a new identityFactory!
-             */
+            // todo may an own factory but not a new identityFactory!
             if(this.data.identities.length > 0)
                 this.data.identities = [];
 
@@ -160,9 +146,7 @@ angular.module('cmCore')
                     });
 
                     self.importData(identity, accountData.identities);
-
-                    // handle account data
-                    // TODO: set account data
+                    self.importAccount(accountData);
 
                     // check device for pushing
                     cmPushNotificationAdapter.checkRegisteredDevice();
@@ -267,7 +251,6 @@ angular.module('cmCore')
          */
         this.getIdentity = function(){
             //cmLogger.debug('cmUserModel:getIdentity');
-
             return this.data.identity;
         };
 
@@ -277,6 +260,33 @@ angular.module('cmCore')
             this.importData(cmIdentityFactory.clear(identity_data).create(identity_data, true),[]);
 
             return this;
+        };
+
+        this.importAccount = function(data){
+            this.data.account.loginName = data.loginName || this.data.account.loginName;
+
+            if(typeof data.email != 'string') {
+                this.data.account.email = data.email || this.data.account.email;
+            } else {
+                this.data.account.email = {value:data.email};
+            }
+
+            if(typeof data.phoneNumber != 'string') {
+                this.data.account.phoneNumber = data.phoneNumber || this.data.account.phoneNumber;
+            } else {
+                this.data.account.phoneNumber = {value:data.phoneNumber};
+            }
+
+            this.trigger('account:updated');
+        };
+
+        this.updateAccount = function(newAccountData){
+            return cmAuth.putAccount(newAccountData)
+            .then(
+                function(){
+                    self.importAccount(newAccountData);
+                }
+            )
         };
 
         /**
@@ -412,7 +422,9 @@ angular.module('cmCore')
             var storedKeys  = this.storageGet('rsa') || [],
                 keys        = cmKeyFactory();
 
-            return keys.importFromDataArray(storedKeys)
+            var returnKeys = keys.importFromDataArray(storedKeys)
+
+            return returnKeys
         };
 
         this.hasPrivateKey = function(){
@@ -456,7 +468,6 @@ angular.module('cmCore')
 
                         //add public key to identity
                         self.data.identity.keys.create(data)
-
 
                         //store the key with its new id:
                         self.storeKey(local_key)
@@ -507,7 +518,7 @@ angular.module('cmCore')
         };
 
         this.signPublicKey = function(keyToSign, keyToSignFingerprint, identity){
-            cmLogger.debug('cmUserModel.signPublicKey');
+//            cmLogger.debug('cmUserModel.signPublicKey');
 
             identity = identity || self.data.identity
 
@@ -557,7 +568,6 @@ angular.module('cmCore')
 
         this.verifyOwnPublicKey = function(key){
             // cmLogger.debug('cmUserModel.verifyOwnPublicKey');
-
             var local_keys = this.loadLocalKeys();
 
             return local_keys.some(function(local_key){
@@ -579,8 +589,6 @@ angular.module('cmCore')
          */
         this.verifyIdentityKeys = function(identity, sign){
             //cmLogger.debug('cmUserModel.verifyIdentityKeys');
-
-            //console.log(identity.cameoId)
 
             if(!identity.keys)
                 return [];
@@ -801,8 +809,7 @@ angular.module('cmCore')
          * clear identity storage
          */
         this.resetUser = function(){
-            this.data.identities = [];
-            this.data = angular.extend({}, dataModel);
+            this.reset();
         };
 
         init();

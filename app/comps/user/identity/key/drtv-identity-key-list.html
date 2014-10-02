@@ -15,6 +15,8 @@
     </cm-info-bubble>
 </article>
 
+<hr ng-if="showNoLocalKeysOnThisDevice || showUntrustedPublickeysExists" class="margin-small" />
+
 <ul ng-if="(publicKeys.length > 0)">
     <li ng-repeat="key in publicKeys | orderBy:sortByPrivKeys" data-qa="key-list-item">
         <a href="#/settings/identity/key/edit/{{key.id}}" class="item tal clearfix">

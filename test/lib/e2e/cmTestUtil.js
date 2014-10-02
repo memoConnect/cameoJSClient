@@ -58,7 +58,7 @@ this.login = function (username, password, expectedRoute) {
     self.logout()
     self.get('/login')
 
-    $("body").sendKeys(protractor.Key.HOME)
+    this.scrollToTop()
     $("[data-qa='login-btn']").click();
 
     var user = $("input[name=user]");
@@ -99,7 +99,7 @@ this.createTestUser = function (testUserId) {
 
     $("[data-qa='input-displayName']").sendKeys(loginName)
 
-    $("[data-qa='link-terms']").sendKeys(protractor.Key.END)
+    this.scrollToBottom()
     $("[data-qa='icon-checkbox-agb']").click()
 
     $("[data-qa='btn-createUser']").click()
@@ -313,11 +313,12 @@ this.waitForModalClose = function () {
     return this
 }
 
-this.waitForLoader = function (count) {
-    count = count || 1
+this.waitForLoader = function (count, parentSelector) {
+    count = count || 1,
+    parentSelector = parentSelector ? parentSelector+' ' : '' // that used for more then one loader on page
     // wait for loader appear
     ptor.wait(function() {
-        return  $("cm-loader").getAttribute('cm-count')
+        return  $(parentSelector+'cm-loader').getAttribute('cm-count')
                 .then(function(value){
                     return value >= count
                 })
@@ -325,7 +326,7 @@ this.waitForLoader = function (count) {
     .then(function () {
         // wait for loader disappear
         ptor.wait(function () {
-            return $("cm-loader").isDisplayed()
+            return $(parentSelector+'cm-loader').isDisplayed()
             .then(function (isDisplayed) {
                 return !isDisplayed
             })
@@ -579,6 +580,13 @@ this.readConversation = function (subject, message) {
     })
 }
 
+this.scrollToTop = function(){
+    $("body").sendKeys(protractor.Key.HOME)
+}
+
+this.scrollToBottom = function(){
+    $("body").sendKeys(protractor.Key.END)
+}
 
 
 

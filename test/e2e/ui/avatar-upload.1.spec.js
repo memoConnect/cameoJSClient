@@ -33,7 +33,7 @@ describe('Avatar Upload: ', function () {
         //avatar-upload-btn
         $("[data-qa='btn-file-choose']").sendKeys(newAvatar)
 
-        util.waitForLoader()
+        util.waitForLoader(1,'cm-upload-avatar')
 
         $('cm-identity-edit cm-avatar i').getAttribute('style').then(function(src){
             newAvatarStyle = src
