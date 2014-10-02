@@ -1,5 +1,4 @@
 {
-
     "YES":  "Yes",
     "NO":   "No",
 
@@ -269,7 +268,7 @@
             "CAMEOID": "CameoID",
             "DISPLAYNAME": "@:CONTACTS.LABEL.DISPLAYNAME",
             "PHONENUMBER": "Phonenumber",
-            "EMAIL": "EMail",
+            "EMAIL": "Email",
             "STREET": "Street",
             "STREETNR": "Nr",
             "ZIP": "Zip",
@@ -295,12 +294,6 @@
                 "EMAIL": "Please select one email",
                 "PHONENUMBER": "Please select one phonenumber"
             }
-        },
-        "HANDSHAKE_3RD": {
-            "HANDSHAKE_NOW": "Wollen Sie jetzt vertrauen? TODO: translate",
-            "TRANSACTION_SECRET": "Dann tippen Sie das ab: TODO: translate",
-            "HANDSHAKE_NEED_TRANSACTID": "Geben Sie den Code vom Gegenüber hier ein: TODO: translate",
-            "HANDSHAKE_OK": "Accept TODO: translate"
         },
         "FOOTER": {
             "SAVE": "Save"
@@ -443,7 +436,7 @@
                 "WAIT": {
                     "CANCEL_BUTTON": "Stop request",
                     "INSTRUCTIONS": "Please press 'Stop request' to stop the process.",
-                    "NOTE": "'{{identity}}' has to enter the following code to confirme your inquiry:",
+                    "NOTE": "'{{identity}}' has to enter the above code to confirme your inquiry:",
                     "LABEL_CODE": "Code"
                 },
                 "SUCCESSFUL": {
@@ -472,6 +465,7 @@
             }
         }
     },
+
     "SETTINGS": {
         "WELCOME": "Settings",
         "LABEL": "Settings",
@@ -556,19 +550,6 @@
                         "CHECK_PUBKEY": "Check public key",
                         "CHECK_KEYNAME": "Check key name"
                     }
-                },
-                "HANDSHAKE": {
-                    "MODAL_HEADER": "Authentication",
-                    "HANDSHAKE_DESCRIPTION": "HANDSHAKE_DESCRIPTION",
-                    "HANDSHAKE_NOW": "Do you want to authenticate this device against <strong>'{{device}}'</strong> now, to be able to read all talks written and encrypted on these devices by each other?<br>Please start the device <strong>'{{device}}'</strong> with the same identity <strong>'{{identity}}'</strong>.",
-                    "HANDSHAKE_OK": "@:MODAL.ALERT.OK",
-                    "CHOOSE_OLD_DEVICE": "Please select a device with which you want to perform the authentication!",
-                    "CHOOSE": "Please select",
-                    "TRANSACTION_SECRET": "To authenticate this device please enter the following code in the input field on your other device:",
-                    "HANDSHAKE_START": "Start authentication",
-                    "HANDSHAKE_RECEIVED": "Would you like to start the authentication?",
-                    "HANDSHAKE_NEED_TRANSACTID": "To authenticate your new device please enter the code below:",
-                    "HANDSHAKE_DONE": "Authentication successfull!"
                 }
             },
             "ABOUT_US": {
@@ -583,6 +564,34 @@
             }
         }
     },
+
+    "ACCOUNT": {
+        "PLACEHOLDER": {
+            "LOGINNAME": "Login name",
+            "PHONENUMBER": "Phonenumber",
+            "EMAIL": "Email",
+            "PASSWORD_CHANGE": "Password change",
+            "OLD_PASSWORD": "Old password"
+        },
+        "INFO": {
+            "EMPTY": {
+                "LOGINAME": "The login name is empty.",
+                "OLD_PASSWORD": "Please enter a password."
+            },
+            "INVALID": {
+                "EMAIL": "@:DRTV.VALIDATE_EMAIL.INFO.INVALID",
+                "PHONENUMBER": "@:DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER",
+                "OLD_PASSWORD": "Your password is invalid."
+            },
+            "NOTE_ABOUT_THIS_DATA": "Your account data can be edited here. This data is not public. Email and/or phonenumber are used for notifications and password reset.",
+            "LOGINAME": "The login name cannot be changed."
+        },
+        "FOOTER": {
+            "BACK": "Done",
+            "SAVE": "Save"
+        }
+    },
+
     "NAVIGATION": {
         "TABS": {
             "BACK": "Back",
@@ -594,6 +603,7 @@
             "TALKS": "Talks"
         }
     },
+
     "DRTV": {
         "PASSWORD": {
             "PASSWORD": "Password",
@@ -657,22 +667,6 @@
             "CONTENT": "The talks on this device are being encrypted for the new cameoKey.",
             "START": "Start"
         },
-        "KEY_REQUEST": {
-            "HEADER": "Authentication",
-            "CONTENT": "There is a new cameoKey on this device which needs to be authenticated by another device. This is necessary to read all existing talks. Do you want to authenticate this cameoKey now?<br>Please start another device with the same identity <strong>'{{identity}}'</strong>."
-        },
-        "KEY_RESPONSE": {
-            "HEADER": "Authentication Request",
-            "CONTENT": "An other device which pretends to be yours asked to be authenticated by this device. After that your new device gets access to all of your encrypted talks.<br>Do you want to authenticate the following device?"
-        },
-        "KEY_REQUEST_3RD": {
-            "HEADER": "Trust TODO: translate",
-            "CONTENT": "Do you want to trust(Request)? TODO: translate"
-        },
-        "KEY_RESPONSE_3RD": {
-            "HEADER": "Trust Request TODO: translate",
-            "CONTENT": "Do you want to trust(Response)? TODO: translate"
-        },
         "FOOTER": {
             "TALKS": "Talks",
             "CONTACTS": "Contacts",
@@ -692,19 +686,16 @@
             "FILE": "Choose an existing file"
         }
     },
+
     "MENU": {
-        "HEADER": "Menu",
-        "NOTIFICATIONS": "@:NOTIFICATIONS.HEADER",
-        "CONTACTS": "Contacts",
+        "NEW_CONTACT": "New contact",
+        "NEW_TALK": "New talk",
         "REQUESTS": "Contact requests",
-        "TALKS": "Talks",
-        "KEYMANAGEMENT": "@:IDENTITY.LABEL.KEYMANAGEMENT",
+        "OWN_KEYS": "Own keys",
         "SETTINGS": "@:SETTINGS.LABEL",
-        "MESSAGES": "Messages",
-        "HINTS": "Hints",
-        "ACTIVITY": "Activity",
         "LOGOUT": "Logout"
     },
+
     "NOTIFICATIONS": {
         "HEADER": "Notifications",
         "MODAL_HEADER": {
@@ -723,6 +714,7 @@
             "FRIEND_REQUEST": "New contact request"
         }
     },
+
     "MODAL": {
         "ALERT": {
             "OK": "OK"
@@ -744,10 +736,12 @@
             "FOOTER": "Reconnect"
         }
     },
+
     "JOB": {
         "IN_PROGRESS": "You have edited this site without saving. Do you really want to leave this page?",
         "FILES_IN_UPLOAD_PROGRESS": "Files are being uploaded. Do you really want to leave this page?"
     },
+
     "SECURITY_ASPECT": {
         "CONVERSATION": {
             "ENCRYPTED": {
@@ -782,6 +776,7 @@
             "MISSING_DATA": "Security aspects missing"
         }
     },
+
     "SYSTEM": {
         "WELCOME": {
             "MESSAGE": "Hello, I am the cameoNet support. \n\nIf you have any questions or problems do not hesitate to reply on this message. You can also use our help system at http://support.cameonet.de,\n\nthe cameoNet team.",

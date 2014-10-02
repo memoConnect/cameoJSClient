@@ -18,13 +18,23 @@ describe('cmLocalContacts default none app', function() {
         expect(cmLocalContacts).toBeDefined()
     })
 
-    describe('value plugin', function () {
+    describe('var plugin', function () {
         it('should be defined', function () {
             expect(cmLocalContacts.plugin).toBeDefined()
         })
 
         it('should return false', function () {
             expect(cmLocalContacts.plugin).toBe(null)
+        })
+    })
+
+    describe('var debug',function(){
+        it('should be defined',function(){
+            expect(cmDevice.debug).toBeDefined()
+        })
+
+        it('should be false on default',function(){
+            expect(cmDevice.debug).toBeFalsy()
         })
     })
 

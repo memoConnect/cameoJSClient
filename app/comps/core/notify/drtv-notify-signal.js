@@ -6,7 +6,7 @@ angular.module('cmCore')
     function (cmNotify) {
         return {
             restrict: 'E',
-            template: '<i class="fa with-response" ng-class="{\'cm-menu-weight-bell cm-orange\': ring, \'cm-menu-weight\': !ring}"></i>',
+            template: '<i class="fa with-response" ng-class="{\'cm-menue-bell cm-orange\': ring, \'cm-menu\': !ring}"></i>',
             scope: true,
             controller: function ($scope) {
                 $scope.ring = false;

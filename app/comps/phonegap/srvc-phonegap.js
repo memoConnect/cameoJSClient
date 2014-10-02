@@ -1,8 +1,10 @@
 'use strict';
 
 angular.module('cmPhonegap').service('cmPhonegap', [
+    'cmLogger',
     '$q', '$document', '$phonegapCameoConfig', '$navigator',
-    function ($q, $document, $phonegapCameoConfig, $navigator) {
+    function (cmLogger,
+              $q, $document, $phonegapCameoConfig, $navigator) {
 
         var isReady = $q.defer();
 
@@ -12,9 +14,12 @@ angular.module('cmPhonegap').service('cmPhonegap', [
                     return false;
                 }
 
+                cmLogger.info('cmPhonegap.isReady? '+$phonegapCameoConfig.deviceReady)
+
                 // if config doesn't get device ready watch again
                 if(!$phonegapCameoConfig.deviceReady){
                     $document[0].addEventListener('deviceready', function () {
+                        cmLogger.info('cmPhonegap.deviceready!')
                         $phonegapCameoConfig.deviceReady = true;
                         isReady.resolve();
                     });

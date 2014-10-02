@@ -6,16 +6,16 @@
  * @description
  * List conversations.
  *
- * @restrict AE
+ * @restrict E
  * @example
  */
 angular.module('cmWidgets').directive('cmWidgetIdentityEdit', [
     // no dependencies
     function(){
         return {
-            restrict:       'AE',
+            restrict:       'E',
             scope:          true,
-            templateUrl:    'widgets/identity/wdgt-identity-edit.html',
+            templateUrl:    'widgets/settings/identity/wdgt-identity-edit.html',
             controller: function(){
                 //console.log('cmWidgetIdentityEdit')
             }

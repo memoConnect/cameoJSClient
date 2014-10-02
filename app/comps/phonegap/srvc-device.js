@@ -13,6 +13,7 @@ angular.module('cmPhonegap')
 
         var self = {
             plugin: null,
+            debug: false,
 
             init: function(){
                 if(typeof $phonegapCameoConfig == 'undefined') {
@@ -34,7 +35,9 @@ angular.module('cmPhonegap')
             },
 
             isApp: function(){
-                return this.existsPlugin();
+                if(this.debug)
+                    cmLogger.warn('cmPhonegap.cmDevice.debug == true!!!');
+                return this.debug || !this.debug && this.existsPlugin();
             },
 
             getPlatform: function(){
@@ -115,7 +118,8 @@ angular.module('cmPhonegap')
                 var nVer = $window.navigator.appVersion,
                     nAgt = $window.navigator.userAgent,
                     browserName = $window.navigator.appName,
-                    nameOffset, verOffset;
+                    nameOffset,
+                    verOffset;
 
                 // In Opera, the true version is after 'Opera' or after 'Version'
                 if ((verOffset = nAgt.indexOf('Opera')) != -1 || (verOffset = nAgt.indexOf('OPR')) != -1) {
@@ -160,6 +164,9 @@ angular.module('cmPhonegap')
 
                 if (nVer.indexOf('Win') != -1)
                     OSName = 'Windows';
+
+                if (nVer.indexOf('SymbianOS') != -1)
+                    OSName = 'Symbian';
 
                 if (nVer.indexOf('like Mac OS X') != -1)
                     OSName = 'iOS';

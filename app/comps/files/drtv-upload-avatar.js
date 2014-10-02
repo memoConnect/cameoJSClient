@@ -36,11 +36,11 @@ angular.module('cmFiles').directive('cmUploadAvatar',[
                                 });
                             }
                         },
-                        error: function(error, header) {
+                        error: function(maxFileSize, header) {
                             cmNotify.warn('CONVERSATION.WARN.FILESIZE_REACHED', {
                                 ttl: 0,
                                 i18n: {
-                                    maxFileSize: error,
+                                    maxFileSize: maxFileSize,
                                     fileSize: header['X-File-Size'],
                                     fileName: header['X-File-Name']
                                 }

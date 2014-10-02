@@ -135,6 +135,8 @@ angular.module('cmUi').directive('cmResizeTextarea',[
                             element.css('overflow', 'auto');
                             element.attr('rows', maxRows);
                         }
+
+                        $rootScope.$broadcast('textArea:resize',element.css('height'));
                     }
                 }
 

@@ -1,8 +1,9 @@
 var config = require("../config-e2e-tests.js")
 var util = require("../../lib/e2e/cmTestUtil.js")
 var ptor = util.getPtorInstance()
+var path = require('path')
 
-describe('transfer scope data registration', function () {
+xdescribe('transfer scope data registration', function () {
 
     afterEach(function () {
         util.stopOnError()
@@ -20,7 +21,7 @@ describe('transfer scope data registration', function () {
         util.setVal('input-email', 'moep@moep.de')
         util.setVal('input-phone', '+49123456')
 
-        $("body").sendKeys(protractor.Key.END)
+        util.scrollToBottom()
         util.click("icon-checkbox-agb")
     })
 
@@ -57,7 +58,8 @@ describe('transfer scope data conversation', function () {
     });
 
     var msg = 'oida wird dit hier mitjenommen?',
-        msg2 = 'juhu buhu'
+        msg2 = 'juhu buhu',
+        smallImageJPG = path.resolve(__dirname, '../data/file-upload-image-24KB.jpg')
 
     it('login', function () {
         util.login()
@@ -66,11 +68,15 @@ describe('transfer scope data conversation', function () {
     it('open new conversation and fill out', function () {
         util.get('/conversation/new')
         util.setVal('input-answer', msg)
+        $("[data-qa='btn-file-choose']").sendKeys(smallImageJPG)
     })
 
     it('disabled encryption (do the transfer) and check if transfer succeed', function () {
         util.disableEncryption();
         expect(util.getVal('input-answer')).toBe(msg)
+        $$("cm-files-preview .file-image").then(function(elements){
+            expect(elements.length).toEqual(1)
+        })
     })
 
     it('send message & create conversation', function () {

@@ -25,7 +25,6 @@ module.exports = function(grunt, options){
             // add to template array for module schmusi
             concatCmTemplatesFound.push(filepath);
 
-
             return  "angular.module('" + filepath + "', []).run([\n" +
                 "'$templateCache', function($templateCache) {\n" +
                 "$templateCache.put('" + filepath + "'," +
@@ -41,18 +40,19 @@ module.exports = function(grunt, options){
                 return src
                     .replace(/(^|\n)[ \t]*('use strict'|"use strict");?\s*/g, '$1')
                     .replace(/\]\)/g, ',' + templateNames + '])')
-                    .replace(/(\;)$/g, '')
+                    .replace(/\[,/g, '[')// remove [, fail when module has no dependencies
+                    .replace(/(\;[ \s]*)$/g, '')
             } else {
                 return src
                     .replace(/(^|\n)[ \t]*('use strict'|"use strict");?\s*/g, '$1')
-                    .replace(/(\;)$/g, '')
+                    .replace(/(\;[ \s]*)$/g, '')
             }
-            // clear scripts use_strict, clear also angular.module(..) and last ;
+            // clear scripts use_strict, clear also angular.module(..) and last ; include white space
         } else {
             return src
                 .replace(/(^|\n)[ \t]*('use strict'|"use strict");?\s*/g, '$1')
                 .replace(/(angular\.module\(.*\))/g, '')
-                .replace(/(\;)$/g, '')
+                .replace(/(\;[ \s]*)$/g, '')
         }
     };
 
@@ -107,7 +107,7 @@ module.exports = function(grunt, options){
                         'app/vendor/!(angular)/**/*.js',
                         'app/vendor/angular/base/angular.js',
                         'app/vendor/angular/base/angular-*.js',
-                        'app/vendor/angular/!(base)/*.js',
+                        'app/vendor/angular/!(base)/*.js'
                     ],
                     dest: 'app/vendor.' + options.globalCameoBuildConfig.config.version + '.js'
                 },
