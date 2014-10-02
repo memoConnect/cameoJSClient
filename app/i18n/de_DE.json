@@ -280,7 +280,8 @@
             },
             "INVALID": {
                 "EMAIL": "@:DRTV.VALIDATE_EMAIL.INFO.INVALID",
-                "PHONENUMBER": "@:DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER"
+                "PHONENUMBER": "@:DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER",
+                "MIXED": "@DRTV.VALIDATE_MIXED.INFO.INVALID_MIXED"
             },
             "SUCCESS": {
                 "SAVE": "Kontakt wurde erfolgreich angelegt.",
@@ -619,7 +620,7 @@
             "LABEL": "E-Mail",
             "PLACEHOLDER": "E-Mail",
             "INFO": {
-                "INVALID": "Bitte geben Sie eine korrekte E-Mail Adresse ein!",
+                "INVALID": "Bitte geben Sie eine korrekte E-Mail-Adresse ein!",
                 "EMPTY": "Sie haben keine E-Mail Adresse eingegeben."
             }
         },
@@ -629,6 +630,14 @@
             "INFO": {
                 "INVALID_PHONE_NUMBER": "Die Nummer scheint keine gültige Mobilfunknummer zu sein.",
                 "EMPTY": "Sie haben keine Mobilfunknummer eingegeben."
+            }
+        },
+        "VALIDATE_MIXED": {
+            "LABEL": "Mobilfunknummer oder e-mail-Adresse",
+            "PLACEHOLDER": "Mobilfunknummer oder e-mail-Adresse",
+            "INFO": {
+                "INVALID_MIXED": "Die Eigabe scheint weder eine gültige Mobilfunknummer noch eine gültige E-Mail-Adresse zu sein.",
+                "EMPTY": "Sie nichts eingegeben."
             }
         },
         "VALIDATE_CAMEOID": {

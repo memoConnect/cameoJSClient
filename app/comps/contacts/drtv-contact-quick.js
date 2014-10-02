@@ -62,22 +62,28 @@ angular.module('cmContacts')
                 $scope.save = function(){
 
                     $scope.validateForm()
-                    .then(function(){
-                        return  cmContactsModel
-                                .addContact({
-                                    identity: {
-                                        displayName:    $scope.displayName,
-                                        mixed:          $scope.mixed
-                                    } 
-                                })
-                                .then(function(contact){
-                                    if($scope.selected)
-                                        $scope.selected[contact.identity.id] = true;
+                    .then(
+                        function(){
+                            return  cmContactsModel
+                                    .addContact({
+                                        identity: {
+                                            displayName:    $scope.displayName,
+                                            mixed:          $scope.mixed
+                                        } 
+                                    })
+                                    .then(function(contact){
+                                            if($scope.selected)
+                                                $scope.selected[contact.identity.id] = true;
 
-                                    if($scope.conversation)
-                                        $scope.conversation.addRecipient(contact.identity);        
-                                })
-                    })
+                                            if($scope.conversation)
+                                                $scope.conversation.addRecipient(contact.identity);        
+                                    })
+                        },
+                        function(){
+                            console.log('sddd')
+                            $scope.cmForm.mixed.$invalid = true
+                        }
+                    )
                 }
             }
         }

@@ -280,7 +280,8 @@
             },
             "INVALID": {
                 "EMAIL": "@:DRTV.VALIDATE_EMAIL.INFO.INVALID",
-                "PHONENUMBER": "@:DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER"
+                "PHONENUMBER": "@:DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER",
+                "MIXED": "@:DRTV.VALIDATE_MIXED.INFO.INVALID_MIXED"
             },
             "SUCCESS": {
                 "SAVE": "Contact created",
@@ -627,6 +628,14 @@
             "INFO": {
                 "INVALID_PHONE_NUMBER": "The entered value does not seem to be a phone number.",
                 "EMPTY": "The phone number field is empty"
+            }
+        },
+        "VALIDATE_MIXED": {
+            "LABEL": "Phone number or e-mail address.",
+            "PLACEHOLDER": "Phone number or e-mail address",
+            "INFO": {
+                "INVALID_MIXED": "The entered value appears to be neither a phone number nor an e-mail addresss.",
+                "EMPTY": "You left the input field empty."
             }
         },
         "VALIDATE_CAMEOID": {

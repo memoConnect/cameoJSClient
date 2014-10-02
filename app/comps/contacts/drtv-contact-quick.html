@@ -34,9 +34,9 @@
                 required
             />
         </div>
-        <cm-info-bubble class="cm-alert" ng-show="cmForm.displayName.$dirty && cmForm.displayName.$invalid && cmForm.displayName.length > 0">
-            <div ng-show="cmForm.displayName.$error.required">
-                <i class="fa cm-new-contact"></i> {{'CONTACT.INFO.EMPTY.DISPLAYNAME'|cmTranslate}}
+        <cm-info-bubble class="cm-alert" ng-show="mixed && cmForm.mixed.$invalid">
+            <div>
+                <i class="fa cm-new-contact"></i> {{'CONTACT.INFO.INVALID.MIXED'|cmTranslate}}
             </div>
         </cm-info-bubble>
     </article>
