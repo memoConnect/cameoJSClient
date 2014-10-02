@@ -1,6 +1,7 @@
 'use strict';
 
-angular.module('cmUser').directive('cmAccountEdit', [
+angular.module('cmUser')
+.directive('cmAccountEdit', [
     'cmUserModel', 'cmNotify', 'cmCrypt',
     '$q', '$rootScope',
     function(cmUserModel, cmNotify, cmCrypt,
@@ -12,6 +13,7 @@ angular.module('cmUser').directive('cmAccountEdit', [
 
                 $scope.showSpinner = false;
                 $scope.showPasswordChange = false;
+                $scope.showReadOnly = false;
                 $scope.isPristine = true;
 
                 $scope.spinner = function(action){
@@ -21,12 +23,16 @@ angular.module('cmUser').directive('cmAccountEdit', [
                     $scope.showSpinner = action == 'stop' ? false : true;
                 };
 
-                $scope.passwordChange = function(action){
+                $scope.togglePasswordChange = function(action){
                     $scope.showPasswordChange = action && action == 'close' || $scope.showPasswordChange ? false : true;
                     if(!$scope.showPasswordChange){
                         $scope.account.oldPassword = '';
                         $rootScope.$broadcast('cm-password:reset');
                     }
+                };
+
+                $scope.toggleReadOnly = function(){
+                    $scope.showReadOnly = true;
                 };
 
                 $rootScope.$on('pristine:false', function(){

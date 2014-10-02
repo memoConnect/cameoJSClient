@@ -23,7 +23,6 @@ angular.module('cmPhonegap')
             },
 
             init: function(){
-
                 if (typeof $phonegapCameoConfig == 'undefined'){
                     return false;
                 }
@@ -53,7 +52,7 @@ angular.module('cmPhonegap')
             },
 
             checkRegisteredDevice: function(accountPushDevices){
-                cmLogger.info('cmPushNotificationAdapter.checkRegisteredDevice')
+//                cmLogger.info('cmPushNotificationAdapter.checkRegisteredDevice')
                 // BE MOCK
                 /*
                  accountPushDevices = [
@@ -84,7 +83,7 @@ angular.module('cmPhonegap')
             },
 
             registerDevice: function(){
-                cmLogger.info('cmPushNotificationAdapter.registerDevice')
+//                cmLogger.info('cmPushNotificationAdapter.registerDevice')
                 // BE MOCK
                 /*
                  {
@@ -95,7 +94,7 @@ angular.module('cmPhonegap')
                  */
                 this.getDeviceData()
                 .then(function(deviceData){
-                    cmLogger.info('before post deviceData.token: '+ deviceData.token)
+                    cmLogger.info('post pushDevice: '+ deviceData.token)
                     self.currentDeviceData = deviceData;
                     cmApi.post({
                         path: '/pushDevice',
@@ -114,11 +113,11 @@ angular.module('cmPhonegap')
             },
 
             deleteDevice: function(token){
-                cmLogger.info('cmPushNotificationAdapter.deleteDevice')
+//                cmLogger.info('cmPushNotificationAdapter.deleteDevice')
                 if(cmDevice.getCurrentOS() != 'unknown'
                 && this.currentDeviceData.token) {
 
-                    cmLogger.info('deleteDevice: '+ this.currentDeviceData.token)
+                    cmLogger.info('delete pushDevice: '+ this.currentDeviceData.token)
 
                     var data = {
                         path: '/pushDevice/'+cmDevice.getCurrentOS()+'/'+this.currentDeviceData.token,

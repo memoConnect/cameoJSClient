@@ -8,7 +8,8 @@ var ptor = util.getPtorInstance(),
     smallImageJPG = path.resolve(__dirname, '../data/file-upload-image-24KB.jpg'),
     largeImageJPG = path.resolve(__dirname, '../data/file-upload-image-1.4MB.jpg'),
     smallFileMP3 = path.resolve(__dirname, '../data/file-upload-audio-23KB.mp3'),
-    smallFilePDF = path.resolve(__dirname, '../data/file-upload-file-12KB.pdf');
+    smallFilePDF = path.resolve(__dirname, '../data/file-upload-file-12KB.pdf'),
+    testFilesNum = 4;
 
 // expect functions
 function testFile(file, extension, index) {
@@ -81,11 +82,11 @@ function getFilename(file) {
 }
 
 // start init tests
-describe('FileUpload unsafe', function () {
+describe('FileUpload unsafe upload: ', function () {
 
     afterEach(function () {
         util.stopOnError()
-    });
+    })
 
     it('login create & new conversation', function () {
         util.login()
@@ -133,4 +134,42 @@ describe('FileUpload unsafe', function () {
             testFile(pathToFile, extension, testIndex)
 
     }
+})
+
+describe('FileDownload: ',function(){
+    afterEach(function () {
+        util.stopOnError()
+    })
+
+    it('login goto conversation where files uploaded', function () {
+        util.login()
+        util.waitForPageLoad('/start')
+
+        util.get('/talks')
+        util.waitForPageLoad('/talks')
+
+        util.headerSearchInList(subjectUnsafe)
+
+        $$("[data-qa='conversation-list-element']").then(function(elements) {
+            elements[0].click()
+        })
+    })
+
+    it('see all files ready for download', function(){
+        util.waitForElements('cm-message cm-message-file .file-download')
+        $$('cm-message cm-message-file .file-download').then(function(elements){
+            expect(elements.length).toEqual(testFilesNum)
+        })
+    })
+
+    it('test download of first file should be an mp3', function(){
+        $$('cm-message cm-message-file .file-download').then(function(elements){
+            elements[0].click()
+            util.waitForProgressbar()
+
+            $$('cm-message cm-message-file .file-html5 audio').then(function(elements){
+                expect(elements.length).toEqual(1)
+            })
+        })
+    })
 })
