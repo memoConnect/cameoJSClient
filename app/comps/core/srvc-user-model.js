@@ -94,6 +94,7 @@ angular.module('cmCore')
             this.data.identity.isAppOwner = true;
             this.data.id = activeIdentity.id || this.data.id;
             this.data.userKey = activeIdentity.userKey || this.data.userKey;
+            this.data.userType = activeIdentity.userType || this.data.userType;
 
             // todo may an own factory but not a new identityFactory!
             if(this.data.identities.length > 0)
