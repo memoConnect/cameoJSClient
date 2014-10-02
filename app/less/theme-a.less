@@ -1,7 +1,10 @@
 .theme-a{
   color: @cm-grey;
   background-color: @cm-white;
-  padding-bottom: 3rem !important;
+  margin-bottom: 3rem !important;
+  &.background-less{
+    background-color: transparent;
+  }
 
   .content {
     padding: 0 2rem;
@@ -113,10 +116,6 @@
     }
   }
 
-  cm-footer button i {
-    margin-left: 1rem;
-  }
-
   .cm-form-group {
     padding: 0 !important;
     input {
@@ -142,19 +141,6 @@
 
   .no-margin-bottom {
     margin-bottom: 0 !important;
-  }
-
-  .icon-list{
-    position: absolute;
-    top: 0.3rem;
-    right: 0;
-    height: 4rem;
-    line-height: 4rem;
-    vertical-align: middle;
-    text-align: right;
-    i.position-exception{
-      vertical-align: middle;
-    }
   }
 
   ul {
@@ -211,11 +197,6 @@
           box-shadow: 0 0 0.625em 0.125em @cm-white;
           vertical-align: top;
         }
-        .icon-list {
-          i {
-            vertical-align: super !important;
-          }
-        }
       }
       &.isActive{
         .box-shadow-bottom;
@@ -240,13 +221,21 @@
         }
       }
       .icon-list{
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: @cm-unit;
+        line-height: @cm-unit;
+        text-align: right;
         i {
+          margin:0;
           width: @cm-unit;
           height: @cm-unit;
           font-size: 3rem;
           color: @cm-grey;
           text-align:center;
-          line-height: 3rem;
+          line-height: inherit;
+          vertical-align: top;
         }
       }
     }
@@ -305,7 +294,7 @@
     text-align:center;
   }
 
-
+  .pw-progress{height:0.3rem}
 
   .timeout{
     text-align:center;
@@ -347,6 +336,12 @@
       margin:0;
       border:none;
     }
+    .cm-input-readonly{
+      background-color:@cm-light-grey !important;
+      input{
+        background-color:@cm-light-grey !important;
+      }
+    }
     cm-info-bubble{
       &.cm-alert{
         color: @cm-grey-new;
@@ -374,7 +369,24 @@
 
   .cm-alert{
     i {
-      color:@cm-warning-color;
+      color: @cm-warning-color;
+      &.cm-ci-color{
+        .cm-ci-color;
+      }
+    }
+  }
+
+  .cm-btn{
+    background:@cm-grey;
+    width:100%;
+    text-align:center;
+    height:@cm-unit;
+    color:@cm-white;
+    &:hover{
+      color:@cm-ci-color;
+    }
+    i {
+      margin-left: 1rem;
     }
   }
 }
@@ -422,5 +434,23 @@ section.default-pages{
       box-shadow:inset 0 -2rem 0rem -1.4rem @cm-grey-new;
       text-decoration: none;
     }
+  }
+}
+
+
+cm-contact-quick {
+  display:block;
+  margin: 1rem 0;
+  form {
+    padding-right:@cm-unit;
+  }
+
+  button {
+    position:absolute;
+    top:0;
+    bottom:0;
+    right:0;
+    width:@cm-unit;
+    font-size:0.75*@cm-unit;
   }
 }

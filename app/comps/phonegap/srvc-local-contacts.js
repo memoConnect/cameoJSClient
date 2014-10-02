@@ -4,30 +4,28 @@
 
 /*  android & ios contact json
  {
-    displayName: "GiverName FamilyName"
+    displayName: "GiverName FamilyName",
     name: {
-        familyName: "FamilyName"
-        formatted: "GiverName FamilyName"
-        givenName: "GiverName"
-        middleName: "MiddleName"
-    }
-    phoneNumbers: Array[
+        familyName: "FamilyName",
+        formatted: "GiverName FamilyName",
+        givenName: "GiverName",
+        middleName: "MiddleName",
+    },
+    phoneNumbers: [
      {
-        id: "1234"
-        pref: false
-        type: "mobile" // mobile | work | fax
-        value: "+49 123 4567890"
+        id: "1234",
+        pref: false,
+        type: "mobile", // mobile | work | fax
+        value: "+49 123 4567890",
      }
-     length: 1
-    ]
-    emails: Array[
+    ],
+    emails: [
      {
-         id: "1246"
-         pref: false
-         type: "work" // other
-         value: "some.coworker@cameo.io"
+         id: "1246",
+         pref: false,
+         type: "work", // other
+         value: "some.coworker@cameo.io",
      }
-     length: 1
     ]
  }
  */
@@ -40,6 +38,7 @@ angular.module('cmPhonegap').service('cmLocalContacts', [
 
         var self = {
             plugin: null,
+            debug: false,
 
             init: function () {
                 if(typeof $phonegapCameoConfig == 'undefined') {
@@ -57,12 +56,43 @@ angular.module('cmPhonegap').service('cmLocalContacts', [
                 return true;
             },
 
-            canRead: function () {
-                return this.plugin != null;
+            canRead: function() {
+                if(this.debug)
+                    cmLogger.warn('cmPhonegap.cmLocalContacts.debug == true!!!');
+                return this.debug || !this.debug.test && this.plugin != null;
             },
 
             selectOne: function() {
                 var loaded = $q.defer();
+
+                if(this.debug){
+                    loaded.resolve({
+                        displayName: "GiverName FamilyName",
+                        name: {
+                            familyName: "FamilyName",
+                            formatted: "GiverName FamilyName",
+                            givenName: "GiverName",
+                            middleName: "MiddleName",
+                        },
+                        phoneNumbers: [
+                            {
+                                id: "1234",
+                                pref: false,
+                                type: "mobile", // mobile | work | fax
+                                value: "+49 123 4567890",
+                            }
+                        ],
+                        emails: [
+                            {
+                                id: "1246",
+                                pref: false,
+                                type: "work", // other
+                                value: "some.coworker@cameo.io",
+                            }
+                        ]
+                    });// return mock use above
+                    return loaded.promise;
+                }
 
                 if(this.canRead()){
                     this.plugin.pickContact(

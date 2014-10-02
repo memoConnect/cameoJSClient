@@ -7,7 +7,8 @@ module.exports = function(grunt, options){
     grunt.registerTask('app:create-download-page', [
         'clean:app-dl',
         'template:app-index-dl',
-        'copy:app-resources-dl'
+        'copy:app-resources-dl',
+        'copy:phonegap-target'
     ]);
 
     return {

@@ -3,8 +3,8 @@
         <cm-back cm-weight="1" back-to="/talks" plain-back="true"></cm-back>
         <cm-identity cm-weight="4"></cm-identity>
         <cm-security-indicator
+            cm-weight="2"
             ng-if           = "conversation"
-            cm-weight       = "2"
             cm-data         = "conversation"
             cm-leading-icon = "cm-lock"
             ng-click        = "gotoPurl(purlId, 'security')"
@@ -23,7 +23,7 @@
         </div>
         <cm-logo cm-weight="4"></cm-logo>
         <cm-security-indicator
-            cm-weight       = "2"
+            cm-weight="2"
             ng-if           = "conversation"
             cm-data         = "conversation"
             cm-leading-icon = "cm-lock"

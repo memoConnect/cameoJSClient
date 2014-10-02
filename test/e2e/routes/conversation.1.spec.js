@@ -64,13 +64,42 @@ describe('Route conversation:', function () {
         $("[data-qa='btn-select-contact']").click()
     })
 
+    it('should add an external contact on the fly', function(){
+        util.waitForQa('input-on-the-fly-displayname')
+        util.setVal('input-on-the-fly-displayname', 'On-the-fly Contact')
+
+        /*
+        util.waitForQa('input-on-the-fly-mixed')
+        util.setVal('input-on-the-fly-mixed', 'bababa @ 123')
+
+        util.waitAndClick('btn-submit-on-the-fly-contact')
+
+        expect()
+        */
+        util.waitForQa('input-on-the-fly-mixed')
+        util.clearInput('input-on-the-fly-mixed')
+        util.setVal('input-on-the-fly-mixed', 'test@mail.com')
+       
+        util.waitAndClickQa('btn-submit-on-the-fly-contact')
+
+
+        ptor.wait(function(){
+            return $$('cm-recipient-tag .displayName').then(function(elements){
+                return elements[1] && elements[1].getText().then(function(value){
+                    return value == "On-the-fly Contact" 
+                }) 
+            })
+        })
+
+    })
+
     it('go back to conversation on click on "done"', function () {
         $("[data-qa='btn-done']").click()
         util.waitForPageLoad("/conversation/new")
     })
 
     it('added recipient should be displayed', function () {
-        expect($(".recipients-counter").getText()).toBe('(1)')
+        expect($(".recipients-counter").getText()).toBe('(2)')      //one internal contact an one external on-the-fly contact
         expect($(".recipient-name").getText()).toBe(config.contactUser1DisplayName)
     })
 
@@ -95,7 +124,7 @@ describe('Route conversation:', function () {
 
         util.waitForElement("cm-conversation-tag")
 
-        console.log('removed part of test temporarily, wont decrypt in talks')
+        //console.log('removed part of test temporarily, wont decrypt in talks')
         /*
         $$("cm-conversation-tag").then(function (elements) {
             //expect(elements[0].$("[data-qa='conversation-subject']").getText()).toContain(newSubject.substring(0.10))
@@ -105,7 +134,9 @@ describe('Route conversation:', function () {
     })
 
     it('the conversation should contain the message', function () {
-        util.waitAndClick("cm-conversation-tag")
+        $$("cm-conversation-tag").then(function (elements) {
+            elements[0].click()
+        })
         util.waitForPageLoad("/conversation/.*")
         $$('cm-message').then(function (elements) {
             expect(elements.length).toBe(1)
@@ -136,7 +167,7 @@ describe('Route conversation:', function () {
         util.expectCurrentUrl('#/talks')
 
         util.waitForElement("cm-conversation-tag")
-        console.log('removed part of test temporarily, wont decrypt in talks')
+        //console.log('removed part of test temporarily, wont decrypt in talks')
         /*
         $$("cm-conversation-tag").then(function (elements) {
             //expect(elements[0].$("[data-qa='conversation-subject']").getText()).toContain(newSubject.substring(0.10))

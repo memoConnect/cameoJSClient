@@ -1,12 +1,8 @@
 'use strict';
 
 angular.module('cmRouteSettings').directive('cmIdentityKeyEdit', [
-    'cmNotify',
-    'cmKey',
-    'cmUtil',
-    'cmUserModel',
-    '$rootScope',
-    '$routeParams',
+    'cmNotify', 'cmKey', 'cmUtil', 'cmUserModel',
+    '$rootScope', '$routeParams',
     function(cmNotify, cmKey, cmUtil, cmUserModel,
              $rootScope, $routeParams){
         return {

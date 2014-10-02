@@ -60,6 +60,14 @@ module.exports = function (grunt) {
             buildConfig.config.apiUrl = apiUrl;
         }
 
+        // for faster switch between apiUrls
+        if('otherApiUrls' in buildConfig.config
+         && buildConfig.config.apiUrl.indexOf('otherApiUrls') != -1
+         && Object.keys(buildConfig.config.otherApiUrls).length > 0) {
+            var jsonPath = buildConfig.config.apiUrl.split('.');
+            buildConfig.config.apiUrl = buildConfig.config[jsonPath[0]][jsonPath[1]];
+        }
+
         var version = grunt.option('appVersion');
         if (version) {
             buildConfig.config.version = version;

@@ -5,14 +5,13 @@ var path = require('path')
 var ptor = util.getPtorInstance()
 
 // start init tests
-describe('Textarea Resize', function () {
+describe('Avatar Upload: ', function () {
 
     afterEach(function() { util.stopOnError() })
 
     var avatarStyle = '',
         newAvatar = path.resolve(__dirname, '../data/avatar-upload.jpg'),
         newAvatarStyle = ''
-
 
     it('login & got to identity list', function () {
         util.login()
@@ -34,7 +33,7 @@ describe('Textarea Resize', function () {
         //avatar-upload-btn
         $("[data-qa='btn-file-choose']").sendKeys(newAvatar)
 
-        util.waitForLoader()
+        util.waitForLoader(1,'cm-upload-avatar')
 
         $('cm-identity-edit cm-avatar i').getAttribute('style').then(function(src){
             newAvatarStyle = src

@@ -19,6 +19,16 @@ var cmDevice,
             expect(cmDevice).toBeDefined()
         })
 
+        describe('var debug',function(){
+            it('should be defined',function(){
+                expect(cmDevice.debug).toBeDefined()
+            })
+
+            it('should be false on default',function(){
+                expect(cmDevice.debug).toBeFalsy()
+            })
+        })
+
         describe('method existsPlugin',function(){
             it('should be defined',function(){
                 expect(cmDevice.existsPlugin).toBeDefined()

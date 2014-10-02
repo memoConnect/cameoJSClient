@@ -28,8 +28,12 @@ angular.module('cmUi').directive('cmLoader',[
                     opts.length = $attrs.cmLength;
                 if($attrs.cmRadius)
                     opts.radius = $attrs.cmRadius;
-                if($attrs.cmColor)
-                    opts.color = $attrs.cmColor;
+                if($attrs.cmColor) {
+                    if($attrs.cmColor == 'ci-color')
+                        opts.color = '#02BED2';
+                    else
+                        opts.color = $attrs.cmColor;
+                }
                 if($attrs.cmWidth)
                     opts.width = $attrs.cmWidth;
 
@@ -63,6 +67,7 @@ angular.module('cmUi').directive('cmLoader',[
                     if(bool != false){
                         $scope.animate(true)
                         $scope.loading = true
+                        $element.attr('cm-count', parseInt($element.attr('cm-count') || 0)+1)
                     } else {
                         $scope.animate(false)
                         $scope.loading = false

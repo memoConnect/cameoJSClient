@@ -2,6 +2,18 @@ cm-message{
   &.file-view{
     article{
       color:@cm-white;
+
+      .file-download {
+        font-size:@cm-small-font;
+        > * {
+          vertical-align:top;
+        }
+        span.file-informations{
+          display:inline-block;
+          width:10rem;
+        }
+      }
+
       .author span{
         color:@cm-light-grey;
       }
@@ -33,20 +45,12 @@ cm-message{
 cm-message-file{
   display:block;
   position:relative;
-  min-height:@cm-unit;
   margin:0 auto;
   margin-bottom: 0.5em;
   text-align: center;
 
   .file-image, .file-html5{
-    min-height:@cm-unit;
     position:relative;
-    div[cm-spinner]{
-      z-index:1;
-      position:absolute;
-      left:50%;
-      top:50%;
-    }
     img{
       .with-cursor;
       display:block;
@@ -107,7 +111,7 @@ cm-files-preview{
   position:absolute;
   bottom:@cm-footer-height;
   width:@cm-app-width;
-  background-color:rgba(255,255,255,0.9);
+  background:@cm-white;
 
   .file-wrap{
     position: relative;
@@ -128,13 +132,6 @@ cm-files-preview{
     position:relative;
     height:@cm-unit * 2;
     margin:0 auto;
-
-    div[cm-spinner]{
-      z-index:1;
-      position:absolute;
-      left:50%;
-      top:50%;
-    }
     img{
       .with-cursor;
       display:block;
@@ -155,10 +152,6 @@ cm-modal.modal-image-fullscreen{
     height:100%;
     z-index:2;
     position:relative;
-    cm-spinner{
-      position: absolute;
-      top:50%;
-    }
     ng-transclude{
       display:table-cell;
       vertical-align:middle;
@@ -296,10 +289,6 @@ cm-upload-avatar {
     -webkit-box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2) !important;
     -moz-box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2) !important;
     box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2) !important;
-    cm-loader.spinner{
-      height:@cm-unit;
-      top:(@cm-unit/2);
-    }
     i {
       color:@cm-black;
       font-size: @cm-mega-font;

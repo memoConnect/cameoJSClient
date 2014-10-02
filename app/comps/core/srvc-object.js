@@ -163,6 +163,7 @@ angular.module('cmCore')
                 if(event_names_to_reject && isNaN(event_names_to_reject)){
                     obj.one(event_names_to_reject, function(event, data){
                         deferred.reject( {event: event, data: data} )
+                        return true
                     })
                 } else {
                     timeout = timeout || event_names_to_reject
@@ -172,6 +173,7 @@ angular.module('cmCore')
 
                 obj.one(event_names_to_resolve, function(event, data){
                     deferred.resolve( {event: event, data: data} )
+                    return true
                 })
 
                 if(typeof timeout == 'number'){

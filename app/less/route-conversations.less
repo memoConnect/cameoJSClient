@@ -276,7 +276,13 @@ cm-conversation{
     &.right {
       text-align: right;
     }
+    &.file-view{
+      div.message {
+        min-width: @cm-message-min-width !important;
+      }
+    }
     article {
+      display:inline-block !important;
       div.avatar {
         font-size: 1.5em;
         width: 1.5em;
@@ -291,7 +297,7 @@ cm-conversation{
         min-height: @cm-unit/2;
         position: relative;
         padding: 0.5em;
-        min-width: @cm-message-min-width;
+        min-width: @cm-unit+2;
         -webkit-border-radius: @cm-border-radius;
         -moz-border-radius: @cm-border-radius;
         border-radius: @cm-border-radius;
@@ -309,7 +315,6 @@ cm-conversation{
       }
       cm-message-assets {
         display: block;
-        margin-top: 1.0rem;
       }
       .text{
         span{
@@ -358,8 +363,9 @@ cm-conversation{
       }
       div.assets {
         position: absolute;
-        bottom: 0.2rem;
-        right: 1rem;
+        bottom:0rem;
+        right:0.2rem;
+        white-space: nowrap;
         &.green {
           span {
             color: @cm-green;

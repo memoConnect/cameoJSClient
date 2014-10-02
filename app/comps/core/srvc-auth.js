@@ -195,10 +195,35 @@ angular.module('cmCore').service('cmAuth', [
                 })
             },
 
+            /**
+             * @ngdoc method
+             * @methodOf cmAuth
+             *
+             * @name checkMixed
+             * @description
+             * Check if the given string is either a valid phone number or a valid e-mail address
+             *
+             * @param {String} string to validate
+             * @returns {Promise} for async handling
+             */
+
+            checkMixed: function(mixed) {
+                return cmApi.post({
+                    path: '/services/checkMixed',
+                    data: { mixed:mixed }
+                })
+            },
+
             getAccount: function(){
                 return cmApi.get({
+                    path: '/account'
+                })
+            },
+
+            putAccount: function(data){
+                return cmApi.put({
                     path: '/account',
-                    timeout: 7000
+                    data: data
                 })
             },
 

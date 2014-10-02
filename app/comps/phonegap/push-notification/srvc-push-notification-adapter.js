@@ -5,10 +5,10 @@
 angular.module('cmPhonegap')
 .service('cmPushNotificationAdapter', [
     'cmPhonegap', 'cmDevice', 'cmPushNotifications',
-    'cmUtil', 'cmLanguage', 'cmApi',
+    'cmUtil', 'cmLanguage', 'cmApi', 'cmLogger', 'cmObject',
     '$rootScope', '$window', '$phonegapCameoConfig', '$injector',
     function (cmPhonegap, cmDevice, cmPushNotifications,
-              cmUtil, cmLanguage, cmApi,
+              cmUtil, cmLanguage, cmApi, cmLogger, cmObject,
               $rootScope, $window, $phonegapCameoConfig, $injector) {
 
         var self = {
@@ -23,7 +23,6 @@ angular.module('cmPhonegap')
             },
 
             init: function(){
-
                 if (typeof $phonegapCameoConfig == 'undefined'){
                     return false;
                 }
@@ -35,16 +34,17 @@ angular.module('cmPhonegap')
                     }
 
                     self.plugin = $window.plugins.pushNotification;
-                    self.register();
+                    self.registerAtService();
                 })
             },
 
-            register: function(){
-                cmPushNotifications.register(self.plugin);
+            registerAtService: function(){
+                cmLogger.info('cmPushNotificationAdapter.registerAtService')
+                cmPushNotifications.registerAtService(self.plugin);
             },
 
-            unregister: function(){
-                cmPushNotifications.unregister();
+            unregisterAtService: function(){
+                cmPushNotifications.unregisterAtService();
             },
 
             getDeviceData: function(){
@@ -52,6 +52,7 @@ angular.module('cmPhonegap')
             },
 
             checkRegisteredDevice: function(accountPushDevices){
+//                cmLogger.info('cmPushNotificationAdapter.checkRegisteredDevice')
                 // BE MOCK
                 /*
                  accountPushDevices = [
@@ -82,6 +83,7 @@ angular.module('cmPhonegap')
             },
 
             registerDevice: function(){
+//                cmLogger.info('cmPushNotificationAdapter.registerDevice')
                 // BE MOCK
                 /*
                  {
@@ -92,6 +94,7 @@ angular.module('cmPhonegap')
                  */
                 this.getDeviceData()
                 .then(function(deviceData){
+                    cmLogger.info('post pushDevice: '+ deviceData.token)
                     self.currentDeviceData = deviceData;
                     cmApi.post({
                         path: '/pushDevice',
@@ -100,15 +103,21 @@ angular.module('cmPhonegap')
                             language: cmLanguage.getCurrentLanguage().replace('_','-'),
                             platform: cmDevice.getCurrentOS()
                         }
-                    }).then(function(){
-                        self.deviceIsRegistrated = true;
-                    });
+                    }).then(
+                        function(){
+                            self.deviceIsRegistrated = true;
+                            self.trigger('device:registrated');
+                        }
+                    );
                 });
             },
 
             deleteDevice: function(token){
+//                cmLogger.info('cmPushNotificationAdapter.deleteDevice')
                 if(cmDevice.getCurrentOS() != 'unknown'
                 && this.currentDeviceData.token) {
+
+                    cmLogger.info('delete pushDevice: '+ this.currentDeviceData.token)
 
                     var data = {
                         path: '/pushDevice/'+cmDevice.getCurrentOS()+'/'+this.currentDeviceData.token,
@@ -118,12 +127,16 @@ angular.module('cmPhonegap')
                     if(token)
                         data.overrideToken = token;
 
-                    cmApi.delete(data).then(function(){
+                    cmApi.delete(data)
+                    .then(function(){
                         self.deviceIsRegistrated = false;
+                        self.trigger('device:unregistrated');
                     });
                 }
             }
         };
+
+        cmObject.addEventHandlingTo(self);
 
         $rootScope.$on('logout', function(event, data){
             self.deleteDevice(data.token);

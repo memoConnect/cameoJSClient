@@ -51,11 +51,10 @@
                     ng-disabled = "conversation.state.is('decrypted')"
                     cm-adaptive-change = "2000"
                 />
-                <i class="fa cm-checker"    ng-if="conversation.state.is('decrypted')"  data-qa="icon-conversation-decrypted"></i>
+                <i class="fa cm-checker" ng-if="conversation.state.is('decrypted')"  data-qa="icon-conversation-decrypted"></i>
             </div>
         </div>
     </div>
-
     <div ng-if="conversation.options.showKeyInfo" class="settings-alert" cm-user-rights>
         <a href="#/settings/identity/key/list" class="classic-link">
             {{'CONVERSATION.LABEL.KEY_GENERATION'|cmTranslate}}

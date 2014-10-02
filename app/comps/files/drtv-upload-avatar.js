@@ -12,8 +12,8 @@ angular.module('cmFiles').directive('cmUploadAvatar',[
             link: function (scope) {
                 scope.imageUpload = false;
                 // after add a image
-                var watcher = $rootScope.$on('cmFiles:fileSetted', function(){
-                    $rootScope.$broadcast('checkFiles', {
+                var watcher = $rootScope.$on('cmFilesFileSetted', function(){
+                    $rootScope.$broadcast('cmFilesCheckFiles', {
                         passphrase: undefined,
                         success: function(files) {
                             if (files.length > 0) {
@@ -36,11 +36,11 @@ angular.module('cmFiles').directive('cmUploadAvatar',[
                                 });
                             }
                         },
-                        error: function(error, header) {
+                        error: function(maxFileSize, header) {
                             cmNotify.warn('CONVERSATION.WARN.FILESIZE_REACHED', {
                                 ttl: 0,
                                 i18n: {
-                                    maxFileSize: error,
+                                    maxFileSize: maxFileSize,
                                     fileSize: header['X-File-Size'],
                                     fileName: header['X-File-Name']
                                 }

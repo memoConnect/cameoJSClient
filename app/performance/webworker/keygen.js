@@ -47,7 +47,7 @@ var emptyFunction = function(){return this},
         }}
     };
 
-importScripts('../../vendor.js');
+importScripts('../../vendor.0.2.6.js');
 
 var crypt = null,
     time = 0;
@@ -66,12 +66,12 @@ self.addEventListener('message', function(e) {
                 privKey:    crypt.key.getPrivateKey(),
                 pubKey:     crypt.key.getPublicKey()
             });
-        break;
+            break;
         case 'stop-sync':
             if(crypt != null)
                 crypt = null;
             self.postMessage({'msg':'stopped'});
-        break;
+            break;
         case 'start-async':
             time = -((new Date()).getTime());
             crypt = new JSEncrypt({default_key_size: data.keySize});
@@ -86,13 +86,13 @@ self.addEventListener('message', function(e) {
                     pubKey:     crypt.key.getPublicKey()
                 });
             });
-        break;
+            break;
         case 'stop-async':
             if(crypt != null) {
                 crypt.cancelAsync();
                 crypt = null;
             }
             self.postMessage({'msg':'stopped'});
-        break;
+            break;
     }
 }, false);

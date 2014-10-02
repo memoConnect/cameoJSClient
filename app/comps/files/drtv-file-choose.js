@@ -48,7 +48,7 @@ angular.module('cmFiles').directive('cmFileChoose', [
                 }
 
                 // reset files from sended message
-                scope.$on('reset:files',function(){
+                scope.$on('cmFileChooseResetFiles',function(){
                     element.html(tpl.replace('{{accept}}',scope.accept));
                     index++;
                     addCounter();

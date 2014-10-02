@@ -26,8 +26,7 @@ module.exports = function(grunt, options){
                     'dist/app/less',
                     'dist/app/routes',
                     'dist/app/vendor',
-                    'dist/app/widgets',
-                    'dist/app/css/*.css'
+                    'dist/app/widgets'
                 ]
             },
             copy: {

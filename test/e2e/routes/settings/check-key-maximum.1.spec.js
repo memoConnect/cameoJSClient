@@ -56,6 +56,7 @@ describe('Check key maximum: ',function(){
         util.click("btn-import-key")
         util.waitForElement("[data-qa='btn-save-key']")
         util.click("btn-save-key")
+        util.waitForPageLoad("/authentication")
         util.expectCurrentUrl("/authentication")
     })
 
@@ -69,9 +70,7 @@ describe('Check key maximum: ',function(){
     it('remove key and check if message and footer for create/import appear', function(){
         util.waitAndClickQa("btn-remove-modal")
         util.waitForElement("[data-qa='modal-confirm']")
-        ptor.debugger()
         util.waitAndClickQa("btn-confirm")
-        ptor.debugger()
 
         util.waitForElement("[data-qa='message-no-keys']")
         expect($("[data-qa='message-no-keys']").isPresent()).toBe(true)

@@ -2,9 +2,11 @@
 
 angular.module('cmCore')
 .service('cmUtil', [
+
+    'cmLogger',
     '$window',
     '$injector',
-    function($window, $injector){
+    function(cmLogger, $window, $injector){
         /**
          * Checks if Key exists in an Object or Array
          * @param object
@@ -62,9 +64,13 @@ angular.module('cmCore')
          * @returns {boolean}
          */
         this.validateString = function(val){
-            var reg = /^[a-zA-Z0-9\-_]{1,}$/;
+            var reg     = /^[a-zA-Z0-9\-_]{1,}$/,
+                valid   = reg.test(val)
 
-            return reg.test(val);
+            if(!valid)
+                cmLogger.debug('cmUtil: validateString() failed for: ' + val)
+
+            return valid;
         };
 
         /**
@@ -128,18 +134,6 @@ angular.module('cmCore')
             if (bytes == 0 || typeof bytes != 'number') return 'n/a';
             var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
             return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
-        };
-
-        /**
-         * return a int between the range of min and max
-         * @param min
-         * @param max
-         * @returns {int}
-         */
-        this.getRandomInt = function (min, max) {
-            if(min == undefined || typeof min != 'number')
-                return 0;
-            return Math.floor(Math.random() * (max - min + 1)) + min;
         };
 
         /**

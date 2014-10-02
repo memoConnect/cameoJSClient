@@ -58,7 +58,7 @@ this.login = function (username, password, expectedRoute) {
     self.logout()
     self.get('/login')
 
-    $("body").sendKeys(protractor.Key.HOME)
+    this.scrollToTop()
     $("[data-qa='login-btn']").click();
 
     var user = $("input[name=user]");
@@ -99,7 +99,7 @@ this.createTestUser = function (testUserId) {
 
     $("[data-qa='input-displayName']").sendKeys(loginName)
 
-    $("[data-qa='link-terms']").sendKeys(protractor.Key.END)
+    this.scrollToBottom()
     $("[data-qa='icon-checkbox-agb']").click()
 
     $("[data-qa='btn-createUser']").click()
@@ -313,35 +313,25 @@ this.waitForModalClose = function () {
     return this
 }
 
-this.waitForSpinner = function () {
-    // wait until spinner appears
-    ptor.wait(function () {
-        return $$("cm-spinner").then(function (elements) {
-            return elements.length > 0
-        })
-    }, config.routeTimeout, 'waitForSpinner start timeout reached').then(function () {
+this.waitForLoader = function (count, parentSelector) {
+    count = count || 1,
+    parentSelector = parentSelector ? parentSelector+' ' : '' // that used for more then one loader on page
+    // wait for loader appear
+    ptor.wait(function() {
+        return  $(parentSelector+'cm-loader').getAttribute('cm-count')
+                .then(function(value){
+                    return value >= count
+                })
+    }, config.routeTimeout, 'waitForLoader start timeout reached')
+    .then(function () {
+        // wait for loader disappear
         ptor.wait(function () {
-            return $("cm-spinner").isDisplayed().then(function (isDisplayed) {
+            return $(parentSelector+'cm-loader').isDisplayed()
+            .then(function (isDisplayed) {
                 return !isDisplayed
             })
-        }, config.routeTimeout, 'waitForSpinner stop timeout reached')
-    })
+        }, config.routeTimeout, 'waitForLoader stop timeout reached')
 
-    return this
-}
-
-this.waitForLoader = function () {
-    // wait until spinner appears
-    ptor.wait(function () {
-        return $$("cm-loader").then(function (elements) {
-            return elements.length > 0
-        })
-    }, config.routeTimeout, 'waitForLoader start timeout reached').then(function () {
-        ptor.wait(function () {
-            return $("cm-loader").isDisplayed().then(function (isDisplayed) {
-                return !isDisplayed
-            })
-        }, config.routeTimeout, 'waitForSpinner stop timeout reached')
     })
 
     return this
@@ -526,6 +516,11 @@ this.click = function (dataQa) {
     $("[data-qa='" + dataQa + "']").click()
 }
 
+
+this.waitForQa = function(dataQa){
+    self.waitForElement("[data-qa='" + dataQa + "']")
+}
+
 this.waitAndClickQa = function (dataQa) {
     self.waitForElement("[data-qa='" + dataQa + "']")
     $("[data-qa='" + dataQa + "']").click()
@@ -577,9 +572,21 @@ this.readConversation = function (subject, message) {
     self.headerSearchInList(subject)
     self.waitAndClick("cm-conversation-tag")
     self.waitForElement("cm-message")
-    expect($("cm-message").getText()).toContain(message)
+//    ptor.debugger()
+    ptor.wait(function(){
+        return $("cm-message").getText().then(function(text){
+            return text.search(message) != -1
+        })
+    })
 }
 
+this.scrollToTop = function(){
+    $("body").sendKeys(protractor.Key.HOME)
+}
+
+this.scrollToBottom = function(){
+    $("body").sendKeys(protractor.Key.END)
+}
 
 
 

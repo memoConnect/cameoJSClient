@@ -347,7 +347,7 @@ angular.module('cmConversations')
 
             this.decryptFiles = function(){
                 angular.forEach(this.files, function(file){
-                    if(file.state == 'exists') {
+                    if(file.state.is('onlyFileId')) {
                         file
                             .setPassphrase(conversation.getPassphrase())
                             .downloadStart();

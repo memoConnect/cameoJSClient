@@ -1,5 +1,4 @@
 {
-
     "YES":  "Ja",
     "NO":   "Nein",
 
@@ -281,7 +280,8 @@
             },
             "INVALID": {
                 "EMAIL": "@:DRTV.VALIDATE_EMAIL.INFO.INVALID",
-                "PHONENUMBER": "@:DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER"
+                "PHONENUMBER": "@:DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER",
+                "MIXED": "@DRTV.VALIDATE_MIXED.INFO.INVALID_MIXED"
             },
             "SUCCESS": {
                 "SAVE": "Kontakt wurde erfolgreich angelegt.",
@@ -296,15 +296,10 @@
                 "PHONENUMBER": "Bitte wählen Sie eine Telefonnummer aus"
             }
         },
-        "HANDSHAKE_3RD": {
-            "HANDSHAKE_NOW": "Der Kontakt hat den Vertrauens-Prozess angenommen. Wollen Sie den nächsten Schritt nun durchführen?",
-            "TRANSACTION_SECRET": "Ihr Kontakt muss folgenden Code eingeben:",
-            "HANDSHAKE_NEED_TRANSACTID": "Bitte geben Sie hier den Code ein, der Ihrem Gegenüber angezeigt wird:",
-            "HANDSHAKE_OK": "Durchführen"
-        },
         "FOOTER": {
             "SAVE": "Speichern"
-        }
+        },
+        "IMPORT_NOTIFICATION" : "Hallo {{to}}, I have transfered your contact data into may cameo addressbook. Bye {{from}}"
     },
 
     "SYSTEMCHECK": {
@@ -400,7 +395,7 @@
                 "WAIT": {
                     "CANCEL_BUTTON": "Verknüpfung abbrechen",
                     "INSTRUCTIONS": "Drücken Sie auf 'Verknüpfung abbrechen' um den Vorgang zu beenden.",
-                    "NOTE": "Übertragen Sie bitte folgenden Code auf Ihr anderes Gerät:",
+                    "NOTE": "Übertragen Sie bitte obigen Code auf Ihr anderes Gerät.",
                     "LABEL_CODE": "Code"
                 },
                 "SUCCESSFUL": {
@@ -442,7 +437,7 @@
                 "WAIT": {
                     "CANCEL_BUTTON": "Anfrage abbrechen",
                     "INSTRUCTIONS": "Drücken Sie auf 'Anfrage abbrechen' um den Vorgang zu beenden.",
-                    "NOTE": "'{{identity}}' muss folgenden Code auf seinem/ihrem Gerät eingeben, um mit Ihnen eine Vertrauensbasis einzugehen:",
+                    "NOTE": "'{{identity}}' muss obigen Code auf seinem/ihrem Gerät eingeben, um mit Ihnen eine Vertrauensbasis einzugehen.",
                     "LABEL_CODE": "Code"
                 },
                 "SUCCESSFUL": {
@@ -556,19 +551,6 @@
                         "CHECK_PUBKEY": "Überprüfe den öffentlichen Schlüssel!",
                         "CHECK_KEYNAME": "Überprüfe den Schlüsselnamen!"
                     }
-                },
-                "HANDSHAKE": {
-                    "MODAL_HEADER": "Authentifikation",
-                    "HANDSHAKE_DESCRIPTION": "HANDSHAKE_DESCRIPTION",
-                    "HANDSHAKE_NOW": "Wollen Sie dieses Gerät gegen <strong>'{{device}}'</strong> authentifizieren, so dass Sie auf beiden Geräten geschriebene und verschlüsselte Nachrichten dieser Identität lesen können?<br> Sie müssen dazu auf Ihrem Gerät <strong>'{{device}}'</strong> cameoNet mit der selben Identität <strong>'{{identity}}'</strong> öffnen.",
-                    "HANDSHAKE_OK": "@:MODAL.ALERT.OK",
-                    "CHOOSE_OLD_DEVICE": "Bitte wählen Sie das Gerät aus, mit dem Sie die Authentifikation durchführen möchten!",
-                    "CHOOSE": "Bitte wählen",
-                    "TRANSACTION_SECRET": "Geben Sie bitte folgenden Code im Dialog auf Ihrem anderen Gerät ein:",
-                    "HANDSHAKE_START": "Authentifikation starten",
-                    "HANDSHAKE_RECEIVED": "Möchten Sie die Authentifikation durchführen?",
-                    "HANDSHAKE_NEED_TRANSACTID": "Geben Sie bitte den Code, der Ihnen auf dem anderen Gerät angezeigt wird, hier ein:",
-                    "HANDSHAKE_DONE": "Authentifikation war erfolgreich!<br>"
                 }
             },
             "ABOUT_US": {
@@ -583,6 +565,33 @@
             "NOTIFY": {
                 "PUSH_NOTIFICATIONS": "Push Notifications"
             }
+        }
+    },
+
+    "ACCOUNT": {
+        "PLACEHOLDER": {
+            "LOGINNAME": "Loginname",
+            "PHONENUMBER": "Telefonnummer",
+            "EMAIL": "E-Mail",
+            "PASSWORD_CHANGE": "Passwort ändern",
+            "OLD_PASSWORD": "Bisheriges Passwort"
+        },
+        "INFO": {
+            "EMPTY": {
+                "LOGINAME": "Bitte geben Sie einen Loginname ein.",
+                "OLD_PASSWORD": "Bitte geben Sie ihr bisheriges Passwort ein."
+            },
+            "INVALID": {
+                "EMAIL": "@:DRTV.VALIDATE_EMAIL.INFO.INVALID",
+                "PHONENUMBER": "@:DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER",
+                "OLD_PASSWORD": "Das von Ihnen eingegebene Passwort ist ungültig."
+            },
+            "NOTE_ABOUT_THIS_DATA": "Hier können Sie ihre Account-Zugangsdaten bearbeiten. Im Gegensatz zu den Identitätsdaten sind diese hier nicht Sichtbar. Die Telefonnummer oder E-Mail dienen zur Benachrichtigungen und zur Passwortrücksetzung.",
+            "LOGINAME": "Der Loginname kann nicht geändert werden."
+        },
+        "FOOTER": {
+            "BACK": "Fertig",
+            "SAVE": "Speichern"
         }
     },
 
@@ -601,7 +610,7 @@
     "DRTV": {
         "PASSWORD": {
             "PASSWORD": "Passwort",
-            "PASSWORD_CONFIRM": "Passwort wiederholen!",
+            "PASSWORD_CONFIRM": "Passwort wiederholen",
             "INFO": {
                 "MIN_LETTER_COUNT": "Bitte mindestens {{count}} Zeichen verwenden!",
                 "EMPTY": "Bitte ein Passwort eingeben und bestätigen!"
@@ -611,7 +620,7 @@
             "LABEL": "E-Mail",
             "PLACEHOLDER": "E-Mail",
             "INFO": {
-                "INVALID": "Bitte geben Sie eine korrekte E-Mail Adresse ein!",
+                "INVALID": "Bitte geben Sie eine korrekte E-Mail-Adresse ein!",
                 "EMPTY": "Sie haben keine E-Mail Adresse eingegeben."
             }
         },
@@ -621,6 +630,14 @@
             "INFO": {
                 "INVALID_PHONE_NUMBER": "Die Nummer scheint keine gültige Mobilfunknummer zu sein.",
                 "EMPTY": "Sie haben keine Mobilfunknummer eingegeben."
+            }
+        },
+        "VALIDATE_MIXED": {
+            "LABEL": "Mobilfunknummer oder e-mail-Adresse",
+            "PLACEHOLDER": "Mobilfunknummer oder e-mail-Adresse",
+            "INFO": {
+                "INVALID_MIXED": "Die Eigabe scheint weder eine gültige Mobilfunknummer noch eine gültige E-Mail-Adresse zu sein.",
+                "EMPTY": "Sie nichts eingegeben."
             }
         },
         "VALIDATE_CAMEOID": {
@@ -661,22 +678,6 @@
             "CONTENT": "Die Talks auf diesem Gerät werden für den neuen cameoKey verschlüsselt.",
             "START": "Start"
         },
-        "KEY_REQUEST": {
-            "HEADER": "Authentifizierung",
-            "CONTENT": "Sie haben einen neuen cameoKey auf diesem Gerät, der noch nicht authentifiziert wurde. D.h. Sie können ältere Nachrichten dieser Identität nicht entschlüsseln. Dies geschieht zu Ihrer Sicherheit.<br>Möchten Sie die Authentifikation jetzt durchführen?<br> Sie müssen dazu auf einem anderen Geräte cameoNet mit der selben Identität <strong>'{{identity}}'</strong> öffnen."
-        },
-        "KEY_RESPONSE": {
-            "HEADER": "Authentifizierungsanfrage",
-            "CONTENT": "Haben Sie soeben auf einem anderen Gerät einen neuen cameoKey erzeugt und möchten dort den Zugriff auf Ihre verschlüsselten Nachrichten erlauben?"
-        },
-        "KEY_REQUEST_3RD": {
-            "HEADER": "Vertrauens-Prozess",
-            "CONTENT": "Wollen Sie den Vertrauens-Prozess für diesen Kontakt starten?<br>Mit dem Vertrauens-Prozess stellen Sie sicher, dass eine Identität einer Person gehört, die Sie persönlich kennen.<br><br>ACHTUNG!! Der Kontakt muss im cameoNet mit der Identität angemeldet sein, bevor Sie den Prozess starten!"
-        },
-        "KEY_RESPONSE_3RD": {
-            "HEADER": "Vertrauens-Prozess",
-            "CONTENT": "Ein Kontakt hat soeben den Vertrauens-Prozess mit Ihnen gestartet. Wollen Sie ihn mit diesem Gerät durchführen?<br><br>Mit dem Vertrauens-Prozess stellen Sie sicher, dass eine Identität einer Person gehört, die Sie persönlich kennen."
-        },
         "FOOTER": {
             "TALKS": "Talks",
             "CONTACTS": "Kontakte",
@@ -698,16 +699,11 @@
     },
 
     "MENU": {
-        "HEADER": "Menü",
-        "NOTIFICATIONS": "@:NOTIFICATIONS.HEADER",
-        "CONTACTS": "Kontakte",
+        "NEW_CONTACT": "Neuer Kontakt",
+        "NEW_TALK": "Neuer Talk",
         "REQUESTS": "Kontaktanfragen",
-        "TALKS": "Talks",
-        "KEYMANAGEMENT": "@:IDENTITY.LABEL.KEYMANAGEMENT",
+        "OWN_KEYS": "Eigene Schlüssel",
         "SETTINGS": "@:SETTINGS.LABEL",
-        "MESSAGES": "Nachrichten",
-        "HINTS": "Sonstige Hinweise",
-        "ACTIVITY": "Aktivität",
         "LOGOUT": "Abmelden"
     },
 

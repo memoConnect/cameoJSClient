@@ -1,4 +1,3 @@
-var config = require("../config-e2e-tests.js")
 var util = require("../../lib/e2e/cmTestUtil.js")
 
 
@@ -400,7 +399,6 @@ describe('Conversation encryption -', function () {
 
                 util.get("/talks")                
                 util.headerSearchInList("asym_" + date)
-                ptor.debugger()
                 $("cm-conversation-tag").click()
 
                 util.waitForElement("cm-message")

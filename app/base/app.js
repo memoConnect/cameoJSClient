@@ -208,6 +208,10 @@ angular.module('cameoClient', [
     // disabled the 3000 seconds delay on click when touch ;)
     FastClick.attach(document.body);
 })
+.run(function(){
+    // start entropy collection for random number generator
+    sjcl.random.startCollectors();
+})
 /**
  * @TODO cmContactsModel anders initialisieren
  */
@@ -217,6 +221,7 @@ angular.module('cameoClient', [
     '$window',
     '$document',
     '$route',
+    '$timeout',
     'cmUserModel',
     'cmContactsModel',
     'cmRootService',
@@ -230,7 +235,10 @@ angular.module('cameoClient', [
     'cmAuthenticationRequest',
     'cmSystemCheck',
     'cmError',
-    function ($rootScope, $location, $window, $document, $route, cmUserModel, cmContactsModel, cmRootService, cmSettings, cmLanguage, cmLogger, cfpLoadingBar, cmEnv, cmVersion, cmApi, cmAuthenticationRequest, cmSystemCheck, cmError) {
+    function ($rootScope, $location, $window, $document, $route, $timeout,
+              cmUserModel, cmContactsModel, cmRootService, cmSettings,
+              cmLanguage, cmLogger, cfpLoadingBar, cmEnv, cmVersion,
+              cmApi, cmAuthenticationRequest, cmSystemCheck, cmError) {
 
         //prep $rootScope with useful tools
         $rootScope.console  =   window.console;
@@ -290,7 +298,7 @@ angular.module('cameoClient', [
                 $rootScope.urlHistory.push($location.$$path);
             }
         });
-        
+
         // Make it easy for e2e-tests to monitor route changes:
         window._route = {};
 
@@ -328,8 +336,14 @@ angular.module('cameoClient', [
         // Actually set view width to 32 rem
         initScreenWidth(32);
 
+        $timeout(function(){
+            initScreenWidth(32);
+        },1000);
+
         // For dev purposes only:
-//            window.onresize = function() { initScreenWidth(32) }
+//            window.onresize = function() {
+//                initScreenWidth(32)
+//            }
 
         /**
          * Loading Bar on RouteChange
