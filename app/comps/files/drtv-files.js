@@ -16,6 +16,10 @@ angular.module('cmFiles').directive('cmFiles',[
                  * @returns {boolean}
                  */
                 this.setFile = function(blob){
+
+//                    TODO: Android name=content fix file plugin!!!
+//                    console.log(blob)
+
                     var bool = true;
 
                     angular.forEach($scope.files, function(value){

@@ -19,7 +19,6 @@ angular.module('cmPhonegap').service('cmPhonegap', [
                 // if config doesn't get device ready watch again
                 if(!$phonegapCameoConfig.deviceReady){
                     $document[0].addEventListener('deviceready', function () {
-                        cmLogger.info('cmPhonegap.deviceready!')
                         $phonegapCameoConfig.deviceReady = true;
                         isReady.resolve();
                     });
