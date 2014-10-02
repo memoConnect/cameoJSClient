@@ -315,7 +315,7 @@ this.waitForModalClose = function () {
 
 this.waitForLoader = function (count, parentSelector) {
     count = count || 1,
-    parentSelector = parentSelector+' ' || '' // that used for more then one loader on page
+    parentSelector = parentSelector ? parentSelector+' ' : '' // that used for more then one loader on page
     // wait for loader appear
     ptor.wait(function() {
         return  $(parentSelector+'cm-loader').getAttribute('cm-count')
