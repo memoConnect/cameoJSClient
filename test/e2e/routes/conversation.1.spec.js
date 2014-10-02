@@ -66,7 +66,7 @@ describe('Route conversation:', function () {
 
     it('should add an external contact on the fly', function(){
         util.waitForQa('input-on-the-fly-displayname')
-        util.setVal('input-on-the-fly-displayname', 'My new external on the fly Contact')
+        util.setVal('input-on-the-fly-displayname', 'On-the-fly Contact')
 
         /*
         util.waitForQa('input-on-the-fly-mixed')
@@ -76,15 +76,19 @@ describe('Route conversation:', function () {
 
         expect()
         */
-       
         util.waitForQa('btn-submit-on-the-fly-contact')
-        util.setVal('btn-submit-on-the-fly-contact', 'test@mail.com')
+        util.clearInput('input-on-the-fly-mixed')
+        util.setVal('input-on-the-fly-mixed', 'test@mail.com')
+       
 
-        util.waitAndClick('btn-submit-on-the-fly-contact')
+        util.waitAndClickQa('btn-submit-on-the-fly-contact')
 
+        //ptor.debugger()
         ptor.wait(function(){
-            return $$('cm-recipient-tag .displayName').then(function(element){
-                return element.getText() == "My new external on the fly Contact" 
+            return $$('cm-recipient-tag .displayName').then(function(elements){
+                return elements[1].getText().then(function(value){
+                    return value == "On-the-fly Contact" 
+                }) 
             })
         })
 

@@ -518,7 +518,7 @@ this.click = function (dataQa) {
 
 this.waitForQa = function(dataQa){
     self.waitForElement("[data-qa='" + dataQa + "']")
-})
+}
 
 this.waitAndClickQa = function (dataQa) {
     self.waitForElement("[data-qa='" + dataQa + "']")

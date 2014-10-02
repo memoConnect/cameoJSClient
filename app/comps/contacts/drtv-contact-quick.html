@@ -30,7 +30,9 @@
                 type        = "text" 
                 name        = "mixed" 
                 ng-model    = "mixed"
+                cm-adaptive-change
                 cm-validate-mixed
+                required
             />
         </div>
         <cm-info-bubble class="cm-alert" ng-show="cmForm.displayName.$dirty && cmForm.displayName.$invalid && cmForm.displayName.length > 0">

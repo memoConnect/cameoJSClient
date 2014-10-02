@@ -6,8 +6,9 @@ angular.module('cmContacts')
     'cmContactsModel',
     'cmIdentityFactory',
     'cmTranslate',
+    '$q',
 
-    function( cmContactsModel, cmIdentityFactory, cmTranslate){
+    function( cmContactsModel, cmIdentityFactory, cmTranslate, $q){
 
         return {
             restrict:       'E',
@@ -25,32 +26,23 @@ angular.module('cmContacts')
                     $scope.mixed = value
                 })
 
-                $scope.validateDisplayName = function(){
-                    if($scope.formData.displayName == undefined
-                    || $scope.formData.displayName.length == 0
-                    ){
-                        $scope.cmForm.displayName.$pristine = true;
-                        $scope.cmForm.displayName.$dirty = false;
-                    }
-                };
-
                 $scope.validateForm = function(){
                     var deferred = $q.defer(),
                         data = {};
 
 
                     function checkDisplayName() {
-                        if ($scope.formData.displayName && $scope.formData.displayName != '') {
-                            data.displayName = $scope.formData.displayName;
+                        if ($scope.displayName && $scope.displayName != '') {
+                            data.displayName = $scope.displayName;
                         }
                     }
 
                     function checkMixed() {
-                        if ($scope.formData.mixed.length > 0
-                            && $scope.formData.mixed[0].value != undefined
-                            && $scope.formData.mixed[0].value != ''
+                        if ($scope.mixed.length > 0
+                            && $scope.mixed[0].value != undefined
+                            && $scope.mixed[0].value != ''
                             ) {
-                            data.mixed = $scope.formData.mixed[0].value;
+                            data.mixed = $scope.mixed[0].value;
                         }
                     }
 
@@ -69,20 +61,22 @@ angular.module('cmContacts')
 
                 $scope.save = function(){
 
+                    $scope.validateForm()
+                    .then(function(){
+                        return  cmContactsModel
+                                .addContact({
+                                    identity: {
+                                        displayName:    $scope.displayName,
+                                        mixed:          $scope.mixed
+                                    } 
+                                })
+                                .then(function(contact){
+                                    if($scope.selected)
+                                        $scope.selected[contact.identity.id] = true;
 
-                    cmContactsModel
-                    .addContact({
-                        identity: {
-                            displayName:    $scope.displayName,
-                            mixed:          $scope.mixed
-                        } 
-                    })
-                    .then(function(contact){
-                        if($scope.selected)
-                            $scope.selected[contact.identity.id] = true;
-
-                        if($scope.conversation)
-                            $scope.conversation.addRecipient(contact.identity);        
+                                    if($scope.conversation)
+                                        $scope.conversation.addRecipient(contact.identity);        
+                                })
                     })
                 }
             }

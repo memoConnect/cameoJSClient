@@ -8,9 +8,16 @@ angular.module('cmContacts').directive('cmContactType',[
         return {
             restrict: 'AE',
             link: function(scope, element, attrs){
-                function refresh(identity){
+                function refresh(data){
+                    
 
-                    var contact = cmContactsModel.findByIdentityId(identity.id)
+                    // data maybe a contact or an identity
+                    var identity = data.identity || data
+
+
+                    var contact = data.contactType
+                                ? data
+                                : cmContactsModel.findByIdentity(data)
                         type    = contact ? contact.contactType : 'unknown',
                         icon    = ''
 

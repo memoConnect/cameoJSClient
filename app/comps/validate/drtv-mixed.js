@@ -19,18 +19,18 @@ angular.module('cmValidate').directive('cmValidateMixed',[
                             then(
                             //success
                             function (mixed){
-                                console.log(data)
                                 correctValue = mixed[Object.keys(mixed)[0]];
-                                ngModel.$setValidity(attrs.name, true);
+                                ngModel.$setValidity('mixed', true);
+                                ngModel.$setViewValue(correctValue)
                                 ngModel.$render();
                             },
                             //error
                             function (){
-                                ngModel.$setValidity(attrs.name, false);
+                                ngModel.$setValidity('mixed', false);
                             }
                         );
                     } else {
-                        ngModel.$setValidity(attrs.name, true);
+                        ngModel.$setValidity('mixed', true);
                         ngModel.$setPristine();
                     }
                 });
