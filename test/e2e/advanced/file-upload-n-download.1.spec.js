@@ -9,7 +9,13 @@ var ptor = util.getPtorInstance(),
     largeImageJPG = path.resolve(__dirname, '../data/file-upload-image-1.4MB.jpg'),
     smallFileMP3 = path.resolve(__dirname, '../data/file-upload-audio-23KB.mp3'),
     smallFilePDF = path.resolve(__dirname, '../data/file-upload-file-12KB.pdf'),
-    testFilesNum = 4;
+    files = [
+        {html5: smallFileMP3},
+        {image: smallImageJPG},
+        //{image: largeImageJPG},
+        {file: smallFilePDF}
+    ],
+    testFilesNum = files.length
 
 // expect functions
 function testFile(file, extension, index) {
@@ -46,7 +52,7 @@ function testHTML5(file, extension, index) {
     chooseFileAndUpload(file, selector, index);
 
     it(getFilename(file) + ' in message displayed', function () {
-        util.waitForProgressbar(10000)
+        util.waitForProgressbar(20000)
 
         var elements = $$('cm-message cm-message-file')
 
@@ -108,14 +114,6 @@ describe('FileUpload unsafe upload: ', function () {
         util.waitAndCloseNotify('checkbox-dont-ask-me-again')
     })
 
-    // test files
-    var files = [
-        {html5: smallFileMP3},
-        {image: smallImageJPG},
-        {image: largeImageJPG},
-        {file: smallFilePDF}
-    ]
-
     // testFile or testImage called for every entry
     for (index in files) {
         // prepare file
@@ -148,9 +146,13 @@ describe('FileDownload: ',function(){
         util.get('/talks')
         util.waitForPageLoad('/talks')
 
+        util.waitForLoader()
+
+        util.waitForElements("[data-qa='conversation-list-element']")
         util.headerSearchInList(subjectUnsafe)
 
         $$("[data-qa='conversation-list-element']").then(function(elements) {
+            expect(elements.length).not.toEqual(0)
             elements[0].click()
         })
     })
@@ -163,9 +165,10 @@ describe('FileDownload: ',function(){
     })
 
     it('test download of first file should be an mp3', function(){
+        util.waitForElements('cm-message cm-message-file .file-download',testFilesNum)
         $$('cm-message cm-message-file .file-download').then(function(elements){
             elements[0].click()
-            util.waitForProgressbar()
+            util.waitForProgressbar(20000)
 
             $$('cm-message cm-message-file .file-html5 audio').then(function(elements){
                 expect(elements.length).toEqual(1)
