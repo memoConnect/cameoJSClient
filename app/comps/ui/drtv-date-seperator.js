@@ -38,15 +38,35 @@
  */
 
 angular.module('cmUi').directive('cmDateSeperator',[
-    function (){
+    'cmUtil',
+    function (cmUtil){
         return{
             restrict: 'E',
             transclude: true,
+            scope: {
+                timestampCurrent: '=cmTimestamp',
+                timestampPrev: '=cmTimestampPrev'
+            },
             template: '<div class="date-seperator" cm-rubber-space>'+
                         '<div class="line" cm-weight="1"></div>'+
                         '<div class="date" cm-weight="3" ng-transclude></div>'+
                         '<div class="line" cm-weight="1"></div>'+
-                      '</div>'
+                      '</div>',
+            controller: function($scope, $element){
+
+                /**
+                 * compare date for date-seperator
+                 * @param currentDate
+                 * @param prevDate
+                 * @returns {boolean}
+                 */
+                $scope.compareDate = function() {
+                    return cmUtil.compareDate($scope.timestampCurrent, $scope.timestampPrev);
+                };
+
+                if($scope.timestampPrev && !$scope.compareDate())
+                    $element.addClass('ng-hide');
+            }
         }
     }
 ]);

@@ -60,7 +60,6 @@ angular.module('cmConversations')
             
             this.recipients         = new cmFactory(cmIdentityModel);      //list of cmIdentityModel objects
             this.messages           = new cmFactory(cmMessageModel);        //list of MessageModel objects
-            //--> meta
 
             this.timeOfCreation     = 0;          //timestamp of the conversation's creation
             //--> meta
@@ -117,12 +116,12 @@ angular.module('cmConversations')
 
                 if(typeof data == 'string' && data.length > 0){
                     self.id = data;
-                    self.load();
+                    self.update();
                 } else if(typeof data == 'object' && ('id' in data)){
                     self.id = data.id;
 
                     if(cmUtil.objLen(data) < 2){
-                        self.load();
+                        self.update();
                     } else {
                         self.importData(data);
                     }
@@ -407,28 +406,33 @@ angular.module('cmConversations')
             };
 
             this.update = function(conversation_data){
-                var offset = 0;
-                var clearAllMessages = true;
+                var offset = 0,
+                    limit = 10,
+                    clearAllMessages = true;
 
                 if(this.id){
                     if(typeof conversation_data !== 'undefined'){
                         if(this.messages.length < conversation_data.numberOfMessages) {
-                            if (this.messages.length > 1) {
-                                offset = this.messages.length;
-                                clearAllMessages = false;
-                            }
-                            var limit = conversation_data.numberOfMessages - offset;
+//                            if (this.messages.length > 1) {
+//                                offset = this.messages.length;
+//                                clearAllMessages = false;
+//                            }
+//                            var limit = conversation_data.numberOfMessages - offset;
+                            var offset = data.numberOfMessages - this.messages.length;
+
                             this._updateConversation(limit, offset, clearAllMessages);
                         }
                     } else {
                         cmConversationsAdapter.getConversationSummary(this.id).then(
                             function(data){
+                                self.numberOfMessages = data.numberOfMessages;
                                 if(self.messages.length < data.numberOfMessages){
-                                    if(self.messages.length > 1){
-                                        offset = self.messages.length;
-                                        clearAllMessages = false;
-                                    }
-                                    var limit = data.numberOfMessages - offset;
+//                                    if(self.messages.length > 1){
+//                                        offset = self.messages.length;
+//                                        clearAllMessages = false;
+//                                    }
+//                                    var limit = data.numberOfMessages - offset;
+                                    var offset = data.numberOfMessages - limit;
 
                                     self._updateConversation(limit, offset, clearAllMessages);
                                 }

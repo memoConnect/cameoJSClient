@@ -148,6 +148,7 @@
         "NO_SUBJECT": "no subject",
         "HEADING": "Talk",
         "LABEL": {
+            "LOAD_PREVIOUS":"load previous messages",
             "SEND": "Send",
             "REQUEST_CAPTCHA": "Request captcha",
             "SEND_CAPTCHA": "Send captcha",

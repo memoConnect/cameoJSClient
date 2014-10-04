@@ -13,11 +13,11 @@ angular.module('cmConversations')
 .directive('cmConversation', [
 
     'cmConversationFactory', 'cmUserModel', 'cmCrypt', 'cmLogger', 'cmNotify',
-    'cmModal', 'cmEnv', 'cmUtil', 'cmSettings', 'cmKeyStorageService', 'cmTransferScopeData',
+    'cmModal', 'cmEnv', 'cmSettings', 'cmKeyStorageService', 'cmTransferScopeData',
     '$location', '$rootScope', '$document', '$routeParams',
 
     function (cmConversationFactory, cmUserModel, cmCrypt, cmLogger, cmNotify,
-              cmModal, cmEnv, cmUtil, cmSettings, cmKeyStorageService, cmTransferScopeData,
+              cmModal, cmEnv, cmSettings, cmKeyStorageService, cmTransferScopeData,
               $location, $rootScope, $document, $routeParams) {
         return {
             restrict: 'AE',
@@ -72,6 +72,10 @@ angular.module('cmConversations')
                             storageService.set($scope.conversation.id, true)
                         }
                     }
+                };
+
+                $scope.loadPreviousMessages = function(){
+                    $scope.conversation.load(true);
                 };
 
                 /**
@@ -132,16 +136,6 @@ angular.module('cmConversations')
 
                 $rootScope.$$listeners.sendOnReturn = [];
                 $rootScope.$on('sendOnReturn',$scope.send);
-
-                /**
-                 * compare date for date-seperator
-                 * @param currentDate
-                 * @param prevDate
-                 * @returns {boolean}
-                 */
-                $scope.compareDate = function(current, prev) {
-                    return cmUtil.compareDate(current, prev);
-                };
 
                 $scope.showAsymmetricKeyError = function(){
 //                    cmLogger.debug('cmConversationDRTV.showAsymmetricKeyError')
@@ -276,7 +270,7 @@ angular.module('cmConversations')
                     });
 
                     // reload detail of conversation
-                    $scope.conversation.load();
+                    $scope.conversation.update();
                     self.addPendingRecipients();
                     $scope.showAsymmetricKeyError();
 
