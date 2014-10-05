@@ -453,6 +453,8 @@ angular.module('cmConversations')
                 cmConversationsAdapter.getConversation(this.id, limit, offset).then(
                     function(data){
 
+                        self.state.set('loadedMessages');
+
                         /**
                          * Message Handling
                          */
