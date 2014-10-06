@@ -1,4 +1,4 @@
-<form ng-submit = "save()" name = "cmForm">
+<form ng-submit="save()" name="cmForm">
     <article class="content">
         <label>{{'CONTACT.PLACEHOLDER.DISPLAYNAME'|cmTranslate}}</label>
         <div class="cm-input-ctn">
@@ -35,10 +35,10 @@
             />
         </div>
         <cm-info-bubble class="cm-alert" ng-show="mixed && cmForm.mixed.$invalid">
-            <div>
-                <i class="fa cm-new-contact"></i> {{'CONTACT.INFO.INVALID.MIXED'|cmTranslate}}
-            </div>
+            <i class="fa cm-new-contact"></i>{{'CONTACT.INFO.INVALID.MIXED'|cmTranslate}}
         </cm-info-bubble>
     </article>
-    <button type = "submit" data-qa = "btn-submit-on-the-fly-contact"><i class = "fa cm-new-contact"></i></button>
+    <button type="submit" data-qa="btn-submit-on-the-fly-contact">
+        <i class="fa cm-new-contact"></i>
+    </button>
 </form>
