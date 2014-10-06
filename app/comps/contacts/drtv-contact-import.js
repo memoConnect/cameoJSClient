@@ -191,9 +191,9 @@ angular.module('cmContacts')
 
                                     return  cmModal.confirm({
                                                 title:      '',
-                                                text:       'CONTACT.NOTIFICATION.CONFIRM',
+                                                text:       'CONTACT.IMPORT.NOTIFICATION.CONFIRMATION',
                                                 html:       '<textarea cm-resize-textarea cm-max-rows = "10" ng-model = "data.message"></textarea>',
-                                                data:       {message: cmTranslate("CONTACT.IMPORT_NOTIFICATION", {from: cmUserModel.data.identity.getDisplayName(), to: identity.getDisplayName() })}
+                                                data:       {message: cmTranslate("CONTACT.IMPORT.NOTIFICATION.MESSAGE", {from: cmUserModel.data.identity.getDisplayName(), to: identity.getDisplayName() })}
                                             })
                                 },
                                 function () {

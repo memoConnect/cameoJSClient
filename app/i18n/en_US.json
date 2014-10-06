@@ -300,7 +300,12 @@
         "FOOTER": {
             "SAVE": "Save"
         },
-        "IMPORT_NOTIFICATION" : "Hallo {{to}}, ich habe Deine Adressdaten in mein Cameo-Adressbuch übernommen. Ciao {{from}}"
+        "IMPORT" :{
+            "NOTIFICATION": {
+                "CONFIRMATION" :"You just uploaded 3rd party contact details to our servers. Please tell them about it.",
+                "MESSAGE" : "Hallo {{to}}, I have transfered your contact data into may cameo addressbook. Bye {{from}}"
+            }
+        }
     },
 
     "SYSTEMCHECK": {
