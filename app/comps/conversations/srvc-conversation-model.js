@@ -117,12 +117,10 @@ angular.module('cmConversations')
                 // via id
                 if(typeof data == 'string' && data.length > 0){
                     self.id = data;
-                    console.log('init update')
                     self.update();
                 // via data.id
                 } else if(typeof data == 'object' && ('id' in data)){
                     self.id = data.id;
-                    console.log('init update data.id')
                     if(cmUtil.objLen(data) < 2){
                         self.update();
                     } else {
@@ -348,7 +346,6 @@ angular.module('cmConversations')
              * @returns {ConversationModel} this Returns ConversationModel
              */
             this.load = function(){
-                console.log('load!!! conversation')
                 if(typeof this.id == 'string'
                     && this.id.length > 0
                     && this.state.is('loading') === false)
@@ -410,8 +407,6 @@ angular.module('cmConversations')
             };
 
             this.update = function(conversation_data){
-                console.log('update!!! conversation',conversation_data)
-
                 var offset = 0,
                     limit = 10,
                     clearAllMessages = false;
@@ -735,7 +730,7 @@ angular.module('cmConversations')
 
                     this.passCaptcha = cmFileFactory.create(conversation_data.passCaptcha);
                     this.passCaptcha
-                        .downloadStart();
+                        .downloadStart(true);
                 }
 
                 return this;
