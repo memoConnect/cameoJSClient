@@ -263,6 +263,7 @@
     },
 
     "CONTACT": {
+        "HEADLINE": "Kontakt",
         "WIDGET": "Talks",
         "PLACEHOLDER": {
             "CAMEOID": "CameoID",
