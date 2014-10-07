@@ -180,7 +180,7 @@
         },
         "PLACEHOLDER": {
             "SUBJECT": "Betreff",
-            "NO_SUBJECT": "Betreff eingeben",
+            "NO_SUBJECT": "(optional)",
             "RECIPIENTS": "Empfänger",
             "ADD_RECIPIENTS": "hinzufügen",
             "INFO": "Info",

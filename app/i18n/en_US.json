@@ -180,7 +180,7 @@
         },
         "PLACEHOLDER": {
             "SUBJECT": "Subject",
-            "NO_SUBJECT": "Add subject",
+            "NO_SUBJECT": "(optional)",
             "RECIPIENTS": "Recipients",
             "ADD_RECIPIENTS": "add",
             "INFO": "Info",
