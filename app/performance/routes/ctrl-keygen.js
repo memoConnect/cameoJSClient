@@ -34,7 +34,7 @@ angular.module('cameoClientPerformance')
 
             if($scope.canWebworker() && $scope.webworkerOn){
                 $scope.state += ' [ generation via webworker ]';
-                worker = new Worker('performance/webworker/keygen.js');
+                worker = new Worker('webworker/keygen.js');
 
                 worker.addEventListener('message', function(e){
                     var result = e.data;

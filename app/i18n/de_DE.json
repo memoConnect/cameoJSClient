@@ -148,6 +148,7 @@
         "NO_SUBJECT": "Kein Betreff",
         "HEADING": "Talk",
         "LABEL": {
+            "LOAD_PREVIOUS":"vorherige Nachrichten laden",
             "SEND": "Abschicken",
             "REQUEST_CAPTCHA": "PassCaptcha anfordern",
             "SEND_CAPTCHA": "PassCaptcha senden",
