@@ -32,8 +32,7 @@
                 <input
                         tabindex="2" data-qa="input-phonenumber"
                         type="text" name="phoneNumber" ng-model="item.value"
-                        ng-disabled="disabled" cm-validate-phone cm-adaptive-change
-                        placeholder="{{'CONTACT.PLACEHOLDER.PHONENUMBER'|cmTranslate}}" />
+                        ng-disabled="disabled" cm-validate-phone cm-adaptive-change />
             </div>
             <!--<div cm-type-chooser cm-choose-value-to="item" cm-disabled="disabled" ng-class="{'cm-input-disabled':disabled}"></div>-->
             <cm-info-bubble class="cm-alert" ng-show="formPhone.phoneNumber.$dirty && formPhone.phoneNumber.$invalid">
