@@ -23,6 +23,44 @@
     padding: 0 2rem;
   }
 
+  article.item {
+    .content;
+    .with-cursor;
+    position: relative;
+    min-height: 4.00rem;
+    .body{
+      color: #666666;
+      display: inline-block;
+      position: relative;
+      width: 100%;
+      i {
+        margin-right: 0.03rem;
+        width: @cm-unit;
+        height: @cm-unit;
+        font-size: 3rem;
+        vertical-align: middle;
+      }
+    }
+    .icon-list{
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: @cm-unit;
+      line-height: @cm-unit;
+      text-align: right;
+      i {
+        margin:0;
+        width: @cm-unit;
+        height: @cm-unit;
+        font-size: 3rem;
+        color: @cm-grey;
+        text-align:center;
+        line-height: inherit;
+        vertical-align: top;
+      }
+    }
+  }
+
   .section{
     padding:0!important;
   }
