@@ -6,7 +6,12 @@ exports.config = {
     allScriptsTimeout: 30000,
     chromeOnly: true,
 
-    <%= capabilities %>,
+    capabilities:{
+        'browserName':'chrome',
+        'chromeOptions': {
+            'prefs': { 'intl.accept_languages': 'en' }
+        }
+    },
 
     onPrepare: function () {
         require('jasmine-reporters');

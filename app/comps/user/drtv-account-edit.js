@@ -40,7 +40,6 @@ angular.module('cmUser')
                 });
 
                 function reset(){
-                    // TODO: exportData account
                     $scope.account = angular.extend({},cmUserModel.data.account);
                     $scope.account.phoneNumbers = [
                         $scope.account.phoneNumber || {value:''}
@@ -63,7 +62,7 @@ angular.module('cmUser')
                     function checkEmail() {
                         if ($scope.account.emails.length > 0
                             && $scope.account.emails[0].value != undefined
-                            && $scope.account.emails[0].value != ''
+                            //&& $scope.account.emails[0].value != ''
                             && $scope.account.emails[0].value != cmUserModel.data.account.email) {
                             objectChange.email = $scope.account.emails[0].value;
                         }
@@ -72,7 +71,7 @@ angular.module('cmUser')
                     function checkPhoneNumber() {
                         if ($scope.account.phoneNumbers.length > 0
                             && $scope.account.phoneNumbers[0].value != undefined
-                            && $scope.account.phoneNumbers[0].value != ''
+                            //&& $scope.account.phoneNumbers[0].value != ''
                             && $scope.account.phoneNumbers[0].value != cmUserModel.data.account.phoneNumber) {
                             objectChange.phoneNumber = $scope.account.phoneNumbers[0].value;
                         }
@@ -124,20 +123,23 @@ angular.module('cmUser')
 
                     $scope.validateForm().then(
                         function(objectChange){
+
+                            console.log(objectChange)
+
                             cmUserModel.updateAccount(objectChange)
                             .then(
                                 function(){
                                     $scope.spinner('stop');
                                     $scope.isPristine = true;
-                                    $scope.passwordChange('close');
+                                    $scope.togglePasswordChange('close');
                                 },
                                 function(result){
 
                                     switch(result.data.error){
-                                        case "old password required":
+                                        case 'old password required':
                                             $scope.cmForm.oldPassword.$setValidity('empty', false);
                                         break;
-                                        case "invalid old password":
+                                        case 'invalid old password':
                                             $scope.cmForm.oldPassword.$setValidity('invalid', false);
                                         break;
                                     }

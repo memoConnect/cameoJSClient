@@ -180,7 +180,7 @@
         },
         "PLACEHOLDER": {
             "SUBJECT": "Subject",
-            "NO_SUBJECT": "Add subject",
+            "NO_SUBJECT": "(optional)",
             "RECIPIENTS": "Recipients",
             "ADD_RECIPIENTS": "add",
             "INFO": "Info",
@@ -281,7 +281,7 @@
             "INVALID": {
                 "EMAIL": "@:DRTV.VALIDATE_EMAIL.INFO.INVALID",
                 "PHONENUMBER": "@:DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER",
-                "MIXED": "@:DRTV.VALIDATE_MIXED.INFO.INVALID_MIXED"
+                "MIXED": "Your input isn't valid."
             },
             "SUCCESS": {
                 "SAVE": "Contact created",
@@ -299,7 +299,12 @@
         "FOOTER": {
             "SAVE": "Save"
         },
-        "IMPORT_NOTIFICATION" : "Hallo {{to}}, ich habe Deine Adressdaten in mein Cameo-Adressbuch übernommen. Ciao {{from}}"
+        "IMPORT" :{
+            "NOTIFICATION": {
+                "CONFIRMATION" :"You just uploaded 3rd party contact details to our servers. Please tell them about it.",
+                "MESSAGE" : "Hallo {{to}}, I have transfered your contact data into may cameo addressbook. Bye {{from}}"
+            }
+        }
     },
 
     "SYSTEMCHECK": {

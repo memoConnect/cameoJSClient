@@ -1,7 +1,20 @@
+.theme-a&.fill-bg:before{
+  content:'';
+  width: @cm-app-width;
+  position: fixed;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left :0;
+  right: 0;
+  margin: 0 auto;
+  background-color: #FFFFFF;
+}
+
 .theme-a{
   color: @cm-grey;
   background-color: @cm-white;
-  margin-bottom: 3rem !important;
+//  padding-bottom: 3rem !important;
   &.background-less{
     background-color: transparent;
   }

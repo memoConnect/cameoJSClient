@@ -79,7 +79,12 @@ describe('Route conversation:', function () {
         util.waitForQa('input-on-the-fly-mixed')
         util.clearInput('input-on-the-fly-mixed')
         util.setVal('input-on-the-fly-mixed', 'test@mail.com')
-       
+
+        ptor.sleep(2000)
+        util.blurQa('input-on-the-fly-mixed')
+        ptor.sleep(2000)
+        util.blurQa('input-on-the-fly-mixed')
+
         util.waitAndClickQa('btn-submit-on-the-fly-contact')
 
 

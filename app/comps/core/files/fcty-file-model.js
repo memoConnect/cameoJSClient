@@ -103,7 +103,9 @@ angular.module('cmCore')
                         self.chunkIndices  = details.chunks;
                         self.maxChunks     = details.maxChunks;
 
-                        self.detectedExtension = cmFileTypes.find(self.type, self.encryptedName);
+                        self.decryptName();
+
+                        self.detectedExtension = cmFileTypes.find(self.type, self.name);
 
                         // is file complete of chunks?
                         if(details.isCompleted) {
@@ -167,11 +169,14 @@ angular.module('cmCore')
             };
 
             this.decryptName = function() {
-                if(this.encryptedName){
+                if(!passphrase){
+                    this.name = this.encryptedName;
+                } else if(this.encryptedName && passphrase){
                     this.name = cmCrypt.decrypt(passphrase, this.encryptedName);
                 } else {
                     cmLogger.debug('Unable to decrypt filename; cmFile.encryptedFileName missing. Try calling cmFile.imporByFile) first.');
                 }
+                console.log('decryptName',passphrase,this.encryptedName,this.name)
                 return this;
             };
 
