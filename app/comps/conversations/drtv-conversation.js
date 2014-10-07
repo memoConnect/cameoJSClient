@@ -75,7 +75,7 @@ angular.module('cmConversations')
                 };
 
                 $scope.loadPreviousMessages = function(){
-                    $scope.conversation.load(true);
+                    $scope.conversation.update();
                 };
 
                 /**
@@ -271,6 +271,7 @@ angular.module('cmConversations')
 
                     // reload detail of conversation
                     $scope.conversation.update();
+
                     self.addPendingRecipients();
                     $scope.showAsymmetricKeyError();
 
@@ -281,9 +282,7 @@ angular.module('cmConversations')
 
                     $scope.show_contacts  = false;
 
-
     //                $scope.showGoToSettingsModal(); 18.07.2014 BS can be removed because on updated:finished event do this check
-                    
 
                     /** Event callbacks **/
                     function callback_update_finished(){

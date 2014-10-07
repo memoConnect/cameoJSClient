@@ -47,13 +47,13 @@ angular.module('cmUi').directive('cmDateSeperator',[
                 timestampCurrent: '=cmTimestamp',
                 timestampPrev: '=cmTimestampPrev'
             },
-            template: '<div class="date-seperator" cm-rubber-space>'+
+            template: //'{{"current: "+timestampCurrent+" prev: "+timestampPrev}}'+
+                      '<div ng-if="compareDate()" class="date-seperator" cm-rubber-space>'+
                         '<div class="line" cm-weight="1"></div>'+
                         '<div class="date" cm-weight="3" ng-transclude></div>'+
                         '<div class="line" cm-weight="1"></div>'+
                       '</div>',
             controller: function($scope, $element){
-
                 /**
                  * compare date for date-seperator
                  * @param currentDate
@@ -62,11 +62,8 @@ angular.module('cmUi').directive('cmDateSeperator',[
                  */
 
                 $scope.compareDate = function() {
-                    return cmUtil.compareDate($scope.timestampCurrent, $scope.timestampPrev);
+                    return !$scope.timestampPrev || cmUtil.compareDate($scope.timestampCurrent, $scope.timestampPrev);
                 };
-
-                if($scope.timestampPrev && !$scope.compareDate())
-                    $element.addClass('ng-hide');
             }
         }
     }

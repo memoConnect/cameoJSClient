@@ -114,12 +114,15 @@ angular.module('cmConversations')
             function init(data){
 //                cmLogger.debug('cmConversationModel:init');
 
+                // via id
                 if(typeof data == 'string' && data.length > 0){
                     self.id = data;
+                    console.log('init update')
                     self.update();
+                // via data.id
                 } else if(typeof data == 'object' && ('id' in data)){
                     self.id = data.id;
-
+                    console.log('init update data.id')
                     if(cmUtil.objLen(data) < 2){
                         self.update();
                     } else {
@@ -345,6 +348,7 @@ angular.module('cmConversations')
              * @returns {ConversationModel} this Returns ConversationModel
              */
             this.load = function(){
+                console.log('load!!! conversation')
                 if(typeof this.id == 'string'
                     && this.id.length > 0
                     && this.state.is('loading') === false)
@@ -381,7 +385,7 @@ angular.module('cmConversations')
              * @returns {Promise} for async handling
              */
             this.save = function(){
-                return  this.state.is('new')
+                return this.state.is('new')
                         ?   cmConversationsAdapter.newConversation( this.exportData() ).then(
                                 function (conversation_data) {
                                     self
@@ -406,38 +410,19 @@ angular.module('cmConversations')
             };
 
             this.update = function(conversation_data){
+                console.log('update!!! conversation',conversation_data)
+
                 var offset = 0,
                     limit = 10,
-                    clearAllMessages = true;
+                    clearAllMessages = false;
 
                 if(this.id){
                     if(typeof conversation_data !== 'undefined'){
                         if(this.messages.length < conversation_data.numberOfMessages) {
-//                            if (this.messages.length > 1) {
-//                                offset = this.messages.length;
-//                                clearAllMessages = false;
-//                            }
-//                            var limit = conversation_data.numberOfMessages - offset;
-                            var offset = data.numberOfMessages - this.messages.length;
-
-                            this._updateConversation(limit, offset, clearAllMessages);
+                            this._updateConversation(limit, self.messages.length, clearAllMessages);
                         }
                     } else {
-                        cmConversationsAdapter.getConversationSummary(this.id).then(
-                            function(data){
-                                self.numberOfMessages = data.numberOfMessages;
-                                if(self.messages.length < data.numberOfMessages){
-//                                    if(self.messages.length > 1){
-//                                        offset = self.messages.length;
-//                                        clearAllMessages = false;
-//                                    }
-//                                    var limit = data.numberOfMessages - offset;
-                                    var offset = data.numberOfMessages - limit;
-
-                                    self._updateConversation(limit, offset, clearAllMessages);
-                                }
-                            }
-                        )
+                        self._updateConversation(limit, self.messages.length, clearAllMessages);
                     }
                 }
 
