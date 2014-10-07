@@ -1,13 +1,13 @@
 <style type="text/css">
     .form{vertical-align:top;}
     .form .label{
-        width:30%;
+        width:50%;
         float:left;
         line-height:7;
         font-size:3em;
         line-height:1.5em;
     }
-    .form .bouncy{width:70%;float:left;}
+    .form .bouncy{width:50%;float:left;}
     .form:after{content:" ";clear:both;display:table;}
 </style>
 <cm-navigation cm-title="Key Generation"></cm-navigation>
@@ -25,6 +25,7 @@
         <button ng-click="stopKeygen(true)">stop</button>
     </div>
 </div>
+<!--
 <div class="form">
     <div class="label">
         sync
@@ -34,6 +35,10 @@
         <button ng-click="stopKeygen()">stop</button>
     </div>
 </div>
+<a href="http://sb-f.de/cm-key-gen/#/keygen" target="_self">test in app keygeneration (self)</a>
+<a href="http://sb-f.de/cm-key-gen/#/keygen" target="_blank">test in app keygeneration (blank)</a>
+<a href="http://sb-f.de/cm-key-gen/#/keygen" target="_system">test in app keygeneration (system)</a>
+-->
 
 <cm-loader cm-halt="isIdle" type="balls"></cm-loader>
 
