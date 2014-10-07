@@ -181,7 +181,7 @@
         },
         "PLACEHOLDER": {
             "SUBJECT": "Subject",
-            "NO_SUBJECT": "Add subject",
+            "NO_SUBJECT": "(optional)",
             "RECIPIENTS": "Recipients",
             "ADD_RECIPIENTS": "add",
             "INFO": "Info",
@@ -282,7 +282,7 @@
             "INVALID": {
                 "EMAIL": "@:DRTV.VALIDATE_EMAIL.INFO.INVALID",
                 "PHONENUMBER": "@:DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER",
-                "MIXED": "@:DRTV.VALIDATE_MIXED.INFO.INVALID_MIXED"
+                "MIXED": "Your input isn't valid."
             },
             "SUCCESS": {
                 "SAVE": "Contact created",

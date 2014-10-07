@@ -5,7 +5,8 @@ angular.module('cameoClientPerformance')
     function($scope, cmCrypt, cmUtil, $interval){
 
         var worker = null,
-            interval = null;
+            interval = null,
+            startTime;
 
         $scope.keySize = 2048;
         $scope.isIdle = false;
@@ -22,14 +23,14 @@ angular.module('cameoClientPerformance')
             $scope.isIdle = true;
             $scope.state = 'is generating "'+(async?'async':'sync')+'" keep device alive';
 
-            var time = -(new Date()).getTime();
+            startTime = -(new Date()).getTime();
 
             if(interval != null)
                 $interval.cancel(interval);
 
             interval = $interval(function(){
-                $scope.generationTime = cmUtil.millisecondsToStr(time+(new Date()).getTime());
-            },1000)
+                $scope.generationTime = cmUtil.millisecondsToStr(startTime+(new Date()).getTime());
+            },1000);
 
             if($scope.canWebworker() && $scope.webworkerOn){
                 $scope.state += ' [ generation via webworker ]';
@@ -97,6 +98,9 @@ angular.module('cameoClientPerformance')
         };
 
         $scope.stopKeygen = function(async){
+
+            $scope.history.stopped.push(cmUtil.millisecondsToStr(startTime+(new Date()).getTime()));
+
             $interval.cancel(interval);
             if(worker != null && $scope.webworkerOn){
                 worker.postMessage({
@@ -105,12 +109,17 @@ angular.module('cameoClientPerformance')
             } else {
                 cmCrypt.cancelGeneration(async);
             }
+
             $scope.state = 'generation stopped / press start';
             $scope.isIdle = false;
         };
 
         $scope.clearHistory = function(){
-            $scope.history = {async:[], sync:[]};
+            $scope.history = {
+                async:[],
+                //sync:[],
+                stopped:[]
+            };
         };
 
         $scope.clearHistory();

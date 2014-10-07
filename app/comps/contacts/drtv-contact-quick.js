@@ -80,7 +80,6 @@ angular.module('cmContacts')
                                     })
                         },
                         function(){
-                            console.log('sddd')
                             $scope.cmForm.mixed.$invalid = true
                         }
                     )

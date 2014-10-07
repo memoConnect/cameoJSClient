@@ -181,7 +181,7 @@
         },
         "PLACEHOLDER": {
             "SUBJECT": "Betreff",
-            "NO_SUBJECT": "Betreff eingeben",
+            "NO_SUBJECT": "(optional)",
             "RECIPIENTS": "Empfänger",
             "ADD_RECIPIENTS": "hinzufügen",
             "INFO": "Info",
@@ -282,7 +282,7 @@
             "INVALID": {
                 "EMAIL": "@:DRTV.VALIDATE_EMAIL.INFO.INVALID",
                 "PHONENUMBER": "@:DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER",
-                "MIXED": "@DRTV.VALIDATE_MIXED.INFO.INVALID_MIXED"
+                "MIXED": "Ihre Eingabe ist nicht valide."
             },
             "SUCCESS": {
                 "SAVE": "Kontakt wurde erfolgreich angelegt.",
