@@ -57,7 +57,7 @@ this.checkErrorLogs = function(){
                     suite = jasmine.getEnv().currentSpec.suite
 
                 if('parentSuite' in suite
-                && 'description' in suite.parentSuite.description)
+                && 'description' in suite.parentSuite)
                     specName = suite.parentSuite.description
 
                 if('description' in suite)
