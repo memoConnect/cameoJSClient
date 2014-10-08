@@ -194,7 +194,6 @@ angular.module('cmConversations')
                      * @type {boolean}
                      */
                     var message_invalid         = !isMessageValid()
-                        // passphrase_invalid      = !$scope.conversation.passphraseValid()
 
                     //If anything is invalid, abort and notify the user:
                     if(message_invalid){

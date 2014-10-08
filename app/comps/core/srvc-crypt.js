@@ -111,32 +111,32 @@ angular.module('cmCore')
                 return _Base64.encode(string);
             },
 
-                /**
-                 * this method decodes a string base64
-                 * @param string
-                 * @returns {*}
-                 */
-                base64Decode: function (string) {
-                    return _Base64.decode(string);
-                },
+            /**
+             * this method decodes a string base64
+             * @param string
+             * @returns {*}
+             */
+            base64Decode: function (string) {
+                return _Base64.decode(string);
+            },
 
-                /**
-                 * this method encrypts strings
-                 * @param secretKey a secret key with max len of 10 chars
-                 * @param secretString a string that should be enrypted
-                 * @returns base64 encoded encrypted string
-                 */
-                encryptWithShortKey: function (secretKey, secretString) {
-                    var parameters = { cipher: "aes", ks: 256, iter: 4096 };
+            /**
+             * this method encrypts strings
+             * @param secretKey a secret key with max len of 10 chars
+             * @param secretString a string that should be enrypted
+             * @returns base64 encoded encrypted string
+             */
+            encryptWithShortKey: function (secretKey, secretString) {
+                var parameters = { cipher: "aes", ks: 256, iter: 4096 };
 
-                    if (typeof secretKey != 'string' || secretKey.length < 3) { //Todo! key sollte länger sein
-                        cmLogger.warn('cmCrypt.encryptWithShortKey(): unable to encrypt, invalid key. ' + secretKey)
-                        return "";
-                    }
+                if (typeof secretKey != 'string' || secretKey.length < 3) { //Todo! key sollte länger sein
+                    cmLogger.warn('cmCrypt.encryptWithShortKey(): unable to encrypt, invalid key. ' + secretKey)
+                    return "";
+                }
 
 
-                    if (null == secretString)
-                        return "";
+                if (null == secretString)
+                    return "";
 
                 var encryptedSecretString = sjcl.json.encrypt(String(secretKey), String(secretString), parameters);
 
