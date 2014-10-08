@@ -212,6 +212,12 @@ angular.module('cameoClient', [
     // start entropy collection for random number generator
     sjcl.random.startCollectors();
 })
+.run(function($rootScope){
+    $rootScope.$on('$translateLoadingSuccess', function(){
+        console.log('i18n fertsch')
+    });
+})
+
 /**
  * @TODO cmContactsModel anders initialisieren
  */

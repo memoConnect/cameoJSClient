@@ -25,22 +25,27 @@ angular.module('cmUi').directive('cmInfoBubble',[
                     left    : attrs.noseX || '70%'
                 });
 
-                // TODO: jumpto real offset of cm-info-bubble
+                function getOffsetSum(elem) {
+                    var top=0, left=0;
+                    while(elem) {
+                        top = top + parseInt(elem.offsetTop);
+                        left = left + parseInt(elem.offsetLeft);
+                        elem = elem.offsetParent;
+                    }
+                    return {top: top, left: left};
+                }
 
-//                scope.$watch(attrs.ngShow, function(bool) {
-//                    if (bool && bool != false) {
-//
-//                        var offset = element[0].getBoundingClientRect();
-//
-//                        console.log(offset)
-//
-//                        var bodyAndHtml = angular.element($document[0].querySelectorAll('body,html'));
-//                        angular.forEach(bodyAndHtml, function (tag) {
-//                            console.log(tag,offset.top)
-//                            tag.scrollTop = offset.top;
-//                        });
-//                    }
-//                });
+                scope.$watch(attrs.ngShow, function(bool) {
+                    if (bool && bool != false) {
+
+                        var offset = getOffsetSum(element[0])
+
+                        var bodyAndHtml = angular.element($document[0].querySelectorAll('body,html'));
+                        angular.forEach(bodyAndHtml, function (tag) {
+                            tag.scrollTop = offset.top;
+                        });
+                    }
+                });
             }
         }
     }
