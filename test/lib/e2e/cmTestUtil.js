@@ -49,8 +49,17 @@ this.checkErrorLogs = function(){
         //expect(errors.length+' JS Errors').toBe('0 JS Errors')
         if(errors.length > 0){
             ptor.getCurrentUrl().then(function(currentUrl){
-                var suite = jasmine.getEnv().currentSpec.suite;
-                console.log('\n'+clc.red(errors.length+' error @ '+suite.parentSuite.description+' '+suite.description+'\n on '+currentUrl))
+                var suite = jasmine.getEnv().currentSpec.suite,
+                    specName = ''
+
+                if('parentSuite' in suite
+                && 'description' in suite.parentSuite.description)
+                    specName += suite.parentSuite.description
+
+                if('description' in suite)
+                    specName += ' '+suite.description
+
+                console.log('\n'+clc.red(errors.length+' error @ '+specName+'\n on '+currentUrl))
                 errors.forEach(function(error){
                     console.log(error)
                 })
