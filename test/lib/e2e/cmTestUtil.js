@@ -50,7 +50,7 @@ this.checkErrorLogs = function(){
         if(errors.length > 0){
             ptor.getCurrentUrl().then(function(currentUrl){
                 var suite = {},
-                    specName = 'unknown'
+                    specNames = []
 
                 if('currentSpec' in jasmine.getEnv()
                 && 'suite' in jasmine.getEnv().currentSpec) {
@@ -60,12 +60,12 @@ this.checkErrorLogs = function(){
                 if('parentSuite' in suite
                 && suite.parentSuite != null
                 && 'description' in suite.parentSuite)
-                    specName = suite.parentSuite.description
+                    specNames.push(suite.parentSuite.description)
 
                 if('description' in suite)
-                    specName = specName+' '+suite.description
+                    specNames.push(suite.description)
 
-                console.log('\n'+clc.red(errors.length+' error @ '+specName+'\n on '+currentUrl))
+                console.log('\n'+clc.red(errors.length+' error @ '+(specNames.join(' '))+'\n on '+currentUrl))
                 errors.forEach(function(error){
                     console.log(error)
                 })
