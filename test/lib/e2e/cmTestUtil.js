@@ -53,15 +53,17 @@ this.checkErrorLogs = function(){
                     specName = 'unknown'
 
                 if('currentSpec' in jasmine.getEnv()
-                && 'suite' in jasmine.getEnv().currentSpec)
+                && 'suite' in jasmine.getEnv().currentSpec) {
                     suite = jasmine.getEnv().currentSpec.suite
+                }
 
                 if('parentSuite' in suite
-                && 'description' in suite.parentSuite.description)
+                && suite.parentSuite != null
+                && 'description' in suite.parentSuite)
                     specName = suite.parentSuite.description
 
                 if('description' in suite)
-                    specName += ' '+suite.description
+                    specName = specName+' '+suite.description
 
                 console.log('\n'+clc.red(errors.length+' error @ '+specName+'\n on '+currentUrl))
                 errors.forEach(function(error){
