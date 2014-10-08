@@ -236,7 +236,7 @@ angular.module('cmConversations')
                 //Create passphraseVault:
                 
                 passphraseVault =   cmPassphraseVault.create({
-                                        sePassphrase:       data.sePassphrase
+                                        sePassphrase:       data.sePassphrase,
                                         aePassphraseList:   data.aePassphraseList
                                     })
 
@@ -244,8 +244,6 @@ angular.module('cmConversations')
                     cmLogger.debug('ConversationModel: inconsistent data: keyTransmission')
                     //TODO
                 
-
-
                 /**
                  * Important for none encrypted Conversations
                  */
@@ -368,33 +366,45 @@ angular.module('cmConversations')
              * @returns {Promise} for async handling
              */
             this.save = function(){
-                return  this.state.is('new')
-                        ?   this.exportData()
-                            .then(function(converesation_data){
-                                return  cmConversationsAdapter.newConversation(conversation_data)
-                            })
-                            .then(
-                                function (conversation_data) {
-                                    self
-                                    .importData(conversation_data)
-                                    .savePassCaptcha();
 
-                                    if(typeof self.password == 'string' && self.password.length > 0){
-                                        self.localPWHandler.get(conversation_data.id, self.password);
-                                    }
+                if(!this.state.is('new'))
+                    return $q.reject()
 
-                                    self.state.unset('new');
-                                    self.trigger('save:finished');
+                return  $q.when(
+                            this.encryption_disabled
+                            ?   undefined 
+                            :   cmPassphraseVault.encryptPassphrase({
+                                    passphrase:         undefined,   // will be generated
+                                    password:           this.password,
+                                    identities:         this.recipients,
+                                    restrict_to_keys:   undefined,   // encrypt for all recipient keys
+                                })  
+                        )
+                        .then(function(pv){
+                            passphraseVault = pv
+                            return cmConversationsAdapter.newConversation(self.exportData())
+                        })                            
+                        .then(
+                            function (conversation_data) {
+                                self
+                                .importData(conversation_data)
+                                .savePassCaptcha();
 
-                                    return conversation_data
-                                },
-
-                                function(){
-                                    self.trigger('save:failed');
-                                    return $q.reject()
+                                if(typeof self.password == 'string' && self.password.length > 0){
+                                    self.localPWHandler.get(conversation_data.id, self.password);
                                 }
-                            )
-                        :   $q.reject()
+
+                                self.state.unset('new');
+                                self.trigger('save:finished');
+
+                                return conversation_data
+                            },
+
+                            function(){
+                                self.trigger('save:failed');
+                                return $q.reject()
+                            }
+                        )
             };
 
             //TODO: is this function actually used?
@@ -525,13 +535,13 @@ angular.module('cmConversations')
              * @returns {Boolean} succees Returns Boolean
              */
             this.decrypt = function () {
-//                cmLogger.debug('cmConversationModel.decrypt');
+                cmLogger.debug('cmConversationModel.decrypt');
 
 
                 this.getPassphrase()
                 .then(function(passphrase){
-                    return $q.all(this.messages.map(function (message){
-                                return message.decrypt()
+                    return $q.all(self.messages.map(function (message){
+                                return message.decrypt(passphrase)
                             }))
                 })
                 .then(
@@ -540,9 +550,9 @@ angular.module('cmConversations')
 
                         // save password to localstorage
                         if (typeof self.password == 'string' && self.password.length > 0)
-                            self.localPWHandler.set(this.id, this.password);
+                            self.localPWHandler.set(this.id, self.password);
 
-                        return $q.resolve()
+                        return $q.when()
                         
                     },
                     function(){
@@ -660,7 +670,7 @@ angular.module('cmConversations')
                 if(this.state.is('new')){
                     return (this.options.hasPassword == true)
                 } else {
-                    return ['symmetric', 'mixed'].indexOf(passphrase.getKeyTransmission()) != -1;
+                    return passphraseVault && ['symmetric', 'mixed'].indexOf(passphraseVault.getKeyTransmission()) != -1;
                 }
             };
 
@@ -944,11 +954,7 @@ angular.module('cmConversations')
 //                cmLogger.debug('cmConversationModel:on:update:finished');
 //                cmBoot.resolve();
                 self.setLastMessage();
-                /* @Todo: temporarily removed until webworker joins in:
-                cmCallbackQueue.push(function(){
-                    self.decrypt();
-                }, 200)
-                */          
+                self.decrypt();
                 //self.securityAspects.refresh();
                 self.updateLockStatus();
                 //self.handleMissingAePassphrases();

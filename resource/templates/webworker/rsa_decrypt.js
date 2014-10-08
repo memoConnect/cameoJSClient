@@ -1,16 +1,19 @@
 importScripts('-mock-vendor.js');
 importScripts('../vendor.0.2.6.js');
 
+
 var crypt = new JSEncrypt()
 
 self.addEventListener('message', function(event) {
     var data    = event.data
+
 
     //console.log(JSON.stringify(data))
     switch (data.cmd) {
         case 'start':
             try {
                 crypt.setKey(data.privKey)
+
                 var result = crypt.decrypt(data.encryptedSecret)
 
                 self.postMessage({
@@ -21,7 +24,7 @@ self.addEventListener('message', function(event) {
             } catch(e){
                 self.postMessage({
                     msg:    'error',
-                    error:  e
+                    error:  JSON.stringify(e)
                 })
             }
             

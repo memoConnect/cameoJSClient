@@ -155,6 +155,11 @@ angular.module('cmCore')
                                 encryptedSecret:    encrypted_secret
                             })
                         :   $q.when(crypt && crypt.decrypt(encrypted_secret))
+                            .then(function(result){
+                                return  result
+                                        ?   $q.when(result)
+                                        :   $q.reject(null)
+                            })
             };
 
             this.verifyKey = function(key, data){

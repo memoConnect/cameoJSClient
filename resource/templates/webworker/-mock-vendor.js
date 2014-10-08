@@ -25,13 +25,16 @@ var emptyFunction = function(){return this},
         name:'location',
         href: ''
     },
+    Base64 = emptyFunction,
+    ASN1   = emptyFunction,
     window = {
         name:'window',
         document: document,
         location: location,
-        addEventListener: emptyFunction
+        addEventListener: emptyFunction,
+        Base64: Base64,
     },
-    ASN1 = emptyFunction,
+
     angular = {
         $$csp:emptyFunction,
         element:function(){return{find:function(){return{prepend:emptyFunction}}}},

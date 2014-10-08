@@ -12,10 +12,14 @@
  * @requires cmObject
  * @requires cmLogger
  */
-angular.module('cmCore').factory('cmPassphraseVault',[
-    'cmKeyFactory',
+angular.module('cmCore').service('cmPassphraseVault',[
 
-    function(cmKeyFactory){
+    'cmUserModel',
+    'cmCrypt',
+    '$q',
+
+    function(cmUserModel, cmCrypt, $q){
+        var self = this
 
         /** utility functions **/
 
@@ -72,6 +76,7 @@ angular.module('cmCore').factory('cmPassphraseVault',[
              * @returns {String} encryption type - 'none' || 'symmetric' || 'asymmetric' || 'mixed'
              */
             this.getKeyTransmission = function(){
+
                 if(sePassphrase && aePassphraseList.length > 0)
                     return 'mixed';
 
@@ -101,28 +106,28 @@ angular.module('cmCore').factory('cmPassphraseVault',[
                         .catch(function(){
                             //check if a valid password has been passed to the function 
                             //and a symmetrically encrypted passphrase is present:
-                            return  couldBeAPassword(password) && symmetricallyEncryptedPassphrase)
+                            return  couldBeAPassword(password) && symmetricallyEncryptedPassphrase
                                     ?   cmCrypt.decrypt(password, cmCrypt.base64Decode(sePassphrase))
                                     :   $q.reject()
                         })
                         //try asymmetrical decryption if neccessary:                
                         .catch(function(){
-                            asymmetricallyEncryptedPassphrases // could be an empty array
-                            .reduce(function(previous_try, item) {
-                                previous_try                
-                                //if decryption has been successfull already there will be nothing to catch:
-                                .catch(function(){
-                                    return cmUserModel.decryptPassphrase(item.encryptedPassphrase, item.keyId)
-                                })
-                            }, $q.reject())
+                            return  aePassphraseList // could be an empty array
+                                    .reduce(function(previous_try, item) {
+                                        return  previous_try                
+                                                //if decryption has been successfull already there will be nothing to catch:
+                                                .catch(function(){
+                                                    return cmUserModel.decryptPassphrase(item.encryptedPassphrase, item.keyId)
+                                                })
+                                    }, $q.reject(null))
                         })
                         //finally check if decryption resolved with a proper passphrase,
                         //if so resolve with passphrase,
                         //if not reject with null
                         .then(
                             function(new_passphrase){
-                            return  couldBeAPassphrase(new_passphrase)
-                                        ?   $q.resolve(new_passphrase)
+                                return  couldBeAPassphrase(new_passphrase)
+                                        ?   $q.when(new_passphrase)
                                         :   $q.reject(null)
                             },
                             function(){
@@ -142,8 +147,8 @@ angular.module('cmCore').factory('cmPassphraseVault',[
              */
             this.exportData = function(){                
                 return  {
-                            sePassphrase        : symmetricallyEncryptedPassphrase,
-                            aePassphraseList    : asymmetricallyEncryptedPassphrases,
+                            sePassphrase        : sePassphrase,
+                            aePassphraseList    : aePassphraseList,
                             keyTransmission     : this.getKeyTransmission()
                         }
             }
@@ -171,9 +176,8 @@ angular.module('cmCore').factory('cmPassphraseVault',[
          * @return {PassphraseVault}
          */
         this.create = function(data){
-
             data =  {
-                        sePassphrase:       data.sePassphrase       || null
+                        sePassphrase:       data.sePassphrase       || null,
                         aePassphraseList:   data.aePassphraseList   || []
                     }
 
@@ -207,27 +211,24 @@ angular.module('cmCore').factory('cmPassphraseVault',[
                             restrict_to_keys:   config.restrict_to_keys || null
                         }
 
-            return $q.all([
+            return $q.all({
                         //symmetrical encryption:
-                        function(){
-                            return  couldBeAPassword(config.password) && couldBeAPassphrase(config.passphrase)
-                                    ?   cmCrypt.base64Encode(cmCrypt.encryptWithShortKey(password, passphrase))
-                                    :   $q.when(undefined)
-                        },
+                        sym:    couldBeAPassword(config.password) && couldBeAPassphrase(config.passphrase)
+                                ?   cmCrypt.base64Encode(cmCrypt.encryptWithShortKey(password, config.passphrase))
+                                :   $q.when(undefined)
+                        ,
                         //asymmetrically encrypt:
-                        function(){
-                            return  couldBeAPassphrase(passphrase)
-                                    ?   config.identities.reduce(function(list, key){
-                                            return list.concat(identity.encryptPassphrase(passphrase, config.restrict_to_keys))
-                                        }, [])
-                                    :   $q.when([])
-                        }
-                    ])
+                        asym:   couldBeAPassphrase(config.passphrase)
+                                ?   config.identities.reduce(function(list, identity){
+                                        return list.concat(identity.encryptPassphrase(config.passphrase, config.restrict_to_keys))
+                                    }, [])
+                                :   $q.when([])
+                    })
                     .then(
                         function(result){
                             return  self.create({
-                                        sePassphrase:       result[0]
-                                        aePassphraseList:   result[1]
+                                        sePassphrase:       result.sym,
+                                        aePassphraseList:   result.asym
                                     })
                         },
                         function(){
@@ -281,8 +282,5 @@ angular.module('cmCore').factory('cmPassphraseVault',[
                 return check;
             }
 
-        }
-
-        return cmPassphrase;
     }
 ]);

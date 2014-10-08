@@ -14,11 +14,11 @@ angular.module('cmConversations')
 
     'cmConversationFactory', 'cmUserModel', 'cmCrypt', 'cmLogger', 'cmNotify',
     'cmModal', 'cmEnv', 'cmSettings', 'cmKeyStorageService', 'cmTransferScopeData',
-    '$location', '$rootScope', '$document', '$routeParams',
+    '$location', '$rootScope', '$document', '$routeParams', '$q',
 
     function (cmConversationFactory, cmUserModel, cmCrypt, cmLogger, cmNotify,
               cmModal, cmEnv, cmSettings, cmKeyStorageService, cmTransferScopeData,
-              $location, $rootScope, $document, $routeParams) {
+              $location, $rootScope, $document, $routeParams, $q) {
         return {
             restrict: 'AE',
             templateUrl: 'comps/conversations/drtv-conversation.html',
@@ -222,6 +222,7 @@ angular.module('cmConversations')
                     //If we got this far the conversation has been saved to the backend.
                     //Create a new message:
 
+
                     $scope.conversation.getPassphrase()
                     .then(
                         //If we get a proper passphrase:
@@ -273,14 +274,7 @@ angular.module('cmConversations')
                     $scope.conversation = conversation
                     $rootScope.pendingConversation = $scope.conversation;
 
-                    //@Todo: temporarily decrypt here until webworker joins in:
-                    $scope.conversation.decrypt()
-                    $scope.conversation.when('update:finished')
-                    .then(function(){
-                        $scope.conversation.decrypt()
-                    });
-
-                    // reload detail of conversation
+                    // reload details of conversation
                     $scope.conversation.update();
 
                     self.addPendingRecipients();

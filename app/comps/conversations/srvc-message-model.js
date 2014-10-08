@@ -175,7 +175,7 @@ angular.module('cmConversations')
                 return this;
             };
 
-            this.decrypt = function () {
+            this.decrypt = function (passphrase) {
                 if(this.state.is('decrypted') !== true){
 
                     if(typeof this.encryptedData == 'string' && this.encryptedData.length > 0){
@@ -187,7 +187,7 @@ angular.module('cmConversations')
                             this.encryptedData = cmCrypt.base64Decode(this.encryptedData);
                         }
 
-                        var decrypted_data = JSON.parse(cmCrypt.decrypt(conversation.getPassphrase(),this.encryptedData));
+                        var decrypted_data = JSON.parse(cmCrypt.decrypt(passphrase,this.encryptedData));
 
                         if(decrypted_data){
                             this.importData(decrypted_data);

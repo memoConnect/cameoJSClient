@@ -12,7 +12,7 @@
 
 angular.module('cmCore').service('cmAuth', [
     'cmApi','LocalStorageAdapter', 'cmObject', 'cmUtil', 'cmLogger', 'cmCrypt' ,'$rootScope',
-    function(cmApi, LocalStorageAdapter, cmObject, cmUtil, cmLogger, cmCrypr, $rootScope){
+    function(cmApi, LocalStorageAdapter, cmObject, cmUtil, cmLogger, cmCrypt, $rootScope){
         var _TOKEN_ = undefined;
         var auth = {
             /**
@@ -28,7 +28,7 @@ angular.module('cmCore').service('cmAuth', [
              * @returns {Promise} for async handling
              */
             requestToken: function(login, pass){
-                var auth = _Base64.encode(login + ":" + pass);
+                var auth = cmCrypt.base64Encode(login + ":" + pass);
 
                 return cmApi.get({
                     path: '/token',

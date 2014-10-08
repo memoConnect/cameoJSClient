@@ -46,8 +46,6 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
                     queryString += cmUserModel.getLocalKeyIdsForRequest();
                 }
 
-                console.log('/conversation/'+ id + queryString)
-
                 return cmApi.get({
                     path: '/conversation/'+ id + queryString
                 })

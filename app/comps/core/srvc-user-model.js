@@ -638,14 +638,14 @@ angular.module('cmCore')
 
         this.decryptPassphrase = function(encrypted_passphrase, keyId){
             var keys    =   this.loadLocalKeys().filter(function(key){
-                                return (key.id == keyId || !keyId)
-                            }) || []
+                                return (!keyId || key.id == keyId)
+                            })
 
 
-            return keys.reduce(function(ongoing, key){
-                return  ongoing
+            return keys.reduce(function(previous_try, key){
+                return  previous_try
                         .catch(function(){
-                                return key.decrypt(encrypted_passphrase)
+                                return  key.decrypt(encrypted_passphrase)
                         })
             }, $q.reject())
 
