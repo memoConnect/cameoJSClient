@@ -2,12 +2,7 @@ var config = require("../config-e2e-tests.js")
 var util = require("../../lib/e2e/cmTestUtil.js")
 
 describe('Authentication requests -', function () {
-
     var ptor = util.getPtorInstance()
-
-    afterEach(function () {
-        util.stopOnError()
-    })
 
     var testUser1Id = Math.random().toString(36).substring(2, 9)
     var testUser1 = "testUser23_" + testUser1Id

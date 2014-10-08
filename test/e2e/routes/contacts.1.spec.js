@@ -3,8 +3,6 @@ var util = require("../../lib/e2e/cmTestUtil.js")
 
 describe('Route: Contact/List', function () {
     var ptor = util.getPtorInstance()
-    afterEach(function() { util.stopOnError() });
-
 
     it('should be found at "#/contact/list".', function(){
         util

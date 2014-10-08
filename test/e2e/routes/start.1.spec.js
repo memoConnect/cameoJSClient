@@ -2,16 +2,11 @@ var config = require("../config-e2e-tests.js")
 var util = require("../../lib/e2e/cmTestUtil.js")
 
 describe('Route: Start - ', function () {
-    "use strict";
+    var ptor = util.getPtorInstance()
 
     var testUserWithKey = ""
     var testUserWithoutKey = ""
     var password = 'password'
-
-    var ptor = util.getPtorInstance()
-    afterEach(function () {
-        util.stopOnError()
-    });
 
     describe('After registration with key generation - ', function () {
         it('register user, first url should be "/start/welcome" ', function () {

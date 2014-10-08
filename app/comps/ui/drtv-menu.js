@@ -36,9 +36,13 @@ angular.module('cmUi').directive('cmMenu',[
                         // file:///android_asset/www/index.html#/login
                         if(cmUtil.startsWith($location.$$absUrl, 'file:///')) {
                             $window.location = parentBtn.link;
-                            // http://localhost:8000/app/#/settings
+                        // http://localhost:8000/app/#/settings
                         } else if($location.$$absUrl.indexOf('/#/') != -1) {
                             var arr_location = $location.$$absUrl.split('/#/');
+                            location.href = arr_location[0] + '/' + parentBtn.link;
+                        // http://localhost:8000/app/index.html#/settings
+                        } else if($location.$$absUrl.indexOf('index.html#/') != -1) {
+                            var arr_location = $location.$$absUrl.split('index.html#/');
                             location.href = arr_location[0] + '/' + parentBtn.link;
                         }
 

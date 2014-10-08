@@ -44,8 +44,7 @@ module.exports = function(grunt, options) {
                         'app/icons.html': ['resource/templates/app/icons.html'],
                         'app/base/config.js': ['resource/templates/app/config.js'],
                         // performance page
-                        'app/performance.html': ['resource/templates/app/performance.html'],
-                        'app/performance/webworker/keygen.js': ['resource/templates/app/performance-webworker/keygen.js']
+                        'app/performance.html': ['resource/templates/app/performance.html']
                     }
                 }
             }

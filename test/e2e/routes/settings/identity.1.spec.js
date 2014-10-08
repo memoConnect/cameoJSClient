@@ -2,8 +2,6 @@ var config = require("../../config-e2e-tests.js")
 var util = require("../../../lib/e2e/cmTestUtil.js")
 
 describe('Route Settings Identity: ', function(){
-    "use strict";
-
     var ptor = util.getPtorInstance()
 
     var newTestUser = ""
@@ -12,8 +10,6 @@ describe('Route Settings Identity: ', function(){
     var newDisplayName = 'TestMoeper';
     var newPhoneNumber = '+49123456789';
     var newEmail = 'moeper@moep.moep';
-
-    afterEach(function() { util.stopOnError() });
 
     describe('Test 1 - GUI', function(){
         it('should be load at "#/settings/identity/edit" after login.', function(){

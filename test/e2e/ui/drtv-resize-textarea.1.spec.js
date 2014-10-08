@@ -1,12 +1,9 @@
 var config = require("../config-e2e-tests.js")
 var util = require("../../lib/e2e/cmTestUtil.js")
 
-var ptor = util.getPtorInstance()
-
 // start init tests
 describe('Textarea Resize', function () {
-
-    afterEach(function() { util.stopOnError() })
+    var ptor = util.getPtorInstance()
 
     it('login & open new conversation', function () {
         util.login()

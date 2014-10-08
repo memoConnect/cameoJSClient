@@ -186,7 +186,6 @@ angular.module('cmCore')
                      * @todo hack for external user in purl
                      */
                     if($location.$$path.search('/purl') != -1){
-                        //console.log($location.$$path)
                         cmAuth.getIdentity().then(
                             function (data) {
                                 if (importIdentity(data)) {
@@ -223,7 +222,6 @@ angular.module('cmCore')
                                         case 0:
                                             cmLogger.debug('cmUserModel:init:failed:0');
                                             $rootScope.$broadcast('connection:failed', function(){
-                                                //console.log('reconnect!!!');
                                                 self.loadIdentity(accountData);
                                             });
                                             return false;
