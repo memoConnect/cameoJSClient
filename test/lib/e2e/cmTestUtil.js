@@ -563,6 +563,7 @@ this.stopOnError = function () {
 
 this.createEncryptedConversation = function (subject, message) {
     self.get("/conversation/new")
+    self.waitForPageLoad("/conversation/new")
     self.waitForElement("[data-qa='input-subject']")
     self.setVal("input-subject", subject)
     self.setVal("input-answer", message)
@@ -574,6 +575,7 @@ this.createEncryptedConversation = function (subject, message) {
 
 this.readConversation = function (subject, message) {
     self.get("/talks")
+    self.waitForPageLoad("/talks")
     self.headerSearchInList(subject)
     self.waitAndClick("cm-conversation-tag")
     self.waitForElement("cm-message")

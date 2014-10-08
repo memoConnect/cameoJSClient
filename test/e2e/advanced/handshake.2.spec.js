@@ -296,7 +296,9 @@ describe('Authentication requests -', function () {
         it("generate key2", function () {
             util.login(testUser1, "password", "/start")
             util.generateKey(2, keyName2)
+            util.waitForPageLoad("/authentication")
             util.get("/settings/identity/key/list")
+            util.waitForPageLoad("/settings/identity/key/list")
             util.waitForElements("[data-qa='key-list-item']", 3)
             checkKeyTrust(keyName1, false)
             checkKeyTrust(keyName2, true)
@@ -635,6 +637,7 @@ describe('Authentication requests -', function () {
 
             it("testuser1 should now be trusted", function () {
                 util.get("/contact/list")
+                util.waitForPageLoad("/contact/list")
                 util.waitForElements("cm-contact-tag", 2)
                 util.headerSearchInList(testUser1)
                 util.waitAndClick("cm-contact-tag")
