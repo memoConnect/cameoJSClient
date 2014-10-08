@@ -42,7 +42,6 @@ angular.module('cmUi').directive('cmDateSeperator',[
     function (cmUtil){
         return{
             restrict: 'E',
-            transclude: true,
             scope: {
                 timestampCurrent: '=cmTimestamp',
                 timestampPrev: '=cmTimestampPrev'
@@ -50,7 +49,9 @@ angular.module('cmUi').directive('cmDateSeperator',[
             template: //'{{"current: "+timestampCurrent+" prev: "+timestampPrev}}'+
                       '<div ng-if="compareDate()" class="date-seperator" cm-rubber-space>'+
                         '<div class="line" cm-weight="1"></div>'+
-                        '<div class="date" cm-weight="3" ng-transclude></div>'+
+                        '<div class="date" cm-weight="3">'+
+                          '<cm-time-converter cm-timestamp="timestampCurrent" cm-special-type="date-seperator"></cm-time-converter>'+
+                        '</div>'+
                         '<div class="line" cm-weight="1"></div>'+
                       '</div>',
             controller: function($scope, $element){
