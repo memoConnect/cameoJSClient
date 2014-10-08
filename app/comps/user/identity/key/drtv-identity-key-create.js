@@ -42,7 +42,6 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
 
                 $scope.showKeySize = false;
                 $scope.toggleKeySize = function(){
-                    //console.log('toggleKeySize', $scope.showKeySize)
                     if(!$scope.showKeySize){
                         $scope.showKeySize = true;
                     } else {

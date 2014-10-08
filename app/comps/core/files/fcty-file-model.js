@@ -33,8 +33,8 @@ angular.module('cmCore')
 
             this.base64 = '';
             this.onCompleteId = undefined;
-
             this.detectedExtension = undefined;
+            this.autoDownload = false;
 
             this.setPassphrase = function(p){
                 passphrase = p;// TODO: || null;
@@ -360,8 +360,10 @@ angular.module('cmCore')
                     self.state.unset('onlyFileId');
                     self.state.set('readyForDownload');
                     self.trigger('file:readyForDownload');
-                    // automatic
-                    //self.startDownloadChunks()
+                    // autoDownload 'passcaptcha has always true'
+                    if(self.autoDownload){
+                        self.startDownloadChunks();
+                    }
                 });
 
                 return this;
@@ -372,8 +374,11 @@ angular.module('cmCore')
                 self._downloadChunk(0);
             };
 
-            this.downloadStart = function(){
+            this.downloadStart = function(autoDownload){
                 cmLogger.debug('cmFileModel:downloadStart');
+                // handle straight autodownload
+                this.autoDownload = autoDownload || this.autoDownload;
+
                 if(this.id != '' && this.state.is('onlyFileId')){
                     cmFileDownload.add(this);
                 }
