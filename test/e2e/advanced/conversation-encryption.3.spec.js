@@ -6,10 +6,6 @@ describe('Conversation encryption -', function () {
     var ptor = util.getPtorInstance()
     var date = Date.now()
 
-    afterEach(function () {
-        util.stopOnError()
-    });
-
     /*
      Helper functions
      */

@@ -1,11 +1,11 @@
 /**
  * Created by reimerei on 15.04.14.
  */
-var fs = require('fs')
-var config = require("../../e2e/config-e2e-tests.js")
-var self = this
-
-var ptor
+var fs = require('fs'),
+    config = require("../../e2e/config-e2e-tests.js"),
+    clc = require('cli-color'),
+    self = this,
+    ptor
 
 this.setPtorInstance = function (newPtor) {
     ptor = newPtor
@@ -15,7 +15,45 @@ this.setPtorInstance = function (newPtor) {
 this.getPtorInstance = function () {
     ptor = protractor.getInstance()
     ptor.ignoreSynchronization = true
+
+    // for every it in describe check error logs and
+    // stop on error if config is on true
+    afterEach(function() {
+        self.checkErrorLogs()
+        self.stopOnError()
+    })
+
     return ptor;
+}
+
+this.stopOnError = function () {
+    if (config.stopOnError) {
+        var passed = jasmine.getEnv().currentSpec.results().passed();
+        if (!passed) {
+            jasmine.getEnv().specFilter = function (spec) {
+                return false;
+            };
+        }
+    }
+}
+
+this.checkErrorLogs = function(){
+    ptor.manage().logs().get('browser').then(function(browserLog) {
+        var errors = [];
+
+        browserLog.forEach(function(log){
+            if(log.level.name == 'SEVERE')
+                errors.push(clc.red(log.message))
+        })
+
+        expect(errors.length+' JS Errors').toBe('0 JS Errors')
+
+        if(errors.length > 0){
+            errors.forEach(function(error){
+                console.log(error)
+            })
+        }
+    })
 }
 
 this.get = function (path) {
@@ -547,18 +585,6 @@ this.getVal = function (dataQa) {
 
 this.setValQuick = function (dataQa, text) {
     ptor.executeScript("document.querySelector(\"[data-qa='" + dataQa + "']\").value = '" + text + "'")
-}
-
-this.stopOnError = function () {
-
-    if (config.stopOnError) {
-        var passed = jasmine.getEnv().currentSpec.results().passed();
-        if (!passed) {
-            jasmine.getEnv().specFilter = function (spec) {
-                return false;
-            };
-        }
-    }
 }
 
 this.createEncryptedConversation = function (subject, message) {

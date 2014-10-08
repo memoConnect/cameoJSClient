@@ -11,8 +11,6 @@ describe('Multi Identity: ', function () {
         email: '1337@cameo.io'
     }
 
-    afterEach(function() { util.stopOnError() });
-
     it('create new user and open identity settings', function () {
         login = util.createTestUser()
         util.expectCurrentUrl('/start/welcome')

@@ -232,7 +232,7 @@ angular.module('cmCore').provider('cmApi',[
 
 
                 function handleError(response, deferred){
-                    cmLogger.error('Api call failed: \n '+response.config.method+' '+response.config.path, response)
+                    cmLogger.error('Api call failed: \n '+response.config.method+' '+JSON.stringify(response, null, 2))
 //                    window.location.href='#/server_down' //@ Todo
                     //error messages should come trough backend
                     deferred.reject(response)
