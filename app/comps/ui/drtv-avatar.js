@@ -63,6 +63,7 @@ angular.module('cmUi').directive('cmAvatar',[
     'cmUtil',
     'cmConfig',
     function (cmUserModel, cmUtil, cmConfig){
+
         return {
             restrict: 'E',
             scope: {
