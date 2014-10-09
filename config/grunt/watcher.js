@@ -39,7 +39,7 @@ module.exports = function(grunt, options){
                         'app/less/*.less'
                     ],
                     tasks: [
-                        'app:gen-all-templates'
+                        'app:create-style-via-less'
                     ]
                 },
                 'app-js':{
