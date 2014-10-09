@@ -74,8 +74,6 @@ angular.module('cmCore')
 
             ready: {
                 userModel: function(){
-                    console.log('yeahItsReady',promises)
-
                     self.init.userModel();
 
                     self.trigger('yeahItsReady');
