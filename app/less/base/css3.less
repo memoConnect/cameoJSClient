@@ -1,0 +1,82 @@
+.without-border-radius{
+  -webkit-border-radius:0!important;
+  -moz-border-radius:0!important;
+  border-radius:0!important
+}
+
+.without-box-shadow{
+  -webkit-box-shadow:none!important;
+  -moz-box-shadow:none!important;
+  box-shadow:none!important
+}
+
+.white-text-shadow{
+  text-shadow:0 0.07em 0.07em rgba(255, 255, 255, 1);
+}
+
+.grey-box-shadow{
+  -webkit-box-shadow:0 0.2em 0.5em 0 rgba(50, 50, 50, 0.5);
+  -moz-box-shadow:0 0.2em 0.5em 0 rgba(50, 50, 50, 0.5);
+  box-shadow:0 0.2em 0.5em 0 rgba(50, 50, 50, 0.5);
+}
+
+.clear-form-border{
+  border:none !important;
+  .without-border-radius;
+  .without-box-shadow
+}
+
+.no-border-radius{
+  -moz-border-radius:0;
+  -webkit-border-radius:0;
+  border-radius:0;
+}
+.border-radius{
+  -moz-border-radius:0.5rem;
+  -webkit-border-radius:0.5rem;
+  border-radius:0.5rem;
+}
+
+.border-radius-bottom{
+  -moz-border-radius-bottomright:0.5rem;
+  -webkit-border-bottom-right-radius:0.5rem;
+  border-bottom-right-radius:0.5rem;
+  -moz-border-radius-bottomleft:0.5rem;
+  -webkit-border-bottom-left-radius:0.5rem;
+  border-bottom-left-radius:0.5rem;
+}
+.border-radius-top{
+  -moz-border-radius-topright:0.5rem;
+  -webkit-border-top-right-radius:0.5rem;
+  border-top-right-radius:0.5rem;
+  -moz-border-radius-topleft:0.5rem;
+  -webkit-border-top-left-radius:0.5rem;
+  border-top-left-radius:0.5rem;
+}
+
+.no-box-shadow{
+  -webkit-box-shadow:none;
+  -moz-box-shadow:none;
+  box-shadow:none;
+}
+.box-shadow-bottom{
+  -webkit-box-shadow: inset 0 -1rem 1rem -1.4rem rgba(50, 50, 50, 0.75);
+  -moz-box-shadow: inset 0 -1rem 1rem -1.4rem rgba(50, 50, 50, 0.75);
+  box-shadow: inset 0 -1rem 1rem -1.4rem rgba(50, 50, 50, 0.75);
+}
+.box-shadow-top{
+  -webkit-box-shadow: 0 -1rem 1rem -1.4rem rgba(50, 50, 50, 0.75);
+  -moz-box-shadow: 0 -1rem 1rem -1.4rem rgba(50, 50, 50, 0.75);
+  box-shadow: 0 -1rem 1rem -1.4rem rgba(50, 50, 50, 0.75);
+}
+.box-shadow-top-inset-ci{
+  -webkit-box-shadow: 0 0.3rem 0 @cm-ci-color inset;
+  -moz-box-shadow: 0 0.3rem 0 @cm-ci-color inset;
+  box-shadow: 0 0.3rem 0 @cm-ci-color inset;
+}
+
+.opacity-25{
+  -moz-opacity:0.25;
+  -khtml-opacity:0.25;
+  opacity:0.25;
+}

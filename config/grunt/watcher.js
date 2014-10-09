@@ -13,6 +13,7 @@ module.exports = function(grunt, options){
                 app:{
                     files: [
                         'config/*.json',
+                        'app/less/*!(old)/*.less',
                         'app/less/*.less',
                         'app/base/app.js',
                         'resource/templates/**/*',

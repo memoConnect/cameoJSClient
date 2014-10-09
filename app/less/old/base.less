@@ -1,0 +1,148 @@
+/*
+unicode number table for css selectors
+
+0	1	2	3	4	5	6	7	8	9
+\30	\31	\32	\33	\34	\35	\36	\37	\38	\39
+
+exp.:
+.\33ggp -> .3ggp
+*/
+
+// General page layout
+
+input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill{
+  background: transparent !important;
+  background-color: transparent !important;
+  color:@cm-grey;
+}
+input {
+  -webkit-user-select: auto !important;
+}
+
+html, body {
+    height:100%;
+    margin:0;
+    padding:0;    
+    background-image: url('gfx/background/app.jpg');
+}
+
+body {
+    font-size: @cm-base-font;
+    width:100%;
+    background-color:#fff;
+    cursor:default;
+  //overflow:hidden;<-zerstört das scrollen in talks im ff
+}
+pre {
+    text-align:left
+}
+
+a {
+  text-decoration: none !important;
+  &:hover,
+  &:focus {
+    color:inherit;
+  }
+}
+
+
+a,button{
+    text-overflow: ellipsis;
+    text-align:center;
+    border:none;
+    white-space:nowrap;
+    overflow:hidden;
+    padding:0;
+    margin:0;
+    background:transparent; 
+    cursor:pointer;
+}
+
+h2, .h2 {
+  font-size:1.875em;
+}
+h1, h2, h3 {
+  margin:0.625em 0;
+}
+
+ul {
+  padding:0;
+  margin:0;
+  list-style: none;
+}
+
+li {
+  padding:0;
+  margin:0;
+  list-style: none;
+}
+
+textarea{background-image:none;border:solid @cm-border-width @cm-border-grey !important;}
+input{background-image:none;}
+
+textarea:focus, button:focus, input[type="text"]:focus, input[type="password"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="date"]:focus, input[type="month"]:focus, input[type="time"]:focus, input[type="week"]:focus, input[type="number"]:focus, input[type="email"]:focus, input[type="url"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="color"]:focus, .uneditable-input:focus {
+  border: 0;
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0.075) inset, 0 0 0 rgba(126, 239, 104, 0.6);
+  outline: 0 none;
+}
+
+
+.cm-content {
+  position:relative;
+  padding-top: @cm-header-height;
+  padding-bottom: @cm-footer-height;
+  min-height: 100%; /* Mindesthöhe für moderne Browser */
+  height: auto !important; /* Für moderne Browser */
+  height: 100%; /* "Mindesthöhe" für IE <7 */
+  box-sizing:border-box;
+
+  section{
+    header.cm-list-header {
+      position:relative;
+      padding:1.5rem;
+      background:rgba(255,255,255,0.5);
+      h1 {
+        display:block;
+        margin:0;
+        text-align:center;
+        font-weight:bold;
+        font-size:@cm-large-font;
+        margin-bottom:0.5rem;
+      }
+      cm-search-input, .cm-search-input{
+        width:100%;
+      }
+    }
+  }
+  &.no-header{padding-top:0px}
+  &.no-footer{padding-bottom:0px}
+
+  hr {
+    background-color: @cm-border-grey;
+    border: none;
+    border-bottom: 0.01*@cm-unit solid @cm-border-grey;
+    margin: 1em 0.1rem;
+    height:1px;
+  }
+}
+
+.cm-page-body{
+  color:@cm-white;
+  padding:3em;
+}
+
+.single-line{
+  text-overflow:ellipsis;
+  overflow:hidden;
+  white-space:nowrap;
+}
+
+.empty-list{
+  padding:1.5em;
+  white-space:nowrap;
+  background:@cm-white;
+  i{
+    color:@cm-ci-color;
+  }
+}
+

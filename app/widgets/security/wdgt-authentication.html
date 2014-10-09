@@ -19,7 +19,7 @@
         <i class= "fa cm-handshake"     ng-class="{'active': step > 2}"></i>
     </div>
     <div class= "space-for-loader">
-        <cm-loader cm-halt = "waiting" type="balls"></cm-loader>
+        <cm-loader cm-halt="waiting" type="balls"></cm-loader>
     </div>
     <cm-info-bubble class="cm-alert" ng-show="ERROR">
         <div>
@@ -112,17 +112,17 @@
 <cm-footer ng-if = "step == 0" cm-rubber-space>
     <button
             ng-click    = "done()"
-            class       = "cm-btn-block cm-btn-grey"
+            class       = "cm-btn-grey"
             data-qa     = "btn-cancel-authentication"
             cm-weight   = "1"
             >
         {{BASE+"START.CANCEL_BUTTON"|cmTranslate}}
-        <i class="fa cm-checkbox-wrong cm-lg-icon"></i>
+        <i class="fa cm-checkbox-wrong"></i>
     </button>
 
     <button
             ng-click    = "startAuthenticationRequest()"
-            class       = "cm-btn-block cm-btn-grey"
+            class       = "cm-btn-grey"
             data-qa     = "btn-start-authentication"
             cm-weight   = "1"
             >
@@ -132,7 +132,7 @@
         <span ng-if = "ERROR">
             {{BASE+"START.RETRY_BUTTON"|cmTranslate}}
         </span>
-        <i class="fa cm-handshake cm-lg-icon"></i>
+        <i class="fa cm-handshake"></i>
     </button>
 
 </cm-footer>
@@ -140,21 +140,21 @@
 <cm-footer ng-if = "step > 0 && step < 3" cm-rubber-space>
     <button
             ng-click    = "cancel()"
-            class       = "cm-btn-block cm-btn-grey"
+            class       = "cm-btn-grey"
             data-qa     = "btn-cancel-authentication"
             >
         {{BASE+"WAIT.CANCEL_BUTTON"|cmTranslate}}
-        <i class="fa cm-checkbox-wrong cm-lg-icon"></i>
+        <i class="fa cm-checkbox-wrong"></i>
     </button>
 </cm-footer>
 
 <cm-footer ng-if = "step == 3" cm-rubber-space>
     <button
             ng-click    = "done()"
-            class       = "cm-btn-block cm-btn-grey"
+            class       = "cm-btn-grey"
             data-qa     = "btn-start-authentication"
             >
         {{BASE+"SUCCESSFUL.DONE_BUTTON"|cmTranslate}}
-        <i class="fa cm-checkbox-wrong cm-lg-icon"></i>
+        <i class="fa cm-checkbox-wrong"></i>
     </button>
 </cm-footer>

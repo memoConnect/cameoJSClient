@@ -1,0 +1,33 @@
+cm-avatar{
+  .dib;
+  .pos-rel;
+  .no-pad;
+  width:@cm-unit;
+  height:@cm-unit;
+  vertical-align:middle;
+  background-size:cover;
+  overflow:hidden;
+  &.with-name{
+    margin-bottom:2em;
+  }
+  img{
+    .dbl;
+    .w100;
+  }
+  i {
+    .dib;
+    width:100%;
+    height:100%;
+    background-size:cover;
+    background-position:center;
+  }
+  .name{
+    .pos-abs;
+    top:@cm-unit;
+    left:0;
+    right:0;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+}
