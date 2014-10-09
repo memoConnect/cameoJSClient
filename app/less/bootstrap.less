@@ -6,12 +6,16 @@
   width:100%;
   text-align:center;
   height:@cm-unit;
-  color:@cm-white;
-  &:hover{
-    color:@cm-ci-color;
-  }
+  color:@cm-white !important;
   i {
+    color:@cm-white !important;
     margin-left: 1rem;
+  }
+  &:hover{
+    color:@cm-ci-color !important;
+    i{
+      color:@cm-ci-color !important;
+    }
   }
 }
 
