@@ -17,6 +17,7 @@ exp.:
 @cm-border-grey: #CCCCCC;
 @cm-border-lightgrey: #eeeeee;
 @cm-white: #FFFFFF;
+@cm-dark-white: #DFDFDF;
 @cm-black: #000000;
 @cm-green: #66CC00;
 @cm-yellow: #FFCC00;
@@ -198,7 +199,7 @@ textarea:focus, button:focus, input[type="text"]:focus, input[type="password"]:f
 .cm-content {
   position:relative;
   padding-top: @cm-header-height;
-  padding-bottom: @cm-footer-height;
+  padding-bottom: @cm-footer-height + 0.5;
   min-height: 100%; /* Mindesthöhe für moderne Browser */
   height: auto !important; /* Für moderne Browser */
   height: 100%; /* "Mindesthöhe" für IE <7 */

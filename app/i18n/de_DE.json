@@ -59,8 +59,8 @@
             "INVALID_PHONENUMBER": "@:DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER"
         },
         "TITLE": {
-            "HEAD_LOGIN": "Login-Informationen",
-            "HEAD_IDENTITY": "Benutzer-Informationen"
+            "HEAD_LOGIN": "Login Informationen",
+            "HEAD_IDENTITY": "Benutzer Informationen"
         },
         "WARN": {
             "REGISTRATION_FAILED": "Bei der Registrierung ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut."

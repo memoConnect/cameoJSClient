@@ -149,7 +149,6 @@ var cameo_config = {
             guests: true
         },
         'registration': {
-            hasCtrl: true,
             guests: true
         },
         'systemcheck': {
