@@ -1,58 +1,49 @@
-cameoJSClient
-==================
+# cameoJSClient
+cameo Web / MobileWeb / Hybrid client <br>
+[github](https://github.com/memoConnect/cameoJSClient)
 
-cameo Web / MobileWeb / Hybrid client
+## Grunt Tasks
+* watcher
+* app:deploy
+* tests-e2e:all
+* tests-unit
 
+## 3rd party plungins
+* AngularJS <br>
+  [link](https://angularjs.org)
 
-Set your own local environment (exp.: for own local mongoDB)
---------
+* AngularJS translate <br>
+  [github](https://github.com/angular-translate)
 
+* AngularJS loading bar <br>
+  [github](https://chieffancypants.github.io/angular-loading-bar)
 
-Grunt Task (before single run do '$ npm install')
---------
-### create css files initially, or just use watcher task that includes initial css creation
-    $ grunt concat:less less
+* AngularJS emoji filter <br>
+  [github](https://github.com/globaldev/angular-emoji-filter)
 
-#### run only all unit tests
-    $ grunt tests-unit
+* captchagen <br>
+  [github](https://github.com/wearefractal/captchagen)
 
-#### run only all e2e tests
-    $ grunt tests-e2e
+* JSEncrypt <br>
+  [github](https://github.com/travist/jsencrypt)
 
-#### deploy the app to one android device with phonegap-adapter.js
-    $ grunt phonegap phonegap:run
+* Stanford Javascript Crypto Library (SJCL) <br>
+  [link](https://crypto.stanford.edu/sjcl)
 
-#### zip the /app, send to build.phonegap.com and get all app files (.apk, .ipa & .xpa), you need your own Phonegap Build credentials
-    $ grunt phonegap-bs
+* CryptoJS <br>
+  [code.google](https://www.code.google.com/p/crypto-js)
 
-#### deploy /app without phonegap-adapter (copy /app to /dist/app and minify all *.js)
-    $ grunt www dev-deploy
+* FileSaver.js <br>
+  [github](https://github.com/eligrey/FileSaver.js)
 
-#### start a watcher to compile .less to .css files continous
-    $ grunt watcher
+* Blob.js <br>
+  [github](https://github.com/eligrey/Blob.js)
 
-Shell Scripts
---------
-#### setup.sh
-    $ npm prune // clear all unused modules
-    $ npm install // install/update all modules in package.json
+* passchk.js <br>
+  [link](https://rumkin.com/tools/password/passchk.php)
 
-#### test.sh
-    calling setup.sh
-    ----
-    $ grunt tests-unit
-    $ grunt tests-e2e
+* spin.js <br>
+  [github](http://fgnass.github.io/spin.js)
 
-#### phonegap.sh
-    calling setup.sh
-    ----
-    $ adb connect 127.0.0.1:5555 // connect wlan adb device
-    $ adb devices // checking if one devices is connected
-    ----
-    $ grunt phonegap
-    $ grunt phonegap:run
-
-#### compile.sh
-    calling compile.sh
-    ----
-    $ grunt dev-deploy
+* FastClick <br>
+  [github](https://github.com/ftlabs/fastclick)

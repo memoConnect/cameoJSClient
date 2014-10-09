@@ -176,7 +176,6 @@ angular.module('cmCore')
                 } else {
                     cmLogger.debug('Unable to decrypt filename; cmFile.encryptedFileName missing. Try calling cmFile.imporByFile) first.');
                 }
-                console.log('decryptName',passphrase,this.encryptedName,this.name)
                 return this;
             };
 
@@ -375,7 +374,7 @@ angular.module('cmCore')
             };
 
             this.downloadStart = function(autoDownload){
-                cmLogger.debug('cmFileModel:downloadStart');
+                //cmLogger.debug('cmFileModel:downloadStart');
                 // handle straight autodownload
                 this.autoDownload = autoDownload || this.autoDownload;
 
