@@ -11,6 +11,7 @@
 cm-header, .cm-header-block{
   .dbl;
   .pos-fxd;
+  padding:0.3rem 0;
   top:0;
   z-index:11;
   width:@cm-app-width;
@@ -20,8 +21,10 @@ cm-header, .cm-header-block{
   height:@cm-header-height;
   font-size:@cm-mega-font;
   white-space:nowrap;
+  overflow:hidden;
 
   > *{
+    height:@cm-unit;
     vertical-align: middle;
     background:@cm-black;
   }
@@ -31,6 +34,7 @@ cm-header, .cm-header-block{
     .with-cursor;
     .tac;
     .pos-rel;
+    width:@cm-unit;
     z-index:1;
     .back-wrap{
       text-overflow:ellipsis;
@@ -50,7 +54,6 @@ cm-header, .cm-header-block{
     .dib;
     .with-cursor;
     .pos-rel;
-    height:@cm-unit;
     text-overflow:ellipsis;
     overflow:hidden;
     white-space:nowrap;

@@ -37,9 +37,9 @@ module.exports = function(grunt, options){
                 'app-less-files': {
                     src: [
                         'app/less/base/*.less',
-                        'app/less/*!(base|old)/*.less',
+                        'app/less/!(base|_old)/**/*.less',
                         'app/less/theme-base.less',
-                        'app/less/*!(theme-base).less'
+                        'app/less/!(theme-base).less'
                     ],
                     dest: 'dist/css/app.less'
                 },

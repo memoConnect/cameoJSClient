@@ -35,7 +35,7 @@ module.exports = function(grunt, options){
                 },
                 'app-css':{
                     files: [
-                        'app/less/*!(old)/*.less',
+                        'app/less/!(_old)/**/*.less',
                         'app/less/*.less'
                     ],
                     tasks: [
