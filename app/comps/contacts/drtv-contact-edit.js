@@ -74,7 +74,7 @@ angular.module('cmContacts')
                      */
                     $scope.startConversation = function () {
                         if($scope.contact.contactType != 'pending'){
-                            delete $rootScope.pendingConversation
+                            delete $rootScope.pendingConversation;
                             if ($scope.identity) {
                                 $rootScope.pendingRecipients = [$scope.identity]
                             } else {
@@ -84,8 +84,10 @@ angular.module('cmContacts')
                         }
                     };
 
-                    $scope.goToAuthentication = function(identityId){
-                        $rootScope.goTo('authentication/identity/' + identityId);
+                    $scope.goToAuthentication = function(identity){
+                        if(identity.userType != 'external' && identity.publicKeys.length > 0){
+                            $rootScope.goTo('authentication/identity/' + identity.id);
+                        }
                     };
 
                     $scope.saveUser = function(){

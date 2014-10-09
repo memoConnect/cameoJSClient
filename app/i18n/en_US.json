@@ -264,6 +264,7 @@
     },
 
     "CONTACT": {
+        "HEADLINE": "Contact",
         "WIDGET": "Talks",
         "PLACEHOLDER": {
             "CAMEOID": "CameoID",
