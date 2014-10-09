@@ -4924,6 +4924,47 @@ JSEncrypt.prototype.getPublicKeyB64 = function () {
 
 
 
+/* RSA signature */
+
+    // Return the PKCS#1 RSA encryption of "text" as an even-length hex string
+    function RSASign(text, digestMethod) {
+        var m = pkcs1pad2(text,(this.n.bitLength()+7)>>3);
+        if(m == null) return null;
+        var c = m.modPow(this.d, this.n);
+        if(c == null) return null;
+        var h = c.toString(16);
+        if((h.length & 1) == 0) return h; else return "0" + h;
+    }
+
+    function RSAVerify(text, signature, digestMethod) {
+        var c = parseBigInt(signature, 16);
+        var m = c.modPowInt(this.e, this.n);
+        if (m == null) return null;
+        var digest = pkcs1unpad2(m, (this.n.bitLength()+7)>>3);
+        return  ''+digestMethod(digest)+'' === ''+digestMethod(text)+'';
+    }
+
+    RSAKey.prototype.sign = RSASign;
+    RSAKey.prototype.verify = RSAVerify;
+
+    JSEncrypt.prototype.sign = function(text, digestMethod) {
+        try {
+            return this.getKey().sign(text, digestMethod);
+        } catch(ex) {
+            return false;
+        }
+    }
+
+    JSEncrypt.prototype.verify = function(text, signature, digestMethod) {
+        try {
+            return this.getKey().verify(text, signature, digestMethod);
+        } catch (ex) {
+            return false;
+        }
+    }
+
+
+
 exports.JSEncrypt = JSEncrypt;
 })(JSEncryptExports);
 var JSEncrypt = JSEncryptExports.JSEncrypt;

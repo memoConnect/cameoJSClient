@@ -184,6 +184,7 @@ angular.module('cmCore')
                                         ?   $q.when(result)
                                         :   $q.reject(null)
                             })
+
             };
 
             this.verifyKey = function(key, data){

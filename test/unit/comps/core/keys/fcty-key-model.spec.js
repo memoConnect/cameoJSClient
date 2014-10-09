@@ -188,7 +188,7 @@ describe('cmKeyModel', function() {
                 $rootScope.$apply()
             })
 
-            waits(function(){
+            waitsFor(function(){
                 return !!encrypted_secret
             }, "encryption to be done.", 1000)
 
@@ -205,7 +205,7 @@ describe('cmKeyModel', function() {
                 $rootScope.$apply()
             })
 
-            waits(function(){
+            waitsFor(function(){
                 return !!decrypted_secret
             }, "decryption to be done.", 1000)
 
@@ -242,15 +242,13 @@ describe('cmKeyModel', function() {
 
     })
 
-    descr
-    ibe("signing and verification", function(){
+    describe("signing and verification", function(){
         it('should provide functions to sign data and verify signatures.', function(){
-            expect(key.sign).toBeDefined()
-            expect(key.verify).toBeDefined()
+            expect(typeof key.sign).toBe('function')
+            expect(typeof key.verify).toBe('function')
         })
 
-        it('should provide functions to sign and verify keys.', function(){
-            expect(key.signKey).toBeDefined()
+        it('should provide functions to verify keys.', function(){
             expect(key.verifyKey).toBeDefined()
         })
 

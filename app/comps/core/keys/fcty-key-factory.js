@@ -28,16 +28,17 @@ angular.module('cmCore')
                 return  $q.all(
                             self
                             .filter(function(key){
-                                return !whiteList || whiteList.indexOf(key.id) != -1
+                                return  !whiteList || whiteList.indexOf(key.id) != -1
                             })
                             .map(function(key){
+                                console.log('los')
                                 return  key
                                         .encrypt(passphrase)
                                         .then(function(result){
-                                            return {
-                                                keyId:                 key.id,
-                                                encryptedPassphrase:   result
-                                            }
+                                            return  {
+                                                        keyId:                 key.id,
+                                                        encryptedPassphrase:   result
+                                                    }
                                         })
                             })
                          
