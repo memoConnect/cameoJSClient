@@ -1,4 +1,4 @@
-.theme-a&.fill-bg:before{
+.theme-a-bg {
   content:'';
   width: @cm-app-width;
   position: fixed;
@@ -9,6 +9,10 @@
   right: 0;
   margin: 0 auto;
   background-color: #FFFFFF;
+}
+
+.theme-a&.fill-bg:before{
+  .theme-a-bg;
 }
 
 .theme-a{
@@ -25,10 +29,11 @@
     position: relative;
     min-height: 4.00rem;
     .body{
+      width: 100%;
+      line-height: @cm-unit;
       color: #666666;
       display: inline-block;
       position: relative;
-      width: 100%;
       i {
         margin-right: 0.03rem;
         width: @cm-unit;
