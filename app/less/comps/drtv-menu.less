@@ -1,19 +1,19 @@
 cm-menu {
-  text-align:right;
+  .tar;
   .cm-handler{
     .with-cursor;
-    text-align: center;
+    .tac;
     cm-notify-signal {
-      display:block;
-      position: relative;
+      .dbl;
+      .pos-rel;
       z-index: 27;
       i{
         font-size:@cm-mega-font + 0.5;
-        vertical-align:middle;
+        .vam;
       }
     }
     .cm-beta{
-      position: absolute;
+      .pos-abs;
       color:@cm-ci-color;
       top: -0.2rem;
       right: 0;
@@ -22,16 +22,17 @@ cm-menu {
     }
   }
   .cm-menu-layer {
-    position:fixed!important;
+    .pos-fxd;
+    .margin-auto;
     width:@cm-app-width;
     top:0;
     bottom:0;
     left:0;
     right:0;
-    margin:0 auto;
     z-index: 2;
     .cm-menu-list{
-      display:inline-block;
+      .pos-rel;
+      .dib;
       overflow-y:auto;
       overflow-x:hidden;
       height:100%;
@@ -41,25 +42,27 @@ cm-menu {
         line-height: inherit;
       }
       ul{
+        .pos-rel;
         border-top:0;
         background:transparent;
         z-index:1;
-        position: relative;
         li{
-          clear: both;
-          cursor: pointer;
+          .with-cursor;
+          .pos-rel;
+          background:@cm-white;
+          clear:both;
           min-height: 4rem;
           border-bottom: @cm-border-grey @cm-border-width solid;
-          position: relative;
         }
       }
       .cm-nose-wrapper {
+        .pos-rel;
+        .no-border;
+        .no-bg;
         height:@cm-header-height;
         line-height:@cm-mega-font;
-        position:relative;
-        border:0;
         i{
-          position:absolute;
+          .pos-abs;
           bottom:0.5rem;
           right:0.5rem;
           font-size:@cm-large-font+1;
@@ -67,50 +70,48 @@ cm-menu {
         }
       }
       .cm-menu-header {
+        .border-radius-tl;
         cursor:default;
         background-color:@cm-light-grey;
         color:@cm-grey;
-        -webkit-border-top-left-radius:@cm-border-radius;
-        -moz-border-radius-topleft:@cm-border-radius;
-        border-top-left-radius:0.5rem;
         border-top:0;
         white-space:nowrap;
         button {
-          width:50%;
-          display:inline-block;
-          float:left;
-          position:relative;
+          .w50;
+          .dib;
+          .cm-fl;
+          .pos-rel;
           overflow:visible;
         }
         .seperator{
-          position:absolute;
+          .pos-abs;
+          .no-pad;
           right:-0.05rem;
           top:20%;
           bottom:20%;
           width:0.1rem;
           background:@cm-grey;
-          padding:0;
         }
       }
       i{
+        .tac;
         width:@cm-unit - 0.5;
-        text-align:center;
         font-size: @cm-mega-font + 0.1;
         &.icon-left {
           float:left;
         }
         &.icon-right{
+          .tar;
+          .pos-abs;
           width:@cm-unit;
-          text-align:right;
           padding-right:0.5rem;
-          position:absolute;
           right:0;
         }
       }
       a,span{
+        .tal;
+        .cm-fl;
         color:@cm-grey;
-        text-align:left;
-        float:left;
         font-size: 1.5rem;
       }
       button.is-active, button:hover {
@@ -122,9 +123,9 @@ cm-menu {
         }
       }
       .bottom-filler{
-        width:100%;
+        .w100;
+        .pos-abs;
         background:@cm-white;
-        position: absolute;
         z-index:0;
         top:(@cm-header-height)+1em;
         bottom:0;
