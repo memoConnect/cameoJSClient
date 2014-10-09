@@ -1,10 +1,10 @@
 <article class="content edit-identity-head clearfix">
     <div class="cm-fl mr5">
-    <cm-avatar cm-data="identity" cm-view="{{chooseAvatar?'unknown':''}}" ng-show="identity" class="border-complete"></cm-avatar>
-</div>
-    <div class="cm-fl w70">
+        <cm-avatar cm-data="identity" cm-view="{{chooseAvatar?'unknown':''}}" ng-show="identity" class="border-complete"></cm-avatar>
+    </div>
+    <div class="cm-fl w72">
         <ul class="no-border">
-            <li ng-click="goTo('/settings/identity/key/list')" data-qa="start-trust-handshake-btn" ng-click="goToAuthentication(contact.identity.id)"  ng-disabled="getTrust() || !hasKey() || !hasLocalKey">
+            <li data-qa="start-trust-handshake-btn" ng-click="goToAuthentication(contact.identity.id)"  ng-disabled="getTrust() || !hasKey() || !hasLocalKey">
                  <span class="item clearfix">
                     <i ng-if="!hasKey() || !hasLocalKey" class="fa cm-close"></i>
                     <i ng-if="hasKey() && hasLocalKey" class="fa {{ getTrust() ? 'cm-checkbox-right' : 'cm-handshake'}}"></i>
