@@ -1,12 +1,7 @@
-/**
- * Created by reimerei on 25.06.14.
- */
-
 var config = require("../config-e2e-tests.js")
 var util = require("../../lib/e2e/cmTestUtil.js")
 
 describe('Purl Registration: ', function () {
-
     var ptor = util.getPtorInstance();
 
     var internalLogin = ""

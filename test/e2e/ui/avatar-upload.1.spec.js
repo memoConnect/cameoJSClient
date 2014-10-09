@@ -2,12 +2,9 @@ var config = require("../config-e2e-tests.js")
 var util = require("../../lib/e2e/cmTestUtil.js")
 var path = require('path')
 
-var ptor = util.getPtorInstance()
-
 // start init tests
 describe('Avatar Upload: ', function () {
-
-    afterEach(function() { util.stopOnError() })
+    var ptor = util.getPtorInstance()
 
     var avatarStyle = '',
         newAvatar = path.resolve(__dirname, '../data/avatar-upload.jpg'),

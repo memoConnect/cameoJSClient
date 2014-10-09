@@ -1,8 +1,7 @@
 var config = require("../../config-e2e-tests.js")
 var util = require("../../../lib/e2e/cmTestUtil.js")
-var ptor = util.getPtorInstance()
-
 describe('Check key maximum: ',function(){
+    var ptor = util.getPtorInstance()
 
     var privKey = [
         '-----BEGIN RSA PRIVATE KEY-----',

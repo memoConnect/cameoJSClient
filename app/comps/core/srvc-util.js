@@ -158,7 +158,6 @@ angular.module('cmCore')
             } else if (typeof current !== 'undefined' && typeof prev === 'undefined') {
                 return true;
             }
-
             return false;
         };
 

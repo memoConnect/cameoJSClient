@@ -5,10 +5,7 @@ var loginName = "Z" + Date.now();
 var password = "PWD_Z" + Date.now();
 
 describe('Registration: ', function () {
-
     var ptor = util.getPtorInstance()
-    afterEach(function() { util.stopOnError() });
-
 
     it('should contain 7 input fields', function () {
         util.logout()
