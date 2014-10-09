@@ -1,8 +1,25 @@
-.theme-b {
-  .display-table-row:first-child{
-    height:20%;
+cm-widget-login{
+  .dtb{
+    height: 100%;
+    position: relative;
   }
 
+  .dtbr{
+    .w100;
+    &:first-child{
+      height:20%;
+      background-color: @theme-b-bg-color-light;
+    }
+    &:last-child{
+      background-color: @theme-b-bg-color;
+    }
+  }
+
+
+}
+
+
+.theme-b {
   .head {
     height: 20rem;
     .rhino{
