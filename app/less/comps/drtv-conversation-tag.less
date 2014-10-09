@@ -1,0 +1,77 @@
+cm-conversation-tag{
+  .dib;
+  .pos-rel;
+  background: @cm-overlay-light;
+  color: @cm-dark-grey;
+  height: @cm-unit + 2*@cm-vertical-padding;
+  line-hieght:@cm-unit;
+  padding: @cm-vertical-padding 0;
+
+  > * {
+    .vam;
+    height: @cm-unit;
+    padding: 0 @cm-horizontal-padding;
+  }
+
+  .details{
+    .tal;
+
+    .subject, .message, .recipients{
+      .single-line;
+      width: 21rem;
+    }
+
+    .subject, .message {
+      .single-line;
+      .cm-bold;
+      line-height:0.5*@cm-unit;
+      color: @cm-font-color;
+    }
+
+    cm-message{
+      .single-line;
+      line-height: 0.5*@cm-unit;
+      color: @cm-font-color-light;
+      height: @cm-unit/2;
+    }
+  }
+
+  .meta{
+    padding-right:@cm-horizontal-padding;
+
+    .top {
+      .single-line;
+      .tar;
+      font-size: @cm-small-font;
+      line-height:0.4*@cm-unit;
+      .last-updated{
+        margin-left: 1em;
+      }
+    }
+
+    .bottom {
+      .single-line;
+      .tar;
+      font-size: @cm-base-font;
+      line-height: 0.6*@cm-unit;
+
+      > * {
+        .vam;
+      }
+
+      .message-count {
+        .cm-bold;
+      }
+
+      cm-recipient-counter{
+        font-size:1.8em;
+        .background {
+          color:@cm-ci-color;
+        }
+        .foreground {
+          color:@cm-white;
+        }
+      }
+    }
+  }
+}
