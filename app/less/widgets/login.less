@@ -1,12 +1,19 @@
 .theme-b {
+  .display-table-row:first-child{
+    height:20%;
+  }
+
   .head {
     height: 20rem;
     .rhino{
+      position: relative;
       height: 16rem;
-      line-height: @cm-unit;
-      i {
-        line-height: @cm-unit;
-        vertical-align: middle;
+      img {
+        width: 12rem;
+        height: 12rem;
+        position: absolute;
+        top: 2rem;
+        left: 32%;
       }
     }
     .logo {
@@ -28,12 +35,6 @@
     }
     :-ms-input-placeholder { /* Internet Explorer 10+ */
       color: #8D8D8D;
-    }
-
-    .with-inside-icon {
-      i{
-        top: 0.2rem;
-      }
     }
   }
   .cm-login-text {
