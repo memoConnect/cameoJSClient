@@ -8,7 +8,7 @@
         <label>{{'CONVERSATION.PLACEHOLDER.ENCRYPTION' | cmTranslate}}</label>
         <div class="checkbox-of-label">
             <button ng-click="toggleConversationEncryption()" data-qa="btn-encryption">
-                <i class="fa cm-lg-icon cm-ci-color ml15" ng-class="{'cm-checkbox':!conversation.isEncrypted(), 'cm-checkbox-right':conversation.isEncrypted(), 'cm-grey':!conversation.state.is('new')}" data-qa="icon-checkbox-encryption"></i>
+                <i class="fa cm-ci-color ml15" ng-class="{'cm-checkbox':!conversation.isEncrypted(), 'cm-checkbox-right':conversation.isEncrypted(), 'cm-grey':!conversation.state.is('new')}" data-qa="icon-checkbox-encryption"></i>
             </button>
         </div>
     </div>
@@ -67,7 +67,7 @@
 </section>
 
 <cm-footer cm-always-on-top>
-    <button ng-click="goBack()" class="cm-btn-block cm-btn-grey" data-qa="btn-security-done">
+    <button ng-click="goBack()" class="cm-btn-grey" data-qa="btn-security-done">
         {{'CONVERSATION.SETTINGS.OKAY'|cmTranslate}}
     </button>
 </cm-footer>

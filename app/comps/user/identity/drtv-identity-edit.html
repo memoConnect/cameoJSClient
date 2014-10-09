@@ -109,9 +109,9 @@
 </form>
 
 <cm-footer cm-always-on-top>
-    <button class="cm-btn-block cm-btn-grey" ng-click="saveIdentity()" data-qa="btn-saveIdentity">
+    <button class="cm-btn-grey" ng-click="saveIdentity()" data-qa="btn-saveIdentity">
         <span ng-show="!showSpinner">
-            {{'CONTACT.FOOTER.SAVE'|cmTranslate}} <i class="fa cm-checker cm-lg-icon"></i>
+            {{'CONTACT.FOOTER.SAVE'|cmTranslate}} <i class="fa cm-checker"></i>
         </span>
         <cm-loader ng-show="showSpinner" cm-color="ci-color"></cm-loader>
     </button>

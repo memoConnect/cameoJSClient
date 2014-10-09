@@ -28,7 +28,7 @@ angular.module('cmUi').directive('cmOfflineHandler',[
                         'cm-footer-icon': 'cm-change'
                     },
                     '<div class="attention">' +
-                        '<i class="fa cm-attention cm-lg-icon cm-orange"></i> <span ng-bind-html="\'MODAL.OFFLINE_HANDLER.MESSAGE\'|cmTranslate"></span>' +
+                        '<i class="fa cm-attention cm-orange"></i> <span ng-bind-html="\'MODAL.OFFLINE_HANDLER.MESSAGE\'|cmTranslate"></span>' +
                     '</div>',
                     'body',
                     scope);

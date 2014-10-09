@@ -1,6 +1,6 @@
 <section class="body-group recipients" ng-if="conversation.state.is('new') || !conversation.state.is('new') && conversation.recipients.length > 1">
     <label ng-click="toggleRecipientView()">
-        <i class="fa cm-lg-icon" ng-class="{'cm-grid':!showGrid,'cm-menu-weight':showGrid}"></i>
+        <i class="fa" ng-class="{'cm-grid':!showGrid,'cm-menu-weight':showGrid}"></i>
         {{'CONVERSATION.PLACEHOLDER.RECIPIENTS'|cmTranslate}}
         <span class="recipients-counter">({{conversation.recipients.length-1}})</span>
         <span class="recipient-name" ng-show="showGrid">{{recipientName}}</span>

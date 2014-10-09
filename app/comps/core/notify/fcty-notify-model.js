@@ -103,7 +103,7 @@ angular.module('cmCore')
                         'cm-footer-icon': 'cm-close'
                     },
                         '<div class="header">'+
-                        '<i class="fa '+this.icon+' cm-lg-icon"></i> '+cmTranslate('NOTIFICATIONS.MODAL_HEADER.'+this.severity.toUpperCase())+
+                        '<i class="fa '+this.icon+'"></i> '+cmTranslate('NOTIFICATIONS.MODAL_HEADER.'+this.severity.toUpperCase())+
                         '</div>'+
                         '<div class="body">'+
                         '<div>'+cmTranslate(this.label, this.i18n)+'</div>'+

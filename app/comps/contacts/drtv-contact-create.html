@@ -95,9 +95,9 @@
 </div>
 
 <cm-footer ng-hide="disabled">
-    <button data-qa="btn-create-contact" class="cm-btn-block cm-btn-grey" id="registerUserButton" ng-click="saveUser()">
+    <button data-qa="btn-create-contact" class="cm-btn-grey" id="registerUserButton" ng-click="saveUser()">
         <span ng-show="!showSpinner">
-            {{'CONTACT.FOOTER.SAVE'|cmTranslate}} <i class="fa cm-checkbox-right cm-lg-icon"></i>
+            {{'CONTACT.FOOTER.SAVE'|cmTranslate}} <i class="fa cm-checkbox-right"></i>
         </span>
         <cm-loader ng-show="showSpinner" cm-color="ci-color"></cm-loader>
     </button>

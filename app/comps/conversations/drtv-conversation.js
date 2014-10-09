@@ -320,7 +320,7 @@ angular.module('cmConversations')
                                 template:   '<small>{{"CONVERSATION.WARN.RECIPIENTS_MISSING_OKAY"|cmTranslate}}</small>'+
                                             '<i ng-click="conversation.solitary = !conversation.solitary" ng-class="'+
                                                 "{'cm-checkbox':!conversation.solitary, 'cm-checkbox-right':conversation.solitary}"+
-                                            '" class="fa cm-lg-icon cm-ci-color ml15" data-qa = "checkbox-dont-ask-me-again"></i>',
+                                            '" class="fa cm-ci-color ml15" data-qa = "checkbox-dont-ask-me-again"></i>',
                                 templateScope: $scope
                             }
                         );

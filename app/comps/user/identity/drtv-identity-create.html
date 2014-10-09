@@ -81,9 +81,9 @@
 </form>
 
 <cm-footer cm-always-on-top>
-    <button class="cm-btn-block cm-btn-grey" ng-click="addIdentity()" data-qa="btn-identity-create">
+    <button class="cm-btn-grey" ng-click="addIdentity()" data-qa="btn-identity-create">
         <span ng-show="!showSpinner">
-            {{'SETTINGS.PAGES.IDENTITY.CREATE.FOOTER'|cmTranslate}} <i class="fa cm-checker cm-lg-icon"></i>
+            {{'SETTINGS.PAGES.IDENTITY.CREATE.FOOTER'|cmTranslate}} <i class="fa cm-checker"></i>
         </span>
         <cm-loader ng-show="showSpinner" cm-color="ci-color"></cm-loader>
     </button>

@@ -1,5 +1,5 @@
 <h2>
-    <i class="fa cm-search cm-lg-icon"></i>
+    <i class="fa cm-search"></i>
     {{'CONTACTS.HEADING.SEARCH'|cmTranslate}}
 </h2>
 
@@ -13,7 +13,7 @@
     <div class="modal-row">
         <textarea placeholder="{{'CONTACTS.PLACEHOLDER.REQUEST_MESSAGE'|cmTranslate}}" ng-model="contact.message" data-qa="input-friendrequestMessage"></textarea>
     </div>
-    <button class="cm-btn cm-btn-block cm-btn-grey" ng-click="sendRequest(contact)" data-qa="btn-sendRequest">
+    <button class="cm-btn-grey" ng-click="sendRequest(contact)" data-qa="btn-sendRequest">
         {{'CONTACTS.LABEL.SEND_REQUEST'|cmTranslate}}
         <i class="fa cm-send"></i>
     </button>
@@ -42,7 +42,7 @@
                 <strong>{{contact.getDisplayName()}}</strong>
             </section>
             <section class="icon-list">
-                <i class="fa cm-contacts cm-lg-icon"></i>
+                <i class="fa cm-contacts"></i>
             </section>
         </li>
     </ul>

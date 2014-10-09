@@ -1,21 +1,20 @@
 cm-modal {
-  display: none;
-  position: fixed;
+  .dpn;
+  .pos-fxd;
+  .margin-hr-auto;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
   z-index: 99999;
   width: 32rem;
-  margin: 0 auto;
-
   &.active {
-    display: block;
+    .dbl;
   }
 
   .backdrop {
     background-color: @cm-overlay-dark;
-    position: absolute;
+    .pos-abs;
     top: 0;
     bottom: 0;
     left: 0;
@@ -40,21 +39,21 @@ cm-modal {
   }
 
   article {
+    .pos-rel;
+    .border-radius;
+    .margin-auto;
     z-index: 2;
-    position: relative;
-    background: #fff;
-    border-radius: @cm-border-radius;
+    background:@cm-white;
     width: 28rem;
-    margin: auto;
     margin-top: @cm-header-height;
 
     header {
-      position: relative;
-      text-align: center;
+      .pos-rel;
+      .tac;
 
       button.close {
-        position: absolute;
-        display: block;
+        .pos-abs;
+        .dbl;
         top: 0;
         left: 0;
         font-size: 0.75*@cm-unit;
@@ -62,21 +61,16 @@ cm-modal {
         line-height: @cm-unit;
         height: @cm-unit;
         width: @cm-unit;
-        /* TODO: compensate bootstrap */
-        float: none !important;
-        font-weight: normal !important;
-        opacity: 1 !important;
-        text-shadow: initial !important;
         z-index:1;
       }
 
       h2 {
+        .vam;
+        .tac;
+        .no-pad;
         font-size: @cm-large-font;
         line-height: @cm-unit;
         font-weight: bold;
-        vertical-align: middle;
-        text-align: center;
-        padding: 0 !important;
         margin: 0 @cm-unit;
         background-color: transparent !important;
         width: auto;
@@ -92,25 +86,26 @@ cm-modal {
     }
 
     .content {
-      display: block;
-      text-align: left;
+      .dbl;
+      .tal;
       padding: 1rem;
 
       div.header, div.cm-alert {
-        text-align: center !important;
+        .tac;
       }
 
       button, .modal-link {
-        display: block;
+        .dbl;
+        .single-line;
+        .tal;
+        .vam;
+        text-decoration:none;
         min-height: @cm-unit;
         line-height: @cm-unit;
         color: @cm-font-color;
         font-size: @cm-large-font;
-        text-align: left;
-        vertical-align: middle;
-        .single-line;
-
         i {
+          .vam;
           color: @cm-font-color;
           width: @cm-unit;
           height: @cm-unit;
@@ -125,25 +120,21 @@ cm-modal {
         }
       }
 
-      button {
-        text-align: center;
-      }
-
       .modal-row {
         border-top: @cm-border-grey @cm-border-width solid;
         padding: 0.5rem 1.5rem;
         textarea {
-          display: block;
+          .dbl;
           width: 100%;
         }
       }
 
       ul.modal-list{
         li {
-          cursor: pointer;
+          .with-cursor;
+          .pos-rel;
           height: @cm-unit;
           border-bottom: @cm-border-grey @cm-border-width solid;
-          position: relative;
           &:last-child{
             border-bottom: 0;
           }
@@ -158,24 +149,10 @@ cm-modal {
     }
 
     footer {
+      .no-pad;
       background-color:@cm-bg-color;
-      padding:0;
       font-size:@cm-large-font;
       line-height:@cm-footer-height;
-
-      button, a {
-        display:inline-block;
-        height:100%;
-        text-align:center;
-        border-radius: 0;
-        background: transparent;
-        border:none;
-        padding:0;
-        .cm-ci-color;
-        overflow: hidden;
-        text-decoration:none;
-        line-height: @cm-footer-height;
-      }
     }
 
     &.cm-modal-plain {}
@@ -192,8 +169,8 @@ cm-modal {
   }
 
   .nose {
-    position: absolute;
-    color: #fff;
+    .pos-abs;
+    color: @cm-white;
     font-size: 3rem;
 
     &.top {
@@ -214,42 +191,28 @@ cm-modal {
 
     &.top,
     &.bottom {
-
       margin: 0 @cm-border-radius;
-
       &.flip {
-        -moz-transform: scaleX(-1);
-        -webkit-transform: scaleX(-1);
-        -o-transform: scaleX(-1);
-        transform: scaleX(-1);
-        -ms-filter: fliph; /*IE*/
-        filter: fliph; /*IE*/
+        .flip-x;
       }
     }
 
     &.left,
     &.right {
-
       margin: @cm-border-radius 0;
-
       &.flip {
-        -moz-transform: scaleY(-1);
-        -webkit-transform: scaleY(-1);
-        -o-transform: scaleY(-1);
-        transform: scaleY(-1);
-        -ms-filter: flipv; /*IE*/
-        filter: flipv; /*IE*/
+        .flip-y;
       }
     }
   }
 
   &.with-title {
     .content {
-      margin-top: 5em;
+      margin-top: @cm-unit;
       .modal-outer-title {
-        text-align: center;
-        width: 100%;
-        position: absolute;
+        .tac;
+        .w100;
+        .pos-abs;
         top: -1.5em;
         .cm-ci-color;
         font-size: 2em
@@ -259,19 +222,19 @@ cm-modal {
 
   &.no-padding {
     .content {
-      padding: 0;
+      .no-pad;
     }
   }
 
   &.webreader{
     font-size:@cm-large-font;
-    text-align:center;
+    .tac;
     .attention{
       .cm-orange;
     }
     .redirect{
       .cm-grey;
-      text-align:center;
+      .tac;
       i{
         .cm-grey;
       }
