@@ -36,7 +36,6 @@ var cameo_config = {
             resolveOnBoot: true
         },
         'login': {
-            hasCtrl: true,
             isDefault: true,
             css: 'no-header no-footer',
             guests: false
