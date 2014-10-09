@@ -118,10 +118,11 @@
 </form>
 
 <cm-footer>
-    <button id="registerUserButton" class="cm-btn-block" ng-click="createUser()" data-qa="btn-createUser">
+    <button id="registerUserButton" class="cm-btn-black" ng-click="createUser()" data-qa="btn-createUser">
         <span ng-show="!showSpinner">
-            {{'REGISTER.LABEL.SUBMIT'|cmTranslate}} <i class="fa cm-checkbox-right cm-lg-icon"></i>
+            {{'REGISTER.LABEL.SUBMIT'|cmTranslate}}
         </span>
+        <i class="fa cm-right cm-lg-icon" ng-show="!showSpinner"></i>
         <cm-loader ng-show="showSpinner" cm-color="#02BED2"></cm-loader>
     </button>
 </cm-footer>
