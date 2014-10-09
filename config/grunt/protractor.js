@@ -4,9 +4,9 @@ module.exports = function (grunt, options) {
 
     grunt.registerTask('tests-e2e', [
         'tests-e2e:prepare',
-//        'protractor:tier1',
+        'protractor:tier1',
         'protractor:tier2'
-//        'protractor:tier3'
+        'protractor:tier3'
     ]);
     grunt.registerTask('tests-e2e:tier1', [
         'tests-e2e:prepare',
