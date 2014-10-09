@@ -9,7 +9,7 @@ angular.module('cmUser').directive('cmLogin', [
     '$location',
     function (cmNotify, cmUserModel, cmKeyStorageService, cmCrypt, cmConfig, $location) {
         return  {
-            restrict    :   'A',
+            restrict    :   'AE',
             templateUrl :   'comps/user/drtv-login.html',
             scope       :   {},
             controller  :   function ($scope, $rootScope) {
