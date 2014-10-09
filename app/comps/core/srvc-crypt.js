@@ -155,74 +155,75 @@ angular.module('cmCore')
                 if(typeof secretKey != 'string' || secretKey.length < 1){ //Todo: längere Keys verlangen
                     cmLogger.warn('cmCrypt.encrypt(): unable to encrypt, invalid key.'+secretKey)
                     return "";
-                    }
+                }
 
-                    if (null == secretString)
-                        return "";
+                if (null == secretString)
+                    return "";
 
-                    if (secretKey.length < 60) {
-                        cmLogger.debug("cmCrypt.encrypt(): key too short.")
-                        return "";
-                    }
+                if (secretKey.length < 60) {
+                    cmLogger.debug("cmCrypt.encrypt(): key too short.")
+                    return "";
+                }
 
 
-                    var encryptedSecretString = sjcl.json.encrypt(String(secretKey), String(secretString), parameters);
+                var encryptedSecretString = sjcl.json.encrypt(String(secretKey), String(secretString), parameters);
 
-                    return encryptedSecretString;
-                },
-                /**
-                 * this method decrypts uuencoded strings
-                 * @param secretKey a secret key
-                 * @param secretString a base64 encoded string that should be decrypted
-                 * @returns decrypted string or false if unable to decrypt
-                 */
-                decrypt: function (secretKey, secretString) {
+                return encryptedSecretString;
+            },
+            /**
+             * this method decrypts uuencoded strings
+             * @param secretKey a secret key
+             * @param secretString a base64 encoded string that should be decrypted
+             * @returns decrypted string or false if unable to decrypt
+             */
+            decrypt: function (secretKey, secretString) {
 
-                    if (secretString != '' && typeof secretString == 'object') {
-                        secretString = JSON.stringify(secretString)
-                    }
+                if (secretString != '' && typeof secretString == 'object') {
+                    secretString = JSON.stringify(secretString)
+                }
 
-                    if (typeof secretKey != 'string' || secretKey.length < 1) {
-                        return false;
-                    }
+                if (typeof secretKey != 'string' || secretKey.length < 1) {
+                    return false;
+                }
 
-                    if (null == secretString)
-                        return false;
+                if (null == secretString)
+                    return false;
 
-                    var decryptedString;
+                var decryptedString;
 
-                    try {
-                        decryptedString = sjcl.decrypt(secretKey, secretString)
-                    } catch (e) {
-                        //                    cmLogger.warn('Unable to decrypt.', e)
-                        //                    console.warn(e)
-                    }
+                try {
+                    decryptedString = sjcl.decrypt(secretKey, secretString)
+                } catch (e) {
+                    //                    cmLogger.warn('Unable to decrypt.', e)
+                    //                    console.warn(e)
+                }
 
-                    return decryptedString || false
-                },
+                return decryptedString || false
+            },
 
-                /**
-                 * return the bit size of possible keygeneration
-                 * @returns {string[]}
-                 */
-                getKeySizes: function () {
-                    return ['2048', '4096'];
-                },
+            /**
+             * return the bit size of possible keygeneration
+             * @returns {string[]}
+             */
+            getKeySizes: function () {
+                return ['2048', '4096'];
+            },
 
-                /**
-                 * start async process
-                 * @param keylen
-                 * @param $scopeState
-                 * @returns {Promise.promise|*|webdriver.promise.Deferred.promise}
-                 */
+            /**
+             * start async process
+             * @param keylen
+             * @param $scopeState
+             * @returns {Promise.promise|*|webdriver.promise.Deferred.promise}
+             */
             generateAsyncKeypair: function(keySize){
-                    if (keySize == undefined ||
-                        typeof keySize != 'number') {
-                        return false;
-                    }
+                if (keySize == undefined ||
+                    typeof keySize != 'number') {
+                    return false;
+                }
 
-                    async.promise = $q.defer();
-                    // start keygen over webworker
+                async.promise = $q.defer();
+                // start keygen over webworker
+                
                 if(cmWebworker){
                     keygenWorker = new cmWebworker('keygen')
 

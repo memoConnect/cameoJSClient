@@ -49,16 +49,15 @@
         */
 
 angular.module('cmCore')
-.service('cmWebworker',[
+.factory('cmWebworker',[
 
     '$q',
     '$timeout',
     
-    function WebWorker($q, $timeout){
+    function cmWebWorker($q, $timeout){
 
-        if(!window.Worker){
+        if(!window.Worker)
             return false
-        } 
 
         return function WebWorkerInstance(job_name){
             var worker      = new Worker('webworker/'+job_name+'.js'),
@@ -69,7 +68,7 @@ angular.module('cmCore')
             this.start = function(data, timeout){
                 var onMessage   =  function(event){
                                         if(event.data.msg == 'finished')
-                                            deferred.resolve(event.data.secret)
+                                            deferred.resolve(event.data)
 
                                         if(['canceled', 'failed', 'error'].indexOf(event.data.msg) != -1)
                                             deferred.reject(event.data)

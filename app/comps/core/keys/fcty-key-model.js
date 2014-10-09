@@ -145,7 +145,12 @@ angular.module('cmCore')
             };
 
             this.encrypt = function(secret){
-                return crypt && crypt.encrypt(secret);
+                return  $q.when(crypt && crypt.encrypt(secret))
+                        .then(function(result){
+                            return  result
+                                    ?   $q.when(result)
+                                    :   $q.reject(null)
+                        });
             };
 
             this.decrypt = function(encrypted_secret){
@@ -154,6 +159,14 @@ angular.module('cmCore')
                                 privKey:            this.getPrivateKey(),
                                 encryptedSecret:    encrypted_secret
                             })
+                            .then(
+                                function(result){
+                                    return result.secret
+                                },
+                                function(){
+                                    return $q.reject(null)
+                                }
+                            )
                         :   $q.when(crypt && crypt.decrypt(encrypted_secret))
                             .then(function(result){
                                 return  result

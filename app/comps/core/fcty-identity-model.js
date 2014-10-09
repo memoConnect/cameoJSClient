@@ -173,13 +173,6 @@ angular.module('cmCore')
                 this.lastUpdated            = undefined;
             };
 
-            //Encrypt passphrase with all available public keys
-            //Identities cannot decrypt, Users can
-            this.encryptPassphrase = function(passphrase, whiteList){
-                cmLogger.debug('indentityModel: encryptPassphrase is deprecated, use keys.encryptPassphrase instead.')
-                return this.keys.encryptPassphrase(passphrase, whiteList)
-            };
-
             this.getDisplayName = function(){
                 var cameoId = this.cameoId || '',
                     name = this.displayName || cameoId.split("@")[0] || this.id;

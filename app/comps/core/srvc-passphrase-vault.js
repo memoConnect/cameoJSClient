@@ -219,9 +219,14 @@ angular.module('cmCore').service('cmPassphraseVault',[
                         ,
                         //asymmetrically encrypt:
                         asym:   couldBeAPassphrase(config.passphrase)
-                                ?   config.identities.reduce(function(list, identity){
-                                        return list.concat(identity.encryptPassphrase(config.passphrase, config.restrict_to_keys))
-                                    }, [])
+                                ?   $q.all(
+                                        config.identities.map(function(identity){
+                                            return identity.keys.encryptPassphrase(config.passphrase, config.restrict_to_keys)
+                                        })
+                                    )
+                                    .then(function(results){
+                                        return Array.concat.apply([], results)
+                                    })
                                 :   $q.when([])
                     })
                     .then(
