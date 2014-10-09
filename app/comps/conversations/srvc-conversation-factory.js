@@ -35,6 +35,8 @@ angular.module('cmConversations').service('cmConversationFactory', [
 
         self.getList = function(limit, offset){
 //            cmLogger.debug('cmConversationFactory.getList');
+            if(cmUserModel.isGuest() || self.state.is('loading'))
+                return false;
 
             self.state.set('loading');
 

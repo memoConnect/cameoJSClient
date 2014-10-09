@@ -2,15 +2,10 @@ var config = require("../../config-e2e-tests.js")
 var util = require("../../../lib/e2e/cmTestUtil.js")
 
 describe('Identity key settings: ', function () {
-
     var ptor = util.getPtorInstance()
     var login
     var password = "password"
     var keyName = "Moeps key"
-
-    afterEach(function () {
-        util.stopOnError()
-    });
 
     it('create new user and open identity settings', function () {
         login = util.createTestUser()

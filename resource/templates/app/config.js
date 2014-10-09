@@ -22,7 +22,8 @@ var cameo_config = {
         },
         'start-welcome': {
             guests: false,
-            routes: ['/start/welcome']
+            routes: ['/start/welcome'],
+            resolveOnBoot: true
         },
         'start-quickstart': {
             hasCtrl: true,
@@ -31,7 +32,8 @@ var cameo_config = {
         },
         'start-keyinfo': {
             guests: false,
-            routes: ['/start/keyinfo']
+            routes: ['/start/keyinfo'],
+            resolveOnBoot: true
         },
         'login': {
             hasCtrl: true,

@@ -60,7 +60,6 @@ angular.module('cmConversations')
             
             this.recipients         = new cmFactory(cmIdentityModel);      //list of cmIdentityModel objects
             this.messages           = new cmFactory(cmMessageModel);        //list of MessageModel objects
-            //--> meta
 
             this.timeOfCreation     = 0;          //timestamp of the conversation's creation
             //--> meta
@@ -115,14 +114,15 @@ angular.module('cmConversations')
             function init(data){
 //                cmLogger.debug('cmConversationModel:init');
 
+                // via id
                 if(typeof data == 'string' && data.length > 0){
                     self.id = data;
-                    self.load();
+                    self.update();
+                // via data.id
                 } else if(typeof data == 'object' && ('id' in data)){
                     self.id = data.id;
-
                     if(cmUtil.objLen(data) < 2){
-                        self.load();
+                        self.update();
                     } else {
                         self.importData(data);
                     }
@@ -382,7 +382,7 @@ angular.module('cmConversations')
              * @returns {Promise} for async handling
              */
             this.save = function(){
-                return  this.state.is('new')
+                return this.state.is('new')
                         ?   cmConversationsAdapter.newConversation( this.exportData() ).then(
                                 function (conversation_data) {
                                     self
@@ -407,33 +407,17 @@ angular.module('cmConversations')
             };
 
             this.update = function(conversation_data){
-                var offset = 0;
-                var clearAllMessages = true;
+                var offset = 0,
+                    limit = 10,
+                    clearAllMessages = false;
 
                 if(this.id){
                     if(typeof conversation_data !== 'undefined'){
                         if(this.messages.length < conversation_data.numberOfMessages) {
-                            if (this.messages.length > 1) {
-                                offset = this.messages.length;
-                                clearAllMessages = false;
-                            }
-                            var limit = conversation_data.numberOfMessages - offset;
-                            this._updateConversation(limit, offset, clearAllMessages);
+                            this._updateConversation(limit, self.messages.length, clearAllMessages);
                         }
                     } else {
-                        cmConversationsAdapter.getConversationSummary(this.id).then(
-                            function(data){
-                                if(self.messages.length < data.numberOfMessages){
-                                    if(self.messages.length > 1){
-                                        offset = self.messages.length;
-                                        clearAllMessages = false;
-                                    }
-                                    var limit = data.numberOfMessages - offset;
-
-                                    self._updateConversation(limit, offset, clearAllMessages);
-                                }
-                            }
-                        )
+                        self._updateConversation(limit, self.messages.length, clearAllMessages);
                     }
                 }
 
@@ -448,6 +432,8 @@ angular.module('cmConversations')
             this._updateConversation = function(limit, offset, clearMessages){
                 cmConversationsAdapter.getConversation(this.id, limit, offset).then(
                     function(data){
+
+                        self.state.set('loadedMessages');
 
                         /**
                          * Message Handling
@@ -744,7 +730,7 @@ angular.module('cmConversations')
 
                     this.passCaptcha = cmFileFactory.create(conversation_data.passCaptcha);
                     this.passCaptcha
-                        .downloadStart();
+                        .downloadStart(true);
                 }
 
                 return this;

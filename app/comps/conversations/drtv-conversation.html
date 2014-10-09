@@ -73,15 +73,16 @@
     </div>
 </section>
 
+<button class="cm-btn" ng-if="conversation && conversation.numberOfMessages > conversation.messages.length" ng-show="conversation.numberOfMessages != conversation.messages.length" ng-click="loadPreviousMessages()">
+    {{'CONVERSATION.LABEL.LOAD_PREVIOUS'|cmTranslate}}
+</button>
+
 <div id="conversation-top"></div>
 
 <div
-    ng-repeat="message in conversation.messages | orderBy:'created':false "
-    cm-scroll-to="{anchor:'#conversation-bottom',force:'bottom'}"
-    cm-last-message>
-    <cm-date-seperator ng-if="(compareDate(message.created,conversation.messages[$index - 1].created))">
-        <cm-time-converter cm-timestamp="message.created" cm-special-type="'date-seperator'"></cm-time-converter>
-    </cm-date-seperator>
+    ng-repeat="message in (filteredData = (conversation.messages | orderBy:'created':false))"
+    cm-scroll-to="{anchor:'#conversation-bottom',force:'bottom'}">
+    <cm-date-seperator cm-timestamp="message.created" cm-timestamp-prev="filteredData[$index - 1].created"></cm-date-seperator>
     <!-- moep - don't delete - ask empu^^ -->
     <cm-message cm-data="message" cm-data-conversation="conversation"></cm-message>
 </div>

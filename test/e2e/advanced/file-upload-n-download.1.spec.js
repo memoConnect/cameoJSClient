@@ -1,8 +1,6 @@
-var config = require("../config-e2e-tests.js")
-var util = require("../../lib/e2e/cmTestUtil.js")
-var path = require('path')
-
-var ptor = util.getPtorInstance(),
+var config = require("../config-e2e-tests.js"),
+    util = require("../../lib/e2e/cmTestUtil.js"),
+    path = require('path'),
     subjectUnsafe = 'subjectUnsafe FileUpload',
     subjectSafe = 'subjectSafe FileUpload',
     smallImageJPG = path.resolve(__dirname, '../data/file-upload-image-24KB.jpg'),
@@ -20,6 +18,8 @@ var ptor = util.getPtorInstance(),
 // expect functions
 function testFile(file, extension, index) {
     var selector = '.file'
+
+
 
     chooseFileAndUpload(file, selector, index);
 
@@ -89,10 +89,7 @@ function getFilename(file) {
 
 // start init tests
 describe('FileUpload unsafe upload: ', function () {
-
-    afterEach(function () {
-        util.stopOnError()
-    })
+    var ptor = util.getPtorInstance()
 
     it('login create & new conversation', function () {
         util.login()
@@ -135,9 +132,7 @@ describe('FileUpload unsafe upload: ', function () {
 })
 
 describe('FileDownload: ',function(){
-    afterEach(function () {
-        util.stopOnError()
-    })
+    var ptor = util.getPtorInstance()
 
     it('login goto conversation where files uploaded', function () {
         util.login()

@@ -1,16 +1,15 @@
 var config = require("../../config-e2e-tests.js")
 var util = require("../../../lib/e2e/cmTestUtil.js")
-var ptor = util.getPtorInstance()
 
 describe('Route Settings Account: ', function(){
+    var ptor = util.getPtorInstance()
+
     var loginName = 'testuser23_',
         genLoginName = '',
         phoneNumber = '+1234567890',
         email = 'moep@moep.de',
         oldPassword = 'password',
         newPassword = 'holymoly'
-
-    afterEach(function() { util.stopOnError() });
 
     describe('Check Form', function() {
         it('should be load at "#/settings/" after registration and btn exists.', function () {

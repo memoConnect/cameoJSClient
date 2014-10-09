@@ -1,13 +1,9 @@
 var config = require("../config-e2e-tests.js")
 var util = require("../../lib/e2e/cmTestUtil.js")
-var ptor = util.getPtorInstance()
 var path = require('path')
 
-xdescribe('transfer scope data registration', function () {
-
-    afterEach(function () {
-        util.stopOnError()
-    });
+describe('transfer scope data registration', function () {
+    var ptor = util.getPtorInstance()
 
     it('fill out registration with validation timeout', function () {
         util.logout()
@@ -52,10 +48,7 @@ xdescribe('transfer scope data registration', function () {
 })
 
 describe('transfer scope data conversation', function () {
-
-    afterEach(function () {
-        util.stopOnError()
-    });
+    var ptor = util.getPtorInstance()
 
     var msg = 'oida wird dit hier mitjenommen?',
         msg2 = 'juhu buhu',

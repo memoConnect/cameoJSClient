@@ -42,7 +42,6 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
 
                 $scope.showKeySize = false;
                 $scope.toggleKeySize = function(){
-                    //console.log('toggleKeySize', $scope.showKeySize)
                     if(!$scope.showKeySize){
                         $scope.showKeySize = true;
                     } else {
@@ -175,8 +174,6 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
                             .then(
                                 function(result){
                                     if(cmUserModel.data.identity.keys.some(function(key){
-                                        console.log(key.id)
-                                        console.log(result.data.keyId)
                                         return key.id != result.data.keyId
                                     })){
                                         $scope.goto('/authentication')
