@@ -145,17 +145,28 @@ angular.module('cmCore')
             };
 
             this.encrypt = function(secret){
-                return  $q.when(crypt && crypt.encrypt(secret))
-                        .then(function(result){
-                            return  result
-                                    ?   $q.when(result)
-                                    :   $q.reject(null)
-                        });
+                return  cmWebworker
+                        ?   new cmWebworker('rsa_encrypt')
+                            .start({
+                                pubKey:     this.getPublicKey(),
+                                secret:     secret
+                            })
+                            .then(function(result){
+                                return  result.secret
+                            })
+
+                        :   $q.when(crypt && crypt.encrypt(secret))
+                            .then(function(result){
+                                return  result
+                                        ?   $q.when(result)
+                                        :   $q.reject(null)
+                            });
             };
 
             this.decrypt = function(encrypted_secret){
                 return  cmWebworker
-                        ?   new cmWebworker('rsa_decrypt').start({
+                        ?   new cmWebworker('rsa_decrypt')
+                            .start({
                                 privKey:            this.getPrivateKey(),
                                 encryptedSecret:    encrypted_secret
                             })

@@ -242,33 +242,48 @@ describe('cmKeyModel', function() {
 
     })
 
-    it('should provide functions to sign data and verify signatures', function(){
+    descr
+    ibe("signing and verification", function(){
+        it('should provide functions to sign data and verify signatures.', function(){
+            expect(key.sign).toBeDefined()
+            expect(key.verify).toBeDefined()
+        })
 
-        var data =  {
-                        key_1 : 'my value',
-                        key_2 : 'my_second_value'
-                    },
-            pub_key = new cmKey()
+        it('should provide functions to sign and verify keys.', function(){
+            expect(key.signKey).toBeDefined()
+            expect(key.verifyKey).toBeDefined()
+        })
 
 
-        key.setKey(privateKey)
-        pub_key.setKey(publicKey)
+
+        it('should provide functions to sign data and verify signatures', function(){
+
+            var data =  {
+                            key_1 : 'my value',
+                            key_2 : 'my_second_value'
+                        },
+                pub_key = new cmKey()
 
 
-        //sign hashed Object
-        var signature = key.sign(cmCrypt.hashObject(data))
+            key.setKey(privateKey)
+            pub_key.setKey(publicKey)
 
-        expect(signature).toBeDefined()
-        expect(pub_key.verify('abc', signature)).toBe(false)
-        expect(pub_key.verify(cmCrypt.hashObject(data), signature)).toBe(true)
 
-        //sign hashed String
-        var signature = key.sign('my special string')
+            //sign hashed Object
+            var signature = key.sign(cmCrypt.hashObject(data))
 
-        expect(signature).toBeDefined()
-        expect(pub_key.verify('abc', signature)).toBe(false)
-        expect(pub_key.verify('my special string', signature)).toBe(true)
+            expect(signature).toBeDefined()
+            expect(pub_key.verify('abc', signature)).toBe(false)
+            expect(pub_key.verify(cmCrypt.hashObject(data), signature)).toBe(true)
 
+            //sign hashed String
+            var signature = key.sign('my special string')
+
+            expect(signature).toBeDefined()
+            expect(pub_key.verify('abc', signature)).toBe(false)
+            expect(pub_key.verify('my special string', signature)).toBe(true)
+
+        })
     })
 
 
