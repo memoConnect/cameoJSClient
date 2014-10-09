@@ -4,7 +4,7 @@
     </div>
     <div class="cm-fl w72">
         <ul class="no-border">
-            <li data-qa="start-trust-handshake-btn" ng-click="goToAuthentication(contact.identity.id)"  ng-disabled="getTrust() || !hasKey() || !hasLocalKey">
+            <li data-qa="start-trust-handshake-btn" ng-click="goToAuthentication(contact.identity)"  ng-disabled="getTrust() || !hasKey() || !hasLocalKey">
                  <span class="item clearfix">
                     <i ng-if="!hasKey() || !hasLocalKey" class="fa cm-close"></i>
                     <i ng-if="hasKey() && hasLocalKey" class="fa {{ getTrust() ? 'cm-checkbox-right' : 'cm-handshake'}}"></i>
