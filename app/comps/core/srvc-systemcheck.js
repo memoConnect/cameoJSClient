@@ -21,7 +21,7 @@ angular.module('cmCore').service('cmSystemCheck', [
         cmObject.addEventHandlingTo(this);
 
         this.getBrowserInfo = function(){
-            cmLogger.debug('cmSystemCheck.getBrowserInfo');
+            //cmLogger.debug('cmSystemCheck.getBrowserInfo');
 
             var deferred = $q.defer();
 
@@ -32,7 +32,6 @@ angular.module('cmCore').service('cmSystemCheck', [
                 }
             }).then(
                 function(data){
-                    console.log('data', data)
                     if(!cmUserModel.isAuth()){
                         var language = data.languageCode.substr(0,2),
                             lc       = language == 'de' ? 'de_DE' : 'en_US';
@@ -60,7 +59,7 @@ angular.module('cmCore').service('cmSystemCheck', [
          * @returns {boolean}
          */
         this.checkClientVersion = function(forceRedirect){
-            cmLogger.debug('cmSystemCheck.checkClientVersion');
+            //cmLogger.debug('cmSystemCheck.checkClientVersion');
 
             var deferred = $q.defer();
 
