@@ -1,6 +1,4 @@
-html, body{
-  .full-height;
-}
+html, body{.h100}
 
 body{
   font-size: @cm-base-font;
@@ -104,7 +102,7 @@ button{
 #cm-app, #cm-bg-wrapper{
   .dbl;
   .pos-rel;
-  .full-height;
+  .full-view;
   .no-pad;
   //max-width is set via javascript in screen.js
   .margin-hr-auto;
@@ -131,7 +129,7 @@ button{
 
 .cm-content {
   .pos-rel;
-  .full-height;
+  .full-view;
   padding-top: @cm-header-height;
   padding-bottom: @cm-footer-height + 0.5;
   &.no-header{padding-top:0}

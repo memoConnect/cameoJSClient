@@ -1,5 +1,5 @@
 <h2>
-    <i class = "fa cm-key"></i>
+    <i class="fa cm-key"></i>
     {{
     [
     BASE+"PAGE_HEADLINE",
@@ -11,14 +11,13 @@
     | cmTranslate}}
 </h2>
 
-
 <article class="content">
     <div class= "authentication-status">
         <i class= "fa cm-key-request"   ng-class="{'active': step > 0}"></i>
         <i class= "fa cm-key-response"  ng-class="{'active': step > 1}"></i>
         <i class= "fa cm-handshake"     ng-class="{'active': step > 2}"></i>
     </div>
-    <div class= "space-for-loader">
+    <div class="space-for-loader">
         <cm-loader cm-halt="waiting" type="balls"></cm-loader>
     </div>
     <cm-info-bubble class="cm-alert" ng-show="ERROR">
@@ -28,8 +27,6 @@
     </cm-info-bubble>
     
 </article>
-
-
 
 <hr/>
 
@@ -45,7 +42,7 @@
 
         | cmTranslate}}
     </h3>
-    <cm-info-bubble nose-x = "60%">
+    <cm-info-bubble nose-x = "40%">
         {{
         [
         BASE+"EXPLANATION",
@@ -96,10 +93,7 @@
     </strong>
 </article>
 
-
 <br/>
-
-
 
 <article ng-if="step != 3 && !!getTimeout()" class="content">
     <cm-timeout cm-data = "getTimeout()">
@@ -107,14 +101,11 @@
     </cm-timeout>
 </article>
 
-
-
-<cm-footer ng-if = "step == 0" cm-rubber-space>
+<cm-footer ng-if="step == 0">
     <button
             ng-click    = "done()"
-            class       = "cm-btn-grey"
+            class       = "cm-btn-grey dib w50"
             data-qa     = "btn-cancel-authentication"
-            cm-weight   = "1"
             >
         {{BASE+"START.CANCEL_BUTTON"|cmTranslate}}
         <i class="fa cm-checkbox-wrong"></i>
@@ -122,9 +113,8 @@
 
     <button
             ng-click    = "startAuthenticationRequest()"
-            class       = "cm-btn-grey"
+            class       = "cm-btn-grey dib w50"
             data-qa     = "btn-start-authentication"
-            cm-weight   = "1"
             >
         <span ng-if = "!ERROR">
             {{BASE+"START.START_BUTTON"|cmTranslate}}
