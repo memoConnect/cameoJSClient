@@ -121,6 +121,9 @@ angular.module('cmConversations')
                             error: function(maxFileSize, header) {
                                 $scope.isSending = false;
                                 $scope.isSendingAbort = true;
+
+                                // TODO: header['X-File-Name'] decrypt!!!
+
                                 cmNotify.warn('CONVERSATION.WARN.FILESIZE_REACHED', {
                                     ttl: 0,
                                     i18n: {

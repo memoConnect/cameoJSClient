@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('cmFiles').directive('cmFilesPreview',[
-    '$rootScope',
-    function($rootScope) {
+    '$rootScope', '$document',
+    function($rootScope, $document) {
         return {
             restrict: 'E',
             templateUrl: 'comps/files/drtv-files-preview.html',
@@ -13,8 +13,10 @@ angular.module('cmFiles').directive('cmFilesPreview',[
                     cmFilesCtrl.removeFile(file);
                 };
 
-                $rootScope.$on('textArea:resize', function(event,newHeight){
-                    element.css('bottom',newHeight);
+                $rootScope.$on('textArea:resize', function(event){
+                    var answerMessage = $document[0].querySelector('div.answer .message');
+                    console.log(answerMessage.offsetHeight)
+                    element.css('bottom',answerMessage.offsetHeight+'px');
                 });
             }
         }
