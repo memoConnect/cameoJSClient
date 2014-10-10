@@ -10,7 +10,14 @@ angular.module('cmWidgets').directive('cmWidgetSystemcheck', [
             templateUrl: 'widgets/systemcheck/wdgt-systemcheck.html',
             controller: function ($scope, $element) {
                 $scope.localStorage = cmSystemCheck.checkLocalStorage();
-                $scope.clientVersionCheck = cmSystemCheck.checkClientVersion();
+                cmSystemCheck.checkClientVersion(false).then(
+                    function(){
+                        $scope.clientVersionCheck = true;
+                    },
+                    function(){
+                        $scope.clientVersionCheck = false
+                    }
+                );
 
                 $scope.version = cmVersion.version;
 

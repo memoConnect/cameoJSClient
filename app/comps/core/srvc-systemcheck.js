@@ -21,7 +21,7 @@ angular.module('cmCore').service('cmSystemCheck', [
         cmObject.addEventHandlingTo(this);
 
         this.getBrowserInfo = function(){
-            //cmLogger.debug('cmSystemCheck.getBrowserInfo');
+            cmLogger.debug('cmSystemCheck.getBrowserInfo');
 
             var deferred = $q.defer();
 
@@ -32,6 +32,7 @@ angular.module('cmCore').service('cmSystemCheck', [
                 }
             }).then(
                 function(data){
+                    console.log('data', data)
                     if(!cmUserModel.isAuth()){
                         var language = data.languageCode.substr(0,2),
                             lc       = language == 'de' ? 'de_DE' : 'en_US';
@@ -43,6 +44,7 @@ angular.module('cmCore').service('cmSystemCheck', [
                     } else {
                         $rootScope.clientVersionCheck = true;
                     }
+
                     deferred.resolve();
                 },
                 function(){
@@ -58,14 +60,16 @@ angular.module('cmCore').service('cmSystemCheck', [
          * @returns {boolean}
          */
         this.checkClientVersion = function(forceRedirect){
-            //cmLogger.debug('cmSystemCheck.checkClientVersion');
+            cmLogger.debug('cmSystemCheck.checkClientVersion');
+
+            var deferred = $q.defer();
 
             if('clientVersionCheck' in $rootScope){
                 if($rootScope.clientVersionCheck == false){
                     this.trigger('check:failed', {forceRedirect:forceRedirect});
-                    return false;
+                    return deferred.reject();
                 } else {
-                    return true;
+                    return deferred.resolve();
                 }
             } else {
                 this.getBrowserInfo().then(
@@ -73,10 +77,12 @@ angular.module('cmCore').service('cmSystemCheck', [
                         return self.checkClientVersion(forceRedirect);
                     },
                     function(){
-                        return true;
+                        return deferred.resolve();
                     }
                 )
             }
+
+            return deferred.promise;
         };
 
         this.checkLocalStorage = function(forceRedirect){
