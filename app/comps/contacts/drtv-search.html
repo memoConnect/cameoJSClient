@@ -5,7 +5,7 @@
 
 <cm-modal id="modalSendRequest" class="no-padding" cm-data-as="contact" cm-title="CONTACTS.HEADING.SEND_REQUEST">
     <div class="modal-row" cm-rubber-space>
-        <cm-avatar class="mr5" cm-data="contact"></cm-avatar>
+        <cm-avatar cm-data="contact"></cm-avatar>
         <div class="cm-request-brief" cm-weight="1">
             <strong>{{contact.getDisplayName()}}</strong>
         </div>
@@ -40,7 +40,7 @@
 <section class="mt15" ng-if="(results.length > 0)">
     <ul>
         <li ng-repeat="contact in results" ng-click="openModal('modalSendRequest',contact)" data-qa="btn-openModal" class="contact-search-item">
-            <cm-avatar class="mr5" cm-data="contact"></cm-avatar>
+            <cm-avatar cm-data="contact"></cm-avatar>
             <section class="identityName" cm-weight="1">
                 <strong>{{contact.getDisplayName()}}</strong>
             </section>

@@ -13,17 +13,15 @@ cm-footer {
   height: @cm-footer-height;
 
   button, a {
-    display: inline-block !important;
-
+    .pos-rel;
     &.deactivated{
       .no-box-shadow;
       color:@cm-dark-grey;
     }
     i {
-      .cm-lg-icon;
-      position: absolute !important;
-      top: 0;
+      .pos-abs;
       right: 2rem;
+
     }
   }
 }

@@ -14,6 +14,7 @@
                 tabindex="1" data-qa="input-displayname"
                 type="text" name="displayName" ng-model="identity.displayName"
                 required />
+            <i class="fa cm-write"></i>
         </div>
         <cm-info-bubble class="cm-alert" ng-show="error.displayName">
             <div ng-show="error.displayName">
@@ -37,6 +38,7 @@
                         type="text" name="phoneNumber" ng-model="item.value"
                         cm-validate-phone cm-adaptive-change
                          />
+                    <i class="fa cm-write"></i>
                 </div>
                 <!--<div cm-type-chooser cm-choose-value-to="item"></div>-->
                 <cm-info-bubble class="cm-alert" ng-show="formPhone.phoneNumber.$dirty && formPhone.phoneNumber.$invalid">
@@ -71,6 +73,7 @@
                         tabindex="3" data-qa="input-email"
                         name="email" ng-model="item.value"
                         cm-validate-email />
+                    <i class="fa cm-write"></i>
                 </div>
                 <cm-info-bubble class="cm-alert" ng-show="formEmail.email.$dirty && formEmail.email.$invalid">
                     <div ng-show="formEmail.email.$invalid">

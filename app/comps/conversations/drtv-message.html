@@ -1,6 +1,6 @@
 <article class="clearfix" ng-if="!textOnly && messageProper()">
     <div ng-if="!is_my_own_message" class="avatar cm-fl">
-        <cm-avatar class="mr5" cm-data="message.from"></cm-avatar>
+        <cm-avatar cm-data="message.from"></cm-avatar>
     </div>
     <div class="message {{ is_my_own_message ? 'right' : 'left'}} cm-fl">
         <span class="nose {{ is_my_own_message ? 'right' : 'left'}}"><i class="fa {{ is_my_own_message ? 'cm-nose-right' : 'cm-nose-left'}}"></i></span>

@@ -101,7 +101,7 @@
             <i
                     id="agbCheckbox"
                     data-qa="icon-checkbox-agb"
-                    class="fa cm-lg-icon cm-ci-color ml15"
+                    class="fa cm-ci-color ml15"
                     ng-class="{
                     'cm-checkbox':registrationForm.agb.$invalid,
                     'cm-checkbox-right':!registrationForm.agb.$invalid
@@ -122,7 +122,7 @@
         <span ng-show="!showSpinner">
             {{'REGISTER.LABEL.SUBMIT'|cmTranslate}}
         </span>
-        <i class="fa cm-right cm-lg-icon" ng-show="!showSpinner"></i>
+        <i class="fa cm-right" ng-show="!showSpinner"></i>
         <cm-loader ng-show="showSpinner" cm-color="#02BED2"></cm-loader>
     </button>
 </cm-footer>

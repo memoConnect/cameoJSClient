@@ -32,7 +32,7 @@
 <form name="cmForm" novalidate autocomplete="off">
     <article class="content">
         <label>{{'CONTACT.PLACEHOLDER.CAMEOID'|cmTranslate}}</label>
-        <div class="cm-input-ctn with-inside-icon cm-icon-grey">
+        <div class="cm-input-ctn cm-input-readonly">
             <i class="fa cm-rhino-positive"></i>
             <input
                 tabindex="1" data-qa="input-cameoId" required disabled
@@ -44,10 +44,11 @@
 
     <article class="content">
         <label>{{'CONTACT.PLACEHOLDER.DISPLAYNAME'|cmTranslate}}</label>
-        <div class="cm-input-ctn">
+        <div class="cm-input-ctn with-inside-icon">
             <input
                 tabindex="2" data-qa="input-displayname" required
                 type="text" name="displayName" ng-model="identity.displayName" ng-keyup="validateDisplayName();" />
+            <i class="fa cm-write"></i>
         </div>
         <cm-info-bubble class="cm-alert" ng-show="cmForm.displayName.$dirty && cmForm.displayName.$invalid && cmForm.displayName.length > 0">
             <div ng-show="cmForm.displayName.$error.required">
@@ -61,10 +62,11 @@
     <label class="content">{{'CONTACT.PLACEHOLDER.PHONENUMBER'|cmTranslate}}</label>
     <cm-multi-input cm-collection="identity.phoneNumbers" class="content">
         <ng-form name="formPhone">
-            <div class="cm-input-ctn with-chooser">
+            <div class="cm-input-ctn with-chooser with-inside-icon">
                 <input
                     tabindex="3" data-qa="input-phonenumber"
                     type="text" name="phoneNumber" ng-model="item.value" cm-validate-phone cm-adaptive-change />
+                <i class="fa cm-write"></i>
             </div>
             <!--<div cm-type-chooser cm-choose-value-to="item"></div>-->
             <cm-info-bubble class="cm-alert" data-qa="form-error-phoneNumber-invalid" ng-show="formPhone.phoneNumber.$dirty && formPhone.phoneNumber.$invalid">
@@ -80,10 +82,11 @@
     <label class="content">{{'CONTACT.PLACEHOLDER.EMAIL'|cmTranslate}}</label>
     <cm-multi-input cm-collection="identity.emails" class="content">
         <ng-form name="formEmail">
-            <div class="cm-input-ctn with-chooser">
+            <div class="cm-input-ctn with-chooser with-inside-icon">
                 <input
                     tabindex="4" data-qa="input-email"
                     name="email" ng-model="item.value" cm-validate-email cm-adaptive-change />
+                <i class="fa cm-write"></i>
             </div>
             <!--<div cm-type-chooser cm-choose-value-to="item"></div>-->
             <cm-info-bubble class="cm-alert" ng-show="formEmail.email.$dirty && formEmail.email.$invalid">

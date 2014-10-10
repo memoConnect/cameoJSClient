@@ -68,7 +68,7 @@
     <cm-footer>
         <button ng-click="cancel()" class="cm-btn-grey" data-qa="btn-cancel-key-generation">
             {{'IDENTITY.KEYS.GENERATE.GENERATING.STOP_BUTTON'|cmTranslate}}
-            <i class="fa cm-checkbox-wrong cm-lg-icon"></i>
+            <i class="fa cm-checkbox-wrong"></i>
         </button>
     </cm-footer>
 </div>
@@ -96,27 +96,24 @@
     </article>
 
     <hr class="margin-small" />
-
-    <h3 class="content" ng-bind-html="'IDENTITY.KEYS.GENERATE.SAVE.KEY_NAME' | cmParse"></h3>
-
-    <article class="content">
-        <div class="cm-form-group">
-            <div class="cm-form-control with-inside-icon">
+    <form>
+        <article class="content">
+            <label>{{'IDENTITY.KEYS.GENERATE.SAVE.KEY_NAME'|cmTranslate}}</label>
+            <div class="cm-input-ctn with-inside-icon">
                 <input
                         tabindex="1"
                         type="text"
                         ng-model="keyName"
                         data-qa='input-key-name'
                         />
-                <i class="fa cm-write cm-lg-icon"></i>
+                <i class="fa cm-write"></i>
             </div>
-        </div>
-    </article>
-
+        </article>
+    </form>
     <cm-footer>
         <button ng-click="store()" class="cm-btn-grey" data-qa="btn-save-key">
             {{'IDENTITY.KEYS.GENERATE.SAVE.SAVE_BUTTON'|cmTranslate}}
-            <i class="fa cm-checker cm-lg-icon"></i>
+            <i class="fa cm-checker"></i>
         </button>
     </cm-footer>
 </div>

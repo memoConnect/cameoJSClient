@@ -10,9 +10,9 @@
     <i
         class="fa cm-input-addon"
         ng-class="{
+            'cm-write': !hasReservationSecret(),
             'cm-checkbox-right':hasReservationSecret()
         }"
-        ng-show="hasError() || hasReservationSecret()"
         data-qa="icon-cameoId-reserved"></i>
 </div>
 <cm-info-bubble class="cm-alert" ng-show="errors.toolong" data-qa="cameoId-info-user-max-letter-count">

@@ -1,12 +1,14 @@
 <h2>
-    <i class="fa cm-new-contact cm-lg-icon"></i>
+    <i class="fa cm-new-contact"></i>
     {{'CONTACTS.HEADING.CREATE'|cmTranslate}}
 </h2>
 
-<article class="content" ng-if="canReadLocalContacts()">
+<article class="content">
     <cm-info-bubble nose-x="55%">
         <span ng-bind-html="'CONTACTS.INFO.IMPORT_POSSIBLE' | cmParse"></span>
     </cm-info-bubble>
 </article>
+
+<hr ng-if="canReadLocalContacts()">
 
 <cm-contact-create></cm-contact-create>

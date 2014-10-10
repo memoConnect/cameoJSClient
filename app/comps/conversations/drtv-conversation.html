@@ -16,11 +16,10 @@
                 class="add-new-recipients"
                 ng-click="goto('conversation/'+(conversation.id||'new')+'/recipients')"
                 ng-if="conversation.recipients.length == 1 && conversation.state.is('new')">
-                <cm-avatar class="mr5" cm-view="unknown"></cm-avatar>
+                <cm-avatar cm-view="unknown"></cm-avatar>
                 <span>{{'CONVERSATION.PLACEHOLDER.ADD_RECIPIENTS'|cmTranslate}}</span>
             </div>
                 <cm-avatar
-                    class="mr5"
                     cm-data="recipient"
                     ng-click="showName(recipient)"
                     ng-class="{

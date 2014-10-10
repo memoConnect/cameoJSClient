@@ -51,16 +51,12 @@
 </ul>
 
 <cm-footer ng-if="canCreate" data-qa="canCreate">
-    <a href="#/settings/identity/key/create"
-       class="cm-btn-grey w50"
-       data-qa="btn-create-key">
-        <span>{{'SETTINGS.PAGES.IDENTITY.KEYS.CREATE.BUTTON'|cmTranslate}}</span>
-        <i class="fa cm-create-key icon-left cm-lg-icon"></i>
-    </a>
-    <a href="#/settings/identity/key/import"
-       class="cm-btn-grey w50"
-       data-qa="btn-import-key">
-        <span>{{'SETTINGS.PAGES.IDENTITY.KEYS.IMPORT.BUTTON'|cmTranslate}}</span>
-        <i class="fa cm-import-key icon-left cm-lg-icon"></i>
-    </a>
+    <button class="cm-btn-grey dib w50" data-qa="btn-create-key" ng-click="goto('settings/identity/key/create')">
+        {{'SETTINGS.PAGES.IDENTITY.KEYS.CREATE.BUTTON'|cmTranslate}}
+        <i class="fa cm-create-key"></i>
+    </button>
+    <button class="cm-btn-grey dib w50" data-qa="btn-import-key" ng-click="goto('settings/identity/key/import')">
+        {{'SETTINGS.PAGES.IDENTITY.KEYS.IMPORT.BUTTON'|cmTranslate}}
+        <i class="fa cm-import-key n"></i>
+    </button>
 </cm-footer>

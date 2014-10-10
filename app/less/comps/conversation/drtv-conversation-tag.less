@@ -5,7 +5,7 @@ cm-conversation-tag{
   color: @cm-dark-grey;
   height: @cm-unit + 2*@cm-vertical-padding;
   line-hieght:@cm-unit;
-  padding: @cm-vertical-padding 0;
+  padding:@cm-vertical-padding @cm-horizontal-padding;
 
   > * {
     .vam;
@@ -36,7 +36,8 @@ cm-conversation-tag{
   }
 
   .meta{
-    padding-right:0.5rem;
+    position: relative;
+    right: 1rem;
 
     .top {
       .single-line;
