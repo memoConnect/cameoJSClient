@@ -850,7 +850,7 @@ angular.module('cmCore')
         });
 
         this.on('update:finished', function(){
-            cmBoot.resolve();
+            cmBoot.ready.userModel();
         });
 
         cmAuth.on('identity:updated signatures:updated', function(event, data){

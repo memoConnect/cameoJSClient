@@ -1,52 +1,88 @@
 'use strict';
 // TODO: doku and tests
 angular.module('cmCore')
-.provider('cmBoot', [
-    function(){
-        var promise = undefined;
+.service('cmBoot', [
+    'cmObject',
+    '$q', '$rootScope', '$document',
+    function(cmObject,
+             $q, $rootScope, $document) {
+        var promises = {};
 
-        this.ready = function($q){
-            if (promise == undefined) {
-                promise = $q.defer();
-            }
-            return promise.promise;
-        };
+        function reset(){
+            //promises = {};
+            delete promises.userModel;
+        }
 
-        this.$get = [
-            '$q',
-            '$rootScope',
-            '$document',
-            function($q, $rootScope, $document) {
+        $rootScope.$on('logout', function(){
+            reset();
+        });
 
-                $rootScope.$on('logout', function(){
-                    promise = undefined;
-                });
+        $rootScope.$on('identity:switched', function(){
+            reset();
+        });
 
-                $rootScope.$on('identity:switched', function(){
-                    promise = undefined;
-                });
+        $rootScope.$on('appSpinner', function(event, action){
+            // hide app spinner
+            angular.element($document[0].querySelector('.app-spinner'))
+                .css('display',action == 'hide'?'none':null);
+        });
 
-                $rootScope.$on('appSpinner', function(event, action){
-                    // hide app spinner
-                    angular.element($document[0].querySelector('.app-spinner')).css('display',action == 'hide'?'none':null);
-                });
+        function onAllPromises(){
+            var allPromises = Object.getOwnPropertyNames(promises).map(function(key) {
+                return promises[key].promise;
+            });
 
-                $rootScope.$on('$routeChangeSuccess', function(){
-                    $rootScope.$broadcast('appSpinner','hide');
-                });
+            $q.all(allPromises)
+            .then(function(){
+                $rootScope.$broadcast('appSpinner','hide');
+            });
+        }
 
-                return {
-                    resolve: function(){
-                        if(promise == undefined) {
-                            promise = $q.defer();
-                        }
+        var self = {
+            init: {
+                userModel: function(){
+                    if(!('userModel' in promises)){
+                        promises.userModel = $q.defer();
+                        onAllPromises();
 
-                        $rootScope.$broadcast('appSpinner','hide');
-
-                        promise.resolve();
+                        self.on('yeahItsReady',function(){
+                            promises.userModel.resolve();
+                        });
                     }
                 }
+            },
+
+            isReady: {
+                i18n: function(){
+                    if(!('i18n' in promises)){
+                        promises.i18n = $q.defer();
+                        onAllPromises();
+
+                        $rootScope.$on('$translateLoadingSuccess', function(){
+                            promises.i18n.resolve();
+                        });
+                    }
+
+                    return promises.i18n.promise;
+                },
+                userModel: function(){
+                    self.init.userModel();
+
+                    return promises.userModel.promise;
+                }
+            },
+
+            ready: {
+                userModel: function(){
+                    self.init.userModel();
+
+                    self.trigger('yeahItsReady');
+                }
             }
-        ]
+        };
+
+        cmObject.addEventHandlingTo(self);
+
+        return self;
     }
 ]);

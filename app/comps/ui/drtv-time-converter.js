@@ -9,15 +9,16 @@ angular.module('cmUi').directive('cmTimeConverter',[
             scope: {
                 timestamp: '=cmTimestamp',
                 dateFormat: '=cmDateFormat',
-                specialType: '=cmSpecialType'
+                specialType: '@cmSpecialType'
             },
             template: '<span>{{time | date: format}}</span>',
             controller: function($scope){
+
                 /**
                  * Set Time
                  */
                 if(typeof $scope.timestamp != 'undefined'){
-                    var d = new Date($scope.timestamp);
+                    var d = new Date(parseInt($scope.timestamp));
                 } else {
                     var d = new Date()
                 }
