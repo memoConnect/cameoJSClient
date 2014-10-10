@@ -13,7 +13,7 @@ angular.module('cmPhonegap')
 
         var self = {
             plugin: null,
-            debug: true,
+            debug: false,
 
             init: function(){
                 if(typeof $phonegapCameoConfig == 'undefined') {
@@ -35,8 +35,11 @@ angular.module('cmPhonegap')
             },
 
             isApp: function(){
-                if(this.debug)
+                if(this.debug) {
                     cmLogger.warn('cmPhonegap.cmDevice.debug == true!!!');
+                    this.plugin = {};
+                }
+
                 return this.debug || !this.debug && this.existsPlugin();
             },
 
