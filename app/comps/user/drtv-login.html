@@ -1,5 +1,14 @@
 <form class="form-signin" role="form" autocomplete="off" data-qa="modal-login">
 
+    <article class="content" ng-if="cmEnv.autoLogin">
+        <select ng-model="formData.autologin" class="cm-form-control btn-block autologin" ng-change="changeAutologin()">
+            <option value="none">{{'LOGIN.LABEL.AUTO'|cmTranslate}}</option>
+            <option ng-repeat="(user,prop) in loginData">{{user}}</option>
+        </select>
+    </article>
+
+    <hr class="margin-small" ng-if="cmEnv.autoLogin">
+
     <article class="content">
         <div class="cm-input-ctn" ng-class="{'cm-input-error':alertState!=''}" cm-input-watcher>
             <input
@@ -21,24 +30,13 @@
         </div>
     </article>
 
-    <hr class="margin-small" ng-if="cmEnv.autoLogin">
-
-    <article class="content" ng-if="cmEnv.autoLogin">
-        <select ng-model="formData.autologin" class="cm-form-control btn-block autologin" ng-change="changeAutologin()">
-            <option value="none">{{'LOGIN.LABEL.AUTO'|cmTranslate}}</option>
-            <option ng-repeat="(user,prop) in loginData">{{user}}</option>
-        </select>
-    </article>
-
-    <hr class="margin-small" ng-if="cmEnv.autoLogin">
-
     <article class="content" ng-hide="alertState==''" data-qa="login-info">
         <cm-info-bubble class="cm-alert">
             <div><i class="fa cm-info"></i><span ng-bind-html="'LOGIN.INFO.'+alertState|cmParse"></span></div>
         </cm-info-bubble>
     </article>
 
-    <hr class="margin-small" ng-if="!cmEnv.autoLogin">
+    <hr class="margin-small">
 
     <article class="item" data-qa="login-submit-btn" ng-click="doLogin()">
         <span class="body tac">
