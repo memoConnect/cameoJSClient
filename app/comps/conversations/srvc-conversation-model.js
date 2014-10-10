@@ -43,13 +43,12 @@ angular.module('cmConversations')
     'cmUtil',
     'cmFilesAdapter',
     'cmKeyStorageService',
-    'cmCallbackQueue',
     '$q',
     '$rootScope',
     
     function (cmBoot, cmConversationsAdapter, cmMessageModel, cmIdentityFactory, cmIdentityModel, cmFileFactory,
               cmCrypt, cmUserModel, cmFactory, cmStateManagement, cmNotify, cmObject, cmLogger, cmPassphraseVault,
-              cmSecurityAspectsConversation, cmUtil, cmFilesAdapter, cmKeyStorageService, cmCallbackQueue,
+              cmSecurityAspectsConversation, cmUtil, cmFilesAdapter, cmKeyStorageService,
               $q, $rootScope){
 
         function ConversationModel(data){
@@ -246,6 +245,8 @@ angular.module('cmConversations')
                 
                 this.keyTransmission = passphraseVault.getKeyTransmission()
 
+                console.log(this.keyTransmission)
+
                 /**
                  * Important for none encrypted Conversations
                  */
@@ -409,7 +410,6 @@ angular.module('cmConversations')
                         )
             };
 
-            //TODO: is this function actually used?
             this.update = function(conversation_data){
                 var offset = 0,
                     limit = 10,
@@ -543,7 +543,8 @@ angular.module('cmConversations')
              * @returns {Boolean} succees Returns Boolean
              */
             this.decrypt = function () {
-                cmLogger.debug('cmConversationModel.decrypt');
+
+                cmLogger.debug('cmConversationModel.decrypt', + self.subject);
 
 
                 this.getPassphrase()
@@ -632,6 +633,8 @@ angular.module('cmConversations')
              * @returns {Promise} Returns a promise to resolve with passphrase
              */
             this.getPassphrase = function(){
+                console.log(this.isEncrypted())
+
                 if(!this.isEncrypted())
                     return $q.reject()
 
