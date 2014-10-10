@@ -40,9 +40,10 @@ angular.module('cmUi').directive('cmInfoBubble',[
 
                         var offset = getOffsetSum(element[0])
 
-                        var bodyAndHtml = angular.element($document[0].querySelectorAll('body,html'));
+                        var bodyAndHtml = angular.element($document[0].querySelectorAll('body,html')),
+                            cmHeader = angular.element($document[0].querySelector('cm-header'))
                         angular.forEach(bodyAndHtml, function (tag) {
-                            tag.scrollTop = offset.top;
+                            tag.scrollTop = offset.top - cmHeader[0].offsetHeight;
                         });
                     }
                 });
