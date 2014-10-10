@@ -19,7 +19,7 @@
 
 <ul ng-if="(publicKeys.length > 0)">
     <li ng-repeat="key in publicKeys | orderBy:sortByPrivKeys" data-qa="key-list-item">
-        <a href="#/settings/identity/key/edit/{{key.id}}" class="item tal clearfix">
+        <div ng-click="goTo('settings/identity/key/edit/'+key.id)" class="item tal clearfix">
             <strong>{{key.name}}</strong>
             <span class="second-row">
                 {{privateKeys.find(key).getSize() || key.getSize() || key.size}}
@@ -35,7 +35,7 @@
                 </span>
                 {{key.created | date:'dd.MM.yy - HH:mm'}}
             </span>
-        </a>
+        </div>
         <div class="short-links">
             <i class="fa cm-handshake" ng-if="!isTrustedKey(key) && isHandshakePossible" ng-click="goTo('/authentication/'+key.id, id)" data-qa="btn-start-handshake"></i>
             <i class="fa cm-export-key" ng-if="privateKeys.find(key)" ng-click="goTo('settings/identity/key/edit/'+key.id)"></i>
