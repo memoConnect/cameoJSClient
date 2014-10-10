@@ -2097,6 +2097,9 @@ var RSAGenerateAsync = function (B, E, callback) {
     this.e = parseInt(E, 16);
     var ee = new BigInteger(E, 16);
     var rsa = this;
+
+    RSAKey.prototype.cancelAsync(true); //TODO: pull request
+
     // These functions have non-descript names because they were originally for(;;) loops.
     // I don't know about cryptography to give them better names than loop1-4.
     var loop1 = function() {
@@ -2115,9 +2118,12 @@ var RSAGenerateAsync = function (B, E, callback) {
                 rsa.dmp1 = rsa.d.mod(p1);
                 rsa.dmq1 = rsa.d.mod(q1);
                 rsa.coeff = rsa.q.modInverse(rsa.p);
-                setTimeout(function(){callback()},0); // escape
+                RSAKey.prototype.setTimeout(function(){
+                  RSAKey.prototype.cancelAsync();
+                  callback()
+                },0, 'end of loop4'); // escape
             } else {
-                setTimeout(loop1,0);
+                RSAKey.prototype.setTimeout(loop1,0,'loop1');
             }
         };
         var loop3 = function() {
@@ -2125,9 +2131,9 @@ var RSAGenerateAsync = function (B, E, callback) {
             rsa.q.fromNumberAsync(qs, 1, rng, function(){
                 rsa.q.subtract(BigInteger.ONE).gcda(ee, function(r){
                     if (r.compareTo(BigInteger.ONE) == 0 && rsa.q.isProbablePrime(10)) {
-                        setTimeout(loop4,0);
+                        RSAKey.prototype.setTimeout(loop4,0,'loop4');
                     } else {
-                        setTimeout(loop3,0);
+                        RSAKey.prototype.setTimeout(loop3,0,'loop3');
                     }
                 });
             });
@@ -2137,18 +2143,34 @@ var RSAGenerateAsync = function (B, E, callback) {
             rsa.p.fromNumberAsync(B - qs, 1, rng, function(){
                 rsa.p.subtract(BigInteger.ONE).gcda(ee, function(r){
                     if (r.compareTo(BigInteger.ONE) == 0 && rsa.p.isProbablePrime(10)) {
-                        setTimeout(loop3,0);
+                        RSAKey.prototype.setTimeout(loop3,0,'loop3');
                     } else {
-                        setTimeout(loop2,0);
+                        RSAKey.prototype.setTimeout(loop2,0,'loop2');
                     }
                 });
             });
         };
-        setTimeout(loop2,0);
+        RSAKey.prototype.setTimeout(loop2,0,'loop2');
     };
-    setTimeout(loop1,0);
+    RSAKey.prototype.setTimeout(loop1,0,'loop1');
 };
 RSAKey.prototype.generateAsync = RSAGenerateAsync;
+
+RSAKey.prototype.generationCanceled = false;
+
+RSAKey.prototype.setTimeout = function(callback, timeout, name){
+    if(!RSAKey.prototype.generationCanceled){
+        setTimeout(callback, timeout);
+    }
+};
+
+RSAKey.prototype.cancelAsync = function(reset){
+    if(!reset) {
+        RSAKey.prototype.generationCanceled = true;
+    } else {
+        RSAKey.prototype.generationCanceled = false;
+    }
+};
 
 // Public API method
 var bnGCDAsync = function (a, callback) {
@@ -2183,12 +2205,12 @@ var bnGCDAsync = function (a, callback) {
         }
         if(!(x.signum() > 0)) {
             if (g > 0) y.lShiftTo(g, y);
-            setTimeout(function(){callback(y)},0); // escape
+            RSAKey.prototype.setTimeout(function(){callback(y)},0, 'end of gcda1'); // escape
         } else {
-            setTimeout(gcda1,0);
+            RSAKey.prototype.setTimeout(gcda1,0, 'gcda1');
         }
     };
-    setTimeout(gcda1,10);
+    RSAKey.prototype.setTimeout(gcda1,10, 'gcda1');
 };
 BigInteger.prototype.gcda = bnGCDAsync;
 
@@ -2210,12 +2232,12 @@ var bnpFromNumberAsync = function (a,b,c,callback) {
         bnp.dAddOffset(2,0);
         if(bnp.bitLength() > a) bnp.subTo(BigInteger.ONE.shiftLeft(a-1),bnp);
         if(bnp.isProbablePrime(b)) {
-            setTimeout(function(){callback()},0); // escape
+            RSAKey.prototype.setTimeout(function(){callback()},0, 'end of bnpfn1'); // escape
         } else {
             bnpfn1();
         }
       };
-      setTimeout(bnpfn1,0);
+      RSAKey.prototype.setTimeout(bnpfn1,0, 'bnpfn1');
     }
   } else {
     var x = new Array(), t = a&7;
@@ -4864,6 +4886,15 @@ JSEncrypt.prototype.getKey = function (cb) {
   }
   return this.key;
 };
+
+//TODO: pullrequest
+
+JSEncrypt.prototype.cancelAsync = function(){
+    if (this.key) {
+        this.key.cancelAsync();
+    }
+};
+
 
 /**
  * Returns the pem encoded representation of the private key
