@@ -15,7 +15,7 @@
     </cm-info-bubble>
 </article>
 
-<hr ng-if="(showNoLocalKeysOnThisDevice || showUntrustedPublickeysExists) && (publicKeys.length == 0)" class="margin-small" />
+<hr ng-if="(showNoLocalKeysOnThisDevice || showUntrustedPublickeysExists)  && (publicKeys.length > 0)" class="margin-small" />
 
 <ul ng-if="(publicKeys.length > 0)">
     <li ng-repeat="key in publicKeys | orderBy:sortByPrivKeys" data-qa="key-list-item">
@@ -52,13 +52,13 @@
 
 <cm-footer ng-if="canCreate" data-qa="canCreate">
     <a href="#/settings/identity/key/create"
-       class="item w50 no-pad cm-btn-grey"
+       class="cm-btn-grey w50"
        data-qa="btn-create-key">
         <span>{{'SETTINGS.PAGES.IDENTITY.KEYS.CREATE.BUTTON'|cmTranslate}}</span>
         <i class="fa cm-create-key icon-left cm-lg-icon"></i>
     </a>
     <a href="#/settings/identity/key/import"
-       class="item w50 no-pad cm-btn-grey"
+       class="cm-btn-grey w50"
        data-qa="btn-import-key">
         <span>{{'SETTINGS.PAGES.IDENTITY.KEYS.IMPORT.BUTTON'|cmTranslate}}</span>
         <i class="fa cm-import-key icon-left cm-lg-icon"></i>
