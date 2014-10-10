@@ -39,8 +39,9 @@
     <hr class="margin-small">
 
     <article class="item" data-qa="login-submit-btn" ng-click="doLogin()">
-        <span class="body tac">
+        <span class="body tac" ng-show="!showSpinner">
             <span class="with-icon">{{'LOGIN.LABEL.SUBMIT'|cmTranslate}}<i class="fa cm-key"></i></span>
         </span>
+        <cm-loader ng-show="showSpinner" cm-color="ci-color"></cm-loader>
     </article>
 </form>
