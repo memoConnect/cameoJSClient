@@ -21,9 +21,9 @@
 
 <article class="content">
     <form name="searchCameoId" autocomplete="off">
-        <div class="cm-search-input cm-input-ctn with-inside-icon cm-icon-grey">
-            <i class="fa cm-search"></i>
+        <div class="cm-input-ctn with-inside-icon">
             <input data-qa="inp-search-cameo-ids" type="text" value="" ng-model="string" ng-keyup="sendSearch()" ng-minlength="4" placeholder="{{'CONTACTS.PLACEHOLDER.ADD_NEW_CONTACT'|cmTranslate}}" name="string" />
+            <i class="fa cm-search"></i>
         </div>
         <cm-info-bubble nose-x="45%" class="cm-alert"
             ng-show="(moreChars = searchCameoId.string.$error.minlength) || (noResult = (searchCameoId.string.$valid && !pristine && results.length < 1))">
@@ -37,7 +37,7 @@
     </form>
 </article>
 
-<section class="mt15">
+<section class="mt15" ng-if="(results.length > 0)">
     <ul>
         <li ng-repeat="contact in results" ng-click="openModal('modalSendRequest',contact)" data-qa="btn-openModal" class="contact-search-item">
             <cm-avatar cm-data="contact"></cm-avatar>
