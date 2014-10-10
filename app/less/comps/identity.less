@@ -1,11 +1,10 @@
 .theme-a {
   cm-identity-tag, cm-contact-tag, cm-recipient-tag, .contact-search-item, .contact-request-item{
-    width:100%;
-    min-height: 4rem;
+    .dib;
+    .w100;
+    min-height: @cm-unit;
     line-height: 1rem;
-    display: block;
-    position: relative;
-    padding: 0.3rem;
+    padding: @cm-vertical-padding;
     cm-avatar {
       margin-right: 1.5rem;
     }
@@ -13,8 +12,8 @@
       margin-right: 0.5rem;
     }
     .identityName, .requestIdentity{
-      display: inline-block;
-      vertical-align: middle;
+      .dib;
+      .vam;
       .displayName{
         font-weight:bold;
         .mb10;
@@ -24,23 +23,18 @@
       }
       .message {
         .w60;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+        .single-line;
       }
     }
   }
   cm-identity-edit, cm-contact-edit, cm-contact-create {
-    display: block;
+    .dbl;
     .edit-identity-head {
       padding-left: 2rem;
       padding-right: 0;
       cm-avatar {
-        width: 8rem;
-        height: 8rem;
-      }
-      ul li .icon-list{
-        right: -0.2rem;
+        width: @cm-unit*2;
+        height: @cm-unit*2;
       }
     }
   }
