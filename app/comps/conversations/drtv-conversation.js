@@ -107,30 +107,45 @@ angular.module('cmConversations')
                          * check if files exists
                          * after success sendMessage
                          */
-                        $rootScope.$broadcast('cmFilesCheckFiles', {
-                            passphrase: $scope.conversation.getPassphrase(),
-                            conversationId: $scope.conversation.id,
-                            success: function(files) {
-                                if (files.length > 0) {
-                                    filesForMessage = files;
-                                    sendMessage();
-                                } else {
-                                    sendMessage();
-                                }
+                        
+                        $scope.conversation.getPassphrase()
+                        .then(
+                            function(passphrase){
+                                return $q.when(passphrase)
                             },
-                            error: function(maxFileSize, header) {
-                                $scope.isSending = false;
-                                $scope.isSendingAbort = true;
-                                cmNotify.warn('CONVERSATION.WARN.FILESIZE_REACHED', {
-                                    ttl: 0,
-                                    i18n: {
-                                        maxFileSize: maxFileSize,
-                                        fileSize: header['X-File-Size'],
-                                        fileName: header['X-File-Name']
-                                    }
-                                });
+                            function(){
+                                return  $scope.conversation.isEncrypted()
+                                        ?   $q.reject('access denied')
+                                        :   $q.when(null)       //Todo: null for 'not encrypted' old convention
                             }
-                        });
+                        )
+                        .then(function(passphrase){
+                            $rootScope.$broadcast('cmFilesCheckFiles', {
+                                passphrase: passphrase,
+                                conversationId: $scope.conversation.id,
+                                success: function(files) {
+                                    if (files.length > 0) {
+                                        filesForMessage = files;
+                                        sendMessage();
+                                    } else {
+                                        sendMessage();
+                                    }
+                                },
+                                error: function(maxFileSize, header) {
+                                    $scope.isSending = false;
+                                    $scope.isSendingAbort = true;
+                                    cmNotify.warn('CONVERSATION.WARN.FILESIZE_REACHED', {
+                                        ttl: 0,
+                                        i18n: {
+                                            maxFileSize: maxFileSize,
+                                            fileSize: header['X-File-Size'],
+                                            fileName: header['X-File-Name']
+                                        }
+                                    });
+                                }
+                            });                            
+                        })
+
                     }
                 };
 

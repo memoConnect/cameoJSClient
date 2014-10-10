@@ -119,19 +119,19 @@ angular.module('cmCore').service('cmPassphraseVault',[
                                                 .catch(function(){
                                                     return cmUserModel.decryptPassphrase(item.encryptedPassphrase, item.keyId)
                                                 })
-                                    }, $q.reject(null))
+                                    }, $q.reject())
                         })
                         //finally check if decryption resolved with a proper passphrase,
                         //if so resolve with passphrase,
-                        //if not reject with null
+                        //if not reject 
                         .then(
                             function(new_passphrase){
                                 return  couldBeAPassphrase(new_passphrase)
                                         ?   $q.when(new_passphrase)
-                                        :   $q.reject(null)
+                                        :   $q.reject()
                             },
                             function(){
-                                return $q.reject(null)
+                                return $q.reject()
                             }
                         )
             }

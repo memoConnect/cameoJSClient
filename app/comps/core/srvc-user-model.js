@@ -647,7 +647,7 @@ angular.module('cmCore')
                         .catch(function(){
                                 return  key.decrypt(encrypted_passphrase)
                         })
-            }, $q.reject(null))
+            }, $q.reject())
 
         };
 

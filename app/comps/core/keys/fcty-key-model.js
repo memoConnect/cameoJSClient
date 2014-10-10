@@ -159,7 +159,7 @@ angular.module('cmCore')
                             .then(function(result){
                                 return  result
                                         ?   $q.when(result)
-                                        :   $q.reject(null)
+                                        :   $q.reject()
                             });
             };
 
@@ -175,14 +175,14 @@ angular.module('cmCore')
                                     return result.secret
                                 },
                                 function(){
-                                    return $q.reject(null)
+                                    return $q.reject()
                                 }
                             )
                         :   $q.when(crypt && crypt.decrypt(encrypted_secret))
                             .then(function(result){
                                 return  result
                                         ?   $q.when(result)
-                                        :   $q.reject(null)
+                                        :   $q.reject()
                             })
 
             };

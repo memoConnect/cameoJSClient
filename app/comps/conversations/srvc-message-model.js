@@ -345,11 +345,11 @@ angular.module('cmConversations')
                 return this;
             };
 
-            this.decryptFiles = function(){
+            this.decryptFiles = function(passphrase){
                 angular.forEach(this.files, function(file){
                     if(file.state.is('onlyFileId')) {
                         file
-                            .setPassphrase(conversation.getPassphrase())
+                            .setPassphrase(passphrase)
                             .downloadStart();
 
                         file.on('importFile:incomplete',function(event, file){

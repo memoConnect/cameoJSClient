@@ -504,24 +504,30 @@ angular.module('cmConversations')
              */
             this.isEncrypted = function(){
 //                cmLogger.debug('cmConversationModel.isEncrypted');
-                var bool = true;
 
-                if(this.state.is('new')){
-                    bool = !encryption_disabled;
-                } else {
-                    if(this.messages.length > 0){
-                        bool = this.messages[0].isEncrypted();
-                    } else if(this.keyTransmission != ''){
-                        /**
-                         * if no messages exists
-                         */
-                        bool = (this.keyTransmission == 'asymmetric' || this.keyTransmission == 'symmetric' || this.keyTransmission == 'mixed')
-                    } else {
-                        //cmLogger.debug('cmConversationModel.isEncrypted Error Line 525');
-                    }
-                }
+                return  this.state.is('new')
+                        ?   !encryption_disabled
+                        :   this.keyTransmission != "none"
+                
+                // var bool = true;
 
-                return bool;
+                // if(this.state.is('new')){
+                //     bool = !encryption_disabled;
+                // } else {
+                //     if(this.messages.length > 0){
+                //         bool = this.messages[0].isEncrypted();
+                //     } else if(this.keyTransmission != ''){
+                //         *
+                //          * if no messages exists
+                         
+                //         bool = (this.keyTransmission == 'asymmetric' || this.keyTransmission == 'symmetric' || this.keyTransmission == 'mixed')
+                //     } else {
+                //         //cmLogger.debug('cmConversationModel.isEncrypted Error Line 525');
+                //     }
+                // }
+
+
+                // return bool;
             };
 
             /**
@@ -621,12 +627,13 @@ angular.module('cmConversations')
              * @description
              * Function get the passphrase of the conversation, in order to use it for e.g. file encryption before upload.
              *
-             * @returns {String} passphrase Returns the passphrase
+             * @returns {Promise} Returns a promise to resolve with passphrase
              */
             this.getPassphrase = function(){
-                return  passphraseVault
-                        ?   passphraseVault.get()
-                        :   $q.reject(null)
+                if(!passphraseVault)
+                    return $q.reject()
+
+                return  passphraseVault.get()
             };
 
             /**
