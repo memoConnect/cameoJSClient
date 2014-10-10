@@ -189,8 +189,8 @@ cm-choose-source{
 }
 
 cm-upload-avatar {
-  display:block;
-  position:absolute;
+  .dbl;
+  .pos-abs;
   width:100%;
   height:100%;
   z-index: 1;
@@ -199,11 +199,10 @@ cm-upload-avatar {
     height:100%;
   }
   button {
+    .no-pad;
+    .pos-bl;
     height:@cm-unit;
     width:@cm-unit;
-    position: absolute;
-    left: 0;
-    bottom: 0;
     background: @cm-overlay-light-transparent;
     -webkit-border-top-right-radius: 1rem;
     -moz-border-radius-topright: 1rem;
