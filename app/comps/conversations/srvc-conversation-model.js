@@ -230,7 +230,7 @@ angular.module('cmConversations')
                 this.subject                = data.subject              || this.subject;
                 this.numberOfMessages       = data.numberOfMessages     || this.numberOfMessages;
                 this.missingAePassphrases   = data.missingAePassphrases || this.missingAePassphrases
-                this.keyTransmission        = data.keyTransmission      || this.keyTransmission
+                this.keyTransmission        = data.keyTransmission      || this.keyTransmission 
 
 
                 //Create passphraseVault:
@@ -244,6 +244,8 @@ angular.module('cmConversations')
                     cmLogger.debug('ConversationModel: inconsistent data: keyTransmission')
                     //TODO
                 
+                this.keyTransmission = passphraseVault.getKeyTransmission()
+
                 /**
                  * Important for none encrypted Conversations
                  */
@@ -371,14 +373,14 @@ angular.module('cmConversations')
                     return $q.reject()
 
                 return  $q.when(
-                            this.encryption_disabled
-                            ?   undefined 
-                            :   cmPassphraseVault.encryptPassphrase({
+                            this.isEncrypted()
+                            ?   cmPassphraseVault.encryptPassphrase({
                                     passphrase:         undefined,   // will be generated
                                     password:           this.password,
                                     identities:         this.recipients,
                                     restrict_to_keys:   undefined,   // encrypt for all recipient keys
                                 })  
+                            :   undefined 
                         )
                         .then(function(pv){
                             passphraseVault = pv
@@ -630,7 +632,10 @@ angular.module('cmConversations')
              * @returns {Promise} Returns a promise to resolve with passphrase
              */
             this.getPassphrase = function(){
-                if(!passphraseVault)
+                if(!this.isEncrypted())
+                    return $q.reject()
+
+                if(!this.state.is('new') && !passphraseVault)
                     return $q.reject()
 
                 return  passphraseVault.get()

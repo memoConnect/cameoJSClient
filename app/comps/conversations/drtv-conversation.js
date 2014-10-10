@@ -103,51 +103,25 @@ angular.module('cmConversations')
                             return false;
                         }
 
-                        /**
-                         * check if files exists
-                         * after success sendMessage
-                         */
-                        
-                        $scope.conversation.getPassphrase()
-                        .then(
-                            function(passphrase){
-                                return $q.when(passphrase)
-                            },
-                            function(){
-                                return  $scope.conversation.isEncrypted()
-                                        ?   $q.reject('access denied')
-                                        :   $q.when(null)       //Todo: null for 'not encrypted' old convention
-                            }
-                        )
-                        .then(function(passphrase){
-                            $rootScope.$broadcast('cmFilesCheckFiles', {
-                                passphrase: passphrase,
-                                conversationId: $scope.conversation.id,
-                                success: function(files) {
-                                    if (files.length > 0) {
-                                        filesForMessage = files;
-                                        sendMessage();
-                                    } else {
-                                        sendMessage();
-                                    }
-                                },
-                                error: function(maxFileSize, header) {
-                                    $scope.isSending = false;
-                                    $scope.isSendingAbort = true;
-                                    cmNotify.warn('CONVERSATION.WARN.FILESIZE_REACHED', {
-                                        ttl: 0,
-                                        i18n: {
-                                            maxFileSize: maxFileSize,
-                                            fileSize: header['X-File-Size'],
-                                            fileName: header['X-File-Name']
-                                        }
-                                    });
-                                }
-                            });                            
-                        })
 
+                        //Is the conversation newly created and has not been saved to the backend yet?                  
+                    
+                        if($scope.conversation.state.is('new')){                        
+                            //The conversations has not been saved to the Backend, do it now:
+                            $scope.conversation.save()
+                            //When that is done try again to send the message:
+                            .then( function(){ 
+                                cmConversationFactory.register($scope.conversation);
+                                prepareFiles();
+                            });
+                            return false
+                        }
+
+                        prepareFiles()
                     }
-                };
+                }
+
+                        
 
                 $rootScope.$$listeners.sendOnReturn = [];
                 $rootScope.$on('sendOnReturn',$scope.send);
@@ -183,6 +157,46 @@ angular.module('cmConversations')
                     }
                 };
 
+                function prepareFiles(){
+
+                    /**
+                     * check if files exists
+                     * after success sendMessage
+                     */
+                
+                    $scope.conversation.getPassphrase()
+                    .catch(function(){
+                            return  $scope.conversation.isEncrypted()
+                                    ?   $q.reject('access denied')
+                                    :   $q.when(null)       //Todo: null for 'not encrypted' old convention
+                    })
+                    .then(function(passphrase){
+                        $rootScope.$broadcast('cmFilesCheckFiles', {
+                            passphrase: passphrase,
+                            conversationId: $scope.conversation.id,
+                            success: function(files) {
+                                console.warn('YIO')
+                                if (files.length > 0) 
+                                    filesForMessage = files;
+                                sendMessage()
+                            },
+                            error: function(maxFileSize, header) {
+                                $scope.isSending = false;
+                                $scope.isSendingAbort = true;
+                                cmNotify.warn('CONVERSATION.WARN.FILESIZE_REACHED', {
+                                    ttl: 0,
+                                    i18n: {
+                                        maxFileSize: maxFileSize,
+                                        fileSize: header['X-File-Size'],
+                                        fileName: header['X-File-Name']
+                                    }
+                                });
+                            }
+                        });                            
+                    })
+
+                }
+
                 /**
                  * validator helper
                  * @returns {boolean}
@@ -198,6 +212,9 @@ angular.module('cmConversations')
                  * send message to api
                  */
                 function sendMessage() {
+
+                    console.log('send message')
+
                     /**
                      * validate answer form
                      * @type {boolean}
@@ -221,20 +238,7 @@ angular.module('cmConversations')
                     }
 
                     //If we got this far everything should be valid.
-                    //Is the conversation newly created and has not been saved to the backend yet?                  
-                    
-                    if($scope.conversation.state.is('new')){                        
-                        //The conversations has not been saved to the Backend, do it now:
-                        $scope.conversation.save()
-                        //When that is done try again to send the message:
-                        .then( function(){ 
-                            cmConversationFactory.register($scope.conversation);
-                            sendMessage();
-                        });
-                        return false
-                    }
 
-                    //If we got this far the conversation has been saved to the backend.
                     //Create a new message:
 
 

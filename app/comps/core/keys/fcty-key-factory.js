@@ -31,7 +31,6 @@ angular.module('cmCore')
                                 return  !whiteList || whiteList.indexOf(key.id) != -1
                             })
                             .map(function(key){
-                                console.log('los')
                                 return  key
                                         .encrypt(passphrase)
                                         .then(function(result){
