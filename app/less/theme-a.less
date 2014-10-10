@@ -17,7 +17,7 @@
 
 .theme-a{
   color: @cm-grey;
-  background-color: @cm-white;
+//  background-color: @cm-white;
 //  padding-bottom: 3rem !important;
   &.background-less{
     background-color: transparent;
@@ -89,7 +89,7 @@
     margin: 1em 0.1rem;
     height:1px;
     &.margin-small {
-      margin: 0.5em 0.1rem;
+      margin: 0.5em 0.1rem !important;
     }
   }
 
@@ -312,7 +312,7 @@
     .content;
   }
 
-  form, ng-form {
+  form, ng-form, .cm-form-style {
     display:block;
     label {
       color: @cm-grey-new;
