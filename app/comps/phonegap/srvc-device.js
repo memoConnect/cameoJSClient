@@ -14,6 +14,7 @@ angular.module('cmPhonegap')
         var self = {
             plugin: null,
             debug: false,
+            debugDevice: 'android',
 
             init: function(){
                 if(typeof $phonegapCameoConfig == 'undefined') {
@@ -51,6 +52,9 @@ angular.module('cmPhonegap')
             },
 
             isAndroid: function(){
+                if(this.debug && this.debugDevice.indexOf('android') >= 0){
+                    return true;
+                }
                 return this.isApp()
                     && this.getPlatform().indexOf('android') >= 0;
             },
