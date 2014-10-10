@@ -2,7 +2,7 @@
 @theme-b-bg-color-light: rgba(0,0,0,0.4);
 
 .theme-b-bg {
-  content:'';
+  content:' ';
   width: @cm-app-width;
   position: relative;
   z-index: -1;
@@ -15,7 +15,7 @@
 }
 
 .theme-b-bg-light {
-  content:'';
+  content:' ';
   width: @cm-app-width;
   position: relative;
   z-index: -1;
@@ -42,14 +42,14 @@
     min-height: @cm-unit;
     .body{
       .w100;
+      .dib;
+      .pos-rel;
       line-height: @cm-unit;
       color: @cm-dark-white;
-      display: inline-block;
-      position: relative;
       .with-icon {
-        position: relative;
+        .pos-rel;
         i {
-          position: absolute;
+          .pos-abs;
           top: -1rem;
           left: -@cm-unit;
           width: @cm-unit;
@@ -61,11 +61,11 @@
   }
 
   .section{
-    padding:0!important;
+   .no-pad;
   }
 
   .inline {
-    display: inline-block;
+    .dib;
   }
 
   h2{

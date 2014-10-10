@@ -2,32 +2,34 @@ cm-avatar{
   .dib;
   .pos-rel;
   .no-pad;
+  .border-complete;
   width:@cm-unit;
   height:@cm-unit;
+  font-size:@cm-unit - 1;
   vertical-align:middle;
   background-size:cover;
   overflow:hidden;
-  &.with-name{
-    margin-bottom:2em;
+
+  &.big{
+    width: @cm-unit*2;
+    height: @cm-unit*2;
+    font-size: (@cm-unit*2)-1;
   }
+
   img{
     .dbl;
     .w100;
   }
   i {
-    .dib;
+    .dbl;
     width:100%;
     height:100%;
     background-size:cover;
     background-position:center;
-  }
-  .name{
-    .pos-abs;
-    top:@cm-unit;
-    left:0;
-    right:0;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
+    &.cm-person{
+      .tac;
+      background:@cm-light-grey;
+      color: @cm-grey-new;
+    }
   }
 }
