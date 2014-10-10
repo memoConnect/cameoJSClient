@@ -38,7 +38,7 @@ angular.module('cmPhonegap').service('cmLocalContacts', [
 
         var self = {
             plugin: null,
-            debug: true,
+            debug: false,
 
             init: function () {
                 if(typeof $phonegapCameoConfig == 'undefined') {
