@@ -11,7 +11,7 @@
     <ul>
         <li ng-repeat="request in requests" class="contact-request-item" data-qa="contact-list-element">
             <div>
-                <cm-avatar cm-data="request.identity"></cm-avatar>
+                <cm-avatar class="mr5" cm-data="request.identity"></cm-avatar>
                 <section cm-weight="4" class="requestIdentity w75">
                     <div class="displayName" data-qa="contact-display-name">{{request.identity.getDisplayName()}}</div>
                 </section>
