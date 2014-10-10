@@ -1,37 +1,42 @@
 cm-avatar{
   .dib;
-  .pos-rel;
-  .no-pad;
-  .mr15;
-  width:@cm-unit;
-  height:@cm-unit;
-  font-size:@cm-unit - 1;
-  vertical-align:middle;
-  background-size:cover;
-  overflow:hidden;
-
-  &.big{
-    .border-complete;
-    margin-right:0;
-    width: @cm-unit*2;
-    height: @cm-unit*2;
-    font-size: (@cm-unit*2)-1;
-  }
-
-  img{
-    .dbl;
-    .w100;
-  }
-  i {
-    .dbl;
-    width:100%;
-    height:100%;
+  .wrap{
+    .dib;
+    .pos-rel;
+    .no-pad;
+    .mr15;
+    width:@cm-unit;
+    height:@cm-unit;
+    font-size:@cm-unit - 1;
+    vertical-align:middle;
     background-size:cover;
-    background-position:center;
-    &.cm-person{
-      .tac;
-      background:@cm-light-grey;
-      color: @cm-grey-new;
+    overflow:hidden;
+
+    &.big{
+      .wrap {
+        .border-complete;
+        margin-right: 0;
+        width: @cm-unit*2;
+        height: @cm-unit*2;
+        font-size: (@cm-unit*2)-1;
+      }
+    }
+
+    img{
+      .dbl;
+      .w100;
+    }
+    i {
+      .dbl;
+      width:100%;
+      height:100%;
+      background-size:cover;
+      background-position:center;
+      &.cm-person{
+        .tac;
+        background:@cm-light-grey;
+        color: @cm-grey-new;
+      }
     }
   }
 }
