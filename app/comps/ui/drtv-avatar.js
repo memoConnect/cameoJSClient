@@ -68,8 +68,7 @@ angular.module('cmUi').directive('cmAvatar',[
             scope: {
                 identity: "=cmData"
             },
-            //template: '<i></i>',
-            template: '<img />',
+            template: '<i></i>',
             link: function(scope, element, attrs){
 
                 var avatarMocks = {
@@ -90,15 +89,14 @@ angular.module('cmUi').directive('cmAvatar',[
                         size = attrs.cmSize;
                     }
 
-                    var imgSrc = cmConfig.restApi + '/file/' + scope.identity.avatarId + '/scale/' + size + '?token=' + cmUserModel.getToken();
-                        //bgImg = new Image();
+                    var imgSrc = cmConfig.restApi + '/file/' + scope.identity.avatarId + '/scale/' + size + '?token=' + cmUserModel.getToken(),
+                        bgImg = new Image();
                     // preload for update avatar
-                    //bgImg.onload = function(){
-                    //    scope.identity.trigger('avatar:loaded');
-                    //};
-                    //bgImg.src = imgSrc;
-                    //element.find('i').css('background-image','url('+imgSrc+')');
-                    element.find('img').attr('src', imgSrc);
+                    bgImg.onload = function(){
+                        scope.identity.trigger('avatar:loaded');
+                    };
+                    bgImg.src = imgSrc;
+                    element.find('i').css('background-image','url('+imgSrc+')');
                 }
 
                 // is unknown avatar for add reciepients or choose avatar
