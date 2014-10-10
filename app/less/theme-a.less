@@ -108,14 +108,12 @@
   }
 
   .icon-list{
-    .pos-abs;
+    .pos-tr;
     .tar;
-    top: @cm-vertical-padding;
-    right: 0;
     height: @cm-unit;
     line-height: @cm-unit;
     i {
-      .no-margin;
+      .no-margin !important;
       .tac;
       .vam;
       width: @cm-unit;
@@ -123,6 +121,9 @@
       font-size: @cm-unit - 1;
       color: @cm-grey;
       line-height: inherit;
+    }
+    .cm-select-ctn{
+      padding:0 1rem;
     }
   }
 
@@ -146,6 +147,10 @@
       font-size: 0.9em;
     }
 
+    a {
+      .classic-link;
+    }
+
     i.cm-nose-up,
     i.cm-nose-down {
       position: absolute;
@@ -158,14 +163,6 @@
         margin-left:0;
         margin-right:-0.575*@cm-unit;
       }
-    }
-
-    i.cm-beta {
-      position: absolute;
-      top: 0;
-      right: 0;
-      font-size: @cm-unit;
-      color: @cm-ci-color;
     }
   }
 
