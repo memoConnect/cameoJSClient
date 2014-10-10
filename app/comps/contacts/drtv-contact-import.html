@@ -30,7 +30,7 @@
             <ng-form name="formPhone" class="with-radiobutton">
                 <label>
                     {{'CONTACT.PLACEHOLDER.PHONENUMBER'|cmTranslate }}
-                    <span ng-if="item.type"> {{item.type}}</span>
+                    <span ng-if="item.type">&nbsp;{{item.type}}</span>
                 </label>
                 <div class="cm-input-ctn with-inside-icon cm-icon-grey">
                     <input
@@ -44,7 +44,7 @@
                 <cm-info-bubble class="cm-alert" ng-show="formPhone.phoneNumber.$dirty && formPhone.phoneNumber.$invalid">
                     <div ng-show="formPhone.phoneNumber.$invalid">
                         <i class="fa cm-info"></i> {{'CONTACT.INFO.INVALID.PHONENUMBER'|cmTranslate}}
-                        <span ng-if="item.type"> {{item.type}}</span>
+                        <span ng-if="item.type">&nbsp;{{item.type}}</span>
                     </div>
                 </cm-info-bubble>
                 <i class="fa cm-radio-0" ng-class="{'cm-radio-1':isSelected(item,'phoneNumber')}" ng-click="chooseItem(item,'phone')"></i>
@@ -66,7 +66,7 @@
             <ng-form name="formEmail" class="with-radiobutton">
                 <label>
                     {{'CONTACT.PLACEHOLDER.EMAIL'|cmTranslate }}
-                    <span ng-if="item.type"> {{item.type}}</span>
+                    <span ng-if="item.type">&nbsp;{{item.type}}</span>
                 </label>
                 <div class="cm-input-ctn with-inside-icon cm-icon-grey">
                     <input
@@ -78,7 +78,7 @@
                 <cm-info-bubble class="cm-alert" ng-show="formEmail.email.$dirty && formEmail.email.$invalid">
                     <div ng-show="formEmail.email.$invalid">
                         <i class="fa cm-info"></i> {{'CONTACT.INFO.INVALID.EMAIL'|cmTranslate}}
-                        <span ng-if="item.type"> {{item.type}}</span>
+                        <span ng-if="item.type">>&nbsp;{{item.type}}</span>
                     </div>
                 </cm-info-bubble>
                 <i class="fa cm-radio-0" ng-class="{'cm-radio-1':isSelected(item,'email')}" ng-click="chooseItem(item,'email')"></i>
