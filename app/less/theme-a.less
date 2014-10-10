@@ -382,20 +382,19 @@ pre.error {
 
 
 section.default-pages{
+  .cm-bold;
+  .w100;
+  .no-margin;
   background: @cm-input-bg-color;
   font-size: @cm-moep-font;
   line-height: @cm-unit;
-  font-weight: bold;
-  width: 100%;
-  margin: 0;
-  .tac;
   button {
-    margin:0;
-    display: inline-block;
-    width: 49.4%;
+    .no-margin;
+    .dib;
+    .w50;
     color:@cm-grey-new;
     i {
-      font-size: 2rem;
+      font-size: @cm-large-font;
       color:@cm-grey-new;
     }
     &:hover,&.isActive{
