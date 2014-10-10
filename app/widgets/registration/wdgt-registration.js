@@ -14,6 +14,26 @@ angular.module('cmWidgets').directive('cmWidgetRegistration', [
 
                 cmSystemCheck.run(true);
 
+
+                $scope.showLoginInfo = false;
+                $scope.showUserInfo = false;
+
+                $scope.toogleLoginInfo = function(){
+                    if($scope.showLoginInfo){
+                        $scope.showLoginInfo = false;
+                    } else {
+                        $scope.showLoginInfo = true;
+                    }
+                };
+
+                $scope.toogleUserInfo = function(){
+                    if($scope.showUserInfo){
+                        $scope.showUserInfo = false;
+                    } else {
+                        $scope.showUserInfo = true;
+                    }
+                };
+
                 $scope.formData = {
                     cameoId: '',
                     password: '',

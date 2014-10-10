@@ -1,7 +1,20 @@
+<article class="content small-text mt5 tac">
+    {{'REGISTER.TITLE.MANDATORY_INFO' | cmTranslate}}
+</article>
+
+<hr class="margin-small">
+
 <h2>
     <i class="fa cm-key"></i>
     {{'REGISTER.TITLE.HEAD_LOGIN' | cmTranslate}}
+    <i class="fa cm-info" ng-click="toogleLoginInfo()"></i>
 </h2>
+
+<article class="content" ng-show="showLoginInfo">
+    <cm-info-bubble nose-x="50%">
+        <span ng-bind-html="'REGISTER.INFO.LOGIN_INFORMATION'|cmParse"></span>
+    </cm-info-bubble>
+</article>
 
 <hr class="margin-small">
 
@@ -23,7 +36,14 @@
     <h2>
         <i class="fa cm-person"></i>
         {{'REGISTER.TITLE.HEAD_IDENTITY'|cmTranslate}}
+        <i class="fa cm-info" ng-click="toogleUserInfo()"></i>
     </h2>
+
+    <article class="content" ng-show="showUserInfo">
+        <cm-info-bubble nose-x="50%">
+            <span ng-bind-html="'REGISTER.INFO.USER_INFORMATION'|cmParse"></span>
+        </cm-info-bubble>
+    </article>
 
     <hr class="margin-small">
 
