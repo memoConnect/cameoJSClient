@@ -1,4 +1,4 @@
-<form class="form-signin" role="form" autocomplete="off" data-qa="modal-login">
+<form class="form-signin" role="form" autocomplete="off" data-qa="modal-login" ng-submit="doLogin()">
 
     <article class="content" ng-if="cmEnv.autoLogin">
         <select ng-model="formData.autologin" class="cm-form-control btn-block autologin" ng-change="changeAutologin()">
@@ -37,6 +37,8 @@
     </article>
 
     <hr class="margin-small">
+
+    <button class="btn-submit" type="submit"></button>
 
     <article class="item" data-qa="login-submit-btn" ng-click="doLogin()">
         <span class="body tac" ng-show="!showSpinner">
