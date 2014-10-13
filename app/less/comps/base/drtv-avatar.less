@@ -12,16 +12,6 @@ cm-avatar{
     background-size:cover;
     overflow:hidden;
 
-    &.big{
-      .wrap {
-        .border-complete;
-        margin-right: 0;
-        width: @cm-unit*2;
-        height: @cm-unit*2;
-        font-size: (@cm-unit*2)-1;
-      }
-    }
-
     img{
       .dbl;
       .w100;
@@ -37,6 +27,15 @@ cm-avatar{
         background:@cm-light-grey;
         color: @cm-grey-new;
       }
+    }
+  }
+  &.big{
+    .wrap {
+      .border-complete;
+      margin-right: 0;
+      width: @cm-unit*2;
+      height: @cm-unit*2;
+      font-size: (@cm-unit*2)-1;
     }
   }
 }
