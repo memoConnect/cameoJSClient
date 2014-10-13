@@ -2,9 +2,10 @@
 
 angular.module('cmCore')
     .service('cmCrypt', [
-        'cmLogger', 'cmKey',
+        'cmLogger', 'cmKey', 'cmCryptoHelper',
         '$q', '$interval', '$rootScope',
-        function (cmLogger, cmKey, $q, $interval, $rootScope) {
+        function (cmLogger, cmKey, cmCryptoHelper,
+                  $q, $interval, $rootScope) {
             // private vars
             var async = {
                 interval: null,
@@ -265,8 +266,18 @@ angular.module('cmCore')
                     }
 
                     async.promise = $q.defer();
+                    // start keygen over plugin crypto helper
+                    if(cmCryptoHelper.isAvailable()) {
+                        cmCryptoHelper.getPrivateKey(keySize)
+                        .then(function(privKey){
+                            var key = (new cmKey()).setKey(privKey);
+                            async.promise.resolve({
+                                timeElapsed: 0,
+                                key: key
+                            });
+                        });
                     // start keygen over webworker
-                    if (webworker.isAvailable()) {
+                    } else if (webworker.isAvailable()) {
                         webworker.start('webworker/keygen.js', {
                             keySize: keySize,
                             cmd: 'start-async'
@@ -277,7 +288,7 @@ angular.module('cmCore')
                                 key: key
                             });
                         });
-                        // otherwise use browser instance
+                    // otherwise use browser instance
                     } else {
                         var self = this,
                             time = -((new Date()).getTime()),

@@ -17,7 +17,18 @@ module.exports = function(grunt, options){
                     config: 'dist/phonegap/www/config.xml',
                     cordova: '.cordova',
                     path: 'phonegap-build',
-                    plugins: ['./resource/phonegap/plugins/org.apache.cordova.contacts'],
+                    plugins: [
+                        'org.apache.cordova.device',
+                        'org.apache.cordova.camera',
+                        'org.apache.cordova.file',
+                        'org.apache.cordova.file-transfer',
+                        'org.apache.cordova.network-information',
+                        'com.phonegap.plugins.pushplugin',
+                        'de.cameonet.cordova.contacts',
+                        'de.appplant.cordova.plugin.hidden-statusbar-overlay',
+                        'com.jamiestarke.webviewdebug',
+                        './resource/phonegap/plugins/de.cameonet.cordova.crypto'
+                    ],
                     platforms: ['android'],
                     maxBuffer: 200, // You may need to raise this for iOS.
                     verbose: true,
