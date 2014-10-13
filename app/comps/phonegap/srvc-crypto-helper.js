@@ -15,7 +15,7 @@ angular.module('cmPhonegap')
 
             init: function(){
                 cmPhonegap.isReady(function(){
-                    if('cmCryptoHelper' in $window){
+                    if(!('cmCryptoHelper' in $window)){
                         //cmLogger.info('CRYPTOHELPER PLUGIN IS MISSING');
                         return false;
                     }
