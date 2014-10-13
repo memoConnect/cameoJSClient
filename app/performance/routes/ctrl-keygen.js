@@ -32,7 +32,7 @@ angular.module('cameoClientPerformance')
                 $scope.generationTime = cmUtil.millisecondsToStr(startTime+(new Date()).getTime());
             },1000);
 
-            if($scope.canWebworker() && $scope.webworkerOn){
+            /*if($scope.canWebworker() && $scope.webworkerOn){
                 $scope.state += ' [ generation via webworker ]';
                 worker = new Worker('webworker/keygen.js');
 
@@ -56,45 +56,29 @@ angular.module('cameoClientPerformance')
                     'cmd':'start-'+(async?'async':'sync'),
                     'keySize':$scope.keySize
                 });
-            } else {
-                if(async) {
-                    cmCrypt.generateAsyncKeypair(
-                        parseInt($scope.keySize)
-                    ).then(
-                        function (result) {
-                            $interval.cancel(interval);
-                            $scope.state = 'generation success';
-                            $scope.generationTime = cmUtil.millisecondsToStr(result.timeElapsed);
-                            $scope.history.async.push(cmUtil.millisecondsToStr(result.timeElapsed));
+            } else {*/
+                cmCrypt.generateAsyncKeypair(
+                    parseInt($scope.keySize)
+                ).then(
+                    function (result) {
+                        $interval.cancel(interval);
+                        $scope.state = 'generation success';
+                        $scope.generationTime = cmUtil.millisecondsToStr(result.timeElapsed);
+                        $scope.history.async.push(cmUtil.millisecondsToStr(result.timeElapsed));
 
-                            $scope.isIdle = false;
-                            //$scope.privKey  = result.key.getPrivateKey();
-                            //$scope.pubKey   = result.key.getPublicKey();
-                        },
-                        function () {
+                        $scope.isIdle = false;
+                        //$scope.privKey  = result.key.getPrivateKey();
+                        //$scope.pubKey   = result.key.getPublicKey();
+                    },
+                    function () {
 
-                        }
-                    ).finally(
-                        function () {
+                    }
+                ).finally(
+                    function () {
 
-                        }
-                    );
-                } else {
-                    cmCrypt.generateSyncKeyPair(parseInt($scope.keySize))
-                    .then(
-                        function (result) {
-                            $interval.cancel(interval);
-                            $scope.state = 'generation success';
-                            $scope.generationTime = cmUtil.millisecondsToStr(result.timeElapsed);
-                            $scope.history.sync.push(cmUtil.millisecondsToStr(result.timeElapsed));
-
-                            $scope.isIdle = false;
-                            //$scope.privKey  = result.key.getPrivateKey();
-                            //$scope.pubKey   = result.key.getPublicKey();
-                        }
-                    )
-                }
-            }
+                    }
+                );
+            //}
         };
 
         $scope.stopKeygen = function(async){
@@ -102,13 +86,13 @@ angular.module('cameoClientPerformance')
             $scope.history.stopped.push(cmUtil.millisecondsToStr(startTime+(new Date()).getTime()));
 
             $interval.cancel(interval);
-            if(worker != null && $scope.webworkerOn){
+            /*if(worker != null && $scope.webworkerOn){
                 worker.postMessage({
                     cmd:'stop-'+(async?'async':'sync')
                 });
-            } else {
+            } else {*/
                 cmCrypt.cancelGeneration(async);
-            }
+            //}
 
             $scope.state = 'generation stopped / press start';
             $scope.isIdle = false;

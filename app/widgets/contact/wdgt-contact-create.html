@@ -3,7 +3,7 @@
     {{'CONTACTS.HEADING.CREATE'|cmTranslate}}
 </h2>
 
-<article class="content" ng-if="canReadLocalContacts()">
+<article class="content mb15" ng-if="canReadLocalContacts()">
     <cm-info-bubble nose-x="55%">
         <span ng-bind-html="'CONTACTS.INFO.IMPORT_POSSIBLE' | cmParse"></span>
     </cm-info-bubble>

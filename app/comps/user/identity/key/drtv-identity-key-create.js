@@ -12,9 +12,10 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
     'cmDevice',
     '$window',
     '$rootScope',
+    '$timeout',
     function(cmUserModel, cmCrypt, cmUtil, cmLogger,
              cmNotify, cmKey, cmJob, cmApi, cmDevice,
-             $window, $rootScope){
+             $window, $rootScope, $timeout){
         return {
             restrict: 'E',
             templateUrl: 'comps/user/identity/key/drtv-identity-key-create.html',
@@ -33,7 +34,9 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
                  */
                 var detect      = cmDevice.detectOSAndBrowser(),
                     startTime   = undefined,
-                    elapsedTime = 0;
+                    elapsedTime = 0,
+                    generationTimeout = null,
+                    generationTimeoutMinutes = 10;
 
                 $scope.active = 'choose'; // choose, active, store
                 //$scope.keySizes = cmCrypt.getKeySizes();
@@ -62,14 +65,27 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
                     elapsedTime =   startTime 
                                     ?   Math.max(new Date().getTime() - startTime, 0)
                                     :   elapsedTime;
-
                     return elapsedTime;
                 };
+
+                function reset(){
+                    $timeout.cancel(generationTimeout);
+                    cmApi.listenToEvents();
+                    cmJob.stop();
+                }
 
                 /**
                  * generate keypair
                  */
-                $scope.generate = function(){
+                $scope.generate = function(withoutTimerReset){
+                    // generation timeout for very long generation
+                    // esspecially for iphone 4/4s ios7 uiwebview
+                    $timeout.cancel(generationTimeout);
+                    generationTimeout = $timeout(function(){
+                        $scope.cancelGeneration();
+                        $scope.generate(true);
+                    },generationTimeoutMinutes * 60 * 1000);
+
                     $scope.active = 'generate';
                     cmJob.start('DRTV.CONFIRM.STANDARD', $scope.cancelGeneration);
 
@@ -85,8 +101,10 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
                      */
                     cmApi.stopListeningToEvents();
 
-                    startTime   = new Date().getTime();
-                    elapsedTime = 0;
+                    if(!withoutTimerReset) {
+                        startTime = new Date().getTime();
+                        elapsedTime = 0;
+                    }
 
                     cmCrypt.generateAsyncKeypair(parseInt(size))
                     .then(
@@ -102,14 +120,14 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
                         }
                     ).finally(
                         function(){
-                            cmApi.listenToEvents();
+                            reset();
                             startTime = undefined
                         }
                     );
                 };
 
                 $scope.$on('$destroy',function(){
-                    cmApi.listenToEvents();
+                    reset();
                 });
 
                 /**
@@ -118,8 +136,7 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
                 $scope.cancelGeneration = function(){
                     //cmLogger.debug('cancel key generation');
                     cmCrypt.cancelGeneration();
-                    cmJob.stop();
-                    cmApi.listenToEvents();
+                    reset();
                     startTime = undefined
                 };
 
@@ -182,7 +199,6 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
                                     }
                                 }
                             )
-
 
                         cmJob.stop();
 
