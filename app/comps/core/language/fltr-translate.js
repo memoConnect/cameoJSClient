@@ -3,5 +3,7 @@
 angular.module('cmCore')
 .filter('cmTranslate', [
     'translateFilter',
-    function(translateFilter){ return translateFilter }
+    function(translateFilter){
+        return translateFilter;
+    }
 ]);

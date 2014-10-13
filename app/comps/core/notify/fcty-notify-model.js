@@ -9,7 +9,9 @@ angular.module('cmCore')
     'cmTranslate',
     'cmLogger',
     '$timeout',
-    function(cmStateManagement, cmObject, cmModal, cmUtil, cmTranslate, cmLogger, $timeout){
+    '$rootScope',
+    function(cmStateManagement, cmObject, cmModal, cmUtil, cmTranslate, cmLogger,
+             $timeout, $rootScope){
         function cmNotifyModel(data){
             var self = this;
 
@@ -90,9 +92,21 @@ angular.module('cmCore')
                 }
             };
 
-            this.renderModal = function(){
+            this.renderModal = function() {
 //                cmLogger.debug('cmNotifyModel.renderModal');
                 var modalId = 'modal-notification-' + new Date().getTime();
+
+                if (!this.templateScope)
+                    this.templateScope = $rootScope.$new();
+
+                angular.extend(this.templateScope, {
+                    icon: this.icon,
+                    label: this.label,
+                    i18n: this.i18n,
+                    severity: this.severity,
+                    template: this.template
+                });
+
                 cmModal.create({
                         id: modalId,
                         type: 'alert',
@@ -103,11 +117,11 @@ angular.module('cmCore')
                         'cm-footer-icon': 'cm-close'
                     },
                         '<div class="header">'+
-                        '<i class="fa '+this.icon+'"></i> '+cmTranslate('NOTIFICATIONS.MODAL_HEADER.'+this.severity.toUpperCase())+
+                            '<i class="fa {{icon}}"></i> {{\'NOTIFICATIONS.MODAL_HEADER.\'+severity.toUpperCase()|cmTranslate}}'+
                         '</div>'+
                         '<div class="body">'+
-                        '<div>'+cmTranslate(this.label, this.i18n)+'</div>'+
-                        (this.template || '')+
+                            '<div>{{label|cmTranslate:i18n}}</div>'+
+                            '{{template}}'+
                         '</div>',
                     null,
                     this.templateScope
