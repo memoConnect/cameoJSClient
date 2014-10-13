@@ -6,15 +6,17 @@ angular.module('cmUser').directive('cmLogin', [
     'cmKeyStorageService',
     'cmCrypt',
     'cmConfig',
+    'cmLoader',
     '$location',
-    function (cmNotify, cmUserModel, cmKeyStorageService, cmCrypt, cmConfig, $location) {
+    function (cmNotify, cmUserModel, cmKeyStorageService, cmCrypt, cmConfig, cmLoader,
+              $location) {
         return  {
             restrict    :   'AE',
             templateUrl :   'comps/user/drtv-login.html',
             scope       :   {},
             controller  :   function ($scope, $rootScope) {
                 $scope.cmEnv = cmConfig.env;
-                $scope.showSpinner = false;
+                var loader = new cmLoader($scope);
                 $scope.alertState = '';
                 $scope.passwordType = 'password';
                 $scope.loginData = cmConfig.autologin;
@@ -56,14 +58,14 @@ angular.module('cmUser').directive('cmLogin', [
                 };
 
                 $scope.doLogin = function(){
-                    if($scope.spinner('isIdle'))
+                    if(loader.isIdle())
                         return false;
 
                     $scope.alertState = '';
-                    $scope.spinner('start');
+                    loader.start();
 
                     if(!checkPasswordLength($scope.formData.pass)){
-                        $scope.spinner('stop');
+                        loader.stop();
                         $scope.alertState = 'PW';
                         return false;
                     }
@@ -87,7 +89,7 @@ angular.module('cmUser').directive('cmLogin', [
                             $rootScope.$broadcast('cmLogin:success');
                         },
                         function(error){
-                            $scope.spinner('stop');
+                            loader.stop();
                             //$rootScope.$broadcast('cmLogin:error'); // not use in app - BS 21.08.2014
 
                             if(typeof error == 'object' && 'status' in error){
@@ -103,14 +105,6 @@ angular.module('cmUser').directive('cmLogin', [
                     );
 
                     return true;
-                };
-
-                $scope.spinner = function(action){
-                    if(action == 'isIdle'){
-                        return $scope.showSpinner;
-                    }
-
-                    $scope.showSpinner = action == 'stop' ? false : true;
                 };
             }
         }

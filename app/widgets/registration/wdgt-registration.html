@@ -138,10 +138,10 @@
 
 <cm-footer>
     <button id="registerUserButton" class="cm-btn-black" ng-click="createUser()" data-qa="btn-createUser">
-        <span ng-show="!showSpinner">
+        <span ng-show="!showLoader">
             {{'REGISTER.LABEL.SUBMIT'|cmTranslate}}
         </span>
-        <i class="fa cm-right" ng-show="!showSpinner"></i>
-        <cm-loader ng-show="showSpinner" cm-color="#02BED2"></cm-loader>
+        <i class="fa cm-right" ng-show="!showLoader"></i>
+        <cm-loader ng-show="showLoader" cm-color="#02BED2"></cm-loader>
     </button>
 </cm-footer>

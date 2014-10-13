@@ -100,7 +100,7 @@
 
 <cm-footer cm-always-on-top>
     <button class="cm-btn-grey" ng-click="saveAccount()" data-qa="btn-footer">
-        <span ng-show="!showSpinner && !isPristine" data-qa="btn-saveAccount">
+        <span ng-show="!showLoader && !isPristine" data-qa="btn-saveAccount">
             {{'ACCOUNT.FOOTER.SAVE'|cmTranslate}}
             <i class="fa cm-checker"></i>
         </span>
@@ -108,6 +108,6 @@
             {{'ACCOUNT.FOOTER.BACK'|cmTranslate}}
             <i class="fa cm-out"></i>
         </span>
-        <cm-loader ng-show="showSpinner" cm-color="ci-color"></cm-loader>
+        <cm-loader ng-show="showLoader" cm-color="ci-color"></cm-loader>
     </button>
 </cm-footer>

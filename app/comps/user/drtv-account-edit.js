@@ -2,26 +2,20 @@
 
 angular.module('cmUser')
 .directive('cmAccountEdit', [
-    'cmUserModel', 'cmNotify', 'cmCrypt',
+    'cmUserModel', 'cmNotify', 'cmCrypt', 'cmLoader',
     '$q', '$rootScope',
-    function(cmUserModel, cmNotify, cmCrypt,
+    function(cmUserModel, cmNotify, cmCrypt, cmLoader,
              $q, $rootScope){
         return {
             restrict: 'E',
             templateUrl: 'comps/user/drtv-account-edit.html',
             controller: function ($scope) {
 
-                $scope.showSpinner = false;
+                var loader = new cmLoader($scope);
+
                 $scope.showPasswordChange = false;
                 $scope.showReadOnly = false;
                 $scope.isPristine = true;
-
-                $scope.spinner = function(action){
-                    if(action == 'isIdle'){
-                        return $scope.showSpinner;
-                    }
-                    $scope.showSpinner = action == 'stop' ? false : true;
-                };
 
                 $scope.togglePasswordChange = function(action){
                     $scope.showPasswordChange = action && action == 'close' || $scope.showPasswordChange ? false : true;
@@ -116,17 +110,17 @@ angular.module('cmUser')
                     if($scope.isPristine)
                         $scope.goBack();
 
-                    if($scope.spinner('isIdle'))
+                    if(loader.isIdle())
                         return false;
 
-                    $scope.spinner('start');
+                    loader.start();
 
                     $scope.validateForm().then(
                         function(objectChange){
                             cmUserModel.updateAccount(objectChange)
                             .then(
                                 function(){
-                                    $scope.spinner('stop');
+                                    loader.stop();
                                     $scope.isPristine = true;
                                     $scope.togglePasswordChange('close');
                                 },
@@ -141,12 +135,12 @@ angular.module('cmUser')
                                         break;
                                     }
 
-                                    $scope.spinner('stop');
+                                    loader.stop();
                                 }
                             );
 
                         }, function(){
-                            $scope.spinner('stop');
+                            loader.stop();
                         }
                     )
                 };

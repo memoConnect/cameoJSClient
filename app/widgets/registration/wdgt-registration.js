@@ -1,9 +1,11 @@
 'use strict';
 
 angular.module('cmWidgets').directive('cmWidgetRegistration', [
-    'cmAuth', 'cmUserModel', 'cmUtil', 'cmLogger', 'cmTransferScopeData', 'cmNotify', 'cmSystemCheck',
+    'cmAuth', 'cmUserModel', 'cmUtil', 'cmLogger', 'cmTransferScopeData',
+    'cmNotify', 'cmSystemCheck', 'cmLoader',
     '$rootScope', '$location', '$q',
-    function (cmAuth, cmUserModel, cmUtil, cmLogger, cmTransferScopeData, cmNotify, cmSystemCheck,
+    function (cmAuth, cmUserModel, cmUtil, cmLogger, cmTransferScopeData,
+              cmNotify, cmSystemCheck, cmLoader,
               $rootScope, $location, $q) {
         return {
             restrict: 'AE',
@@ -14,6 +16,7 @@ angular.module('cmWidgets').directive('cmWidgetRegistration', [
 
                 cmSystemCheck.run(true);
 
+                var loader = new cmLoader($scope);
 
                 $scope.showLoginInfo = false;
                 $scope.showUserInfo = false;
@@ -43,7 +46,6 @@ angular.module('cmWidgets').directive('cmWidgetRegistration', [
                 };
 
                 $scope.handleGuest = false;
-                $scope.showSpinner = false;
 
                 /**
                  * Toogle Function for AGB Check
@@ -139,19 +141,11 @@ angular.module('cmWidgets').directive('cmWidgetRegistration', [
                 /**
                  * Form Validation and Apicall to create user
                  */
-                $scope.spinner = function (action) {
-                    if (action == 'isIdle') {
-                        return $scope.showSpinner;
-                    }
-
-                    $scope.showSpinner = action == 'stop' ? false : true;
-                };
-
                 $scope.createUser = function () {
-                    if ($scope.spinner('isIdle'))
+                    if (loader.isIdle())
                         return false;
 
-                    $scope.spinner('start');
+                    loader.start();
 
                     function sendCreateUserRequest(data) {
                         cmAuth.createUser(data).then(
@@ -174,7 +168,7 @@ angular.module('cmWidgets').directive('cmWidgetRegistration', [
                                 return true;
                             },
                             function (response) {
-                                $scope.spinner('stop');
+                                loader.stop();
 
                                 if (typeof response == 'object' && 'data' in response && typeof response.data == 'object') {
                                     if ('error' in response.data && response.data.error == 'invalid reservation secret') {
@@ -195,7 +189,7 @@ angular.module('cmWidgets').directive('cmWidgetRegistration', [
                             sendCreateUserRequest(data);
                         },
                         function () {
-                            $scope.spinner('stop');
+                            loader.stop();
                         }
                     );
                 };

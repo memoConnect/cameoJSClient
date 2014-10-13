@@ -10,16 +10,20 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
     'cmJob',
     'cmApi',
     'cmDevice',
+    'cmLoader',
     '$window',
     '$rootScope',
     '$timeout',
     function(cmUserModel, cmCrypt, cmUtil, cmLogger,
-             cmNotify, cmKey, cmJob, cmApi, cmDevice,
+             cmNotify, cmKey, cmJob, cmApi, cmDevice, cmLoader,
              $window, $rootScope, $timeout){
         return {
             restrict: 'E',
             templateUrl: 'comps/user/identity/key/drtv-identity-key-create.html',
             controller: function ($scope) {
+
+                var loader = new cmLoader($scope);
+
                 // only one privKey!!!
                 if(cmUserModel.hasPrivateKey()){
                     $scope.goTo('/settings/identity/key/list', true);
@@ -158,14 +162,19 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
                  * store key pair
                  */
                 $scope.store = function(){
+                    if(loader.isIdle())
+                        return false;
+
+                    loader.start();
+
                     var error = false;
 
-                    if($scope.privKey == ''){
+                    if($scope.privKey == '' || !$scope.privKey){
                         error = true;
                         cmNotify.warn('SETTINGS.PAGES.IDENTITY.KEYS.WARN.CHECK_PRIVKEY');
                     }
 
-                    if($scope.pubKey == ''){
+                    if($scope.pubKey == '' || !$scope.pubKey){
                         error = true;
                         cmNotify.warn('SETTINGS.PAGES.IDENTITY.KEYS.WARN.CHECK_PUBKEY');
                     }
@@ -176,15 +185,14 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
                     }
 
                     if(error !== true){
-                        var key = new   cmKey({
-                                            name: $scope.keyName,
-                                            privKey: $scope.privKey
-                                        });
+                        var key = new cmKey({
+                            name: $scope.keyName,
+                            privKey: $scope.privKey
+                        });
 
                         cmUserModel
                             .storeKey(key)
                             .syncLocalKeys();
-
 
                         cmUserModel
                             .when('key:saved', null, 5000)
@@ -198,10 +206,12 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
                                         $scope.goTo('/talks');
                                     }
                                 }
-                            )
+                            );
 
                         cmJob.stop();
-
+                        loader.stop();
+                    } else {
+                        loader.stop();
                     }
                 };
 

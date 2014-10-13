@@ -112,8 +112,11 @@
     </form>
     <cm-footer>
         <button ng-click="store()" class="cm-btn-grey" data-qa="btn-save-key">
-            {{'IDENTITY.KEYS.GENERATE.SAVE.SAVE_BUTTON'|cmTranslate}}
-            <i class="fa cm-checker"></i>
+            <span ng-show="!showLoader">
+                {{'IDENTITY.KEYS.GENERATE.SAVE.SAVE_BUTTON'|cmTranslate}}
+                <i class="fa cm-checker"></i>
+            </span>
+            <cm-loader ng-show="showLoader"></cm-loader>
         </button>
     </cm-footer>
 </div>
