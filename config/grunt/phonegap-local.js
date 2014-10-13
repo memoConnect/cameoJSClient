@@ -29,7 +29,10 @@ module.exports = function(grunt, options){
                         'com.jamiestarke.webviewdebug',
                         './resource/phonegap/plugins/de.cameonet.cordova.crypto'
                     ],
-                    platforms: ['android'],
+                    platforms: [
+                        //'android',
+                        'ios'
+                    ],
                     maxBuffer: 200, // You may need to raise this for iOS.
                     verbose: true,
                     releases: 'releases',
