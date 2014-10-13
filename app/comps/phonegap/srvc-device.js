@@ -13,7 +13,7 @@ angular.module('cmPhonegap')
 
         var self = {
             plugin: null,
-            debug: false,
+            debug: true,
             debugDevice: 'android',
 
             init: function(){

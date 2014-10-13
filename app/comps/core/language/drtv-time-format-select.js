@@ -11,7 +11,7 @@ angular.module('cmCore').directive('cmTimeFormatSelect', [
             link: function(scope, element){
                 element.find('select').on('change', function(){
                     cmSettings.set('timeFormat', scope.myFormat);
-                })
+                });
             },
 
             controller: function($scope){

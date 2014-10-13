@@ -3,13 +3,14 @@
 angular.module('cmCore')
 .directive('cmLanguageSelect', [
     'cmLanguage',
-    function(cmLanguage){
+    'cmTranslate',
+    function(cmLanguage, cmTranslate){
         return {
             restrict: 'AE',
             transclude: true,
-            template: '<select ng-model="language" ng-options="getLanguageName(lang_key) for lang_key in languages">'+
-                '<a ng-repeat="key in languages">{{languages}}</a>'+
-                '</select>',
+            template: '<select ng-model="language">'+
+                        '<option ng-repeat="lang_key in languages" value="{{lang_key}}">{{\'LANG.\'+lang_key.toUpperCase()|cmTranslate}}</option>'+
+                      '</select>',
 
             link: function(scope, element){
                 element.find('select').on('change', function(){
@@ -18,9 +19,8 @@ angular.module('cmCore')
             },
 
             controller: function($scope){
-                $scope.languages = cmLanguage.getSupportedLanguages()
-                $scope.getLanguageName = cmLanguage.getLanguageName
-                $scope.language = cmLanguage.getCurrentLanguage()
+               $scope.languages = cmLanguage.getSupportedLanguages();
+               $scope.language = cmLanguage.getCurrentLanguage();
             }
         }
     }

@@ -9,8 +9,6 @@
  * @restrict AE
  */
 
-//Todo: Widget should not access $roueParams
-
 angular.module('cmContacts')
 .directive('cmContactImport', [
 
@@ -187,13 +185,20 @@ angular.module('cmContacts')
                             .then(
                                 function (data) {
                                     $scope.spinner('stop');
-                                    identity = cmIdentityFactory.create(data.identity, true)
+                                    identity = cmIdentityFactory.create(data.identity, true);
 
                                     return  cmModal.confirm({
-                                                title:      '',
-                                                text:       'CONTACT.IMPORT.NOTIFICATION.CONFIRMATION',
-                                                html:       '<textarea cm-resize-textarea cm-max-rows = "10" ng-model = "data.message"></textarea>',
-                                                data:       {message: cmTranslate("CONTACT.IMPORT.NOTIFICATION.MESSAGE", {from: cmUserModel.data.identity.getDisplayName(), to: identity.getDisplayName() })}
+                                                title: '',
+                                                text:  'CONTACT.IMPORT.NOTIFICATION.CONFIRMATION',
+                                                html:  '<textarea cm-resize-textarea cm-max-rows="10">' +
+                                                    '{{\'CONTACT.IMPORT.NOTIFICATION.MESSAGE\'|cmTranslate:data.message}}'+
+                                                    '</textarea>',
+                                                data:  {
+                                                    message: {
+                                                        from: cmUserModel.data.identity.getDisplayName(),
+                                                        to: identity.getDisplayName()
+                                                    }
+                                                }
                                             })
                                 },
                                 function () {
