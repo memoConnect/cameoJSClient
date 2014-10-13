@@ -70,8 +70,10 @@ angular.module('cmCore')
                                         if(event.data.msg == 'finished')
                                             deferred.resolve(event.data)
 
-                                        if(['canceled', 'failed', 'error'].indexOf(event.data.msg) != -1)
+                                        if(['canceled', 'failed', 'error'].indexOf(event.data.msg) != -1){
                                             deferred.reject(event.data)
+                                            self.terminate()
+                                        }
 
                                         if(event.data.msg == 'notify')
                                             deferred.notify(event.data)
@@ -97,12 +99,17 @@ angular.module('cmCore')
                 return  deferred.promise
             }
 
-            this.cancel = function(){
+            this.cancel = function(){                
                 worker.postMessage({cmd: 'cancel'})
+                return  deferred.promise.catch(function(data){
+                            return  data.msg == 'canceled'
+                                    ?   $q.when('canceled')
+                                    :   $q.reject(data)
+                        })
             }
 
-            this.close = function(){
-                worker.close()
+            this.terminate = function(){
+                worker.terminate()
             }
         }
     }

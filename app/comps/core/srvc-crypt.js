@@ -239,8 +239,9 @@ angular.module('cmCore')
                                 key: key
                             });
                         },
-                        function(){
-                            async.promise.reject();
+                        function(reason){
+                            console.log('webwroker failed', reason)
+                            async.promise.reject(reason);
                         }
                     )
 
@@ -282,17 +283,16 @@ angular.module('cmCore')
              */
             cancelGeneration: function(withoutReject){
                 if(cmWebworker){
-                    keygenWorker.cancel()
-                        return true;
+                    return keygenWorker.cancel()
                 } else if(async.crypt != null){
                         // clear promise and library vars if param withReject is true
                     if(withoutReject == undefined) {
                             async.crypt.cancelAsync();
                             async.promise.reject();
                         }
-                        return true;
+                        return $q.when(true);
                     }
-                    return false;
+                    return $q.when(false);
                 },
 
             generatePassword: function (length) {

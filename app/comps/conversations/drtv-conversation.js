@@ -84,6 +84,7 @@ angular.module('cmConversations')
                  * after preparation send message
                  */
                 $scope.send = function(){
+                    console.log('before send')
                     if($scope.isSending !== true){
                         $scope.isSending = true;
                         $scope.isSendingAbort = false;
@@ -110,7 +111,8 @@ angular.module('cmConversations')
                             //The conversations has not been saved to the Backend, do it now:
                             $scope.conversation.save()
                             //When that is done try again to send the message:
-                            .then( function(){ 
+                            .then( function(conversation_data){ 
+                                $scope.conversation.importData(conversation_data)
                                 cmConversationFactory.register($scope.conversation);
                                 prepareFiles();
                             });
@@ -128,17 +130,23 @@ angular.module('cmConversations')
 
                 $scope.showAsymmetricKeyError = function(){
 //                    cmLogger.debug('cmConversationDRTV.showAsymmetricKeyError')
+
+                        
+                    console.log('KEy ERROR')
+                    console.log($scope.conversation.getKeyTransmission())  
+                    console.log('has private key: '+$scope.conversation.userHasPrivateKey())           
+                    console.log('showedAsymmetricKeyError: '+showedAsymmetricKeyError)       
                     if(!$scope.conversation.state.is('new')
                         && $scope.conversation.getKeyTransmission() == 'asymmetric'
                         && $scope.conversation.userHasPrivateKey() == false
-                        && showedAsymmetricKeyError == false){
-                        showedAsymmetricKeyError = true;
+                    ){
                         cmNotify.warn('CONVERSATION.WARN.ASYMMETRIC_DECRYPT_ERROR',{ttl:0});
+                        return true
                     }
+                    return false
                 };
 
                 $scope.showGoToSettingsModal = function(){
-//                    cmLogger.debug('cmConversationDRTV.showGoToSettingsModal')
                     if(
                             !$scope.conversation.state.is('new')
                         &&  $scope.conversation.passwordRequired()
@@ -154,11 +162,15 @@ angular.module('cmConversations')
                             settingsLinker.typeId = $routeParams.conversationId;
                         }
                         cmNotify.warn('CONVERSATION.WARN.PASSWORD_NEEDED',{ttl:0,i18n:settingsLinker});
+                        return true
                     }
+
+                    return false
                 };
 
                 function prepareFiles(){
 
+                    console.log('prep files')
                     /**
                      * check if files exists
                      * after success sendMessage
@@ -166,6 +178,7 @@ angular.module('cmConversations')
                 
                     $scope.conversation.getPassphrase()
                     .catch(function(){
+                            console.log('failed')
                             return  $scope.conversation.isEncrypted()
                                     ?   $q.reject('access denied')
                                     :   $q.when(null)       //Todo: null for 'not encrypted' old convention
@@ -355,7 +368,7 @@ angular.module('cmConversations')
                     }
 
                     $scope.conversation
-                    .on('update:finished',       callback_update_finished)
+                    .one('update:finished',       callback_update_finished)
                     .on('password:missing',      callback_password_missing)
                     .on('recipients:missing',    callback_recipients_missing)
                     .on('save:aborted',          callback_save_aborted)

@@ -252,12 +252,7 @@ describe('cmCrypt', function () {
             expect(cmCrypt.generateAsyncKeypair('huhu')).toBeFalsy()
             expect(cmCrypt.generateAsyncKeypair({test:1})).toBeFalsy()
             expect(cmCrypt.generateAsyncKeypair(['pups'])).toBeFalsy()
-        })
-
-        it('should return false on cancel when no generating process is running', function(){
-            expect(cmCrypt.cancelGeneration()).toBeFalsy()
-        })
-        
+        })     
 
     })
 

@@ -147,6 +147,7 @@ describe('Conversation encryption -', function () {
         })
 
         it("get purl for external user (if needed)", function () {
+            ptor.debugger()
             if (getPurl) {
                 ptor.wait(function () {
                     return util.getTestUserNotifications(recipients[0].login).then(function (response) {

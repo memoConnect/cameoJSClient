@@ -106,7 +106,7 @@ angular.module('cmCore').service('cmPassphraseVault',[
                         .catch(function(){
                             //check if a valid password has been passed to the function 
                             //and a symmetrically encrypted passphrase is present:
-                            return  couldBeAPassword(password) && symmetricallyEncryptedPassphrase
+                            return  couldBeAPassword(password) && sePassphrase
                                     ?   cmCrypt.decrypt(password, cmCrypt.base64Decode(sePassphrase))
                                     :   $q.reject()
                         })
@@ -134,6 +134,26 @@ angular.module('cmCore').service('cmPassphraseVault',[
                                 return $q.reject()
                             }
                         )
+            }
+
+            /**
+             * @ngdoc method
+             * @methodOf PassphraseVault
+             *
+             * @name userHasAccess
+             * @description
+             * checks if local user keys in passphraselist
+             *
+             * @returns {Boolean} boolean Returns a Boolean
+             */
+            this.userHasAccess = function(){
+                var localKeys = cmUserModel.loadLocalKeys()
+
+                return  localKeys.some(function(key){
+                            return aePassphraseList.some(function(item){
+                                return item.keyId == key.id
+                            })
+                        })
             }
 
             /**
@@ -211,10 +231,12 @@ angular.module('cmCore').service('cmPassphraseVault',[
                             restrict_to_keys:   config.restrict_to_keys || null
                         }
 
+            console.dir(config)
+
             return $q.all({
                         //symmetrical encryption:
                         sym:    couldBeAPassword(config.password) && couldBeAPassphrase(config.passphrase)
-                                ?   cmCrypt.base64Encode(cmCrypt.encryptWithShortKey(password, config.passphrase))
+                                ?   cmCrypt.base64Encode(cmCrypt.encryptWithShortKey(config.password, config.passphrase))
                                 :   $q.when(undefined)
                         ,
                         //asymmetrically encrypt:
@@ -225,7 +247,7 @@ angular.module('cmCore').service('cmPassphraseVault',[
                                         })
                                     )
                                     .then(function(results){
-                                        return Array.concat.apply([], results)
+                                        return Array.prototype.concat.apply([], results)
                                     })
                                 :   $q.when([])
                     })
@@ -258,33 +280,6 @@ angular.module('cmCore').service('cmPassphraseVault',[
 //                            return size != undefined ? Math.min(recipient.getWeakestKeySize(), size) : recipient.getWeakestKeySize()
                             return size != undefined ? Math.min(recipient.getWeakestKeySize(), size.getWeakestKeySize()) : recipient.getWeakestKeySize()
                         }) || 0
-            }
-
-            /**
-             * @ngdoc method
-             * @methodOf cmPassphrase
-             *
-             * @name isInPassphraseList
-             * @description
-             * checks if local user keys in passphraselist
-             *
-             * @returns {Boolean} boolean Returns a Boolean
-             */
-            this.isInPassphraseList = function(){
-                var localKeys = cmUserModel.loadLocalKeys(),
-                    check = false;
-
-                if(asymmetricallyEncryptedPassphrases.length > 0 && cmUtil.isArray(localKeys) && localKeys.length > 0){
-                    localKeys.forEach(function(value){
-                        asymmetricallyEncryptedPassphrases.forEach(function(key){
-                            if(key.keyId == value.id){
-                                check = true;
-                            }
-                        })
-                    });
-                }
-
-                return check;
             }
 
     }

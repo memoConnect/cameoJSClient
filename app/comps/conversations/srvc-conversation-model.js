@@ -216,7 +216,7 @@ angular.module('cmConversations')
              * @param {Object} data The conversation data as recieved from the backend.
              */
             this.importData = function(data){
-//                cmLogger.debug('cmConversationModel:importData');
+                cmLogger.debug('cmConversationModel:importData');
                 if(typeof data !== 'object'){
                     cmLogger.debug('cmConversationModel:import:failed - no data!');
                     return this;
@@ -243,7 +243,7 @@ angular.module('cmConversations')
                     cmLogger.debug('ConversationModel: inconsistent data: keyTransmission')
                     //TODO
                 
-                this.keyTransmission = passphraseVault.getKeyTransmission()
+                //this.keyTransmission = passphraseVault.getKeyTransmission()
 
                 console.log(this.keyTransmission)
 
@@ -255,10 +255,12 @@ angular.module('cmConversations')
                 
 
                 // getting locally saved pw for conversation
-//                if(!this.isUserInPassphraseList()){
-                    if(this.password == undefined)
-                        this.password = this.localPWHandler.get(this.id)
-//                }
+                if(this.password == undefined)
+                    this.password = this.localPWHandler.get(this.id)
+
+                console.log('pw:')
+                console.log(this.password)
+                console.log(this.id)
 
                 this.initPassCaptcha(data);
 
@@ -546,7 +548,6 @@ angular.module('cmConversations')
 
                 cmLogger.debug('cmConversationModel.decrypt', + self.subject);
 
-
                 this.getPassphrase()
                 .then(function(passphrase){
                     return $q.all(self.messages.map(function (message){
@@ -559,7 +560,7 @@ angular.module('cmConversations')
 
                         // save password to localstorage
                         if (typeof self.password == 'string' && self.password.length > 0)
-                            self.localPWHandler.set(this.id, self.password);
+                            self.localPWHandler.set(self.id, self.password);
 
                         return $q.when()
                         
@@ -633,15 +634,17 @@ angular.module('cmConversations')
              * @returns {Promise} Returns a promise to resolve with passphrase
              */
             this.getPassphrase = function(){
-                console.log(this.isEncrypted())
 
                 if(!this.isEncrypted())
                     return $q.reject()
 
                 if(!this.state.is('new') && !passphraseVault)
-                    return $q.reject()
+                    return $q.reject('new but passphrasevault missing.')
 
-                return  passphraseVault.get()
+                if(!passphraseVault)
+                    return $q.reject('passphrase vault missing.')
+
+                return  passphraseVault.get(this.password)
             };
 
             /**
@@ -666,7 +669,7 @@ angular.module('cmConversations')
                     )
 
                 }else{
-                    return this.hasPassword() && (!this.userHasPrivateKey() || !this.isUserInPassphraseList())
+                    return this.hasPassword() && (!this.userHasPrivateKey() || !this.userHasAccess())
                 }
             }
 
@@ -690,8 +693,8 @@ angular.module('cmConversations')
             };
 
             //TODO:
-            this.isUserInPassphraseList = function(){
-                return passphrase.isInPassphraseList();
+            this.userHasAccess = function(){
+                return passphraseVault.userHasAccess();
             };
 
             this.enablePassCaptcha = function(){

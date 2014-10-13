@@ -152,6 +152,7 @@ angular.module('cmCore')
              */
             obj.one = function(event_names, callback){
                 obj.on(event_names, callback, 1)
+                return obj
             }
 
             /**

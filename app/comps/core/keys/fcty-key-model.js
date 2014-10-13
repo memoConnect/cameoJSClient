@@ -128,6 +128,13 @@ angular.module('cmCore')
 
             this.sign = function(data){
                 return crypt && crypt.sign(data)
+
+                // return  $q.when(crypt && crypt.sign(data))
+                //         .then(function(result){
+                //             return  result
+                //                     ?   $q.when(result)
+                //                     :   $q.reject()
+                //         })
             };
 
             this.verify = function(data, signature, force){
