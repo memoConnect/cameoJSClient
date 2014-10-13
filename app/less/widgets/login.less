@@ -7,11 +7,18 @@ cm-widget-login{
   .dtbr{
     .w100;
     &:first-child{
+      position: relative;
       height:20%;
-      background-color: @theme-b-bg-color-light;
-    }
-    &:last-child{
-      background-color: @theme-b-bg-color;
+      background-image: url('gfx/background/app.jpg');
+      &:before{
+        .theme-b-bg-light;
+        position: absolute !important;
+        z-index: 0;
+      }
+
+      .logo{
+        position: relative;
+      }
     }
   }
 }
