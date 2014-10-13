@@ -10,13 +10,24 @@ cm-widget-login{
       position: relative;
       height:20%;
       background-image: url('gfx/background/app.jpg');
-      &:before{
-        .theme-b-bg-light;
-        position: absolute !important;
-        z-index: 0;
+      .head{
+          position: relative;
+          z-index:2;
+          .bg-transparent {
+            width: @cm-app-width;
+            position: absolute;
+            z-index: 0;
+            top: 0;
+            bottom: 0;
+            left :0;
+            right: 0;
+            margin: 0 auto;
+            background-color: @theme-b-bg-color-light;
+          }
       }
 
-      .logo{
+      .logo, .rhino{
+        z-index: 2;
         position: relative;
       }
     }

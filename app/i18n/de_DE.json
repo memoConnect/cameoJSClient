@@ -770,11 +770,11 @@
         "CONVERSATION": {
             "ENCRYPTED": {
                 "NAME": "Dieser Talk ist verschlüsselt.",
-                "DESCRIPTION": ""
+                "DESCRIPTION": "missing description @todo"
             },
             "NOT_ENCRYPTED": {
                 "NAME": "Dieser Talk ist nicht verschlüsselt.",
-                "DESCRIPTION": "",
+                "DESCRIPTION": "missing description @todo",
                 "TOGGLE": "Verschlüsselung aktivieren."
             },
             "KEY_TRANSMISSION_SYMMETRIC": {
@@ -795,7 +795,7 @@
             },
             "TRUSTING_ALL_RECIPIENTS": {
                 "NAME": "Du vertraust allen Empfängern.",
-                "DESCRIPTION": ""
+                "DESCRIPTION": "missing description @todo"
             },
             "MISSING_DATA": "Sicherheitsaspekte fehlen!"
         }

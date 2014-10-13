@@ -57,33 +57,32 @@ cm-header cm-security-indicator{
   }
 }
 
-
 cm-security-aspect{
-    display: block;
-    line-height:1.6em;
-    margin-bottom:1em;
+  display:block;
+  position: relative;
+  min-height: @cm-unit;
+  .border-bottom;
+  section.content{
+    width: @cm-app-width;
+  }
+  .item {
+    display: inline-block;
+    font-weight: bold;
+    padding-top: 0.5rem;
+  }
+  cm-icons{
+    padding-top: 0.2rem;
+    font-size: 1.6em;
+    line-height: 1em;
+    margin-right: 0.5em;
+    text-align: left;
+    white-space: nowrap;
+  }
 
-    .name{
-        font-weight:bold;
-        text-overflow: ellipsis;
-        overflow:hidden;
-
-        > * { vertical-align: middle; }
-
-        cm-icons{
-            text-align: left;
-            white-space: nowrap;
-            line-height:1em;
-            font-size:1.6em;
-            margin-right: 0.5em;
-
-            &.positive{ color: @cm-color-positive; }
-            &.negative{ color: @cm-color-negative; }
-
-            &>*{ vertical-align:top; }
-        }
-    }
-    .description{
-      white-space:normal;
-    }
+  .toggleOption {
+    .content;
+    display: inline-block;
+    .mt5;
+    .mb15;
+  }
 }

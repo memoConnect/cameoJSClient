@@ -9,7 +9,9 @@ form, .cm-form-style {
     margin-right: 0.5rem;
   }
   .terms-link {
+    .mt15;
     padding-left: 2rem;
+    line-height: 1em;
   }
 }
 
@@ -77,13 +79,16 @@ textarea {
       background-color: @cm-dark-white;
       color: @cm-black;
     }
-
-    .cm-input-ctn.isActive, .cm-input-ctn.isActive input {
-      background-color: @cm-white;
-    }
-
     select {
       color: @cm-black;
+    }
+  }
+}
+
+.theme-b {
+  form, .cm-form-style{
+    .cm-input-ctn.isActive, .cm-input-ctn.isActive input {
+      background-color: @cm-white;
     }
   }
 }

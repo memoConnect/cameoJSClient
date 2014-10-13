@@ -770,11 +770,11 @@
         "CONVERSATION": {
             "ENCRYPTED": {
                 "NAME": "Talk is encrypted.",
-                "DESCRIPTION": ""
+                "DESCRIPTION": "missing description @todo"
             },
             "NOT_ENCRYPTED": {
                 "NAME": "Talk is not encrypted.",
-                "DESCRIPTION": "",
+                "DESCRIPTION": "missing description @todo",
                 "TOGGLE": "Enable encryption."
             },
             "KEY_TRANSMISSION_SYMMETRIC": {
@@ -786,7 +786,7 @@
             },
             "NO_SYMMETRIC_KEY_TRANSMISSION": {
                 "NAME": "This talk is safely encrypted with cameoKeys.",
-                "DESCRIPTION": ""
+                "DESCRIPTION": "missing description @todo"
             },
             "HAS_PASSCAPTCHA": {
                 "NAME": "PassCaptcha enabled.",
@@ -795,7 +795,7 @@
             },
             "TRUSTING_ALL_RECIPIENTS": {
                 "NAME": "You trust all recipients.",
-                "DESCRIPTION": ""
+                "DESCRIPTION": "missing description @todo"
             },
             "MISSING_DATA": "Security aspects missing"
         }
