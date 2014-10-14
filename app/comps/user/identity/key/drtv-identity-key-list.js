@@ -24,12 +24,17 @@ angular.module('cmUser').directive('cmIdentityKeyList', [
                     $scope.publicKeys   =   cmUserModel.data.identity.keys || [];
                     $scope.trustedKeys  =   []
 
+                    $scope.checking     =   {}
+
                     $scope.publicKeys.forEach(function(key){
+                        $scope.checking[key.id] = true
                         cmUserModel
                         .verifyOwnPublicKey(key)
                         .then(function(){
-                            console.log('MMM',key.id)
                             $scope.trustedKeys.push(key)
+                        })
+                        .finally(function(){
+                            $scope.checking[key.id] = false
                         })
                     });
 

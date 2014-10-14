@@ -602,7 +602,7 @@ angular.module('cmCore')
                                 });
                     })
                     .then(function(ttrusted_keys){
-                        console.log(ttrusted_keys)
+                        //looks for keys that are transitively trusted but not yet signed:
                         var unsigned_ttrusted_keys  =   ttrusted_keys.filter(function(ttrusted_key){
                                                             return  local_keys.some(function(local_key){
                                                                         return  ttrusted_key.signatures.every(function(signature){
@@ -614,7 +614,7 @@ angular.module('cmCore')
                         if(sign != true || unsigned_ttrusted_keys.length == 0)
                             return $q.when(ttrusted_keys)
 
-                        this.state.set('signing');
+                        self.state.set('signing');
 
                         $q.all(
                             unsigned_ttrusted_keys.map(function(ttrusted_key){

@@ -161,7 +161,6 @@ angular.module('cmCore')
                                             data:       data
                                         })
                                         .then(function(result){
-                                            console.log('LLL: ', result, signature)
                                             return $q.when(result.result)
                                         })
                                     :   $q.when(crypt && crypt.verify(data, signature, function(x){ return x }))
@@ -173,7 +172,6 @@ angular.module('cmCore')
                         })
                         .then(
                             function(signature){
-                                console.log('succc')
                                 verified[data] = verified[data] || {}
                                 verified[data][signature] = true
                                 return signature
@@ -229,8 +227,6 @@ angular.module('cmCore')
             };
 
             this.verifyKey = function(key, data){
-                console.log('verifying: ',key.id)
-                console.log('data', data)
 
                 return  (this.getPublicKey() == key.getPublicKey() 
                         ?   $q.when()   //always verifies itself
@@ -242,9 +238,7 @@ angular.module('cmCore')
                                                     :   $q.reject('keyIds not matching.')
                                         })
                             }, $q.reject())
-                        ).then(function(){
-                            console.log('SUCC', key.id)
-                        })
+                        )
             };
 
             this.getSize = function(){
