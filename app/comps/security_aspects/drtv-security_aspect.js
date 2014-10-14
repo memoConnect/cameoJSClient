@@ -15,13 +15,9 @@ angular.module('cmSecurityAspects')
 
             link:       function(scope, element, attrs){
 
-                            console.log('attrs', attrs)
                             if(typeof attrs.cmShowToggleOptions == 'undefined'){
                                 scope.showToggleOptions = true;
                             } else {
-                                console.log('moep')
-                                scope.showToggleOptions = true;
-                                console.log('eval', scope.$eval(attrs.cmShowToggleOptions))
                                 scope.showToggleOptions = scope.$eval(attrs.cmShowToggleOptions);
                             }
 
