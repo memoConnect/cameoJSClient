@@ -52,6 +52,7 @@ describe('Identity key settings: ', function () {
         util.waitAndClickQa("btn-create-key")
         util.waitForPageLoad('/settings/identity/key/create')
         util.waitAndClickQa("btn-generate-key")
+        ptor.debugger()
     })
 
     describe('with increased timeout', function () {

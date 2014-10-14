@@ -637,13 +637,18 @@ angular.module('cmCore')
         };
 
         this.decryptPassphrase = function(encrypted_passphrase, keyId){
-            var keys = this.loadLocalKeys() || []
+            var keys    =   this.loadLocalKeys().filter(function(key){
+                                return (!keyId || key.id == keyId)
+                            })
 
-            return  keys.reduce(function(decrypted_passphrase, key){
-                        return      decrypted_passphrase 
-                                ||  ( (key.id == keyId || !keyId) && key.decrypt(encrypted_passphrase) )
 
-                    }, undefined)
+            return keys.reduce(function(previous_try, key){
+                return  previous_try
+                        .catch(function(){
+                                return  key.decrypt(encrypted_passphrase)
+                        })
+            }, $q.reject())
+
         };
 
         this.bulkReKeying = function(localKeyId, newKeyId){
@@ -655,48 +660,54 @@ angular.module('cmCore')
                 if(typeof localKeyId == 'string' && cmUtil.validateString(localKeyId)
                     && typeof newKeyId == 'string' && cmUtil.validateString(newKeyId))
                 {
-                    var localKey = this.loadLocalKeys().find(localKeyId);
-                    var newKey = this.data.identity.keys.find(newKeyId);
+                    var localKey    = this.loadLocalKeys().find(localKeyId);
+                    var newKey      = this.data.identity.keys.find(newKeyId);
+
 
                     if(localKey instanceof cmKey && newKey instanceof cmKey){
                         cmAuth.getBulkPassphrases(localKey.id, newKey.id)
                         .then(
                             function(list){
-                                var newList = [],
-                                    i = 0;
 
-                                while(i < list.length){
-                                    var passphrase = self.decryptPassphrase(list[i].aePassphrase, localKey.id);
-                                    if(cmUtil.validateString(passphrase)){
-                                        newList.push({conversationId: list[i].conversationId, aePassphrase: newKey.encrypt(passphrase)})
+                                if(list.length == 0)
+                                    return []
+
+                                $q.all(
+                                    list.map(function(item){
+                                        return  self.decryptPassphrase(item.aePassphrase, localKey.id)
+                                                .then(function(passphrase){
+                                                    return newKey.encrypt(passphrase)
+                                                })
+                                                .then(function(encrypted_passphrase){
+                                                    return  {
+                                                                conversationId: item.conversationId, 
+                                                                aePassphrase:   encrypted_passphrase
+                                                            }
+                                                })
+                                    })
+                                )
+                                .then(function(newList){
+                                    return  cmAuth.saveBulkPassphrases(newKey.id, newList)
+                                })
+                                .then(
+                                    function(){
+                                        return  cmApi.broadcast({
+                                                    name: 'rekeying:finished',
+                                                    data:{
+                                                        keyId: newKey.id
+                                                    }
+                                                });
+                                    },
+                                    function(){
+                                        cmLogger.debug('cmUserModel.bulkReKeying - Request Error - saveBulkPassphrases');
                                     }
-                                    passphrase = undefined;
-                                    i++;
-                                }
-
-                                if(newList.length > 0){
-                                    cmAuth.saveBulkPassphrases(newKey.id, newList).then(
-                                        function(){
-                                            cmApi.broadcast({
-                                                name: 'rekeying:finished',
-                                                data:{
-                                                    keyId: newKey.id
-                                                }
-                                            });
-                                        },
-                                        function(){
-                                            cmLogger.debug('cmUserModel.bulkReKeying - Request Error - saveBulkPassphrases');
-                                        }
-                                    ).finally(
-                                        function(){
-                                            self.trigger('bulkrekeying:finished');
-                                            self.state.unset('rekeying');
-                                        }
-                                    );
-                                } else {
+                                )
+                                .finally(function(){
                                     self.trigger('bulkrekeying:finished');
                                     self.state.unset('rekeying');
-                                }
+                                })
+
+
                             },function(){
                                 cmLogger.debug('cmUserModel.bulkReKeying - Request Error - getBulkPassphrases');
                             }

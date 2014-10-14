@@ -166,7 +166,7 @@ describe('Authentication requests -', function () {
             util.createEncryptedConversation(subject3, encryptedMessage3)
         })
 
-        it("should be not able to read conversation from key1", function () {
+        it("should not be able to read conversation from key1", function () {
             util.readConversation(subject1, "- encrypted -")
         })
 
@@ -231,7 +231,7 @@ describe('Authentication requests -', function () {
             checkKeyTrust(keyName3, true)
         })
 
-        it("should be able to read conversation from key3", function () {
+        it("should not be able to read conversation from key3", function () {
             util.readConversation(subject3, encryptedMessage3)
         })
 

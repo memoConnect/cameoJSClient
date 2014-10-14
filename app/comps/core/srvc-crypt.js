@@ -1,66 +1,24 @@
 'use strict';
 
 angular.module('cmCore')
-    .service('cmCrypt', [
-        'cmLogger', 'cmKey',
-        '$q', '$interval', '$rootScope',
-        function (cmLogger, cmKey, $q, $interval, $rootScope) {
-            // private vars
-            var async = {
-                interval: null,
-                promise: null,
-                crypt: null
-            };
+.service('cmCrypt',[
+    'cmLogger', 'cmKey', 'cmWebworker',
+    '$q', '$interval', '$rootScope',
+    function (cmLogger, cmKey, cmWebworker,
+              $q, $interval, $rootScope) {
+        // private vars
+        var async = {
+            interval: null,
+            promise: null,
+            crypt: null
+        };
 
-            var webworker = {
-                stack: [],
-                isAvailable: function () {
-                    return !(window.Worker === undefined)
-                },
-                start: function (jsPath, data, onFinished) {
+        var keygenWorker 
 
-                    var worker = new Worker(jsPath);
 
-                    worker.addEventListener('message', function (e) {
-                        var result = e.data;
-                        switch (result.msg) {
-                            case 'finished':
-                                onFinished(result);
-                                break;
-                        }
-                    });
+        return {
 
-                    worker.postMessage = worker.webkitPostMessage || worker.postMessage;
-
-                    worker.postMessage(data);
-
-                    this.stack.push({jsPath: jsPath, instance: worker});
-                },
-                cancel: function (jsPath, data, onFinished) {
-                    var worker = this.stack.filter(function (worker) {
-                        return worker.jsPath == jsPath
-                    });
-
-                    if (worker.length > 0) {
-                        worker = worker[0].instance;
-
-                        worker.addEventListener('message', function (e) {
-                            var result = e.data;
-                            switch (result.msg) {
-                                case 'canceled':
-                                    onFinished(result);
-                                    break;
-                            }
-                        });
-
-                        worker.postMessage(data);
-                    }
-                }
-            };
-
-            return {
-
-                randomString: function (length, smallAlphabet) {
+            randomString: function (length, smallAlphabet) {
                     var alphabet = smallAlphabet ? "abcdefghijklmnopqrstuvwxyz0123456789" : "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_"
                     var randomInts;
 
@@ -98,345 +56,350 @@ angular.module('cmCore')
                     return randomWord;
                 },
 
-                /**
-                 * this method calculates a secure hash
-                 * @param secretString String that should be hashed
-                 */
-                hash: function (secretString) {
-                    if (typeof secretString != 'string' || secretString.length == 0)
-                        throw "cmCrypt.hash(): invalid argument."
+            /**
+             * this method calculates a secure hash
+             * @param secretString String that should be hashed
+             */
+            
+            hash: function (secretString) {
+                if (typeof secretString != 'string' || secretString.length == 0)
+                    throw "cmCrypt.hash(): invalid argument."
 
-                    return sjcl.codec.base64.fromBits(sjcl.hash.sha256.hash(secretString))
-                },
-                /**
-                 * [hashObject description]
-                 * @param  {[type]} obj         [description]
-                 * @param  {[type]} hash_method [description]
-                 * @return {[type]}             [description]
-                 */
-                hashObject: function (obj) {
-                    var visited = []
+                return sjcl.codec.base64.fromBits(sjcl.hash.sha256.hash(secretString))
+            },
+            /**
+             * [hashObject description]
+             * @param  {[type]} obj         [description]
+             * @param  {[type]} hash_method [description]
+             * @return {[type]}             [description]
+             */
+            hashObject: function(obj){
+                var visited = []
 
-                    function objectToArray(obj) {
+                function objectToArray(obj){
 
-                        //console.log(visited.length)
+                    //console.log(visited.length)
 
-                        if (visited.indexOf(obj) != -1)
-                            throw "Error: cmCrypt.hashObject() unable to hash cyclic Objects."
+                    if(visited.indexOf(obj) != -1)
+                        throw "Error: cmCrypt.hashObject() unable to hash cyclic Objects."
+                    
 
+                    if(typeof obj == "string") return obj
+                    if(typeof obj == "number") return obj.toString()
+                        
+                    if(["[object Object]", "[object Array]"].indexOf(Object.prototype.toString.call(obj)) == -1)
+                        throw "Error: cmCrypt.hashObject() unable to hash Objects with values like " + Object.prototype.toString.call(obj) 
 
-                        if (typeof obj == "string") return obj
-                        if (typeof obj == "number") return obj.toString()
+                    var keys    =   Object.keys(obj).sort()
 
-                        if (["[object Object]", "[object Array]"].indexOf(Object.prototype.toString.call(obj)) == -1)
-                            throw "Error: cmCrypt.hashObject() unable to hash Objects with values like " + Object.prototype.toString.call(obj)
+                    visited.push(obj)
 
-                        var keys = Object.keys(obj).sort()
+                    var values  =   keys.map(function(key){ return objectToArray(obj[key]) })
 
-                        visited.push(obj)
-
-                        var values = keys.map(function (key) {
-                            return objectToArray(obj[key])
-                        })
-
-                        return [keys, values]
-                    }
+                    return [keys, values]
+                }
 
                     return this.hash(JSON.stringify(objectToArray(obj)))
                 },
 
-                /**
-                 * this methods encodes a string base64
-                 * @param string
-                 * @returns {*}
-                 */
-                base64Encode: function (string) {
-                    return _Base64.encode(string);
-                },
+            /**
+             * this methods encodes a string base64
+             * @param string
+             * @returns {*}
+             */
+            base64Encode: function(string){
+                return _Base64.encode(string);
+            },
 
-                /**
-                 * this method decodes a string base64
-                 * @param string
-                 * @returns {*}
-                 */
-                base64Decode: function (string) {
-                    return _Base64.decode(string);
-                },
+            /**
+             * this method decodes a string base64
+             * @param string
+             * @returns {*}
+             */
+            base64Decode: function (string) {
+                return _Base64.decode(string);
+            },
 
-                /**
-                 * this method encrypts strings
-                 * @param secretKey a secret key with max len of 10 chars
-                 * @param secretString a string that should be enrypted
-                 * @returns base64 encoded encrypted string
-                 */
-                encryptWithShortKey: function (secretKey, secretString) {
-                    var parameters = { cipher: "aes", ks: 256, iter: 4096 };
+            /**
+             * this method encrypts strings
+             * @param secretKey a secret key with max len of 10 chars
+             * @param secretString a string that should be enrypted
+             * @returns base64 encoded encrypted string
+             */
+            encryptWithShortKey: function (secretKey, secretString) {
+                var parameters = { cipher: "aes", ks: 256, iter: 4096 };
 
-                    if (typeof secretKey != 'string' || secretKey.length < 3) { //Todo! key sollte länger sein
-                        cmLogger.warn('cmCrypt.encryptWithShortKey(): unable to encrypt, invalid key. ' + secretKey)
-                        return "";
-                    }
-
-
-                    if (null == secretString)
-                        return "";
-
-                    var encryptedSecretString = sjcl.json.encrypt(String(secretKey), String(secretString), parameters);
-
-                    return encryptedSecretString;
-                },
-
-                /**
-                 * this method encrypts strings
-                 * @param secretKey a secret key with min len of 60 chars
-                 * @param secretString a string that should be encrypted
-                 * @returns base64 encoded encrypted string
-                 */
-                encrypt: function (secretKey, secretString) {
-                    var parameters = {cipher: "aes", ks: 256, iter: 500 };
-
-                    if (typeof secretKey != 'string' || secretKey.length < 1) { //Todo: längere Keys verlangen
-                        cmLogger.warn('cmCrypt.encrypt(): unable to encrypt, invalid key.' + secretKey)
-                        return "";
-                    }
-
-                    if (null == secretString)
-                        return "";
-
-                    if (secretKey.length < 60) {
-                        cmLogger.debug("cmCrypt.encrypt(): key too short.")
-                        return "";
-                    }
+                if (typeof secretKey != 'string' || secretKey.length < 3) { //Todo! key sollte länger sein
+                    cmLogger.warn('cmCrypt.encryptWithShortKey(): unable to encrypt, invalid key. ' + secretKey)
+                    return "";
+                }
 
 
-                    var encryptedSecretString = sjcl.json.encrypt(String(secretKey), String(secretString), parameters);
+                if (null == secretString)
+                    return "";
 
-                    return encryptedSecretString;
-                },
-                /**
-                 * this method decrypts uuencoded strings
-                 * @param secretKey a secret key
-                 * @param secretString a base64 encoded string that should be decrypted
-                 * @returns decrypted string or false if unable to decrypt
-                 */
-                decrypt: function (secretKey, secretString) {
+                var encryptedSecretString = sjcl.json.encrypt(String(secretKey), String(secretString), parameters);
 
-                    if (secretString != '' && typeof secretString == 'object') {
-                        secretString = JSON.stringify(secretString)
-                    }
+                return encryptedSecretString;
+            },
 
-                    if (typeof secretKey != 'string' || secretKey.length < 1) {
-                        return false;
-                    }
+            /**
+             * this method encrypts strings
+             * @param secretKey a secret key with min len of 60 chars
+             * @param secretString a string that should be encrypted
+             * @returns base64 encoded encrypted string
+             */
+            encrypt: function (secretKey, secretString) {
+                var parameters = {cipher: "aes", ks: 256, iter: 500 };
 
-                    if (null == secretString)
-                        return false;
+                if(typeof secretKey != 'string' || secretKey.length < 1){ //Todo: längere Keys verlangen
+                    cmLogger.warn('cmCrypt.encrypt(): unable to encrypt, invalid key.'+secretKey)
+                    return "";
+                }
 
-                    var decryptedString;
+                if (null == secretString)
+                    return "";
 
-                    try {
-                        decryptedString = sjcl.decrypt(secretKey, secretString)
-                    } catch (e) {
-                        //                    cmLogger.warn('Unable to decrypt.', e)
-                        //                    console.warn(e)
-                    }
+                if (secretKey.length < 60) {
+                    cmLogger.debug("cmCrypt.encrypt(): key too short.")
+                    return "";
+                }
 
-                    return decryptedString || false
-                },
 
-                /**
-                 * return the bit size of possible keygeneration
-                 * @returns {string[]}
-                 */
-                getKeySizes: function () {
-                    return ['2048', '4096'];
-                },
+                var encryptedSecretString = sjcl.json.encrypt(String(secretKey), String(secretString), parameters);
 
-                /**
-                 * start async process
-                 * @param keylen
-                 * @param $scopeState
-                 * @returns {Promise.promise|*|webdriver.promise.Deferred.promise}
-                 */
-                generateAsyncKeypair: function (keySize) {
-                    if (keySize == undefined ||
-                        typeof keySize != 'number') {
-                        return false;
-                    }
+                return encryptedSecretString;
+            },
+            /**
+             * this method decrypts uuencoded strings
+             * @param secretKey a secret key
+             * @param secretString a base64 encoded string that should be decrypted
+             * @returns decrypted string or false if unable to decrypt
+             */
+            decrypt: function (secretKey, secretString) {
 
-                    async.promise = $q.defer();
-                    // start keygen over webworker
-                    if (webworker.isAvailable()) {
-                        webworker.start('webworker/keygen.js', {
-                            keySize: keySize,
-                            cmd: 'start-async'
-                        }, function (result) {
+                if (secretString != '' && typeof secretString == 'object') {
+                    secretString = JSON.stringify(secretString)
+                }
+
+                if (typeof secretKey != 'string' || secretKey.length < 1) {
+                    return false;
+                }
+
+                if (null == secretString)
+                    return false;
+
+                var decryptedString;
+
+                try {
+                    decryptedString = sjcl.decrypt(secretKey, secretString)
+                } catch (e) {
+                    //                    cmLogger.warn('Unable to decrypt.', e)
+                    //                    console.warn(e)
+                }
+
+                return decryptedString || false
+            },
+
+            /**
+             * return the bit size of possible keygeneration
+             * @returns {string[]}
+             */
+            getKeySizes: function () {
+                return ['2048', '4096'];
+            },
+
+            /**
+             * start async process
+             * @param keylen
+             * @param $scopeState
+             * @returns {Promise.promise|*|webdriver.promise.Deferred.promise}
+             */
+            generateAsyncKeypair: function(keySize){
+                if (keySize == undefined ||
+                    typeof keySize != 'number') {
+                    return false;
+                }
+
+                async.promise = $q.defer();
+                // start keygen over webworker
+                
+                if(cmWebworker){
+                    keygenWorker = new cmWebworker('keygen')
+
+                    keygenWorker
+                    .start( {keySize: keySize} )
+                    .then(
+                        function(result){
+
                             var key = (new cmKey()).setKey(result.privKey);
+
                             async.promise.resolve({
                                 timeElapsed: result.timeElapsed,
                                 key: key
                             });
-                        });
+                        },
+                        function(reason){
+                            console.log('webwroker failed', reason)
+                            async.promise.reject(reason);
+                        }
+                    )
+
                         // otherwise use browser instance
-                    } else {
-                        var self = this,
-                            time = -((new Date()).getTime()),
-                            counts = 0;
+                } else {
+                    var self = this,
+                        time = -((new Date()).getTime()),
+                        counts = 0;
 
-                        // init vars
-                        async.crypt = new JSEncrypt({default_key_size: keySize}),
+                    // init vars
+                    async.crypt = new JSEncrypt({default_key_size: keySize}),
 
-                            // start keypair generation
-                            async.crypt.getKey(function () {
+                        // start keypair generation
+                        async.crypt.getKey(function () {
 
-                                // only resolve if keypair exists
-                                if (async.crypt.getPrivateKey() == undefined)
-                                    return false;
+                            // only resolve if keypair exists
+                            if (async.crypt.getPrivateKey() == undefined)
+                                return false;
 
-                                self.cancelGeneration(true);
-                                if (async.promise != null) {
-                                    async.promise.resolve({
-                                        timeElapsed: (time + ((new Date()).getTime())),
-                                        counts: counts,
-                                        key: async.crypt
-                                    });
-                                    // !!! important for unit test, don't remove !!!
-                                    $rootScope.$apply();
-                                }
-                            });
-                    }
-
-                    return async.promise.promise;
-                },
-                /**
-                 * cancel key generation process / simple clearInterval
-                 * if interval is pending
-                 * @returns {boolean}
-                 */
-                cancelGeneration: function (withoutReject) {
-                    if (webworker.isAvailable()) {
-                        webworker.cancel('webworker/keygen.js', {
-                            cmd: 'stop-async'
-                        }, function () {
-                            async.promise.reject();
+                            self.cancelGeneration(true);
+                            if (async.promise != null) {
+                                async.promise.resolve({
+                                    timeElapsed: (time + ((new Date()).getTime())),
+                                    counts: counts,
+                                    key: async.crypt
+                                });
+                                // !!! important for unit test, don't remove !!!
+                                $rootScope.$apply();
+                            }
                         });
-                        return true;
-                    } else if (async.crypt != null) {
+                }
+
+                return async.promise.promise;
+            },
+            /**
+             * cancel key generation process / simple clearInterval
+             * if interval is pending
+             * @returns {boolean}
+             */
+            cancelGeneration: function(withoutReject){
+                if(cmWebworker){
+                    return keygenWorker.cancel()
+                } else if(async.crypt != null){
                         // clear promise and library vars if param withReject is true
-                        if (withoutReject == undefined) {
+                    if(withoutReject == undefined) {
                             async.crypt.cancelAsync();
                             async.promise.reject();
                         }
-                        return true;
+                        return $q.when(true);
                     }
-                    return false;
+                    return $q.when(false);
                 },
 
-                generatePassword: function (length) {
-                    return this.randomString(length || 10, true)
-                },
+            generatePassword: function (length) {
+                return this.randomString(length || 10, true)
+            },
 
-                generatePassphrase: function () {
-                    return this.randomString(60, false)
-                },
+            generatePassphrase: function () {
+                return this.randomString(60, false)
+            },
 
-                //Todo check if te follwoing is still needed
+            //Todo check if te follwoing is still needed
 
-                /**
-                 * generateTransactionSecret
-                 * @returns {String} transactionSecret
-                 */
-                generateTransactionSecret: function () {
-                    return this.generatePassword(6);
-                },
+            /**
+             * generateTransactionSecret
+             * @returns {String} transactionSecret
+             */
+            generateTransactionSecret: function () {
+                return this.generatePassword(6);
+            },
 
-                /**
-                 * signAuthenticationRequest
-                 * @param _settings_
-                 * @returns {String} rsaSha256Signature of newPrivKey
-                 */
-                signAuthenticationRequest: function (_settings_) {
-                    var defaultSettings = {
-                            identityId: 0,
-                            transactionSecret: '',
-                            fromKey: undefined,
-                            toKey: undefined
-                        },
-                        dataForHandshake = {
-                            signature: '',
-                            encryptedTransactionSecret: '',
-                            fromKeyId: 0,
-                            fromKeyFingerprint: '',
-                            toKeyId: 0,
-                            toKeyFingerprint: ''
-                        },
-                        settings = angular.extend({}, defaultSettings, _settings_);
+            /**
+             * signAuthenticationRequest
+             * @param _settings_
+             * @returns {String} rsaSha256Signature of newPrivKey
+             */
+            signAuthenticationRequest: function (_settings_) {
+                var defaultSettings = {
+                        identityId: 0,
+                        transactionSecret: '',
+                        fromKey: undefined,
+                        toKey: undefined
+                    },
+                    dataForHandshake = {
+                        signature: '',
+                        encryptedTransactionSecret: '',
+                        fromKeyId: 0,
+                        fromKeyFingerprint: '',
+                        toKeyId: 0,
+                        toKeyFingerprint: ''
+                    },
+                    settings = angular.extend({}, defaultSettings, _settings_);
 
-                    if (!(settings.fromKey instanceof cmKey)) {
-                        cmLogger.error('sign fromKey isn\'t a cmKey');
-                        return null;
-                    }
-                    if (!(settings.toKey instanceof cmKey)) {
-                        cmLogger.error('sign toKey isn\'t a cmKey');
-                        return null;
-                    }
-
-                    dataForHandshake.fromKeyId = settings.fromKey.id;
-                    dataForHandshake.fromKeyFingerprint = settings.fromKey.getFingerprint();
-
-                    dataForHandshake.toKeyId = settings.toKey.id;
-                    dataForHandshake.toKeyFingerprint = settings.toKey.getFingerprint();
-
-                    dataForHandshake.encryptedTransactionSecret = settings.toKey.encrypt(settings.transactionSecret);
-
-                    var signData = {
-                        identityId: settings.identityId,
-                        encryptedTransactionSecret: dataForHandshake.encryptedTransactionSecret
-                    };
-
-
-                    dataForHandshake.signature = settings.fromKey.sign(this.hashObject(signData));
-
-                    return dataForHandshake;
-                },
-
-                /**
-                 * verifyAuthenticationRequest
-                 * @param _settings_
-                 * @returns {Boolean} is verification valid of newPubKey
-                 */
-                verifyAuthenticationRequest: function (_settings_) {
-                    var defaultSettings = {
-                            identityId: '',
-                            fromKey: undefined,
-                            encryptedTransactionSecret: '',
-                            signature: ''
-                        },
-                        settings = angular.extend({}, defaultSettings, _settings_);
-
-                    if (!(settings.fromKey instanceof cmKey)) {
-                        cmLogger.error('sign fromKey isn\'t a cmKey');
-                        return false;
-                    }
-
-                    var verifyData = {
-                        identityId: settings.identityId,
-                        encryptedTransactionSecret: settings.encryptedTransactionSecret
-                    };
-
-                    return settings.fromKey.verify(this.hashObject(verifyData), settings.signature);
-                },
-
-                isTransactionSecretValid: function (_settings_) {
-                    var defaultSettings = {
-                            userInput: '', //
-                            toKey: undefined,
-                            encryptedTransactionSecret: ''
-                        },
-                        settings = angular.extend({}, defaultSettings, _settings_);
-
-                    return settings.toKey.decrypt(settings.encryptedTransactionSecret) == settings.userInput;
+                if (!(settings.fromKey instanceof cmKey)) {
+                    cmLogger.error('sign fromKey isn\'t a cmKey');
+                    return null;
                 }
+                if (!(settings.toKey instanceof cmKey)) {
+                    cmLogger.error('sign toKey isn\'t a cmKey');
+                    return null;
+                }
+
+                dataForHandshake.fromKeyId = settings.fromKey.id;
+                dataForHandshake.fromKeyFingerprint = settings.fromKey.getFingerprint();
+
+                dataForHandshake.toKeyId = settings.toKey.id;
+                dataForHandshake.toKeyFingerprint = settings.toKey.getFingerprint();
+
+                dataForHandshake.encryptedTransactionSecret = settings.toKey.encrypt(settings.transactionSecret);
+
+                var signData = {
+                    identityId: settings.identityId,
+                    encryptedTransactionSecret: dataForHandshake.encryptedTransactionSecret
+                };
+
+
+                dataForHandshake.signature = settings.fromKey.sign(this.hashObject(signData));
+
+                return dataForHandshake;
+            },
+
+            /**
+             * verifyAuthenticationRequest
+             * @param _settings_
+             * @returns {Boolean} is verification valid of newPubKey
+             */
+            verifyAuthenticationRequest: function (_settings_) {
+                var defaultSettings = {
+                        identityId: '',
+                        fromKey: undefined,
+                        encryptedTransactionSecret: '',
+                        signature: ''
+                    },
+                    settings = angular.extend({}, defaultSettings, _settings_);
+
+                if (!(settings.fromKey instanceof cmKey)) {
+                    cmLogger.error('sign fromKey isn\'t a cmKey');
+                    return false;
+                }
+
+                var verifyData = {
+                    identityId: settings.identityId,
+                    encryptedTransactionSecret: settings.encryptedTransactionSecret
+                };
+
+                return settings.fromKey.verify(this.hashObject(verifyData), settings.signature);
+            },
+
+            isTransactionSecretValid: function (_settings_) {
+                var defaultSettings = {
+                        userInput: '', //
+                        toKey: undefined,
+                        encryptedTransactionSecret: ''
+                    },
+                    settings = angular.extend({}, defaultSettings, _settings_);
+
+                return settings.toKey.decrypt(settings.encryptedTransactionSecret) == settings.userInput;
             }
         }
-    ]);
+    }
+]);

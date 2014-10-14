@@ -7,7 +7,8 @@ angular.module('cmCore')
     'cmObject',
     'cmLogger',
     '$rootScope',
-    function(cmKey, cmFactory, cmObject, cmLogger, $rootScope){
+    '$q',
+    function(cmKey, cmFactory, cmObject, cmLogger, $rootScope, $q){
 
         function keyFactory(){
 
@@ -24,19 +25,23 @@ angular.module('cmCore')
 
             self.encryptPassphrase = function(passphrase, whiteList){
                 
-                return  self            
-                        .map(function(key){
-                            if(!whiteList || whiteList.indexOf(key.id) != -1)
-                                return  {
-                                            keyId:                 key.id,
-                                            encryptedPassphrase:   key.encrypt(passphrase)
-                                        }
-                            
-                        })
-                        //filter all failed attempts:
-                        .filter(function(item){
-                            return item && item.encryptedPassphrase
-                        })
+                return  $q.all(
+                            self
+                            .filter(function(key){
+                                return  !whiteList || whiteList.indexOf(key.id) != -1
+                            })
+                            .map(function(key){
+                                return  key
+                                        .encrypt(passphrase)
+                                        .then(function(result){
+                                            return  {
+                                                        keyId:                 key.id,
+                                                        encryptedPassphrase:   result
+                                                    }
+                                        })
+                            })
+                         
+                        )
             };
 
             self.getWeakestKeySize = function(){
