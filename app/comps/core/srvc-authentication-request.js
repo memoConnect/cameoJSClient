@@ -400,7 +400,6 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
                                             })
                                         }
                                     }
-
             cmModal.create({
                 id:             'incoming-authentication-request',
                 type:           'plain',
