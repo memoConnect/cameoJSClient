@@ -183,7 +183,9 @@ describe("cmLanguage", function() {
         describe("cmLanguage filter", function(){
 
             it('should provide a function "getLanguageName" to get the translation of a languages\'s name by its key.', function(){
-                expect(cmLanguage.getLanguageName('en_US')).toEqual('english')
+                cmLanguage.getLanguageName('en_US').then(function(langName){
+                    expect(langName).toEqual('english')
+                })
             })
 
 
@@ -212,7 +214,9 @@ describe("cmLanguage", function() {
                 //resolves all promises
                 $httpBackend.flush();
 
-                expect(cmLanguage.getLanguageName('fr_FR')).toBe('Französisch')
+                cmLanguage.getLanguageName('fr_FR').then(function(langName){
+                    expect(langName).toBe('Französisch')
+                })
                 $httpBackend.verifyNoOutstandingExpectation()
             })
         })
