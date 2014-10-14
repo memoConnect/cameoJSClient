@@ -2,6 +2,15 @@ input, textarea, select, button, i {
   outline: none;
 }
 
+.transition(@transition-property:all){
+  /* [transition-property] [transition-duration] [transition-timing-function] [transition-delay] */
+  @values:@transition-property 250ms ease;
+  transition:@values;
+  -webkit-transition:@values;
+  -moz-transition:@values;
+  -o-transition:@values;
+}
+
 .text-shadow{
   text-shadow:0 0 @cm-horizontal-padding @cm-overlay-dark;
 }
@@ -23,9 +32,10 @@ input, .without-box-shadow, i, button{
 }
 
 .grey-box-shadow{
-  -webkit-box-shadow:0 0.2em 0.5em 0 rgba(50, 50, 50, 0.5);
-  -moz-box-shadow:0 0.2em 0.5em 0 rgba(50, 50, 50, 0.5);
-  box-shadow:0 0.2em 0.5em 0 rgba(50, 50, 50, 0.5);
+  @values:0 0.2em 0.5em 0 rgba(50, 50, 50, 0.5);
+  -webkit-box-shadow:@values;
+  -moz-box-shadow:@values;
+  box-shadow:@values;
 }
 
 .clear-form-border{
@@ -75,36 +85,52 @@ input, .without-box-shadow, i, button{
 }
 
 .no-box-shadow{
-  -webkit-box-shadow:none;
-  -moz-box-shadow:none;
-  box-shadow:none;
+  @values:none;
+  -webkit-box-shadow:@values;
+  -moz-box-shadow:@values;
+  box-shadow:@values;
 }
 .box-shadow-bottom{
-  -webkit-box-shadow: inset 0 -1rem 1rem -1.4rem rgba(50, 50, 50, 0.75);
-  -moz-box-shadow: inset 0 -1rem 1rem -1.4rem rgba(50, 50, 50, 0.75);
-  box-shadow: inset 0 -1rem 1rem -1.4rem rgba(50, 50, 50, 0.75);
+  @values:inset 0 -1rem 1rem -1.4rem rgba(50, 50, 50, 0.75);
+  -webkit-box-shadow:@values;
+  -moz-box-shadow:@values;
+  box-shadow:@values;
 }
 .box-shadow-top{
-  -webkit-box-shadow: 0 -1rem 1rem -1.4rem rgba(50, 50, 50, 0.75);
-  -moz-box-shadow: 0 -1rem 1rem -1.4rem rgba(50, 50, 50, 0.75);
-  box-shadow: 0 -1rem 1rem -1.4rem rgba(50, 50, 50, 0.75);
+  @values: 0 -1rem 1rem -1.4rem rgba(50, 50, 50, 0.75);
+  -webkit-box-shadow:@values;
+  -moz-box-shadow:@values;
+  box-shadow:@values;
 }
 .box-shadow-bottom-new-grey{
-  @inset-values: 0 -0.5rem 0 0 @cm-grey-new inset;
-  -webkit-box-shadow:@inset-values;
-  -moz-box-shadow:@inset-values ;
-  box-shadow:@inset-values;
+  @values: 0 -0.5rem 0 0 @cm-grey-new inset;
+  -webkit-box-shadow:@values;
+  -moz-box-shadow:@values ;
+  box-shadow:@values;
+  .transition(all);
 }
 .box-shadow-top-inset-ci{
-  -webkit-box-shadow: 0 0.3rem 0 @cm-ci-color inset;
-  -moz-box-shadow: 0 0.3rem 0 @cm-ci-color inset;
-  box-shadow: 0 0.3rem 0 @cm-ci-color inset;
+  @values: 0 0.5rem 0 @cm-ci-color inset;
+  -webkit-box-shadow:@values;
+  -moz-box-shadow:@values;
+  box-shadow:@values;
+  .transition(all);
 }
 
+.opacity-0{
+  -moz-opacity:0;
+  -khtml-opacity:0;
+  opacity:0;
+}
 .opacity-25{
   -moz-opacity:0.25;
   -khtml-opacity:0.25;
   opacity:0.25;
+}
+.opacity-100{
+  -moz-opacity:1;
+  -khtml-opacity:1;
+  opacity:1;
 }
 
 .flip-x{
