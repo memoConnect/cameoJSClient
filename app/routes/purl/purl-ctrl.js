@@ -78,7 +78,7 @@ angular.module('cmRoutes')
                 $rootScope.$broadcast('logout', {goToLogin: false, where: 'purl-ctrl getPurl reject'})
                 $scope.showLogin();
             } else {
-                //$scope.goto('/404');
+                $rootScope.goTo('/404');
             }
         }
     }
