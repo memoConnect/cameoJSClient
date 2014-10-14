@@ -24,19 +24,18 @@ angular.module('cmRoutes')
                     'cm-close-btn': false,
                     'cm-footer-label': 'MODAL.WEBREADER.LATER',
                     'cm-footer-icon': 'cm-close'
-                },'' +
-                    '<div class="attention">' +
+                },
+                '<div class="attention">' +
                     '<i class="fa cm-attention"></i> {{\'MODAL.WEBREADER.NOTICE\'|cmTranslate}}' +
-                    '</div>'+
-                    '<a href="#/registration" class="redirect" data-qa="btn-register-modal">' +
+                '</div>'+
+                '<a href="#/registration" class="classic-link" data-qa="btn-register-modal">' +
                     '<i class="fa cm-key"></i> {{\'MODAL.WEBREADER.REGISTRATION\'|cmTranslate}}' +
-                    '</a>'
+                '</a>'
             );
             cmModal.open('fast-registration')
         };
 
         $scope.showLogin = function () {
-
             $scope.showSignIn = true;
 
             cmModal.create({
