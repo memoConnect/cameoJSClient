@@ -58,10 +58,11 @@ cm-header cm-security-indicator{
 }
 
 cm-security-aspect{
-  display:block;
-  position: relative;
-  min-height: @cm-unit;
+  .dbl;
+  .pos-rel;
   .border-bottom;
+  overflow:auto;
+  min-height: @cm-unit;
   section.content{
     width: @cm-app-width;
   }
