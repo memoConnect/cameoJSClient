@@ -42,9 +42,9 @@ angular.module('cmUser').directive('cmIdentityKeyList', [
 
                 $scope.remove = function(key){
                     $scope.confirm({
-                        title:      'SETTINGS.PAGES.IDENTITY.KEYS.REMOVE_KEY',
-                        text:       'SETTINGS.PAGES.IDENTITY.KEYS.REMOVE_KEY_REALLY',
-                        html:       '<h3>'+key.name+'</h3>{{'+key.created+' | date:"dd.MM.yy - HH:mm"}}'
+                        title: 'SETTINGS.PAGES.IDENTITY.KEYS.REMOVE_KEY',
+                        text:  'SETTINGS.PAGES.IDENTITY.KEYS.REMOVE_KEY_REALLY',
+                        html:  '<h3>'+key.name+'</h3>{{'+key.created+' | date:"dd.MM.yy - HH:mm"}}'
                     })
                     .then(function(){
                         cmUserModel.removeKey(key);                        
