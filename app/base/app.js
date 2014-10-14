@@ -160,11 +160,17 @@ angular.module('cameoClient', [
                     return cmBoot.isReady.i18n();
                 };
 
-                if (angular.isDefined(_settings_['resolveOnBoot'])){
+                if (angular.isDefined(_settings_['resolveUserModel']) && _settings_['resolveUserModel'] == true){
                     routeParams.resolve.userModel = function(cmBoot) {
                         return cmBoot.isReady.userModel();
                     }
                 }
+
+                //if (angular.isDefined(_settings_['resolvePurl']) && _settings_['resolvePurl'] == true){
+                //    routeParams.resolve.purl = function(cmBoot) {
+                //        return cmBoot.isReady.purl();
+                //    }
+                //}
 
                 if (angular.isDefined(_settings_['reloadOnSearch'])){
                     routeParams.reloadOnSearch = _settings_['reloadOnSearch'];

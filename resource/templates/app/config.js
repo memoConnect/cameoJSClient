@@ -18,12 +18,12 @@ var cameo_config = {
         'start': {
             guests: false,
             routes: ['/start'],
-            resolveOnBoot: true
+            resolveUserModel: true
         },
         'start-welcome': {
             guests: false,
             routes: ['/start/welcome'],
-            resolveOnBoot: true
+            resolveUserModel: true
         },
         'start-quickstart': {
             hasCtrl: true,
@@ -33,7 +33,7 @@ var cameo_config = {
         'start-keyinfo': {
             guests: false,
             routes: ['/start/keyinfo'],
-            resolveOnBoot: true
+            resolveUserModel: true
         },
         'login': {
             isDefault: true,
@@ -95,11 +95,11 @@ var cameo_config = {
                 '/authentication/:keyId?',
                 '/authentication/identity/:identityId?'
             ],
-            resolveOnBoot: true,
+            resolveUserModel: true,
             guests: false
         },
         'talks': {
-            resolveOnBoot: true
+            resolveUserModel: true
         },
         'mediawall': {
 
@@ -110,21 +110,21 @@ var cameo_config = {
                 '/conversation/:conversationId?'
             ],
             hasCtrl: true,
-            resolveOnBoot: true
+            resolveUserModel: true
         },
         'conversation-security': {
             routes:[
                 '/conversation/:conversationId/security'
             ],
             hasCtrl: true,
-            resolveOnBoot: true
+            resolveUserModel: true
         },
         'conversation-recipients': {
             routes:[
                 '/conversation/:conversationId/recipients'
             ],
             hasCtrl: true,
-            resolveOnBoot: true
+            resolveUserModel: true
         },
         'purl': {
             routes:[
@@ -165,7 +165,7 @@ var cameo_config = {
                 '/contact',
                 '/contacts'
             ],
-            resolveOnBoot: true
+            resolveUserModel: true
         },
         'contact-request-list': {
             routes:[
@@ -173,7 +173,7 @@ var cameo_config = {
                 '/contact/request'
             ],
             hasCtrl: true,
-            resolveOnBoot: true
+            resolveUserModel: true
         },
         'contact-search':  {
             routes:['/contact/search']
