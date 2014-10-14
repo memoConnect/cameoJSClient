@@ -483,8 +483,8 @@ angular.module('cmConversations')
 //                cmLogger.debug('cmConversationModel:enableEncryption');
 
                 if(this.state.is('new')){
-                    disabled = false
-                    this.trigger('encryption:enabled');
+                    encryption_disabled = false
+                    this.trigger('encryption:enabled')
                 }
 
                 return this;
