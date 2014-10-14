@@ -10,8 +10,9 @@ angular.module('cmCore')
     'cmLogger',
     '$timeout',
     '$rootScope',
+    '$sce',
     function(cmStateManagement, cmObject, cmModal, cmUtil, cmTranslate, cmLogger,
-             $timeout, $rootScope){
+             $timeout, $rootScope, $sce){
         function cmNotifyModel(data){
             var self = this;
 
@@ -100,11 +101,7 @@ angular.module('cmCore')
                     this.templateScope = $rootScope.$new();
 
                 angular.extend(this.templateScope, {
-                    icon: this.icon,
-                    label: this.label,
-                    i18n: this.i18n,
-                    severity: this.severity,
-                    template: this.template
+                    i18n: this.i18n
                 });
 
                 cmModal.create({
@@ -117,11 +114,12 @@ angular.module('cmCore')
                         'cm-footer-icon': 'cm-close'
                     },
                         '<div class="header">'+
-                            '<i class="fa {{icon}}"></i> {{\'NOTIFICATIONS.MODAL_HEADER.\'+severity.toUpperCase()|cmTranslate}}'+
+                            '<i class="fa '+this.icon+'"></i>' +
+                            '{{\'NOTIFICATIONS.MODAL_HEADER.'+this.severity.toUpperCase()+'\'|cmTranslate}}'+
                         '</div>'+
                         '<div class="body">'+
-                            '<div>{{label|cmTranslate:i18n}}</div>'+
-                            '{{template}}'+
+                            '<div ng-bind-html="\''+this.label+'\'|cmTranslate:i18n"></div>'+
+                            (this.template || '')+
                         '</div>',
                     null,
                     this.templateScope

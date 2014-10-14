@@ -18,13 +18,11 @@ angular.module('cmUi').directive('cmMenu',[
 
                 $scope.handleMenu = function(){
                     $scope.menuVisible = $scope.menuVisible ? false : true;
-
                     if($scope.menuVisible)
                         cmNotify.trigger('bell:unring');
                 };
 
                 $scope.checkActive = function(url){
-                    console.log($location.$$url,'/' + url,cmUtil.startsWith($location.$$url,'/' + url))
                     if(cmUtil.startsWith($location.$$url,'/' + url)){
                         return true;
                     }
