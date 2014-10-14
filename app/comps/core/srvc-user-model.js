@@ -543,11 +543,11 @@ angular.module('cmCore')
 
                             cmLogger.debug('cmUserModel.signPublicKey: signing...')
 
-                            //Content of the signature:
-                            var signature  =  signingKey.sign(self.getTrustToken(keyToSign, identity.cameoId));
                             
-                            
-                            return  cmAuth.savePublicKeySignature(signingKey.id, keyToSign.id, signature)
+                            return  signingKey.sign(self.getTrustToken(keyToSign, identity.cameoId))
+                                    .then(function(signature){
+                                        return cmAuth.savePublicKeySignature(signingKey.id, keyToSign.id, signature)
+                                    })
                                     .then(
                                         function(signature){
                                             keyToSign.importData({signatures:[signature]})  
