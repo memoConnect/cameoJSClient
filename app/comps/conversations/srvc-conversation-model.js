@@ -53,7 +53,7 @@ angular.module('cmConversations')
 
         function ConversationModel(data){
             var self                = this,
-                passphraseVault     = undefined
+                passphraseVault     = undefined,
                 encryption_disabled = undefined
 
             this.id                 = undefined;
