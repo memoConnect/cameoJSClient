@@ -525,20 +525,20 @@ angular.module('cmCore')
                 return $q.reject()
             }
 
-            return  cmCallbackQueue.push(this.loadLocalKeys().map(function(signingKey){
+            return  $q.all(this.loadLocalKeys().map(function(signingKey){
                         return function(){
                             //Keys should not sign themselves
-                            if(signingKey.id == keyToSign.id && (signingKey.getFingerprint() === keyToSign.getFingerprint())){
+                            if(signingKey.id == keyToSign.id && (signingKey.getFingerprint() == keyToSign.getFingerprint())){
                                 self.trigger('signatures:cancel');
                                 cmLogger.debug('cmUserModel.signPublicKey() failed; key tried to sign itself.')
-                                return false;
+                                return $q.when(false);
                             }
 
                             //Dont sign twice:
                             if(keyToSign.signatures.some(function(signature){ return signature.keyId == signingKey.id })){
                                 self.trigger('signatures:cancel');
                                 cmLogger.debug('cmUserModel.signPublicKey() failed; dublicate signature.')
-                                return false; 
+                                return $q.when(false); 
                             }
 
                             cmLogger.debug('cmUserModel.signPublicKey: signing...')

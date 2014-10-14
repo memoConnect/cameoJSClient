@@ -157,7 +157,7 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
             },
 
 
-             /**
+            /**
              * @ngdoc method
              * @methodOf cmAuthenticationRequest
              *
@@ -180,6 +180,7 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
                     result          =   fromKey.verify(hashed_data, request.signature)
 
                 if(result){
+                    console.log('verificaion succcess')
                     self.trigger('verification:successful', {
                         identity:           fromIdentity,
                         key:                fromKey,
