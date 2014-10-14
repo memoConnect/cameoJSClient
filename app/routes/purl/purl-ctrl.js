@@ -52,11 +52,12 @@ angular.module('cmRoutes')
             });
         };
 
-
+        //
         //console.log('resolveData', resolveData);
+        //console.log('$routeParams.purlId',$routeParams.purlId)
 
         if(typeof resolveData == 'object'){
-            if(typeof resolveData.identity == 'object' && typeof resolveData.token == 'string' && typeof resolveData.conversation == 'object'){
+            if(typeof resolveData.identity == 'object' && typeof resolveData.conversation == 'object'){
                 // identity check internal || external user
                 cmPurlModel.handleIdentity(resolveData.identity);
 
