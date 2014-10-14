@@ -182,26 +182,25 @@ describe("cmLanguage", function() {
 
         describe("cmLanguage filter", function(){
 
-            it('should provide a functionen "getLanguageName" to get the translation of a languages\'s name by its key.', function(){
+            it('should provide a function "getLanguageName" to get the translation of a languages\'s name by its key.', function(){
                 expect(cmLanguage.getLanguageName('en_US')).toEqual('english')
             })
 
 
-            it('should provide a functionen "getCurrentLanguage" to return the currently active languages\'s key.', function(){
+            it('should provide a function "getCurrentLanguage" to return the currently active languages\'s key.', function(){
                 expect(cmLanguage.getCurrentLanguage()).toEqual('en_US')
             })
 
 
-            it('should provide a functionen "getSupportedLanguages" to return the keys of supported languages\'.', function(){
+            it('should provide a function "getSupportedLanguages" to return the keys of supported languages\'.', function(){
                 expect(cmLanguage.getSupportedLanguages()).toEqual(['en_US, de_DE'])
             })
 
-
-            it('should provide a functionen "getPathToLanguage" to return the path to language files.', function(){
+            it('should provide a function "getPathToLanguage" to return the path to language files.', function(){
                 expect(cmLanguage.getPathToLanguage()).toEqual('i18n')
             })
 
-            it('should provide a functionen "switchLanguage" to switch between supported languages.', function(){
+            it('should provide a function "switchLanguage" to switch between supported languages.', function(){
                 expect(typeof cmLanguage.switchLanguage).toEqual('function')
 
                 $httpBackend.whenGET('i18n/de_DE.json')
