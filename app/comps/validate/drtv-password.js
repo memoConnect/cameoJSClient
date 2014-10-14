@@ -57,27 +57,22 @@ angular.module('cmValidate').directive('cmPassword', [
 
                     $scope.showPasswordEmptyError = false;
 
-                    if(pw != undefined){
+                    if(pw != undefined && pw != ''){
                         $scope.checkPasswordLength(pw);
 
                         $scope.showStrengthMeter= true;
                         var bits = passchk_fast.passEntropy(pw);
 
                         if(bits < 28){
-                            $scope.color = '#d9534f';
-                            //very weak
+                            $scope.bgColor = 'very-weak';
                         } else if(bits < 36){
-                            $scope.color = '#f0ad4e';
-                            //weak
+                            $scope.bgColor = 'week';
                         } else if(bits < 60){
-                            $scope.color = '#f0df43';
-                            //reasonable || normal
+                            $scope.bgColor = 'reasonable-normal';
                         } else if(bits < 128){
-                            $scope.color = '#c4f04e';
-                            //strong
+                            $scope.bgColor = 'strong';
                         } else {
-                            $scope.color = '#5cb85c';
-                            //very strong
+                            $scope.bgColor = 'very-strong';
                         }
 
                         $scope.percent = (1+(bits>10 ? 100*Math.pow((Math.log(bits-10)/Math.log(bits-3)), 10) : 0))+'%';
@@ -85,7 +80,7 @@ angular.module('cmValidate').directive('cmPassword', [
                         //100*bits / Math.max(128, bits)
                     } else {
                         $scope.percent = '0%';
-                        $scope.color = '#d9534f';
+                        $scope.bgColor = 'very-weak';
                     }
                 };
 
@@ -93,6 +88,10 @@ angular.module('cmValidate').directive('cmPassword', [
                  * validates both password inputs
                  */
                 $scope.confirmPW = function(){
+
+                    if(!$scope.pw || $scope.pwConfirm)
+                        return false;
+
                     if($scope.pw == $scope.pwConfirm){
                         $scope.showConfirmPWStatus = true;
                         $scope.showPasswordEmptyError = false;
