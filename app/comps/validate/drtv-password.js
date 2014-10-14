@@ -88,8 +88,7 @@ angular.module('cmValidate').directive('cmPassword', [
                  * validates both password inputs
                  */
                 $scope.confirmPW = function(){
-
-                    if(!$scope.pw || $scope.pwConfirm)
+                    if(!$scope.pw || !$scope.pwConfirm)
                         return false;
 
                     if($scope.pw == $scope.pwConfirm){
