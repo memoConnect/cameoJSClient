@@ -14,23 +14,34 @@ angular.module('cmSecurityAspects')
                             },
 
             link:       function(scope, element, attrs){
+
+                            console.log('attrs', attrs)
+                            if(typeof attrs.cmShowToggleOptions == 'undefined'){
+                                scope.showToggleOptions = true;
+                            } else {
+                                console.log('moep')
+                                scope.showToggleOptions = true;
+                                console.log('eval', scope.$eval(attrs.cmShowToggleOptions))
+                                scope.showToggleOptions = scope.$eval(attrs.cmShowToggleOptions);
+                            }
+
                             if(scope.aspect.value < 0){
-                                scope.class = 'negative'
-                                scope.icons = 'cm-checkbox-minus'
+                                scope.class = 'negative';
+                                scope.icons = 'cm-checkbox-minus';
                             }
 
                             if(scope.aspect.value == 0)
-                                scope.class = 'neutral' 
+                                scope.class = 'neutral' ;
 
                             if(scope.aspect.value > 0){
-                                scope.class = 'positive'
-                                scope.icons = 'cm-checkbox-add'
+                                scope.class = 'positive';
+                                scope.icons = 'cm-checkbox-add';
                             }
 
-                            element.addClass(scope.class)
+                            element.addClass(scope.class);
 
-                            scope.count = Math.abs(scope.aspect.value)
+                            scope.count = Math.abs(scope.aspect.value);
                         }
         }
     }
-])
+]);
