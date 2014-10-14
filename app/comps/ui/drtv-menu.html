@@ -1,6 +1,5 @@
 <div class="cm-handler" ng-click="handleMenu()" data-qa="btn-open-menu">
     <cm-notify-signal></cm-notify-signal>
-    <i class="fa cm-beta"></i>
 </div>
 <div class="cm-menu-layer" ng-show="menuVisible">
     <div cm-transparent-bg ng-click="handleMenu()"></div>
@@ -16,7 +15,7 @@
                     <i class="fa cm-talk"></i><div class="seperator"></div>
                 </button>
                 <button ng-click="goTo({},'contacts')"
-                        ng-class="{'is-active':checkActive('contacts')}">
+                        ng-class="{'is-active':checkActive('contact')}">
                     <i class="fa cm-person"></i>
                 </button>
             </li>

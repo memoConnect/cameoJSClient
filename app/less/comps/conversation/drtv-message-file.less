@@ -1,0 +1,49 @@
+cm-message-file{
+  .dbl;
+  .pos-rel;
+  .margin-hr-auto;
+  .tac;
+  margin-bottom: 0.5em;
+
+  .file-image, .file-html5{
+    .pos-rel;
+    img{
+      .with-cursor;
+      .dbl;
+      .margin-hr-auto;
+      max-width:@cm-message-min-width;
+      min-height:@cm-unit * 2;
+    }
+    video, audio{
+      .w100;
+    }
+  }
+  .file{
+    .margin-hr-auto;
+    font-size:@cm-unit*1.5;
+    i{
+
+    }
+  }
+  &:last-child{
+    margin-bottom:0;
+  }
+
+  .file-download {
+    .dtb;
+    font-size:@cm-small-font;
+    > * {
+      .vam;
+      .dtbc;
+      .pos-rel;
+    }
+    span.file-informations{
+      width:@cm-unit*2.5;
+    }
+    i.cm-download-blanc{
+      .pos-br;
+      .cm-ci-color;
+      font-size:@cm-unit;
+    }
+  }
+}

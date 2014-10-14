@@ -64,10 +64,10 @@ angular.module('cmRoutes').controller('PurlRecipientCtrl',[
                     'cm-footer-icon': 'cm-close'
                 },'' +
                     '<div class="attention">' +
-                    '<i class="fa cm-attention cm-lg-icon"></i> {{\'MODAL.WEBREADER.NOTICE\'|cmTranslate}}' +
+                    '<i class="fa cm-attention"></i> {{\'MODAL.WEBREADER.NOTICE\'|cmTranslate}}' +
                     '</div>'+
                     '<a href="#/registration" class="redirect" data-qa="btn-register-modal">' +
-                    '<i class="fa cm-key cm-lg-icon"></i> {{\'MODAL.WEBREADER.REGISTRATION\'|cmTranslate}}' +
+                    '<i class="fa cm-key"></i> {{\'MODAL.WEBREADER.REGISTRATION\'|cmTranslate}}' +
                     '</a>'
             );
             cmModal.open('fast-registration')

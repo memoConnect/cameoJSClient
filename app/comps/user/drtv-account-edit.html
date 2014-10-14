@@ -25,10 +25,11 @@
     <label class="content">{{'ACCOUNT.PLACEHOLDER.PHONENUMBER'|cmTranslate}}</label>
     <cm-multi-input cm-collection="account.phoneNumbers" class="content">
         <ng-form name="formPhone">
-            <div class="cm-input-ctn with-chooser">
+            <div class="cm-input-ctn with-chooser with-inside-icon">
                 <input
                     tabindex="2" data-qa="input-phoneNumber"
                     type="text" name="phoneNumber" ng-model="item.value" cm-validate-phone cm-adaptive-change />
+                <i class="fa cm-write"></i>
             </div>
             <!--<div cm-type-chooser cm-choose-value-to="item"></div>-->
             <cm-info-bubble class="cm-alert" ng-show="formPhone.phoneNumber.$dirty && formPhone.phoneNumber.$invalid">
@@ -44,10 +45,11 @@
     <label class="content">{{'ACCOUNT.PLACEHOLDER.EMAIL'|cmTranslate}}</label>
     <cm-multi-input cm-collection="account.emails" class="content">
         <ng-form name="formEmail">
-            <div class="cm-input-ctn with-chooser">
+            <div class="cm-input-ctn with-chooser with-inside-icon">
                 <input
                     tabindex="3" data-qa="input-email"
                     name="email" ng-model="item.value" cm-validate-email cm-adaptive-change />
+                <i class="fa cm-write"></i>
             </div>
             <!--<div cm-type-chooser cm-choose-value-to="item"></div>-->
             <cm-info-bubble class="cm-alert" ng-show="formEmail.email.$dirty && formEmail.email.$invalid">
@@ -58,7 +60,7 @@
         </ng-form>
     </cm-multi-input>
 
-    <ul class="border-top border-bottom">
+    <ul class="border-top border-bottom mt5">
         <li class="no-border">
             <span class="item" ng-click="togglePasswordChange()" data-qa="btn-passwordChange" >
             {{'ACCOUNT.PLACEHOLDER.PASSWORD_CHANGE'|cmTranslate}}
@@ -71,10 +73,11 @@
 
                 <article class="content">
                     <label>{{'ACCOUNT.PLACEHOLDER.OLD_PASSWORD'|cmTranslate}}</label>
-                    <div class="cm-input-ctn">
+                    <div class="cm-input-ctn with-inside-icon">
                         <input
                                 tabindex="4" data-qa="input-oldPassword"
                                 type="password" name="oldPassword" ng-model="account.oldPassword" />
+                        <i class="fa cm-write"></i>
                     </div>
                     <cm-info-bubble class="cm-alert"
                                     ng-show="cmForm.oldPassword.$error.empty || cmForm.oldPassword.$error.invalid">
@@ -89,17 +92,15 @@
 
                 <hr class="margin-small" />
 
-                <article class="content">
-                    <cm-password ng-model="account.password" cm-with-stars="false" cm-tabindex="5"></cm-password>
-                </article>
+                <cm-password ng-model="account.password" cm-with-stars="false" cm-tabindex="5"></cm-password>
             </section>
         </li>
     </ul>
 </form>
 
 <cm-footer cm-always-on-top>
-    <button class="cm-btn" ng-click="saveAccount()" data-qa="btn-footer">
-        <span ng-show="!showSpinner && !isPristine" data-qa="btn-saveAccount">
+    <button class="cm-btn-grey" ng-click="saveAccount()" data-qa="btn-footer">
+        <span ng-show="!showLoader && !isPristine" data-qa="btn-saveAccount">
             {{'ACCOUNT.FOOTER.SAVE'|cmTranslate}}
             <i class="fa cm-checker"></i>
         </span>
@@ -107,6 +108,6 @@
             {{'ACCOUNT.FOOTER.BACK'|cmTranslate}}
             <i class="fa cm-out"></i>
         </span>
-        <cm-loader ng-show="showSpinner" cm-color="ci-color"></cm-loader>
+        <cm-loader ng-show="showLoader" cm-color="ci-color"></cm-loader>
     </button>
 </cm-footer>

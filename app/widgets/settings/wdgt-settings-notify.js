@@ -1,10 +1,9 @@
 'use strict';
 
-angular.module('cmWidgets').directive('cmWidgetSettingsNotify', [
+angular.module('cmWidgets')
+.directive('cmWidgetSettingsNotify', [
     'cmSettings', 'cmPushNotificationAdapter', 'cmDevice',
-    '$rootScope',
-    function(cmSettings, cmPushNotificationAdapter, cmDevice,
-             $rootScope){
+    function(cmSettings, cmPushNotificationAdapter, cmDevice){
         return {
             restrict: 'E',
             templateUrl: 'widgets/settings/wdgt-settings-notify.html',

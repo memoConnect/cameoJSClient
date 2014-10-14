@@ -10,10 +10,11 @@
 
     <article class="content">
         <label>{{'SETTINGS.PAGES.IDENTITY.CREATE.PLACEHOLDER.DISPLAYNAME'|cmTranslate}}</label>
-        <div class="cm-input-ctn">
+        <div class="cm-input-ctn with-inside-icon">
             <input
                 tabindex="2" data-qa="input-displayname"
                 type="text" name="displayName" ng-model="formData.displayName" ng-keyup="validateDisplayName()" />
+            <i class="fa cm-write"></i>
         </div>
         <cm-info-bubble
             class="cm-alert"
@@ -35,10 +36,11 @@
         <label>{{'SETTINGS.PAGES.IDENTITY.CREATE.PLACEHOLDER.PHONENUMBER'|cmTranslate}}</label>
         <cm-multi-input cm-collection="formData.phoneNumbers">
             <ng-form name="formPhone" autocomplete="off">
-                <div class="cm-input-ctn with-chooser">
+                <div class="cm-input-ctn with-chooser with-inside-icon">
                     <input
                         tabindex="3" data-qa="input-phonenumber"
                         type="text" name="phoneNumber" ng-model="item.value" cm-validate-phone cm-adaptive-change />
+                    <i class="fa cm-write"></i>
                 </div>
                 <!--<div cm-type-chooser cm-choose-value-to="item"></div>-->
                 <cm-info-bubble
@@ -63,10 +65,11 @@
         <label>{{'SETTINGS.PAGES.IDENTITY.CREATE.PLACEHOLDER.EMAIL'|cmTranslate}}</label>
         <cm-multi-input cm-collection="formData.emails">
             <ng-form name="formEmail" autocomplete="off">
-                <div class="cm-input-ctn with-chooser">
+                <div class="cm-input-ctn with-chooser with-inside-icon">
                     <input
                         tabindex="4" data-qa="input-email"
                         name="email" ng-model="item.value" cm-validate-email />
+                    <i class="fa cm-write"></i>
                 </div>
                 <!--<div cm-type-chooser cm-choose-value-to="item"></div>-->
                 <cm-info-bubble class="cm-alert" ng-show="formEmail.email.$dirty && formEmail.email.$invalid">
@@ -80,11 +83,11 @@
     </article>
 </form>
 
-<cm-footer cm-always-on-top>
-    <button class="cm-btn-block cm-btn-grey" ng-click="addIdentity()" data-qa="btn-identity-create">
-        <span ng-show="!showSpinner">
-            {{'SETTINGS.PAGES.IDENTITY.CREATE.FOOTER'|cmTranslate}} <i class="fa cm-checker cm-lg-icon"></i>
+<cm-footer>
+    <button class="cm-btn-grey" ng-click="addIdentity()" data-qa="btn-identity-create">
+        <span ng-show="!showLoader">
+            {{'SETTINGS.PAGES.IDENTITY.CREATE.FOOTER'|cmTranslate}} <i class="fa cm-checker"></i>
         </span>
-        <cm-loader ng-show="showSpinner" cm-color="ci-color"></cm-loader>
+        <cm-loader ng-show="showLoader" cm-color="ci-color"></cm-loader>
     </button>
 </cm-footer>

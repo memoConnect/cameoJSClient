@@ -10,6 +10,7 @@ angular.module('cmCore').service('cmJob', [
     function($rootScope, $window, $location, cmTranslate, cmModal, cmLogger){
 
         var jobIsActive = false,
+            jobi18n = '',
             jobFunctionUnbind = null,
             pendingUrl = {path:'',replace:false};
 
@@ -27,8 +28,12 @@ angular.module('cmCore').service('cmJob', [
 //                cmLogger.debug('cmJob.start '+message);
                 jobIsActive = true;
 
+                cmTranslate(message||'JOB.IN_PROGRESS').then(function(_jobi18n_){
+                    jobi18n = _jobi18n_;
+                });
+
                 $window.onbeforeunload = function () {
-                    return cmTranslate(message||'JOB.IN_PROGRESS')
+                    return jobi18n;
                 };
 
                 jobFunctionUnbind = $rootScope.$on('$locationChangeStart', function(event, next) {

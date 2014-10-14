@@ -18,10 +18,11 @@
 //		}
 // language keys: $LANG_$CULTURE, en_US
 // last language is stored in local storage (fallback cookie)
-// Todo: new logger, add notify
 
 angular.module('cmCore')
 .service('cmTranslate', [
     '$translate',
-    function($translate){ return $translate }
+    function($translate){
+        return $translate;
+    }
 ]);

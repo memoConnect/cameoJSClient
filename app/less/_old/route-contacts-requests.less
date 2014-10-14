@@ -1,0 +1,32 @@
+cm-request-list{
+  display:block;
+  cm-contact-tag{
+    height:auto;
+    padding:0.3rem;
+    button{
+      color:@cm-readed-grey;
+    }
+    &.is-new{
+      strong{
+        color:@cm-warning-color;
+      }
+      button{
+        outline: 0;
+        color:@cm-ci-color;
+      }
+    }
+    &.message-open{
+      height:auto;
+      .cm-request-brief{
+        overflow:visible;
+        white-space:normal;
+        height:auto;
+      }
+    }
+    &.show-bar{
+      height:auto;
+    }
+  }
+
+
+}

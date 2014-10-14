@@ -63,26 +63,34 @@ angular.module('cmCore')
                     },
 
                     getLanguageName: function(lang_key){
-                        lang_key = lang_key || cmTranslate.uses();
+                        lang_key = lang_key || cmTranslate.use();
                         return cmTranslate('LANG.'+lang_key.toUpperCase())
                     },
 
                     switchLanguage: function(lang_key){
                         var self = this;
 
-                        return cmTranslate.uses(lang_key)
+                        return cmTranslate.use(lang_key)
                             .then(
                             function(){
-                                cmNotify.info(cmTranslate('LANG.SWITCH.SUCCESS', { lang: self.getLanguageName(lang_key) }), {ttl: 2000})
+                                self.getLanguageName(lang_key).then(function(language) {
+                                    cmTranslate('LANG.SWITCH.SUCCESS', {lang: language}).then(function (text) {
+                                        cmNotify.info(text, {ttl: 2000});
+                                    });
+                                });
                             },
                             function(){
-                                cmNotify.error(cmTranslate('LANG.SWITCH.ERROR', { lang: self.getLanguageName(lang_key) }), {ttl: 2000})
+                                self.getLanguageName(lang_key).then(function(language) {
+                                    cmTranslate('LANG.SWITCH.ERROR', {lang: language}).then(function (text) {
+                                        cmNotify.error(text, {ttl: 2000});
+                                    });
+                                });
                             }
                         )
                     },
 
                     getCurrentLanguage:  function(){
-                        return cmTranslate.uses() || cmTranslate.preferredLanguage()
+                        return cmTranslate.use() || cmTranslate.preferredLanguage()
                     }
                 }
             }

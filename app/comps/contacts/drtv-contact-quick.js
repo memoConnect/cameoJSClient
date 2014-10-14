@@ -6,9 +6,11 @@ angular.module('cmContacts')
     'cmContactsModel',
     'cmIdentityFactory',
     'cmTranslate',
+    'cmLoader',
     '$q',
 
-    function( cmContactsModel, cmIdentityFactory, cmTranslate, $q){
+    function(cmContactsModel, cmIdentityFactory, cmTranslate, cmLoader,
+             $q){
 
         return {
             restrict:       'E',
@@ -19,17 +21,17 @@ angular.module('cmContacts')
             templateUrl:    'comps/contacts/drtv-contact-quick.html',
 
             controller: function($scope, $element, $attrs){
+                var loader = new cmLoader($scope);
 
-                $scope.displayName  = ''
+                $scope.displayName = '';
 
                 $attrs.$observe("cmInput", function(value){
-                    $scope.mixed = value
-                })
+                    $scope.mixed = value;
+                });
 
                 $scope.validateForm = function(){
                     var deferred = $q.defer(),
                         data = {};
-
 
                     function checkDisplayName() {
                         if ($scope.displayName && $scope.displayName != '') {
@@ -48,7 +50,7 @@ angular.module('cmContacts')
 
     
                     checkDisplayName();
-                    checkMixed()
+                    checkMixed();
 
                     if($scope.cmForm.$valid != false){
                         deferred.resolve(data);
@@ -60,11 +62,15 @@ angular.module('cmContacts')
                 };
 
                 $scope.save = function(){
+                    if (loader.isIdle())
+                        return false;
+
+                    loader.start();
 
                     $scope.validateForm()
                     .then(
                         function(){
-                            return  cmContactsModel
+                            return cmContactsModel
                                     .addContact({
                                         identity: {
                                             displayName:    $scope.displayName,
@@ -72,19 +78,27 @@ angular.module('cmContacts')
                                         } 
                                     })
                                     .then(function(contact){
-                                            if($scope.selected)
-                                                $scope.selected[contact.identity.id] = true;
+                                        if($scope.selected)
+                                            $scope.selected[contact.identity.id] = true;
 
-                                            if($scope.conversation)
-                                                $scope.conversation.addRecipient(contact.identity);        
-                                    })
+                                        if($scope.conversation)
+                                            $scope.conversation.addRecipient(contact.identity);
+
+                                        // reset
+                                        $scope.displayName = '';
+                                        $scope.mixed = '';
+                                        loader.stop();
+                                    }, function(){
+                                        loader.stop();
+                                    });
                         },
                         function(){
-                            $scope.cmForm.mixed.$invalid = true
+                            $scope.cmForm.mixed.$invalid = true;
+                            loader.stop();
                         }
-                    )
-                }
+                    );
+                };
             }
         }
     }
-])
+]);

@@ -1,16 +1,16 @@
 'use strict';
 
 angular.module('cmUser').directive('cmIdentityEdit', [
-    'cmUserModel',
-    'cmNotify',
+    'cmUserModel', 'cmNotify', 'cmLoader',
     '$q',
-    function(cmUserModel, cmNotify, $q){
+    function(cmUserModel, cmNotify, cmLoader,
+             $q){
         return {
             restrict: 'E',
             templateUrl: 'comps/user/identity/drtv-identity-edit.html',
             controller: function ($scope) {
 
-                $scope.showSpinner = false;
+                var loader = new cmLoader($scope);
 
                 function reset(){
                     $scope.identity = angular.extend({},cmUserModel.data.identity);
@@ -46,10 +46,33 @@ angular.module('cmUser').directive('cmIdentityEdit', [
                 };
 
                 $scope.validateForm = function(){
-                    var deferred = $q.defer();
+                    var deferred = $q.defer(),
+                        objectChange = {};
+
+                    function checkDisplayName() {
+                        if ($scope.identity.displayName != cmUserModel.data.identity.displayName) {
+                            objectChange.displayName = $scope.identity.displayName;
+                        }
+                    }
+
+                    function checkEmail() {
+                        if ($scope.identity.emails.length > 0 && $scope.identity.emails[0].value != undefined && $scope.identity.emails[0].value != '' && $scope.identity.emails[0].value != cmUserModel.data.identity.email) {
+                            objectChange.email = $scope.identity.emails[0].value;
+                        }
+                    }
+
+                    function checkPhoneNumber() {
+                        if ($scope.identity.phoneNumbers.length > 0 && $scope.identity.phoneNumbers[0].value != undefined && $scope.identity.phoneNumbers[0].value != '' && $scope.identity.phoneNumbers[0].value != cmUserModel.data.identity.phoneNumber) {
+                            objectChange.phoneNumber = $scope.identity.phoneNumbers[0].value;
+                        }
+                    }
+
+                    checkDisplayName();
+                    checkEmail();
+                    checkPhoneNumber();
 
                     if($scope.cmForm.$valid !== false){
-                        deferred.resolve();
+                        deferred.resolve(objectChange);
                     } else {
                         deferred.reject();
                     }
@@ -58,53 +81,24 @@ angular.module('cmUser').directive('cmIdentityEdit', [
                 };
 
                 $scope.saveIdentity = function(){
-                    if($scope.spinner('isIdle'))
+                    if(loader.isIdle())
                         return false;
 
-                    $scope.spinner('start');
-                    var objectChange = {};
+                    loader.start();
 
-                    $scope.validateForm().then(
-                        function(){
-                            function checkDisplayName() {
-                                if ($scope.identity.displayName != cmUserModel.data.identity.displayName) {
-                                    objectChange.displayName = $scope.identity.displayName;
-                                }
-                            }
-
-                            function checkEmail() {
-                                if ($scope.identity.emails.length > 0 && $scope.identity.emails[0].value != undefined && $scope.identity.emails[0].value != '' && $scope.identity.emails[0].value != cmUserModel.data.identity.email) {
-                                    objectChange.email = $scope.identity.emails[0].value;
-                                }
-                            }
-
-                            function checkPhoneNumber() {
-                                if ($scope.identity.phoneNumbers.length > 0 && $scope.identity.phoneNumbers[0].value != undefined && $scope.identity.phoneNumbers[0].value != '' && $scope.identity.phoneNumbers[0].value != cmUserModel.data.identity.phoneNumber) {
-                                    objectChange.phoneNumber = $scope.identity.phoneNumbers[0].value;
-                                }
-                            }
-
-                            checkDisplayName();
-                            checkEmail();
-                            checkPhoneNumber();
-
+                    $scope.validateForm()
+                    .then(
+                        function(objectChange){
                             cmUserModel.data.identity.update(objectChange);
                             cmUserModel.data.identity.one('update:finished',function(){
-                                $scope.spinner('stop');
+                                loader.stop();
                                 cmNotify.info('IDENTITY.NOTIFY.UPDATE.SUCCESS',{ttl:3000,displayType:'modal'});
                             });
-                        }, function(){
-                            $scope.spinner('stop');
+                        },
+                        function(){
+                            loader.stop();
                         }
                     )
-                };
-
-                $scope.spinner = function(action){
-                    if(action == 'isIdle'){
-                        return $scope.showSpinner;
-                    }
-
-                    $scope.showSpinner = action == 'stop' ? false : true;
                 };
             }
         }

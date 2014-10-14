@@ -165,6 +165,8 @@ module.exports = function (grunt) {
 
     configs.pkg = grunt.file.readJSON('package.json');
 
+    require('load-grunt-tasks')(grunt);
+
     grunt.initConfig(configs);
 
     grunt.registerTask('default', []);

@@ -1,6 +1,11 @@
 <div class="file-download" ng-if="file.state.is('readyForDownload')" ng-click="file.startDownloadChunks()">
-    <div class="file {{file.detectedExtension}}"></div>
-    <span class="file-informations">{{file.name}}<br />{{cmUtil.bytesToStr(file.size)}} <i class="fa cm-save"></i></span>
+    <div>
+        <div class="file {{file.detectedExtension}}"></div>
+        <i class="fa cm-download-blanc"></i>
+    </div>
+    <span class="file-informations">{{file.name}}<br />
+        {{cmUtil.bytesToStr(file.size)}}
+    </span>
 </div>
 <div ng-if="!file.state.is('readyForDownload')">
     <cm-progressbar cm-percent="progress" ng-if="!file.state.is('cached')"></cm-progressbar>

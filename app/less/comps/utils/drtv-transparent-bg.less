@@ -1,0 +1,15 @@
+[cm-transparent-bg]{
+  width:@cm-app-width;
+  .pos-fxd;
+  .margin-hr-auto;
+  z-index:0;
+  top:0;
+  bottom:0;
+  left:0;
+  right:0;
+  background-color: @cm-overlay-dark;
+  &~div{
+    .pos-rel;
+    z-index: 1;
+  }
+}

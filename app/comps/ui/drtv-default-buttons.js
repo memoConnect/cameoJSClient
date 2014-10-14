@@ -18,7 +18,7 @@ angular.module('cmUi')
                             'cm-weight="1" ' +
                             'cm-rubber-space-repeat ' +
                             'ng-class="{active:btns[btn].isActive}">' +
-                            '<i ng-if="btns[btn].icon" class="fa {{btns[btn].icon}} cm-lg-icon"></i>' +
+                            '<i ng-if="btns[btn].icon" class="fa {{btns[btn].icon}}"></i>' +
                             '{{btns[btn].i18n|cmTranslate}}' +
                         '</a>',
 

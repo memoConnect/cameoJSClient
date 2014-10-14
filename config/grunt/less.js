@@ -36,16 +36,16 @@ module.exports = function(grunt, options){
                 },
                 'app-less-files': {
                     src: [
-                        'app/less/base.less',
-                        'app/less/bootstrap.less',
-                        'app/less/theme-a.less',
-                        'app/less/!(base|bootstrap|theme-a).less'
+                        'app/less/base/*.less',
+                        'app/less/!(base|_old)/**/*.less',
+                        'app/less/theme-base.less',
+                        'app/less/!(theme-base).less'
                     ],
                     dest: 'dist/css/app.less'
                 },
                 'app-css': {
                     src: [
-                        'app/css/bootstrap.min.css',
+                        'app/css/normalize.css',
                         'dist/css/app.css',
                         'app/css/cameofont.css',
                         'app/vendor/**/*.css'

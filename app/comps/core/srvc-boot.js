@@ -3,9 +3,9 @@
 angular.module('cmCore')
 .service('cmBoot', [
     'cmObject',
-    '$q', '$rootScope', '$document',
+    '$q', '$rootScope', '$document', '$injector',
     function(cmObject,
-             $q, $rootScope, $document) {
+             $q, $rootScope, $document, $injector) {
         var promises = {};
 
         function reset(){
@@ -45,7 +45,7 @@ angular.module('cmCore')
                         promises.userModel = $q.defer();
                         onAllPromises();
 
-                        self.on('yeahItsReady',function(){
+                        self.on('userModel:ready',function(){
                             promises.userModel.resolve();
                         });
                     }
@@ -69,6 +69,9 @@ angular.module('cmCore')
                     self.init.userModel();
 
                     return promises.userModel.promise;
+                },
+                purl: function(idPurl){
+                    return $injector.get('cmPurlModel').getPurl(idPurl).catch(function(r){return $q.when(r)});
                 }
             },
 
@@ -76,7 +79,7 @@ angular.module('cmCore')
                 userModel: function(){
                     self.init.userModel();
 
-                    self.trigger('yeahItsReady');
+                    self.trigger('userModel:ready');
                 }
             }
         };

@@ -1,5 +1,5 @@
 <h2 class="no-margin-bottom">
-    <i class="fa cm-settings cm-lg-icon"></i>
+    <i class="fa cm-settings"></i>
     {{'SETTINGS.LABEL' | cmTranslate}}
 </h2>
 
@@ -9,15 +9,15 @@
         ng-class="{'is-disabled':overview[page].disabled}"
         data-qa="{{overview[page]['data-qa']}}">
         <span class="item clearfix">
-            <i class="fa" ng-class="overview[page].icon"></i>
-            <span>{{overview[page].i18n|cmTranslate}}</span>
-        </span>
-        <div class="short-links">
-            <span ng-if="overview[page].shortLinks">
-                <i ng-repeat="shortLink in Object.keys(overview[page].shortLinks)" class="fa" ng-class="overview[page].shortLinks[shortLink].icon" ng-click="goToSettingsPage($event, page+'/'+shortLink, overview[page].disabled)"></i>
+            <span class="title">
+                <i class="fa" ng-class="overview[page].icon"></i>
+                <span>{{overview[page].i18n|cmTranslate}}</span>
             </span>
-            <i class="fa cm-right"></i>
-        </div>
+
+            <section class="icon-list">
+                <i class="fa cm-right"></i>
+            </section>
+        </span>
     </li>
     <li ng-click="logout()">
         <span class="item clearfix">

@@ -1,10 +1,29 @@
 angular.module('cmCore')
 .service('cmError', [
-    function(){
-        window.onerror = function(msg, url, line, col, error) {
-            //window.location.href = window.location.pathname + '#/error?msg=' + msg + '&url='+url+'&line='+line+'&col='+col+'&error='+error
-            return false
-        }
+    '$rootScope',
+    '$window',
+    '$injector',
+    function($rootScope, $window, $injector){
+        var self = {
+            showOnPage: function(error){
+                $rootScope.errorThrown = error;
+                $rootScope.goto('/error');
+            }
+        };
+
+        $window.onerror = function(msg, url, line, col, error) {
+            self.showOnPage({
+                jserror: msg,
+                location: $injector.get('$location').$$path,
+                script: url,
+                at: line+':'+col,
+                error: error
+            });
+            //window.location.href = window.location.pathname + '#/error';
+            return false;
+        };
+
+        return self;
     }
 ])
 .factory('$exceptionHandler', [
@@ -13,12 +32,23 @@ angular.module('cmCore')
     function (cmLogger,
               $injector) {
         return function (exception, cause) {
-    //        exception.message += ' (caused by "' + cause + '")';
-            cmLogger.error(JSON.stringify({
+
+            var stack = (exception.stack+'');
+
+            var error = {
                 location:   $injector.get('$location').$$path,
+                exception:  exception,
                 msg:        exception.message,
-                stack:      exception.stack
-            },null,2));
+                stack:      stack.replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, ' \n'),
+                cause:      cause
+            };
+
+            cmLogger.error(JSON.stringify(error,null,2));
+
+            if(typeof exception == 'object' && 'message' in exception && exception.message.indexOf('defined') >= 0){
+                $injector.get('cmError').showOnPage(error);
+            }
+
             //throw exception;
         };
     }

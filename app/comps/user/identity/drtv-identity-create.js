@@ -1,20 +1,16 @@
 'use strict';
 
 angular.module('cmUser').directive('cmIdentityCreate', [
-    'cmAuth',
-    'cmNotify',
-    'cmUserModel',
-    '$location',
-    '$q',
-    '$rootScope',
-    function(cmAuth, cmNotify, cmUserModel,
+    'cmAuth', 'cmNotify', 'cmUserModel', 'cmLoader',
+    '$location', '$q', '$rootScope',
+    function(cmAuth, cmNotify, cmUserModel, cmLoader,
              $location, $q, $rootScope){
         return {
             restrict: 'E',
             templateUrl: 'comps/user/identity/drtv-identity-create.html',
             controller: function ($scope) {
 
-                $scope.showSpinner = false;
+                var loader = new cmLoader($scope);
 
                 $scope.formData = {
                     cameoId: '',
@@ -102,35 +98,28 @@ angular.module('cmUser').directive('cmIdentityCreate', [
                 };
 
                 $scope.addIdentity = function(){
-                    if($scope.spinner('isIdle'))
+                    if(loader.isIdle())
                         return false;
 
-                    $scope.spinner('start');
+                    loader.start();
 
                     $scope.validateForm().then(
                         function(data){
                             cmAuth.addIdentity(data).then(
                                 function(res){
-                                    $scope.spinner('stop');
+                                    loader.stop();
                                     cmUserModel.switchToIdentity(res.identity, res.token.token);
                                 },
                                 function(){
-                                    $scope.spinner('stop');
+                                    loader.stop();
                                     cmNotify.warn('SETTINGS.PAGES.IDENTITY.CREATE.WARN.FAILED');
                                 }
                             );
-                        }, function(){
-                            $scope.spinner('stop');
+                        },
+                        function(){
+                            loader.stop();
                         }
                     )
-                };
-
-                $scope.spinner = function(action){
-                    if(action == 'isIdle'){
-                        return $scope.showSpinner;
-                    }
-
-                    $scope.showSpinner = action == 'stop' ? false : true;
                 };
             }
         }

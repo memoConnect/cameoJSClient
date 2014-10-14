@@ -9,12 +9,10 @@
         "VERSION": "Version"
     },
 
-    "APP": {
-        "ERROR_HEADER": "Ein Fehler ist aufgetreten.",
-        "ERROR": {
-            "LOGOUT": "Abmelden",
-            "BACK_TO_TALKS": "Talks öffnen"
-        }
+    "ERROR": {
+        "HEADER": "Ein Fehler ist aufgetreten.",
+        "LOGOUT": "Abmelden",
+        "BACK_TO_TALKS": "Talks öffnen"
     },
 
     "LOGIN": {
@@ -60,11 +58,14 @@
                 "PASSWORD": "Bitte geben Sie ein Passwort ein!"
             },
             "INVALID_EMAIL": "@:DRTV.VALIDATE_EMAIL.INFO.INVALID",
-            "INVALID_PHONENUMBER": "@:DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER"
+            "INVALID_PHONENUMBER": "@:DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER",
+            "LOGIN_INFORMATION": "Hier legen Sie Ihre Zugangsdaten fest, mit denen Sie sich anschließend im cameoNet anmelden können.<br/><br/>Der Nutzername wird automatisch zu Ihrer (ersten) cameoID, über die andere Nutzer Sie im cameoNet finden können.",
+            "USER_INFORMATION": "Die folgenden Felder sind optional:<br/><br/>Wenn Sie einen Anzeigenamen eingeben, wird Ihre Identität überall im cameoNet mit diesem Namen angezeigt. Er muss nicht eindeutig sein. Andere Nutzer können Sie im cameoNet auch über Ihren Anzeigenamen finden.<br/><br/>Wenn Sie eine E-Mail-Adresse und/oder eine Mobilfunknummer eingeben, können Sie sich über neue Nachrichten und Kontaktanfragen informieren lassen und bei Bedarf Ihr Passwort zurücksetzen. Diese Daten sind für andere Nutzer nicht sichtbar und werden nicht in Ihre Identität übertragen."
         },
         "TITLE": {
-            "HEAD_LOGIN": "Login-Informationen",
-            "HEAD_IDENTITY": "Benutzer-Informationen"
+            "HEAD_LOGIN": "Login Informationen",
+            "HEAD_IDENTITY": "Benutzer Informationen",
+            "MANDATORY_INFO": "Mit * gekennzeichnete Felder, müssen ausgefüllt werden."
         },
         "WARN": {
             "REGISTRATION_FAILED": "Bei der Registrierung ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut."
@@ -144,7 +145,7 @@
 
     "TALKS": {
         "HEADING": "Talks",
-        "MORE": "Weitere Talks laden.",
+        "MORE": "Weitere Talks laden",
         "LIST_EMPTY": "Bisher keine Talks vorhanden."
     },
 
@@ -268,6 +269,7 @@
     },
 
     "CONTACT": {
+        "HEADLINE": "Kontakt",
         "WIDGET": "Talks",
         "PLACEHOLDER": {
             "CAMEOID": "CameoID",
@@ -767,14 +769,15 @@
     },
 
     "SECURITY_ASPECT": {
+        "HEADLINE": "Status Verschlüsselung",
         "CONVERSATION": {
             "ENCRYPTED": {
                 "NAME": "Dieser Talk ist verschlüsselt.",
-                "DESCRIPTION": ""
+                "DESCRIPTION": "missing description @todo"
             },
             "NOT_ENCRYPTED": {
                 "NAME": "Dieser Talk ist nicht verschlüsselt.",
-                "DESCRIPTION": "",
+                "DESCRIPTION": "missing description @todo",
                 "TOGGLE": "Verschlüsselung aktivieren."
             },
             "KEY_TRANSMISSION_SYMMETRIC": {
@@ -795,7 +798,7 @@
             },
             "TRUSTING_ALL_RECIPIENTS": {
                 "NAME": "Du vertraust allen Empfängern.",
-                "DESCRIPTION": ""
+                "DESCRIPTION": "missing description @todo"
             },
             "MISSING_DATA": "Sicherheitsaspekte fehlen!"
         }

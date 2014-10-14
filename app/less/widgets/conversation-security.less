@@ -1,0 +1,39 @@
+cm-widget-conversation-security {
+  h2 {
+    margin-bottom: 0 !important;
+    .border-bottom;
+  }
+  .captcha {
+    position: relative;
+    text-align: left;
+    cm-captcha {
+      display: inline-block;
+      height: 10rem;
+      width: 25rem;
+    }
+  }
+}
+
+.theme-a {
+  cm-widget-conversation-security {
+    .icon-list {
+      top: -0.3rem;
+
+      &.security-settings {
+        i {
+          .cm-ci-color;
+        }
+      }
+      &.captcha-reload {
+        top: 2rem;
+      }
+    }
+
+    .security-headline {
+      font-weight: bold !important;
+    }
+    article.item {
+      .border-bottom;
+    }
+  }
+}

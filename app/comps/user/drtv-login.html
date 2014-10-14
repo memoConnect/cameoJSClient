@@ -1,45 +1,49 @@
-<form class="form-signin" role="form" ng-submit="doLogin()" autocomplete="off" data-qa="modal-login">
-    <div class="modal-outer-title">
-        <cm-logo></cm-logo>
-    </div>
+<form class="form-signin" role="form" autocomplete="off" data-qa="login" ng-submit="doLogin()">
 
-    <h2 class="form-signin-heading ">{{'LOGIN.HEADING'|cmTranslate}}</h2>
+    <article class="content" ng-if="cmEnv.autoLogin">
+        <select ng-model="formData.autologin" class="cm-form-control btn-block autologin" ng-change="changeAutologin()">
+            <option value="none">{{'LOGIN.LABEL.AUTO'|cmTranslate}}</option>
+            <option ng-repeat="(user,prop) in loginData">{{user}}</option>
+        </select>
+    </article>
 
-    <div class="cm-form-group">
-        <div class="cm-form-control" ng-class="{'cm-input-error':alertState!=''}">
+    <hr class="margin-small" ng-if="cmEnv.autoLogin">
+
+    <article class="content">
+        <div class="cm-input-ctn" ng-class="{'cm-input-error':alertState!=''}" cm-input-watcher>
             <input
                 tabindex="1"
                 type="text" ng-model="formData.user" ng-class="{'cm-input-error':alertState!=''}"
                 id="user" name="user" value="" required
-                placeholder="{{'LOGIN.PLACEHOLDER.USERNAME'|cmTranslate}}" />
+                placeholder="{{'LOGIN.PLACEHOLDER.USERNAME'|cmTranslate}}"  />
         </div>
-    </div>
-    <div class="cm-form-group">
-        <div class="cm-form-control with-inside-icon" ng-class="{'cm-input-error':alertState!=''}">
+    </article>
+
+    <article class="content">
+        <div class="cm-input-ctn with-inside-icon" ng-class="{'cm-input-error':alertState!=''}" cm-input-watcher>
             <input
                 tabindex="2"
                 type="{{passwordType}}" ng-model="formData.pass" ng-class="{'cm-input-error':alertState!=''}"
                 id="pw" name="pw" value="" required
                 placeholder="{{'LOGIN.PLACEHOLDER.PASSWORD'|cmTranslate}}" />
-            <i class="fa cm-icon-grey cm-lg-icon" ng-class="{'cm-visible':passwordType=='password','cm-hidden':passwordType=='text'}" ng-click="handlePassword()"></i>
+            <i class="fa cm-icon-grey" ng-class="{'cm-visible':passwordType=='password','cm-hidden':passwordType=='text'}" ng-click="handlePassword()"></i>
         </div>
+    </article>
 
-    </div>
-    <div class="cm-form-group" ng-if="cmEnv.autoLogin">
-        <select ng-model="formData.autologin" class="cm-form-control btn-block autologin" ng-change="changeAutologin()">
-            <option value="none">{{'LOGIN.LABEL.AUTO'|cmTranslate}}</option>
-            <option ng-repeat="(user,prop) in loginData">{{user}}</option>
-        </select>
-    </div>
+    <article class="content" ng-hide="alertState==''" data-qa="login-info">
+        <cm-info-bubble class="cm-alert">
+            <div><i class="fa cm-info"></i><span ng-bind-html="'LOGIN.INFO.'+alertState|cmParse"></span></div>
+        </cm-info-bubble>
+    </article>
 
-    <div class="cm-alert" ng-hide="alertState==''" data-qa="login-info">
-        <div><i class="fa cm-info"></i><span ng-bind-html="'LOGIN.INFO.'+alertState|cmParse"></span></div>
-    </div>
+    <hr class="margin-small">
 
-    <button class="btn cm-btn cm-btn-lg cm-btn-block cm-btn-grey" type="submit" data-qa="login-submit-btn">
-        <span ng-show="!showSpinner">
-            {{'LOGIN.LABEL.SUBMIT'|cmTranslate}} <i class="fa cm-key cm-lg-icon"></i>
+    <button class="btn-submit" type="submit"></button>
+
+    <article class="item" data-qa="login-submit-btn" ng-click="doLogin()">
+        <span class="body tac" ng-show="!showLoader">
+            <span class="with-icon">{{'LOGIN.LABEL.SUBMIT'|cmTranslate}}<i class="fa cm-key"></i></span>
         </span>
-        <cm-loader ng-show="showSpinner" cm-color="ci-color"></cm-loader>
-    </button>
+        <cm-loader ng-show="showLoader" cm-color="ci-color"></cm-loader>
+    </article>
 </form>

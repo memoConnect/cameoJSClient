@@ -40,6 +40,7 @@
         </cm-info-bubble>
     </article>
     <button type="submit" data-qa="btn-submit-on-the-fly-contact">
-        <i class="fa cm-new-contact"></i>
+        <i ng-show="!showLoader" class="fa cm-new-contact"></i>
+        <cm-loader ng-show="showLoader"></cm-loader>
     </button>
 </form>

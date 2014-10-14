@@ -1,0 +1,142 @@
+cm-menu {
+  .tar;
+  .cm-handler{
+    .with-cursor;
+    .tac;
+    cm-notify-signal {
+      .dbl;
+      .pos-rel;
+      z-index: 27;
+      i{
+        font-size:@cm-mega-font + 0.5;
+        .vam;
+        .w100;
+      }
+    }
+    .cm-beta{
+      .pos-abs;
+      color:@cm-ci-color;
+      top: -0.2rem;
+      right: 0;
+      font-size:@cm-mega-font*2;
+      z-index: 20;
+    }
+  }
+  .cm-menu-layer {
+    .pos-fxd;
+    .margin-auto;
+    width:@cm-app-width;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    z-index: 2;
+    .cm-menu-list{
+      .pos-rel;
+      .dib;
+      overflow-y:auto;
+      overflow-x:hidden;
+      height:100%;
+      width:60%;
+      i {
+        color:@cm-grey;
+        line-height: inherit;
+      }
+      ul{
+        .pos-rel;
+        border-top:0;
+        background:transparent;
+        z-index:1;
+        li{
+          .with-cursor;
+          .pos-rel;
+          background:@cm-white;
+          clear:both;
+          min-height: 4rem;
+          border-bottom: @cm-border-grey @cm-border-width solid;
+        }
+      }
+      .cm-nose-wrapper {
+        .pos-rel;
+        .no-border;
+        .no-bg;
+        height:@cm-header-height;
+        line-height:@cm-mega-font;
+        i{
+          .pos-abs;
+          bottom:0.5rem;
+          right:0.5rem;
+          font-size:@cm-large-font+1;
+          color:@cm-light-grey;
+        }
+      }
+      .cm-menu-header {
+        height:@cm-unit;
+        .border-radius-tl;
+        cursor:default;
+        background-color:@cm-light-grey;
+        color:@cm-grey;
+        border-top:0;
+        white-space:nowrap;
+        button {
+          .w50;
+          .h100;
+          .dib;
+          .cm-fl;
+          .pos-rel;
+          overflow:visible;
+        }
+        .seperator{
+          .pos-abs;
+          .no-pad;
+          right:-0.05rem;
+          top:20%;
+          bottom:20%;
+          width:0.1rem;
+          background:@cm-grey;
+        }
+      }
+      i{
+        .tac;
+        width:@cm-unit - 0.5;
+        font-size: @cm-mega-font + 0.1;
+        &.icon-left {
+          float:left;
+        }
+        &.icon-right{
+          .tar;
+          .pos-abs;
+          width:@cm-unit;
+          padding-right:0.5rem;
+          right:0;
+        }
+      }
+      a,span{
+        .tal;
+        .cm-fl;
+        color:@cm-grey;
+        font-size: 1.5rem;
+      }
+      button.is-active, button:hover {
+        .box-shadow-bottom-new-grey !important;
+      }
+      li.is-active{
+        a,i,span {
+          .cm-ci-color;
+        }
+      }
+      .bottom-filler{
+        .w100;
+        .pos-abs;
+        background:@cm-white;
+        z-index:0;
+        top:(@cm-header-height)+1em;
+        bottom:0;
+        right:0;
+      }
+      .info, .info i, .info span{
+        color: @cm-warning-color !important;
+      }
+    }
+  }
+}

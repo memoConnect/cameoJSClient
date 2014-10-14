@@ -107,7 +107,7 @@ angular.module('cmUi')
                             okay:   config.okay,
                             title:  config.title || 'DRTV.CONFIRM.HEADER',
                             html:   config.html || '',
-                            data:   config.data,
+                            data:   config.data
                         }
 
             var deferred    = $q.defer(),
@@ -130,7 +130,7 @@ angular.module('cmUi')
                 type:           'confirm',
                 'class':        'no-padding',
                 'cm-close-btn': false,
-                'cm-title':     config.title,
+                'cm-title':     config.title
             },'<cm-modal-confirm>'+config.html+'</cm-modal-confirm>',null,scope);
 
             self.open(modalId, config.data);
