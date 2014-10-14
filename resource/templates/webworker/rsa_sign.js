@@ -14,11 +14,11 @@ self.addEventListener('message', function(event) {
             try {
                 crypt.setKey(data.privKey)
 
-                var result = crypt.sign(data.data)
+                var signature = crypt.sign(data.data)
 
                 self.postMessage({
-                    msg:    result ? 'finished' : 'failed',
-                    secret: result
+                    msg:        signature ? 'finished' : 'failed',
+                    signature:  signature
                 })
 
             } catch(e){

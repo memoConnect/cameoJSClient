@@ -128,41 +128,62 @@ angular.module('cmCore')
 
             this.sign = function(data){
 
-                // return  cmWebworker
-                //         ?   new cmWebworker('rsa_sign')
-                //             .start({
-                //                 privKey:    this.getPrivateKey(),
-                //                 data:       data
-                //             })
-                //         :   $q.when(crypt && crypt.sign(data))
-                //             .then(function(result){
-                //                 return  result
-                //                         ?   $q.when(result)
-                //                         :   $q.reject()
-                //             })
-                             
-                return      $q.when(crypt && crypt.sign(data))
+                return  cmWebworker
+                        ?   new cmWebworker('rsa_sign')
+                            .start({
+                                privKey:    this.getPrivateKey(),
+                                data:       data
+                            })
                             .then(function(result){
-                                return  result
-                                        ?   $q.when(result)
+                                return $q.when(result.signature)
+                            })
+                        :   $q.when(crypt && crypt.sign(data))
+                            .then(function(signature){
+                                return  signature
+                                        ?   $q.when(signature)
                                         :   $q.reject()
                             })
-
             };
 
-            this.verify = function(data, signature, force){
-                var result =   !force && (verified[data] && verified[data][signature])
-                                ?   verified[data][signature]
-                                :   crypt && crypt.verify(data, signature, function(x){ return x }) 
-
-                if(result){
-                    verified[data] = { signature: result}
-                }else{
-                    cmLogger.warn('keyModel.verify() failed.')
-                }
-
-                return  result
-            };
+            this.verify = function(data, signature, force){ 
+                return  $q.reject()
+                        // .catch(function(){
+                        //     return  !force && (verified[data] && verified[data][signature])
+                        //             ?   $q.when(verified[data][signature])
+                        //             :   $q.reject()
+                        // })
+                        .catch(function(){
+                            return  cmWebworker
+                                    ?   new cmWebworker('rsa_verify')
+                                        .start({
+                                            pubKey:     self.getPublicKey(),
+                                            signature:  signature,
+                                            data:       data
+                                        })
+                                        .then(function(result){
+                                            console.log('LLL: ', result, signature)
+                                            return $q.when(result.result)
+                                        })
+                                    :   $q.when(crypt && crypt.verify(data, signature, function(x){ return x }))
+                                        .then(function(result){
+                                            return  result
+                                                    ?   $q.when(result)
+                                                    :   $q.reject()
+                                        })
+                        })
+                        .then(
+                            function(signature){
+                                console.log('succc')
+                                verified[data] = verified[data] || {}
+                                verified[data][signature] = true
+                                return signature
+                            },
+                            function(){
+                                cmLogger.warn('keyModel.verify() failed.')
+                                return $q.reject()
+                            }
+                        )
+            }
 
             this.encrypt = function(secret){
                 return  cmWebworker
@@ -208,12 +229,21 @@ angular.module('cmCore')
             };
 
             this.verifyKey = function(key, data){
-                return  this.getPublicKey() == key.getPublicKey() //allways verifies itself
-                        ||
-                        key.signatures.some(function(signature){
-                            return      crypt 
-                                    &&  (self.id == signature.keyId) 
-                                    &&  self.verify(data, signature.content)
+                console.log('verifying: ',key.id)
+                console.log('data', data)
+
+                return  (this.getPublicKey() == key.getPublicKey() 
+                        ?   $q.when()   //always verifies itself
+                        :   key.signatures.reduce(function(previous_try, signature){
+                                return  previous_try
+                                        .catch(function(){
+                                            return  (self.id == signature.keyId)
+                                                    ?   self.verify(data, signature.content)
+                                                    :   $q.reject('keyIds not matching.')
+                                        })
+                            }, $q.reject())
+                        ).then(function(){
+                            console.log('SUCC', key.id)
                         })
             };
 

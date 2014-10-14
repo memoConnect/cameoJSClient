@@ -19,12 +19,20 @@ angular.module('cmUser').directive('cmIdentityKeyList', [
                 $scope.canCreate = true;
 
                 function refresh(){
-                    $scope.canCreate    = !cmUserModel.hasPrivateKey();
-                    $scope.privateKeys  = cmUserModel.loadLocalKeys() || [];
-                    $scope.publicKeys   = cmUserModel.data.identity.keys || [];
-                    $scope.trustedKeys  = $scope.publicKeys.filter(function(key){
-                        return cmUserModel.verifyOwnPublicKey(key);
+                    $scope.canCreate    =   !cmUserModel.hasPrivateKey();
+                    $scope.privateKeys  =   cmUserModel.loadLocalKeys() || [];
+                    $scope.publicKeys   =   cmUserModel.data.identity.keys || [];
+                    $scope.trustedKeys  =   []
+
+                    $scope.publicKeys.forEach(function(key){
+                        cmUserModel
+                        .verifyOwnPublicKey(key)
+                        .then(function(){
+                            console.log('MMM',key.id)
+                            $scope.trustedKeys.push(key)
+                        })
                     });
+
                     $scope.signing      =   cmUserModel.state.is('signing');
 
                     $scope.isHandshakePossible = ($scope.privateKeys.length > 0);
@@ -64,6 +72,7 @@ angular.module('cmUser').directive('cmIdentityKeyList', [
                     cmUserModel.trigger('handshake:start', {key: toKey});
                 };
 
+                //Todo: check if refresh has to be called that often
                 cmUserModel.state.on('change', refresh);
                 cmUserModel.on('key:stored key:removed signatures:saved identity:updated', refresh);
 

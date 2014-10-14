@@ -21,8 +21,9 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
     'cmModal',
     'cmCallbackQueue',
     '$rootScope',
+    '$q',
 
-    function(cmApi, cmObject, cmLogger, cmCrypt, cmUserModel, cmIdentityFactory, cmModal, cmCallbackQueue, $rootScope){
+    function(cmApi, cmObject, cmLogger, cmCrypt, cmUserModel, cmIdentityFactory, cmModal, cmCallbackQueue, $rootScope, $q){
 
         var self = {
             /**
@@ -176,21 +177,21 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
                                             cameoId:            fromIdentity.cameoId,
                                             salt:               request.salt
                                         }),
-                    fromKey         =   fromIdentity.keys.find(request.fromKeyId),
-                    result          =   fromKey.verify(hashed_data, request.signature)
+                    fromKey         =   fromIdentity.keys.find(request.fromKeyId)
 
-                if(result){
-                    console.log('verificaion succcess')
-                    self.trigger('verification:successful', {
-                        identity:           fromIdentity,
-                        key:                fromKey,
-                        transactionSecret:  secret,
-                    })
-                } else {
-                    self.trigger('verification:failed')
-                }
 
-                return result
+                return  fromKey.verify(hashed_data, request.signature)
+                        .then(function(result){
+                            result
+                            ?   self.trigger('verification:successful', {
+                                    identity:           fromIdentity,
+                                    key:                fromKey,
+                                    transactionSecret:  secret,
+                                })
+                            :   self.trigger('verification:failed')
+
+                            return $q.when(result)
+                        })
             },
 
             //Todo: maybe find a more suitabble place for this function:
@@ -330,7 +331,17 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
                                         scope.error.emptyInput    = !secret
                                         scope.error.wrongSecret   = !scope.error.emptyInput && !self.verify(scope.request, secret)
 
-                                        if(!scope.error.emptyInput && !scope.error.wrongSecret){  
+                                        $q.reject()
+                                        .catch(function(){
+                                            return  scope.error.emptyInput
+                                                    ?   $q.reject('empty input.')
+                                                    :   self.verify(scope.request, secret)
+                                        })
+                                        .catch(function(error){
+                                            scope.error.wrongSecret = true
+                                            return $q.reject('verification failed.')
+                                        })
+                                        .then(function(){
 
                                             // Modal is no longer needed:
                                             cmModal.close('incoming-authentication-request')
@@ -349,57 +360,61 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
                                                                     ||  cmUserModel.loadLocalKeys()[0]
                                                                     
 
-                                            if(
-                                                    fromIdentity    != scope.fromIdentity
-                                                ||  fromKey         != scope.fromKey
-                                            ){
-                                                cmLogger('cmAuthenticationRequest: modal double check on verify failed.')
-                                                return false
+                                            return      fromIdentity    == scope.fromIdentity
+                                                    &&  fromKey         == scope.fromKey
+
+                                                    ?   cmUserModel.signPublicKey(fromKey, fromKey.id, fromIdentity)
+                                                        .then(function(){
+                                                            return  $q.when({
+                                                                        fromIdentity:   fromIdentity,
+                                                                        fromKey:        fromKey,
+                                                                        toKey:          toKey,
+                                                                        secret:         secret
+                                                                    })
+                                                        })
+                                                    :   $q.reject('double check failed.')
+                                                    
+                                        })
+                                        .then(function(data){
+
+                                            if(is3rdParty === false){
+
+                                                /*
+                                                // Open modal for bulk rekeying:
+                                                self.openBulkRequest({
+                                                    key1: toKey.id,
+                                                    key2: fromKey.id
+                                                })
+                                                */
+
+                                                cmUserModel.bulkReKeying(data.toKey.id, data.fromKey.id)
+
+                                                
+                                            }else{
+
+                                                /*
+                                                // Open success Modal:
+                                                cmModal.create({
+                                                    id:             'authentication-request-successful',
+                                                    type:           'alert',
+                                                    'cm-close-btn': false,
+                                                },  
+                                                    is3rdParty
+                                                    ?   '{{"IDENTITY.KEYS.TRUST.MODAL.SUCCESS"|cmTranslate}}'
+                                                    :   '{{"IDENTITY.KEYS.AUTHENTICATION.MODAL.SUCCESS"|cmTranslate}}'
+                                                )
+
+                                                cmModal.open('authentication-request-successful')
+                                                */
                                             }
 
-                                            cmUserModel
-                                            .signPublicKey(scope.fromKey, scope.fromKey.id, scope.fromIdentity)
-                                            .then(function(){
-
-                                                if(is3rdParty === false){
-
-                                                    /*
-                                                    // Open modal for bulk rekeying:
-                                                    self.openBulkRequest({
-                                                        key1: toKey.id,
-                                                        key2: fromKey.id
-                                                    })
-                                                    */
-
-                                                    cmUserModel.bulkReKeying(toKey.id, fromKey.id)
-
-                                                    
-                                                }else{
-
-                                                    /*
-                                                    // Open success Modal:
-                                                    cmModal.create({
-                                                        id:             'authentication-request-successful',
-                                                        type:           'alert',
-                                                        'cm-close-btn': false,
-                                                    },  
-                                                        is3rdParty
-                                                        ?   '{{"IDENTITY.KEYS.TRUST.MODAL.SUCCESS"|cmTranslate}}'
-                                                        :   '{{"IDENTITY.KEYS.AUTHENTICATION.MODAL.SUCCESS"|cmTranslate}}'
-                                                    )
-
-                                                    cmModal.open('authentication-request-successful')
-                                                    */
-                                                }
-
-                                                //Send a request in return:
-                                                self.send(
-                                                    fromIdentity.id,    //Sender of the initial requests
-                                                    secret,             //The secret we successfully used during the last attempt
-                                                    fromKey.id          //The key that originally requested to be signed
-                                                )                                                
-                                            })
-                                        }
+                                            //Send a request in return:
+                                            self.send(
+                                                data.fromIdentity.id,    //Sender of the initial requests
+                                                data.secret,             //The secret we successfully used during the last attempt
+                                                data.fromKey.id          //The key that originally requested to be signed
+                                            )                                                
+                                        })
                                     }
             cmModal.create({
                 id:             'incoming-authentication-request',

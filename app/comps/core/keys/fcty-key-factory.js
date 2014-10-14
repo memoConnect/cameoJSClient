@@ -62,22 +62,40 @@ angular.module('cmCore')
 
                 if(!trust_callback){
                     cmLogger.debug('cmKey.getTransitivelyTrustedKeys: trust_callback missing.')
-                    return false
+                    return $q.reject()
                 }       
 
-                var extended_key_list   =   self.filter(function(key){                                    
-                                                var is_ttrusted =   trustedKeys.indexOf(key) != -1
-                                                                    ||
-                                                                    trustedKeys.some(function(trusted_key){
-                                                                        return trust_callback(trusted_key, key)
-                                                                    }) 
+                return  $q.all(self.map(function(key){
+                            var is_trusted =    trustedKeys.indexOf(key) != -1                           
+                                                ?   $q.when(key)
+                                                :   trustedKeys.reduce(function(previous_try, trusted_key){
+                                                        return  previous_try
+                                                                .catch(function(){
+                                                                    return  $q.when(trust_callback(trusted_key, key))
+                                                                            .then(function(call_back_result){
+                                                                                return  call_back_result
+                                                                                        ?   $q.when(key)
+                                                                                        :   $q.reject()
+                                                                            })
+                                                                })
+                                                    }, $q.reject())
 
-                                                return  is_ttrusted
-                                            })
-
-                return  trusted_keys_iteration && (extended_key_list.length === trusted_keys_iteration.length)
-                        ?   extended_key_list
-                        :   self.getTransitivelyTrustedKeys(null, trust_callback, extended_key_list)
+                            return  is_trusted
+                                    .then(
+                                        function(key){
+                                            return $q.when(key)
+                                        },
+                                        function(){
+                                            return $q.when(undefined)
+                                        }
+                                    )
+                        }))
+                        .then(function(list){
+                            var extended_key_list = list.filter(function(item){ return !!item})
+                            return  trusted_keys_iteration && (extended_key_list.length === trusted_keys_iteration.length)
+                                    ?   $q.when(extended_key_list)
+                                    :   self.getTransitivelyTrustedKeys(null, trust_callback, extended_key_list)
+                        })
             };
 
             $rootScope.$on('logout', function(){ self.reset() });

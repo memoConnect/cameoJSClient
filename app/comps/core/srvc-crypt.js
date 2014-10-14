@@ -225,7 +225,7 @@ angular.module('cmCore')
                 // start keygen over webworker
                 
                 if(cmWebworker){
-                    keygenWorker = new cmWebworker('keygen')
+                    keygenWorker = new cmWebworker('rsa_keygen')
 
                     keygenWorker
                     .start( {keySize: keySize} )
@@ -305,101 +305,101 @@ angular.module('cmCore')
 
             //Todo check if te follwoing is still needed
 
-            /**
-             * generateTransactionSecret
-             * @returns {String} transactionSecret
-             */
-            generateTransactionSecret: function () {
-                return this.generatePassword(6);
-            },
+            // /**
+            //  * generateTransactionSecret
+            //  * @returns {String} transactionSecret
+            //  */
+            // generateTransactionSecret: function () {
+            //     return this.generatePassword(6);
+            // },
 
-            /**
-             * signAuthenticationRequest
-             * @param _settings_
-             * @returns {String} rsaSha256Signature of newPrivKey
-             */
-            signAuthenticationRequest: function (_settings_) {
-                var defaultSettings = {
-                        identityId: 0,
-                        transactionSecret: '',
-                        fromKey: undefined,
-                        toKey: undefined
-                    },
-                    dataForHandshake = {
-                        signature: '',
-                        encryptedTransactionSecret: '',
-                        fromKeyId: 0,
-                        fromKeyFingerprint: '',
-                        toKeyId: 0,
-                        toKeyFingerprint: ''
-                    },
-                    settings = angular.extend({}, defaultSettings, _settings_);
+            // /**
+            //  * signAuthenticationRequest
+            //  * @param _settings_
+            //  * @returns {String} rsaSha256Signature of newPrivKey
+            //  */
+            // signAuthenticationRequest: function (_settings_) {
+            //     var defaultSettings = {
+            //             identityId: 0,
+            //             transactionSecret: '',
+            //             fromKey: undefined,
+            //             toKey: undefined
+            //         },
+            //         dataForHandshake = {
+            //             signature: '',
+            //             encryptedTransactionSecret: '',
+            //             fromKeyId: 0,
+            //             fromKeyFingerprint: '',
+            //             toKeyId: 0,
+            //             toKeyFingerprint: ''
+            //         },
+            //         settings = angular.extend({}, defaultSettings, _settings_);
 
-                if (!(settings.fromKey instanceof cmKey)) {
-                    cmLogger.error('sign fromKey isn\'t a cmKey');
-                    return null;
-                }
-                if (!(settings.toKey instanceof cmKey)) {
-                    cmLogger.error('sign toKey isn\'t a cmKey');
-                    return null;
-                }
+            //     if (!(settings.fromKey instanceof cmKey)) {
+            //         cmLogger.error('sign fromKey isn\'t a cmKey');
+            //         return null;
+            //     }
+            //     if (!(settings.toKey instanceof cmKey)) {
+            //         cmLogger.error('sign toKey isn\'t a cmKey');
+            //         return null;
+            //     }
 
-                dataForHandshake.fromKeyId = settings.fromKey.id;
-                dataForHandshake.fromKeyFingerprint = settings.fromKey.getFingerprint();
+            //     dataForHandshake.fromKeyId = settings.fromKey.id;
+            //     dataForHandshake.fromKeyFingerprint = settings.fromKey.getFingerprint();
 
-                dataForHandshake.toKeyId = settings.toKey.id;
-                dataForHandshake.toKeyFingerprint = settings.toKey.getFingerprint();
+            //     dataForHandshake.toKeyId = settings.toKey.id;
+            //     dataForHandshake.toKeyFingerprint = settings.toKey.getFingerprint();
 
-                dataForHandshake.encryptedTransactionSecret = settings.toKey.encrypt(settings.transactionSecret);
+            //     dataForHandshake.encryptedTransactionSecret = settings.toKey.encrypt(settings.transactionSecret);
 
-                var signData = {
-                    identityId: settings.identityId,
-                    encryptedTransactionSecret: dataForHandshake.encryptedTransactionSecret
-                };
+            //     var signData = {
+            //         identityId: settings.identityId,
+            //         encryptedTransactionSecret: dataForHandshake.encryptedTransactionSecret
+            //     };
 
 
-                dataForHandshake.signature = settings.fromKey.sign(this.hashObject(signData));
+            //     dataForHandshake.signature = settings.fromKey.sign(this.hashObject(signData));
 
-                return dataForHandshake;
-            },
+            //     return dataForHandshake;
+            // },
 
-            /**
-             * verifyAuthenticationRequest
-             * @param _settings_
-             * @returns {Boolean} is verification valid of newPubKey
-             */
-            verifyAuthenticationRequest: function (_settings_) {
-                var defaultSettings = {
-                        identityId: '',
-                        fromKey: undefined,
-                        encryptedTransactionSecret: '',
-                        signature: ''
-                    },
-                    settings = angular.extend({}, defaultSettings, _settings_);
+            // /**
+            //  * verifyAuthenticationRequest
+            //  * @param _settings_
+            //  * @returns {Boolean} is verification valid of newPubKey
+            //  */
+            // verifyAuthenticationRequest: function (_settings_) {
+            //     var defaultSettings = {
+            //             identityId: '',
+            //             fromKey: undefined,
+            //             encryptedTransactionSecret: '',
+            //             signature: ''
+            //         },
+            //         settings = angular.extend({}, defaultSettings, _settings_);
 
-                if (!(settings.fromKey instanceof cmKey)) {
-                    cmLogger.error('sign fromKey isn\'t a cmKey');
-                    return false;
-                }
+            //     if (!(settings.fromKey instanceof cmKey)) {
+            //         cmLogger.error('sign fromKey isn\'t a cmKey');
+            //         return false;
+            //     }
 
-                var verifyData = {
-                    identityId: settings.identityId,
-                    encryptedTransactionSecret: settings.encryptedTransactionSecret
-                };
+            //     var verifyData = {
+            //         identityId: settings.identityId,
+            //         encryptedTransactionSecret: settings.encryptedTransactionSecret
+            //     };
 
-                return settings.fromKey.verify(this.hashObject(verifyData), settings.signature);
-            },
+            //     return settings.fromKey.verify(this.hashObject(verifyData), settings.signature);
+            // },
 
-            isTransactionSecretValid: function (_settings_) {
-                var defaultSettings = {
-                        userInput: '', //
-                        toKey: undefined,
-                        encryptedTransactionSecret: ''
-                    },
-                    settings = angular.extend({}, defaultSettings, _settings_);
+            // isTransactionSecretValid: function (_settings_) {
+            //     var defaultSettings = {
+            //             userInput: '', //
+            //             toKey: undefined,
+            //             encryptedTransactionSecret: ''
+            //         },
+            //         settings = angular.extend({}, defaultSettings, _settings_);
 
-                return settings.toKey.decrypt(settings.encryptedTransactionSecret) == settings.userInput;
-            }
+            //     return settings.toKey.decrypt(settings.encryptedTransactionSecret) == settings.userInput;
+            // }
         }
     }
 ]);
