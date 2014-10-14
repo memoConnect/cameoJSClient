@@ -216,7 +216,7 @@ angular.module('cmConversations')
              * @param {Object} data The conversation data as recieved from the backend.
              */
             this.importData = function(data){
-                cmLogger.debug('cmConversationModel:importData');
+//                cmLogger.debug('cmConversationModel:importData');
                 if(typeof data !== 'object'){
                     cmLogger.debug('cmConversationModel:import:failed - no data!');
                     return this;
@@ -240,7 +240,7 @@ angular.module('cmConversations')
                                     })
 
                 if(passphraseVault.getKeyTransmission() != this.keyTransmission)
-                    cmLogger.debug('ConversationModel: inconsistent data: keyTransmission')
+                    cmLogger.debug('cmConversationModel: inconsistent data: keyTransmission')
                     //TODO
                 
                 //this.keyTransmission = passphraseVault.getKeyTransmission()
@@ -539,8 +539,7 @@ angular.module('cmConversations')
              * @returns {Boolean} succees Returns Boolean
              */
             this.decrypt = function () {
-
-                cmLogger.debug('cmConversationModel.decrypt', + self.subject);
+                //cmLogger.debug('cmConversationModel.decrypt', + self.subject);
 
                 this.getPassphrase()
                 .then(function(passphrase){
@@ -700,7 +699,7 @@ angular.module('cmConversations')
             };
 
             this.disablePassCaptcha = function(){
-                cmLogger.debug('cmConversationModel.disablePassCaptcha');
+//                cmLogger.debug('cmConversationModel.disablePassCaptcha');
                 if(!this.state.is('new')) return ;
 
                 this.options.hasCaptcha = false;
