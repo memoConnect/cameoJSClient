@@ -84,7 +84,6 @@ angular.module('cmConversations')
                  * after preparation send message
                  */
                 $scope.send = function(){
-                    console.log('before send')
                     if($scope.isSending !== true){
                         $scope.isSending = true;
                         $scope.isSendingAbort = false;
@@ -131,11 +130,6 @@ angular.module('cmConversations')
                 $scope.showAsymmetricKeyError = function(){
 //                    cmLogger.debug('cmConversationDRTV.showAsymmetricKeyError')
 
-                        
-                    console.log('KEy ERROR')
-                    console.log($scope.conversation.getKeyTransmission())  
-                    console.log('has private key: '+$scope.conversation.userHasPrivateKey())           
-                    console.log('showedAsymmetricKeyError: '+showedAsymmetricKeyError)       
                     if(!$scope.conversation.state.is('new')
                         && $scope.conversation.getKeyTransmission() == 'asymmetric'
                         && $scope.conversation.userHasPrivateKey() == false
@@ -170,7 +164,6 @@ angular.module('cmConversations')
 
                 function prepareFiles(){
 
-                    console.log('prep files')
                     /**
                      * check if files exists
                      * after success sendMessage
@@ -178,7 +171,6 @@ angular.module('cmConversations')
                 
                     $scope.conversation.getPassphrase()
                     .catch(function(){
-                            console.log('failed')
                             return  $scope.conversation.isEncrypted()
                                     ?   $q.reject('access denied')
                                     :   $q.when(null)       //Todo: null for 'not encrypted' old convention
@@ -188,7 +180,6 @@ angular.module('cmConversations')
                             passphrase: passphrase,
                             conversationId: $scope.conversation.id,
                             success: function(files) {
-                                console.warn('YIO')
                                 if (files.length > 0) 
                                     filesForMessage = files;
                                 sendMessage()
@@ -225,8 +216,6 @@ angular.module('cmConversations')
                  * send message to api
                  */
                 function sendMessage() {
-
-                    console.log('send message')
 
                     /**
                      * validate answer form
@@ -310,7 +299,7 @@ angular.module('cmConversations')
                     $scope.conversation.update();
 
                     self.addPendingRecipients();
-                    $scope.showAsymmetricKeyError();
+                    // $scope.showAsymmetricKeyError();
 
                     // first focus on message
                     if($scope.conversation.state.is('new') && cmEnv.isNotMobile){

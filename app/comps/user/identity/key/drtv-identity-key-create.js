@@ -110,11 +110,9 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
                         elapsedTime = 0;
                     }
 
-                    console.log('before genration')
                     cmCrypt.generateAsyncKeypair(parseInt(size))
                     .then(
                         function(result){
-                            console.log('generation: successful')
                             $scope.privKey  = result.key.getPrivateKey();
                             $scope.pubKey   = result.key.getPublicKey();
                             $scope.keyName  = detect.os+' / '+detect.browser;
@@ -122,7 +120,6 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
                             $scope.active = 'store';
                         },
                         function(reason){
-                            console.log('generation: failed', reason)
                             $scope.active = 'choose';
                         }
                     ).finally(
@@ -140,7 +137,6 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
 
                 $scope.cancel = function(){
 
-                    console.log('cancel gen')
                     cmCrypt.cancelGeneration()
                     .then(function(){
                         reset();

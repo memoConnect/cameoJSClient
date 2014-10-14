@@ -245,8 +245,6 @@ angular.module('cmConversations')
                 
                 //this.keyTransmission = passphraseVault.getKeyTransmission()
 
-                console.log(this.keyTransmission)
-
                 /**
                  * Important for none encrypted Conversations
                  */
@@ -257,10 +255,6 @@ angular.module('cmConversations')
                 // getting locally saved pw for conversation
                 if(this.password == undefined)
                     this.password = this.localPWHandler.get(this.id)
-
-                console.log('pw:')
-                console.log(this.password)
-                console.log(this.id)
 
                 this.initPassCaptcha(data);
 
@@ -313,7 +307,7 @@ angular.module('cmConversations')
 
                 var passphrase_data =   passphraseVault
                                         ?   passphraseVault.exportData()
-                                        :   {}
+                                        :   { keyTransmission: 'none' }
 
                 data.sePassphrase       =   passphrase_data.sePassphrase        || undefined;
                 data.aePassphraseList   =   passphrase_data.aePassphraseList    || undefined;

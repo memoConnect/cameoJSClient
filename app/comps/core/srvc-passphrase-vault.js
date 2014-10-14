@@ -2,15 +2,13 @@
 
 /**
  * @ngdoc object
- * @name cmPassphrase
+ * @name cmPassphraseVault
  * @description
  * Handle Passphrase Conversation
  *
- * @requires cmFactory
  * @requires cmUserModel
  * @requires cmCrypt
- * @requires cmObject
- * @requires cmLogger
+ * @requires $q
  */
 angular.module('cmCore').service('cmPassphraseVault',[
 
