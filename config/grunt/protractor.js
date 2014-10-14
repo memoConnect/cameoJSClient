@@ -125,6 +125,7 @@ module.exports = function (grunt, options) {
                             'currentApiUrl': options.globalCameoBuildConfig.config.apiUrl,
                             'currentWwwUrl': options.globalCameoTestConfig.config.wwwUrl,
                             'stopOnError': options.globalCameoTestConfig.config.stopOnError || false,
+                            'showConsoleError': options.globalCameoTestConfig.config.showConsoleError || true,
                             'testData': "this." + options.globalCameoTestConfig.testData.join(";\nthis.") + ";"
                         }
                     },
