@@ -1,4 +1,4 @@
-<h2>
+<h2 class="border-bottom">
     <i class="fa cm-rhino-positive"></i>
     {{'START.WELCOME.HEADLINE'|cmTranslate}}
 </h2>
@@ -13,7 +13,6 @@
     <cm-info-bubble nose-x="55%">
         <span ng-bind-html="'START.WELCOME.TEXT_3' | cmParse"></span>
     </cm-info-bubble>
-    <i class="fa cm-beta cm-lg-special"></i>
 </article>
 
 <hr/>
@@ -22,8 +21,8 @@
 <article ng-bind-html="'START.WELCOME.TEXT_5' | cmParse" class="content"></article>
 
 <cm-footer>
-    <button ng-click="goTo('/start/quickstart')" class="cm-btn-block cm-btn-grey" data-qa="btn-next-step">
+    <button ng-click="goTo('/start/quickstart')" class="cm-btn cm-btn-grey" data-qa="btn-next-step">
         {{'START.BTNS.NEXT' | cmTranslate}}
-        <i class="fa cm-right cm-lg-icon"></i>
+        <i class="fa cm-right"></i>
     </button>
 </cm-footer>

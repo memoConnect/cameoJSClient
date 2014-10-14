@@ -1,0 +1,141 @@
+cm-message {
+  .dbl;
+  margin: 0.5em 0;
+  word-wrap: break-word;
+  &.right {
+    .tar;
+  }
+  &.file-view{
+    div.message {
+      min-width: @cm-message-min-width !important;
+    }
+  }
+  article {
+    .dib;
+    div.message {
+      .pos-rel;
+      .border-radius;
+      .no-border;
+      .tal;
+      min-height: @cm-unit/2;
+      padding: 0.5em;
+      min-width: @cm-unit+2;
+      &.left {
+        background-color: @cm-msg-bg-color-other;
+        max-width: @cm-message-left-max-width;
+      }
+      &.right {
+        background-color: @cm-msg-bg-color-own;
+        margin-right: 0.7rem;
+        max-width: @cm-message-right-max-width;
+      }
+    }
+    cm-message-assets {
+      .dbl;
+      .mt15;
+    }
+    .text{
+      span{
+        margin: 0.5rem 0;
+      }
+      &.own-message{
+        span {
+          .no-margin;
+          margin-bottom: 0.5rem;
+        }
+      }
+    }
+    span {
+      .dbl;
+      &.nose {
+        .pos-abs;
+        &.left {
+          top: 0.2em;
+          left: -0.4em;
+          i {
+            color: @cm-msg-bg-color-other
+          }
+        }
+        &.right {
+          top: 0.5em;
+          right: -0.39em;
+          i {
+            color: @cm-msg-bg-color-own
+          }
+        }
+        i {
+          font-size: 1.5em;
+        }
+      }
+    }
+    div.author {
+      .pos-abs;
+      top: -0.3rem;
+      left: 0;
+      margin-left: 0.6rem;
+      span {
+        .dib;
+        font-size: 0.6em;
+        color: @cm-grey;
+      }
+    }
+    div.assets {
+      .pos-abs;
+      bottom:0rem;
+      right:0.2rem;
+      white-space: nowrap;
+      > *{
+        .vam;
+      }
+      &.green {
+        span {
+          color: @cm-green;
+        }
+      }
+      span {
+        .dib;
+        font-size: @cm-small-font;
+        &.date {
+          .tar;
+          overflow: hidden;
+        }
+        &.security {
+          .tar;
+        }
+        &.envelope {
+          .tar;
+        }
+      }
+    }
+  }
+  &.file-view{
+    article{
+      color:@cm-white;
+
+      .author span{
+        color:@cm-light-grey;
+      }
+      div.message{
+        padding-bottom:1.5em;
+        &.left, &.right{
+          background-color:@cm-overlay-dark;
+        }
+        &.left{
+          padding-top:1.5rem;
+          .text{
+            span {
+              margin-top: 0;
+            }
+          }
+        }
+      }
+      span.nose{
+        &.left, &.right{
+          i {
+            color: @cm-overlay-dark;
+          }
+        }
+      }
+    }
+  }
+}

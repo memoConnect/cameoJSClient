@@ -1,0 +1,220 @@
+cm-files{
+  display:block;
+  position:relative;
+  width:@cm-unit;
+  height:@cm-unit;
+
+  cm-file-choose{
+    height:100%;
+    overflow:hidden;
+    position:absolute;
+    right:0;
+    top:0;
+    bottom:0;
+    left:0;
+    width:100%;
+    z-index: 1;
+    input{
+      .with-cursor;
+      bottom:0;
+      font-size:1000px !important;
+      height:300px;
+      margin:0;
+      opacity:0;
+      padding:0;
+      position:absolute;
+      right:0;
+    }
+  }
+}
+
+cm-files-preview{
+  display:block;
+  position:absolute;
+  bottom:@cm-footer-height;
+  width:@cm-app-width;
+  background:@cm-white;
+
+  .file-wrap{
+    position: relative;
+    text-align:center;
+    padding:@cm-vertical-padding;
+    i.cm-close{
+      position: absolute;
+      right: 1em;
+      top: 35%;
+      .with-cursor;
+    }
+    .file{
+      font-size:@cm-unit*1.5;
+    }
+  }
+
+  .file-image{
+    position:relative;
+    height:@cm-unit * 2;
+    margin:0 auto;
+    img{
+      .with-cursor;
+      display:block;
+      max-width:@cm-app-width - 1;
+      max-height:@cm-unit * 2;
+      margin:0 auto;
+    }
+  }
+  .file{
+    margin:0 auto;
+  }
+}
+
+cm-modal.modal-image-fullscreen{
+  .content{
+    display:table;
+    width:@cm-app-width;
+    height:100%;
+    z-index:2;
+    position:relative;
+    ng-transclude{
+      display:table-cell;
+      vertical-align:middle;
+      text-align:center;
+      width:100%;
+      figure{
+        display:inline-block;
+        img{
+          max-width: 100%;
+          height: auto;
+        }
+        figcaption{
+          text-align: right;
+        }
+        &.is-landscape{
+          figcaption{
+            padding-right:5%;
+          }
+        }
+      }
+      cm-footer{
+        text-align:right;
+        color:@cm-white;
+        i.cm-grid{
+          margin:@cm-unit - 3;
+        }
+      }
+    }
+  }
+  .backdrop{
+    z-index:1;
+  }
+}
+
+.file {
+  display: inline-block;
+  background:~"url(gfx/filetype_map_small.png) transparent 0 -@{unknown-default}em";
+  background-size:~"1em @{filesnum}em";
+  height:1em !important;
+  width:1em !important;
+  border:0;
+  cursor:pointer;
+  padding:0;
+  vertical-align:text-bottom;
+  font-size:1em;
+}
+@files:dir dir-download dir-safe dir-public pdf txt doc docx php css xls xlsx zip rar sit apk jpg gif bmp tif eps png mov mpg mp4 flv avi xml html chm ttf exe dmg mp3 wav wma aif ogg '\33gpp' aac ppt pptx pps unknown;
+@filesnum:length(@files);
+@unknown-default:@filesnum - 1;
+.spriteFiles(@index:0) when (@index < @filesnum){
+  @name: extract(@files, @index + 1);
+  @selector: ~".file.@{name}";
+
+  .bg-pos(@y) when (@y < 1){background-position:0 0;}
+  .bg-pos(@y) when (@y > 0){background-position:~`"0 -@{y}em"`;}
+
+  @{selector} {.bg-pos(@index)}
+  // next item
+  .spriteFiles(@index + 1);
+}
+.spriteFiles();
+
+cm-choose-source{
+  display:block;
+  font-size:3rem;
+  .wrapper{
+    position:absolute;
+    left:0;
+    background-color:@cm-black;
+    > i.fa{// cm-nose
+      position:absolute;
+      color:black;
+      left: 0;
+      &.flip {
+        -moz-transform: scaleX(-1);
+        -webkit-transform: scaleX(-1);
+        -o-transform: scaleX(-1);
+        transform: scaleX(-1);
+        -ms-filter: fliph; /*IE*/
+        filter: fliph; /*IE*/
+      }
+    }
+    &.down{
+      top:7.8rem;
+      > i.fa{
+        top: -3.5rem;
+      }
+    }
+    &.up{
+      bottom:@cm-unit;
+      > i.fa{
+        bottom: -3rem;
+      }
+    }
+  }
+
+  div.source {
+    color:@cm-white;
+    white-space:nowrap;
+    text-align:left;
+    height:@cm-unit;
+    line-height:@cm-unit;
+    font-size:@cm-large-font;
+    padding-right:@cm-horizontal-padding*2;
+    i {
+      font-size:@cm-large-font*2;
+      width:@cm-unit;
+      height:@cm-unit;
+      text-align:center;
+      vertical-align:sub;
+    }
+  }
+}
+
+cm-upload-avatar {
+  .dbl;
+  .pos-abs;
+  width:100%;
+  height:100%;
+  z-index: 1;
+  cm-files{
+    width:100%;
+    height:100%;
+  }
+  button {
+    .no-pad;
+    .pos-bl;
+    height:@cm-unit;
+    width:@cm-unit;
+    background: @cm-overlay-light-transparent;
+    -webkit-border-top-right-radius: 1rem;
+    -moz-border-radius-topright: 1rem;
+    border-top-right-radius: 1rem;
+    -webkit-box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2) !important;
+    -moz-box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2) !important;
+    box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2) !important;
+    i {
+      color:@cm-black;
+      font-size: @cm-mega-font;
+      line-height: 4rem !important;
+      .cm-unit-btn;
+    }
+  }
+}

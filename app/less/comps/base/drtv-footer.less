@@ -1,0 +1,27 @@
+#cm-app.reduced-screen cm-footer{
+  .pos-rel;
+  margin-bottom: -@cm-footer-height;
+}
+
+cm-footer {
+  .dbl;
+  .pos-fxd;
+  .no-pad;
+  bottom:0;
+  font-size: @cm-moep-font;
+  width: @cm-app-width;
+  height: @cm-footer-height;
+
+  button, a {
+    .pos-rel;
+    &.deactivated{
+      .no-box-shadow;
+      color:@cm-dark-grey;
+    }
+    i {
+      .pos-abs;
+      right: 2rem;
+      font-size: @cm-mega-font;
+    }
+  }
+}

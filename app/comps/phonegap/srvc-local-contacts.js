@@ -31,14 +31,13 @@
  */
 
 angular.module('cmPhonegap').service('cmLocalContacts', [
-    'cmPhonegap', 'cmUtil', 'cmLogger',
+    'cmPhonegap', 'cmUtil', 'cmLogger', 'cmDevice',
     '$q', '$navigator', '$phonegapCameoConfig',
-    function (cmPhonegap, cmUtil, cmLogger,
+    function (cmPhonegap, cmUtil, cmLogger, cmDevice,
               $q, $navigator, $phonegapCameoConfig) {
 
         var self = {
             plugin: null,
-            debug: false,
 
             init: function () {
                 if(typeof $phonegapCameoConfig == 'undefined') {
@@ -57,29 +56,29 @@ angular.module('cmPhonegap').service('cmLocalContacts', [
             },
 
             canRead: function() {
-                if(this.debug)
+                if(cmDevice.debug)
                     cmLogger.warn('cmPhonegap.cmLocalContacts.debug == true!!!');
-                return this.debug || !this.debug.test && this.plugin != null;
+                return cmDevice.debug || !cmDevice.debug && this.plugin != null;
             },
 
             selectOne: function() {
                 var loaded = $q.defer();
 
-                if(this.debug){
+                if(cmDevice.debug){
                     loaded.resolve({
                         displayName: "GiverName FamilyName",
                         name: {
                             familyName: "FamilyName",
                             formatted: "GiverName FamilyName",
                             givenName: "GiverName",
-                            middleName: "MiddleName",
+                            middleName: "MiddleName"
                         },
                         phoneNumbers: [
                             {
                                 id: "1234",
                                 pref: false,
                                 type: "mobile", // mobile | work | fax
-                                value: "+49 123 4567890",
+                                value: "+49 123 4567890"
                             }
                         ],
                         emails: [
@@ -87,7 +86,7 @@ angular.module('cmPhonegap').service('cmLocalContacts', [
                                 id: "1246",
                                 pref: false,
                                 type: "work", // other
-                                value: "some.coworker@cameo.io",
+                                value: "some.coworker@cameo.io"
                             }
                         ]
                     });// return mock use above

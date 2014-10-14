@@ -115,7 +115,6 @@ this.login = function (username, password, expectedRoute) {
     self.get('/login')
 
     this.scrollToTop()
-    $("[data-qa='login-btn']").click();
 
     var user = $("input[name=user]");
     var pw = $("input[name=pw]");

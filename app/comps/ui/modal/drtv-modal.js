@@ -130,7 +130,6 @@ angular.module('cmUi')
 
                 element
                 .addClass(attrs.severity)
-                .css('transition-duration', '300ms');
 
                 addNose(element, attrs);
                 // register modal to service
@@ -139,8 +138,8 @@ angular.module('cmUi')
                 scope.refresh();
             },
 
-            controller: function($scope, $element, $attrs){   
-                $scope.title    = cmTranslate($attrs.cmTitle);
+            controller: function($scope, $element, $attrs){
+                $scope.title    = $attrs.cmTitle;
                 $scope.severity = $attrs.severity || 'info';
                 $scope.options  = $scope.$eval($attrs.cmOptions) || {withoutBackdrop:false}
                 $scope.id       = $attrs.id

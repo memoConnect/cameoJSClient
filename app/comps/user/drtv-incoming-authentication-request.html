@@ -1,14 +1,12 @@
-<div>
-    <div class="modal-row cm-form-group">
+<div class="theme-a modal-row">
+    <strong ng-if="is3rdParty" ng-bind-html="'IDENTITY.KEYS.TRUST.ENTER_TRANSACTION_SECRET.NOTE'|cmTranslate:modalMessageVars"></strong>
+    <strong ng-if="!is3rdParty" ng-bind-html="'IDENTITY.KEYS.AUTHENTICATION.ENTER_TRANSACTION_SECRET.NOTE'|cmTranslate:modalMessageVars"></strong>
 
-        <strong ng-if="is3rdParty"    ng-bind-html="'IDENTITY.KEYS.TRUST.ENTER_TRANSACTION_SECRET.NOTE'|cmTranslate:modalMessageVars"></strong>
-        <strong ng-if="!is3rdParty"    ng-bind-html="'IDENTITY.KEYS.AUTHENTICATION.ENTER_TRANSACTION_SECRET.NOTE'|cmTranslate:modalMessageVars"></strong>
-
-
-        <div class="cm-form-control white-control with-inputter">
+    <form ng-submit="verify(transactSecret)">
+        <div class="cm-input-ctn with-inside-icon">
             <input id="inp-transactSecret" type="text" ng-model="transactSecret" cm-adaptive-change data-qa="inp-transactSecret">
+            <i class="fa cm-write"></i>
         </div>
-
 
         <span ng-if="is3rdParty"    ng-bind-html="'IDENTITY.KEYS.TRUST.ENTER_TRANSACTION_SECRET.INSTRUCTIONS'|cmTranslate:modalMessageVars"></span>
         <span ng-if="!is3rdParty"   ng-bind-html="'IDENTITY.KEYS.AUTHENTICATION.ENTER_TRANSACTION_SECRET.INSTRUCTIONS'|cmTranslate:modalMessageVars"></span>
@@ -22,9 +20,10 @@
             <i class="fa cm-info"></i>{{'SYSTEM.ERROR.WRONG_INPUT'|cmTranslate}}
         </div>
     </div>
-    <div cm-rubber-space>
+</div>
+    <footer>
         <button 
-            class       = "cm-btn cm-btn-block cm-btn-grey cm-inline-block cm-white-border-right" 
+            class       = "cm-btn-grey dib w50" 
             data-qa     = "btn-cancel" 
             cm-weight   = "1" 
             ng-click    = "close()"
@@ -33,7 +32,7 @@
             <i class="fa cm-checkbox-wrong cm-lg-icon"></i>
         </button>
         <button 
-            class       = "cm-btn cm-btn-block cm-btn-grey cm-inline-block" 
+            class       = "cm-btn-grey dib w50" 
             data-qa     = "btn-acceptRequest" 
             ng-click    = "verify(transactSecret)"
             cm-weight   = "1" 
@@ -49,5 +48,4 @@
                 <i class="fa cm-checker cm-lg-icon"></i>
             </span>
         </button>
-    </div>
-</div>
+    </footer>

@@ -4,8 +4,9 @@
     </cm-info-bubble>
 </article>
 
-<form name="cmForm" novalidate autocomplete="off">
+<hr class="margin-small" />
 
+<form name="cmForm" novalidate autocomplete="off">
     <article class="content">
         <label>{{'CONTACT.PLACEHOLDER.DISPLAYNAME'|cmTranslate}}</label>
         <div class="cm-input-ctn with-inside-icon cm-icon-grey">
@@ -13,6 +14,7 @@
                 tabindex="1" data-qa="input-displayname"
                 type="text" name="displayName" ng-model="identity.displayName"
                 required />
+            <i class="fa cm-write"></i>
         </div>
         <cm-info-bubble class="cm-alert" ng-show="error.displayName">
             <div ng-show="error.displayName">
@@ -36,6 +38,7 @@
                         type="text" name="phoneNumber" ng-model="item.value"
                         cm-validate-phone cm-adaptive-change
                          />
+                    <i class="fa cm-write"></i>
                 </div>
                 <!--<div cm-type-chooser cm-choose-value-to="item"></div>-->
                 <cm-info-bubble class="cm-alert" ng-show="formPhone.phoneNumber.$dirty && formPhone.phoneNumber.$invalid">
@@ -70,6 +73,7 @@
                         tabindex="3" data-qa="input-email"
                         name="email" ng-model="item.value"
                         cm-validate-email />
+                    <i class="fa cm-write"></i>
                 </div>
                 <cm-info-bubble class="cm-alert" ng-show="formEmail.email.$dirty && formEmail.email.$invalid">
                     <div ng-show="formEmail.email.$invalid">
@@ -91,11 +95,11 @@
 </form>
 
 <cm-footer>
-    <button data-qa="btn-create-contact" class="cm-btn-block cm-btn-grey" id="registerUserButton" ng-click="importContact()">
-        <span ng-show="!showSpinner">
-            {{'CONTACT.FOOTER.SAVE'|cmTranslate}} <i class="fa cm-checkbox-right cm-lg-icon"></i>
+    <button data-qa="btn-create-contact" class="cm-btn-grey" id="registerUserButton" ng-click="importContact()">
+        <span ng-show="!showLoader">
+            {{'CONTACT.FOOTER.SAVE'|cmTranslate}} <i class="fa cm-checkbox-right"></i>
         </span>
-        <cm-loader ng-show="showSpinner" cm-color="ci-color"></cm-loader>
+        <cm-loader ng-show="showLoader" cm-color="ci-color"></cm-loader>
     </button>
 </cm-footer>
 

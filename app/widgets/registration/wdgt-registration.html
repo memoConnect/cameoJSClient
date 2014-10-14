@@ -1,0 +1,147 @@
+<form name="registrationForm" class="form-horizontal" role="form" autocomplete="off" novalidate>
+    <article class="content small-text mt5 tac">
+        {{'REGISTER.TITLE.MANDATORY_INFO' | cmTranslate}}
+    </article>
+
+    <hr class="margin-small">
+
+    <h2 ng-click="toogleLoginInfo()">
+        <i class="fa cm-key"></i>
+        {{'REGISTER.TITLE.HEAD_LOGIN' | cmTranslate}}
+        <i class="fa cm-info"></i>
+    </h2>
+
+    <article class="content" ng-show="showLoginInfo">
+        <cm-info-bubble nose-x="50%">
+            <span ng-bind-html="'REGISTER.INFO.LOGIN_INFORMATION'|cmParse"></span>
+        </cm-info-bubble>
+    </article>
+
+    <hr class="margin-small">
+
+    <article class="content">
+        <cm-cameo-id
+                ng-model="formData.cameoId" form-name="registrationForm" cm-tabindex="1"
+                placeholder="REGISTER.PLACEHOLDER.USERNAME">
+        </cm-cameo-id>
+    </article>
+
+    <hr class="margin-small">
+
+    <cm-password ng-model="formData.password" cm-tabindex="2"></cm-password>
+
+    <hr class="margin-small">
+
+    <h2 ng-click="toogleUserInfo()">
+        <i class="fa cm-person"></i>
+        {{'REGISTER.TITLE.HEAD_IDENTITY'|cmTranslate}}
+        <i class="fa cm-info"></i>
+    </h2>
+
+    <article class="content" ng-show="showUserInfo">
+        <cm-info-bubble nose-x="50%">
+            <span ng-bind-html="'REGISTER.INFO.USER_INFORMATION'|cmParse"></span>
+        </cm-info-bubble>
+    </article>
+
+    <hr class="margin-small">
+
+    <article class="content">
+        <label>{{'REGISTER.PLACEHOLDER.DISPLAYNAME'|cmTranslate}}</label>
+        <div class="cm-input-ctn" data-qa="form-input" cm-input-watcher>
+            <input
+                    tabindex="4" data-qa="input-displayName"
+                    type="text" id="displayName" name="displayName" ng-model="formData.displayName" />
+        </div>
+    </article>
+
+    <hr class="margin-small">
+
+    <article class="content">
+        <label>{{'REGISTER.PLACEHOLDER.EMAIL'|cmTranslate}}</label>
+        <div class="cm-input-ctn" ng-class="{'cm-input-error':registrationForm.email.$invalid}" data-qa="form-input" cm-input-watcher>
+            <input
+                    tabindex="5" data-qa="input-email"
+                    type="text" id="email" name="email"
+                    ng-model="formData.email" ng-class="{'cm-input-error':registrationForm.email.$invalid}"
+                    cm-validate-email cm-adaptive-change />
+            <i
+                    class="fa cm-input-addon"
+                    ng-class="{
+                    'cm-checkbox-wrong':registrationForm.email.$dirty && registrationForm.email.$invalid,
+                    'cm-checkbox-right':!(registrationForm.email.$dirty && registrationForm.email.$invalid)
+                }"
+                    ng-show="formData.email"
+                    data-qa="icon-phone-correct"></i>
+        </div>
+        <cm-info-bubble class="cm-alert" ng-show="registrationForm.email.$dirty && registrationForm.email.$invalid" data-qa="register-info-invalid-mail">
+            <div ng-show="registrationForm.email.$invalid">
+                <i class="fa cm-info"></i>{{'REGISTER.INFO.INVALID_EMAIL'|cmTranslate}}
+            </div>
+        </cm-info-bubble>
+    </article>
+
+    <hr class="margin-small">
+
+    <article class="content">
+        <label>{{'REGISTER.PLACEHOLDER.PHONENUMBER'|cmTranslate}}</label>
+        <div class="cm-input-ctn" ng-class="{'cm-input-error':registrationForm.phone.$invalid}" data-qa="form-input" cm-input-watcher>
+            <input
+                    tabindex="6" data-qa="input-phone"
+                    type="text" id="phone" name="phone"
+                    ng-model="formData.phone" cm-validate-phone cm-adaptive-change ng-minlength="6"
+                    ng-class="{'cm-input-error':registrationForm.phone.$invalid}" />
+            <i
+                    class="fa cm-input-addon"
+                    ng-class="{
+                    'cm-checkbox-wrong':registrationForm.phone.$dirty && registrationForm.phone.$invalid,
+                    'cm-checkbox-right':!(registrationForm.phone.$dirty && registrationForm.phone.$invalid)
+                }"
+                    ng-show="formData.phone"
+                    data-qa="icon-phone-correct"></i>
+        </div>
+        <cm-info-bubble class="cm-alert" ng-show="registrationForm.phone.$dirty && registrationForm.phone.$invalid" data-qa="register-info-invalid-phonenumber">
+            <div ng-show="registrationForm.phone.$invalid">
+                <i class="fa cm-info"></i>{{'REGISTER.INFO.INVALID_PHONENUMBER'|cmTranslate}}
+            </div>
+        </cm-info-bubble>
+    </article>
+
+    <hr class="margin-small">
+
+    <article class="content">
+        <div class="cm-clear-bg terms-link" data-qa="form-input">
+            {{'REGISTER.LABEL.TERMS_ACCEPT'|cmTranslate}}&nbsp;
+            <a href="#/terms" data-qa="link-terms" class="classic-link">{{'REGISTER.LABEL.TERMS'|cmTranslate}}</a>
+            <input
+                    data-qa="checkbox-agb"
+                    type="checkbox" id="agbCheckboxInput" name="agb" ng-model="formData.agb"
+                    class="ng-hide" required />
+            <i
+                    id="agbCheckbox"
+                    data-qa="icon-checkbox-agb"
+                    class="fa cm-ci-color ml15"
+                    ng-class="{
+                    'cm-checkbox':registrationForm.agb.$invalid,
+                    'cm-checkbox-right':!registrationForm.agb.$invalid
+                }"
+                    ng-click="acceptTerms()"></i>
+        </div>
+
+        <cm-info-bubble class="cm-alert" nose-x="55%" ng-show="registrationForm.phone.dirty && registrationForm.agb.$invalid" data-qa="register-info-terms">
+            <div ng-show="registrationForm.agb.$invalid">
+                <i class="fa cm-info"></i>{{'REGISTER.INFO.TERMS'|cmTranslate}}
+            </div>
+        </cm-info-bubble>
+    </article>
+</form>
+
+<cm-footer>
+    <button id="registerUserButton" class="cm-btn-black" ng-click="createUser()" data-qa="btn-createUser">
+        <span ng-show="!showLoader">
+            {{'REGISTER.LABEL.SUBMIT'|cmTranslate}}
+        </span>
+        <i class="fa cm-right" ng-show="!showLoader"></i>
+        <cm-loader ng-show="showLoader" cm-color="ci-color"></cm-loader>
+    </button>
+</cm-footer>

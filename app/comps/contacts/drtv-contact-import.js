@@ -9,19 +9,17 @@
  * @restrict AE
  */
 
-//Todo: Widget should not access $roueParams
-
 angular.module('cmContacts')
 .directive('cmContactImport', [
 
     'cmContactsModel', 'cmUtil', 'cmModal', 'cmNotify',
     'cmLocalContacts', 'cmConversationFactory', 'cmIdentityFactory', 'cmTranslate',
-    'cmUserModel',
+    'cmUserModel', 'cmLoader',
     '$rootScope', '$q',
 
     function(cmContactsModel, cmUtil, cmModal, cmNotify,
              cmLocalContacts, cmConversationFactory, cmIdentityFactory, cmTranslate,
-             cmUserModel,
+             cmUserModel, cmLoader,
              $rootScope, $q){
 
         return {
@@ -31,7 +29,7 @@ angular.module('cmContacts')
 
             controller: function($scope, $element, $attrs){
                 $scope.cmUtil = cmUtil;
-                $scope.showSpinenr = false;
+                var loader = new cmLoader($scope);
 
                 $scope.resetErrors = function(){
                     $scope.error = {
@@ -144,10 +142,10 @@ angular.module('cmContacts')
                 };
 
                 $scope.importContact = function(){
-                    if($scope.spinner('isIdle'))
+                    if(loader.isIdle())
                         return false;
 
-                    $scope.spinner('start');
+                    loader.start();
 
                     $scope.validateForm().then(
                         function() {
@@ -186,24 +184,30 @@ angular.module('cmContacts')
                             })
                             .then(
                                 function (data) {
-                                    $scope.spinner('stop');
-                                    identity = cmIdentityFactory.create(data.identity, true)
+                                    loader.stop();
+                                    identity = cmIdentityFactory.create(data.identity, true);
 
                                     return  cmModal.confirm({
-                                                title:      '',
-                                                text:       'CONTACT.IMPORT.NOTIFICATION.CONFIRMATION',
-                                                html:       '<textarea cm-resize-textarea cm-max-rows = "10" ng-model = "data.message"></textarea>',
-                                                data:       {message: cmTranslate("CONTACT.IMPORT.NOTIFICATION.MESSAGE", {from: cmUserModel.data.identity.getDisplayName(), to: identity.getDisplayName() })}
+                                                title: '',
+                                                text:  'CONTACT.IMPORT.NOTIFICATION.CONFIRMATION',
+                                                html:  '<textarea cm-resize-textarea cm-max-rows="10">' +
+                                                    '{{\'CONTACT.IMPORT.NOTIFICATION.MESSAGE\'|cmTranslate:data.message}}'+
+                                                    '</textarea>',
+                                                data:  {
+                                                    message: {
+                                                        from: cmUserModel.data.identity.getDisplayName(),
+                                                        to: identity.getDisplayName()
+                                                    }
+                                                }
                                             })
                                 },
                                 function () {
-                                    $scope.spinner('stop');
+                                    loader.stop();
                                     cmNotify.error('CONTACT.INFO.ERROR.SAVE', {ttl: 5000});
                                     return $q.reject()
                                 }
                             )
                             .then(function(modal_scope){
-                                $scope.spinner('stop');
                                 var conversation =  cmConversationFactory
                                                     .create()
                                                     .addRecipient(identity)
@@ -223,26 +227,18 @@ angular.module('cmContacts')
 
                             })
                             .finally(function(){
-                                $scope.spinner('stop');
+                                loader.stop();
                                 $scope.gotoContactList();
                             })
 
                         },
-                         function(){
-                             $scope.spinner('stop');
-                         }
+                        function(){
+                            loader.stop();
+                        }
                     );
                 };
 
                 $scope.reset();
-
-                $scope.spinner = function(action){
-                    if(action == 'isIdle'){
-                        return $scope.showSpinner;
-                    }
-
-                    $scope.showSpinner = action == 'stop' ? false : true;
-                };
 
                 // init
                 if(cmLocalContacts.canRead()) {

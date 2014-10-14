@@ -9,12 +9,10 @@
         "VERSION": "version"
     },
 
-    "APP": {
-        "ERROR_HEADER": "An Error occured.",
-        "ERROR": {
-            "LOGOUT": "Logout",
-            "BACK_TO_TALKS": "Back to Talks"
-        }
+    "ERROR": {
+        "HEADER": "An error occurred",
+        "LOGOUT": "Logout",
+        "BACK_TO_TALKS": "Back to Talks"
     },
 
     "LOGIN": {
@@ -60,11 +58,14 @@
                 "PASSWORD": "Please enter a Password."
             },
             "INVALID_EMAIL": "@:DRTV.VALIDATE_EMAIL.INFO.INVALID",
-            "INVALID_PHONENUMBER": "@:DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER"
+            "INVALID_PHONENUMBER": "@:DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER",
+            "USER_INFORMATION": "@todo",
+            "LOGIN_INFORMATION": "@todo"
         },
         "TITLE": {
             "HEAD_LOGIN": "Login Information",
-            "HEAD_IDENTITY": "User Information"
+            "HEAD_IDENTITY": "User Information",
+            "MANDATORY_INFO": "* mandatory fields"
         },
          "WARN": {
              "REGISTRATION_FAILED": "Bei der Registrierung ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut."
@@ -268,6 +269,7 @@
     },
 
     "CONTACT": {
+        "HEADLINE": "Contact",
         "WIDGET": "Talks",
         "PLACEHOLDER": {
             "CAMEOID": "CameoID",
@@ -770,11 +772,11 @@
         "CONVERSATION": {
             "ENCRYPTED": {
                 "NAME": "Talk is encrypted.",
-                "DESCRIPTION": ""
+                "DESCRIPTION": "missing description @todo"
             },
             "NOT_ENCRYPTED": {
                 "NAME": "Talk is not encrypted.",
-                "DESCRIPTION": "",
+                "DESCRIPTION": "missing description @todo",
                 "TOGGLE": "Enable encryption."
             },
             "KEY_TRANSMISSION_SYMMETRIC": {
@@ -786,7 +788,7 @@
             },
             "NO_SYMMETRIC_KEY_TRANSMISSION": {
                 "NAME": "This talk is safely encrypted with cameoKeys.",
-                "DESCRIPTION": ""
+                "DESCRIPTION": "missing description @todo"
             },
             "HAS_PASSCAPTCHA": {
                 "NAME": "PassCaptcha enabled.",
@@ -795,7 +797,7 @@
             },
             "TRUSTING_ALL_RECIPIENTS": {
                 "NAME": "You trust all recipients.",
-                "DESCRIPTION": ""
+                "DESCRIPTION": "missing description @todo"
             },
             "MISSING_DATA": "Security aspects missing"
         }

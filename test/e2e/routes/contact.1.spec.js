@@ -32,12 +32,9 @@ describe('Route Contact: ', function () {
         })
 
         it('should be an internal cameo user', function(){
-            util.waitForElement('cm-contact-type')
-            ptor.wait(function(){
-                return $('cm-contact-type').getAttribute('class').then(function(value){
-                    return value.match(/internal/)
-                })
-            })
+            util.waitForElement("[data-qa='internal-user']")
+
+            expect($("[data-qa='internal-user']").isDisplayed()).toBe(true)
         })
 
         it('all inputs should be disabled', function(){

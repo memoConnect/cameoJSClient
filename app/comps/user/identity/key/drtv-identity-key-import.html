@@ -15,13 +15,13 @@
     </div>
 </article>
 
-<cm-footer cm-always-on-top>
-    <button ng-click="import()" class="cm-btn-block cm-btn-grey" data-qa="btn-import-key" ng-if="!isValid">
+<cm-footer>
+    <button ng-click="import()" class="cm-btn-grey" data-qa="btn-import-key" ng-if="!isValid">
         {{'SETTINGS.PAGES.IDENTITY.KEYS.IMPORT.BUTTON'|cmTranslate}}
-        <i class="fa cm-checker cm-lg-icon"></i>
+        <i class="fa cm-checker"></i>
     </button>
-    <button ng-click="store()" class="cm-btn-block cm-btn-grey" data-qa="btn-save-key" ng-if="isValid">
+    <button ng-click="store()" class="cm-btn-grey" data-qa="btn-save-key" ng-if="isValid">
         {{'SETTINGS.PAGES.IDENTITY.KEYS.STORE_KEYPAIR'|cmTranslate}}
-        <i class="fa cm-checker cm-lg-icon"></i>
+        <i class="fa cm-checker"></i>
     </button>
 </cm-footer>
