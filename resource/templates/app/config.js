@@ -131,21 +131,24 @@ var cameo_config = {
                 '/purl/:purlId'
             ],
             hasCtrl: true,
-            guests: true
+            guests: true,
+            resolvePurl: true
         },
         'purl-security': {
             routes:[
                 '/purl/:purlId/security'
             ],
             hasCtrl: true,
-            guests: true
+            guests: true,
+            resolvePurl: true
         },
         'purl-recipients': {
             routes:[
                 '/purl/:purlId/recipients'
             ],
             hasCtrl: true,
-            guests: true
+            guests: true,
+            resolvePurl: true
         },
         'registration': {
             guests: true

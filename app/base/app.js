@@ -56,7 +56,8 @@ angular.module('cameoClient', [
 // app route config
 .config([
     '$routeProvider',
-    function ($routeProvider) {
+    '$locationProvider',
+    function ($routeProvider, $locationProvider) {
         /**
          * this option makes location use without #-tag
          * @param settings
@@ -166,11 +167,11 @@ angular.module('cameoClient', [
                     }
                 }
 
-                //if (angular.isDefined(_settings_['resolvePurl']) && _settings_['resolvePurl'] == true){
-                //    routeParams.resolve.purl = function(cmBoot) {
-                //        return cmBoot.isReady.purl();
-                //    }
-                //}
+                if (angular.isDefined(_settings_['resolvePurl']) && _settings_['resolvePurl'] == true){
+                    routeParams.resolve.resolveData = function(cmBoot, $route) {
+                        return cmBoot.isReady.purl($route.current.params.purlId);
+                    }
+                }
 
                 if (angular.isDefined(_settings_['reloadOnSearch'])){
                     routeParams.reloadOnSearch = _settings_['reloadOnSearch'];
