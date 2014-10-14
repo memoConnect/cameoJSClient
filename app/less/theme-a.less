@@ -216,7 +216,7 @@
           font-size:@cm-small-font;
         }
       }
-      &.isActive{
+      &.isActive{/*active identity*/
         .box-shadow-bottom;
       }
       .short-links{
@@ -383,18 +383,20 @@ section.default-pages{
   .no-margin;
   background: @cm-input-bg-color;
   font-size: @cm-moep-font;
-  line-height: @cm-unit;
+  height:@cm-unit;
+  line-height:@cm-unit;
   button {
     .no-margin;
     .dib;
     .w50;
+    .h100;
     color:@cm-grey-new;
     i {
       font-size: @cm-large-font;
       color:@cm-grey-new;
     }
     &:hover,&.isActive{
-      box-shadow:inset 0 -2rem 0rem -1.4rem @cm-grey-new;
+      .box-shadow-bottom-new-grey !important;
       text-decoration: none;
     }
   }

@@ -320,10 +320,8 @@ angular.module('cmConversations')
                             {
                                 ttl:0, 
                                 i18n: settingsLinker,
-                                template:   '<small>{{"CONVERSATION.WARN.RECIPIENTS_MISSING_OKAY"|cmTranslate}}</small>'+
-                                            '<i ng-click="conversation.solitary = !conversation.solitary" ng-class="'+
-                                                "{'cm-checkbox':!conversation.solitary, 'cm-checkbox-right':conversation.solitary}"+
-                                            '" class="fa cm-ci-color ml15" data-qa = "checkbox-dont-ask-me-again"></i>',
+                                template: '<small>{{\'CONVERSATION.WARN.RECIPIENTS_MISSING_OKAY\'|cmTranslate}}</small>'+
+                                          '<i ng-click="conversation.solitary = !conversation.solitary" ng-class="{\'cm-checkbox\':!conversation.solitary, \'cm-checkbox-right\':conversation.solitary}" class="fa cm-ci-color ml15" data-qa="checkbox-dont-ask-me-again"></i>',
                                 templateScope: $scope
                             }
                         );

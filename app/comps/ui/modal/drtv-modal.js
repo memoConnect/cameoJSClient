@@ -130,7 +130,6 @@ angular.module('cmUi')
 
                 element
                 .addClass(attrs.severity)
-                .css('transition-duration', '300ms');
 
                 addNose(element, attrs);
                 // register modal to service

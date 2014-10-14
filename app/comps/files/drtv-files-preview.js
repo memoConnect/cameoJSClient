@@ -15,7 +15,6 @@ angular.module('cmFiles').directive('cmFilesPreview',[
 
                 $rootScope.$on('textArea:resize', function(event){
                     var answerMessage = $document[0].querySelector('div.answer .message');
-                    console.log(answerMessage.offsetHeight)
                     element.css('bottom',answerMessage.offsetHeight+'px');
                 });
             }

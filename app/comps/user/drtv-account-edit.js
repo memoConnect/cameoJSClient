@@ -117,6 +117,7 @@ angular.module('cmUser')
 
                     $scope.validateForm().then(
                         function(objectChange){
+
                             cmUserModel.updateAccount(objectChange)
                             .then(
                                 function(){
