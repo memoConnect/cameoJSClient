@@ -10,7 +10,11 @@
     },
 
     "APP": {
-        "ERROR": "An Error occured."
+        "ERROR_HEADER": "An Error occured.",
+        "ERROR": {
+            "LOGOUT": "Logout",
+            "BACK_TO_TALKS": "Back to Talks"
+        }
     },
 
     "LOGIN": {
