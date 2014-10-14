@@ -24,7 +24,8 @@ angular.module('cmUi').directive('cmMenu',[
                 };
 
                 $scope.checkActive = function(url){
-                    if('/' + url == $location.$$url){
+                    console.log($location.$$url,'/' + url,cmUtil.startsWith($location.$$url,'/' + url))
+                    if(cmUtil.startsWith($location.$$url,'/' + url)){
                         return true;
                     }
                     return false;

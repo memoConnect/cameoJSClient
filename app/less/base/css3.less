@@ -89,6 +89,12 @@ input, .without-box-shadow, i, button{
   -moz-box-shadow: 0 -1rem 1rem -1.4rem rgba(50, 50, 50, 0.75);
   box-shadow: 0 -1rem 1rem -1.4rem rgba(50, 50, 50, 0.75);
 }
+.box-shadow-bottom-new-grey{
+  @inset-values: 0 -0.5rem 0 0 @cm-grey-new inset;
+  -webkit-box-shadow:@inset-values;
+  -moz-box-shadow:@inset-values ;
+  box-shadow:@inset-values;
+}
 .box-shadow-top-inset-ci{
   -webkit-box-shadow: 0 0.3rem 0 @cm-ci-color inset;
   -moz-box-shadow: 0 0.3rem 0 @cm-ci-color inset;

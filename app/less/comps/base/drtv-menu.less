@@ -71,6 +71,7 @@ cm-menu {
         }
       }
       .cm-menu-header {
+        height:@cm-unit;
         .border-radius-tl;
         cursor:default;
         background-color:@cm-light-grey;
@@ -79,6 +80,7 @@ cm-menu {
         white-space:nowrap;
         button {
           .w50;
+          .h100;
           .dib;
           .cm-fl;
           .pos-rel;
@@ -116,7 +118,7 @@ cm-menu {
         font-size: 1.5rem;
       }
       button.is-active, button:hover {
-        box-shadow: inset 0 -2rem 0rem -1.4rem @cm-grey-new;
+        .box-shadow-bottom-new-grey !important;
       }
       li.is-active{
         a,i,span {

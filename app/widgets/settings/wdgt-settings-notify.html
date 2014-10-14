@@ -9,6 +9,7 @@
         <span class="item clearfix">
             <span class="title">
                 <span>{{'SETTINGS.PAGES.NOTIFY.PUSH_NOTIFICATIONS' | cmTranslate}}</span>
+                {{changePushNotifications}}
             </span>
 
             <section class="icon-list">
@@ -16,7 +17,7 @@
                     'cm-radio-0':!settings.pushNotifications,
                     'cm-radio-1':settings.pushNotifications
                 }"></i>
-                <cm-loader ng-show="changePushNotifications" class="inline"></cm-loader>
+                <cm-loader ng-show="changePushNotifications" class="in-icon-list"></cm-loader>
             </section>
         </span>
     </li>
