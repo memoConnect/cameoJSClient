@@ -3,7 +3,9 @@
 describe('cmFileDownload', function(){
     var cmFileDownload,
         mockFile = {
-            state: 'exists',
+            state: {
+                is: function(){return 'onlyFileId'}
+            },
             callback: null,
             downloadChunks: function(){},
             trigger: function(){

@@ -4,118 +4,97 @@
 
 /*  android & ios contact json
  {
-    addresses: Array[
-      {
-        country: "Germany"
-        formatted: "Street 123↵12345 City"
-        id: "811"
-        locality: "City"
-        postalCode: "12345"
-        pref: false
-        streetAddress: "Street 123"
-        type: "home"
-      }
-    ]
-    birthday: null
-    categories: null
-    displayName: "GiverName FamilyName"
-    emails: Array[
-     {
-         id: "1246"
-         pref: false
-         type: "work" // other
-         value: "some.coworker@cameo.io"
-     }
-     length: 1
-    ]
-    id: "225"
-    ims: null
+    displayName: "GiverName FamilyName",
     name: {
-        familyName: "FamilyName"
-        formatted: "GiverName FamilyName"
-        givenName: "GiverName"
-        middleName: "MiddleName"
-    }
-    nickname: null
-    note: ""
-    organizations: Array[
+        familyName: "FamilyName",
+        formatted: "GiverName FamilyName",
+        givenName: "GiverName",
+        middleName: "MiddleName",
+    },
+    phoneNumbers: [
      {
-        id: "1245"
-        name: "cameoNet"
-        pref: false
-        type: "custom"
+        id: "1234",
+        pref: false,
+        type: "mobile", // mobile | work | fax
+        value: "+49 123 4567890",
      }
-     length: 1
-    ]
-    phoneNumbers: Array[
+    ],
+    emails: [
      {
-        id: "1234"
-        pref: false
-        type: "mobile" // mobile | work | fax
-        value: "+49 123 4567890"
+         id: "1246",
+         pref: false,
+         type: "work", // other
+         value: "some.coworker@cameo.io",
      }
-     length: 1
     ]
-    photos: Array[
-     {
-        id: "1236"
-        pref: false
-        type: "url"
-        value: "content://com.android.contacts/contacts/225/photo"
-     }
-     length: 1
-    ]
-    rawId: "225"
-    urls: null
  }
  */
 
 angular.module('cmPhonegap').service('cmLocalContacts', [
     'cmPhonegap', 'cmUtil', 'cmLogger',
-    '$q',
-    function (cmPhonegap, cmUtil, cmLogger, $q) {
+    '$q', '$navigator', '$phonegapCameoConfig',
+    function (cmPhonegap, cmUtil, cmLogger,
+              $q, $navigator, $phonegapCameoConfig) {
 
         var self = {
-            state: '',
             plugin: null,
+            debug: false,
 
             init: function () {
-                if (!('contacts' in navigator)) {
-                    //cmLogger.info('CONTACTS PLUGIN IS MISSING');
+                if(typeof $phonegapCameoConfig == 'undefined') {
                     return false;
                 }
 
-                cmPhonegap.isReady(function () {
-                    self.plugin = navigator.contacts;
+                cmPhonegap.isReady(function(){
+                    if(!('contacts' in $navigator)) {
+                        //cmLogger.info('CONTACTS PLUGIN IS MISSING');
+                        return false;
+                    }
+                    self.plugin = $navigator.contacts;
                 });
+
+                return true;
             },
 
-            canRead: function () {
-                return self.plugin != null;
+            canRead: function() {
+                if(this.debug)
+                    cmLogger.warn('cmPhonegap.cmLocalContacts.debug == true!!!');
+                return this.debug || !this.debug.test && this.plugin != null;
             },
 
             selectOne: function() {
-                var loaded = $q.defer(),
-                    mocks = [
-                        {},
-                        {
-                        "displayName": '',
-                        "name": {
-                            "formatted": ""
+                var loaded = $q.defer();
+
+                if(this.debug){
+                    loaded.resolve({
+                        displayName: "GiverName FamilyName",
+                        name: {
+                            familyName: "FamilyName",
+                            formatted: "GiverName FamilyName",
+                            givenName: "GiverName",
+                            middleName: "MiddleName",
                         },
-                        "phoneNumbers": null,
-                        "emails": [
+                        phoneNumbers: [
                             {
-                                "type": "home",
-                                "value": "annegret.lubs@web.de"
+                                id: "1234",
+                                pref: false,
+                                type: "mobile", // mobile | work | fax
+                                value: "+49 123 4567890",
+                            }
+                        ],
+                        emails: [
+                            {
+                                id: "1246",
+                                pref: false,
+                                type: "work", // other
+                                value: "some.coworker@cameo.io",
                             }
                         ]
-                        }
-                    ];
+                    });// return mock use above
+                    return loaded.promise;
+                }
 
                 if(this.canRead()){
-//                      loaded.resolve(mocks[1]);
-
                     this.plugin.pickContact(
                         function (contact) {
                             loaded.resolve(contact);
@@ -123,33 +102,6 @@ angular.module('cmPhonegap').service('cmLocalContacts', [
                         function onError(contactError) {
                             loaded.reject(contactError);
                         }
-                    );
-                }
-
-                return loaded.promise;
-            },
-
-            loadAll: function (stringFilter) {
-                var loaded = $q.defer();
-
-                if(this.canRead()) {
-                    var options = new ContactFindOptions();
-                    // search string
-                    options.filter = stringFilter ? stringFilter : '';
-                    options.multiple = true;
-                    // looks specific type
-                    var filter = ['name', 'displayName', 'phoneNumbers', 'emails'];
-                    // find contacts
-                    this.plugin
-                        .find(
-                        function (contacts) {
-                            loaded.resolve(contacts);
-                        },
-                        function onError(contactError) {
-                            loaded.reject(contactError);
-                        },
-                        filter,
-                        options
                     );
                 }
 

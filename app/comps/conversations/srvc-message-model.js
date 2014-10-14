@@ -83,7 +83,7 @@ angular.module('cmConversations')
              * reset object
              */
             function reset(){
-                cmLogger.debug('cmMessageModel.reset');
+                //cmLogger.debug('cmMessageModel.reset');
                 self.files = [];
                 self.fileIds = [];
             }
@@ -160,7 +160,7 @@ angular.module('cmConversations')
                 }
             };
 
-            this.encrypt = function () {
+            this.encrypt = function (passphrase) {
                 // merge secret_data into json string:
                 var secret_data = {};
 
@@ -170,15 +170,12 @@ angular.module('cmConversations')
 
                 var secret_JSON = JSON.stringify(secret_data);
 
-                //this.encryptedData = cmCrypt.base64Encode(cmCrypt.encryptWithShortKey(passphrase, secret_JSON));
-                if(conversation.getPassphrase() !== null)
-                    this.encryptedData = cmCrypt.encrypt(conversation.getPassphrase(), secret_JSON);
-                //@ TODO!!!!
+                this.encryptedData = cmCrypt.encrypt(passphrase, secret_JSON);
 
                 return this;
             };
 
-            this.decrypt = function () {
+            this.decrypt = function (passphrase) {
                 if(this.state.is('decrypted') !== true){
 
                     if(typeof this.encryptedData == 'string' && this.encryptedData.length > 0){
@@ -190,7 +187,7 @@ angular.module('cmConversations')
                             this.encryptedData = cmCrypt.base64Decode(this.encryptedData);
                         }
 
-                        var decrypted_data = JSON.parse(cmCrypt.decrypt(conversation.getPassphrase(),this.encryptedData));
+                        var decrypted_data = JSON.parse(cmCrypt.decrypt(passphrase,this.encryptedData));
 
                         if(decrypted_data){
                             this.importData(decrypted_data);
@@ -348,11 +345,11 @@ angular.module('cmConversations')
                 return this;
             };
 
-            this.decryptFiles = function(){
+            this.decryptFiles = function(passphrase){
                 angular.forEach(this.files, function(file){
-                    if(file.state == 'exists') {
+                    if(file.state.is('onlyFileId')) {
                         file
-                            .setPassphrase(conversation.getPassphrase())
+                            .setPassphrase(passphrase)
                             .downloadStart();
 
                         file.on('importFile:incomplete',function(event, file){

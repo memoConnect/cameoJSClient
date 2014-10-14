@@ -1,7 +1,19 @@
 .cm-ci-color{color:@cm-ci-color}
 .cm-ci-color-bg{background-color:@cm-ci-color}
 
-.cm-btn{&:hover{color:@cm-white}}
+.cm-btn{
+  background:@cm-grey;
+  width:100%;
+  text-align:center;
+  height:@cm-unit;
+  color:@cm-white;
+  &:hover{
+    color:@cm-ci-color;
+  }
+  i {
+    margin-left: 1rem;
+  }
+}
 
 .btn {
     -moz-user-select: none;
@@ -41,7 +53,6 @@
 .cm-grey {
   color: @cm-grey;
 }
-
 .cm-green {
   color: @cm-green;
 }
@@ -81,8 +92,6 @@
   opacity:0.25;
   cursor:default;
 }
-
-.cm-nose-wrapper{}
 
 .cm-lg-icon{
   font-size:@cm-mega-font;

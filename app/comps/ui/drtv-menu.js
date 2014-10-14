@@ -1,11 +1,10 @@
 'use strict';
 
 angular.module('cmUi').directive('cmMenu',[
-    'cmUserModel',
-    'cmConfig',
-    'cmNotify',
-    '$location',
-    function (cmUserModel, cmConfig, cmNotify, $location){
+    'cmUserModel', 'cmConfig', 'cmNotify', 'cmUtil',
+    '$location', '$window',
+    function (cmUserModel, cmConfig, cmNotify, cmUtil,
+              $location, $window){
         return {
             restrict: 'AE',
             scope: true,
@@ -14,9 +13,7 @@ angular.module('cmUi').directive('cmMenu',[
 
                 $scope.Object = Object;
                 $scope.menu = cmConfig.menu;
-
                 $scope.version = cmConfig.version;
-
                 $scope.menuVisible = false;
 
                 $scope.handleMenu = function(){
@@ -26,11 +23,32 @@ angular.module('cmUi').directive('cmMenu',[
                         cmNotify.trigger('bell:unring');
                 };
 
-                $scope.toggleSubs = function(parent){
-                    parent.subsVisible = parent.subsVisible ? false : true;
+                $scope.checkActive = function(url){
+                    if('/' + url == $location.$$url){
+                        return true;
+                    }
+                    return false;
                 };
 
                 $scope.goTo = function(parentBtn, url, isSub){
+                    // for extern and performance
+                    if('link' in parentBtn){
+                        // file:///android_asset/www/index.html#/login
+                        if(cmUtil.startsWith($location.$$absUrl, 'file:///')) {
+                            $window.location = parentBtn.link;
+                        // http://localhost:8000/app/#/settings
+                        } else if($location.$$absUrl.indexOf('/#/') != -1) {
+                            var arr_location = $location.$$absUrl.split('/#/');
+                            location.href = arr_location[0] + '/' + parentBtn.link;
+                        // http://localhost:8000/app/index.html#/settings
+                        } else if($location.$$absUrl.indexOf('index.html#/') != -1) {
+                            var arr_location = $location.$$absUrl.split('index.html#/');
+                            location.href = arr_location[0] + '/' + parentBtn.link;
+                        }
+
+                        return false;
+                    }
+
                     /**
                      * if current location == url, then only close menu
                      */
@@ -38,12 +56,6 @@ angular.module('cmUi').directive('cmMenu',[
                         $scope.handleMenu();
                         return false;
                     }
-
-                    if(parentBtn.onlyLabel && isSub == undefined)
-                        return false;
-
-                    if(isSub != undefined)
-                        $scope.toggleSubs(parentBtn)
 
                     if(typeof url !== 'undefined'){
                         $scope.goto('/'+url);

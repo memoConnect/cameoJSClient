@@ -1,17 +1,13 @@
-/**
- * Created by reimerei on 25.06.14.
- */
-
 var config = require("../config-e2e-tests.js")
 var util = require("../../lib/e2e/cmTestUtil.js")
 
 describe('Purl Registration: ', function () {
-
     var ptor = util.getPtorInstance();
 
     var internalLogin = ""
     var password = 'password'
 
+    var subject = "moepsSubject"
     var msgText = "wooooopDieMoep"
     var msgText2 = "wooooopDieMoepDieMoepMoep"
 
@@ -63,6 +59,7 @@ describe('Purl Registration: ', function () {
 
         // send message
         $("[data-qa='input-answer']").sendKeys(msgText)
+        $("[data-qa='input-subject']").sendKeys(subject)
         $("[data-qa='btn-send-answer']").click()
     })
 
@@ -90,8 +87,7 @@ describe('Purl Registration: ', function () {
         $("[data-qa='btn-send-answer']").click()
     })
 
-    // TODO: purlId is empty???
-    xit('open modal when clicking on attachment purlId:"'+purl+'"', function () {
+    it('open modal when clicking on attachment', function () {
         $("[data-qa='btn-fast-registration']").click()
         util.waitForElement("[data-qa='btn-register-modal']")
         $("[data-qa='btn-register-modal']").click()
@@ -118,14 +114,35 @@ describe('Purl Registration: ', function () {
         $("[data-qa='icon-checkbox-agb']").click()
 
         $("[data-qa='btn-createUser']").click()
-
-        util.waitForPageLoad("/start/welcome")
-
-        util.get("/purl/" + purl)
-        util.waitForPageLoad("/purl/" + purl)
     })
 
-    it('conversation with the right message should be loaded', function () {
+    it('first url should be "/start/welcome" ', function () {
+        util.waitForPageLoad('/start/welcome')
+    })
+
+    it("next step should be the /start/quickstart", function () {
+        util.waitAndClickQa("btn-next-step")
+        util.waitForPageLoad('/start/quickstart')
+    })
+
+    it("the next step should be key generation", function () {
+        util.waitAndClickQa("btn-next-step")
+        util.waitForPageLoad('/settings/identity/key/create')
+    })
+
+    it("should be in /talks after saving the key", function () {
+        util.waitForElementVisible("[data-qa='page-save-key']", 60000)
+        util.waitAndClickQa("btn-save-key")
+        util.waitForPageLoad('/talks')
+    })
+
+    it("initial conversation should be present, along with user conversation", function(){
+        util.waitForElements("cm-conversation-tag", 2)
+        util.headerSearchInList(subject)
+        util.waitAndClick("cm-conversation-tag")
+    })
+
+    it('conversation should contain all messages', function () {
         util.waitForElements("cm-message", 2)
         $$('cm-message').then(function (elements) {
             expect(elements.length).toBe(2)
@@ -134,8 +151,9 @@ describe('Purl Registration: ', function () {
             expect(elements[0].$("[data-qa='message-author']").getText()).toBe(internalLogin)
 //            expect(elements[1].$("[data-qa='message-author']").getText()).toBe(externalLogin)
         })
+    })
 
-        // delete test users
+    it("delete test users", function(){
         util.deleteTestUser(internalLogin)
         util.deleteTestUser(externalLogin)
     })

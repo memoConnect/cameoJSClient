@@ -9,47 +9,24 @@ module.exports = function(config) {
         // list of files / patterns to load in the browser
         files: [
             'test/lib/jquery/*.js',
-
-            'app/base/config.js',
-
-            'app/vendor/angular/angular.js',
-            'app/vendor/angular/angular-sanitize.js',
-
-            'app/vendor/angular-translate/angular-translate.js',
-
-            'app/vendor/angular-moment/moment-with-langs.js',
-            'app/vendor/angular-moment/angular-moment.js',
-
-            'app/vendor/!(require*)/*.js',
-
-            'app/vendor/crypto/sjcl/sjcl.min.js',
-            'app/vendor/crypto/jsencrypt/jsencrypt.js',
-
-            // packages
-            'app/packages/comps/core/package.js',
-            'app/packages/comps/ui/package.js',
-            'app/packages/comps/contacts/package.js',
-            'app/packages/comps/user/package.js',
-            'app/packages/comps/validate/package.js',
-            'app/packages/comps/conversations/package.js',
-            'app/packages/comps/files/package.js',
-            'app/packages/comps/security_aspects/package.js',
-            'app/packages/comps/phonegap/package.js',
-
+            'app/vendor*.js',
             'test/lib/angular/angular-mocks.js',
+            'app/cameo*.js',
 
-            // specs
+            // all specs
             'test/unit/**/*.spec.js',
 
-            'app/**/*.json'
+            'app/**/*.json',
+            'dist/i18n/language-keys.json'
         ],
 
         ngJson2JsPreprocessor: {
-            stripPrefix: 'app/'
+            stripPrefix: '(app/)|(dist/i18n/)'
         },
 
         preprocessors: {
-            'app/**/*.json': ['json2js']
+            'app/**/*.json': ['json2js'],
+            'dist/i18n/language-keys.json': ['json2js']
         },
 
         // list of files to exclude

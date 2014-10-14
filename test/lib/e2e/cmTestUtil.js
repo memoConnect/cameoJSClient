@@ -1,11 +1,11 @@
 /**
  * Created by reimerei on 15.04.14.
  */
-var fs = require('fs')
-var config = require("../../e2e/config-e2e-tests.js")
-var self = this
-
-var ptor
+var fs = require('fs'),
+    config = require("../../e2e/config-e2e-tests.js"),
+    clc = require('cli-color'),
+    self = this,
+    ptor
 
 this.setPtorInstance = function (newPtor) {
     ptor = newPtor
@@ -15,7 +15,63 @@ this.setPtorInstance = function (newPtor) {
 this.getPtorInstance = function () {
     ptor = protractor.getInstance()
     ptor.ignoreSynchronization = true
+
+    // for every it in describe check error logs and
+    // stop on error if config is on true
+    afterEach(function() {
+        self.checkErrorLogs()
+        self.stopOnError()
+    })
+
     return ptor;
+}
+
+this.stopOnError = function () {
+    if (config.stopOnError) {
+        var passed = jasmine.getEnv().currentSpec.results().passed();
+        if (!passed) {
+            jasmine.getEnv().specFilter = function (spec) {
+                return false;
+            };
+        }
+    }
+}
+
+this.checkErrorLogs = function(){
+    ptor.manage().logs().get('browser').then(function(browserLog) {
+        var errors = [];
+
+        browserLog.forEach(function(log){
+            if(log.level.name == 'SEVERE')
+                errors.push(clc.red(log.message))
+        })
+
+        //expect(errors.length+' JS Errors').toBe('0 JS Errors')
+        if(errors.length > 0){
+            ptor.getCurrentUrl().then(function(currentUrl){
+                var suite = {},
+                    specNames = []
+
+                if('currentSpec' in jasmine.getEnv()
+                && 'suite' in jasmine.getEnv().currentSpec) {
+                    suite = jasmine.getEnv().currentSpec.suite
+                }
+
+                if('parentSuite' in suite
+                && suite.parentSuite != null
+                && 'description' in suite.parentSuite)
+                    specNames.push(suite.parentSuite.description)
+
+                if('description' in suite)
+                    specNames.push(suite.description)
+
+                console.log('\n'+clc.red(errors.length+' error @ '+(specNames.join(' '))+'\n on '+currentUrl))
+                errors.forEach(function(error){
+                    console.log(error)
+                })
+            })
+        }
+    })
 }
 
 this.get = function (path) {
@@ -58,7 +114,7 @@ this.login = function (username, password, expectedRoute) {
     self.logout()
     self.get('/login')
 
-    $("body").sendKeys(protractor.Key.HOME)
+    this.scrollToTop()
     $("[data-qa='login-btn']").click();
 
     var user = $("input[name=user]");
@@ -99,7 +155,7 @@ this.createTestUser = function (testUserId) {
 
     $("[data-qa='input-displayName']").sendKeys(loginName)
 
-    $("[data-qa='link-terms']").sendKeys(protractor.Key.END)
+    this.scrollToBottom()
     $("[data-qa='icon-checkbox-agb']").click()
 
     $("[data-qa='btn-createUser']").click()
@@ -201,6 +257,24 @@ this.broadcastEvent = function (token, event) {
     }, token, event, config.apiUrl)
 }
 
+this.remoteBroadcastEvent = function (token, event, identityId) {
+
+    return ptor.executeAsyncScript(function (token, event, apiUrl, identityId) {
+
+        var callback = arguments[arguments.length - 1];
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", apiUrl + "/event/broadcast/identity/" + identityId, true);
+        xhr.setRequestHeader("Authorization", token);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4) {
+                callback(JSON.parse(xhr.responseText))
+            }
+        }
+        xhr.send(JSON.stringify(event));
+    }, token, event, config.apiUrl, identityId)
+}
+
 this.waitForPageLoad = function (expectedRoute) {
     ptor.wait(function () {
         return ptor.executeScript('return window != undefined && window._route').then(function (route) {
@@ -229,13 +303,13 @@ this.waitForEventSubscription = function () {
     return this
 }
 
-this.waitForElement = function (selector) {
+this.waitForElement = function (selector, timeout) {
 
     ptor.wait(function () {
         return $$(selector).then(function (elements) {
             return elements.length > 0
         })
-    }, config.waitForTimeout, 'waitForElement ' + selector + ' timeout is reached')
+    }, timeout || config.waitForTimeout, 'waitForElement ' + selector + ' timeout is reached')
 
     return this
 }
@@ -295,35 +369,25 @@ this.waitForModalClose = function () {
     return this
 }
 
-this.waitForSpinner = function () {
-    // wait until spinner appears
-    ptor.wait(function () {
-        return $$("cm-spinner").then(function (elements) {
-            return elements.length > 0
-        })
-    }, config.routeTimeout, 'waitForSpinner start timeout reached').then(function () {
+this.waitForLoader = function (count, parentSelector) {
+    count = count || 1,
+    parentSelector = parentSelector ? parentSelector+' ' : '' // that used for more then one loader on page
+    // wait for loader appear
+    ptor.wait(function() {
+        return  $(parentSelector+'cm-loader').getAttribute('cm-count')
+                .then(function(value){
+                    return value >= count
+                })
+    }, config.routeTimeout, 'waitForLoader start timeout reached')
+    .then(function () {
+        // wait for loader disappear
         ptor.wait(function () {
-            return $("cm-spinner").isDisplayed().then(function (isDisplayed) {
+            return $(parentSelector+'cm-loader').isDisplayed()
+            .then(function (isDisplayed) {
                 return !isDisplayed
             })
-        }, config.routeTimeout, 'waitForSpinner stop timeout reached')
-    })
+        }, config.routeTimeout, 'waitForLoader stop timeout reached')
 
-    return this
-}
-
-this.waitForLoader = function () {
-    // wait until spinner appears
-    ptor.wait(function () {
-        return $$("cm-loader").then(function (elements) {
-            return elements.length > 0
-        })
-    }, config.routeTimeout, 'waitForLoader start timeout reached').then(function () {
-        ptor.wait(function () {
-            return $("cm-loader").isDisplayed().then(function (isDisplayed) {
-                return !isDisplayed
-            })
-        }, config.routeTimeout, 'waitForSpinner stop timeout reached')
     })
 
     return this
@@ -375,7 +439,7 @@ this.getFileExtension = function (file) {
 }
 
 this.headerSearchInList = function (searchString) {
-    $("[data-qa='btn-header-list-search']").click()
+    self.waitAndClickQa("btn-header-list-search")
     this.searchInList(searchString)
 }
 
@@ -385,6 +449,7 @@ this.searchInList = function (searchString) {
 
 this.clearLocalStorage = function () {
     ptor.executeScript('localStorage.clear()')
+    return this
 }
 
 this.getLocalStorage = function () {
@@ -408,6 +473,7 @@ this.setLocalStorage = function (key, value) {
     ptor.executeScript(function (key, value) {
         localStorage.setItem(key, value)
     }, key, value)
+    return this
 }
 
 this.getToken = function () {
@@ -506,8 +572,29 @@ this.click = function (dataQa) {
     $("[data-qa='" + dataQa + "']").click()
 }
 
+
+this.waitForQa = function(dataQa){
+    self.waitForElement("[data-qa='" + dataQa + "']")
+}
+
+this.waitAndClickQa = function (dataQa) {
+    self.waitForElement("[data-qa='" + dataQa + "']")
+    $("[data-qa='" + dataQa + "']").click()
+}
+
+this.waitAndClick = function (selector) {
+    self.waitForElement(selector)
+    $(selector).click()
+}
+
+
 this.setVal = function (dataQa, text) {
     $("[data-qa='" + dataQa + "']").sendKeys(text)
+}
+
+
+this.blurQa = function (dataQa) {
+    $("[data-qa='" + dataQa + "']").sendKeys(protractor.Key.TAB)
 }
 
 this.getVal = function (dataQa) {
@@ -518,18 +605,39 @@ this.setValQuick = function (dataQa, text) {
     ptor.executeScript("document.querySelector(\"[data-qa='" + dataQa + "']\").value = '" + text + "'")
 }
 
-this.stopOnError = function () {
-
-    if (config.stopOnError) {
-        var passed = jasmine.getEnv().currentSpec.results().passed();
-        if (!passed) {
-            jasmine.getEnv().specFilter = function (spec) {
-                return false;
-            };
-        }
-    }
+this.createEncryptedConversation = function (subject, message) {
+    self.get("/conversation/new")
+    self.waitForPageLoad("/conversation/new")
+    self.waitForElement("[data-qa='input-subject']")
+    self.setVal("input-subject", subject)
+    self.setVal("input-answer", message)
+    self.waitAndClickQa("btn-send-answer")
+    self.waitAndClick("cm-modal.active [data-qa='checkbox-dont-ask-me-again']")
+    self.waitAndClick("cm-modal.active [data-qa='cm-modal-close-btn']")
+    self.waitAndClickQa("btn-send-answer")
 }
 
+this.readConversation = function (subject, message) {
+    self.get("/talks")
+    self.waitForPageLoad("/talks")
+    self.headerSearchInList(subject)
+    self.waitAndClick("cm-conversation-tag")
+    self.waitForElement("cm-message")
+//    ptor.debugger()
+    ptor.wait(function(){
+        return $("cm-message").getText().then(function(text){
+            return text.search(message) != -1
+        })
+    })
+}
+
+this.scrollToTop = function(){
+    $("body").sendKeys(protractor.Key.HOME)
+}
+
+this.scrollToBottom = function(){
+    $("body").sendKeys(protractor.Key.END)
+}
 
 
 

@@ -1,20 +1,14 @@
 'use strict';
 
 angular.module('cmConversations').directive('cmMessageFile', [
-    
-    'cmFileFactory',
-    'cmLogger',
-    '$timeout',
-    'cmJob',
-    'cmFileTypes',
-    'cmModal',
-
-    function (cmFileFactory, cmLogger, $timeout, cmJob, cmFileTypes, cmModal) {
+    'cmModal', 'cmUtil',
+    function (cmModal, cmUtil) {
         return {
             restrict: 'E',
             require: '^cmMessage',
             templateUrl: 'comps/conversations/drtv-message-file.html',
             controller: function ($scope, $element) {
+                $scope.cmUtil = cmUtil;
                 $scope.progress = 0;
 
                 $scope.showFullscreen = function(){

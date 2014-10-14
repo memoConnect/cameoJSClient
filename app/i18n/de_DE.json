@@ -1,4 +1,7 @@
 {
+    "YES":  "Ja",
+    "NO":   "Nein",
+
     "CAMEO": {
         "SLOGAN": "Safer Communication - Made in Germany!",
         "DESCRIBE": "Registrieren Sie sich kostenlos und unverbindlich für cameoNet.\nWirklich sicher kommunizieren. Mobil und Desktop. Mit allen Kontakten. Und tollen Zusatzfunktionen.\nSichern Sie sich Ihren Benutzernamen noch heute und testen Sie uns!",
@@ -42,7 +45,7 @@
             "SUBMIT": "Benutzerkonto anlegen",
             "USERNAME": "Benutzername",
             "NAME": "Anzeigename",
-            "TERMS": " die AGB",
+            "TERMS": "die AGB",
             "TERMS_ACCEPT": "Ich akzeptiere"
         },
         "PLACEHOLDER": {
@@ -146,8 +149,10 @@
     },
 
     "CONVERSATION": {
+        "NO_SUBJECT": "Kein Betreff",
         "HEADING": "Talk",
         "LABEL": {
+            "LOAD_PREVIOUS":"vorherige Nachrichten laden",
             "SEND": "Abschicken",
             "REQUEST_CAPTCHA": "PassCaptcha anfordern",
             "SEND_CAPTCHA": "PassCaptcha senden",
@@ -180,7 +185,7 @@
         },
         "PLACEHOLDER": {
             "SUBJECT": "Betreff",
-            "NO_SUBJECT": "Betreff eingeben",
+            "NO_SUBJECT": "(optional)",
             "RECIPIENTS": "Empfänger",
             "ADD_RECIPIENTS": "hinzufügen",
             "INFO": "Info",
@@ -280,7 +285,8 @@
             },
             "INVALID": {
                 "EMAIL": "@:DRTV.VALIDATE_EMAIL.INFO.INVALID",
-                "PHONENUMBER": "@:DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER"
+                "PHONENUMBER": "@:DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER",
+                "MIXED": "Ihre Eingabe ist nicht valide."
             },
             "SUCCESS": {
                 "SAVE": "Kontakt wurde erfolgreich angelegt.",
@@ -295,14 +301,12 @@
                 "PHONENUMBER": "Bitte wählen Sie eine Telefonnummer aus"
             }
         },
-        "HANDSHAKE_3RD": {
-            "HANDSHAKE_NOW": "Der Kontakt hat den Vertrauens-Prozess angenommen. Wollen Sie den nächsten Schritt nun durchführen?",
-            "TRANSACTION_SECRET": "Ihr Kontakt muss folgenden Code eingeben:",
-            "HANDSHAKE_NEED_TRANSACTID": "Bitte geben Sie hier den Code ein, der Ihrem Gegenüber angezeigt wird:",
-            "HANDSHAKE_OK": "Durchführen"
-        },
         "FOOTER": {
             "SAVE": "Speichern"
+        },
+        "NOTIFICATION" :{
+            "CONFIRMATION" :"Sie haben Kontaktdaten einer dritten Person auf unseren Servern gespeichert. Informieren Sie sie bitte darüber.",
+            "MESSAGE" : "Hallo {{to}}, ich habe Deine Adressdaten in mein Cameo-Adressbuch übernommen. Ciao {{from}}"
         }
     },
 
@@ -388,87 +392,85 @@
                 "PAGE_HEADLINE": "cameoKeys",
                 "HEADLINE": "cameoKeys verknüpfen",
                 "EXPLANATION": "Um Ihre Nachrichten die Sie als {{identity}} geschrieben haben auf allen Geräten lesen zu können, müssen Sie ihren lokalen cameoKey mit Ihren cameoKeys auf anderen Geräten verknüpfen.",
+                "TIMEOUT":"Der Vorgang wird in {{timeout}} abgebrochen.",
                 "START": {
                     "START_BUTTON": "Verbinden",
                     "CANCEL_BUTTON": "Nicht jetzt",
+                    "RETRY_BUTTON": "Wiederholen",
                     "INSTRUCTIONS": "Drücken Sie auf 'Verbinden' um den Vorgang zu starten.",
                     "NOTE": "ACHTUNG! Bevor Sie auf 'Verbinden' klicken müssen Sie auf einem Ihrer Geräte cameoNet als {{identity}} öffnen!"
                 },
-                "REQUEST_STARTED": {
-                    "CANCEL_BUTTON": "Anfrage Abbrechen",
-                    "INSTRUCTIONS": "Drücken Sie auf 'Anfrage abbrechen' um den Vorgang zu beenden.",
-                    "NOTE": "Anfrage gestartet. Bestätigen Sie die Anfrage auf dem zu verknüpfenden Gerät!"
-                },
-                "ACCEPT_REQUEST": {
-                    "HEADER": "Verknüpfungsanfrage",
-                    "INSTRUCTIONS": "Sie haben auf einem anderen Gerät einen cameoKey, den Sie auf diesem Gerät noch nicht kennen. D.h. Sie können Nachrichten, die Sie hier verschlüsselt haben, auf dem anderen Gerät nicht lesen und umgekehrt.<br>Wollen Sie den cameoKey '{{cameoKey}}' mit Ihrem lokalen cameoKey verknüpfen?",
-                    "NOTE": "Um die cameoKeys zu verknüpfen, starten Sie die Verknüpfung.",
-                    "ACCEPT_BUTTON": "Verknüpfung starten",
-                    "CANCEL_BUTTON": "Ablehnen"
-                },
-                "SHOW_TRANSACTION_SECRET": {
+                "WAIT": {
+                    "CANCEL_BUTTON": "Verknüpfung abbrechen",
                     "INSTRUCTIONS": "Drücken Sie auf 'Verknüpfung abbrechen' um den Vorgang zu beenden.",
-                    "NOTE": "Übertragen Sie bitte folgenden Code auf Ihr anderes Gerät:",
-                    "LABEL_CODE": "Code",
-                    "CLOSE_BUTTON": "Verknüpfung abbrechen"
-                },
-                "ENTER_TRANSACTION_SECRET": {
-                    "HEADER": "@:IDENTITY.KEYS.AUTHENTICATION.ACCEPT_REQUEST.HEADER",
-                    "INSTRUCTIONS": "@:IDENTITY.KEYS.AUTHENTICATION.ACCEPT_REQUEST.INSTRUCTIONS",
-                    "NOTE": "Geben Sie hier bitte den Code ein, der Ihnen auf dem anderen Gerät angezeigt wird:",
-                    "LABEL_CODE": "@:IDENTITY.KEYS.AUTHENTICATION.SHOW_TRANSACTION_SECRET.CODE",
-                    "CANCEL_BUTTON": "@:IDENTITY.KEYS.AUTHENTICATION.SHOW_TRANSACTION_SECRET.CLOSE_BUTTON",
-                    "SUBMIT_BUTTON": "Übertragen"
+                    "NOTE": "Übertragen Sie bitte obigen Code auf Ihr anderes Gerät.",
+                    "LABEL_CODE": "Code"
                 },
                 "SUCCESSFUL": {
                     "INSTRUCTIONS": "Die Verknüpfung Ihrer cameoKeys war erfolgreich! In Kürze können Sie alle Talks lesen, die Sie mit Ihren verknüpften cameoKeys verschlüsselt haben.",
                     "NOTE": "Sie können den Dialog nun schließen.",
-                    "CLOSE_BUTTON": "Schließen"
+                    "DONE_BUTTON": "Schließen"
                 },
-                "TIMEOUT":"Der Vorgang wird in {{timeout}} abgebrochen."
+                "ERROR": {
+                    "TIMEOUT" :"Zeit überschritten, bitte versuchen sie es erneut.",
+                    "VERIFY" :"Verknüpfung fehlgeschlagen, bitte versuchen sie es erneut."
+                },
+                "ENTER_TRANSACTION_SECRET": {
+                    "HEADER": "cameoKeys verknüpfen",
+                    "INSTRUCTIONS": "Sie haben auf einem anderen Gerät einen cameoKey, den Sie auf diesem Gerät noch nicht kennen. D.h. Sie können Nachrichten, die Sie hier verschlüsselt haben, auf dem anderen Gerät nicht lesen und umgekehrt.",
+                    "NOTE": "Wenn Sie den cameoKey '{{cameoKey}}' mit Ihrem lokalen cameoKey verknüpfen wollen, geben Sie hier bitte den Code ein, der Ihnen auf dem anderen Gerät angezeigt wird:",
+                    "SUBMIT_BUTTON": "Übertragen"
+                },
+                "DONE" :{
+                    "INSTRUCTIONS": "Verknüfung erfolgreich abgeschlossen.",
+                    "NOTE":" Klicken sie auf 'Schließen'."
+                },
+                "MODAL":{
+                    "SUCCESS": "cameoKeys erfolgreich verknüpft.",
+                    "CANCELED": "Verknüfung abgebrochen."
+                }
             },
             "TRUST": {
                 "PAGE_HEADLINE": "Vertrauensprozess",
                 "HEADLINE": "Kontakt vertrauen",
-                "EXPLANATION": "Mit dem Vertrauens-Prozess stellen Sie sicher, dass eine Identität zu einer Person gehört, die Sie persönlich kennen.",
+                "EXPLANATION": "Mit dem Vertrauensprozess stellen Sie sicher, dass eine Identität zu einer Person gehört, die Sie persönlich kennen.",
+                "TIMEOUT":"Der Vorgang wird in {{timeout}} abgebrochen.",
                 "START": {
                     "START_BUTTON": "Anfragen",
                     "CANCEL_BUTTON": "Nicht jetzt",
+                    "RETRY_BUTTON": "Wiederholen",
                     "INSTRUCTIONS": "Wenn Sie diesem Kontakt vertrauen wollen, drücken Sie auf 'Anfragen', um ihm eine Vertrauensanfrage zu senden.",
                     "NOTE": "ACHTUNG! Bevor Sie auf 'Anfragen' klicken muss Ihr Kontakt im cameoNet als {{identity}} angemeldet sein!"
                 },
-                "REQUEST_STARTED": {
+                "WAIT": {
                     "CANCEL_BUTTON": "Anfrage abbrechen",
                     "INSTRUCTIONS": "Drücken Sie auf 'Anfrage abbrechen' um den Vorgang zu beenden.",
-                    "NOTE": "Bitte warten Sie bis Ihr Kontakt die Anfrage angenommen hat."
-                },
-                "ACCEPT_REQUEST": {
-                    "HEADER": "Vertrauensanfrage",
-                    "INSTRUCTIONS": "'{{identity}}' hat soeben den Prozess gestartet, mit Ihnen eine Vertrauensbasis einzugehen.<br>Mit dem Vertrauens-Prozess stellen Sie sicher, dass eine Identität einer Person gehört, die Sie persönlich kennen.",
-                    "NOTE": "Wenn Sie '{{identity}}' vertrauen wollen, drücken Sie auf 'Annehmen'.",
-                    "ACCEPT_BUTTON": "Annehmen",
-                    "CANCEL_BUTTON": "Ablehnen"
-                },
-                "SHOW_TRANSACTION_SECRET": {
-                    "INSTRUCTIONS": "Drücken Sie auf 'Abbrechen' um den Vorgang zu beenden.",
-                    "NOTE": "'{{identity}}' muss folgenden Code eingeben:",
-                    "LABEL_CODE": "Code",
-                    "CLOSE_BUTTON": "Abbrechen"
-                },
-                "ENTER_TRANSACTION_SECRET": {
-                    "HEADER": "@:IDENTITY.KEYS.TRUST.ACCEPT_REQUEST.HEADER",
-                    "INSTRUCTIONS": "@:IDENTITY.KEYS.TRUST.ACCEPT_REQUEST.INSTRUCTIONS",
-                    "NOTE": "Bitte geben Sie hier den Code ein, der auf dem Gerät von '{{identity}}' angezeigt wird:",
-                    "LABEL_CODE": "@:IDENTITY.KEYS.TRUST.SHOW_TRANSACTION_SECRET.CODE",
-                    "CANCEL_BUTTON": "@:IDENTITY.KEYS.TRUST.SHOW_TRANSACTION_SECRET.CLOSE_BUTTON",
-                    "SUBMIT_BUTTON": "Übertragen"
+                    "NOTE": "'{{identity}}' muss obigen Code auf seinem/ihrem Gerät eingeben, um mit Ihnen eine Vertrauensbasis einzugehen.",
+                    "LABEL_CODE": "Code"
                 },
                 "SUCCESSFUL": {
-                    "INSTRUCTIONS": "Der Vertrauens-Prozess wurde erfogreich durchgeführt!<br>Sie und '{{identity}} vertrauen sich jetzt gegenseitig.",
+                    "INSTRUCTIONS": "Der Vertrauensprozess wurde erfogreich durchgeführt!<br>Sie und '{{identity}} vertrauen sich jetzt gegenseitig.",
                     "NOTE": "Sie können den Dialog nun schließen.",
-                    "CLOSE_BUTTON": "Schließen"
+                    "DONE_BUTTON": "Schließen"
                 },
-                "TIMEOUT":"Der Vorgang wird in {{timeout}} abgebrochen."
+                "ERROR": {
+                    "TIMEOUT" :"Zeit überschritten, bitte versuchen sie es erneut.",
+                    "VERIFY" :"Vertrauensprozess fehlgeschlagen, bitte versuchen sie es erneut."
+                },
+                "ENTER_TRANSACTION_SECRET": {
+                    "HEADER": "Vertrauensanfrage",
+                    "INSTRUCTIONS": "'{{identity}}' hat soeben den Prozess gestartet, mit Ihnen eine Vertrauensbasis einzugehen.<br>Mit dem Vertrauensprozess stellen Sie sicher, dass eine Identität einer Person gehört, die Sie persönlich kennen.",
+                    "NOTE": "Wenn Sie '{{identity}}' vertrauen wollen, geben Sie hier den Code ein, der auf dem Gerät von '{{identity}}' angezeigt wird:",
+                    "SUBMIT_BUTTON": "Übertragen"
+                },
+                "DONE" :{
+                    "INSTRUCTIONS": "Vertrauensprozess erfolgreich abgeschlossen.",
+                    "NOTE":" Klicken sie auf 'Schließen'."
+                },
+                "MODAL":{
+                    "SUCCESS": "Vertrauensprozess erfolgreich abgeschlossen.",
+                    "CANCELED": "Vertrauensprozess abgebrochen."
+                }
             }
         }
     },
@@ -542,7 +544,7 @@
                     "GENERATE": "cameoKey erzeugen",
                     "GENERATION_IN_PROGRESS": "Generierung läuft",
                     "GENERATION_TIME_PROGRESS": "verbrauchte Zeit:",
-                    "GENERATION_TIMER": " {{time}}",
+                    "GENERATION_TIMER": "{{time}}",
                     "GENERATE_INFO_TEXT": "Bitte haben Sie einen Moment Geduld, dieser Prozess kann nach Device oder Schlüsselstärke variieren. Bei Wartezeiten von mehr als 5min können Sie den Prozess abbrechen und erneut starten.",
                     "CANCEL": "Generierung abbrechen",
                     "STORE_KEYPAIR": "cameoKey speichern",
@@ -557,25 +559,52 @@
                         "CHECK_PUBKEY": "Überprüfe den öffentlichen Schlüssel!",
                         "CHECK_KEYNAME": "Überprüfe den Schlüsselnamen!"
                     }
-                },
-                "HANDSHAKE": {
-                    "MODAL_HEADER": "Authentifikation",
-                    "HANDSHAKE_DESCRIPTION": "HANDSHAKE_DESCRIPTION",
-                    "HANDSHAKE_NOW": "Wollen Sie dieses Gerät gegen <strong>'{{device}}'</strong> authentifizieren, so dass Sie auf beiden Geräten geschriebene und verschlüsselte Nachrichten dieser Identität lesen können?<br> Sie müssen dazu auf Ihrem Gerät <strong>'{{device}}'</strong> cameoNet mit der selben Identität <strong>'{{identity}}'</strong> öffnen.",
-                    "HANDSHAKE_OK": "@:MODAL.ALERT.OK",
-                    "CHOOSE_OLD_DEVICE": "Bitte wählen Sie das Gerät aus, mit dem Sie die Authentifikation durchführen möchten!",
-                    "CHOOSE": "Bitte wählen",
-                    "TRANSACTION_SECRET": "Geben Sie bitte folgenden Code im Dialog auf Ihrem anderen Gerät ein:",
-                    "HANDSHAKE_START": "Authentifikation starten",
-                    "HANDSHAKE_RECEIVED": "Möchten Sie die Authentifikation durchführen?",
-                    "HANDSHAKE_NEED_TRANSACTID": "Geben Sie bitte den Code, der Ihnen auf dem anderen Gerät angezeigt wird, hier ein:",
-                    "HANDSHAKE_DONE": "Authentifikation war erfolgreich!<br>"
                 }
             },
             "ABOUT_US": {
                 "TITLE": "Über uns",
-                "TEXT": "cameoNet 2014"
+                "TEXT": "cameoNet 2014",
+                "3RD_PARTY": {
+                    "TITLE": "Eingebundene Projekte",
+                    "DATE": "1412842948000",
+                    "LIBRARIES": "AngularJS\nhttps://angularjs.org/;AngularJS translate\nhttps://github.com/angular-translate;AngularJS loading bar\nhttps://chieffancypants.github.io/angular-loading-bar;AngularJS emoji filter\nhttps://github.com/globaldev/angular-emoji-filter;captchagen\nhttps://github.com/wearefractal/captchagen;JSEncrypt\nhttps://github.com/travist/jsencrypt;Stanford Javascript Crypto Library (SJCL)\nhttps://crypto.stanford.edu/sjcl;CryptoJS\nhttps://www.code.google.com/p/crypto-js;FileSaver.js\n https://github.com/eligrey/FileSaver.js;Blob.js\nhttps://github.com/eligrey/Blob.js;passchk.js\nhttps://rumkin.com/tools/password/passchk.php;spin.js\nhttp://fgnass.github.io/spin.js;FastClick\nhttps://github.com/ftlabs/fastclick"
+                }
+            },
+
+            "PERFORMANCE": {
+                "TITLE": "Performance"
+            },
+
+            "NOTIFY": {
+                "PUSH_NOTIFICATIONS": "Push Notifications"
             }
+        }
+    },
+
+    "ACCOUNT": {
+        "PLACEHOLDER": {
+            "LOGINNAME": "Loginname",
+            "PHONENUMBER": "Telefonnummer",
+            "EMAIL": "E-Mail",
+            "PASSWORD_CHANGE": "Passwort ändern",
+            "OLD_PASSWORD": "Bisheriges Passwort"
+        },
+        "INFO": {
+            "EMPTY": {
+                "LOGINAME": "Bitte geben Sie einen Loginname ein.",
+                "OLD_PASSWORD": "Bitte geben Sie ihr bisheriges Passwort ein."
+            },
+            "INVALID": {
+                "EMAIL": "@:DRTV.VALIDATE_EMAIL.INFO.INVALID",
+                "PHONENUMBER": "@:DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER",
+                "OLD_PASSWORD": "Das von Ihnen eingegebene Passwort ist ungültig."
+            },
+            "NOTE_ABOUT_THIS_DATA": "Hier können Sie ihre Account-Zugangsdaten bearbeiten. Im Gegensatz zu den Identitätsdaten sind diese hier nicht Sichtbar. Die Telefonnummer oder E-Mail dienen zur Benachrichtigungen und zur Passwortrücksetzung.",
+            "LOGINAME": "Der Loginname kann nicht geändert werden."
+        },
+        "FOOTER": {
+            "BACK": "Fertig",
+            "SAVE": "Speichern"
         }
     },
 
@@ -594,7 +623,7 @@
     "DRTV": {
         "PASSWORD": {
             "PASSWORD": "Passwort",
-            "PASSWORD_CONFIRM": "Passwort wiederholen!",
+            "PASSWORD_CONFIRM": "Passwort wiederholen",
             "INFO": {
                 "MIN_LETTER_COUNT": "Bitte mindestens {{count}} Zeichen verwenden!",
                 "EMPTY": "Bitte ein Passwort eingeben und bestätigen!"
@@ -604,7 +633,7 @@
             "LABEL": "E-Mail",
             "PLACEHOLDER": "E-Mail",
             "INFO": {
-                "INVALID": "Bitte geben Sie eine korrekte E-Mail Adresse ein!",
+                "INVALID": "Bitte geben Sie eine korrekte E-Mail-Adresse ein!",
                 "EMPTY": "Sie haben keine E-Mail Adresse eingegeben."
             }
         },
@@ -614,6 +643,14 @@
             "INFO": {
                 "INVALID_PHONE_NUMBER": "Die Nummer scheint keine gültige Mobilfunknummer zu sein.",
                 "EMPTY": "Sie haben keine Mobilfunknummer eingegeben."
+            }
+        },
+        "VALIDATE_MIXED": {
+            "LABEL": "Mobilfunknummer oder e-mail-Adresse",
+            "PLACEHOLDER": "Mobilfunknummer oder e-mail-Adresse",
+            "INFO": {
+                "INVALID_MIXED": "Die Eigabe scheint weder eine gültige Mobilfunknummer noch eine gültige E-Mail-Adresse zu sein.",
+                "EMPTY": "Sie nichts eingegeben."
             }
         },
         "VALIDATE_CAMEOID": {
@@ -654,22 +691,6 @@
             "CONTENT": "Die Talks auf diesem Gerät werden für den neuen cameoKey verschlüsselt.",
             "START": "Start"
         },
-        "KEY_REQUEST": {
-            "HEADER": "Authentifizierung",
-            "CONTENT": "Sie haben einen neuen cameoKey auf diesem Gerät, der noch nicht authentifiziert wurde. D.h. Sie können ältere Nachrichten dieser Identität nicht entschlüsseln. Dies geschieht zu Ihrer Sicherheit.<br>Möchten Sie die Authentifikation jetzt durchführen?<br> Sie müssen dazu auf einem anderen Geräte cameoNet mit der selben Identität <strong>'{{identity}}'</strong> öffnen."
-        },
-        "KEY_RESPONSE": {
-            "HEADER": "Authentifizierungsanfrage",
-            "CONTENT": "Haben Sie soeben auf einem anderen Gerät einen neuen cameoKey erzeugt und möchten dort den Zugriff auf Ihre verschlüsselten Nachrichten erlauben?"
-        },
-        "KEY_REQUEST_3RD": {
-            "HEADER": "Vertrauens-Prozess",
-            "CONTENT": "Wollen Sie den Vertrauens-Prozess für diesen Kontakt starten?<br>Mit dem Vertrauens-Prozess stellen Sie sicher, dass eine Identität einer Person gehört, die Sie persönlich kennen.<br><br>ACHTUNG!! Der Kontakt muss im cameoNet mit der Identität angemeldet sein, bevor Sie den Prozess starten!"
-        },
-        "KEY_RESPONSE_3RD": {
-            "HEADER": "Vertrauens-Prozess",
-            "CONTENT": "Ein Kontakt hat soeben den Vertrauens-Prozess mit Ihnen gestartet. Wollen Sie ihn mit diesem Gerät durchführen?<br><br>Mit dem Vertrauens-Prozess stellen Sie sicher, dass eine Identität einer Person gehört, die Sie persönlich kennen."
-        },
         "FOOTER": {
             "TALKS": "Talks",
             "CONTACTS": "Kontakte",
@@ -691,16 +712,11 @@
     },
 
     "MENU": {
-        "HEADER": "Menü",
-        "NOTIFICATIONS": "@:NOTIFICATIONS.HEADER",
-        "CONTACTS": "Kontakte",
+        "NEW_CONTACT": "Neuer Kontakt",
+        "NEW_TALK": "Neuer Talk",
         "REQUESTS": "Kontaktanfragen",
-        "TALKS": "Talks",
-        "KEYMANAGEMENT": "@:IDENTITY.LABEL.KEYMANAGEMENT",
+        "OWN_KEYS": "Eigene Schlüssel",
         "SETTINGS": "@:SETTINGS.LABEL",
-        "MESSAGES": "Nachrichten",
-        "HINTS": "Sonstige Hinweise",
-        "ACTIVITY": "Aktivität",
         "LOGOUT": "Abmelden"
     },
 

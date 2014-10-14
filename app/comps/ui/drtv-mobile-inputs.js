@@ -62,15 +62,23 @@
 /* Issue now addressed in cm-footer and cm-header
 */
 
-// angular.module('cmUi').directive('input',[
-//     'cmEnv',
-//     '$document',
-//     function (cmEnv,
-//               $document) {
+angular.module('cmUi').directive('input',[
+     '$rootScope',
+     '$timeout',
+     function ($rootScope, $timeout) {
 
-//         return {
-//             restrict: 'EA',
-//             link: function (scope, element, attrs) {
+         return {
+             restrict: 'EA',
+             link: function (scope, element, attrs) {
+
+                 element.on('focus', function(){
+                    $rootScope.$broadcast('pristine:false');
+                    //Todo: solve differenntly:
+                    $timeout(function(){
+                        scope.$apply();
+                    }, 100)
+                 });
+
 //                 // only for mobile devices or enabled inputs
 //                 if(!('isNotMobile' in cmEnv) ||
 //                     cmEnv.isNotMobile ||
@@ -123,7 +131,7 @@
 //                     document.addEventListener("showkeyboard", onFocus, false);
 //                     document.addEventListener("hidekeyboard", onBlur, false);
 //                 }
-//             }
-//         }
-//     }
-// ]);
+             }
+         }
+     }
+]);

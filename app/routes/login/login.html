@@ -1,14 +1,15 @@
-<div ng-controller="LoginCtrl" class="cm-center full-height login-page login-screen-start">
+<div class="cm-center full-height login-page login-screen-start">
+    <i class="fa cm-beta"></i>
+
     <cm-modal id="login" class="with-title no-padding" cm-close-btn="false">
         <div cm-login></div>
     </cm-modal>
 
-    <div cm-transparent-bg></div>
+    <div cm-transparent-bg ng-hide="isModalVisible"></div>
 
     <div class="cm-table">
         <div class="cm-row">
             <div class="cm-cell cm-middle">
-                <i class="fa cm-beta"></i>
                 <i class="fa cm-rhino-bubble cm-login-rhino" ng-hide="isModalVisible"></i>
             </div>
         </div>

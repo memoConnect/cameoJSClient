@@ -1,4 +1,7 @@
 {
+    "YES":  "Yes",
+    "NO":   "No",
+
     "CAMEO": {
         "SLOGAN": "Safer Communication - Made in Germany!",
         "DESCRIBE": "Register for free.\nWithout obligation.\nEasy and secure communication. Mobile and desktop\nConnect with all your contacts.\nExplore our smart features.\nRegister today!",
@@ -146,8 +149,10 @@
     },
 
     "CONVERSATION": {
+        "NO_SUBJECT": "no subject",
         "HEADING": "Talk",
         "LABEL": {
+            "LOAD_PREVIOUS":"load previous messages",
             "SEND": "Send",
             "REQUEST_CAPTCHA": "Request captcha",
             "SEND_CAPTCHA": "Send captcha",
@@ -180,7 +185,7 @@
         },
         "PLACEHOLDER": {
             "SUBJECT": "Subject",
-            "NO_SUBJECT": "Add subject",
+            "NO_SUBJECT": "(optional)",
             "RECIPIENTS": "Recipients",
             "ADD_RECIPIENTS": "add",
             "INFO": "Info",
@@ -244,7 +249,7 @@
             "SORT": "Sort",
             "FILTER": "Filter",
             "SEARCH_IDENTITY": "Search Cameo indentity",
-            "ADD_EXTERN": "Create new extern contact",
+            "ADD_EXTERN": "Create new external contact",
             "SEND_REQUEST": "Send",
             "IMPORT_LOCAL": "Load local contact"
         },
@@ -268,7 +273,7 @@
             "CAMEOID": "CameoID",
             "DISPLAYNAME": "@:CONTACTS.LABEL.DISPLAYNAME",
             "PHONENUMBER": "Phonenumber",
-            "EMAIL": "EMail",
+            "EMAIL": "Email",
             "STREET": "Street",
             "STREETNR": "Nr",
             "ZIP": "Zip",
@@ -280,7 +285,8 @@
             },
             "INVALID": {
                 "EMAIL": "@:DRTV.VALIDATE_EMAIL.INFO.INVALID",
-                "PHONENUMBER": "@:DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER"
+                "PHONENUMBER": "@:DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER",
+                "MIXED": "Your input isn't valid."
             },
             "SUCCESS": {
                 "SAVE": "Contact created",
@@ -295,14 +301,14 @@
                 "PHONENUMBER": "Please select one phonenumber"
             }
         },
-        "HANDSHAKE_3RD": {
-            "HANDSHAKE_NOW": "Wollen Sie jetzt vertrauen? TODO: translate",
-            "TRANSACTION_SECRET": "Dann tippen Sie das ab: TODO: translate",
-            "HANDSHAKE_NEED_TRANSACTID": "Geben Sie den Code vom Gegenüber hier ein: TODO: translate",
-            "HANDSHAKE_OK": "Accept TODO: translate"
-        },
         "FOOTER": {
             "SAVE": "Save"
+        },
+        "IMPORT" :{
+            "NOTIFICATION": {
+                "CONFIRMATION" :"You just uploaded 3rd party contact details to our servers. Please tell them about it.",
+                "MESSAGE" : "Hallo {{to}}, I have transfered your contact data into may cameo addressbook. Bye {{from}}"
+            }
         }
     },
 
@@ -388,90 +394,89 @@
                 "PAGE_HEADLINE": "cameoKeys",
                 "HEADLINE": "Link cameoKey",
                 "EXPLANATION": "To read encrypted messages written under {{identity}} on other devices, please link the local cameoKey with all other keys that you are using there.",
+                "TIMEOUT": "Linking will be canceled in {{timeout}}.",
                 "START": {
                     "START_BUTTON": "Link up",
                     "CANCEL_BUTTON": "Not now",
+                    "RETRY_BUTTON": "Retry",
                     "INSTRUCTIONS": "Please press 'Link up' to start the process.",
-                    "NOTE": "Attention! Before pressing 'Link up' you should first choose your identity {{identity}} (Settings > Identity Settings)!"
+                    "NOTE": "Attention! Before pressing 'Link up' you should first open cameoNet with your identity {{identity}} on another device!"
                 },
-                "REQUEST_STARTED": {
+                "WAIT": {
                     "CANCEL_BUTTON": "Abort request",
                     "INSTRUCTIONS": "Please press 'Abort request' to stop the process.",
-                    "NOTE": "Request has been started. Please confirm the request on the other device."
-                },
-                "ACCEPT_REQUEST": {
-                    "HEADER": "Linking Request",
-                    "INSTRUCTIONS": "On another device a cameoKey is stored that is not linked to this device. Therefore it is not possible to read encrypted data on this device and vice versa.<br> Do you want to link your local cameoKey '{{cameoKey}}' with the other device?",
-                    "NOTE": "To link cameoKeys, please start the link up process.",
-                    "ACCEPT_BUTTON": "Start linking",
-                    "CANCEL_BUTTON": "Decline"
-                },
-                "SHOW_TRANSACTION_SECRET": {
-                    "INSTRUCTIONS": "Please press 'Stop linking' to stop the process.",
-                    "NOTE": "Please enter the code into the other device:",
-                    "LABEL_CODE": "Code",
-                    "CLOSE_BUTTON": "Stop linking"
-                },
-                "ENTER_TRANSACTION_SECRET": {
-                    "HEADER": "@:IDENTITY.KEYS.AUTHENTICATION.ACCEPT_REQUEST.HEADER",
-                    "INSTRUCTIONS": "@:IDENTITY.KEYS.AUTHENTICATION.ACCEPT_REQUEST.INSTRUCTIONS",
-                    "NOTE": "Please enter the code displayed on the other device:",
-                    "LABEL_CODE": "@:IDENTITY.KEYS.AUTHENTICATION.SHOW_TRANSACTION_SECRET.CODE",
-                    "CANCEL_BUTTON": "@:IDENTITY.KEYS.AUTHENTICATION.SHOW_TRANSACTION_SECRET.CLOSE_BUTTON",
-                    "SUBMIT_BUTTON": "Submit"
+                    "NOTE": "Request has been started. Please confirm the request on the other device.",
+                    "LABEL_CODE": "Code"
                 },
                 "SUCCESSFUL": {
-                    "INSTRUCTIONS": "You have successfully linked your cameoKey! In a few seconds, all previous talks that have been created by the linked cameoKeys will be egible.",
+                    "INSTRUCTIONS": "You have successfully linked your cameoKeys! In a few seconds, all previous talks that have been created by the linked cameoKeys will be egible.",
                     "NOTE": "Please close this dialogue.",
-                    "CLOSE_BUTTON": "Close"
+                    "DONE_BUTTON": "Close"
                 },
-                "TIMEOUT": "Der Vorgang wird in {{timeout}} abgebrochen."
+                "ERROR": {
+                    "TIMEOUT" :"Timeout - please try again.",
+                    "VERIFY" :"Linking missed - please try again."
+                },
+                "ENTER_TRANSACTION_SECRET": {
+                    "HEADER": "Linking Request",
+                    "INSTRUCTIONS": "On another device a cameoKey is stored that is not linked to this device. Therefore it is not possible to read encrypted data on this device and vice versa.",
+                    "NOTE": "If you want to link cameoKey '{{cameoKey}}' with your local cameoKey, please enter the code displayed on the other device:",
+                    "SUBMIT_BUTTON": "Submit"
+                },
+                "DONE" :{
+                    "INSTRUCTIONS": "You have successfully linked your cameoKeys!",
+                    "NOTE": "Please close this dialogue."
+                },
+                "MODAL":{
+                    "SUCCESS": "You have successfully linked your cameoKeys!",
+                    "CANCELED": "Linking canceled."
+                }
             },
             "TRUST": {
                 "PAGE_HEADLINE": "Trust Process",
                 "HEADLINE": "Trust contact",
                 "EXPLANATION": "By using the trust process you can verify whether an identity is of an individual that you know in person.",
+                "TIMEOUT":"The process will be stopped in {{timeout}} seconds.",
                 "START": {
                     "START_BUTTON": "Request",
                     "CANCEL_BUTTON": "Not now",
+                    "RETRY_BUTTON": "Retry",
                     "INSTRUCTIONS": "If you like to trust this contact please press 'Request', to send an inquiry for trusting each other.",
                     "NOTE": "Attention! Before you press 'Request' the contact has to be registered to cameoNet as {{identity}}."
                 },
-                "REQUEST_STARTED": {
+                "WAIT": {
                     "CANCEL_BUTTON": "Stop request",
                     "INSTRUCTIONS": "Please press 'Stop request' to stop the process.",
-                    "NOTE": "Please wait until the opposite party has confirmed your inquiry."
-                },
-                "ACCEPT_REQUEST": {
-                    "HEADER": "Inquiry of trust",
-                    "INSTRUCTIONS": "Recently {{identity}} has started a trust process with you.<br> By using the trust process you can verify whether an identity is of an individual that you know in person.",
-                    "NOTE": "If you like to trust {{identity}}, please press 'Confirm'.",
-                    "ACCEPT_BUTTON": "Confirm",
-                    "CANCEL_BUTTON": "Deny"
-                },
-                "SHOW_TRANSACTION_SECRET": {
-                    "INSTRUCTIONS": "Please press 'Stop process' to skip the process.",
-                    "NOTE": "'{{identity}}' has to enter this code below:",
-                    "LABEL_CODE": "Code",
-                    "CLOSE_BUTTON": "Stop process"
-                },
-                "ENTER_TRANSACTION_SECRET": {
-                    "HEADER": "@:IDENTITY.KEYS.TRUST.ACCEPT_REQUEST.HEADER",
-                    "INSTRUCTIONS": "@:IDENTITY.KEYS.TRUST.ACCEPT_REQUEST.INSTRUCTIONS",
-                    "NOTE": "Please enter a code below, that will be displayed to '{{identity}}':",
-                    "LABEL_CODE": "@:IDENTITY.KEYS.TRUST.SHOW_TRANSACTION_SECRET.CODE",
-                    "CANCEL_BUTTON": "@:IDENTITY.KEYS.TRUST.SHOW_TRANSACTION_SECRET.CLOSE_BUTTON",
-                    "SUBMIT_BUTTON": "Transmit"
+                    "NOTE": "'{{identity}}' has to enter the above code to confirme your inquiry:",
+                    "LABEL_CODE": "Code"
                 },
                 "SUCCESSFUL": {
                     "INSTRUCTIONS": "The trust process has been executed successfully.<br> Now '{{identity}} and you are trusting each other.",
-                    "NOTE": "Please close this dialogue now.",
-                    "CLOSE_BUTTON": "Close"
+                    "NOTE": "You can close this dialogue now.",
+                    "DONE_BUTTON": "Close"
                 },
-                "TIMEOUT":"The process will be stopped in {{timeout}} seconds."
+                "ERROR": {
+                    "TIMEOUT" :"Timeout - please try again.",
+                    "VERIFY" :"Trust process missed - please try again."
+                },
+                "ENTER_TRANSACTION_SECRET": {
+                    "HEADER": "Inquiry of trust",
+                    "INSTRUCTIONS": "Recently {{identity}} has started a trust process with you.<br> By using the trust process you can verify whether an identity is of an individual that you know in person.",
+                    "NOTE": "If you like to trust {{identity}}, please enter the code displayed on the device of {{identity}} here:",
+                    "SUBMIT_BUTTON": "Transmit"
+                },
+                "DONE" :{
+                    "INSTRUCTIONS": "Trust process successfull!",
+                    "NOTE": "Please close this dialogue."
+                },
+                "MODAL":{
+                    "SUCCESS": "Trust process successfull!",
+                    "CANCELED": "Trust process canceled."
+                }
             }
         }
     },
+
     "SETTINGS": {
         "WELCOME": "Settings",
         "LABEL": "Settings",
@@ -541,7 +546,7 @@
                     "GENERATE": "Generate cameoKey",
                     "GENERATION_IN_PROGRESS": "Key generation in progress",
                     "GENERATION_TIME_PROGRESS": "Time elapsed:",
-                    "GENERATION_TIMER": " {{time}}",
+                    "GENERATION_TIMER": "{{time}}",
                     "GENERATE_INFO_TEXT": "Please be patient. The process time will vary according to the technical parameter of your hardware and the selected key force. If the waiting time exceeds 5 minutes, please stop the process and restart.",
                     "CANCEL": "Cancel",
                     "STORE_KEYPAIR": "Save cameoKey",
@@ -556,27 +561,53 @@
                         "CHECK_PUBKEY": "Check public key",
                         "CHECK_KEYNAME": "Check key name"
                     }
-                },
-                "HANDSHAKE": {
-                    "MODAL_HEADER": "Authentication",
-                    "HANDSHAKE_DESCRIPTION": "HANDSHAKE_DESCRIPTION",
-                    "HANDSHAKE_NOW": "Do you want to authenticate this device against <strong>'{{device}}'</strong> now, to be able to read all talks written and encrypted on these devices by each other?<br>Please start the device <strong>'{{device}}'</strong> with the same identity <strong>'{{identity}}'</strong>.",
-                    "HANDSHAKE_OK": "@:MODAL.ALERT.OK",
-                    "CHOOSE_OLD_DEVICE": "Please select a device with which you want to perform the authentication!",
-                    "CHOOSE": "Please select",
-                    "TRANSACTION_SECRET": "To authenticate this device please enter the following code in the input field on your other device:",
-                    "HANDSHAKE_START": "Start authentication",
-                    "HANDSHAKE_RECEIVED": "Would you like to start the authentication?",
-                    "HANDSHAKE_NEED_TRANSACTID": "To authenticate your new device please enter the code below:",
-                    "HANDSHAKE_DONE": "Authentication successfull!"
                 }
             },
             "ABOUT_US": {
                 "TITLE": "About us",
-                "TEXT": "cameoNet 2014"
+                "TEXT": "cameoNet 2014",
+                "3RD_PARTY": {
+                    "TITLE": "3rd party plugins",
+                    "DATE": "1412842948000",
+                    "LIBRARIES": "AngularJS\nhttps://angularjs.org/;AngularJS translate\nhttps://github.com/angular-translate;AngularJS loading bar\nhttps://chieffancypants.github.io/angular-loading-bar;AngularJS emoji filter\nhttps://github.com/globaldev/angular-emoji-filter;captchagen\nhttps://github.com/wearefractal/captchagen;JSEncrypt\nhttps://github.com/travist/jsencrypt;Stanford Javascript Crypto Library (SJCL)\nhttps://crypto.stanford.edu/sjcl;CryptoJS\nhttps://www.code.google.com/p/crypto-js;FileSaver.js\n https://github.com/eligrey/FileSaver.js;Blob.js\nhttps://github.com/eligrey/Blob.js;passchk.js\nhttps://rumkin.com/tools/password/passchk.php;spin.js\nhttp://fgnass.github.io/spin.js;FastClick\nhttps://github.com/ftlabs/fastclick"
+                }
+            },
+            "PERFORMANCE": {
+                "TITLE": "Performance"
+            },
+            "NOTIFY": {
+                "PUSH_NOTIFICATIONS": "Push Notifications"
             }
         }
     },
+
+    "ACCOUNT": {
+        "PLACEHOLDER": {
+            "LOGINNAME": "Login name",
+            "PHONENUMBER": "Phonenumber",
+            "EMAIL": "Email",
+            "PASSWORD_CHANGE": "Password change",
+            "OLD_PASSWORD": "Old password"
+        },
+        "INFO": {
+            "EMPTY": {
+                "LOGINAME": "The login name is empty.",
+                "OLD_PASSWORD": "Please enter a password."
+            },
+            "INVALID": {
+                "EMAIL": "@:DRTV.VALIDATE_EMAIL.INFO.INVALID",
+                "PHONENUMBER": "@:DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER",
+                "OLD_PASSWORD": "Your password is invalid."
+            },
+            "NOTE_ABOUT_THIS_DATA": "Your account data can be edited here. This data is not public. Email and/or phonenumber are used for notifications and password reset.",
+            "LOGINAME": "The login name cannot be changed."
+        },
+        "FOOTER": {
+            "BACK": "Done",
+            "SAVE": "Save"
+        }
+    },
+
     "NAVIGATION": {
         "TABS": {
             "BACK": "Back",
@@ -588,6 +619,7 @@
             "TALKS": "Talks"
         }
     },
+
     "DRTV": {
         "PASSWORD": {
             "PASSWORD": "Password",
@@ -611,6 +643,14 @@
             "INFO": {
                 "INVALID_PHONE_NUMBER": "The entered value does not seem to be a phone number.",
                 "EMPTY": "The phone number field is empty"
+            }
+        },
+        "VALIDATE_MIXED": {
+            "LABEL": "Phone number or e-mail address.",
+            "PLACEHOLDER": "Phone number or e-mail address",
+            "INFO": {
+                "INVALID_MIXED": "The entered value appears to be neither a phone number nor an e-mail addresss.",
+                "EMPTY": "You left the input field empty."
             }
         },
         "VALIDATE_CAMEOID": {
@@ -651,22 +691,6 @@
             "CONTENT": "The talks on this device are being encrypted for the new cameoKey.",
             "START": "Start"
         },
-        "KEY_REQUEST": {
-            "HEADER": "Authentication",
-            "CONTENT": "There is a new cameoKey on this device which needs to be authenticated by another device. This is necessary to read all existing talks. Do you want to authenticate this cameoKey now?<br>Please start another device with the same identity <strong>'{{identity}}'</strong>."
-        },
-        "KEY_RESPONSE": {
-            "HEADER": "Authentication Request",
-            "CONTENT": "An other device which pretends to be yours asked to be authenticated by this device. After that your new device gets access to all of your encrypted talks.<br>Do you want to authenticate the following device?"
-        },
-        "KEY_REQUEST_3RD": {
-            "HEADER": "Trust TODO: translate",
-            "CONTENT": "Do you want to trust(Request)? TODO: translate"
-        },
-        "KEY_RESPONSE_3RD": {
-            "HEADER": "Trust Request TODO: translate",
-            "CONTENT": "Do you want to trust(Response)? TODO: translate"
-        },
         "FOOTER": {
             "TALKS": "Talks",
             "CONTACTS": "Contacts",
@@ -686,19 +710,16 @@
             "FILE": "Choose an existing file"
         }
     },
+
     "MENU": {
-        "HEADER": "Menu",
-        "NOTIFICATIONS": "@:NOTIFICATIONS.HEADER",
-        "CONTACTS": "Contacts",
+        "NEW_CONTACT": "New contact",
+        "NEW_TALK": "New talk",
         "REQUESTS": "Contact requests",
-        "TALKS": "Talks",
-        "KEYMANAGEMENT": "@:IDENTITY.LABEL.KEYMANAGEMENT",
+        "OWN_KEYS": "Own keys",
         "SETTINGS": "@:SETTINGS.LABEL",
-        "MESSAGES": "Messages",
-        "HINTS": "Hints",
-        "ACTIVITY": "Activity",
         "LOGOUT": "Logout"
     },
+
     "NOTIFICATIONS": {
         "HEADER": "Notifications",
         "MODAL_HEADER": {
@@ -717,6 +738,7 @@
             "FRIEND_REQUEST": "New contact request"
         }
     },
+
     "MODAL": {
         "ALERT": {
             "OK": "OK"
@@ -738,10 +760,12 @@
             "FOOTER": "Reconnect"
         }
     },
+
     "JOB": {
         "IN_PROGRESS": "You have edited this site without saving. Do you really want to leave this page?",
         "FILES_IN_UPLOAD_PROGRESS": "Files are being uploaded. Do you really want to leave this page?"
     },
+
     "SECURITY_ASPECT": {
         "CONVERSATION": {
             "ENCRYPTED": {
@@ -776,6 +800,7 @@
             "MISSING_DATA": "Security aspects missing"
         }
     },
+
     "SYSTEM": {
         "WELCOME": {
             "MESSAGE": "Hello, I am the cameoNet support. \n\nIf you have any questions or problems do not hesitate to reply on this message. You can also use our help system at http://support.cameonet.de,\n\nthe cameoNet team.",

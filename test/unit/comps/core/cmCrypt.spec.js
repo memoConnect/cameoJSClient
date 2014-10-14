@@ -3,9 +3,11 @@
 describe('cmCrypt', function () {
     var cmCrypt;
 
+    window.Worker = undefined;
+
     beforeEach(module('cmCore'))
     beforeEach(inject(function(_cmCrypt_) {
-        cmCrypt = _cmCrypt_;
+       cmCrypt = _cmCrypt_;
     }))
 
     describe('should provide the function',function(){
@@ -62,7 +64,7 @@ describe('cmCrypt', function () {
 
             if(! (typeof obj != "object") ) return obj
 
-            var keys        = Object.keys()
+            var keys        = Object.keys(),
                 shuffled    = {},
                 i
 
@@ -250,12 +252,24 @@ describe('cmCrypt', function () {
             expect(cmCrypt.generateAsyncKeypair('huhu')).toBeFalsy()
             expect(cmCrypt.generateAsyncKeypair({test:1})).toBeFalsy()
             expect(cmCrypt.generateAsyncKeypair(['pups'])).toBeFalsy()
+        })     
+
+    })
+
+    describe('random string generator', function(){
+
+        it("generate long random string using with big alphabet", function(){
+            expect(cmCrypt.randomString(70, false).length).toBe(70)
         })
 
-        it('should return false on cancel when no generating process is running', function(){
-            expect(cmCrypt.cancelGeneration()).toBeFalsy()
+        it("generate long random string using with short alphabet", function(){
+            expect(cmCrypt.randomString(100, true).length).toBe(100)
+            expect(cmCrypt.randomString(100, true)).not.toMatch(/[A-Z]/)
         })
-        
+
+        it("generate short random string using with short alphabet", function(){
+            expect(cmCrypt.randomString(10, true).length).toBe(10)
+        })
 
     })
 

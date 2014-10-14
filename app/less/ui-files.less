@@ -2,6 +2,18 @@ cm-message{
   &.file-view{
     article{
       color:@cm-white;
+
+      .file-download {
+        font-size:@cm-small-font;
+        > * {
+          vertical-align:top;
+        }
+        span.file-informations{
+          display:inline-block;
+          width:10rem;
+        }
+      }
+
       .author span{
         color:@cm-light-grey;
       }
@@ -33,20 +45,12 @@ cm-message{
 cm-message-file{
   display:block;
   position:relative;
-  min-height:@cm-unit;
   margin:0 auto;
   margin-bottom: 0.5em;
   text-align: center;
 
   .file-image, .file-html5{
-    min-height:@cm-unit;
     position:relative;
-    div[cm-spinner]{
-      z-index:1;
-      position:absolute;
-      left:50%;
-      top:50%;
-    }
     img{
       .with-cursor;
       display:block;
@@ -84,8 +88,10 @@ cm-files{
     position:absolute;
     right:0;
     top:0;
+    bottom:0;
+    left:0;
     width:100%;
-
+    z-index: 1;
     input{
       .with-cursor;
       bottom:0;
@@ -105,7 +111,7 @@ cm-files-preview{
   position:absolute;
   bottom:@cm-footer-height;
   width:@cm-app-width;
-  background-color:rgba(255,255,255,0.9);
+  background:@cm-white;
 
   .file-wrap{
     position: relative;
@@ -126,13 +132,6 @@ cm-files-preview{
     position:relative;
     height:@cm-unit * 2;
     margin:0 auto;
-
-    div[cm-spinner]{
-      z-index:1;
-      position:absolute;
-      left:50%;
-      top:50%;
-    }
     img{
       .with-cursor;
       display:block;
@@ -153,10 +152,6 @@ cm-modal.modal-image-fullscreen{
     height:100%;
     z-index:2;
     position:relative;
-    cm-spinner{
-      position: absolute;
-      top:50%;
-    }
     ng-transclude{
       display:table-cell;
       vertical-align:middle;
@@ -193,7 +188,7 @@ cm-modal.modal-image-fullscreen{
 
 .file {
   display: inline-block;
-  background:~"url(../gfx/filetype_map_small.png) transparent 0 -@{unknown-default}em";
+  background:~"url(gfx/filetype_map_small.png) transparent 0 -@{unknown-default}em";
   background-size:~"1em @{filesnum}em";
   height:1em !important;
   width:1em !important;
@@ -221,10 +216,38 @@ cm-modal.modal-image-fullscreen{
 
 cm-choose-source{
   display:block;
-  position:absolute;
-  bottom:@cm-footer-height;
-  left:0;
-  background-color:@cm-black;
+  font-size:3rem;
+  .wrapper{
+    position:absolute;
+    left:0;
+    background-color:@cm-black;
+    > i.fa{// cm-nose
+      position:absolute;
+      color:black;
+      left: 0;
+      &.flip {
+        -moz-transform: scaleX(-1);
+        -webkit-transform: scaleX(-1);
+        -o-transform: scaleX(-1);
+        transform: scaleX(-1);
+        -ms-filter: fliph; /*IE*/
+        filter: fliph; /*IE*/
+      }
+    }
+    &.down{
+      top:7.8rem;
+      > i.fa{
+        top: -3.2rem;
+      }
+    }
+    &.up{
+      bottom:@cm-unit;
+      > i.fa{
+        bottom: -2.7rem;
+      }
+    }
+  }
+
   div.source {
     color:@cm-white;
     white-space:nowrap;
@@ -241,18 +264,36 @@ cm-choose-source{
       vertical-align:sub;
     }
   }
-  i.cm-nose-down{
-    position:absolute;
-    color:black;
+}
+
+cm-upload-avatar {
+  display:block;
+  position:absolute;
+  width:100%;
+  height:100%;
+  z-index: 1;
+  cm-files{
+    width:100%;
+    height:100%;
+  }
+  button {
+    height:@cm-unit;
+    width:@cm-unit;
+    position: absolute;
     left: 0;
-    bottom: -2.7rem;
-    &.flip {
-      -moz-transform: scaleX(-1);
-      -webkit-transform: scaleX(-1);
-      -o-transform: scaleX(-1);
-      transform: scaleX(-1);
-      -ms-filter: fliph; /*IE*/
-      filter: fliph; /*IE*/
+    bottom: 0;
+    background: @cm-overlay-light-transparent;
+    -webkit-border-top-right-radius: 1rem;
+    -moz-border-radius-topright: 1rem;
+    border-top-right-radius: 1rem;
+    -webkit-box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2) !important;
+    -moz-box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2) !important;
+    box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2) !important;
+    i {
+      color:@cm-black;
+      font-size: @cm-mega-font;
+      line-height: 4rem !important;
+      .cm-unit-btn;
     }
   }
 }

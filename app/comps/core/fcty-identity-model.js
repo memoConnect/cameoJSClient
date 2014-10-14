@@ -45,25 +45,34 @@ angular.module('cmCore')
              * @param identity_data
              */
             this.importData = function(data){
+//                cmLogger.debug('cmIdentityModel.importData');
                 if(typeof data !== 'object'){
                     cmLogger.debug('cmIdentityModel:import:failed - no data!');
                     return this;
                 }
 
-                this.id                     = data.id || this.id;
-                this.displayName            = data.displayName || this.displayName;
-                this.userKey                = data.userKey || this.userKey;
-                this.cameoId                = data.cameoId || this.cameoId;
-                this.avatarId               = data.avatar || this.avatarId;
-                this.email                  = data.email || this.email;
-                this.phoneNumber            = data.phoneNumber || this.phoneNumber;
-                this.preferredMessageType   = data.preferredMessageType || this.preferredMessageType;
-                this.userType               = data.userType || this.userType;
-                this.created                = data.created || this.created;
-                this.lastUpdated            = data.lastUpdated || this.lastUpdated;
-                this.isActive               = data.active || this.isActive;
+                this.id                     = data.id           || this.id;
+                this.displayName            = data.displayName  || this.displayName;
+                this.userKey                = data.userKey      || this.userKey;
+                this.cameoId                = data.cameoId      || this.cameoId;
+                this.avatarId               = data.avatar       || this.avatarId;
+                // TODO: hack for identity/edit update
+                if(typeof data.email != 'string')
+                    this.email              = data.email        || this.email;
+                else
+                    this.email              = {value:data.email};
+                if(typeof data.email != 'string')
+                    this.phoneNumber        = data.phoneNumber  || this.phoneNumber;
+                else
+                    this.phoneNumber        = {value:data.phoneNumber};
 
-                data.publicKeys             = data.publicKeys || [];
+                this.preferredMessageType   = data.preferredMessageType || this.preferredMessageType;
+                this.userType               = data.userType             || this.userType;
+                this.created                = data.created              || this.created;
+                this.lastUpdated            = data.lastUpdated          || this.lastUpdated;
+                this.isActive               = data.active               || this.isActive;
+
+                data.publicKeys             = data.publicKeys           || [];
 
                 data.publicKeys.forEach(function (publicKey_data) {
                     // first deleted event from BE
@@ -162,13 +171,6 @@ angular.module('cmCore')
                 this.userType               = undefined;
                 this.created                = undefined;
                 this.lastUpdated            = undefined;
-            };
-
-            //Encrypt passphrase with all available public keys
-            //Identities cannot decrypt, Users can
-            this.encryptPassphrase = function(passphrase, whiteList){
-                cmLogger.debug('indentityModel: encryptPassphrase is deprecated, use keys.encryptPassphrase instead.')
-                return this.keys.encryptPassphrase(passphrase, whiteList)
             };
 
             this.getDisplayName = function(){

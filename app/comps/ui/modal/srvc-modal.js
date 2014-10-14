@@ -3,9 +3,9 @@
 angular.module('cmUi')
 .service('cmModal',[
     'cmObject', 'cmLogger',
-    '$rootScope', '$compile', '$document',
+    '$rootScope', '$compile', '$document', '$q', '$timeout',
     function(cmObject, cmLogger,
-             $rootScope, $compile, $document){
+             $rootScope, $compile, $document, $q, $timeout){
         var self = {};
 
         cmObject.addEventHandlingTo(self);
@@ -29,7 +29,7 @@ angular.module('cmUi')
             return self;
         };
 
-        self.open = function(id, data){
+        self.open = function(id, data, ttl){
             if(self.instances[id]){
                 self.instances[id]
                     .setData(data)
@@ -41,12 +41,13 @@ angular.module('cmUi')
                 });
             }
 
-            
+            if(ttl){ $timeout(function(){ self.close(id)}, ttl) }
+
             return self;
         };
 
         self.close = function(id){
-            var instance = self.instances[id]
+            var instance = self.instances[id];
             
             if(instance){
                 self.instances[id].close();
@@ -57,7 +58,7 @@ angular.module('cmUi')
         };
 
         self.closeAll = function(){
-            angular.forEach(self.instances, function(modal_instance){
+            angular.forEach(self.instances, function (modal_instance) {
                 modal_instance.close();
             });
 
@@ -65,6 +66,11 @@ angular.module('cmUi')
         };
 
         self.create = function(config, template, target, scope){
+            var attrs = '';
+            
+            //Todo: könnte man schöner machen:
+            angular.forEach(config, function(value, key){ attrs += key+'="'+value+'"' });
+
             // clear existing instance
             if(self.instances[config.id] != undefined){
                 delete self.instances[config.id];
@@ -76,11 +82,8 @@ angular.module('cmUi')
             }
 
             // create new element
-            var attrs = '',
-                scope = scope || $rootScope.$new();
+            var scope = scope || $rootScope.$new();
 
-            //Todo: könnte man schöner machen:
-            angular.forEach(config, function(value, key){ attrs += key+'="'+value+'"' });
 
             var modal = $compile('<cm-modal '+attrs+' >'+(template||'')+'</cm-modal>')(scope);
             // move modal up the dom hierarchy, if necessary:
@@ -93,12 +96,60 @@ angular.module('cmUi')
 
             // the modal directive (<cm-modal>) will register itself on next digest
 
-            return modal;
+            return modal
         };
 
-        $rootScope.openModal = self.open;
-        $rootScope.closeModal   = self.close;
-        $rootScope.isModalVisible = false;
+        self.confirm = function(config){
+
+            config  =   {
+                            text:   config.text,
+                            cancel: config.cancel,
+                            okay:   config.okay,
+                            title:  config.title || 'DRTV.CONFIRM.HEADER',
+                            html:   config.html || '',
+                            data:   config.data,
+                        }
+
+            var deferred    = $q.defer(),
+                scope       = $rootScope.$new(),
+                modalId     = 'modal-confirm-'+(new Date()).getTime();
+
+            scope.text              =   config.text       || '';
+            scope.labelOkay         =   config.okay
+            scope.labelCancel       =   config.cancel
+
+            scope.cancel            =   function(){ 
+                                            $rootScope.closeModal(modalId)
+                                        }
+            scope.confirm           =   function(){
+                                            deferred.resolve(this)
+                                            $rootScope.closeModal(modalId) 
+                                        }
+            self.create({
+                id:             modalId,
+                type:           'confirm',
+                'class':        'no-padding',
+                'cm-close-btn': false,
+                'cm-title':     config.title,
+            },'<cm-modal-confirm>'+config.html+'</cm-modal-confirm>',null,scope);
+
+            self.open(modalId, config.data);
+
+            self.one('modal:closed', function(event, id){
+                if(id == modalId)
+                    deferred.reject()
+
+                return true //remove event binding
+            })
+
+            return deferred.promise
+        };
+
+        $rootScope.openModal        = self.open
+        $rootScope.closeModal       = self.close
+        $rootScope.isModalVisible   = false
+        $rootScope.confirm          = self.confirm
+
 //        $rootScope.$watch('isModalVisible' ,function(newValue){
 //            console.log('watch modal '+newValue)
 //            $rootScope.isModalVisible = newValue;
@@ -110,8 +161,8 @@ angular.module('cmUi')
         });
 
         // closeAll on ESC
-        $document.bind('keydown', function (evt) {
-            if (evt.which === 27) {
+        $document.bind('keydown', function (event) {
+            if (event.which === 27) {
                 self.closeAll();
             }
         });

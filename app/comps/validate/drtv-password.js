@@ -9,9 +9,12 @@ angular.module('cmValidate').directive('cmPassword', [
             templateUrl: 'comps/validate/drtv-password.html',
             scope: {
                 password: '=ngModel',
-                tabindex: '@cmTabindex'
+                tabindex: '@cmTabindex',
+                withStars: '@cmWithStars'
             },
             controller: function($scope){
+
+                $scope.withStars = $scope.withStars || true;
 
                 $scope.nextTabIndex = parseInt($scope.tabindex) + 1;
 
@@ -23,6 +26,12 @@ angular.module('cmValidate').directive('cmPassword', [
 
                 $scope.$on('cm-password:empty', function(){
                     $scope.showPasswordEmptyError = true;
+                });
+
+                $scope.$on('cm-password:reset', function(){
+                    $scope.pw = '';
+                    $scope.pwConfirm = '';
+                    $scope.checkPWStrength();
                 });
 
                 $scope.checkPasswordLength = function(pw){
@@ -54,8 +63,6 @@ angular.module('cmValidate').directive('cmPassword', [
                         $scope.showStrengthMeter= true;
                         var bits = passchk_fast.passEntropy(pw);
 
-//                    console.log(bits);
-
                         if(bits < 28){
                             $scope.color = '#d9534f';
                             //very weak
@@ -73,13 +80,11 @@ angular.module('cmValidate').directive('cmPassword', [
                             //very strong
                         }
 
-                        $scope.percent = 1+(bits>10 ? 100*Math.pow((Math.log(bits-10)/Math.log(bits-3)), 10) : 0)
+                        $scope.percent = (1+(bits>10 ? 100*Math.pow((Math.log(bits-10)/Math.log(bits-3)), 10) : 0))+'%';
                         //100*Math.max(0,(1-Math.pow(1.4,((bits-10)*-0.08))))
                         //100*bits / Math.max(128, bits)
-
-//                    $scope.pwStrength = pw;
                     } else {
-                        $scope.percent = 0;
+                        $scope.percent = '0%';
                         $scope.color = '#d9534f';
                     }
                 };

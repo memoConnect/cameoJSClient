@@ -11,11 +11,12 @@
 angular.module('cmCore')
 .service('cmObject', [
 
-    '$q',
     'cmLogger',
     'cmUtil',
+    '$q',
+    '$timeout',
 
-    function($q, cmLogger, cmUtil){
+    function(cmLogger, cmUtil, $q, $timeout){
         var self = this
 
         /**
@@ -65,11 +66,14 @@ angular.module('cmCore')
              * @return {Object}            returns the base object for chaining
              */
             
-            obj.trigger = function(event_name, data, original_source){
+            obj.trigger = function(event_name, data, event_data){
                 var event = {
-                                target : obj,  
-                                source : original_source || obj 
+                                target :    obj,  
+                                source :    obj ,
+                                name :      event_name
                             }
+
+                angular.extend(event, event_data)
 
                 obj._callbacks[event_name] = obj._callbacks[event_name] || []   //create the according callback array, if neccessary
 
@@ -78,11 +82,16 @@ angular.module('cmCore')
 
                 obj._callbacks[event_name].forEach(function(callback_obj, index){
                     // call callback function and delete if need be, see ._call()
-                    if(!_call(callback_obj, event, data)) delete obj._callbacks[event_name][index]
+                    if(!_call(callback_obj, event, data)){
+                        delete obj._callbacks[event_name][index]
+                    }
                 })
 
+                // Remove undefined entries:
+                obj._callbacks[event_name] = obj._callbacks[event_name].filter(function(item){ return item != undefined})
+
                 obj._receptors.forEach(function(receptor){
-                    receptor.trigger(event_name, data, event.source)
+                    receptor.trigger(event_name, data, {source : event.source} )
                 })
 
                 return obj
@@ -143,6 +152,38 @@ angular.module('cmCore')
              */
             obj.one = function(event_names, callback){
                 obj.on(event_names, callback, 1)
+                return obj
+            }
+
+            /**
+             * Function to convert an event to a promise
+             * @param  {String} event_names     Names of the events to listen to. Multiple event names should be separated by ' '.
+             * @return {promise}                Promise to be resolved when the event triggers for the first time
+             */
+            obj.when = function(event_names_to_resolve, event_names_to_reject, timeout){
+                if(event_names_to_reject && isNaN(event_names_to_reject)){
+                    obj.one(event_names_to_reject, function(event, data){
+                        deferred.reject( {event: event, data: data} )
+                        return true
+                    })
+                } else {
+                    timeout = timeout || event_names_to_reject
+                }
+
+                var deferred = $q.defer()
+
+                obj.one(event_names_to_resolve, function(event, data){
+                    deferred.resolve( {event: event, data: data} )
+                    return true
+                })
+
+                if(typeof timeout == 'number'){
+                    $timeout(function(){
+                        deferred.reject('timeout')
+                    }, timeout)
+                }
+
+                return deferred.promise
             }
 
             /**

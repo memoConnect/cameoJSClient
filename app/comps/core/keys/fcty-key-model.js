@@ -2,10 +2,14 @@
 
 angular.module('cmCore')
 .factory('cmKey', [
+
     'cmLogger',
     'cmObject',
+    'cmWebworker',
     '$rootScope',
-    function(cmLogger, cmObject, $rootScope){
+    '$q',
+
+    function(cmLogger, cmObject, cmWebworker, $rootScope, $q){
         /**
          * @TODO TEsts!!!!!
          * @param args
@@ -38,10 +42,10 @@ angular.module('cmCore')
                 }
 
                 var key =       data.privKey
-                    ||  this.getPrivateKey()
-                    ||  data.key
-                    ||  data.pubKey
-                    ||  undefined;
+                            ||  this.getPrivateKey()
+                            ||  data.key
+                            ||  data.pubKey
+                            ||  undefined;
 
                 if(data.name)       this.setName(data.name);
                 if(data.id)         this.setId(data.id);
@@ -110,7 +114,7 @@ angular.module('cmCore')
             };
 
             this.getFingerprint = function(){
-                return this.id;
+                return this.id //Todo: rework Fingerprints, was:  sjcl.codec.base64.fromBits(sjcl.hash.sha256.hash(this.getPublicKey()), true, true)
             };
 
             this.getPrivateKey = function(){
@@ -124,6 +128,13 @@ angular.module('cmCore')
 
             this.sign = function(data){
                 return crypt && crypt.sign(data)
+
+                // return  $q.when(crypt && crypt.sign(data))
+                //         .then(function(result){
+                //             return  result
+                //                     ?   $q.when(result)
+                //                     :   $q.reject()
+                //         })
             };
 
             this.verify = function(data, signature, force){
@@ -141,11 +152,46 @@ angular.module('cmCore')
             };
 
             this.encrypt = function(secret){
-                return crypt && crypt.encrypt(secret);
+                return  cmWebworker
+                        ?   new cmWebworker('rsa_encrypt')
+                            .start({
+                                pubKey:     this.getPublicKey(),
+                                secret:     secret
+                            })
+                            .then(function(result){
+                                return  result.secret
+                            })
+
+                        :   $q.when(crypt && crypt.encrypt(secret))
+                            .then(function(result){
+                                return  result
+                                        ?   $q.when(result)
+                                        :   $q.reject()
+                            });
             };
 
             this.decrypt = function(encrypted_secret){
-                return crypt && crypt.decrypt(encrypted_secret);
+                return  cmWebworker
+                        ?   new cmWebworker('rsa_decrypt')
+                            .start({
+                                privKey:            this.getPrivateKey(),
+                                encryptedSecret:    encrypted_secret
+                            })
+                            .then(
+                                function(result){
+                                    return result.secret
+                                },
+                                function(){
+                                    return $q.reject()
+                                }
+                            )
+                        :   $q.when(crypt && crypt.decrypt(encrypted_secret))
+                            .then(function(result){
+                                return  result
+                                        ?   $q.when(result)
+                                        :   $q.reject()
+                            })
+
             };
 
             this.verifyKey = function(key, data){

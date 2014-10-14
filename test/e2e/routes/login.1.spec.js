@@ -2,10 +2,7 @@ var config = require("../config-e2e-tests.js")
 var util = require("../../lib/e2e/cmTestUtil.js")
 
 describe('login screen', function () {
-
     var ptor = util.getPtorInstance()
-    afterEach(function() { util.stopOnError() });
-
 
     it('should contain two buttons', function () {
         util.logout()
@@ -43,7 +40,7 @@ describe('login screen', function () {
     });
 
     it('should show error on wrong login', function () {
-        $("[data-qa='login-btn']").click();
+        util.waitAndClickQa("login-btn")
 
         var user = $("input[name='user']");
         var pw = $("input[name='pw']");
@@ -51,9 +48,7 @@ describe('login screen', function () {
         user.sendKeys("moep");
         pw.sendKeys("moep!");
 
-        $("[data-qa='login-submit-btn']").click();
-
-        util.waitForSpinner()
+        util.waitAndClickQa("login-submit-btn")
         util.checkWarning("login-info")
 
         $("body").sendKeys(protractor.Key.ESCAPE);

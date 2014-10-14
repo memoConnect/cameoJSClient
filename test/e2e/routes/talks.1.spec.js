@@ -2,9 +2,8 @@ var config = require("../config-e2e-tests.js")
 var util = require("../../lib/e2e/cmTestUtil.js")
 
 describe('Route Talks:', function () {
-    "use strict";
-
     var ptor = util.getPtorInstance()
+
     afterEach(function() { util.stopOnError() });
 
     it('should be at "#/start".', function () {
@@ -31,8 +30,7 @@ describe('Route Talks:', function () {
     })
 
     it('should open conversation when clicked', function () {
-
-        $("body").sendKeys(protractor.Key.HOME)
+        util.scrollToTop()
 
         $$("[data-qa='conversation-list-element']").then(function (elements) {
             elements[0].click()
@@ -47,7 +45,7 @@ describe('Route Talks:', function () {
 
     it('should open a new conversation on button click', function () {
         //util.waitForLoader()
-        $("body").sendKeys(protractor.Key.HOME)
+        util.scrollToTop()
         // wait for browser to scroll, todo: find a better way to do this
         $("[data-qa='new-conversation-btn']").click()
         util.waitForPageLoad("/conversation/new")

@@ -1,11 +1,8 @@
-define([
-    'app'
-], function (app) {
-    'use strict';
+'use strict';
 
-    app.register.controller('VersionCtrl',[
-        '$scope','cmVersion',
-        function($scope, cmVersion){
+angular.module('cmRoutes').controller('VersionCtrl',[
+    '$scope','cmVersion',
+    function($scope, cmVersion){
         $scope.cmVersion = cmVersion;
-    }]);
-});
+    }
+]);

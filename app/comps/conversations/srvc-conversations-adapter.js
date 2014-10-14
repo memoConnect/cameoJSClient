@@ -54,7 +54,6 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
             getConversationSummary: function(id){
                 //cmLogger.warn('cmConversationAdapter: .getConversationSummary is deprecated; use .getConversation(id, 1, 0) instead')
                 //return this.getConversation(id, 1, 0)
-
                 return cmApi.get({
                     path: '/conversation/' + id + '/summary' + '?' +  cmUserModel.getLocalKeyIdsForRequest()
                 })
@@ -125,7 +124,7 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
         });
 
         cmApi.on('rekeying:finished', function(event, data){
-            //cmLogger.debug('cmConversationsAdapter.on rekeying:finished');
+            cmLogger.debug('cmConversationsAdapter.on rekeying:finished');
             adapter.trigger('passphrases:updated', data);
         });
 

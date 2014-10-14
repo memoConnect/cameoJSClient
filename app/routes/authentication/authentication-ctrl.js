@@ -1,14 +1,11 @@
-define([
-    'app',
-    'ngload!pckCore',
-    'ngload!pckWidgets'
-], function (app) {
-    'use strict';
+'use strict';
 
-    app.register.controller('AuthenticationCtrl', [
-        // no depedencies
-        function() {
-            // nothing to do here
-        }
-    ]);
-});
+angular.module('cmRoutes').controller('AuthenticationCtrl', [
+    '$scope',
+    '$routeParams',
+
+    function($scope, $routeParams) {
+        $scope.keyId        = $routeParams.keyId
+        $scope.identityId   = $routeParams.identityId
+    }
+]);

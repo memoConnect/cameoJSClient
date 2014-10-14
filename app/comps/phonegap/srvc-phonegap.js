@@ -1,43 +1,51 @@
 'use strict';
 
 angular.module('cmPhonegap').service('cmPhonegap', [
-    '$q',
-    function ($q) {
+    'cmLogger',
+    '$q', '$document', '$phonegapCameoConfig', '$navigator',
+    function (cmLogger,
+              $q, $document, $phonegapCameoConfig, $navigator) {
 
         var isReady = $q.defer();
 
         var self = {
             isReady: function(callback){
-                if(typeof phonegap_cameo_config == 'undefined'){
+                if(typeof $phonegapCameoConfig == 'undefined'){
                     return false;
                 }
 
+                cmLogger.info('cmPhonegap.isReady? '+$phonegapCameoConfig.deviceReady)
+
                 // if config doesn't get device ready watch again
-                if(!phonegap_cameo_config.deviceReady){
-                    document.addEventListener('deviceready', function () {
-                        phonegap_cameo_config.deviceReady = true;
+                if(!$phonegapCameoConfig.deviceReady){
+                    $document[0].addEventListener('deviceready', function () {
+                        $phonegapCameoConfig.deviceReady = true;
                         isReady.resolve();
                     });
 
                     isReady.promise.then(function(){
-                        callback();
+                        if(typeof callback == 'function')
+                            callback();
                     });
                 // nothing to wait phonegap is ready
                 } else {
-                    callback();
+                    if(typeof callback == 'function')
+                        callback();
                 }
+
+                return false;
             },
-            closeApp: function(){
+            initCloseApp: function(){
                 return false;
 
-                document.addEventListener('backbutton', function(e) {
-                    navigator.app.exitApp();
+                $document[0].addEventListener('backbutton', function(e) {
+                    $navigator.app.exitApp();
                 });
             }
         };
 
         // on home close app
-        self.closeApp();
+        self.initCloseApp();
 
         return self;
     }]

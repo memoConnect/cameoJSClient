@@ -1,4 +1,4 @@
-<section ng-controller = "ConversationCtrl">
+<section>
     <cm-header cm-rubber-space>
         <div cm-weight="1">
             <cm-back back-to="/talks" ng-if="conversationId == 'new'"></cm-back>
@@ -7,24 +7,11 @@
         <cm-identity cm-weight="4"></cm-identity>
         <cm-security-indicator
             cm-weight       = "2"
-            cm-data         = "conversation.securityAspects"
+            cm-data         = "conversation"
             ng-click        = "gotoConversation(conversation.id,'security')"
         ></cm-security-indicator>
         <cm-menu cm-weight="1"></cm-menu>
     </cm-header>
 
-    <cm-widget-conversation cmData = "conversation">
-    </cm-widget-conversation>
-
+    <cm-widget-conversation cmData="conversation"></cm-widget-conversation>
 </section>
-
-
-<!--
-<div ng-controller="ConversationCtrl">
-    <section ng-switch="pageChild1">
-        <cm-conversation      cm-data="conversation" ng-switch-default></cm-conversation>
-        <cm-recipients        cm-data="conversation" ng-switch-when= "recipients"></cm-recipients>
-        <cm-security-settings cm-data="conversation" ng-switch-when= "security-settings"></cm-security-settings>
-    </section>
-</div>
--->

@@ -32,7 +32,7 @@ describe("cmLanguage", function() {
         function ucfirst(str) {
             //  discuss at: http://phpjs.org/functions/ucfirst/
             // original by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
-            // bugfixed by: Onno Marsman
+            // bugfixed by: Onno Marsman 
             // improved by: Brett Zamir (http://brett-zamir.me)
             //   example 1: ucfirst('kevin van zonneveld');
             //   returns 1: 'Kevin van zonneveld'
@@ -47,11 +47,55 @@ describe("cmLanguage", function() {
             cameo_config.supported_languages.forEach(function (lang_key) {
                 beforeEach(function(){
                     module('i18n/' + lang_key + '.json')
+                    module('language-keys.json')
                 })
             })
 
-            it('should find a translation for each message_id for all supported languages.', function () {
+            //Helper function to serialize all message ids
+            function extendList(list, str, obj) {
+                if (typeof obj == 'string') {
+                    list.push(str)
+                } else {
+                    $.each(obj, function (key, value) {
+                        extendList(list, str + (str ? '.' : '') + key, value)
+                    })
+                }
+            }
 
+            it('should find a translation for each message_id for all supported languages.', function () {
+                cameo_config.supported_languages.forEach(function (lang_key) {
+                    inject(['i18n'+ucfirst(lang_key), function (jsonData){
+                        language_tables[lang_key] = jsonData
+                    }])
+                })
+
+                var used_ids,
+                    missing_ids = {}
+
+                inject(['languageKeys', function(data){ used_ids = data }])
+
+
+                $.each(language_tables, function(lang_key, language_data){
+                    used_ids.forEach(function(message_id){
+                        var translated_keys = []
+                        extendList(translated_keys, '', language_data)
+
+                        missing_ids[lang_key] = missing_ids[lang_key] || []
+
+                        if(translated_keys.indexOf(message_id) == -1)
+                            missing_ids[lang_key].push(message_id) 
+                    })
+                })
+
+                $.each(language_tables, function(lang_key, language_data){
+                    if(missing_ids[lang_key].length != 0)
+                        console.log('\n'+ lang_key + ' is missing translations for the following message ids:\n\n'+ JSON.stringify(missing_ids[lang_key], null, 2) + '\n')
+
+                    //expect(missing_ids[lang_key].length).toBe(0)
+                })
+            })
+
+            it('should find the same language keys in all supported language file.', function () {
                 cameo_config.supported_languages.forEach(function (lang_key) {
                     inject(['i18n'+ucfirst(lang_key), function (jsonData){
                         language_tables[lang_key] = jsonData
@@ -59,17 +103,6 @@ describe("cmLanguage", function() {
                 })
 
                 var message_ids = {}
-
-                //Helper function to serialize all message ids
-                function extendList(list, str, obj) {
-                    if (typeof obj == 'string') {
-                        list.push(str)
-                    } else {
-                        $.each(obj, function (key, value) {
-                            extendList(list, str + (str ? '.' : '') + key, value)
-                        })
-                    }
-                }
 
                 //Helper function to compare language lists od message ids
                 function diffLists(list1, list2) {
@@ -82,7 +115,7 @@ describe("cmLanguage", function() {
                         i++
                     }
 
-                    return(list1[i] || list2[i])
+                    return((list1[i] || list2[i]) ? list1[i] +' / '+ list2[i] : false)
                 }
 
                 var list = [],
@@ -99,15 +132,13 @@ describe("cmLanguage", function() {
                         last_diff = diffLists(list, next_list)
 
                         if (last_diff) {
-                            console.log('Missing or surplus message id in ' + lang_key + ': ' + last_diff)
+                            console.log('Missing, surplus or not matching message id in ' + lang_key + ': ' + last_diff)
                         }
 
                         all_the_same = all_the_same && !last_diff
                         list = next_list
                     }
                 })
-
-                expect(all_the_same).toEqual(true)
             })
         })
     })

@@ -20,11 +20,10 @@ angular.module('cmContacts')
         'cmIdentityFactory',
         'cmUtil',
         'cmNotify',
-        'cmHooks',
         'cmUserModel',
 
         function( $rootScope,$routeParams,
-                  cmContactsModel, cmIdentityFactory, cmUtil, cmNotify, cmHooks, cmUserModel){
+                  cmContactsModel, cmIdentityFactory, cmUtil, cmNotify, cmUserModel){
 
             return {
                 restrict:       'AE',
@@ -42,7 +41,7 @@ angular.module('cmContacts')
                     };
 
                     $scope.chooseAvatar = false;
-                    cmContactsModel.getOne($routeParams.id).then(
+                    cmContactsModel.getOne($scope.contactId).then(
                         function (data) {
                             // set data froom api
                             $scope.contact = data;
@@ -128,8 +127,8 @@ angular.module('cmContacts')
 
                         // everything is fine let's add the contact
                         cmContactsModel
-                            .editContact($routeParams.id, identity)
-                            .then(
+                        .editContact($routeParams.id, identity)
+                        .then(
                             function () {
                                 cmNotify.info('CONTACT.INFO.SUCCESS.EDIT',{ttl:5000,displayType:'modal'});
                             },

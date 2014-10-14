@@ -229,32 +229,6 @@ describe('cmUtil', function() {
         })
     })
 
-    describe('getRandomInt', function () {
-        it('should be defined', function () {
-            expect(cmUtil.getRandomInt).toBeDefined()
-        })
-
-        describe('should return 0', function () {
-            it('with no params', function () {
-                expect(cmUtil.getRandomInt()).toEqual(0)
-            })
-
-            it('with object as param', function () {
-                expect(cmUtil.getRandomInt({'test': 1})).toEqual(0)
-            })
-
-            it('with array as param', function () {
-                expect(cmUtil.getRandomInt(['test'])).toEqual(0)
-            })
-        })
-
-        it('should generate an random number between 1 - 5', function () {
-            var random = cmUtil.getRandomInt(1, 5)
-            expect(random).toBeGreaterThan(0)
-            expect(random).toBeLessThan(6)
-        })
-    })
-
     describe('compareDate', function(){
         it('should be defined', function () {
             expect(cmUtil.compareDate).toBeDefined()
@@ -312,6 +286,22 @@ describe('cmUtil', function() {
                 var prev = 1388620800000 // 1.2.2014 23:59:59 000
 
                 expect(cmUtil.compareDate(current, prev)).toBe(true)
+            })
+        })
+
+        describe('test with real date which create a gui error', function(){
+            it('test 1 should be true', function(){
+                var current = 1411153446045 // 19.09.2014 21:04:06
+                var prev = 1411151556026 // 19.09.2014 20:32:36
+
+                expect(cmUtil.compareDate(current, prev)).toBe(false)
+            })
+
+            it('test 2 should be true', function(){
+                var current = 1411154387354 // 19.09.2014 21:19:47
+                var prev = 1411153446045 // 19.09.2014 21:04:06
+
+                expect(cmUtil.compareDate(current, prev)).toBe(false)
             })
         })
     })

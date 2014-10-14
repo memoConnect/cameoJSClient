@@ -66,10 +66,10 @@ angular.module('cmConversations').directive('cmSecuritySettings', [
                  * try to decrypt the conversation
                  */
                 $scope.decrypt = function(){
-                    if($scope.conversation.isEncrypted()
-                        && !($scope.conversation.getKeyTransmission() == 'asymmetric' && $scope.conversation.userHasPrivateKey() == false)
+                    if(     !$scope.conversation.state.is('new')
+                        &&  $scope.conversation.isEncrypted()
+                        &&  !($scope.conversation.getKeyTransmission() == 'asymmetric' && $scope.conversation.userHasPrivateKey() == false)
                     ) {
-
                         $scope.conversation.one('decrypt:failed', function () {
                             cmNotify.warn('CONVERSATION.WARN.PASSWORD_WRONG');
                             //$scope.toggleControls('open');

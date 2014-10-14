@@ -5,8 +5,10 @@ describe('Filter cmAutolink', function () {
         scope,
         textDefault = 'hallo moeper',
         textWithLink = 'juhu http://www.moep.de alter verwalter',
+        textWithTwoLinksAndBreak = 'juhu http://www.moep.de\nhttp://www.peom.de alter verwalter',
         noneLink = 'moep.de/123',
         linkFull = 'http://www.moep.de/123',
+        linkWithHashTag = 'http://localhost:8000/app/#/conversation/123',
         linkFullHttps = 'https://www.moep.de/123',
         linkWww = 'www.moep.de/123',
         linkLong = 'https://memo-berlin.atlassian.net/secure/RapidBoard.jspa?rapidView=1&view=detail&selectedIssue=CAM-500'
@@ -38,6 +40,13 @@ describe('Filter cmAutolink', function () {
         expect(element.text()).toBe(textWithLink)
     })
 
+    it('text with link will replaced by a html a-tag', function(){
+        createDrtv(textWithTwoLinksAndBreak)
+        expect(element.html()).not.toBe(textWithTwoLinksAndBreak)
+        expect(element.find('a').length).toBe(2)
+        expect(element.text()).toBe(textWithTwoLinksAndBreak)
+    })
+
     it('that not should replaced by autolink', function(){
         createDrtv(noneLink)
         expect(element.find('a').length).toBe(0)
@@ -47,6 +56,10 @@ describe('Filter cmAutolink', function () {
         createDrtv(linkFull)
         expect(element.find('a').length).toBe(1)
         expect(element.text()).toBe(linkFull)
+
+        createDrtv(linkWithHashTag)
+        expect(element.find('a').length).toBe(1)
+        expect(element.text()).toBe(linkWithHashTag)
 
         createDrtv(linkFullHttps)
         expect(element.find('a').length).toBe(1)

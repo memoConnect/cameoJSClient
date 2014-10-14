@@ -5,12 +5,12 @@ angular.module('cmCore').service('cmJob', [
     '$window',
     '$location',
     'cmTranslate',
-    'cmHooks',
+    'cmModal',
     'cmLogger',
-    function($rootScope, $window, $location, cmTranslate, cmHooks, cmLogger){
+    function($rootScope, $window, $location, cmTranslate, cmModal, cmLogger){
 
         var jobIsActive = false,
-            jobFunction = null,
+            jobFunctionUnbind = null,
             pendingUrl = {path:'',replace:false};
 
         function resetPendingUrl(){
@@ -24,23 +24,27 @@ angular.module('cmCore').service('cmJob', [
                 return jobIsActive;
             },
             start: function(message, cancelCallback){
-                //cmLogger.debug('cmJob.start '+message);
+//                cmLogger.debug('cmJob.start '+message);
                 jobIsActive = true;
 
                 $window.onbeforeunload = function () {
                     return cmTranslate(message||'JOB.IN_PROGRESS')
                 };
 
-                jobFunction = $rootScope.$on('$locationChangeStart', function(event, next) {
+                jobFunctionUnbind = $rootScope.$on('$locationChangeStart', function(event, next) {
                     event.preventDefault();
 
-                    cmHooks.openModalConfirm(message, function(){
+                    cmModal.confirm({
+                        text:   message,
+                        cancel: 'NO',
+                        okay:   'YES'
+                    })
+                    .then(function(){
                         if(typeof cancelCallback == 'function'){
                             cancelCallback();
                         }
 
                         stop();
-
 
                         if(pendingUrl.path != ''){
                             $rootScope.goTo(pendingUrl.path, pendingUrl.replace);
@@ -51,12 +55,13 @@ angular.module('cmCore').service('cmJob', [
                 });
             },
             stop: function(){
-                //cmLogger.debug('cmJob.stop');
+//                cmLogger.debug('cmJob.stop');
                 jobIsActive = false;
 
                 $window.onbeforeunload = null;
 
-                jobFunction();
+                if(jobFunctionUnbind)
+                    jobFunctionUnbind();
             },
             setPendingUrl: function(path, replace){
                 //cmLogger.debug('cmJob.setPendingUrl ' + path);

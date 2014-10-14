@@ -1,11 +1,11 @@
-<section ng-controller="PurlCtrl">
-
+<section ng-show="!showSignIn">
     <cm-header cm-rubber-space ng-if="!headerGuest">
         <cm-back cm-weight="1" back-to="/talks" plain-back="true"></cm-back>
         <cm-identity cm-weight="4"></cm-identity>
         <cm-security-indicator
-            cm-weight       = "2"
-            cm-data         = "conversation.securityAspects"
+            cm-weight="2"
+            ng-if           = "conversation"
+            cm-data         = "conversation"
             cm-leading-icon = "cm-lock"
             ng-click        = "gotoPurl(purlId, 'security')"
         ></cm-security-indicator>
@@ -23,8 +23,9 @@
         </div>
         <cm-logo cm-weight="4"></cm-logo>
         <cm-security-indicator
-            cm-weight       = "2"
-            cm-data         = "conversation.securityAspects"
+            cm-weight="2"
+            ng-if           = "conversation"
+            cm-data         = "conversation"
             cm-leading-icon = "cm-lock"
             ng-click        = "gotoPurl(purlId, 'security')"
         ></cm-security-indicator>
@@ -33,10 +34,8 @@
     <cm-widget-conversation cm-data="conversation"></cm-widget-conversation>
 </section>
 
-
-
 <!--
-<div ng-controller="PurlCtrl">
+<div>
     <section ng-switch="pageChild1" ng-if="showConversation">
         <cm-conversation      cm-data="conversation" ng-switch-default></cm-conversation>
         <cm-recipients        cm-data="conversation" ng-switch-when="recipients"></cm-recipients>

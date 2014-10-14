@@ -2,66 +2,82 @@
 
 // https://github.com/apache/cordova-plugin-device/blob/master/doc/index.md
 
-angular.module('cmPhonegap').service('cmDevice', [
+angular.module('cmPhonegap')
+.service('cmDevice', [
     'cmPhonegap', 'cmLogger', 'cmUtil',
-    '$window',
+    '$window', '$device', '$phonegapCameoConfig',
     function (cmPhonegap, cmLogger, cmUtil,
-              $window) {
+              $window, $device, $phonegapCameoConfig) {
 
         var unknown = 'unknown';
 
         var self = {
             plugin: null,
+            debug: false,
 
-            existsPlugin: function() {
-                if(typeof device == 'undefined'){
-                    //cmLogger.info('DEVICE PLUGIN IS MISSING');
+            init: function(){
+                if(typeof $phonegapCameoConfig == 'undefined') {
                     return false;
                 }
 
-                this.plugin = device;
+                cmPhonegap.isReady(function(){
+                    if(typeof $device.get() == 'undefined'){
+                        //cmLogger.info('DEVICE PLUGIN IS MISSING');
+                        return false;
+                    }
 
-                return true;
+                    self.plugin = $device.get()
+                });
             },
 
-            getPlatform: function(){
-                return this.plugin.platform.toLowerCase();
+            existsPlugin: function(){
+                return this.plugin != null;
             },
 
             isApp: function(){
-                return this.existsPlugin();
+                if(this.debug)
+                    cmLogger.warn('cmPhonegap.cmDevice.debug == true!!!');
+                return this.debug || !this.debug && this.existsPlugin();
             },
+
+            getPlatform: function(){
+                return this.isApp()
+                    && 'platform' in this.plugin
+                     ? this.plugin.platform.toLowerCase()
+                     : unknown;
+            },
+
             isAndroid: function(){
-                return this.existsPlugin()
+                return this.isApp()
                     && this.getPlatform().indexOf('android') >= 0;
             },
             isiOS: function(){
-                return this.existsPlugin()
+                return this.isApp()
                    && (this.getPlatform().indexOf('iphone') >= 0
                     || this.getPlatform().indexOf('ipad') >= 0
                     || this.getPlatform().indexOf('ios') >= 0);
             },
             isWinPhone: function(){
-                return this.existsPlugin()
+                return this.isApp()
                     && this.getPlatform().indexOf('win') >= 0;
             },
             isWinPhone8: function(){
-                return this.existsPlugin()
-                    && this.getPlatform().indexOf('Win32NT') >= 0;
+                return this.isApp()
+                    && this.getPlatform().indexOf('win32nt') >= 0;
             },
             isBlackBerry: function(){
-                return this.existsPlugin()
+                return this.isApp()
                     && this.getPlatform().indexOf('blackberry') >= 0;
             },
             isAmazonFireOS: function(){
-                return this.existsPlugin()
+                return this.isApp()
                     && this.getPlatform().indexOf('amazon-fireos') >= 0;
             },
 
             getCurrentOS: function(){
                 var os = 'unknown';
 
-                if(!this.existsPlugin())
+                if(!this.isApp())
                     return os;
 
                 if (this.isAndroid()) {
@@ -78,21 +94,21 @@ angular.module('cmPhonegap').service('cmDevice', [
             },
 
             getId: function(){
-                if(!this.existsPlugin())
+                if(!this.isApp())
                     return unknown;
 
                 return this.plugin.uuid;
             },
 
             getName: function(){
-                if(!this.existsPlugin())
+                if(!this.isApp())
                     return unknown;
 
                 return this.plugin.name;
             },
 
             getVersion: function(){
-                if(!this.existsPlugin())
+                if(!this.isApp())
                     return unknown;
 
                 return this.plugin.version;
@@ -102,7 +118,8 @@ angular.module('cmPhonegap').service('cmDevice', [
                 var nVer = $window.navigator.appVersion,
                     nAgt = $window.navigator.userAgent,
                     browserName = $window.navigator.appName,
-                    nameOffset, verOffset;
+                    nameOffset,
+                    verOffset;
 
                 // In Opera, the true version is after 'Opera' or after 'Version'
                 if ((verOffset = nAgt.indexOf('Opera')) != -1 || (verOffset = nAgt.indexOf('OPR')) != -1) {
@@ -148,6 +165,9 @@ angular.module('cmPhonegap').service('cmDevice', [
                 if (nVer.indexOf('Win') != -1)
                     OSName = 'Windows';
 
+                if (nVer.indexOf('SymbianOS') != -1)
+                    OSName = 'Symbian';
+
                 if (nVer.indexOf('like Mac OS X') != -1)
                     OSName = 'iOS';
                 else if (nVer.indexOf('Mac') != -1)
@@ -166,6 +186,8 @@ angular.module('cmPhonegap').service('cmDevice', [
                 };
             }
         };
+
+        self.init();
 
         return self;
     }

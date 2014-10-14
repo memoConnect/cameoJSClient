@@ -1,11 +1,11 @@
-<section ng-controller = "ConversationSecurityCtrl">
+<section>
 
 <cm-header cm-rubber-space ng-show="!isPurl">
     <cm-back cm-weight="1" back-to="conversation/{{conversationId}}"></cm-back>
     <cm-identity cm-weight="4"></cm-identity>
     <cm-security-indicator
         cm-weight       = "2"
-        cm-data         = "conversation.securityAspects"
+        cm-data         = "conversation"
     ></cm-security-indicator>
     <cm-menu cm-weight="1"></cm-menu>
 </cm-header>

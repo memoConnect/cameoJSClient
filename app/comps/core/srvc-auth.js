@@ -11,8 +11,8 @@
  */
 
 angular.module('cmCore').service('cmAuth', [
-    'cmApi','LocalStorageAdapter', 'cmObject', 'cmUtil', 'cmLogger' ,'$rootScope',
-    function(cmApi, LocalStorageAdapter, cmObject, cmUtil, cmLogger, $rootScope){
+    'cmApi','LocalStorageAdapter', 'cmObject', 'cmUtil', 'cmLogger', 'cmCrypt' ,'$rootScope',
+    function(cmApi, LocalStorageAdapter, cmObject, cmUtil, cmLogger, cmCrypt, $rootScope){
         var _TOKEN_ = undefined;
         var auth = {
             /**
@@ -28,7 +28,7 @@ angular.module('cmCore').service('cmAuth', [
              * @returns {Promise} for async handling
              */
             requestToken: function(login, pass){
-                var auth = _Base64.encode(login + ":" + pass);
+                var auth = cmCrypt.base64Encode(login + ":" + pass);
 
                 return cmApi.get({
                     path: '/token',
@@ -195,10 +195,35 @@ angular.module('cmCore').service('cmAuth', [
                 })
             },
 
+            /**
+             * @ngdoc method
+             * @methodOf cmAuth
+             *
+             * @name checkMixed
+             * @description
+             * Check if the given string is either a valid phone number or a valid e-mail address
+             *
+             * @param {String} string to validate
+             * @returns {Promise} for async handling
+             */
+
+            checkMixed: function(mixed) {
+                return cmApi.post({
+                    path: '/services/checkMixed',
+                    data: { mixed:mixed }
+                })
+            },
+
             getAccount: function(){
                 return cmApi.get({
+                    path: '/account'
+                })
+            },
+
+            putAccount: function(data){
+                return cmApi.put({
                     path: '/account',
-                    timeout: 7000
+                    data: data
                 })
             },
 
@@ -302,39 +327,7 @@ angular.module('cmCore').service('cmAuth', [
                     }
                 });
             },
-            /**
-             * @ngdoc method
-             * @methodOf cmAuth
-             *
-             * @name deleteAuthenticationRequest
-             * @description
-             * delete Authentication Request
-             *
-             * @param {String} is id of authentication request
-             * @returns {Promise} for async handling
-             */
-            deleteAuthenticationRequest: function(id){
-                return cmApi.delete({
-                    path: '/identity/authenticationRequest/' + id
-                });
-            },
-            /**
-             * @ngdoc method
-             * @methodOf cmAuth
-             *
-             * @name saveAuthenticationRequest
-             * @description
-             * save Authentication Request
-             *
-             * @param {Object} data data for authentication request
-             * @returns {Promise} for async handling
-             */
-            saveAuthenticationRequest: function(data){
-                return cmApi.post({
-                    path: '/identity/authenticationRequest',
-                    data: data
-                });
-            },
+
             /**
              * @ngdoc method
              * @methodOf cmAuth
@@ -379,23 +372,7 @@ angular.module('cmCore').service('cmAuth', [
                     data: data
                 });
             },
-            /**
-             * @ngdoc method
-             * @methodOf cmAuth
-             *
-             * @name sendBroadcast
-             * @description
-             * post a broadcast event to own devices
-             *
-             * @param {Object} data event data
-             * @returns {Promise} for async handling
-             */
-            sendBroadcast: function(data, identityId){
-                return cmApi.post({
-                    path: '/event/broadcast' + (identityId ? '/identity/' + identityId : ''),
-                    data: data
-                });
-            },
+
             /**
              * @ngdoc method
              * @methodOf cmAuth
@@ -468,7 +445,9 @@ angular.module('cmCore').service('cmAuth', [
              */
             getTwoFactorToken: function(){
                 return localStorage.getItem('twoFactorToken');
-            }
+            },
+
+
         };
 
         cmObject.addEventHandlingTo(auth);
@@ -487,6 +466,7 @@ angular.module('cmCore').service('cmAuth', [
            //console.log('conversation:new-aePassphrase');
             auth.trigger('conversation:update', data)
         });
+
 
         return auth;
     }

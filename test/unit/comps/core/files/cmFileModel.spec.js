@@ -21,7 +21,6 @@ describe('cmFileModel', function() {
     describe('public api', function(){
         it('should have methods', function () {
             expect(cmFileModel.setPassphrase).toBeDefined()
-            expect(cmFileModel.setState).toBeDefined()
             expect(cmFileModel.importBlob).toBeDefined()
             expect(cmFileModel.importFile).toBeDefined()
             expect(cmFileModel.chopIntoChunks).toBeDefined()
@@ -63,12 +62,11 @@ describe('cmFileModel', function() {
     describe('state', function(){
         it('should be defined and empty string', function(){
             expect(cmFileModel.state).toBeDefined()
-            expect(cmFileModel.state).toBe('')
         })
 
         it('should be "new"', function(){
-            cmFileModel.setState('new')
-            expect(cmFileModel.state).toBe('new')
+            cmFileModel.state.set('new')
+            expect(cmFileModel.state.is('new')).toBeTruthy()
         })
     })
 

@@ -5,13 +5,9 @@ var loginName = "Z" + Date.now();
 var password = "PWD_Z" + Date.now();
 
 describe('Registration: ', function () {
-
     var ptor = util.getPtorInstance()
-    afterEach(function() { util.stopOnError() });
-
 
     it('should contain 7 input fields', function () {
-
         util.logout()
 
         util.get("/registration");
@@ -23,8 +19,6 @@ describe('Registration: ', function () {
     })
 
     it('should display errors if required fields are empty', function () {
-
-        ptor.debugger()
         $("[data-qa='btn-createUser']").click()
 
         util.checkWarning("cameoId-info-username-empty")
@@ -33,7 +27,6 @@ describe('Registration: ', function () {
     })
 
     it('should display error if username too short', function () {
-
         util.get("/registration");
         util.waitForPageLoad('/registration')
 
@@ -50,7 +43,6 @@ describe('Registration: ', function () {
     })
 
     it('should display error if username is invalid', function () {
-
         util.get("/registration");
         util.waitForPageLoad('/registration')
 
@@ -66,7 +58,6 @@ describe('Registration: ', function () {
     })
 
     it('should display error if username exists', function () {
-
         util.get("/registration")
         util.waitForPageLoad('/registration')
 
@@ -82,7 +73,6 @@ describe('Registration: ', function () {
     })
 
     it('should return error on wrong password repeat', function () {
-
         $("[data-qa='input-password']").sendKeys(password)
         $("[data-qa='input-passwordConfirm']").sendKeys("moep")
         $("[data-qa='icon-passwordConfirm']").getAttribute("class").then(function(cl){
@@ -92,27 +82,23 @@ describe('Registration: ', function () {
     })
 
     it('should link to term of use', function() {
-        $("body").sendKeys(protractor.Key.END)
+        util.scrollToBottom()
 
         util.waitForElement("[data-qa='link-terms']")
         $("[data-qa='link-terms']").click()
         util.waitForPageLoad("/terms")
     })
 
-    it('should create account with valid credentials', function() {
-
+    it('should create account with valid credentials and have a support talk', function() {
         var loginName = util.createTestUser()
         util.waitForPageLoad('/start/welcome')
 
         util.get('/talks')
         util.waitForPageLoad('/talks')
-
-        expect($(".empty-list").isPresent()).toBe(true)
-
-        // modal should only be displayed on first visit
-        ptor.refresh()
-        $$("cm-modal").then(function(elements) {
-            expect(elements.length).toBe(0)
+        // support talks should be present
+        util.waitForElement("[data-qa='conversation-list-element']")
+        $$("[data-qa='conversation-list-element']").then(function (elements) {
+            expect(elements.length).toBe(1)
         })
 
         util.deleteTestUser(loginName)

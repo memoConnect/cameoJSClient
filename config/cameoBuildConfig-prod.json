@@ -4,7 +4,8 @@
         "autoLogin": false,
         "loadingBar": false,
         "enableDebug": false,
-        "logLevel": "ERROR"
+        "logLevel": "ERROR",
+        "performancePage": false
     },
     "debug":{
         "weinre": false,
