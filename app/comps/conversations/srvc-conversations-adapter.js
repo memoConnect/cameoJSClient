@@ -124,7 +124,7 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
         });
 
         cmApi.on('rekeying:finished', function(event, data){
-            //cmLogger.debug('cmConversationsAdapter.on rekeying:finished');
+            cmLogger.debug('cmConversationsAdapter.on rekeying:finished');
             adapter.trigger('passphrases:updated', data);
         });
 

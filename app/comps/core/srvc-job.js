@@ -65,7 +65,8 @@ angular.module('cmCore').service('cmJob', [
 
                 $window.onbeforeunload = null;
 
-                jobFunctionUnbind();
+                if(jobFunctionUnbind)
+                    jobFunctionUnbind();
             },
             setPendingUrl: function(path, replace){
                 //cmLogger.debug('cmJob.setPendingUrl ' + path);

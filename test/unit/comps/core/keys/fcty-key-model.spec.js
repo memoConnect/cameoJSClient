@@ -4,6 +4,7 @@ describe('cmKeyModel', function() {
 
     var cmKey,
         cmCrypt,
+        $rootScope,
         key, key_1, key_2,
         publicKey   =   ['-----BEGIN PUBLIC KEY-----'
                         ,'MIIBITANBgkqhkiG9w0BAQEFAAOCAQ4AMIIBCQKCAQBW65EZMA3kk/KTp4dfLsYT'
@@ -102,9 +103,10 @@ describe('cmKeyModel', function() {
 
     beforeEach(module('cmCore'))
 
-    beforeEach(inject(function(_cmKey_, _cmCrypt_){
-        cmKey   = _cmKey_
-        cmCrypt = _cmCrypt_
+    beforeEach(inject(function(_cmKey_, _cmCrypt_, _$rootScope_){
+        cmKey       = _cmKey_
+        cmCrypt     = _cmCrypt_
+        $rootScope  = _$rootScope_
         key     = new cmKey()
         key_1   = new cmKey()
         key_2   = new cmKey()
@@ -163,21 +165,54 @@ describe('cmKeyModel', function() {
         
     })      
 
-    it('should provide a functions "encrypt" and "decrypt" to encrypt strings with a public key and decrypt with the according private key', function(){                                
+    describe('de- and encryption', function(){
+        it('should provide a functions "encrypt" and "decrypt"', function(){
+            expect(key.encrypt).toBeDefined()
+            expect(key.decrypt).toBeDefined()
+        })
 
-        key.setKey(publicKey)
 
-        var encrypted_secret = key.encrypt(secret)                
+        it('should encrypt strings with a public key and decrypt with the according private key', function(){                                
 
-        expect(encrypted_secret).toBeDefined()
-        expect(encrypted_secret).not.toEqual('priv')
+            var encrypted_secret,
+                decrypted_secret
 
-        key.setKey(privateKey)
-    
-        var decrypted_secret = key.decrypt(encrypted_secret)
+            runs(function(){
+                key
+                .setKey(publicKey)
+                .encrypt(secret)
+                .then(function(result){
+                    encrypted_secret = result
+                })
 
-        expect(decrypted_secret).toBeDefined()
-        expect(decrypted_secret).toEqual('priv')
+                $rootScope.$apply()
+            })
+
+            waitsFor(function(){
+                return !!encrypted_secret
+            }, "encryption to be done.", 1000)
+
+            runs(function(){
+                expect(encrypted_secret).not.toEqual('priv')
+
+                key
+                .setKey(privateKey)
+                .decrypt(encrypted_secret)
+                .then(function(result){
+                    decrypted_secret = result                    
+                })
+
+                $rootScope.$apply()
+            })
+
+            waitsFor(function(){
+                return !!decrypted_secret
+            }, "decryption to be done.", 1000)
+
+            runs(function(){
+                expect(decrypted_secret).toEqual('priv')
+            })
+        })
     })
 
     it('should provide a function "getSize" to detect keysizes', function(){
@@ -207,33 +242,46 @@ describe('cmKeyModel', function() {
 
     })
 
-    it('should provide functions to sign data and verify signatures', function(){
+    describe("signing and verification", function(){
+        it('should provide functions to sign data and verify signatures.', function(){
+            expect(typeof key.sign).toBe('function')
+            expect(typeof key.verify).toBe('function')
+        })
 
-        var data =  {
-                        key_1 : 'my value',
-                        key_2 : 'my_second_value'
-                    },
-            pub_key = new cmKey()
-
-
-        key.setKey(privateKey)
-        pub_key.setKey(publicKey)
+        it('should provide functions to verify keys.', function(){
+            expect(key.verifyKey).toBeDefined()
+        })
 
 
-        //sign hashed Object
-        var signature = key.sign(cmCrypt.hashObject(data))
 
-        expect(signature).toBeDefined()
-        expect(pub_key.verify('abc', signature)).toBe(false)
-        expect(pub_key.verify(cmCrypt.hashObject(data), signature)).toBe(true)
+        it('should provide functions to sign data and verify signatures', function(){
 
-        //sign hashed String
-        var signature = key.sign('my special string')
+            var data =  {
+                            key_1 : 'my value',
+                            key_2 : 'my_second_value'
+                        },
+                pub_key = new cmKey()
 
-        expect(signature).toBeDefined()
-        expect(pub_key.verify('abc', signature)).toBe(false)
-        expect(pub_key.verify('my special string', signature)).toBe(true)
 
+            key.setKey(privateKey)
+            pub_key.setKey(publicKey)
+
+
+            //sign hashed Object
+            var signature = key.sign(cmCrypt.hashObject(data))
+
+            expect(signature).toBeDefined()
+            expect(pub_key.verify('abc', signature)).toBe(false)
+            expect(pub_key.verify(cmCrypt.hashObject(data), signature)).toBe(true)
+
+            //sign hashed String
+            var signature = key.sign('my special string')
+
+            expect(signature).toBeDefined()
+            expect(pub_key.verify('abc', signature)).toBe(false)
+            expect(pub_key.verify('my special string', signature)).toBe(true)
+
+        })
     })
 
 

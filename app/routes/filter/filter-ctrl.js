@@ -8,8 +8,6 @@ angular.module('cmRoutes').controller('FilterCtrl', [
     'cmCrypt',
     function ($scope, $http, $cookieStore, cmLogger, cmCrypt) {
 
-        console.log(cmCrypt.hash('whoopwhoop'));
-
         $scope.messages = [];
         $scope.messageCount = 0;
         $scope.filter = "{}";

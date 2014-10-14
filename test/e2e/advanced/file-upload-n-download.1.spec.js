@@ -134,14 +134,14 @@ describe('FileUpload unsafe upload: ', function () {
 describe('FileDownload: ',function(){
     var ptor = util.getPtorInstance()
 
-    it('login goto conversation where files uploaded', function () {
+    it('login goto conversation where files were uploaded', function () {
         util.login()
         util.waitForPageLoad('/start')
 
         util.get('/talks')
         util.waitForPageLoad('/talks')
 
-        util.waitForLoader()
+        util.waitForLoader(1)
 
         util.waitForElements("[data-qa='conversation-list-element']")
         util.headerSearchInList(subjectUnsafe)

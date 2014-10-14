@@ -5,13 +5,41 @@ module.exports = function(grunt, options){
 
     grunt.registerTask('app:create-webworker', [
         'clean:app-webworker',
-        'template:app-webworker'
+        'template:app-webworker',
+        'copy:app-webworker-mock-vendor'
     ]);
+
+
+    var webworker   =   ['keygen', 'rsa_decrypt', 'rsa_encrypt'],
+        files       =   webworker.map(function(job_name){
+                            console.log(job_name)
+                            var path    = 'app/webworker/'+job_name+'.js',
+                                object  = {}
+
+                            object[path] =  [
+                                                'resource/templates/webworker/'+job_name+'.js'
+                                            ]
+                            return object
+                        })
+
 
     return {
         tasks:{
             clean: {
                 'app-webworker': ['app/webworker']
+            },
+
+            copy: {
+                'app-webworker-mock-vendor': {
+                    files: [
+                        {
+                            expand: true,
+                            flatten: true,
+                            src: ['resource/templates/webworker/-mock-vendor.js'],
+                            dest: 'app/webworker/'
+                        }
+                    ]
+                }
             },
             template: {
                 'app-webworker': {
@@ -20,12 +48,8 @@ module.exports = function(grunt, options){
                             'currentVersion': options.globalCameoBuildConfig.config.version
                         }
                     },
-                    'files': {
-                        'app/webworker/keygen.js': [
-                            'resource/templates/webworker/keygen.js'
-                        ]
-                    }
-                }
+                    'files': files
+                }                
             }
         }
     }

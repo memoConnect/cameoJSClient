@@ -245,10 +245,12 @@ angular.module('cameoClient', [
     'cmAuthenticationRequest',
     'cmSystemCheck',
     'cmError',
+    'cmConversationFactory', //binds events to api!
+
     function ($rootScope, $location, $window, $document, $route, $timeout,
               cmUserModel, cmContactsModel, cmRootService, cmSettings,
               cmLanguage, cmLogger, cfpLoadingBar, cmEnv, cmVersion,
-              cmApi, cmAuthenticationRequest, cmSystemCheck, cmError) {
+              cmApi, cmAuthenticationRequest, cmSystemCheck, cmError, cmConversationFactory) {
 
         //prep $rootScope with useful tools
         $rootScope.console  =   window.console;

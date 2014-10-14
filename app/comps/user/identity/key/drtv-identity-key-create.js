@@ -20,6 +20,7 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
         return {
             restrict: 'E',
             templateUrl: 'comps/user/identity/key/drtv-identity-key-create.html',
+
             controller: function ($scope) {
 
                 var loader = new cmLoader($scope);
@@ -83,12 +84,15 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
                  */
                 $scope.generate = function(withoutTimerReset){
                     // generation timeout for very long generation
-                    // esspecially for iphone 4/4s ios7 uiwebview
+                    // especially for iphone 4/4s ios7 uiwebview
+                    
                     $timeout.cancel(generationTimeout);
                     generationTimeout = $timeout(function(){
                         $scope.cancelGeneration();
                         $scope.generate(true);
                     },generationTimeoutMinutes * 60 * 1000);
+
+
 
                     $scope.active = 'generate';
                     cmJob.start('DRTV.CONFIRM.STANDARD', $scope.cancelGeneration);
@@ -119,7 +123,7 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
 
                             $scope.active = 'store';
                         },
-                        function(){
+                        function(reason){
                             $scope.active = 'choose';
                         }
                     ).finally(
@@ -134,28 +138,25 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
                     reset();
                 });
 
-                /**
-                 * cancel keypair generation
-                 */
-                $scope.cancelGeneration = function(){
-                    //cmLogger.debug('cancel key generation');
-                    cmCrypt.cancelGeneration();
-                    reset();
-                    startTime = undefined
-                };
 
                 $scope.cancel = function(){
-//                    cmLogger.debug('cancel');
-                    $scope.cancelGeneration();
 
-                    if(typeof $rootScope.generateAutomatic != 'undefined'){
-                        /**
-                         * @TODO siwtch auch, wenn noch keine Talks vorhanden sind
-                         */
-                        $scope.goTo('/talks');
-                    } else {
-                        $scope.goBack();
-                    }
+                    cmCrypt.cancelGeneration()
+                    .then(function(){
+                        reset();
+                        startTime = undefined
+
+
+                        if(typeof $rootScope.generateAutomatic != 'undefined'){
+                            /**
+                             * @TODO siwtch auch, wenn noch keine Talks vorhanden sind
+                             */
+                            $scope.goTo('/talks');
+                        } else {
+                            $scope.goBack();
+                        }
+                        
+                    })
                 };
 
                 /**
