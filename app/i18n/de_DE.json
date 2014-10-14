@@ -9,12 +9,19 @@
         "VERSION": "Version"
     },
 
+<<<<<<< aeb36a59148d076707b8e5f56c962568d6ed0d4a
     "APP": {
         "ERROR_HEADER": "Ein Fehler ist aufgetreten.",
         "ERROR": {
             "LOGOUT": "Abmelden",
             "BACK_TO_TALKS": "Talks öffnen"
         }
+=======
+    "ERROR": {
+        "HEADER": "Ein Fehler ist aufgetreten.",
+        "LOGOUT": "Abmelden",
+        "BACK_TO_TALKS": "Talks"
+>>>>>>> 419cdbf1fd5b7500a43c68986730a38b1e43d22e
     },
 
     "LOGIN": {

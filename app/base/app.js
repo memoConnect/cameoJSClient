@@ -161,13 +161,13 @@ angular.module('cameoClient', [
                     return cmBoot.isReady.i18n();
                 };
 
-                if(angular.isDefined(_settings_['resolveUserModel']) && _settings_['resolveUserModel'] == true){
-                    routeParams.resolve.userModel = function (cmBoot) {
+                if (angular.isDefined(_settings_['resolveUserModel']) && _settings_['resolveUserModel'] == true){
+                    routeParams.resolve.userModel = function(cmBoot) {
                         return cmBoot.isReady.userModel();
                     }
                 }
 
-                if(angular.isDefined(_settings_['resolvePurl']) && _settings_['resolvePurl'] == true){
+                if (angular.isDefined(_settings_['resolvePurl']) && _settings_['resolvePurl'] == true){
                     routeParams.resolve.resolveData = function(cmBoot, $route) {
                         return cmBoot.isReady.purl($route.current.params.purlId);
                     }
@@ -222,6 +222,9 @@ angular.module('cameoClient', [
     // start entropy collection for random number generator
     sjcl.random.startCollectors();
 })
+.run(['cmError',function(cmError){
+    // only an inject is nessarary
+}])
 /**
  * @TODO cmContactsModel anders initialisieren
  */
