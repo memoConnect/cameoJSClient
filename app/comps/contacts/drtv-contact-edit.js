@@ -21,9 +21,10 @@ angular.module('cmContacts')
         'cmUtil',
         'cmNotify',
         'cmUserModel',
+        'cmLogger',
 
         function( $rootScope,$routeParams,
-                  cmContactsModel, cmIdentityFactory, cmUtil, cmNotify, cmUserModel){
+                  cmContactsModel, cmIdentityFactory, cmUtil, cmNotify, cmUserModel, cmLogger){
 
             return {
                 restrict:       'AE',
@@ -35,6 +36,11 @@ angular.module('cmContacts')
                 controller: function($scope, $element, $attrs){
                     $scope.cmUtil = cmUtil;
 
+                    $scope.hasLocalKey = !!cmUserModel.loadLocalKeys().length;
+
+                    $scope.contact = cmContactsModel.contacts.create($scope.contactId);
+                    $scope.identity = $scope.contact.identity;
+
                     $scope.formData = {
                         phoneNumbers: [{value:''}],
                         emails: [{value:''}]
@@ -42,50 +48,53 @@ angular.module('cmContacts')
 
                     $scope.chooseAvatar = false;
 
-                    $scope.isTrusted    = undefined
-                    $scope.hasKeys      = undefined
+                    $scope.isTrusted    = undefined;
+                    $scope.hasKeys      = undefined;
 
+                    function initContact(){
+                        cmLogger.debug('cmContactEdit.initContact');
 
-                    cmContactsModel.getOne($scope.contactId).then(
-                        function (data) {
-                            // set data froom api
-                            $scope.contact = data;
-                            // get identity model
-                            $scope.identity = cmIdentityFactory.create(data.identity,true);
+                        //////////////////////
+                        // TODO: mock workarround json in array
+                        $scope.formData.phoneNumbers = [
+                            $scope.identity.phoneNumber || {value:''}
+                        ];
+                        $scope.formData.emails = [
+                            $scope.identity.email || {value:''}
+                        ];
+                        //////////////////////
 
-                            //////////////////////
-                            // TODO: mock workarround json in array
-                            $scope.formData.phoneNumbers = [
-                                    $scope.identity.phoneNumber || {value:''}
-                            ];
-                            $scope.formData.emails = [
-                                    $scope.identity.email || {value:''}
-                            ];
-                            //////////////////////
+                        // cameo user can't edit only extern end local
+                        $scope.disabled = $scope.contact.contactType == 'internal' ? true : false;
 
-                            // cameo user can't edit only extern end local
-                            $scope.disabled = data.contactType == 'internal' ? true : false;
-
-                            if(!$scope.disabled){
-                                $scope.showCameoId = true;
-                            } else {
-                                $scope.showCameoId = false;
-                            }
-
-                            $scope.hasKeys = ($scope.identity.keys.length > 0);
-
-
-                            cmUserModel.verifyTrust($scope.identity)
-                            .then(
-                                function(){
-                                    $scope.isTrusted = true
-                                },
-                                function(){
-                                    $scope.isTrusted = false
-                                }
-                            )
+                        if(!$scope.disabled){
+                            $scope.showCameoId = true;
+                        } else {
+                            $scope.showCameoId = false;
                         }
-                    );
+
+                        $scope.hasKeys = ($scope.identity.keys.length > 0);
+
+                        cmUserModel.verifyTrust($scope.identity)
+                            .then(
+                            function(){
+                                $scope.isTrusted = true
+                            },
+                            function(){
+                                $scope.isTrusted = false
+                            }
+                        )
+                    }
+
+                    initContact();
+                    $scope.identity.on('update:finished',initContact);
+
+                    //$scope.contact.update();
+
+                    // $scope.hasKey = function(){
+                    //     return $scope.identity && $scope.identity.keys.length > 0;
+                    // };
+
 
                     /**
                      * handle every single contact via model
@@ -163,12 +172,6 @@ angular.module('cmContacts')
                         cmHooks.openKeyRequest($scope.identity);
                     };
 
-
-                    // $scope.hasKey = function(){
-                    //     return $scope.identity && $scope.identity.keys.length > 0;
-                    // };
-
-                    $scope.hasLocalKey = !!cmUserModel.loadLocalKeys().length;
                 }
             }
         }

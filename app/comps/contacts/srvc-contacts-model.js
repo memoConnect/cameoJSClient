@@ -23,13 +23,15 @@ angular.module('cmContacts').service('cmContactsModel',[
         this.contacts       =   new cmFactory(cmContactModel,
                                     function sameByData(instance, data){
                                         return data &&
+                                              (data.id == instance.id ||
                                                data.identity &&
                                                data.identity.id &&
                                                instance &&
                                                instance.identity &&
                                                instance.identity.id &&
-                                               data.identity.id == instance.identity.id
+                                               data.identity.id == instance.identity.id)
                                     });
+
         // TODO: groups must be in factory style with models
         this.groups         =   [];//new cmFactory(function(){return this;});
         this.requests       =   new cmFactory(cmFriendRequestModel, 
