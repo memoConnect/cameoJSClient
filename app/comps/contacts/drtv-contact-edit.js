@@ -83,7 +83,9 @@ angular.module('cmContacts')
                             function(){
                                 $scope.isTrusted = false
                             }
-                        )
+                        );
+
+                        $scope.identity.one('update:finished', initContact);
                     }
 
                     initContact();
