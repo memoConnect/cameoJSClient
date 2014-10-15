@@ -38,6 +38,11 @@ angular.module('cmConversations').service('cmConversationFactory', [
             if(cmUserModel.isGuest() || self.state.is('loading'))
                 return false;
 
+            // for spinner show only once
+            if(!self.state.is('first-load')) {
+                self.state.set('first-load');
+                self.state.set('initial-loading');
+            }
             self.state.set('loading');
 
             if(typeof limit === 'undefined'){
@@ -54,12 +59,14 @@ angular.module('cmConversations').service('cmConversationFactory', [
 
                     data.conversations.forEach(function (conversation_data) {
                         self.create(conversation_data);
-                    })
-
+                    });
                 }
             ).finally(
                 function(){
                     self.state.unset('loading');
+                    if(self.state.is('initial-loading')){
+                        self.state.unset('initial-loading');
+                    }
                 }
             )
         };

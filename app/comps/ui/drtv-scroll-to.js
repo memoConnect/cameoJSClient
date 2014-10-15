@@ -24,7 +24,10 @@ angular.module('cmUi').directive('cmScrollTo',[
                     return false;
                 }
 
-                function initTimeout(){
+                function initTimeout(where){
+
+                    console.log('cmScrollTo: '+where)
+
                     var anchor = angular.element($document[0].querySelector(scope.options.anchor)),
                         bodyAndHtml = angular.element($document[0].querySelectorAll('body,html')),
                         extraOffset = 0;
@@ -64,15 +67,15 @@ angular.module('cmUi').directive('cmScrollTo',[
                 if(!scope.options.onEvent) {
                     // drtv in ng-loop
                     if (attrs.ngRepeat && scope.$last) {
-                        initTimeout();
+                        initTimeout('last');
                     // drtv normal
                     } else if (!attrs.ngRepeat) {
-                        initTimeout();
+                        initTimeout('no-repeat');
                     }
                 // only via event broadcast
                 } else {
                     var scrollToEvent = $rootScope.$on('scroll:to',function(){
-                        initTimeout();
+                        initTimeout('event');
                     });
 
                     scope.$on('$destroy', function(){
