@@ -611,9 +611,6 @@ angular.module('cmCore')
                                                                     })
                                                         })
 
-                        console.dir(ttrusted_keys.map(function(key){return key.name}))
-                        console.dir(unsigned_ttrusted_keys.map(function(key){return key.name}))
-                    
                         if(sign != true || unsigned_ttrusted_keys.length == 0)
                             return $q.when(ttrusted_keys)
 

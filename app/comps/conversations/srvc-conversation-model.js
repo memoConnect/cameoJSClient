@@ -234,13 +234,13 @@ angular.module('cmConversations')
 
 
                 //Create passphraseVault:
-                
+                if(data.sePassphrase || data.aePassphraseList)
                 passphraseVault =   cmPassphraseVault.create({
                                         sePassphrase:       data.sePassphrase,
                                         aePassphraseList:   data.aePassphraseList
                                     })
 
-                if(passphraseVault.getKeyTransmission() != this.keyTransmission)
+                if(passphraseVault && (passphraseVault.getKeyTransmission() != this.keyTransmission))
                     cmLogger.debug('cmConversationModel: inconsistent data: keyTransmission')
                     //TODO
                 
@@ -642,7 +642,7 @@ angular.module('cmConversations')
             this.getPassphrase = function(){
 
                 if(!this.isEncrypted())
-                    return $q.reject()
+                    return $q.reject('not encrypted.')
 
                 if(!this.state.is('new') && !passphraseVault)
                     return $q.reject('new but passphrasevault missing.')
