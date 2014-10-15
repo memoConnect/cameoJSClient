@@ -1,6 +1,6 @@
 <article class="content edit-identity-head clearfix">
     <div class="cm-fl mr5">
-        <cm-avatar cm-data="identity" cm-view="{{chooseAvatar?'unknown':''}}" ng-show="identity" class="big"></cm-avatar>
+        <cm-avatar cm-data="contact.identity" cm-view="{{chooseAvatar?'unknown':''}}" ng-show="contact.identity" class="big"></cm-avatar>
     </div>
     <div class="cm-fl w72">
         <ul class="no-border">
@@ -71,7 +71,7 @@
         <div class="cm-input-ctn with-inside-icon cm-icon-grey" ng-class="{'cm-input-disabled':disabled}">
             <i class="fa cm-rhino-positive"></i>
             <input data-qa="input-cameoId" disabled
-                   type="text" name="cameoId" ng-model="identity.cameoId" />
+                   type="text" name="cameoId" ng-model="contact.identity.cameoId" />
         </div>
     </article>
 
@@ -82,7 +82,7 @@
         <div class="cm-input-ctn" ng-class="{'cm-input-disabled':disabled}">
             <input
                     tabindex="1" data-qa="input-displayname"
-                    type="text" name="displayName" ng-model="identity.displayName"
+                    type="text" name="displayName" ng-model="contact.identity.displayName"
                     ng-disabled="disabled" required />
         </div>
 

@@ -16,55 +16,33 @@ angular.module('cmContacts')
 
         '$rootScope',
         '$routeParams',
-        'cmContactsModel',
+        '$timeout',
         'cmIdentityFactory',
         'cmUtil',
         'cmNotify',
         'cmUserModel',
         'cmLogger',
 
-        function( $rootScope,$routeParams,
-                  cmContactsModel, cmIdentityFactory, cmUtil, cmNotify, cmUserModel, cmLogger){
+        function( $rootScope,$routeParams, $timeout,
+                  cmIdentityFactory, cmUtil, cmNotify, cmUserModel, cmLogger){
 
             return {
                 restrict:       'AE',
                 scope:          {
-                    contactId: '=cmContactId'
+                    contact: '=cmData'
                 },
                 templateUrl:    'comps/contacts/drtv-contact-edit.html',
 
                 controller: function($scope, $element, $attrs){
-                    $scope.cmUtil = cmUtil;
 
-                    $scope.hasLocalKey = !!cmUserModel.loadLocalKeys().length;
+                    function refresh(){
+                        $scope.hasLocalKey = !!cmUserModel.loadLocalKeys().length;
 
-                    $scope.contact = cmContactsModel.contacts.create($scope.contactId);
+                        $scope.chooseAvatar = false;
 
-                    $scope.formData = {
-                        phoneNumbers: [{value:''}],
-                        emails: [{value:''}]
-                    };
+                        $scope.isTrusted    = undefined;
+                        $scope.hasKeys      = undefined;
 
-                    $scope.chooseAvatar = false;
-
-                    $scope.isTrusted    = undefined;
-                    $scope.hasKeys      = undefined;
-
-                    function initContact(){
-                        //cmLogger.debug('cmContactEdit.initContact');
-                        $scope.identity = $scope.contact.identity;
-
-                        //////////////////////
-                        // TODO: mock workarround json in array
-                        $scope.formData.phoneNumbers = [
-                            $scope.identity.phoneNumber || {value:''}
-                        ];
-                        $scope.formData.emails = [
-                            $scope.identity.email || {value:''}
-                        ];
-                        //////////////////////
-
-                        // cameo user can't edit only extern end local
                         $scope.disabled = $scope.contact.contactType == 'internal' ? true : false;
 
                         if(!$scope.disabled){
@@ -73,26 +51,23 @@ angular.module('cmContacts')
                             $scope.showCameoId = false;
                         }
 
-                        $scope.hasKeys = ($scope.identity.keys.length > 0);
-
-                        cmUserModel.verifyTrust($scope.identity)
-                            .then(
+                        $scope.hasKeys = ($scope.contact.identity.keys.length > 0);
+                        
+                        cmUserModel.verifyTrust($scope.contact.identity)
+                        .then(
                             function(){
-                                $scope.isTrusted = true
+                                $scope.isTrusted = true;
                             },
                             function(){
-                                $scope.isTrusted = false
+                                $scope.isTrusted = false;
                             }
                         );
-
-                        $scope.identity.one('update:finished', initContact);
                     }
+                    
+                    refresh()
 
-                    initContact();
+                    
 
-                    $scope.contact.on('update:finished',initContact);
-
-                    $scope.contact.update();
 
                     // $scope.hasKey = function(){
                     //     return $scope.identity && $scope.identity.keys.length > 0;
@@ -115,7 +90,7 @@ angular.module('cmContacts')
                     };
 
                     $scope.goToAuthentication = function(identity){
-                        if(identity.userType != 'external' && identity.publicKeys.length > 0){
+                        if(identity.userType != 'external' && identity.keys.length > 0){
                             $rootScope.goTo('authentication/identity/' + identity.id);
                         }
                     };
@@ -174,6 +149,13 @@ angular.module('cmContacts')
                     $scope.startTrustHandshake = function(){
                         cmHooks.openKeyRequest($scope.identity);
                     };
+
+                    $scope.contact.identity.on('update:finished', refresh)
+
+                    $scope.$on('$destroy', function(){
+                        $scope.contact.identity.off('update:finished', refresh)
+                    })
+
 
                 }
             }

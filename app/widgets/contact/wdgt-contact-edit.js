@@ -17,9 +17,9 @@ angular.module('cmWidgets')
         return {
             restrict: 'E',
             scope: {
-                contactId: '=cmContactId'
+                contact: "=cmData"
             },
-            templateUrl: 'widgets/contact/wdgt-contact-edit.html'
+            templateUrl: 'widgets/contact/wdgt-contact-edit.html',
         }
     }
 ]);
