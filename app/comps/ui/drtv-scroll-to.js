@@ -25,9 +25,6 @@ angular.module('cmUi').directive('cmScrollTo',[
                 }
 
                 function initTimeout(where){
-
-                    console.log('cmScrollTo: '+where)
-
                     var anchor = angular.element($document[0].querySelector(scope.options.anchor)),
                         bodyAndHtml = angular.element($document[0].querySelectorAll('body,html')),
                         extraOffset = 0;

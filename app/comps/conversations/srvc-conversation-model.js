@@ -407,10 +407,15 @@ angular.module('cmConversations')
                         )
             };
 
-            this.update = function(conversation_data){
+            this.update = function(conversation_data, fromDrtvInit){
                 var offset = 0,
-                    limit = 10,
                     clearAllMessages = false;
+
+                // unbind load prev messages but scroll to last message
+                if(fromDrtvInit && self.messages.length >= limit){
+                    $rootScope.$broadcast('scroll:to');
+                    return this;
+                }
 
                 if(this.id){
                     if(typeof conversation_data !== 'undefined'){
@@ -420,6 +425,13 @@ angular.module('cmConversations')
                     } else {
                         self._updateConversation(limit, self.messages.length, clearAllMessages);
                     }
+                }
+
+                // after update scroll to last message
+                if(fromDrtvInit) {
+                    this.one('update:finished', function() {
+                        $rootScope.$broadcast('scroll:to');
+                    });
                 }
 
                 return this;

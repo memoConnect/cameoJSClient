@@ -296,6 +296,8 @@ angular.module('cmConversations')
                     $rootScope.pendingConversation = $scope.conversation;
 
                     // reload details of conversation
+                    $scope.conversation.update(undefined, true);
+
                     self.addPendingRecipients();
                     // $scope.showAsymmetricKeyError();
 
