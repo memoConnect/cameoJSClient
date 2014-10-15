@@ -54,7 +54,8 @@ angular.module('cmConversations')
         function ConversationModel(data){
             var self                = this,
                 passphraseVault     = undefined,
-                encryption_disabled = undefined
+                encryption_disabled = undefined,
+                limit               = 10;
 
             this.id                 = undefined;
             
@@ -117,12 +118,12 @@ angular.module('cmConversations')
                 // via id
                 if(typeof data == 'string' && data.length > 0){
                     self.id = data;
-                    self.update();
+                    self.load();
                 // via data.id
                 } else if(typeof data == 'object' && ('id' in data)){
                     self.id = data.id;
                     if(cmUtil.objLen(data) < 2){
-                        self.update();
+                        self.load();
                     } else {
                         self.importData(data);
                     }
@@ -249,7 +250,7 @@ angular.module('cmConversations')
                  * Important for none encrypted Conversations
                  */
                 if(!this.state.is('new') && this.keyTransmission == 'none')
-                    self.disableEncryption()
+                    self.disableEncryption();
                 
 
                 // getting locally saved pw for conversation
@@ -335,7 +336,7 @@ angular.module('cmConversations')
                 {
                     this.state.set('loading');
 
-                    cmConversationsAdapter.getConversation(this.id).then(
+                    cmConversationsAdapter.getConversation(this.id, limit, self.messages.length).then(
                         function(conversation_data){
                             self.importData(conversation_data);
 
@@ -375,7 +376,7 @@ angular.module('cmConversations')
                                     passphrase:         undefined,   // will be generated
                                     password:           this.password,
                                     identities:         this.recipients,
-                                    restrict_to_keys:   undefined,   // encrypt for all recipient keys
+                                    restrict_to_keys:   undefined   // encrypt for all recipient keys
                                 })  
                             :   undefined 
                         )
@@ -430,7 +431,7 @@ angular.module('cmConversations')
              * @param clearMessages
              */
             this._updateConversation = function(limit, offset, clearMessages){
-                cmConversationsAdapter.getConversation(this.id, limit, offset).then(
+                cmConversationsAdapter.getConversationMessages(this.id, limit, offset).then(
                     function(data){
 
                         self.state.set('loadedMessages');
