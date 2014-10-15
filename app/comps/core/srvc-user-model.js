@@ -633,7 +633,9 @@ angular.module('cmCore')
             return  identity.keys.length != 0
                     ?   this.verifyIdentityKeys(identity, true)
                         .then(function(trusted_keys){
-                            $q.when(identity.keys.length == trusted_keys.length)
+                            identity.keys.length == trusted_keys.length
+                            ?   $q.when()
+                            :   $q.reject('untrusted key found.')
                         })
                     :  $q.reject('missing keys.')
         };

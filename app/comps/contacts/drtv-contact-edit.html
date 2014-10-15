@@ -5,7 +5,7 @@
     <div class="cm-fl w72">
         <ul class="no-border">
             <li>
-                <section ng-if="!getTrust() && !hasKey() || !hasLocalKey" class="cm-disabled">
+                <section ng-if="!isTrusted && (!hasKeys || !hasLocalKey)" class="cm-disabled">
                      <span class="item clearfix">
                         <i  class="fa cm-no-key cm-ci-color"></i>
                          keine cameoKeys
@@ -15,7 +15,7 @@
                     </section>
                 </section>
 
-                <section ng-if="!getTrust() && hasKey() && hasLocalKey">
+                <section ng-if="!isTrusted && hasKeys && hasLocalKey">
                      <span class="item clearfix">
                         <i  class="fa cm-key cm-ci-color"></i>
                         cameoKey vorhanden
@@ -25,7 +25,7 @@
                     </section>
                 </section>
 
-                <section ng-if="getTrust()" data-qa="trust-confirmed">
+                <section ng-if="isTrusted" data-qa="trust-confirmed">
                      <span class="item clearfix">
                         <i  class="fa cm-connection-trusted cm-ci-color"></i>
                         Kontakt wird vertraut
@@ -36,7 +36,7 @@
                 </section>
             </li>
 
-            <li class="no-border" data-qa="start-trust-handshake-btn" ng-click="goToAuthentication(contact.identity)" ng-if="!getTrust() && hasKey() && hasLocalKey">
+            <li class="no-border" data-qa="start-trust-handshake-btn" ng-click="goToAuthentication(contact.identity)" ng-if="!isTrusted && hasKeys && hasLocalKey">
                 <span class="item clearfix">
                         <i  class="fa cm-handshake"></i>
                         Kontakt vertrauen

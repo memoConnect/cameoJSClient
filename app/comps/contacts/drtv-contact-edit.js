@@ -41,6 +41,11 @@ angular.module('cmContacts')
                     };
 
                     $scope.chooseAvatar = false;
+
+                    $scope.isTrusted    = undefined
+                    $scope.hasKeys      = undefined
+
+
                     cmContactsModel.getOne($scope.contactId).then(
                         function (data) {
                             // set data froom api
@@ -66,6 +71,19 @@ angular.module('cmContacts')
                             } else {
                                 $scope.showCameoId = false;
                             }
+
+                            $scope.hasKeys = ($scope.identity.keys.length > 0);
+
+
+                            cmUserModel.verifyTrust($scope.identity)
+                            .then(
+                                function(){
+                                    $scope.isTrusted = true
+                                },
+                                function(){
+                                    $scope.isTrusted = false
+                                }
+                            )
                         }
                     );
 
@@ -127,6 +145,7 @@ angular.module('cmContacts')
                             return false;
                         }
 
+
                         // everything is fine let's add the contact
                         cmContactsModel
                         .editContact($routeParams.id, identity)
@@ -144,14 +163,10 @@ angular.module('cmContacts')
                         cmHooks.openKeyRequest($scope.identity);
                     };
 
-                    $scope.getTrust = function(){
-                        //Todo:
-                        return $scope.identity && cmUserModel.verifyTrust($scope.identity);
-                    };
 
-                    $scope.hasKey = function(){
-                        return $scope.identity && $scope.identity.keys.length > 0;
-                    };
+                    // $scope.hasKey = function(){
+                    //     return $scope.identity && $scope.identity.keys.length > 0;
+                    // };
 
                     $scope.hasLocalKey = !!cmUserModel.loadLocalKeys().length;
                 }
