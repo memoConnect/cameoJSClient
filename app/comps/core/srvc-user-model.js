@@ -630,8 +630,12 @@ angular.module('cmCore')
         };
 
         this.verifyTrust = function(identity){
-            return      identity.keys.length > 0
-                    &&  identity.keys.length == this.verifyIdentityKeys(identity, true).length //true: sign keys if needed 
+            return  identity.keys.length != 0
+                    ?   this.verifyIdentityKeys(identity, true)
+                        .then(function(trusted_keys){
+                            $q.when(identity.keys.length == trusted_keys.length)
+                        })
+                    :  $q.reject('missing keys.')
         };
 
         this.clearLocalKeys = function(){

@@ -145,6 +145,7 @@ angular.module('cmContacts')
                     };
 
                     $scope.getTrust = function(){
+                        //Todo:
                         return $scope.identity && cmUserModel.verifyTrust($scope.identity);
                     };
 
