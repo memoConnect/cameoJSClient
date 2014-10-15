@@ -67,8 +67,10 @@ angular.module('cmCore')
 
             this.start = function(data, timeout){
                 var onMessage   =  function(event){
-                                        if(event.data.msg == 'finished')
+                                        if(event.data.msg == 'finished'){
                                             deferred.resolve(event.data)
+                                            self.terminate()
+                                        }
 
                                         if(['canceled', 'failed', 'error'].indexOf(event.data.msg) != -1){
                                             deferred.reject(event.data)
@@ -110,6 +112,7 @@ angular.module('cmCore')
 
             this.terminate = function(){
                 worker.terminate()
+                delete worker
             }
         }
     }

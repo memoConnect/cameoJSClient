@@ -573,7 +573,7 @@ angular.module('cmCore')
         };
 
         this.signOwnKeys = function(){
-            // cmLogger.debug('cmUserModel.signOwnKeys');
+            //cmLogger.debug('cmUserModel.signOwnKeys');
             return this.verifyIdentityKeys(this.data.identity, true)
         }
 
@@ -586,9 +586,9 @@ angular.module('cmCore')
             //cmLogger.debug('cmUserModel.verifyIdentityKeys');
 
             if(!identity.keys)
-                return [];
+                return $q.when([]);
 
-            var local_keys              =   this.loadLocalKeys()
+            var local_keys = this.loadLocalKeys()
 
             return  $q.when()
                     .then(function(){
@@ -602,7 +602,7 @@ angular.module('cmCore')
                                 });
                     })
                     .then(function(ttrusted_keys){
-                        //looks for keys that are transitively trusted but not yet signed:
+                        //looks for keys that are transitively trusted but not yet signed by all local keys:
                         var unsigned_ttrusted_keys  =   ttrusted_keys.filter(function(ttrusted_key){
                                                             return  local_keys.some(function(local_key){
                                                                         return  ttrusted_key.signatures.every(function(signature){
@@ -610,6 +610,9 @@ angular.module('cmCore')
                                                                                 })
                                                                     })
                                                         })
+
+                        console.dir(ttrusted_keys.map(function(key){return key.name}))
+                        console.dir(unsigned_ttrusted_keys.map(function(key){return key.name}))
                     
                         if(sign != true || unsigned_ttrusted_keys.length == 0)
                             return $q.when(ttrusted_keys)
@@ -618,7 +621,8 @@ angular.module('cmCore')
 
                         $q.all(
                             unsigned_ttrusted_keys.map(function(ttrusted_key){
-                                return function(){ self.signPublicKey(ttrusted_key, ttrusted_key.getFingerprint(), identity) }
+                                console.info('signing: '+ttrusted_key.name)
+                                return self.signPublicKey(ttrusted_key, ttrusted_key.getFingerprint(), identity)
                             })
                         )
                         .finally(function(){
@@ -871,6 +875,7 @@ angular.module('cmCore')
             if(typeof data.id != 'undefined' && data.id == self.data.identity.id) {
                 self.data.identity.importData(data);
                 self.syncLocalKeys();
+                self.signOwnKeys()
             }
         });
 

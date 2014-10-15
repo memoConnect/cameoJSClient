@@ -47,26 +47,41 @@ describe('Authentication requests -', function () {
     }
 
     var checkKeyTrust = function (keyName, isTrusted) {
-        $$("[data-qa='key-list-item']").then(function (keys) {
-            keys.forEach(function (key) {
-                key.getText().then(function (text) {
-                    if (text.search(keyName) > -1) {
-                        if (isTrusted) {
-                            expect(text).toContain("trusted")
-                            expect(text).not.toContain("untrusted")
-                        } else {
-                            expect(text).toContain("untrusted")
-                        }
-                    }
-                })
-            })
+        var trust = {}
+
+        ptor.getCurrentUrl().then(function(url){
+            if(!url.match("/settings/identity/key/list"))
+                util.get("/settings/identity/key/list")
+            return
         })
+        .then(function(){
+            console.log('Key "'+keyName+'" to be ' + (isTrusted ? 'trusted' : 'untrusted') + ' .')
+
+            ptor.wait(function(){
+               return   $$("[data-qa='key-list-item']")
+                        .map(function(key){
+                            return  key.getText()
+                                    .then(function(text){
+                                        return text
+                                    })
+                        })
+                        .then(function(result){        
+
+                            return  result.some(function(text){
+                                        return      text.match(keyName)
+                                                &&  text.match(isTrusted ? 'trusted' : 'untrusted')
+                                    })  
+                        })
+            }, 5000, 'for Key "'+keyName+'" to be ' + (isTrusted ? 'trusted' : 'untrusted') + ' .') 
+        })
+
     }
 
-    var getAuthEvent = function (token, eventSubscription, index, skip) {
+    var getAuthEvent = function (token, eventSubscription, index, skip) { 
         var s = skip || 0
         var events = []
-        var get = function () {
+
+        function get(){
             util.getEvents(token, eventSubscription).then(function (res) {
 
                 var e = res.data.events.filter(function (event) {
@@ -183,6 +198,7 @@ describe('Authentication requests -', function () {
             util.login(testUser1, "password")
             util.get("/settings/identity/key/list")
             util.waitForElements("[data-qa='key-list-item']", 2)
+            ptor.debugger()
             checkKeyTrust(keyName1, true)
             checkKeyTrust(keyName3, false)
             util.waitForEventSubscription()
@@ -226,6 +242,7 @@ describe('Authentication requests -', function () {
 
         it("both keys should now be trusted", function () {
             util.get("/settings/identity/key/list")
+            ptor.debugger()
             util.waitForElements("[data-qa='key-list-item']", 2)
             checkKeyTrust(keyName1, true)
             checkKeyTrust(keyName3, true)
@@ -441,11 +458,11 @@ describe('Authentication requests -', function () {
         })
 
         it("all three keys should now be trusted", function () {
-            ptor.wait(function () {
-                return $("cm-identity-key-list").getText().then(function (text) {
-                    return text.indexOf("untrusted") == -1
-                })
-            })
+            // ptor.wait(function () {
+            //     return $("cm-identity-key-list").getText().then(function (text) {
+            //         return text.indexOf("untrusted") == -1
+            //     })
+            // })
 
             checkKeyTrust(keyName1, true)
             checkKeyTrust(keyName2, true)
