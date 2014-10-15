@@ -59,6 +59,21 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
                 })
             },
 
+            getConversationMessages: function(id, limit, offset) {
+                var queryString = cmUtil.handleLimitOffset(limit,offset);
+
+                if(queryString == ''){
+                    queryString += '?' + cmUserModel.getLocalKeyIdsForRequest();
+                } else {
+                    queryString += cmUserModel.getLocalKeyIdsForRequest();
+                }
+
+                return cmApi.get({
+                    path: '/conversation/'+ id + '/messages' + queryString
+                })
+            },
+
+
             getPurl: function(id){
                 return cmApi.get({
                     path:'/purl/' + id + '?' +  cmUserModel.getLocalKeyIdsForRequest()
