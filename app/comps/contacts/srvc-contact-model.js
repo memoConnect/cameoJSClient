@@ -4,11 +4,17 @@ angular.module('cmContacts')
 .factory('cmContactModel', [
     'cmContactsAdapter',
     'cmIdentityFactory',
+    'cmObject',
+    'cmStateManagement',
     'cmUtil',
     'cmLogger',
-    function(cmContactsAdapter, cmIdentityFactory, cmUtil, cmLogger){
+    function(cmContactsAdapter, cmIdentityFactory, cmObject, cmStateManagement, cmUtil, cmLogger){
         function ContactModel(data){
             var self = this;
+
+            cmObject.addEventHandlingTo(this);
+
+            this.state  = new cmStateManagement(['loading']);
 
             this.id            = undefined;
             this.contactType   = undefined;
@@ -16,7 +22,7 @@ angular.module('cmContacts')
             this.identity      = cmIdentityFactory.new();
 
             function init(data){
-                cmLogger.debug('cmContactModel:init');
+                //cmLogger.debug('cmContactModel:init');
 
                 // via id
                 if(typeof data == 'string' && data.length > 0){
@@ -36,7 +42,7 @@ angular.module('cmContacts')
             }
 
             this.importData = function(data) {
-                cmLogger.debug('cmContactModel.importData');
+                //cmLogger.debug('cmContactModel.importData');
 
                 if(typeof data !== 'object'){
                     cmLogger.debug('cmContactModel:import:failed - no data!');
@@ -47,6 +53,8 @@ angular.module('cmContacts')
                 this.contactType = data.contactType || this.contactType;
                 this.groups = data.groups || this.groups;
                 this.identity = data.identity ? cmIdentityFactory.create(data.identity, true) : this.identity;
+
+                this.trigger('update:finished');
             };
 
             this.setContactType = function(type){
@@ -55,9 +63,11 @@ angular.module('cmContacts')
             };
 
             this.update = function(){
-                cmLogger.debug('cmContactModel.update');
+                //cmLogger.debug('cmContactModel.update');
 
-                if(this.id){
+                if(this.id && !this.state.is('loading')){
+                    this.state.set('loading');
+
                     cmContactsAdapter.getOne(this.id).then(
                         function(data){
                             self.importData(data);
@@ -65,11 +75,16 @@ angular.module('cmContacts')
                         function(){
                             cmLogger.debug('cmContactModel.update fail!');
                         }
+                    ).finally(
+                        function(){
+                            self.state.unset('loading');
+                        }
                     );
                 }
             };
 
-            init(data)
+            init(data);
+
         }
 
         return ContactModel;

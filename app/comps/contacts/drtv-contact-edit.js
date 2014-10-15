@@ -39,7 +39,6 @@ angular.module('cmContacts')
                     $scope.hasLocalKey = !!cmUserModel.loadLocalKeys().length;
 
                     $scope.contact = cmContactsModel.contacts.create($scope.contactId);
-                    $scope.identity = $scope.contact.identity;
 
                     $scope.formData = {
                         phoneNumbers: [{value:''}],
@@ -52,7 +51,8 @@ angular.module('cmContacts')
                     $scope.hasKeys      = undefined;
 
                     function initContact(){
-                        cmLogger.debug('cmContactEdit.initContact');
+                        //cmLogger.debug('cmContactEdit.initContact');
+                        $scope.identity = $scope.contact.identity;
 
                         //////////////////////
                         // TODO: mock workarround json in array
@@ -87,9 +87,10 @@ angular.module('cmContacts')
                     }
 
                     initContact();
-                    $scope.identity.on('update:finished',initContact);
 
-                    //$scope.contact.update();
+                    $scope.contact.on('update:finished',initContact);
+
+                    $scope.contact.update();
 
                     // $scope.hasKey = function(){
                     //     return $scope.identity && $scope.identity.keys.length > 0;

@@ -21,7 +21,7 @@ angular.module('cmCore')
              * @returns {Message}
              */
             function init(data){
-                self.clear()
+                self.clear();
 
                 if(typeof data == 'string' && data.length > 0){
                     self.id = data;
@@ -45,7 +45,7 @@ angular.module('cmCore')
              * @param identity_data
              */
             this.importData = function(data){
-                cmLogger.debug('cmIdentityModel.importData');
+                //cmLogger.debug('cmIdentityModel.importData');
                 if(typeof data !== 'object'){
                     cmLogger.debug('cmIdentityModel:import:failed - no data!');
                     return this;
