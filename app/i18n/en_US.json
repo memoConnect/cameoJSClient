@@ -769,6 +769,7 @@
     },
 
     "SECURITY_ASPECT": {
+        "HEADLINE": "Encryption",
         "CONVERSATION": {
             "ENCRYPTED": {
                 "NAME": "Talk is encrypted.",

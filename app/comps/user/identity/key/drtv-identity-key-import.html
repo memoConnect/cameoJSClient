@@ -1,17 +1,20 @@
-<article class="content">
+<article class="content cm-form-style">
     <h3>{{'SETTINGS.PAGES.IDENTITY.KEYS.PRIVATE_KEY'|cmTranslate}}</h3>
 
-    <textarea class="form-control" ng-model="privKey" ng-readonly="isValid" data-qa="display-private-key"></textarea>
+    <textarea ng-model="privKey" ng-readonly="isValid" data-qa="display-private-key"></textarea>
 
     <h3 ng-if="keySize" class="mt15">{{'SETTINGS.PAGES.IDENTITY.KEYS.KEY_SIZE'|cmTranslate}}: {{keySize}}</h3>
     <div ng-show="isValid">
         <h3>{{'SETTINGS.PAGES.IDENTITY.KEYS.PUBLIC_KEY'|cmTranslate}}</h3>
 
-        <textarea class="form-control" ng-model="pubKey" readonly="readonly" data-qa="display-public-key"></textarea>
+        <textarea ng-model="pubKey" readonly="readonly" data-qa="display-public-key"></textarea>
 
         <h3>{{'SETTINGS.PAGES.IDENTITY.KEYS.KEY_NAME'|cmTranslate}}</h3>
 
-        <input class="form-control" ng-model="keyName" type="text" data-qa="input-key-name" />
+        <div class="cm-input-ctn with-inside-icon">
+            <input ng-model="keyName" type="text" data-qa="input-key-name" />
+            <i class="fa cm-write"></i>
+        </div>
     </div>
 </article>
 

@@ -13,6 +13,6 @@
     <cm-info-bubble cm-bind-template="aspect.template"></cm-info-bubble>
 </section>
 
-<span class="toggleOption">
+<span class="toggleOption" ng-if="showToggleOptions">
     <a ng-click="aspect.toggle()" ng-if="aspect.isToggleAble" class="classic-link">{{aspect.languagePrefix+"."+aspect.id+".TOGGLE"|cmTranslate}}</a>
 </span>

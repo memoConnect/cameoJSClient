@@ -4,24 +4,45 @@
     </div>
     <div class="cm-fl w72">
         <ul class="no-border">
-            <li data-qa="start-trust-handshake-btn" ng-click="goToAuthentication(contact.identity)"  ng-disabled="getTrust() || !hasKey() || !hasLocalKey">
-                 <span class="item clearfix">
-                    <i ng-if="!hasKey() || !hasLocalKey" class="fa cm-close"></i>
-                    <i ng-if="hasKey() && hasLocalKey" class="fa {{ getTrust() ? 'cm-checkbox-right' : 'cm-handshake'}}"></i>
-                    <!--{{'IDENTITY.LABEL.KEYMANAGEMENT'|cmTranslate}}-->
-                    Kontakt vertrauen
-                 </span>
-                <section class="icon-list">
-                    <i class="fa cm-right position-exception"></i>
+            <li>
+                <section ng-if="!getTrust() && !hasKey() || !hasLocalKey" class="cm-disabled">
+                     <span class="item clearfix">
+                        <i  class="fa cm-no-key cm-ci-color"></i>
+                         keine cameoKeys
+                     </span>
+                    <section class="icon-list">
+                        <i class="fa cm-info"></i>
+                    </section>
+                </section>
+
+                <section ng-if="!getTrust() && hasKey() && hasLocalKey">
+                     <span class="item clearfix">
+                        <i  class="fa cm-key cm-ci-color"></i>
+                        cameoKey vorhanden
+                     </span>
+                    <section class="icon-list">
+                        <i class="fa cm-info"></i>
+                    </section>
+                </section>
+
+                <section ng-if="getTrust()" data-qa="trust-confirmed">
+                     <span class="item clearfix">
+                        <i  class="fa cm-connection-trusted cm-ci-color"></i>
+                        Kontakt wird vertraut
+                     </span>
+                    <section class="icon-list">
+                        <i class="fa cm-info"></i>
+                    </section>
                 </section>
             </li>
-            <li class="no-border cm-disabled" data-qa="btn-identity-trust">
+
+            <li class="no-border" data-qa="start-trust-handshake-btn" ng-click="goToAuthentication(contact.identity)" ng-if="!getTrust() && hasKey() && hasLocalKey">
                 <span class="item clearfix">
-                    <i class="fa cm-checker fa-2x"></i>
-                    {{'IDENTITY.LABEL.TRUST'|cmTranslate}}
-                </span>
+                        <i  class="fa cm-handshake"></i>
+                        Kontakt vertrauen
+                     </span>
                 <section class="icon-list">
-                    <i class="fa cm-right position-exception"></i>
+                    <i class="fa cm-right"></i>
                 </section>
             </li>
         </ul>
@@ -30,9 +51,8 @@
 
 <hr class="margin-small" />
 
-
 <!-- show all talks with this user -->
-<article class="item">
+<!--<article class="item">
     <span class="body">
         <i class="fa cm-talk"></i>
         Alle Talks mit diesem Kontakt anzeigen
@@ -43,6 +63,7 @@
 </article>
 
 <hr class="margin-small" />
+-->
 
 <form name="cmForm" novalidate autocomplete="off">
     <article class="content" ng-if="!showCameoId" data-qa="internal-user">

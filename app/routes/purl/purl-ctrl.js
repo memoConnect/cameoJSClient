@@ -3,7 +3,7 @@
 angular.module('cmRoutes')
 .controller('PurlCtrl',[
     'cmModal', 'cmPurlModel', 'cmConversationFactory',
-    '$scope', '$rootScope', '$routeParams','resolveData',
+    '$scope', '$rootScope', '$routeParams', 'resolveData',
     function(cmModal, cmPurlModel, cmConversationFactory,
              $scope, $rootScope, $routeParams, resolveData){
 
@@ -43,7 +43,7 @@ angular.module('cmRoutes')
                 'class': 'with-title no-padding theme-b',
                 'cm-close-btn': false,
                 'cm-close-on-backdrop': false
-            },'<div cm-login></div>');
+            },'<div cm-login-modal></div>');
             cmModal.open('login');
 
             $rootScope.$on('cmLogin:success', function(){
@@ -51,7 +51,6 @@ angular.module('cmRoutes')
             });
         };
 
-        //
         //console.log('resolveData', resolveData);
         //console.log('$routeParams.purlId',$routeParams.purlId)
 

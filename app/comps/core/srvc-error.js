@@ -45,7 +45,7 @@ angular.module('cmCore')
 
             cmLogger.error(JSON.stringify(error,null,2));
 
-            if('message' in exception && exception.message.indexOf('defined') >= 0){
+            if(typeof exception == 'object' && 'message' in exception && exception.message.indexOf('defined') >= 0){
                 $injector.get('cmError').showOnPage(error);
             }
 

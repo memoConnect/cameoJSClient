@@ -769,6 +769,7 @@
     },
 
     "SECURITY_ASPECT": {
+        "HEADLINE": "Status Verschlüsselung",
         "CONVERSATION": {
             "ENCRYPTED": {
                 "NAME": "Dieser Talk ist verschlüsselt.",

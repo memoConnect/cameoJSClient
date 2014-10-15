@@ -23,21 +23,27 @@ this.getPtorInstance = function () {
         self.stopOnError()
     })
 
-    return ptor;
+    return ptor
 }
 
 this.stopOnError = function () {
-    if (config.stopOnError) {
-        var passed = jasmine.getEnv().currentSpec.results().passed();
-        if (!passed) {
-            jasmine.getEnv().specFilter = function (spec) {
-                return false;
-            };
+    if (!config.stopOnError) {
+        return false;
+    }
+
+    var passed = jasmine.getEnv().currentSpec.results().passed();
+    if (!passed) {
+        jasmine.getEnv().specFilter = function (spec) {
+            return false;
         }
     }
 }
 
 this.checkErrorLogs = function(){
+    if(!config.showConsoleError) {
+        return false;
+    }
+
     ptor.manage().logs().get('browser').then(function(browserLog) {
         var errors = [];
 

@@ -598,7 +598,7 @@ describe('Authentication requests -', function () {
                 util.waitForElements("cm-contact-tag", 2)
                 util.headerSearchInList(testUser2)
                 util.waitAndClick("cm-contact-tag")
-                expect($("[data-qa='start-trust-handshake-btn']").isElementPresent(by.css(".cm-checkbox-right"))).toBe(true)
+                expect($("[data-qa='trust-confirmed']").isDisplayed()).toBe(true)
             })
 
             it("get authentication:start event send to testUser2", function () {
@@ -636,7 +636,8 @@ describe('Authentication requests -', function () {
                 util.waitForElements("cm-contact-tag", 2)
                 util.headerSearchInList(testUser1)
                 util.waitAndClick("cm-contact-tag")
-                expect($("[data-qa='start-trust-handshake-btn']").isElementPresent(by.css(".cm-checkbox-right"))).toBe(true)
+                //expect($("[data-qa='start-trust-handshake-btn']").isElementPresent(by.css(".cm-checkbox-right"))).toBe(true)
+                expect($("[data-qa='trust-confirmed']").isDisplayed()).toBe(true)
             })
         })
 
@@ -663,7 +664,8 @@ describe('Authentication requests -', function () {
                 util.waitForElements("cm-contact-tag", 2)
                 util.headerSearchInList(testUser2)
                 util.waitAndClick("cm-contact-tag")
-                expect($("[data-qa='start-trust-handshake-btn']").isElementPresent(by.css(".cm-checkbox-right"))).toBe(true)
+                //expect($("[data-qa='start-trust-handshake-btn']").isElementPresent(by.css(".cm-checkbox-right"))).toBe(true)
+                expect($("[data-qa='trust-confirmed']").isDisplayed()).toBe(true)
             })
         })
     })
