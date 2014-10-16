@@ -245,7 +245,7 @@ angular.module('cmCore')
                         }
                     )
 
-                        // otherwise use browser instance
+                // otherwise use browser instance
                 } else {
                     var self = this,
                         time = -((new Date()).getTime()),
@@ -275,6 +275,16 @@ angular.module('cmCore')
                 }
 
                 return async.promise.promise;
+            },
+
+            generateSyncKeypair: function(keySize){
+                if (keySize == undefined ||
+                    typeof keySize != 'number') {
+                    return false;
+                }
+                var crypt = new JSEncrypt({default_key_size: keySize});
+                crypt.getKey();
+                return crypt.getPrivateKey();
             },
             /**
              * cancel key generation process / simple clearInterval

@@ -19,6 +19,16 @@ self.addEventListener('message', function(event) {
                 });
             });
         break;
+        case 'start-sync':
+            time = -((new Date()).getTime());
+            crypt = new JSEncrypt({default_key_size: data.keySize});
+            crypt.getKey();
+            self.postMessage({
+                msg:        'finished',
+                timeElapsed:(time + ((new Date()).getTime())),
+                privKey:    crypt.key.getPrivateKey()
+            });
+        break;
         case 'cancel':
             if(crypt != null) {
                 crypt.cancelAsync();
