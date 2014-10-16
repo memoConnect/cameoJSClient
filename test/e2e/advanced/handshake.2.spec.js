@@ -657,8 +657,11 @@ describe('Authentication requests -', function () {
                 util.waitForElements("cm-contact-tag", 2)
                 util.headerSearchInList(testUser1)
                 util.waitAndClick("cm-contact-tag")
-                //expect($("[data-qa='start-trust-handshake-btn']").isElementPresent(by.css(".cm-checkbox-right"))).toBe(true)
-                expect($("[data-qa='trust-confirmed']").isDisplayed()).toBe(true)
+                ptor.wait(function(){
+                    return $$("[data-qa='trust-confirmed']").then(function(items){
+                        return items.length > 0 
+                    })
+                }, 2000, '[data-qa="trust-confirmed"]')
             })
         })
 
@@ -685,8 +688,11 @@ describe('Authentication requests -', function () {
                 util.waitForElements("cm-contact-tag", 2)
                 util.headerSearchInList(testUser2)
                 util.waitAndClick("cm-contact-tag")
-                //expect($("[data-qa='start-trust-handshake-btn']").isElementPresent(by.css(".cm-checkbox-right"))).toBe(true)
-                expect($("[data-qa='trust-confirmed']").isDisplayed()).toBe(true)
+                ptor.wait(function(){
+                    return $$("[data-qa='trust-confirmed']").then(function(items){
+                        return items.length > 0 
+                    })
+                }, 2000, '[data-qa="trust-confirmed"]')
             })
         })
     })

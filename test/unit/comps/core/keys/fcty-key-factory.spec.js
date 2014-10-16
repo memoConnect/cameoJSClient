@@ -103,6 +103,11 @@ describe('cmKeyFactory', function() {
                 expect(new cmKeyFactory().getWeakestKeySize()).toBe(0)
             })
 
+            console.log('missing test')
+            it('should determine transitive trust.', function(){
+
+            })
+
     })
 
 
