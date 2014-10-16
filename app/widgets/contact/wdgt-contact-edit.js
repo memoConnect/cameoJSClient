@@ -34,8 +34,32 @@ angular.module('cmWidgets')
                 templateUrl:    'widgets/contact/wdgt-contact-edit.html',
 
                 controller: function($scope, $element, $attrs){
+                    $scope.cmUtil = cmUtil;
+
+                    $scope.hasLocalKey = !!cmUserModel.loadLocalKeys().length;
+
+                    $scope.formData = {
+                        phoneNumbers: [{value:''}],
+                        emails: [{value:''}]
+                    };
+
+                    $scope.chooseAvatar = false;
+
+                    $scope.isTrusted    = undefined;
+                    $scope.hasKeys      = undefined;
+
 
                     function refresh(){
+                        //////////////////////
+                        // TODO: mock workarround json in array
+                        $scope.formData.phoneNumbers = [
+                            $scope.contact.identity.phoneNumber || {value:''}
+                        ];
+                        $scope.formData.emails = [
+                            $scope.contact.identity.email || {value:''}
+                        ];
+                        //////////////////////
+
                         $scope.hasLocalKey = !!cmUserModel.loadLocalKeys().length;
 
                         $scope.chooseAvatar = false;
@@ -64,15 +88,7 @@ angular.module('cmWidgets')
                         );
                     }
                     
-                    refresh()
-
-                    
-
-
-                    // $scope.hasKey = function(){
-                    //     return $scope.identity && $scope.identity.keys.length > 0;
-                    // };
-
+                    refresh();
 
                     /**
                      * handle every single contact via model
@@ -155,7 +171,6 @@ angular.module('cmWidgets')
                     $scope.$on('$destroy', function(){
                         $scope.contact.identity.off('update:finished', refresh)
                     })
-
 
                 }
             }
