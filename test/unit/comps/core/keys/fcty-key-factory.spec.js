@@ -73,8 +73,6 @@ describe('cmKeyFactory', function() {
                 var passphrase  = "x", //test key cannot handle longer passphrases
                     key_list    
 
-                console.log('test')
-
                 runs(function(){
                     keys.encryptPassphrase(passphrase)
                     .then(function(result){
