@@ -55,8 +55,6 @@ describe('Authentication requests -', function () {
             return
         })
         .then(function(){
-            console.log('Key "'+keyName+'" to be ' + (isTrusted ? 'trusted' : 'untrusted') + ' .')
-
             ptor.wait(function(){
                return   $$("[data-qa='key-list-item']")
                         .map(function(key){
@@ -198,7 +196,6 @@ describe('Authentication requests -', function () {
             util.login(testUser1, "password")
             util.get("/settings/identity/key/list")
             util.waitForElements("[data-qa='key-list-item']", 2)
-            ptor.debugger()
             checkKeyTrust(keyName1, true)
             checkKeyTrust(keyName3, false)
             util.waitForEventSubscription()
@@ -242,7 +239,6 @@ describe('Authentication requests -', function () {
 
         it("both keys should now be trusted", function () {
             util.get("/settings/identity/key/list")
-            ptor.debugger()
             util.waitForElements("[data-qa='key-list-item']", 2)
             checkKeyTrust(keyName1, true)
             checkKeyTrust(keyName3, true)
@@ -383,6 +379,7 @@ describe('Authentication requests -', function () {
         })
 
         it("should be not able to read conversation from key3", function () {
+            ptor.debugger()
             util.readConversation(subject3, "- encrypted -")
         })
 
@@ -415,7 +412,6 @@ describe('Authentication requests -', function () {
 
         it("enter transaction secret and submit", function () {
             util.setVal("inp-transactSecret", transactionSecret)
-            ptor.debugger()
             util.waitAndClickQa('btn-acceptRequest')
             util.waitForElementDisappear("cm-modal.active [data-qa='inp-transactSecret']")
         })
@@ -688,6 +684,7 @@ describe('Authentication requests -', function () {
                 util.waitForElements("cm-contact-tag", 2)
                 util.headerSearchInList(testUser2)
                 util.waitAndClick("cm-contact-tag")
+                ptor.debugger()
                 ptor.wait(function(){
                     return $$("[data-qa='trust-confirmed']").then(function(items){
                         return items.length > 0 

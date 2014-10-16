@@ -128,11 +128,13 @@ angular.module('cmCore')
 
             this.sign = function(data){
 
-                return  cmWebworker
-                        ?   new cmWebworker('rsa_sign')
-                            .start({
-                                privKey:    this.getPrivateKey(),
-                                data:       data
+                return  cmWebworker.available
+                        ?   cmWebworker.new('rsa_sign')
+                            .then(function(worker){
+                                return  worker.start({
+                                            privKey:    self.getPrivateKey(),
+                                            data:       data
+                                        })
                             })
                             .then(function(result){
                                 return $q.when(result.signature)
@@ -153,12 +155,15 @@ angular.module('cmCore')
                         //             :   $q.reject()
                         // })
                         .catch(function(){
-                            return  cmWebworker
-                                    ?   new cmWebworker('rsa_verify')
-                                        .start({
-                                            pubKey:     self.getPublicKey(),
-                                            signature:  signature,
-                                            data:       data
+                            return  cmWebworker.available
+                                    ?   cmWebworker.new('rsa_verify')
+                                        .then(function(worker){
+                                            return  worker.start({
+                                                        pubKey:     self.getPublicKey(),
+                                                        signature:  signature,
+                                                        data:       data
+                                                    })
+                                            
                                         })
                                         .then(function(result){
                                             return $q.when(result.result)
@@ -184,11 +189,13 @@ angular.module('cmCore')
             }
 
             this.encrypt = function(secret){
-                return  cmWebworker
-                        ?   new cmWebworker('rsa_encrypt')
-                            .start({
-                                pubKey:     this.getPublicKey(),
-                                secret:     secret
+                return  cmWebworker.available
+                        ?   cmWebworker.new('rsa_encrypt')
+                            .then(function(worker){
+                                return  worker.start({
+                                            pubKey:     self.getPublicKey(),
+                                            secret:     secret
+                                        }) 
                             })
                             .then(function(result){
                                 return  result.secret
@@ -203,11 +210,13 @@ angular.module('cmCore')
             };
 
             this.decrypt = function(encrypted_secret){
-                return  cmWebworker
-                        ?   new cmWebworker('rsa_decrypt')
-                            .start({
-                                privKey:            this.getPrivateKey(),
-                                encryptedSecret:    encrypted_secret
+                return  cmWebworker.available
+                        ?   cmWebworker.new('rsa_decrypt')
+                            .then(function(worker){
+                                return  worker.start({
+                                            privKey:            self.getPrivateKey(),
+                                            encryptedSecret:    encrypted_secret
+                                        })
                             })
                             .then(
                                 function(result){

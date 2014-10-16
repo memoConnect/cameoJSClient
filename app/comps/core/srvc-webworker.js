@@ -49,24 +49,26 @@
         */
 
 angular.module('cmCore')
-.factory('cmWebworker',[
+.service('cmWebworker',[
 
     '$q',
     '$timeout',
-    
-    function cmWebWorker($q, $timeout){
 
-        if(!window.Worker)
-            return false
+    function cmWebWorker($q, $timeout, cmFactory){
 
-        return function WebWorkerInstance(job_name){
+        this.available = !!window.Worker
+
+        var self                = this,
+            number_of_workers   = 0
+
+        function WebWorkerInstance(job_name){
             var worker      = new Worker('webworker/'+job_name+'.js'),
                 deferred    = $q.defer(),
                 self        = this
 
+            number_of_workers ++
 
-            this.start = function(data, timeout){
-                var onMessage   =  function(event){
+            var onMessage   =  function(event){
                                         if(event.data.msg == 'finished'){
                                             deferred.resolve(event.data)
                                             self.terminate()
@@ -79,18 +81,15 @@ angular.module('cmCore')
 
                                         if(event.data.msg == 'notify')
                                             deferred.notify(event.data)
-                                    }
+                                }
 
+            this.start = function(data, timeout){
                 if(timeout)
                     $timeout(function(){ 
                         deferred.reject('timeout')
                         self.cancel()
                     }, timeout)
 
-                deferred.promise
-                .then(function(){
-                    worker.removeEventListener('message', onMessage)
-                }) 
 
                 data.cmd = 'start'
 
@@ -111,10 +110,25 @@ angular.module('cmCore')
             }
 
             this.terminate = function(){
+                worker.removeEventListener('message', onMessage)
                 worker.terminate()
+                number_of_workers --
+                console.warn('number of workers: '+number_of_workers)
                 delete worker
+                delete deferred 
             }
         }
+
+
+        this.new = function(job_name){
+            console.warn('number of workers: '+ (number_of_workers+1))
+            return  number_of_workers < 20
+                    ?   $q.when(new WebWorkerInstance(job_name))
+                    :   $timeout(function(){
+                            return self.new(job_name)
+                        }, 1000, false)
+        }    
+
     }
 
 ])

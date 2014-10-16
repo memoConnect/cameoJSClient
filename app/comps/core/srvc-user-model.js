@@ -681,20 +681,24 @@ angular.module('cmCore')
                                 if(list.length == 0)
                                     return []
 
-                                $q.all(
-                                    list.map(function(item){
-                                        return  self.decryptPassphrase(item.aePassphrase, localKey.id)
-                                                .then(function(passphrase){
-                                                    return newKey.encrypt(passphrase)
-                                                })
-                                                .then(function(encrypted_passphrase){
-                                                    return  {
-                                                                conversationId: item.conversationId, 
-                                                                aePassphrase:   encrypted_passphrase
-                                                            }
-                                                })
-                                    })
-                                )
+                                
+                                //re and encrypt passphrasees one by one, dont try to de and encrypt them all simultaniuosly:
+                                list.reduce(function(previous_run, item){
+                                    return  previous_run
+                                            .then(function(list_so_far){
+                                                return  self.decryptPassphrase(item.aePassphrase, localKey.id)
+                                                        .then(function(passphrase){
+                                                            return newKey.encrypt(passphrase)
+                                                        })
+                                                        .then(function(encrypted_passphrase){
+                                                            return  list_so_far.concat([{
+                                                                        conversationId: item.conversationId, 
+                                                                        aePassphrase:   encrypted_passphrase
+                                                                    }])
+                                                        })
+
+                                            })
+                                }, $q.when([]))
                                 .then(function(newList){
                                     return  cmAuth.saveBulkPassphrases(newKey.id, newList)
                                 })

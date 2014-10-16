@@ -224,11 +224,13 @@ angular.module('cmCore')
                 async.promise = $q.defer();
                 // start keygen over webworker
                 
-                if(cmWebworker){
-                    keygenWorker = new cmWebworker('rsa_keygen')
-
-                    keygenWorker
-                    .start( {keySize: keySize} )
+                if(cmWebworker.available){
+                    cmWebworker.new('rsa_keygen')
+                    .then(function(worker){
+                        keygenWorker = worker
+                        return  keygenWorker
+                                .start( {keySize: keySize} )
+                     })   
                     .then(
                         function(result){
 
@@ -282,7 +284,7 @@ angular.module('cmCore')
              * @returns {boolean}
              */
             cancelGeneration: function(withoutReject){
-                if(cmWebworker){
+                if(cmWebworker.available){
                     return keygenWorker.cancel()
                 } else if(async.crypt != null){
                         // clear promise and library vars if param withReject is true

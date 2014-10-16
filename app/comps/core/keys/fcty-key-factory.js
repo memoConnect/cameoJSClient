@@ -65,8 +65,6 @@ angular.module('cmCore')
                     return $q.reject()
                 }       
 
-                console.log('trusted keys: ', trustedKeys)
-
                 return  $q.all(self.map(function(key){
                             var is_trusted =    trustedKeys.indexOf(key) != -1                           
                                                 ?   $q.when(key)

@@ -287,6 +287,7 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
             var modal = cmModal.instances['incoming-authentication-request']
 
             if(modal && modal.isActive()){
+                console.log('Request, modal active ', request, modal.request)
                 // If request comes from the same origin as the ongoing request then update:
                 if(modal.request.fromIdentityId == request.fromIdentityId)
                     modal.request = request
