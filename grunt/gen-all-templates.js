@@ -6,11 +6,11 @@ module.exports = function(grunt, options) {
     grunt.registerTask('app:gen-all-templates', [
         'protractor:e2e:config',// protractor.js
         'template:app-files',
-        'template:cockpit',
         'app:create-webworker',// webworker.js
         'phonegap:app-config',// phonegap-to-buildserver.js
         'protractor:config',// protractor.js
-        'app:create-style-via-less'// less.js
+        'app:create-style-via-less',// less.js
+        'cockpit:deploy'// cockpit.js
     ]);
 
     return {
@@ -46,18 +46,6 @@ module.exports = function(grunt, options) {
                         'build/app/base/config.js': ['app/base/config.js'],
                         // performance page
                         'dist/app/performance.html': ['core/performance.html']
-                    }
-                },
-                'cockpit': {
-                    'options': {
-                        'data': {
-                            'currentVersion': options.globalCameoBuildConfig.config.version,
-                            'basePath': options.globalCameoBuildConfig.cockpit.basePath,
-                            'appPath': options.globalCameoBuildConfig.cockpit.appPath
-                        }
-                    },
-                    'files': {
-                        'dist/cockpit/index.html': ['cockpit/index.html']
                     }
                 }
             }
