@@ -241,9 +241,9 @@ angular.module('cmConversations')
                     });
                 }
 
-                if(passphraseVault.getKeyTransmission() != this.keyTransmission)
-                    cmLogger.debug('cmConversationModel: inconsistent data: keyTransmission')
-                    //TODO
+                //if(passphraseVault.getKeyTransmission() != this.keyTransmission)
+                //    cmLogger.debug('cmConversationModel: inconsistent data: keyTransmission')
+                //    //TODO
                 
                 //this.keyTransmission = passphraseVault.getKeyTransmission()
 
