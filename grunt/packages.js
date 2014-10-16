@@ -136,7 +136,7 @@ module.exports = function(grunt, options){
                     src: [
                         'build/app/base/config.js',
                         'app/base/app.js',
-                        'build/app/packages/**/package.js'
+                        'build/app/packages/*.js'
                     ],
                     dest: 'dist/app/cameo.' + options.globalCameoBuildConfig.config.version + '.js'
                 }
