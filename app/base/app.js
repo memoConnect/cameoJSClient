@@ -128,7 +128,6 @@ angular.module('cameoClient', [
                     } else {
                         routeParams.templateUrl = 'routes/' + routeKey + '/' + routeKey + '.html';
                     }
-
                 }
                 // check if route has/need controller
                 if (angular.isDefined(_settings_['hasCtrl']) && _settings_.hasCtrl === true){

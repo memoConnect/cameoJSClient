@@ -21,7 +21,10 @@ module.exports = function(grunt, options){
                 .replace(/\s{2,100}(<)/gm, '<')// clear whitespaces before html tag
                 .replace(/\s{2,100}/gm, ' ')// clear whitespaces on line
                 .replace(/(')/gm, "\\'");// uncomment single quotes,
-            filepath = filepath.replace('app/', '');
+            filepath = filepath
+                    .replace('core/', '')
+                    .replace('app/', '')
+                    .replace('desktop/', '');
             // add to template array for module schmusi
             concatCmTemplatesFound.push(filepath);
 
@@ -133,6 +136,12 @@ module.exports = function(grunt, options){
                     })
                 },
                 'app-cameo': {
+                    options:{
+                        banner: "'use strict';\n",
+                        process: function(src) {
+                            return src.replace(/(^|\n)[ \t]*('use strict'|"use strict");?\s*/g, '$1');
+                        }
+                    },
                     src: [
                         'build/app/base/config.js',
                         'app/base/app.js',
