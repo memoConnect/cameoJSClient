@@ -125,7 +125,6 @@ describe('Identity key settings: ', function () {
         })
     })
 
-
     it('generate another local key and delete local storage', function () {
         util.generateKey(1, keyName)
         util.clearLocalStorage()
