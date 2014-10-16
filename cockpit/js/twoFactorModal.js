@@ -7,7 +7,7 @@ angular.module("twoFactorModal", ["cmCore", "ui.bootstrap"])
             function showTwoFactorModal() {
 
                 var modalInstance = $modal.open({
-                    templateUrl: "/c/twoFactorModal.html",
+                    templateUrl: "twoFactorModal.html",
                     controller: function ($rootScope, $scope, $modalInstance) {
 
 
