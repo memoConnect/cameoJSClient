@@ -257,6 +257,10 @@ angular.module('cameoClient', [
         $rootScope.console  =   window.console;
         $rootScope.alert    =   window.alert;
 
+        $rootScope.$watch(function(){
+            cmLogger.debug('$digest!')
+        })
+
         //add Overlay handles:
         $rootScope.showOverlay = function(id){ $rootScope.$broadcast('cmOverlay:show', id) };
         $rootScope.hideOverlay = function(id){ $rootScope.$broadcast('cmOverlay:hide', id) };
