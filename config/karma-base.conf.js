@@ -9,14 +9,14 @@ module.exports = function(config) {
         // list of files / patterns to load in the browser
         files: [
             'test/lib/jquery/*.js',
-            'app/vendor*.js',
+            'dist/app/vendor*.js',
             'test/lib/angular/angular-mocks.js',
-            'app/cameo*.js',
+            'dist/app/cameo*.js',
 
             // all specs
             'test/unit/**/*.spec.js',
 
-            'app/**/*.json',
+            'core/i18n/*.json',
             'build/i18n/language-keys.json'
         ],
 
@@ -25,13 +25,12 @@ module.exports = function(config) {
         },
 
         preprocessors: {
-            'app/**/*.json': ['json2js'],
+            'core/i18n/*.json': ['json2js'],
             'build/i18n/language-keys.json': ['json2js']
         },
 
         // list of files to exclude
         exclude: [
-            'app/**/main.js'
         ],
 
         // test results reporter to use
