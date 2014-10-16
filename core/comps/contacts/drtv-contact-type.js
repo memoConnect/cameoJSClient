@@ -17,7 +17,7 @@ angular.module('cmContacts').directive('cmContactType',[
 
                     var contact = data.contactType
                                 ? data
-                                : cmContactsModel.findByIdentity(data)
+                                : cmContactsModel.findByIdentity(data),
                         type    = contact ? contact.contactType : 'unknown',
                         icon    = ''
 

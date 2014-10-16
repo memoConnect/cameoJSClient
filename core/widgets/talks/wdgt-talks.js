@@ -29,7 +29,9 @@ angular.module('cmWidgets')
                  * init conversations to scope
                  */
                 $scope.conversations = cmConversationFactory;
-                $scope.conversations.getList();
+                if($scope.conversations.length == 0){
+                    $scope.conversations.getList();
+                }
 
                 /**
                  * load more Conversations
@@ -38,7 +40,7 @@ angular.module('cmWidgets')
                     if(cmUserModel.isAuth() != false){
                         $scope.conversations.getList($scope.conversations.getLimit(), $scope.conversations.length);
                     }
-                }
+                };
 
                 /**
                  * Show More Button
