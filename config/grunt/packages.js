@@ -118,13 +118,6 @@ module.exports = function(grunt, options){
                     },
                     files: concatCreateCmPackages({
                         'core': 'app/comps/core',
-                        'core-cockpit': {
-                            packagePath: 'app/comps/core',
-                            moduleName: 'core-cockpit',
-                            //                        include:'*(*api|*auth|*crypt|*logger)',
-                            exclude: '!(fcty-|pack-|-module|*identity|*language|*notify|*cron|*job|*localstorage|*usermodel|*util)',
-                            file: 'package-cockpit.js'
-                        },
                         'conversations': 'app/comps/conversations',
                         'contacts': 'app/comps/contacts',
                         'user': 'app/comps/user',
