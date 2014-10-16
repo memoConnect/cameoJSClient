@@ -10,11 +10,11 @@ module.exports = function (grunt, options) {
     ]);
     grunt.registerTask('tests-e2e:tier1', [
         'tests-e2e:prepare',
-        'protractor:tier1',
+        'protractor:tier1'
     ]);
     grunt.registerTask('tests-e2e:tier2', [
         'tests-e2e:prepare',
-        'protractor:tier2',
+        'protractor:tier2'
     ]);
     grunt.registerTask('tests-e2e:tier3', [
         'tests-e2e:prepare',
@@ -22,12 +22,11 @@ module.exports = function (grunt, options) {
     ]);
     grunt.registerTask('tests-e2e:all', [
         'tests-e2e:prepare',
-        'protractor:all',
+        'protractor:all'
     ]);
     grunt.registerTask('tests-e2e:prepare', [
         'test:generate-keys',
         'app:gen-all-templates',
-        'app:js-files'
     ]);
 
     grunt.registerTask('tests-2e2', ['tests-e2e']);

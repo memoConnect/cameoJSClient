@@ -4,9 +4,25 @@ module.exports = function(grunt, options) {
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-template');
 
-    grunt.registerTask('app:copy-core', [
+    grunt.registerTask('app:gen-all-templates', [
+        'template:app-files',// app.js
+        'template:cockpit-files',// cockpit.js
+        'protractor:e2e:config',// protractor.js
+        'app:create-webworker',// webworker.js
+        'phonegap:app-config',// phonegap-to-buildserver.js
+        'protractor:config',// protractor.js
+        'app:create-style-via-less',// less.js
+        'app:js-files'//packages.js
+    ]);
+
+    grunt.registerTask('app:deploy-without-template', [
         'clean:app-dist',
-        'copy:app-core'
+        'copy:app-files'
+    ]);
+
+    grunt.registerTask('app:deploy-full', [
+        'app:deploy-without-template',
+        'template:app-files'
     ]);
 
     return {
@@ -17,7 +33,7 @@ module.exports = function(grunt, options) {
                 ]
             },
             copy: {
-                'app-core': {
+                'app-files': {
                     files: [
                         {
                             expand: true,

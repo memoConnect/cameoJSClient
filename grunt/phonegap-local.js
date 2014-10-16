@@ -2,7 +2,7 @@ module.exports = function(grunt, options){
 
     grunt.loadNpmTasks('grunt-phonegap');
 
-    grunt.registerTask('phonegap:adb-run', [
+    grunt.registerTask('phonegap:build-n-run', [
         'phonegap:app-prepare',
         'phonegap:build',
         'phonegap:run'

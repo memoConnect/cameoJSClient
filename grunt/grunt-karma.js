@@ -5,7 +5,6 @@ module.exports = function (grunt, options) {
     grunt.registerTask('tests-unit', [
         'app:gen-all-templates',
         'search:language-keys',
-        'app:js-files',
         'karma:jenkins'
     ]);
 

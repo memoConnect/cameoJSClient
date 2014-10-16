@@ -7,14 +7,13 @@ module.exports = function(grunt, options){
     grunt.registerTask('app:create-download-page', [
         'clean:app-dl',
         'template:app-index-dl',
-        'copy:app-resources-dl',
-        'copy:phonegap-target'
+        'copy:app-resources-dl'
     ]);
 
     return {
         tasks:{
             clean:{
-                'app-dl': ['dist/dl']
+                'app-dl': ['dist/dl/gfx']
             },
             copy: {
                 'app-resources-dl': {

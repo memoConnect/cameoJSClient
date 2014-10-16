@@ -4,9 +4,13 @@ module.exports = function(grunt, options) {
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-template');
 
-    grunt.registerTask('cockpit:deploy', [
+    grunt.registerTask('cockpit:deploy-without-template', [
         'clean:cockpit-dist',
-        'copy:cockpit-files',
+        'copy:cockpit-files'
+    ]);
+
+    grunt.registerTask('cockpit:deploy-full', [
+        'cockpit:deploy-without-template',
         'template:cockpit-files'
     ]);
 

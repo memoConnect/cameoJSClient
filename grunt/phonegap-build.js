@@ -32,7 +32,7 @@ module.exports = function(grunt, options){
     ]);
 
     var archive = {
-        app: 'build/phonegap-target/cameoNetApp.zip'
+        app: 'dist/dl/cameoNetApp.zip'
     };
 
     return {
@@ -63,16 +63,6 @@ module.exports = function(grunt, options){
                             dest: 'build/phonegap/www/res/'
                         }
                     ]
-                },
-                'phonegap-target': {
-                    files: [
-                        {
-                            expand: true,
-                            cwd: 'build/phonegap-target',
-                            src: ['*', '!*.zip'],
-                            dest: 'dist/dl/'
-                        }
-                    ]
                 }
             },
             template: {
@@ -87,7 +77,7 @@ module.exports = function(grunt, options){
                         }
                     },
                     'files': {
-                        'build/phonegap/www/index.html': ['resource/templates/app/index.html']
+                        'build/phonegap/www/index.html': ['app/index.html']
                     }
                 },
                 'app-config-phonegap': {
@@ -116,9 +106,9 @@ module.exports = function(grunt, options){
                             password: options.globalCameoSecrets.phonegap.password
                         },
                         download: {
-                            ios: 'build/phonegap-target/' + options.globalCameoBuildConfig.phonegap.phonegapBaseFilename + '.ipa',
-                            android: 'build/phonegap-target/' + options.globalCameoBuildConfig.phonegap.phonegapBaseFilename + '.apk',
-                            winphone: 'build/phonegap-target/' + options.globalCameoBuildConfig.phonegap.phonegapBaseFilename + '.xap'
+                            ios: 'dist/dl/' + options.globalCameoBuildConfig.phonegap.phonegapBaseFilename + '.ipa',
+                            android: 'dist/dl/' + options.globalCameoBuildConfig.phonegap.phonegapBaseFilename + '.apk',
+                            winphone: 'dist/dl/' + options.globalCameoBuildConfig.phonegap.phonegapBaseFilename + '.xap'
                         }
                     }
                 },

@@ -3,9 +3,11 @@ module.exports = function(grunt, options){
     grunt.loadNpmTasks('grunt-contrib-watch');
 
     grunt.registerTask('watcher', [
-        'app:copy-core',
+        'app:deploy-without-template',
+        'cockpit:deploy-without-template',
+
         'app:gen-all-templates',
-        'app:js-files',
+
         'concurrent:app'
     ]);
 
@@ -31,8 +33,7 @@ module.exports = function(grunt, options){
                         'app/*.html'
                     ],
                     tasks: [
-                        'app:gen-all-templates',
-                        'app:js-files'
+                        'app:gen-all-templates'
                     ]
                 },
                 'app-css':{

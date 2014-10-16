@@ -19,13 +19,13 @@ module.exports = function(grunt, options){
 
                 iOS: {
                     options: {
-                        file: 'build/phonegap-target/' + options.globalCameoBuildConfig.phonegap.phonegapBaseFilename + '.ipa'
+                        file: 'dist/dl/' + options.globalCameoBuildConfig.phonegap.phonegapBaseFilename + '.ipa'
                     }
                 },
 
                 android: {
                     options: {
-                        file: 'build/phonegap-target/' + options.globalCameoBuildConfig.phonegap.phonegapBaseFilename + '.apk'
+                        file: 'dist/dl/' + options.globalCameoBuildConfig.phonegap.phonegapBaseFilename + '.apk'
                     }
                 }
             }
