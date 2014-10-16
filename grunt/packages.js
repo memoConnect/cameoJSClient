@@ -63,7 +63,7 @@ module.exports = function(grunt, options){
         Object.keys(packagesObject).forEach(function (packageName) {
             var settings,
                 moduleName = packageName;
-            exclude = '!(-module-' + moduleName + ')',
+                exclude = '!(-module-' + moduleName + ')',
                 include = '*',
                 packagePath = packagesObject[packageName],
                 file = 'package.js';
@@ -78,7 +78,7 @@ module.exports = function(grunt, options){
                 file = settings.file || file;
             }
 
-            packages[packagePath.replace('app/', 'dist/app/packages/') + '/' + file] = [
+            packages['build/app/packages/' + packageName + '.js'] = [
                     packagePath + '/**/*.html', // at last all templates
                     packagePath + '/-module-' + moduleName + '.js', // at first module
                     packagePath + '/**/' + exclude + include + '.js' // all directives / services / factorys etc
@@ -93,6 +93,8 @@ module.exports = function(grunt, options){
             clean: {
                 'app-js-files': [
                     'app/packages/**/*.js',
+                    'dist/packages/**/*.js',
+                    'build/packages/**/*.js',
                     'app/vendor*.js',
                     'app/cameo*.js'
                 ]
@@ -103,13 +105,13 @@ module.exports = function(grunt, options){
                 },
                 'app-vendor': {
                     src: [
-                        'app/vendor/!(angular)/*.js',
-                        'app/vendor/!(angular)/**/*.js',
-                        'app/vendor/angular/base/angular.js',
-                        'app/vendor/angular/base/angular-*.js',
-                        'app/vendor/angular/!(base)/*.js'
+                        'core/vendor/!(angular)/*.js',
+                        'core/vendor/!(angular)/**/*.js',
+                        'core/vendor/angular/base/angular.js',
+                        'core/vendor/angular/base/angular-*.js',
+                        'core/vendor/angular/!(base)/*.js'
                     ],
-                    dest: 'app/vendor.' + options.globalCameoBuildConfig.config.version + '.js'
+                    dest: 'dist/app/vendor.' + options.globalCameoBuildConfig.config.version + '.js'
                 },
                 'app-packages': {
                     options: {
@@ -117,26 +119,26 @@ module.exports = function(grunt, options){
                         process: concatConvertCmFiles
                     },
                     files: concatCreateCmPackages({
-                        'core': 'app/comps/core',
-                        'conversations': 'app/comps/conversations',
-                        'contacts': 'app/comps/contacts',
-                        'user': 'app/comps/user',
-                        'validate': 'app/comps/validate',
-                        'files': 'app/comps/files',
-                        'security_aspects': 'app/comps/security_aspects',
-                        'ui': 'app/comps/ui',
-                        'phonegap': 'app/comps/phonegap',
+                        'core': 'core/comps/core',
+                        'conversations': 'core/comps/conversations',
+                        'contacts': 'core/comps/contacts',
+                        'user': 'core/comps/user',
+                        'validate': 'core/comps/validate',
+                        'files': 'core/comps/files',
+                        'security_aspects': 'core/comps/security_aspects',
+                        'ui': 'core/comps/ui',
+                        'phonegap': 'core/comps/phonegap',
                         'routes': 'app/routes',
-                        'widgets': 'app/widgets'
+                        'widgets': 'core/widgets'
                     })
                 },
                 'app-cameo': {
                     src: [
-                        'app/base/config.js',
+                        'build/app/base/config.js',
                         'app/base/app.js',
-                        'dist/app/packages/**/package.js'
+                        'build/app/packages/**/package.js'
                     ],
-                    dest: 'app/cameo.' + options.globalCameoBuildConfig.config.version + '.js'
+                    dest: 'dist/app/cameo.' + options.globalCameoBuildConfig.config.version + '.js'
                 }
             }
         }

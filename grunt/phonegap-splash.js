@@ -12,7 +12,7 @@ module.exports = function(grunt, options){
             phonegapsplash: {
                 build: {
                     src: 'resource/phonegap/res/screen/splash-canevas.png',
-                    dest: 'dist/phonegapsplash/',
+                    dest: 'build/phonegapsplash/',
                     options: {
                         layouts: ['portrait'],
                         profiles: ['android', 'ios', 'windows-phone']

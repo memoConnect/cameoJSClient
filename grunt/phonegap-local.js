@@ -13,10 +13,10 @@ module.exports = function(grunt, options){
             phonegap: {
                 // https://www.npmjs.org/package/grunt-phonegap
                 config: {
-                    root: 'dist/phonegap/www',
-                    config: 'dist/phonegap/www/config.xml',
+                    root: 'build/phonegap/www',
+                    config: 'build/phonegap/www/config.xml',
                     cordova: '.cordova',
-                    path: 'phonegap-build',
+                    path: 'build/phonegap-build',
                     plugins: ['./resource/phonegap/plugins/org.apache.cordova.contacts'],
                     platforms: ['android'],
                     maxBuffer: 200, // You may need to raise this for iOS.

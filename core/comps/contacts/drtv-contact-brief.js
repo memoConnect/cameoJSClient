@@ -7,11 +7,9 @@ angular.module('cmContacts')
     function(){
         return {
             restrict : 'AE',
-
             template: '<div class="name" data-qa="contact-display-name">' +
                         '{{contact.identity.getDisplayName()}}' +
-                      '</div>'+
-                      ''
+                      '</div>'
         }
     }
 ]);

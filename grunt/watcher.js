@@ -3,6 +3,7 @@ module.exports = function(grunt, options){
     grunt.loadNpmTasks('grunt-contrib-watch');
 
     grunt.registerTask('watcher', [
+        'app:copy-core',
         'app:gen-all-templates',
         'app:js-files',
         'concurrent:app'
@@ -26,7 +27,8 @@ module.exports = function(grunt, options){
                 'app-other':{
                     files: [
                         'config/*.json',
-                        'resource/templates/**/*'
+                        'resource/templates/**/*',
+                        'app/*.html'
                     ],
                     tasks: [
                         'app:gen-all-templates',
@@ -35,8 +37,8 @@ module.exports = function(grunt, options){
                 },
                 'app-css':{
                     files: [
-                        'app/less/!(_old)/**/*.less',
-                        'app/less/*.less'
+                        'core/less/!(_old)/**/*.less',
+                        'core/less/*.less'
                     ],
                     tasks: [
                         'app:create-style-via-less'
@@ -45,10 +47,10 @@ module.exports = function(grunt, options){
                 'app-js':{
                     files: [
                         'app/base/app.js',
-                        'app/comps/**/*',
+                        'core/comps/**/*',
                         'app/routes/**/*',
-                        'app/widgets/**/*',
-                        'app/vendor/**/*'
+                        'core/widgets/**/*',
+                        'core/vendor/**/*'
                     ],
                     tasks: [
                         'app:js-files'

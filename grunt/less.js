@@ -24,6 +24,7 @@ module.exports = function(grunt, options){
             clean: {
                 'all-generated-css': [
                     'dist/css/',
+                    'build/css/',
                     'app/css/style*.css',
                     'app/css/app.css',
                     'app/css/app.less',
@@ -36,21 +37,21 @@ module.exports = function(grunt, options){
                 },
                 'app-less-files': {
                     src: [
-                        'app/less/base/*.less',
-                        'app/less/!(base|_old)/**/*.less',
-                        'app/less/theme-base.less',
-                        'app/less/!(theme-base).less'
+                        'core/less/base/*.less',
+                        'core/less/!(base|_old)/**/*.less',
+                        'core/less/theme-base.less',
+                        'core/less/!(theme-base).less'
                     ],
-                    dest: 'dist/css/app.less'
+                    dest: 'build/css/app.less'
                 },
                 'app-css': {
                     src: [
-                        'app/css/normalize.css',
-                        'dist/css/app.css',
-                        'app/css/cameofont.css',
-                        'app/vendor/**/*.css'
+                        'core/css/normalize.css',
+                        'build/css/app.css',
+                        'core/css/cameofont.css',
+                        'core/vendor/**/*.css'
                     ],
-                    dest: 'app/style.' + options.globalCameoBuildConfig.config.version + '.css'
+                    dest: 'dist/app/style.' + options.globalCameoBuildConfig.config.version + '.css'
                 }
             },
             less: {
@@ -59,7 +60,7 @@ module.exports = function(grunt, options){
                         yuicompress: true
                     },
                     files: {
-                        'dist/css/app.css': 'dist/css/app.less'
+                        'build/css/app.css': 'build/css/app.less'
                     }
                 }
             }

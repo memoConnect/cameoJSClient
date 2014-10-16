@@ -12,12 +12,11 @@ module.exports = function(grunt, options){
 
     var webworker   =   ['keygen', 'rsa_decrypt', 'rsa_encrypt'],
         files       =   webworker.map(function(job_name){
-                            console.log(job_name)
-                            var path    = 'app/webworker/'+job_name+'.js',
+                            var path    = 'dist/app/webworker/'+job_name+'.js',
                                 object  = {}
 
                             object[path] =  [
-                                                'resource/templates/webworker/'+job_name+'.js'
+                                                'core/webworker/'+job_name+'.js'
                                             ]
                             return object
                         })
@@ -26,7 +25,7 @@ module.exports = function(grunt, options){
     return {
         tasks:{
             clean: {
-                'app-webworker': ['app/webworker']
+                'app-webworker': ['dist/app/webworker']
             },
 
             copy: {
@@ -35,8 +34,8 @@ module.exports = function(grunt, options){
                         {
                             expand: true,
                             flatten: true,
-                            src: ['resource/templates/webworker/-mock-vendor.js'],
-                            dest: 'app/webworker/'
+                            src: ['core/webworker/-mock-vendor.js'],
+                            dest: 'dist/app/webworker/'
                         }
                     ]
                 }

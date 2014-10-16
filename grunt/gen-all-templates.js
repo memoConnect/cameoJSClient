@@ -41,11 +41,11 @@ module.exports = function(grunt, options) {
                         }
                     },
                     'files': {
-                        'app/index.html': ['resource/templates/app/index.html'],
-                        'app/icons.html': ['resource/templates/app/icons.html'],
-                        'app/base/config.js': ['resource/templates/app/config.js'],
+                        'dist/app/index.html': ['app/index.html'],
+                        'dist/app/icons.html': ['core/icons.html'],
+                        'build/app/base/config.js': ['app/base/config.js'],
                         // performance page
-                        'app/performance.html': ['resource/templates/app/performance.html']
+                        'dist/app/performance.html': ['core/performance.html']
                     }
                 },
                 'cockpit': {
@@ -57,7 +57,7 @@ module.exports = function(grunt, options) {
                         }
                     },
                     'files': {
-                        'cockpit/index.html': ['resource/templates/cockpit/index.html']
+                        'dist/cockpit/index.html': ['cockpit/index.html']
                     }
                 }
             }

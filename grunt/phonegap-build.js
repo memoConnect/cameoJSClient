@@ -32,7 +32,7 @@ module.exports = function(grunt, options){
     ]);
 
     var archive = {
-        app: 'dist/phonegap-target/cameoNetApp.zip'
+        app: 'build/phonegap-target/cameoNetApp.zip'
     };
 
     return {
@@ -40,7 +40,9 @@ module.exports = function(grunt, options){
             clean: {
                 'app-phonegap': [
                     'dist/phonegap',
-                    'dist/phonegap-target'
+                    'dist/phonegap-target',
+                    'build/phonegap',
+                    'build/phonegap-target'
                 ]
             },
             copy: {
@@ -51,14 +53,14 @@ module.exports = function(grunt, options){
                             flatten: false,
                             cwd: 'dist/app',
                             src: ['**'],
-                            dest: 'dist/phonegap/www'
+                            dest: 'build/phonegap/www'
                         },
                         // copy all icon and splashs to /www/res
                         {
                             expand: true,
                             cwd: 'resource/phonegap/res/',
                             src: ['**'],
-                            dest: 'dist/phonegap/www/res/'
+                            dest: 'build/phonegap/www/res/'
                         }
                     ]
                 },
@@ -66,7 +68,7 @@ module.exports = function(grunt, options){
                     files: [
                         {
                             expand: true,
-                            cwd: 'dist/phonegap-target',
+                            cwd: 'build/phonegap-target',
                             src: ['*', '!*.zip'],
                             dest: 'dist/dl/'
                         }
@@ -85,7 +87,7 @@ module.exports = function(grunt, options){
                         }
                     },
                     'files': {
-                        'dist/phonegap/www/index.html': ['resource/templates/app/index.html']
+                        'build/phonegap/www/index.html': ['resource/templates/app/index.html']
                     }
                 },
                 'app-config-phonegap': {
@@ -99,8 +101,8 @@ module.exports = function(grunt, options){
                         }
                     },
                     'files': {
-                        'dist/phonegap/www/config.xml': ['resource/templates/phonegap/config.xml'],
-                        'dist/phonegap/www/config.js': ['resource/templates/phonegap/config.js']
+                        'build/phonegap/www/config.xml': ['resource/templates/phonegap/config.xml'],
+                        'build/phonegap/www/config.js': ['resource/templates/phonegap/config.js']
                     }
                 }
             },
@@ -114,9 +116,9 @@ module.exports = function(grunt, options){
                             password: options.globalCameoSecrets.phonegap.password
                         },
                         download: {
-                            ios: 'dist/phonegap-target/' + options.globalCameoBuildConfig.phonegap.phonegapBaseFilename + '.ipa',
-                            android: 'dist/phonegap-target/' + options.globalCameoBuildConfig.phonegap.phonegapBaseFilename + '.apk',
-                            winphone: 'dist/phonegap-target/' + options.globalCameoBuildConfig.phonegap.phonegapBaseFilename + '.xap'
+                            ios: 'build/phonegap-target/' + options.globalCameoBuildConfig.phonegap.phonegapBaseFilename + '.ipa',
+                            android: 'build/phonegap-target/' + options.globalCameoBuildConfig.phonegap.phonegapBaseFilename + '.apk',
+                            winphone: 'build/phonegap-target/' + options.globalCameoBuildConfig.phonegap.phonegapBaseFilename + '.xap'
                         }
                     }
                 },
@@ -134,7 +136,7 @@ module.exports = function(grunt, options){
                         mode: 'zip'
                     },
                     expand: true,
-                    cwd: 'dist/phonegap/www/',
+                    cwd: 'build/phonegap/www/',
                     src: ['**/*']
                 }
             }

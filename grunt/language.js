@@ -25,7 +25,7 @@ module.exports = function(grunt, options){
                                 })
                             }
 
-                            grunt.file.write("dist/i18n/language-keys.json", JSON.stringify(list.sort()))
+                            grunt.file.write("build/i18n/language-keys.json", JSON.stringify(list.sort()))
 
                             return list.sort()
                         }
