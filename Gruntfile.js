@@ -134,6 +134,14 @@ module.exports = function (grunt) {
         // URL Bust for requireJS
         testConfig.config.urlBust = (new Date()).getTime();
 
+        if(typeof testConfig.config.stopOnError == 'undefined'){
+            testConfig.config.stopOnError = false;
+        }
+
+        if(typeof testConfig.config.showConsoleError == 'undefined'){
+            testConfig.config.showConsoleError = true;
+        }
+
         var protractorDebug = grunt.option('debug');
         if (protractorDebug) {
             testConfig.config.protractorDebug = true
