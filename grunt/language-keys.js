@@ -2,17 +2,16 @@ module.exports = function(grunt, options){
 
     grunt.loadNpmTasks('grunt-search');
 
-
     return {
         tasks:{
             search: {
-                "language-keys": {
+                'language-keys': {
                     files: {
-                        src: ["app/**/*.js", "app/**/*.html"]
+                        src: ['dist/app/**/*.js', 'dist/app/**/*.html']
                     },
                     options: {
                         searchString: /\b[A-Z0-9_]*[A-Z]+[A-Z0-9_]*\b(\.[A-Z0-9_]*[A-Z]+[A-Z0-9_]*\b)+/g,
-                        logFormat: "custom",
+                        logFormat: 'custom',
                         customLogFormatCallback: function(params) {
                             var list = []
 
@@ -25,12 +24,12 @@ module.exports = function(grunt, options){
                                 })
                             }
 
-                            grunt.file.write("build/i18n/language-keys.json", JSON.stringify(list.sort()))
+                            grunt.file.write('build/i18n/language-keys.json', JSON.stringify(list.sort()))
 
                             return list.sort()
                         }
                     }
-                },
+                }
             }
         }
     }
