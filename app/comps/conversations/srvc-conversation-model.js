@@ -229,16 +229,17 @@ angular.module('cmConversations')
                 this.timeOfLastUpdate       = data.lastUpdated          || this.timeOfLastUpdate;
                 this.subject                = data.subject              || this.subject;
                 this.numberOfMessages       = data.numberOfMessages     || this.numberOfMessages;
-                this.missingAePassphrases   = data.missingAePassphrases || this.missingAePassphrases
-                this.keyTransmission        = data.keyTransmission      || this.keyTransmission 
+                this.missingAePassphrases   = data.missingAePassphrases || this.missingAePassphrases;
+                this.keyTransmission        = data.keyTransmission      || this.keyTransmission;
 
 
                 //Create passphraseVault:
-                
-                passphraseVault =   cmPassphraseVault.create({
-                                        sePassphrase:       data.sePassphrase,
-                                        aePassphraseList:   data.aePassphraseList
-                                    })
+                if(data.sePassphrase || data.aePassphraseList){
+                    passphraseVault =   cmPassphraseVault.create({
+                        sePassphrase:       data.sePassphrase,
+                        aePassphraseList:   data.aePassphraseList
+                    });
+                }
 
                 if(passphraseVault.getKeyTransmission() != this.keyTransmission)
                     cmLogger.debug('cmConversationModel: inconsistent data: keyTransmission')
