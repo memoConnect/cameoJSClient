@@ -65,6 +65,8 @@ angular.module('cmCore')
                     return $q.reject()
                 }       
 
+                console.log('trusted keys: ', trustedKeys)
+
                 return  $q.all(self.map(function(key){
                             var is_trusted =    trustedKeys.indexOf(key) != -1                           
                                                 ?   $q.when(key)
@@ -75,20 +77,15 @@ angular.module('cmCore')
                                                                             .then(function(call_back_result){
                                                                                 return  call_back_result
                                                                                         ?   $q.when(key)
-                                                                                        :   $q.reject()
+                                                                                        :   $q.reject('callback return value was falsely.')
                                                                             })
                                                                 })
-                                                    }, $q.reject())
+                                                    }, $q.reject('missing trusted keys.'))
 
                             return  is_trusted
-                                    .then(
-                                        function(key){
-                                            return $q.when(key)
-                                        },
-                                        function(){
-                                            return $q.when(undefined)
-                                        }
-                                    )
+                                    .catch(function(reason){
+                                        return $q.when(undefined)
+                                    })
                         }))
                         .then(function(list){
                             var extended_key_list = list.filter(function(item){ return !!item})

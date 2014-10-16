@@ -229,7 +229,7 @@ angular.module('cmCore')
             this.verifyKey = function(key, data){
 
                 return  (this.getPublicKey() == key.getPublicKey() 
-                        ?   $q.when()   //always verifies itself
+                        ?   $q.when(key)   //always verifies itself
                         :   key.signatures.reduce(function(previous_try, signature){
                                 return  previous_try
                                         .catch(function(){
@@ -237,7 +237,7 @@ angular.module('cmCore')
                                                     ?   self.verify(data, signature.content)
                                                     :   $q.reject('keyIds not matching.')
                                         })
-                            }, $q.reject())
+                            }, $q.reject('no signatures.'))
                         )
             };
 

@@ -78,14 +78,9 @@ angular.module('cmWidgets')
                         $scope.hasKeys = ($scope.contact.identity.keys.length > 0);
                         
                         cmUserModel.verifyTrust($scope.contact.identity)
-                        .then(
-                            function(){
-                                $scope.isTrusted = true;
-                            },
-                            function(){
-                                $scope.isTrusted = false;
-                            }
-                        );
+                        .then(function(){
+                            $scope.isTrusted = true;
+                        });
                     }
                     
                     refresh();

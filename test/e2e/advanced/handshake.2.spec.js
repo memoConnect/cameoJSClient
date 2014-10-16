@@ -615,7 +615,11 @@ describe('Authentication requests -', function () {
                 util.waitForElements("cm-contact-tag", 2)
                 util.headerSearchInList(testUser2)
                 util.waitAndClick("cm-contact-tag")
-                expect($("[data-qa='trust-confirmed']").isDisplayed()).toBe(true)
+                ptor.wait(function(){
+                    return $$("[data-qa='trust-confirmed']").then(function(items){
+                        return items.length > 0 
+                    })
+                }, 2000, '[data-qa="trust-confirmed"]')
             })
 
             it("get authentication:start event send to testUser2", function () {
