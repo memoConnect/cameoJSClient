@@ -25,8 +25,8 @@ angular.module('cmContacts')
                 return this;
              };
 
-             this.importData(data)
+             this.importData(data);
         }
-        return ContactModel
+        return ContactModel;
     }
 ]);
