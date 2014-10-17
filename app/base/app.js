@@ -226,6 +226,7 @@ angular.module('cameoClient', [
     '$route',
     '$timeout',
     'cmUserModel',
+    'cmConversationFactory',
     'cmContactsModel',
     'cmRootService',
     'cmSettings',
@@ -239,7 +240,7 @@ angular.module('cameoClient', [
     'cmSystemCheck',
     'cmError',
     function ($rootScope, $location, $window, $document, $route, $timeout,
-              cmUserModel, cmContactsModel, cmRootService, cmSettings,
+              cmUserModel, cmConversationFactory, cmContactsModel, cmRootService, cmSettings,
               cmLanguage, cmLogger, cfpLoadingBar, cmEnv, cmVersion,
               cmApi, cmAuthenticationRequest, cmSystemCheck, cmError) {
 
