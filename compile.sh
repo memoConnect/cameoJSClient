@@ -2,7 +2,7 @@
 
 buildMode=test
 buildPhonegap=false
-command=deploy
+command="app:deploy"
 version="no version"
 
 #handle arguments
@@ -20,7 +20,7 @@ for i in "$@" ; do
 		    version="${i#*=}"
 	    ;;
 		--phonegap)
-			command=:phonegap:to-build-server
+			command=phonegap:to-build-server
 		;;
 	    *)
 	      echo Unknown option: ${i}

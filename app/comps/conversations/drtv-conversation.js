@@ -13,11 +13,11 @@ angular.module('cmConversations')
 .directive('cmConversation', [
 
     'cmConversationFactory', 'cmUserModel', 'cmCrypt', 'cmLogger', 'cmNotify',
-    'cmModal', 'cmEnv', 'cmUtil', 'cmSettings', 'cmKeyStorageService', 'cmTransferScopeData',
+    'cmModal', 'cmEnv', 'cmSettings', 'cmKeyStorageService', 'cmTransferScopeData',
     '$location', '$rootScope', '$document', '$routeParams',
 
     function (cmConversationFactory, cmUserModel, cmCrypt, cmLogger, cmNotify,
-              cmModal, cmEnv, cmUtil, cmSettings, cmKeyStorageService, cmTransferScopeData,
+              cmModal, cmEnv, cmSettings, cmKeyStorageService, cmTransferScopeData,
               $location, $rootScope, $document, $routeParams) {
         return {
             restrict: 'AE',
@@ -36,7 +36,6 @@ angular.module('cmConversations')
 
                 $scope.isSending        = false;
                 $scope.isSendingAbort   = false;
-
 
                 $scope.recipientName = '';
                 function showRecipientName(identity){
@@ -75,6 +74,10 @@ angular.module('cmConversations')
                     }
                 };
 
+                $scope.loadPreviousMessages = function(){
+                    $scope.conversation.update();
+                };
+
                 /**
                  * start sending process
                  * with preparing files for upload
@@ -104,7 +107,7 @@ angular.module('cmConversations')
                          * check if files exists
                          * after success sendMessage
                          */
-                        $rootScope.$broadcast('checkFiles', {
+                        $rootScope.$broadcast('cmFilesCheckFiles', {
                             passphrase: $scope.conversation.getPassphrase(),
                             conversationId: $scope.conversation.id,
                             success: function(files) {
@@ -115,13 +118,13 @@ angular.module('cmConversations')
                                     sendMessage();
                                 }
                             },
-                            error: function(error, header) {
+                            error: function(maxFileSize, header) {
                                 $scope.isSending = false;
                                 $scope.isSendingAbort = true;
                                 cmNotify.warn('CONVERSATION.WARN.FILESIZE_REACHED', {
                                     ttl: 0,
                                     i18n: {
-                                        maxFileSize: error,
+                                        maxFileSize: maxFileSize,
                                         fileSize: header['X-File-Size'],
                                         fileName: header['X-File-Name']
                                     }
@@ -133,16 +136,6 @@ angular.module('cmConversations')
 
                 $rootScope.$$listeners.sendOnReturn = [];
                 $rootScope.$on('sendOnReturn',$scope.send);
-
-                /**
-                 * compare date for date-seperator
-                 * @param currentDate
-                 * @param prevDate
-                 * @returns {boolean}
-                 */
-                $scope.compareDate = function(current, prev) {
-                    return cmUtil.compareDate(current, prev);
-                };
 
                 $scope.showAsymmetricKeyError = function(){
 //                    cmLogger.debug('cmConversationDRTV.showAsymmetricKeyError')
@@ -269,8 +262,16 @@ angular.module('cmConversations')
                     $scope.conversation = conversation
                     $rootScope.pendingConversation = $scope.conversation;
 
+                    //@Todo: temporarily decrypt here util webworker joins in:
+                    $scope.conversation.decrypt()
+                    $scope.conversation.when('update:finished')
+                    .then(function(){
+                        $scope.conversation.decrypt()
+                    });
+
                     // reload detail of conversation
-                    $scope.conversation.load();
+                    $scope.conversation.update();
+
                     self.addPendingRecipients();
                     $scope.showAsymmetricKeyError();
 
@@ -281,9 +282,7 @@ angular.module('cmConversations')
 
                     $scope.show_contacts  = false;
 
-
     //                $scope.showGoToSettingsModal(); 18.07.2014 BS can be removed because on updated:finished event do this check
-                    
 
                     /** Event callbacks **/
                     function callback_update_finished(){
@@ -356,15 +355,19 @@ angular.module('cmConversations')
                         stop_listening_to_logout();
                         stop_listening_to_idenity_switch();
                     });
-
-
-
                 }
 
                 // transfer data between routeChanges
                 var clearTransferScopeData = cmTransferScopeData.create($scope,{
                     id:'conversation-'+($scope.conversation.id||'new'),
-                    scopeVar:'newMessageText'
+                    scopeVar:'newMessageText',
+                    onSet: function(){
+                        this.noneScopeData = $scope.files;
+                    },
+                    onGet: function(formData, noneScopeData){
+                        if(noneScopeData != null)
+                            $scope.files = noneScopeData;
+                    }
                 });
 
 

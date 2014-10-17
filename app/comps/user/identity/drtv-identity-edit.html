@@ -94,7 +94,6 @@
         </ng-form>
     </cm-multi-input>
 
-
     <!--address class="cm-address">
         <div class="cm-input-ctn">
             <input type="text" class="street" name="street" ng-model="identity.address.street" placeholder="{{'CONTACT.PLACEHOLDER.STREET'|cmTranslate}}" required tabindex="5" data-qa="input-address-street" />
@@ -110,5 +109,10 @@
 </form>
 
 <cm-footer cm-always-on-top>
-    <button class="cm-btn-block cm-btn-grey" ng-click="saveIdentity()" data-qa="btn-saveIdentity">{{'CONTACT.FOOTER.SAVE'|cmTranslate}} <i class="fa cm-checker cm-lg-icon"></i></button>
+    <button class="cm-btn-block cm-btn-grey" ng-click="saveIdentity()" data-qa="btn-saveIdentity">
+        <span ng-show="!showSpinner">
+            {{'CONTACT.FOOTER.SAVE'|cmTranslate}} <i class="fa cm-checker cm-lg-icon"></i>
+        </span>
+        <cm-loader ng-show="showSpinner" cm-color="ci-color"></cm-loader>
+    </button>
 </cm-footer>

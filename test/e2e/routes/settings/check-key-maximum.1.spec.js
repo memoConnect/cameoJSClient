@@ -1,8 +1,7 @@
 var config = require("../../config-e2e-tests.js")
 var util = require("../../../lib/e2e/cmTestUtil.js")
-var ptor = util.getPtorInstance()
-
 describe('Check key maximum: ',function(){
+    var ptor = util.getPtorInstance()
 
     var privKey = [
         '-----BEGIN RSA PRIVATE KEY-----',
@@ -56,18 +55,8 @@ describe('Check key maximum: ',function(){
         util.click("btn-import-key")
         util.waitForElement("[data-qa='btn-save-key']")
         util.click("btn-save-key")
-    })
-
-    console.log('removed parts of the test @ todo!!!')
-    it('check if message and footer for create/import disappear', function(){
-        util.expectCurrentUrl("settings/identity/key/list")
-
-        //expect($("[data-qa='message-no-keys']").isPresent()).toBe(false)
-        //expect($("cm-footer").isPresent()).toBe(false)
-        //expect($("[data-qa='canNotCreate']").isPresent()).toBe(true)
-        //$$("[data-qa='key-list-item']").then(function(elements){
-        //    expect(elements.length).toEqual(1)
-        //})
+        util.waitForPageLoad("/authentication")
+        util.expectCurrentUrl("/authentication")
     })
 
     it('check closed routes', function(){
@@ -77,11 +66,10 @@ describe('Check key maximum: ',function(){
         util.expectCurrentUrl("settings/identity/key")
     })
 
-    console.log('removed parts of the test')
     it('remove key and check if message and footer for create/import appear', function(){
-        util.waitForElement("[data-qa='btn-remove-modal']")
-        util.click("btn-remove-modal")
-        util.click("btn-remove-key");
+        util.waitAndClickQa("btn-remove-modal")
+        util.waitForElement("[data-qa='modal-confirm']")
+        util.waitAndClickQa("btn-confirm")
 
         util.waitForElement("[data-qa='message-no-keys']")
         expect($("[data-qa='message-no-keys']").isPresent()).toBe(true)

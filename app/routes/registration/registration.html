@@ -29,7 +29,6 @@
                 type="text" id="displayName" name="displayName" ng-model="formData.displayName" />
         </div>
 
-
         <label>{{'REGISTER.PLACEHOLDER.EMAIL'|cmTranslate}}</label>
         <div class="cm-input-ctn with-inside-icon" ng-class="{'cm-input-error':registrationForm.email.$invalid}" data-qa="form-input">
             <input
@@ -75,7 +74,7 @@
         </div>
 
         <div class="cm-input-ctn cm-clear-bg" data-qa="form-input">
-            {{'REGISTER.LABEL.TERMS_ACCEPT'|cmTranslate}}
+            {{'REGISTER.LABEL.TERMS_ACCEPT'|cmTranslate}}&nbsp;
             <a href="#/terms" data-qa="link-terms" class="classic-link">{{'REGISTER.LABEL.TERMS'|cmTranslate}}</a>
             <input
                 data-qa="checkbox-agb"
@@ -105,6 +104,6 @@
         <span ng-show="!showSpinner">
             {{'REGISTER.LABEL.SUBMIT'|cmTranslate}} <i class="fa cm-checkbox-right cm-lg-icon"></i>
         </span>
-        <cm-spinner ng-show="showSpinner" cm-color="#02BED2"></cm-spinner>
+        <cm-loader ng-show="showSpinner" cm-color="#02BED2"></cm-loader>
     </button>
 </cm-footer>

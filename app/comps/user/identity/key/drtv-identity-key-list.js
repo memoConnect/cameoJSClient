@@ -41,8 +41,14 @@ angular.module('cmUser').directive('cmIdentityKeyList', [
                 }
 
                 $scope.remove = function(key){
-                    cmUserModel.removeKey(key);
-                    cmModal.closeAll();
+                    $scope.confirm({
+                        title:      'SETTINGS.PAGES.IDENTITY.KEYS.REMOVE_KEY',
+                        text:       'SETTINGS.PAGES.IDENTITY.KEYS.REMOVE_KEY_REALLY',
+                        html:       '<h3>'+key.name+'</h3>{{'+key.created+' | date:"dd.MM.yy - HH:mm"}}'
+                    })
+                    .then(function(){
+                        cmUserModel.removeKey(key);                        
+                    })
                     refresh();
                 };
 
@@ -61,8 +67,11 @@ angular.module('cmUser').directive('cmIdentityKeyList', [
                 cmUserModel.state.on('change', refresh);
                 cmUserModel.on('key:stored key:removed signatures:saved identity:updated', refresh);
 
+
+
                 cmUserModel.on('update:finished', function(){
-                    cmUserModel.data.identity.on('update:finished', refresh);
+                    refresh()
+                    cmUserModel.data.identity.one('update:finished', refresh);
                 });
 
 

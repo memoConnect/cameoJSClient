@@ -1,33 +1,28 @@
 'use strict';
 
-angular.module('cmRoutes').controller('PurlCtrl',[
-
-    '$scope',
-    '$rootScope',
-    '$routeParams',
-    'cmModal',
-    'cmPurlModel',
-    'cmConversationFactory',
-
-    function($scope, $rootScope, $routeParams, cmModal, cmPurlModel, cmConversationFactory){
+angular.module('cmRoutes')
+.controller('PurlCtrl',[
+    'cmModal', 'cmPurlModel', 'cmConversationFactory',
+    '$scope', '$rootScope', '$routeParams', '$timeout',
+    function(cmModal, cmPurlModel, cmConversationFactory,
+             $scope, $rootScope, $routeParams, $timeout){
 
         $rootScope.pendingPurl      = null;
-
         $scope.showSignIn           = false;
         $scope.purlId               = $routeParams.purlId || '';
         $scope.headerGuest          = true;
 
-            if($routeParams.purlId){
-                cmPurlModel.getPurl($routeParams.purlId).then(
-                    function(data){
-                        // identity check internal || external user
-                        cmPurlModel.handleIdentity(data.identity);
+        if($routeParams.purlId){
+            cmPurlModel.getPurl($routeParams.purlId).then(
+                function(data){
+                    // identity check internal || external user
+                    cmPurlModel.handleIdentity(data.identity);
 
-                        if(data.identity.userType == 'external'){
-                            $rootScope.pendingPurl = $routeParams.purlId;
-                        } else {
-                            $scope.headerGuest = false;
-                        }
+                    if(data.identity.userType == 'external'){
+                        $rootScope.pendingPurl = $routeParams.purlId;
+                    } else {
+                        $scope.headerGuest = false;
+                    }
 
                     if(typeof data.token !== 'undefined'){
                         cmPurlModel.handleToken(data.token)
@@ -35,7 +30,7 @@ angular.module('cmRoutes').controller('PurlCtrl',[
 
                     var conversation_id = cmPurlModel.handleConversation(data.conversation);
 
-                    $scope.conversation = cmConversationFactory.create(conversation_id)
+                    $scope.conversation = cmConversationFactory.create(conversation_id);
                 },
 
                 function(response){
@@ -77,6 +72,9 @@ angular.module('cmRoutes').controller('PurlCtrl',[
         };
 
         $scope.showLogin = function () {
+
+            $scope.showSignIn = true;
+
             cmModal.create({
                 id: 'login',
                 'class': 'with-title no-padding',

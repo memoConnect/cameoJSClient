@@ -48,14 +48,18 @@
         </cm-info-bubble>
     </article>
 
-    <hr>
+    <hr class="margin-small" />
 
-    <article class="content">
+    <article class="content" ng-if = "active == 'generate'">
         <span ng-bind-html="'IDENTITY.KEYS.GENERATE.GENERATING.TIME_PASSED'|cmParse"></span>
-        <section class="cm-special-text">{{'IDENTITY.KEYS.GENERATE.GENERATING.GENERATION_TIMER'|cmTranslate:i18n}}</section>
+        <cm-timeout cm-data="getElapsedTime()">
+            <section class="cm-special-text">
+                {{'IDENTITY.KEYS.GENERATE.GENERATING.GENERATION_TIMER'|cmTranslate:{ 'time':cmTimeout} }}
+            </section>
+        </cm-timeout>
     </article>
 
-    <hr>
+    <hr class="margin-small" />
 
     <div class="space-for-loader">
         <cm-loader cm-halt="waiting" type="balls"></cm-loader>
@@ -82,14 +86,16 @@
         </cm-info-bubble>
     </article>
 
-    <hr>
+    <hr class="margin-small" />
 
-    <article class="content">
+    <article class="content" ng-if="active == 'store'">
         <span ng-bind-html="'IDENTITY.KEYS.GENERATE.SAVE.TIME_PASSED'|cmParse"></span>
-        <section class="cm-special-text">{{'IDENTITY.KEYS.GENERATE.SAVE.GENERATION_TIMER'|cmTranslate:i18n}}</section>
+        <cm-timeout cm-data="getElapsedTime()">
+            <section class="cm-special-text">{{'IDENTITY.KEYS.GENERATE.SAVE.GENERATION_TIMER'|cmTranslate:{ 'time':cmTimeout} }}</section>
+        </cm-timeout>
     </article>
 
-    <hr>
+    <hr class="margin-small" />
 
     <h3 class="content" ng-bind-html="'IDENTITY.KEYS.GENERATE.SAVE.KEY_NAME' | cmParse"></h3>
 
@@ -104,7 +110,6 @@
                         />
                 <i class="fa cm-write cm-lg-icon"></i>
             </div>
-
         </div>
     </article>
 

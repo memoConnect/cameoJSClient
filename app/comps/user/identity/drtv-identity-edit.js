@@ -10,10 +10,10 @@ angular.module('cmUser').directive('cmIdentityEdit', [
             templateUrl: 'comps/user/identity/drtv-identity-edit.html',
             controller: function ($scope) {
 
+                $scope.showSpinner = false;
+
                 function reset(){
                     $scope.identity = angular.extend({},cmUserModel.data.identity);
-                    console.log($scope.identity.phoneNumber)
-                    console.log($scope.identity.email)
                     $scope.identity.phoneNumbers = [
                         $scope.identity.phoneNumber || {value:''}
                     ];
@@ -22,15 +22,17 @@ angular.module('cmUser').directive('cmIdentityEdit', [
                     ];
                 }
 
-                // TODO on is undefined
-                cmUserModel.data.identity.on('update:finished',reset);
+                if(('identity' in cmUserModel.data)
+                && !('on' in cmUserModel.data.identity)){
+                    cmUserModel.on('update:finished', function(){
+                        reset();
+                        cmUserModel.data.identity.on('update:finished', reset);
+                    });
+                } else {
+                    cmUserModel.data.identity.on('update:finished', reset);
+                }
 
                 reset();
-
-                //////////////////////
-                // TODO: mock workarround json in array
-
-                //////////////////////
 
                 $scope.goToKeys = function(){
                     $scope.goTo('/settings/identity/key/list');
@@ -56,6 +58,10 @@ angular.module('cmUser').directive('cmIdentityEdit', [
                 };
 
                 $scope.saveIdentity = function(){
+                    if($scope.spinner('isIdle'))
+                        return false;
+
+                    $scope.spinner('start');
                     var objectChange = {};
 
                     $scope.validateForm().then(
@@ -83,14 +89,22 @@ angular.module('cmUser').directive('cmIdentityEdit', [
                             checkPhoneNumber();
 
                             cmUserModel.data.identity.update(objectChange);
-
-                            function callback_save_identity(){
+                            cmUserModel.data.identity.one('update:finished',function(){
+                                $scope.spinner('stop');
                                 cmNotify.info('IDENTITY.NOTIFY.UPDATE.SUCCESS',{ttl:3000,displayType:'modal'});
-                            }
-
-                            cmUserModel.data.identity.one('update:finished',callback_save_identity);
+                            });
+                        }, function(){
+                            $scope.spinner('stop');
                         }
                     )
+                };
+
+                $scope.spinner = function(action){
+                    if(action == 'isIdle'){
+                        return $scope.showSpinner;
+                    }
+
+                    $scope.showSpinner = action == 'stop' ? false : true;
                 };
             }
         }

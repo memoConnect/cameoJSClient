@@ -2,9 +2,11 @@
 
 angular.module('cmCore')
 .service('cmUtil', [
+
+    'cmLogger',
     '$window',
     '$injector',
-    function($window, $injector){
+    function(cmLogger, $window, $injector){
         /**
          * Checks if Key exists in an Object or Array
          * @param object
@@ -62,9 +64,13 @@ angular.module('cmCore')
          * @returns {boolean}
          */
         this.validateString = function(val){
-            var reg = /^[a-zA-Z0-9\-_]{1,}$/;
+            var reg     = /^[a-zA-Z0-9\-_]{1,}$/,
+                valid   = reg.test(val)
 
-            return reg.test(val);
+            if(!valid)
+                cmLogger.debug('cmUtil: validateString() failed for: ' + val)
+
+            return valid;
         };
 
         /**
@@ -131,18 +137,6 @@ angular.module('cmCore')
         };
 
         /**
-         * return a int between the range of min and max
-         * @param min
-         * @param max
-         * @returns {int}
-         */
-        this.getRandomInt = function (min, max) {
-            if(min == undefined || typeof min != 'number')
-                return 0;
-            return Math.floor(Math.random() * (max - min + 1)) + min;
-        };
-
-        /**
          *
          * @param current (integer) unix timestamp in ms
          * @param prev (integer) unix timestamp in ms
@@ -164,7 +158,6 @@ angular.module('cmCore')
             } else if (typeof current !== 'undefined' && typeof prev === 'undefined') {
                 return true;
             }
-
             return false;
         };
 
@@ -173,7 +166,7 @@ angular.module('cmCore')
          * @param milliseconds
          * @returns {string}
          */
-        this.millisecondsToStr = function(milliseconds) {
+        this.millisecondsToStr = function(milliseconds, printOutMs) {
             // TIP: to find current time in milliseconds, use:
             // var current_time_milliseconds = new Date().getTime();
 
@@ -204,8 +197,11 @@ angular.module('cmCore')
                 addToString(minutes + 'm');
 
             var seconds = temp % 60;
-            if (seconds)
+            if (seconds && !printOutMs)
                 addToString(Math.floor(seconds) + 's');
+
+            if(seconds && printOutMs)
+                addToString(temp + 's');
 
             if(str == '')
                 addToString('...');

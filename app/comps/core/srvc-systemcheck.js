@@ -43,6 +43,7 @@ angular.module('cmCore').service('cmSystemCheck', [
                     } else {
                         $rootScope.clientVersionCheck = true;
                     }
+
                     deferred.resolve();
                 },
                 function(){
@@ -60,12 +61,14 @@ angular.module('cmCore').service('cmSystemCheck', [
         this.checkClientVersion = function(forceRedirect){
             //cmLogger.debug('cmSystemCheck.checkClientVersion');
 
+            var deferred = $q.defer();
+
             if('clientVersionCheck' in $rootScope){
                 if($rootScope.clientVersionCheck == false){
                     this.trigger('check:failed', {forceRedirect:forceRedirect});
-                    return false;
+                    return deferred.reject();
                 } else {
-                    return true;
+                    return deferred.resolve();
                 }
             } else {
                 this.getBrowserInfo().then(
@@ -73,10 +76,12 @@ angular.module('cmCore').service('cmSystemCheck', [
                         return self.checkClientVersion(forceRedirect);
                     },
                     function(){
-                        return true;
+                        return deferred.resolve();
                     }
                 )
             }
+
+            return deferred.promise;
         };
 
         this.checkLocalStorage = function(forceRedirect){

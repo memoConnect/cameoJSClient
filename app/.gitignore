@@ -1,3 +1,11 @@
 /.DS_Store
-cameo.js
-vendor.js
+/webworker
+/performance/webworker
+/css/app.less
+/css/app.css
+index.html
+icons.html
+performance.html
+cameo*.js
+vendor*.js
+style*.css

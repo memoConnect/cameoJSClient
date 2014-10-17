@@ -5,13 +5,9 @@ var loginName = "Z" + Date.now();
 var password = "PWD_Z" + Date.now();
 
 describe('Registration: ', function () {
-
     var ptor = util.getPtorInstance()
-    afterEach(function() { util.stopOnError() });
-
 
     it('should contain 7 input fields', function () {
-
         util.logout()
 
         util.get("/registration");
@@ -23,8 +19,6 @@ describe('Registration: ', function () {
     })
 
     it('should display errors if required fields are empty', function () {
-
-        ptor.debugger()
         $("[data-qa='btn-createUser']").click()
 
         util.checkWarning("cameoId-info-username-empty")
@@ -33,7 +27,6 @@ describe('Registration: ', function () {
     })
 
     it('should display error if username too short', function () {
-
         util.get("/registration");
         util.waitForPageLoad('/registration')
 
@@ -89,7 +82,7 @@ describe('Registration: ', function () {
     })
 
     it('should link to term of use', function() {
-        $("body").sendKeys(protractor.Key.END)
+        util.scrollToBottom()
 
         util.waitForElement("[data-qa='link-terms']")
         $("[data-qa='link-terms']").click()

@@ -2,9 +2,9 @@
 
 angular.module('cmFiles').directive('cmUploadAvatar',[
     'cmNotify', 'cmUserModel',
-    '$rootScope',
+    '$rootScope', '$timeout',
     function(cmNotify, cmUserModel,
-             $rootScope) {
+             $rootScope, $timeout) {
         return {
             restrict: 'E',
             templateUrl: 'comps/files/drtv-upload-avatar.html',
@@ -12,32 +12,35 @@ angular.module('cmFiles').directive('cmUploadAvatar',[
             link: function (scope) {
                 scope.imageUpload = false;
                 // after add a image
-                var watcher = $rootScope.$on('cmFiles:fileSetted', function(){
-                    $rootScope.$broadcast('checkFiles', {
+                var watcher = $rootScope.$on('cmFilesFileSetted', function(){
+                    $rootScope.$broadcast('cmFilesCheckFiles', {
                         passphrase: undefined,
                         success: function(files) {
                             if (files.length > 0) {
                                 scope.imageUpload = true;
                                 files[0].uploadChunks();
                                 files[0].one('upload:finish',function(){
-                                    scope.imageUpload = false;
                                     cmUserModel
                                     .data.identity
                                     .update({
                                         avatar: files[0].id
                                     });
 
-                                    cmUserModel.data.identity.one('update:finished',function(){
-                                        console.log('smth other todo??')
+                                    cmUserModel.data.identity.one('update:finished', function(){
+                                        $timeout(function(){
+                                            cmUserModel.data.identity.one('avatar:loaded',function(){
+                                                scope.imageUpload = false;
+                                            });
+                                        });
                                     });
                                 });
                             }
                         },
-                        error: function(error, header) {
+                        error: function(maxFileSize, header) {
                             cmNotify.warn('CONVERSATION.WARN.FILESIZE_REACHED', {
                                 ttl: 0,
                                 i18n: {
-                                    maxFileSize: error,
+                                    maxFileSize: maxFileSize,
                                     fileSize: header['X-File-Size'],
                                     fileName: header['X-File-Name']
                                 }

@@ -3,9 +3,9 @@
 angular.module('cmUi')
 .directive('cmModal', [
     'cmModal', 'cmTranslate',
-    '$rootScope', '$timeout',
+    '$rootScope', '$timeout', '$q',
     function (cmModal, cmTranslate,
-              $rootScope, $timeout){
+              $rootScope, $timeout, $q){
 
         // handle nose position
         function addNose(element, attrs){
@@ -43,9 +43,10 @@ angular.module('cmUi')
             templateUrl: function(tElement, tAttrs){
                 var type = tAttrs.type || 'plain',
                     templateUrl = {
-                        plain: 'comps/ui/modal/drtv-modal-plain.html',
+                        plain:      'comps/ui/modal/drtv-modal-plain.html',
                         fullscreen: 'comps/ui/modal/drtv-modal-fullscreen.html',
-                        alert: 'comps/ui/modal/drtv-modal-alert.html'
+                        alert:      'comps/ui/modal/drtv-modal-alert.html',
+                        confirm:    'comps/ui/modal/drtv-modal-confirm.html'
                     };
 
                 return templateUrl[type];
@@ -98,11 +99,14 @@ angular.module('cmUi')
                     return this
                 };
 
-                // open modal
-                scope.open = function(){
-                    this.toggle(true);
+                scope.isActive = function(){
+                    return element.hasClass('active')
+                }
 
-                    return this
+                // open modal
+                scope.open = function(ttl){
+                    scope.toggle(true);
+                    return scope
                 };
                 // close modal
                 scope.close = function(fromBackdrop){
@@ -139,6 +143,7 @@ angular.module('cmUi')
                 $scope.title    = cmTranslate($attrs.cmTitle);
                 $scope.severity = $attrs.severity || 'info';
                 $scope.options  = $scope.$eval($attrs.cmOptions) || {withoutBackdrop:false}
+                $scope.id       = $attrs.id
             }
         }
     }

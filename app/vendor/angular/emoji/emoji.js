@@ -17,7 +17,7 @@
                         arrClear = arrClear.concat(self.items[mainCat][subCat]);
                     });
                 });
-                return arrClear.join(delimiter || ',');
+                return arrClear.join(delimiter||',');
             },
             getFromCategory: function(mainCat, subCat){
                 var arrReturn = [];

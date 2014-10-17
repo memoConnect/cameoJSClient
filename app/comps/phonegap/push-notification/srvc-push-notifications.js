@@ -3,11 +3,12 @@
 // https://github.com/phonegap-build/PushPlugin
 // https://github.com/phonegap-build/PushPlugin#plugin_api
 
-angular.module('cmPhonegap').service('cmPushNotifications', [
+angular.module('cmPhonegap')
+.service('cmPushNotifications', [
     'cmPhonegap', 'cmUtil', 'cmDevice', 'cmLogger',
-    '$q', '$rootScope',
+    '$q', '$rootScope', '$phonegapCameoConfig',
     function (cmPhonegap, cmUtil, cmDevice, cmLogger,
-              $q, $rootScope) {
+              $q, $rootScope, $phonegapCameoConfig) {
 
         var self = {
             plugin: null,
@@ -19,29 +20,37 @@ angular.module('cmPhonegap').service('cmPushNotifications', [
                 this.deviceToken = '';
             },
 
-            register: function(){
+            registerAtService: function(plugin){
+                cmLogger.info('cmPushNotifications.registerAtService')
+
+                this.plugin = plugin;
                 this.reset();
+
                 // only gcm needs an senderid
                 if (cmDevice.isAndroid()) {
                     this.plugin.register(
                         function() {
-                            self.handler.success(arguments);
+                            self.handler.success('registerAtService.isAndroid',arguments);
                         },
                         function() {
-                            self.handler.error(arguments);
+                            self.handler.error('registerAtService.isAndroid',arguments);
                         },
                         {
-                            senderID: phonegap_cameo_config.googleSenderId,
+                            senderID: $phonegapCameoConfig.googleSenderId,
                             ecb: 'window.PushNotificationsCB.onNotification.Android'
                         }
                     );
                 } else if(cmDevice.isiOS()){
+
+                    this.unregisterAtService();
+
                     this.plugin.register(
                         function(result){
+                            self.handler.success('registerAtService.isiOS',arguments);
                             self.handler.token(result);
                         },
                         function(){
-                            self.handler.error(arguments);
+                            self.handler.error('registerAtService.isiOS',arguments);
                         },
                         {
                             badge: true,
@@ -56,7 +65,7 @@ angular.module('cmPhonegap').service('cmPushNotifications', [
                             self.handler.channel(result);
                         },
                         function() {
-                            self.handler.error(arguments);
+                            self.handler.error('registerAtService.isWinPhone8',arguments);
                         },
                         {
                             channelName: this.channelName,
@@ -68,13 +77,13 @@ angular.module('cmPhonegap').service('cmPushNotifications', [
                 }
             },
 
-            unregister: function(){
+            unregisterAtService: function(){
                 this.plugin.unregister(
                     function(){
-                        self.handler.success(arguments)
+                        self.handler.success('unregisterAtService',arguments)
                     },
                     function(){
-                        self.handler.error(arguments)
+                        self.handler.error('unregisterAtService',arguments)
                     },
                     {
                         channelName: this.channelName
@@ -83,8 +92,7 @@ angular.module('cmPhonegap').service('cmPushNotifications', [
             },
 
             setDeviceToken: function(token){
-                //console.log('##setDeviceToken#################');
-                //console.log(token);
+                cmLogger.info('cmPushNotifications.setDeviceToken: '+token)
                 this.deviceToken = token;
 
                 this.initPromise();
@@ -102,11 +110,9 @@ angular.module('cmPhonegap').service('cmPushNotifications', [
 
             handler: {
                 success: function(result){
-                    //console.log('##succesHandler#################');
-                    //console.log(cmUtil.prettify(result));
+                    cmLogger.info('cmPushNotifications.handler.success: '+cmUtil.prettify(result))
                 },
                 token: function(token){
-//                    console.log('##tokenHandler#################');
                     self.setDeviceToken(token);
                 },
                 channel: function(result){
@@ -114,9 +120,7 @@ angular.module('cmPhonegap').service('cmPushNotifications', [
                     //console.log(cmUtil.prettify(result));
                 },
                 error: function(result) {
-                    // result contains any error description text returned from the plugin call
-                    console.log('##errorHandler#################');
-                    console.log(cmUtil.prettify(result));
+                    cmLogger.error('cmPushNotifications.handler.error: '+cmUtil.prettify(result))
                 }
             },
 
@@ -131,65 +135,33 @@ angular.module('cmPhonegap').service('cmPushNotifications', [
                             }
                             break;
                         case 'message':
-//                            console.log('##on pn#####################');
-//                            console.log(cmUtil.prettify(event))
-
-                            if(!event.foreground) {
-                                $rootScope.goTo('talks', true);
+                            if(!event.foreground){
+                                self.onContext(event.payload.context);
+                            } else {
+                                //console.log('cmBimmel!!!',event.payload.context)
                             }
-//                            if (event.foreground) {
-//                                console.log('##foreground inline push notification#####################');
-////                                // on Android soundname is outside the payload.
-////                                // On Amazon FireOS all custom attributes are contained within payload
-////                                var soundfile = e.soundname || e.payload.sound;
-////                                // if the notification contains a soundname, play it.
-////                                var my_media = new Media("/android_asset/www/"+ soundfile);
-////                                my_media.play();
-//                            } else {
-//                                if (event.coldstart) {
-//                                    console.log('##coldstart push notification#####################');
-//                                } else {
-//                                    console.log('##background push notification#####################');
-//                                }
-//                            }
-//
-//                            console.log('message: ' + event.payload.message);
-//                            console.log('count: ' + event.payload.msgcnt);
-//                            console.log('time: ' + event.payload.timeStamp);
                             break;
 
                         case 'error':
-                            console.log('##on pn error#####################');
-                            console.log(cmUtil.prettify(event));
-                            break;
+                            self.handler.error('onNotification.Android.error',event);
+                        break;
                         default:
-                            console.log('##on pn default###################');
-                            console.log(cmUtil.prettify(event));
-                            break;
+                            self.handler.error('onNotification.Android.default',event);
+                        break;
                     }
                 },
                 iOS: function (event) {
-//                    console.log('##on pn#####################');
-//                    console.log(cmUtil.prettify(event))
-
-//                    if ( event.alert ){
-//                        navigator.notification.alert(event.alert);
-//                    }
-
-//                    if ( event.sound ){
-//                        var snd = new Media(event.sound);
-//                        snd.play();
-//                    }
-
-                    $rootScope.goTo('talks',true);
+                    if('sound' in event && event.sound != '') {
+                        self.onContext(event.sound);
+                    }
 
                     if (event.badge) {
                         self.plugin.setApplicationIconBadgeNumber(
                             function(result) {
-                                self.handler.success(arguments);
+                                self.handler.success('onNotification.iOS.setApplicationIconBadgeNumber',arguments);
                             },
                             function() {
-                                self.handler.error(arguments);
+                                self.handler.error('onNotification.iOS.error',arguments);
                             },
                             event.badge
                         );
@@ -199,10 +171,10 @@ angular.module('cmPhonegap').service('cmPushNotifications', [
                     if (event.type == "toast" && event.jsonContent) {
                         self.plugin.showToastNotification(
                             function(){
-                                self.handler.success(arguments);
+                                self.handler.success('onNotification.WP8.showToastNotification',arguments);
                             },
                             function(){
-                                self.handler.error(arguments);
+                                self.handler.error('onNotification.WP8.error',arguments);
                             },
                             {
                                 Title: event.jsonContent["wp:Text1"],
@@ -212,8 +184,21 @@ angular.module('cmPhonegap').service('cmPushNotifications', [
                     }
 
                     if (event.type == "raw" && event.jsonContent) {
-                        alert(evente.jsonContent.Body);
+                        self.onContext(event.jsonContent.Body);
                     }
+                }
+            },
+
+            onContext: function(data){
+                cmLogger.error('cmPushNotifications.onContext: '+data);
+                var context = data.split(':');
+                switch(context[0]){
+                    case 'message':
+                        $rootScope.goTo('conversation/'+context[1], true);
+                    break;
+                    case 'friendRequest':
+                        $rootScope.goTo('contact/request/list', true);
+                    break;
                 }
             }
         };
@@ -221,5 +206,5 @@ angular.module('cmPhonegap').service('cmPushNotifications', [
         window.PushNotificationsCB = self;
 
         return self;
-    }]
-);
+    }
+]);

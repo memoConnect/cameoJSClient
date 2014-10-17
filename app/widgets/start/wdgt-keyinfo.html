@@ -32,7 +32,7 @@
         </div>
     </li>
 
-    <li ng-click="goTo('/talks')">
+    <li ng-click="goTo('/talks')" data-qa="btn-skip-keygen">
         <span class="item">
             {{'START.KEYINFO.SKIP_TEXT' | cmTranslate}}
         </span>
@@ -45,17 +45,17 @@
         <span class="item" ng-click="toggleKeySize()">
         {{'IDENTITY.KEYS.GENERATE.START.KEY_LENGTH.BUTTON_LABEL'|cmTranslate}} <strong>2048 (default)</strong>
         </span>
-        <div class="short-links" ng-click="toggleKeySize()">
+        <div class="short-links" ng-click="toggleKeySize()" data-qa="btn-toggle-keysize">
             <i class="fa" ng-class="{'cm-down':!showKeySize,'cm-up':showKeySize}"></i>
         </div>
         <ul class="cm-submenu" ng-show="showKeySize">
-            <li ng-click="chooseKeySize('2048')">
+            <li ng-click="chooseKeySize('2048')" data-qa="checkbox-keysize-2048">
                 <span class="item">2048</span>
                 <div class="short-links">
                     <i class="fa" ng-class="{'cm-checkbox':keySize != 2048,'cm-checkbox-right':keySize == 2048}"></i>
                 </div>
             </li>
-            <li ng-click="chooseKeySize('4096')">
+            <li ng-click="chooseKeySize('4096')" data-qa="checkbox-keysize-4096">
                 <span class="item">4096</span>
                 <div class="short-links">
                     <i class="fa" ng-class="{'cm-checkbox':keySize != 4096,'cm-checkbox-right':keySize == 4096}"></i>

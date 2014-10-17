@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('cmFiles').directive('cmFilesPreview',[
-    'cmFileFactory',
-    function(cmFileFactory) {
+    '$rootScope',
+    function($rootScope) {
         return {
             restrict: 'E',
             templateUrl: 'comps/files/drtv-files-preview.html',
@@ -11,7 +11,11 @@ angular.module('cmFiles').directive('cmFilesPreview',[
             link: function (scope, element, attrs, cmFilesCtrl) {
                 scope.removeFile = function(file){
                     cmFilesCtrl.removeFile(file);
-                }
+                };
+
+                $rootScope.$on('textArea:resize', function(event,newHeight){
+                    element.css('bottom',newHeight);
+                });
             }
         }
     }

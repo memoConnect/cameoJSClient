@@ -2,15 +2,10 @@ var config = require("../../config-e2e-tests.js")
 var util = require("../../../lib/e2e/cmTestUtil.js")
 
 describe('Identity key settings: ', function () {
-
     var ptor = util.getPtorInstance()
     var login
     var password = "password"
     var keyName = "Moeps key"
-
-    afterEach(function () {
-        util.stopOnError()
-    });
 
     it('create new user and open identity settings', function () {
         login = util.createTestUser()
@@ -49,14 +44,14 @@ describe('Identity key settings: ', function () {
     })
 
     it('cancel generation', function () {
-        $("[data-qa='btn-cancel-key-generation']").click()
+        util.waitAndClickQa("btn-cancel-key-generation")
         util.waitForPageLoad("/settings/identity/key/list")
     })
 
     it('start generation again', function () {
-        $("[data-qa='btn-create-key']").click()
+        util.waitAndClickQa("btn-create-key")
         util.waitForPageLoad('/settings/identity/key/create')
-        $("[data-qa='btn-generate-key']").click()
+        util.waitAndClickQa("btn-generate-key")
     })
 
     describe('with increased timeout', function () {
@@ -69,10 +64,8 @@ describe('Identity key settings: ', function () {
         })
 
         it('wait for key generation and display key', function () {
-            util.waitForElementVisible("[data-qa='page-save-key']", 110000)
-
+            util.waitForElementVisible("[data-qa='page-save-key']",120000)
             expect($("[data-qa='input-key-name']").getAttribute('value')).toBeTruthy()
-
             util.clearInput("input-key-name")
             $("[data-qa='input-key-name']").sendKeys(keyName)
 
@@ -81,12 +74,13 @@ describe('Identity key settings: ', function () {
              */
             $("body").click();
 
-            $("[data-qa='btn-save-key']").click()
+            util.waitAndClickQa("btn-save-key")
 
         })
     })
 
     it('the new key should be displayed as local', function () {
+        util.get('/settings/identity/key/list')
         util.waitForPageLoad('/settings/identity/key/list')
         util.waitForElement("[data-qa='key-list-item']")
 
@@ -118,8 +112,9 @@ describe('Identity key settings: ', function () {
     })
 
     it('delete key and confirm that it is deleted after logout/login', function () {
-        $("[data-qa='btn-remove-modal']").click()
-        $("[data-qa='btn-remove-key']").click()
+
+        util.waitAndClickQa('btn-remove-modal')
+        util.waitAndClickQa('btn-confirm')
 
         util.logout()
         util.login(login, password)

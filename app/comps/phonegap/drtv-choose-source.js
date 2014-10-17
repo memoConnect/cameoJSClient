@@ -37,9 +37,6 @@ angular.module('cmPhonegap').directive('cmChooseSource', [
 
                 // watch for extern handler
                 $rootScope.$on('cmChooseSource:open', function(){
-
-                    console.log('juhu cmChooseSource:open')
-
                     scope.toggleList('show',true);
                 });
 
@@ -87,8 +84,6 @@ angular.module('cmPhonegap').directive('cmChooseSource', [
                                   || action && action == 'show' && scope.showList
                                   || !action && scope.showList
                                   ? false : true;
-
-                    console.log(action, scope.showList)
 
                     if(scope.showList){
                         body.on('click',clickOutside);

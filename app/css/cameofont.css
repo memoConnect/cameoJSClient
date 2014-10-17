@@ -6,11 +6,11 @@
  * -------------------------- */
 @font-face {
   font-family: 'CameoFont';
-  src: url('fonts/cameofont-webfont.eot?v=4.0.3');
-  src: url('fonts/cameofont-webfont.eot?#iefix&v=4.0.3') format('embedded-opentype'),
-  url('fonts/cameofont-webfont.woff?v=4.0.3') format('woff'),
-  url('fonts/cameofont-webfont.ttf?v=4.0.3') format('truetype'),
-  url('fonts/cameofont-webfont.svg?v=4.0.3#cameofontregular') format('svg');
+  src: url('css/fonts/cameofont-webfont.eot?v=4.0.3');
+  src: url('css/fonts/cameofont-webfont.eot?#iefix&v=4.0.3') format('embedded-opentype'),
+  url('css/fonts/cameofont-webfont.woff?v=4.0.3') format('woff'),
+  url('css/fonts/cameofont-webfont.ttf?v=4.0.3') format('truetype'),
+  url('css/fonts/cameofont-webfont.svg?v=4.0.3#cameofontregular') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -201,11 +201,11 @@
    readers do not read off random characters that represent icons
 */
 .cm-rhino-bubble{
-    background-image:url('../gfx/rhino-bubble.png');
+    background-image:url('gfx/rhino-bubble.png');
     background-color:transparent;
-    background-size:0.8em 0.8em;
-    width:0.8em;
-    height:0.8em;
+    background-size:1em 1em;
+    width:1em;
+    height:1em;
 }
 .cm-rhino-bubble-glyph:before{content:'\f044'}
 .cm-rhino-positive:before{content:'\f002'}
@@ -241,6 +241,7 @@
 .cm-out:before{content:'\f018'}
 .cm-info:before{content:'\f019'}
 .cm-key:before{content:'\f01a'}
+.cm-no-key:before{content:'\f097'}
 .cm-location:before{content:'\f01b'}
 .cm-logo:before{content:'\f045'}
 .cm-logo-c:before{content:'\f046'}
@@ -326,3 +327,4 @@
 .cm-avatar-add:before{content:'\f094'}
 .cm-radio-0:before{content:'\f095'}
 .cm-radio-1:before{content:'\f096'}
+.cm-qr-code:before{content:'\f099'}

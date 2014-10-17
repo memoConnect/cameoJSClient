@@ -6,8 +6,9 @@ angular.module('cmCore')
     '$location', '$rootScope',
     function(cmUtil,
              $location, $rootScope) {
+
         var scopeData = {},
-            privateData = {},
+            noneScopeData = {},
             defaultOptions = {
                 id: '',
                 scopeVar: '',
@@ -28,8 +29,8 @@ angular.module('cmCore')
 
             scopeData[options.id] = $scope[options.scopeVar];
 
-            if (options.privateData != undefined) {
-                privateData[options.id] = options.privateData;
+            if (options.noneScopeData != undefined) {
+                noneScopeData[options.id] = options.noneScopeData;
             }
 
             // clear data exp.: password
@@ -47,7 +48,11 @@ angular.module('cmCore')
                     $scope[options.scopeVar] = scopeData[options.id]
 
                 }
-                options.onGet(scopeData[options.id], privateData[options.id]);
+                options.onGet(scopeData[options.id], noneScopeData[options.id]);
+                _reset(options);
+            // when only noneScopeData is full data
+            } else if(noneScopeData[options.id] != null){
+                options.onGet({}, noneScopeData[options.id]);
                 _reset(options);
             }
         }
@@ -56,9 +61,14 @@ angular.module('cmCore')
         function _reset(options){
             delete scopeData[options.id];
             scopeData[options.id] = null;
-            delete privateData[options.id];
-            privateData[options.id] = null;
+            delete noneScopeData[options.id];
+            noneScopeData[options.id] = null;
         }
+
+        $rootScope.$on('logout', function(){
+            scopeData = {};
+            noneScopeData = {};
+        });
 
         return {
             create: function ($scope, _options_) {

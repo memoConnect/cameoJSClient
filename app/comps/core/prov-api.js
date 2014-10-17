@@ -232,7 +232,7 @@ angular.module('cmCore').provider('cmApi',[
 
 
                 function handleError(response, deferred){
-                    cmLogger.error('Api call failed: \n '+response.config.method+' '+response.config.path, response)
+                    cmLogger.error('Api call failed: \n '+response.config.method+' '+JSON.stringify(response, null, 2))
 //                    window.location.href='#/server_down' //@ Todo
                     //error messages should come trough backend
                     deferred.reject(response)
@@ -454,7 +454,8 @@ angular.module('cmCore').provider('cmApi',[
                             .then(
                             function(events){
                                 events.forEach(function(event){
-                                    api.trigger(event.name, event.data)
+                                    cmLogger.debug('Backend event: '+event.name)
+                                    api.trigger(event.name, event.data, event)
                                 })
                             },
                             function(){
@@ -494,6 +495,25 @@ angular.module('cmCore').provider('cmApi',[
                         api.resetSubscriptionId()
                     })
                 }
+
+                /**
+                 * @ngdoc method
+                 * @methodOf cmAuth
+                 *
+                 * @name sendBroadcast
+                 * @description
+                 * post a broadcast event to own devices
+                 *
+                 * @param {Object} data event data
+                 * @returns {Promise} for async handling
+                 */
+                api.broadcast = function(data, identityId){
+                    return api.post({
+                        path: '/event/broadcast' + (identityId ? '/identity/' + identityId : ''),
+                        data: data
+                    });
+                }
+                
 
                 return api
             }

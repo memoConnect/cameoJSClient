@@ -1,8 +1,8 @@
 <button>
-    <i class="fa cm-settings" ng-if="imageUpload == false"></i>
-    <cm-spinner ng-if="imageUpload"></cm-spinner>
+    <i class="fa cm-settings" ng-show="!imageUpload"></i>
+    <cm-loader ng-show="imageUpload"></cm-loader>
 </button>
-<cm-files ng-model="files" id="files-droparea">
+<cm-files ng-model="files" id="files-droparea" data-qa="avatar-upload-btn">
     <cm-file-choose cm-droparea="files-droparea" cm-accept="image/*"></cm-file-choose>
     <cm-choose-source cm-options="{tooltip:'down',useFrontCamera:true}"></cm-choose-source>
 </cm-files>

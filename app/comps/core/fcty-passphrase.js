@@ -196,6 +196,7 @@ angular.module('cmCore').factory('cmPassphrase',[
                 var old_passphrase = passphrase,
                     new_passphrase = undefined;
 
+
                 if(!couldBeAPassword(pw) || !symmetricallyEncryptedPassphrase) 
                     return false
 
@@ -219,7 +220,7 @@ angular.module('cmCore').factory('cmPassphrase',[
              *
              * @name decryptAsymmetricallyEncryptedPassphrase
              * @description
-             * Decrypts the encrypted passphrase list into a passphrase ready to be delivered by .getPassphrase()
+             * Decrypts the encrypted passphrase list into a passphrase ready to be delivered by .get()
              *
              * @param {cmUserModel} user User providing keys for encryption.
              * @returns {Boolean} Returns wether the decryption was a success or not.

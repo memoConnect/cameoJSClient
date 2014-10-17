@@ -15,8 +15,6 @@ angular.module('cmContacts')
                 $scope.canReadLocalContacts = function(){
                     return cmLocalContacts.canRead();
                 };
-
-
             }
         }
     }

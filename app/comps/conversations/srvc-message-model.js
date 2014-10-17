@@ -171,8 +171,9 @@ angular.module('cmConversations')
                 var secret_JSON = JSON.stringify(secret_data);
 
                 //this.encryptedData = cmCrypt.base64Encode(cmCrypt.encryptWithShortKey(passphrase, secret_JSON));
-                if(conversation.getPassphrase() !== null)
+                if(conversation.getPassphrase() !== null) {
                     this.encryptedData = cmCrypt.encrypt(conversation.getPassphrase(), secret_JSON);
+                }
                 //@ TODO!!!!
 
                 return this;
@@ -350,7 +351,7 @@ angular.module('cmConversations')
 
             this.decryptFiles = function(){
                 angular.forEach(this.files, function(file){
-                    if(file.state == 'exists') {
+                    if(file.state.is('onlyFileId')) {
                         file
                             .setPassphrase(conversation.getPassphrase())
                             .downloadStart();

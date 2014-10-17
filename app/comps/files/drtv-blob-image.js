@@ -21,9 +21,9 @@ angular.module('cmFiles').directive('cmBlobImage',[
                                     file.loaded = true;
                                 });
 
-                                if(attrs.cmScrollTo) {
-                                    $rootScope.$broadcast('scroll:to');
-                                }
+//                                if(attrs.cmScrollTo) {
+//                                    $rootScope.$broadcast('scroll:to');
+//                                }
                             });
                         });
 
@@ -35,7 +35,7 @@ angular.module('cmFiles').directive('cmBlobImage',[
 
                 function handleBlob(file){
                     if(typeof file !== 'undefined'){
-                        if(file.state == 'cached' || file.state == 'new'){
+                        if(file.state.is('cached') || file.state.is('new')){
                             showFile(file);
                         }
 

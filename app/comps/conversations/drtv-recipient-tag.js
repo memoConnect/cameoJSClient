@@ -6,12 +6,13 @@ angular.module('cmConversations').directive('cmRecipientTag',[
         return {
             restrict: 'AE',
             scope: {
-                selected: "=cmDataSelected",
-                identity: "=cmData",
-                conversation: "=cmDataConversation"
+                selected:       "=cmDataSelected",
+                identity:       "=cmData",
+                conversation:   "=cmDataConversation"
             },
             templateUrl: 'comps/conversations/drtv-recipient-tag.html',
             controller: function($scope){
+
                 $scope.addRecipient = function(){
                     $scope.selected[$scope.identity.id] = true;
                     $scope.conversation.addRecipient($scope.identity);

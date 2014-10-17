@@ -20,7 +20,7 @@
     margin:0;
     border:none;
   }
-  &~.progress {
+  &~.pw-progress {
     margin-top: -0.8em;
     margin-bottom: 0.5em;
     background:transparent;
@@ -149,10 +149,6 @@ form.form-signin {
   button {
     position: relative;
   }
-  cm-spinner{
-    height: @cm-unit;
-    top:@cm-unit/2;
-  }
 }
 
 cm-search-input,.cm-search-input{
@@ -180,4 +176,11 @@ cm-add-button{
 
 .cm-warning{
   color: @cm-warning-color;
+}
+
+
+/* Input field for transaction secret in authentication request modal */
+#inp-transactSecret{
+  font-size: @cm-unit;
+  text-align:center;
 }

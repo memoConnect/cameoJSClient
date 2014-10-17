@@ -1,13 +1,10 @@
 var config = require("../../config-e2e-tests.js")
 var util = require("../../../lib/e2e/cmTestUtil.js")
-var ptor = util.getPtorInstance()
-
 /**
 * @deprected becaus of current gui changes in menu
 */
 xdescribe('Settings: ', function(){
-
-    afterEach(function() { util.stopOnError() });
+    var ptor = util.getPtorInstance()
 
     function openMenu(){
         $("cm-menu .cm-handler").click()

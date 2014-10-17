@@ -8,13 +8,18 @@ angular.module('cmFiles').directive('cmFiles',[
         return {
             restrict : 'E',
             controller : function($scope){
-                $scope.files = [];
+                $scope.files = $scope.files || [];
+
                 /**
                  * function called via <input type=file> or
                  * @param blob
                  * @returns {boolean}
                  */
                 this.setFile = function(blob){
+
+//                    TODO: Android name=content fix file plugin!!!
+//                    console.log(blob)
+
                     var bool = true;
 
                     angular.forEach($scope.files, function(value){
@@ -30,7 +35,7 @@ angular.module('cmFiles').directive('cmFiles',[
                     var file = cmFileFactory.create(blob,true);
                     $scope.files.push(file);
 
-                    $rootScope.$broadcast('cmFiles:fileSetted');
+                    $rootScope.$broadcast('cmFilesFileSetted');
                 };
 
                 this.removeFile = function(file){
@@ -46,8 +51,8 @@ angular.module('cmFiles').directive('cmFiles',[
                  * prepare files and return to caller
                  * @type {Array}
                  */
-                $rootScope.$$listeners.checkFiles = [];
-                $rootScope.$on('checkFiles', function(event, options){
+                $rootScope.$$listeners.cmFilesCheckFiles = [];
+                $rootScope.$on('cmFilesCheckFiles', function(event, options){
                     $scope.prepareFilesForUpload(options.passphrase, options.conversationId)
                     .then(
                         function(){
@@ -58,7 +63,7 @@ angular.module('cmFiles').directive('cmFiles',[
                         },
                         function(result){
                             if(typeof options.error == 'function'){
-                                options.error(result.data.error.maxFileSize, result.config.header);
+                                options.error(result.data.error.maxFileSize, result.config.headers);
                             }
                         }
                     )
@@ -92,7 +97,7 @@ angular.module('cmFiles').directive('cmFiles',[
                  */
                 $scope.resetFiles = function(){
                     $scope.files = [];
-                    $scope.$broadcast('reset:files');
+                    $scope.$broadcast('cmFileChooseResetFiles');
                 };
             }
         }
