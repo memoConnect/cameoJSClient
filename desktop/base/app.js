@@ -338,7 +338,7 @@ angular.module('cameoClient', [
                 app     = $document[0].querySelector('#cm-app');
 
             //prevent screen size to change when content overflows
-            html.style.overflowY = 'scroll';
+            //html.style.overflowY = 'scroll';
 
             var height          = window.innerHeight,
                 width           = html.offsetWidth,

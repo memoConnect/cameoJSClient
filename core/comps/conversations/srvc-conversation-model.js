@@ -217,7 +217,7 @@ angular.module('cmConversations')
              * @param {Object} data The conversation data as recieved from the backend.
              */
             this.importData = function(data){
-//                cmLogger.debug('cmConversationModel:importData');
+                cmLogger.debug('cmConversationModel:importData');
                 if(typeof data !== 'object'){
                     cmLogger.debug('cmConversationModel:import:failed - no data!');
                     return this;
@@ -517,9 +517,9 @@ angular.module('cmConversations')
             this.isEncrypted = function(){
 //                cmLogger.debug('cmConversationModel.isEncrypted');
 
-                return  this.state.is('new')
+                return this.state.is('new')
                         ?   !encryption_disabled
-                        :   this.keyTransmission != "none"
+                        :   this.keyTransmission != "none";
                 
                 // var bool = true;
 
@@ -574,9 +574,9 @@ angular.module('cmConversations')
                     },
                     function(){
                         self.trigger('decrypt:failed');
-                        return $q.reject()
+                        return $q.reject();
                     }
-                )
+                );
 
 
                 /**
@@ -960,7 +960,6 @@ angular.module('cmConversations')
                 return this;
             };
 
-
             /**
              * Event Handling
              */
@@ -1002,6 +1001,7 @@ angular.module('cmConversations')
             //Todo: fire event on factory and delegate to conversation or something
             this.on('message:new', function(event, message_data){
                 if(typeof message_data == 'object'){
+                    console.log(self.timeOfLastUpdate,message_data.created)
                     if('created' in message_data){
                         self.timeOfLastUpdate = message_data.created;
                     }

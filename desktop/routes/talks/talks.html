@@ -1,4 +1,4 @@
-<section class="theme-a fill-bg">
+<section class="theme-a fixed-layout with-default-pages">
     <cm-header cm-rubber-space>
         <cm-identity cm-weight="4"></cm-identity>
         <cm-add-button cm-weight="1" ng-click="createNewConversation()" data-qa="new-conversation-btn" cm-icon="new-talk"></cm-add-button>
@@ -11,13 +11,13 @@
 
     <cm-modal-add-contact id="add-contact" nose-position="6rem"></cm-modal-add-contact>
 
-    <cm-column>
-            <cm-widget-talks></cm-widget-talks>
+    <cm-column class="fill-bg">
+        <cm-widget-talks></cm-widget-talks>
     </cm-column>
-    <cm-column>
+    <cm-column class="fill-bg without-footer no-scroll">
 
     </cm-column>
-    <cm-column>
+    <cm-column class="fill-bg without-footer no-scroll">
 
     </cm-column>
 </section>

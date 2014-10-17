@@ -2,7 +2,9 @@
 
 angular.module('cmConversations').directive('cmConversationTag',[
     'cmUserModel',
-    function (cmUserModel){
+    '$routeParams',
+    function (cmUserModel,
+              $routeParams){
         return {
             restrict: 'AE',
             scope: {
@@ -10,7 +12,12 @@ angular.module('cmConversations').directive('cmConversationTag',[
             },
             templateUrl: 'comps/conversations/drtv-conversation-tag.html',
             priority: 0,
-            link: function(scope){
+            link: function(scope, element){
+                if('conversationId' in $routeParams
+                && scope.conversation
+                && scope.conversation.id == $routeParams.conversationId){
+                    element.addClass('is-active');
+                }
             },
             controller: function($scope){
                 /**
