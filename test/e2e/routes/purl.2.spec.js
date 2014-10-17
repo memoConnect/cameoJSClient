@@ -276,7 +276,7 @@ describe('Route: Purl - ', function () {
     /**
      * Test 7
      */
-    describe("Test 7 - Internalal user opens Purl that does not exists:", function(){
+    describe("Test 7 - Internal user opens Purl that does not exists:", function(){
         it('should be 404 path', function(){
             util.login()
             util.waitForPageLoad('/start')
@@ -292,7 +292,7 @@ describe('Route: Purl - ', function () {
     /**
      * Test 8
      */
-    describe("Test 8 - Externalal User tries to open non-existing Purl:", function(){
+    describe("Test 8 - External User tries to open non-existing Purl:", function(){
         it('should be 404 path', function(){
             util.logout()
             util.get('/purl/moep')
