@@ -1,14 +1,11 @@
 importScripts('-mock-vendor.js');
-importScripts('../vendor.0.2.6.js');
-
+importScripts('../vendor.<%= currentVersion %>.js');
 
 var crypt = new JSEncrypt()
 
 self.addEventListener('message', function(event) {
     var data    = event.data
 
-
-    //console.log(JSON.stringify(data))
     switch (data.cmd) {
         case 'start':
             try {
