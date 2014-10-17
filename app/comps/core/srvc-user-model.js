@@ -516,7 +516,7 @@ angular.module('cmCore')
         };
 
         this.signPublicKey = function(keyToSign, keyToSignFingerprint, identity){
-//            cmLogger.debug('cmUserModel.signPublicKey');
+            // cmLogger.debug('cmUserModel.signPublicKey');
 
             identity = identity || self.data.identity
 
@@ -525,39 +525,36 @@ angular.module('cmCore')
                 return $q.reject()
             }
 
-            return  cmCallbackQueue.push(this.loadLocalKeys().map(function(signingKey){
-                        return function(){
-                            //Keys should not sign themselves
-                            if(signingKey.id == keyToSign.id && (signingKey.getFingerprint() === keyToSign.getFingerprint())){
-                                self.trigger('signatures:cancel');
-                                cmLogger.debug('cmUserModel.signPublicKey() failed; key tried to sign itself.')
-                                return false;
-                            }
-
-                            //Dont sign twice:
-                            if(keyToSign.signatures.some(function(signature){ return signature.keyId == signingKey.id })){
-                                self.trigger('signatures:cancel');
-                                cmLogger.debug('cmUserModel.signPublicKey() failed; dublicate signature.')
-                                return false; 
-                            }
-
-                            cmLogger.debug('cmUserModel.signPublicKey: signing...')
-
-                            //Content of the signature:
-                            var signature  =  signingKey.sign(self.getTrustToken(keyToSign, identity.cameoId));
-                            
-                            
-                            return  cmAuth.savePublicKeySignature(signingKey.id, keyToSign.id, signature)
-                                    .then(
-                                        function(signature){
-                                            keyToSign.importData({signatures:[signature]})  
-                                            return signature                          
-                                        },
-                                        function(){
-                                            self.trigger('signatures:failed');
-                                        }
-                                    )
+            return  $q.all(this.loadLocalKeys().map(function(signingKey){
+                        //Keys should not sign themselves
+                        if(signingKey.id == keyToSign.id && (signingKey.getFingerprint() == keyToSign.getFingerprint())){
+                            self.trigger('signatures:cancel');
+                            cmLogger.debug('cmUserModel.signPublicKey() failed; key tried to sign itself.')
+                            return $q.when(false);
                         }
+
+                        //Dont sign twice:
+                        if(keyToSign.signatures.some(function(signature){ return signature.keyId == signingKey.id })){
+                            self.trigger('signatures:cancel');
+                            cmLogger.debug('cmUserModel.signPublicKey() failed; dublicate signature.')
+                            return $q.when(false); 
+                        }
+
+                        cmLogger.debug('cmUserModel.signPublicKey: signing...')
+
+                        return  signingKey.sign(self.getTrustToken(keyToSign, identity.cameoId))
+                                .then(function(signature){
+                                    return cmAuth.savePublicKeySignature(signingKey.id, keyToSign.id, signature)
+                                })
+                                .then(
+                                    function(signature){
+                                        keyToSign.importData({signatures:[signature]})  
+                                        return signature                          
+                                    },
+                                    function(){
+                                        self.trigger('signatures:failed');
+                                    }
+                                )
                     }))
                     .then(function(result){
                         self.trigger('signatures:saved', result)
@@ -566,17 +563,17 @@ angular.module('cmCore')
 
         this.verifyOwnPublicKey = function(key){
             // cmLogger.debug('cmUserModel.verifyOwnPublicKey');
-            var local_keys = this.loadLocalKeys();
 
-            return local_keys.some(function(local_key){
-                return  (local_key.getPrivateKey() && local_key.getPublicKey() == key.getPublicKey()) //local keys are always considered own keys.
-                        ||
-                        local_key.verifyKey(key, self.getTrustToken(key, self.data.identity.cameoId))
-            })
+            return this.loadLocalKeys().reduce(function(previous_try, local_key){
+                return  previous_try
+                        .catch(function(){
+                            return  local_key.verifyKey(key, self.getTrustToken(key, self.data.identity.cameoId))
+                        })
+            }, $q.reject())
         };
 
         this.signOwnKeys = function(){
-            // cmLogger.debug('cmUserModel.signOwnKeys');
+            //cmLogger.debug('cmUserModel.signOwnKeys');
             return this.verifyIdentityKeys(this.data.identity, true)
         }
 
@@ -589,47 +586,59 @@ angular.module('cmCore')
             //cmLogger.debug('cmUserModel.verifyIdentityKeys');
 
             if(!identity.keys)
-                return [];
+                return $q.when([]);
 
-            var local_keys              =   this.loadLocalKeys(),
-                own_ttrusted_keys       =   self.data.identity.keys.getTransitivelyTrustedKeys(local_keys, function trust(trusted_key, key){
-                                                return trusted_key.verifyKey(key, self.getTrustToken(key, self.data.identity.cameoId))
-                                            });
+            var local_keys = this.loadLocalKeys()
 
-
-            var ttrusted_keys           =   identity.keys.getTransitivelyTrustedKeys(own_ttrusted_keys, function trust(trusted_key, key){
-                                                return trusted_key.verifyKey(key, self.getTrustToken(key, identity.cameoId))
-                                            });
-               
-
-            var unsigned_ttrusted_keys  =   ttrusted_keys.filter(function(ttrusted_key){
-                                                return  local_keys.some(function(local_key){
-                                                            return  ttrusted_key.signatures.every(function(signature){
-                                                                        return signature.keyId != local_key.id
+            return  $q.when()
+                    .then(function(){
+                        return  self.data.identity.keys.getTransitivelyTrustedKeys(local_keys, function trust(trusted_key, key){
+                                    return trusted_key.verifyKey(key, self.getTrustToken(key, self.data.identity.cameoId))
+                                })
+                    })
+                    .then(function(own_ttrusted_keys){
+                        return  identity.keys.getTransitivelyTrustedKeys(own_ttrusted_keys, function trust(trusted_key, key){
+                                    return trusted_key.verifyKey(key, self.getTrustToken(key, identity.cameoId))
+                                });
+                    })
+                    .then(function(ttrusted_keys){
+                        //looks for keys that are transitively trusted but not yet signed by all local keys:
+                        var unsigned_ttrusted_keys  =   ttrusted_keys.filter(function(ttrusted_key){
+                                                            return  local_keys.some(function(local_key){
+                                                                        return  ttrusted_key.signatures.every(function(signature){
+                                                                                    return signature.keyId != local_key.id
+                                                                                })
                                                                     })
                                                         })
-                                            });
 
-            if(sign != true || unsigned_ttrusted_keys.length == 0)
-                return ttrusted_keys;
+                        if(sign != true || unsigned_ttrusted_keys.length == 0)
+                            return $q.when(ttrusted_keys)
 
-            this.state.set('signing');
+                        self.state.set('signing');
 
-            cmCallbackQueue.push(
-                unsigned_ttrusted_keys.map(function(ttrusted_key){
-                    return function(){ self.signPublicKey(ttrusted_key, ttrusted_key.getFingerprint(), identity) }
-                })
-            )
-            .finally(function(){
-                 self.state.unset('signing')
-            });
+                        $q.all(
+                            unsigned_ttrusted_keys.map(function(ttrusted_key){
+                                console.info('signing: '+ttrusted_key.name)
+                                return self.signPublicKey(ttrusted_key, ttrusted_key.getFingerprint(), identity)
+                            })
+                        )
+                        .finally(function(){
+                             self.state.unset('signing')
+                        });
 
-            return ttrusted_keys
+                        return $q.when(ttrusted_keys)
+                    })
         };
 
         this.verifyTrust = function(identity){
-            return      identity.keys.length > 0
-                    &&  identity.keys.length == this.verifyIdentityKeys(identity, true).length //true: sign keys if needed 
+            return  identity.keys.length != 0
+                    ?   this.verifyIdentityKeys(identity, true)
+                        .then(function(trusted_keys){
+                            return  identity.keys.length == trusted_keys.length
+                                    ?   $q.when()
+                                    :   $q.reject('untrusted key found.')
+                        })
+                    :  $q.reject('missing keys.')
         };
 
         this.clearLocalKeys = function(){
@@ -672,20 +681,24 @@ angular.module('cmCore')
                                 if(list.length == 0)
                                     return []
 
-                                $q.all(
-                                    list.map(function(item){
-                                        return  self.decryptPassphrase(item.aePassphrase, localKey.id)
-                                                .then(function(passphrase){
-                                                    return newKey.encrypt(passphrase)
-                                                })
-                                                .then(function(encrypted_passphrase){
-                                                    return  {
-                                                                conversationId: item.conversationId, 
-                                                                aePassphrase:   encrypted_passphrase
-                                                            }
-                                                })
-                                    })
-                                )
+                                
+                                //re and encrypt passphrasees one by one, dont try to de and encrypt them all simultaniuosly:
+                                list.reduce(function(previous_run, item){
+                                    return  previous_run
+                                            .then(function(list_so_far){
+                                                return  self.decryptPassphrase(item.aePassphrase, localKey.id)
+                                                        .then(function(passphrase){
+                                                            return newKey.encrypt(passphrase)
+                                                        })
+                                                        .then(function(encrypted_passphrase){
+                                                            return  list_so_far.concat([{
+                                                                        conversationId: item.conversationId, 
+                                                                        aePassphrase:   encrypted_passphrase
+                                                                    }])
+                                                        })
+
+                                            })
+                                }, $q.when([]))
                                 .then(function(newList){
                                     return  cmAuth.saveBulkPassphrases(newKey.id, newList)
                                 })
@@ -863,6 +876,7 @@ angular.module('cmCore')
             if(typeof data.id != 'undefined' && data.id == self.data.identity.id) {
                 self.data.identity.importData(data);
                 self.syncLocalKeys();
+                self.signOwnKeys()
             }
         });
 

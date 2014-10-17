@@ -72,9 +72,9 @@ angular.module('cmRouteSettings')
                         cmUserModel
                             .when('key:saved', null, 5000)
                             .then(
-                                function(data){
+                                function(result){
                                     if(cmUserModel.data.identity.keys.some(function(key){
-                                        return key.id != data.keyId
+                                        return key.id != result.data.keyId
                                     })){
                                         $scope.goto('/authentication')
                                     } else {

@@ -311,6 +311,12 @@
                 "CONFIRMATION" :"You just uploaded 3rd party contact details to our servers. Please tell them about it.",
                 "MESSAGE" : "Hallo {{to}}, I have transfered your contact data into may cameo addressbook. Bye {{from}}"
             }
+        },
+        "TRUST":{
+            "NO_CAMEOKEYS": "no cameoKey @todo",
+            "HAS_CAMEOKEYS": "has cameoKey @todo",
+            "OK": "trusted",
+            "START": "trust this contact  @todo"
         }
     },
 

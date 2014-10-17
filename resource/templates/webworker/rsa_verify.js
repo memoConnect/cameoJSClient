@@ -1,5 +1,5 @@
 importScripts('-mock-vendor.js');
-importScripts('../vendor.0.2.6.js');
+importScripts('../vendor.<%= currentVersion %>.js');
 
 
 var crypt = new JSEncrypt()
@@ -14,11 +14,11 @@ self.addEventListener('message', function(event) {
             try {
                 crypt.setKey(data.pubKey)
 
-                var result = crypt.verify(data.signature, data.data)
+                var result = crypt.verify(data.data, data.signature, function(x){ return x })
 
                 self.postMessage({
                     msg:    result ? 'finished' : 'failed',
-                    secret: result
+                    result: result
                 })
 
             } catch(e){

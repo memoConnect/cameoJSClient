@@ -19,12 +19,25 @@ angular.module('cmUser').directive('cmIdentityKeyList', [
                 $scope.canCreate = true;
 
                 function refresh(){
-                    $scope.canCreate    = !cmUserModel.hasPrivateKey();
-                    $scope.privateKeys  = cmUserModel.loadLocalKeys() || [];
-                    $scope.publicKeys   = cmUserModel.data.identity.keys || [];
-                    $scope.trustedKeys  = $scope.publicKeys.filter(function(key){
-                        return cmUserModel.verifyOwnPublicKey(key);
+                    $scope.canCreate    =   !cmUserModel.hasPrivateKey();
+                    $scope.privateKeys  =   cmUserModel.loadLocalKeys() || [];
+                    $scope.publicKeys   =   cmUserModel.data.identity.keys || [];
+                    $scope.trustedKeys  =   []
+
+                    $scope.checking     =   {}
+
+                    $scope.publicKeys.forEach(function(key){
+                        $scope.checking[key.id] = true
+                        cmUserModel
+                        .verifyOwnPublicKey(key)
+                        .then(function(){
+                            $scope.trustedKeys.push(key)
+                        })
+                        .finally(function(){
+                            $scope.checking[key.id] = false
+                        })
                     });
+
                     $scope.signing      =   cmUserModel.state.is('signing');
 
                     $scope.isHandshakePossible = ($scope.privateKeys.length > 0);
@@ -64,15 +77,9 @@ angular.module('cmUser').directive('cmIdentityKeyList', [
                     cmUserModel.trigger('handshake:start', {key: toKey});
                 };
 
+                //Todo: check if refresh has to be called that often
                 cmUserModel.state.on('change', refresh);
-                cmUserModel.on('key:stored key:removed signatures:saved identity:updated', refresh);
-
-
-
-                cmUserModel.on('update:finished', function(){
-                    refresh()
-                    cmUserModel.data.identity.one('update:finished', refresh);
-                });
+                cmUserModel.on('key:stored key:removed signatures:saved identity:updated update:finished', refresh);
 
 
                 refresh()
