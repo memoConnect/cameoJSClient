@@ -83,7 +83,6 @@
     ng-repeat="message in (filteredData = (conversation.messages | orderBy:'created':false))"
     cm-scroll-to="{anchor:'#conversation-bottom',force:'bottom'}">
     <cm-date-seperator cm-timestamp="message.created" cm-timestamp-prev="filteredData[$index - 1].created"></cm-date-seperator>
-    <!-- moep - don't delete - ask empu^^ -->
     <cm-message cm-data="message" cm-data-conversation="conversation"></cm-message>
 </div>
 
