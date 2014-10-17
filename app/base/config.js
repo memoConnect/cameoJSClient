@@ -246,8 +246,8 @@ var cameo_config = {
     },
 
     menu: {
-        'contact/create': {i18n:'MENU.NEW_CONTACT', icon:'cm-new-contact'},
         'conversation/new': {i18n:'MENU.NEW_TALK', icon:'cm-new-talk'},
+        'contact/create': {i18n:'MENU.NEW_CONTACT', icon:'cm-new-contact'},
         'settings/identity/key/list': {i18n:'MENU.OWN_KEYS', icon:'cm-key'},
         'contact/request/list': {'data-qa':'btn-menu-contact-requests', i18n:'MENU.REQUESTS', icon:'cm-new-contact-query', css:'cm-menu-notify qa-btn-request-notify', drtv:'cm-friend-request-counter'},
         'settings': {i18n:'MENU.SETTINGS', icon:'cm-settings'},

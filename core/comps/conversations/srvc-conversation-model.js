@@ -643,7 +643,7 @@ angular.module('cmConversations')
             this.getPassphrase = function(){
 
                 if(!this.isEncrypted())
-                    return $q.reject()
+                    return $q.reject('not encrypted.')
 
                 if(!this.state.is('new') && !passphraseVault)
                     return $q.reject('new but passphrasevault missing.')

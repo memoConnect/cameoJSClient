@@ -127,36 +127,75 @@ angular.module('cmCore')
             };
 
             this.sign = function(data){
-                return crypt && crypt.sign(data)
 
-                // return  $q.when(crypt && crypt.sign(data))
-                //         .then(function(result){
-                //             return  result
-                //                     ?   $q.when(result)
-                //                     :   $q.reject()
-                //         })
+                return  cmWebworker.available
+                        ?   cmWebworker.new('rsa_sign')
+                            .then(function(worker){
+                                return  worker.start({
+                                            privKey:    self.getPrivateKey(),
+                                            data:       data
+                                        })
+                            })
+                            .then(function(result){
+                                return $q.when(result.signature)
+                            })
+                        :   $q.when(crypt && crypt.sign(data))
+                            .then(function(signature){
+                                return  signature
+                                        ?   $q.when(signature)
+                                        :   $q.reject()
+                            })
             };
 
-            this.verify = function(data, signature, force){
-                var result =   !force && (verified[data] && verified[data][signature])
-                                ?   verified[data][signature]
-                                :   crypt && crypt.verify(data, signature, function(x){ return x }) 
-
-                if(result){
-                    verified[data] = { signature: result}
-                }else{
-                    cmLogger.warn('keyModel.verify() failed.')
-                }
-
-                return  result
-            };
+            this.verify = function(data, signature, force){ 
+                return  $q.reject()
+                        // .catch(function(){
+                        //     return  !force && (verified[data] && verified[data][signature])
+                        //             ?   $q.when(verified[data][signature])
+                        //             :   $q.reject()
+                        // })
+                        .catch(function(){
+                            return  cmWebworker.available
+                                    ?   cmWebworker.new('rsa_verify')
+                                        .then(function(worker){
+                                            return  worker.start({
+                                                        pubKey:     self.getPublicKey(),
+                                                        signature:  signature,
+                                                        data:       data
+                                                    })
+                                            
+                                        })
+                                        .then(function(result){
+                                            return $q.when(result.result)
+                                        })
+                                    :   $q.when(crypt && crypt.verify(data, signature, function(x){ return x }))
+                                        .then(function(result){
+                                            return  result
+                                                    ?   $q.when(result)
+                                                    :   $q.reject()
+                                        })
+                        })
+                        .then(
+                            function(signature){
+                                verified[data] = verified[data] || {}
+                                verified[data][signature] = true
+                                return signature
+                            },
+                            function(){
+                                cmLogger.warn('keyModel.verify() failed.')
+                                return $q.reject()
+                            }
+                        )
+            }
 
             this.encrypt = function(secret){
-                return  cmWebworker
-                        ?   new cmWebworker('rsa_encrypt')
-                            .start({
-                                pubKey:     this.getPublicKey(),
-                                secret:     secret
+                return  cmWebworker.available
+                        ?   cmWebworker.new('rsa_encrypt')
+                            .then(function(worker){
+                                return  worker.start({
+                                            pubKey:     self.getPublicKey(),
+                                            secret:     secret
+                                        }) 
                             })
                             .then(function(result){
                                 return  result.secret
@@ -171,11 +210,13 @@ angular.module('cmCore')
             };
 
             this.decrypt = function(encrypted_secret){
-                return  cmWebworker
-                        ?   new cmWebworker('rsa_decrypt')
-                            .start({
-                                privKey:            this.getPrivateKey(),
-                                encryptedSecret:    encrypted_secret
+                return  cmWebworker.available
+                        ?   cmWebworker.new('rsa_decrypt')
+                            .then(function(worker){
+                                return  worker.start({
+                                            privKey:            self.getPrivateKey(),
+                                            encryptedSecret:    encrypted_secret
+                                        })
                             })
                             .then(
                                 function(result){
@@ -195,13 +236,18 @@ angular.module('cmCore')
             };
 
             this.verifyKey = function(key, data){
-                return  this.getPublicKey() == key.getPublicKey() //allways verifies itself
-                        ||
-                        key.signatures.some(function(signature){
-                            return      crypt 
-                                    &&  (self.id == signature.keyId) 
-                                    &&  self.verify(data, signature.content)
-                        })
+
+                return  (this.getPublicKey() == key.getPublicKey() 
+                        ?   $q.when(key)   //always verifies itself
+                        :   key.signatures.reduce(function(previous_try, signature){
+                                return  previous_try
+                                        .catch(function(){
+                                            return  (self.id == signature.keyId)
+                                                    ?   self.verify(data, signature.content)
+                                                    :   $q.reject('keyIds not matching.')
+                                        })
+                            }, $q.reject('no signatures.'))
+                        )
             };
 
             this.getSize = function(){

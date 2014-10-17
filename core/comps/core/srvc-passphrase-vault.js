@@ -59,6 +59,7 @@ angular.module('cmCore').service('cmPassphraseVault',[
          */
         function PassphraseVault(data){
 
+
             var sePassphrase        = data.sePassphrase,
                 aePassphraseList    = data.aePassphraseList || [],
                 self                = this
@@ -99,17 +100,17 @@ angular.module('cmCore').service('cmPassphraseVault',[
              */
 
             this.get = function(password){
-                return  $q.reject()
+                return  $q.reject('unknown.')
                         //try symmetric decryption first:,               
                         .catch(function(){
                             //check if a valid password has been passed to the function 
                             //and a symmetrically encrypted passphrase is present:
                             return  couldBeAPassword(password) && sePassphrase
                                     ?   cmCrypt.decrypt(password, cmCrypt.base64Decode(sePassphrase))
-                                    :   $q.reject()
+                                    :   $q.reject('password invalid.')
                         })
                         //try asymmetrical decryption if neccessary:                
-                        .catch(function(){
+                        .catch(function(reason){
                             return  aePassphraseList // could be an empty array
                                     .reduce(function(previous_try, item) {
                                         return  previous_try                
@@ -117,7 +118,7 @@ angular.module('cmCore').service('cmPassphraseVault',[
                                                 .catch(function(){
                                                     return cmUserModel.decryptPassphrase(item.encryptedPassphrase, item.keyId)
                                                 })
-                                    }, $q.reject())
+                                    }, $q.reject(reason))
                         })
                         //finally check if decryption resolved with a proper passphrase,
                         //if so resolve with passphrase,
@@ -126,10 +127,10 @@ angular.module('cmCore').service('cmPassphraseVault',[
                             function(new_passphrase){
                                 return  couldBeAPassphrase(new_passphrase)
                                         ?   $q.when(new_passphrase)
-                                        :   $q.reject()
+                                        :   $q.reject('decrypted passphrase invalid.')
                             },
-                            function(){
-                                return $q.reject()
+                            function(reason){
+                                return $q.reject(reason)
                             }
                         )
             }
@@ -229,7 +230,6 @@ angular.module('cmCore').service('cmPassphraseVault',[
                             restrict_to_keys:   config.restrict_to_keys || null
                         }
 
-            console.dir(config)
 
             return $q.all({
                         //symmetrical encryption:

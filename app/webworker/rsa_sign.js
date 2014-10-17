@@ -1,5 +1,5 @@
 importScripts('-mock-vendor.js');
-importScripts('../vendor.<%= currentVersion %>.js');
+importScripts('../vendor.0.2.6.js');
 
 
 var crypt = new JSEncrypt()

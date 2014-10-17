@@ -31,6 +31,7 @@ angular.module('cmSecurityAspects').directive('cmSecurityIndicator',[
                     //console.log('aspects', $scope.positive, $scope.negative)
 
                     $scope.leading_icon = ($scope.positive >= $scope.negative)?'cm-lock':'cm-unlock';
+                      
                 }
 
                 if($scope.conversation){
@@ -53,6 +54,7 @@ angular.module('cmSecurityAspects').directive('cmSecurityIndicator',[
                 } else {
                     cmLogger.debug('cmSecurityIndicator - Conversation not found!')
                 }
+
 
 
                 //$scope.$watchCollection($attrs.cmData, function(security_aspects){

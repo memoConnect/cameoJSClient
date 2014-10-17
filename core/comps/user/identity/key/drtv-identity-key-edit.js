@@ -17,7 +17,13 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyEdit', [
                 $scope.keyName      = key && key.name;
                 $scope.keySize      = key && key.getSize();
                 $scope.fingerprint  = key && key.getFingerprint();
-                $scope.isTrusted    = cmUserModel.verifyOwnPublicKey(key);
+
+                $scope.isTrusted    = undefined
+
+                cmUserModel.verifyOwnPublicKey(key)
+                .then(function(){
+                    $scope.isTrusted = true
+                })
 
             }
         }

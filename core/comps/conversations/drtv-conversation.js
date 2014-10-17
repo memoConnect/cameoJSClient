@@ -168,7 +168,7 @@ angular.module('cmConversations')
                      * check if files exists
                      * after success sendMessage
                      */
-                
+                    
                     $scope.conversation.getPassphrase()
                     .catch(function(){
                             return  $scope.conversation.isEncrypted()
@@ -221,6 +221,8 @@ angular.module('cmConversations')
                      * validate answer form
                      * @type {boolean}
                      */
+                    
+                
                     var message_invalid         = !isMessageValid()
 
                     //If anything is invalid, abort and notify the user:
@@ -256,7 +258,7 @@ angular.module('cmConversations')
                                     .save()
                         },
                         //If we dont get a proper passphrase
-                        function(){
+                        function(reason){
                             return  $scope.conversation.isEncrypted()
                                     ?   $q.reject('access denied')
                                     :   $scope.conversation.messages

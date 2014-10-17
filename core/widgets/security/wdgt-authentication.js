@@ -88,6 +88,7 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
                     .then(
                         function(result){
                             var data = result.data
+
                             return  cmUserModel.signPublicKey(data.key, data.key.id, data.identity)      //wait for key in response to be signed
                                     //Todo: this 'then' should be elsewhere:
                                     .then(function(){    

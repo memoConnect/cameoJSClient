@@ -260,26 +260,58 @@ describe('cmKeyModel', function() {
                             key_1 : 'my value',
                             key_2 : 'my_second_value'
                         },
-                pub_key = new cmKey()
+                pub_key = new cmKey(),
+                signature,
+                failed,
+                success
 
-
-            key.setKey(privateKey)
-            pub_key.setKey(publicKey)
-
+                key.setKey(privateKey)
+                pub_key.setKey(publicKey)
 
             //sign hashed Object
-            var signature = key.sign(cmCrypt.hashObject(data))
 
-            expect(signature).toBeDefined()
-            expect(pub_key.verify('abc', signature)).toBe(false)
-            expect(pub_key.verify(cmCrypt.hashObject(data), signature)).toBe(true)
+            runs(function(){
+                signature = undefined
 
-            //sign hashed String
-            var signature = key.sign('my special string')
+                key.sign(cmCrypt.hashObject(data))
+                .then(function(result){
+                    signature = result
+                })               
 
-            expect(signature).toBeDefined()
-            expect(pub_key.verify('abc', signature)).toBe(false)
-            expect(pub_key.verify('my special string', signature)).toBe(true)
+                $rootScope.$apply()
+            })
+
+            waitsFor(function(){
+
+                return typeof signature != 'undefined'
+            }, 'signing to be done.', 2000)
+
+            runs(function(){
+                failed = undefined
+                pub_key.verify('abc', signature)
+                .catch(function(){
+                    failed = true
+                })
+                $rootScope.$apply()
+            })
+
+            waitsFor(function(){
+                return failed
+            }, 'verification to fail.')
+
+
+            runs(function(){
+                success = undefined
+                pub_key.verify(cmCrypt.hashObject(data), signature)
+                .then(function(){
+                    success = true
+                })
+                $rootScope.$apply()                
+            })
+
+            waitsFor(function(){
+                return success
+            }, 'verification to finish successfully.', 2000)
 
         })
     })
@@ -293,21 +325,68 @@ describe('cmKeyModel', function() {
                                 id:'my_id',
                                 fingerprint: key_1.getFingerprint()
                             },
-            signature   =   key.sign(cmCrypt.hashObject(data))
+            signature   =   undefined,
+            success     =   undefined,
+            failed      =   undefined
 
-        key_1.importData({signatures : [{keyId:'signing_key', content: signature}] })
+        runs(function(){
+            key.sign(cmCrypt.hashObject(data))
+            .then(function(result){
+                signature = result
+            })
+            $rootScope.$apply()
+        })
 
-        key.setId('signing_key')
+        waitsFor(function(){
+            return typeof signature != 'undefined'
+        }, 'signing to finish successfully.', 2000)
 
-        //allways verifies itself:
-        expect(key.verifyKey(key, cmCrypt.hashObject(data))).toBe(true)
+        runs(function(){
+            key_1.importData({signatures : [{keyId:'signing_key', content: signature}] })
+            key.setId('signing_key')
 
-        //dont verify a key without signatures:
-        expect(key.verifyKey(key_2, cmCrypt.hashObject(data))).toBe(false)
+            success = false
 
+            //always verifies itself:
+            key.verifyKey(key, cmCrypt.hashObject(data))
+            .then(function(){
+                success = true
+            })
+            $rootScope.$apply()
+        })
 
-        expect(key.verifyKey(key_1, cmCrypt.hashObject(data))).toBe(true)
+        waitsFor(function(){
+            return success
+        }, 'verification of "key" to finish successfully.', 2000)
 
+        runs(function(){
+            failed = false
+
+            //dont verify a key without signatures:
+            key.verifyKey(key_2, cmCrypt.hashObject(data))
+            .catch(function(){
+                failed = true
+            })
+            $rootScope.$apply()
+        })
+
+        waitsFor(function(){
+            return failed
+        }, 'verification to fail.')
+
+        
+        runs(function(){
+            success = false
+            key.verifyKey(key_1, cmCrypt.hashObject(data))
+            .then(function(){
+                success = true
+            })
+            $rootScope.$apply()
+        })
+
+        waitsFor(function(){
+            return success
+        }, 'verificatiuon of "key_1" to finish successfully.', 2000)
     })
 
 })

@@ -10,9 +10,15 @@ module.exports = function(grunt, options){
     ]);
 
 
-    var webworker   =   ['keygen', 'rsa_decrypt', 'rsa_encrypt'],
+    var webworker   =   [
+                            'rsa_keygen', 
+                            'rsa_decrypt', 
+                            'rsa_encrypt',
+                            'rsa_sign',
+                            'rsa_verify'
+                        ],
         files       =   webworker.map(function(job_name){
-                            var path    = 'dist/app/webworker/'+job_name+'.js',
+                            var path    = 'app/webworker/'+job_name+'.js',
                                 object  = {}
 
                             object[path] =  [
