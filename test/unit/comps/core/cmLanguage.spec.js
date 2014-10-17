@@ -19,7 +19,7 @@ describe("cmLanguage", function() {
             var count = cameo_config.supported_languages.length
 
             cameo_config.supported_languages.forEach(function(lang_key){
-                var file = 'app/'+cameo_config.path_to_languages+'/'+lang_key+'.json';
+                var file = 'dist/app/'+cameo_config.path_to_languages+'/'+lang_key+'.json';
                 language_tables[lang_key] = eval(window.__html__[file])
                 console.log(typeof language_tables[lang_key])
             })
@@ -47,7 +47,7 @@ describe("cmLanguage", function() {
             cameo_config.supported_languages.forEach(function (lang_key) {
                 beforeEach(function(){
                     module('i18n/' + lang_key + '.json')
-                    module('language-keys.json')
+                    module('i18n/language-keys.json')
                 })
             })
 
@@ -72,7 +72,7 @@ describe("cmLanguage", function() {
                 var used_ids,
                     missing_ids = {}
 
-                inject(['languageKeys', function(data){ used_ids = data }])
+                inject(['i18nLanguageKeys', function(data){ used_ids = data }])
 
 
                 $.each(language_tables, function(lang_key, language_data){

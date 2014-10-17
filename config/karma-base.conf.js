@@ -9,29 +9,28 @@ module.exports = function(config) {
         // list of files / patterns to load in the browser
         files: [
             'test/lib/jquery/*.js',
-            'app/vendor*.js',
+            'dist/app/vendor*.js',
             'test/lib/angular/angular-mocks.js',
-            'app/cameo*.js',
+            'dist/app/cameo*.js',
 
             // all specs
             'test/unit/**/*.spec.js',
 
-            'app/**/*.json',
-            'dist/i18n/language-keys.json'
+            'dist/app/i18n/*.json',
+            'build/i18n/language-keys.json'
         ],
 
-        ngJson2JsPreprocessor: {
-            stripPrefix: '(app/)|(dist/i18n/)'
-        },
-
         preprocessors: {
-            'app/**/*.json': ['json2js'],
-            'dist/i18n/language-keys.json': ['json2js']
+            'dist/app/i18n/*.json': ['json2js'],
+            'build/i18n/language-keys.json': ['json2js']
+        },
+        // for all i18n json strip to ->/i18n
+        ngJson2JsPreprocessor: {
+            stripPrefix: '(dist/app/)|(build/)'
         },
 
         // list of files to exclude
         exclude: [
-            'app/**/main.js'
         ],
 
         // test results reporter to use

@@ -164,7 +164,7 @@ module.exports = function (grunt) {
     // http://creynders.github.io/load-grunt-configs/
     var configs = require('load-grunt-configs')(grunt, {
         config : {
-            src: 'config/grunt/*.js'
+            src: 'grunt/*.js'
         },
         globalCameoSecrets: globalCameoSecrets,
         globalCameoBuildConfig: globalCameoBuildConfig,
