@@ -18,7 +18,7 @@ module.exports = function(grunt, options){
                             'rsa_verify'
                         ],
         files       =   webworker.map(function(job_name){
-                            var path    = 'app/webworker/'+job_name+'.js',
+                            var path    = 'dist/app/webworker/'+job_name+'.js',
                                 object  = {}
 
                             object[path] =  [
