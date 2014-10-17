@@ -39,7 +39,7 @@ module.exports = function(grunt, options){
                     files: [
                         'core/less/!(_old)/**/*.less',
                         'core/less/*.less',
-                        'desktop/less/*.less'
+                        'desktop/less/**/*.less'
                     ],
                     tasks: [
                         'desktop:create-style-via-less'

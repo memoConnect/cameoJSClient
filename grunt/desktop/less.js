@@ -36,7 +36,7 @@ module.exports = function(grunt, options){
                         'core/less/!(base|_old)/**/*.less',
                         'core/less/theme-base.less',
                         'core/less/!(theme-base).less',
-                        'desktop/less/*.less'
+                        'desktop/less/**/*.less'
                     ],
                     dest: 'build/css/desktop.less'
                 },
