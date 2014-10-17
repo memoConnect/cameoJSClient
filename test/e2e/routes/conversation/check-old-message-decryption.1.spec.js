@@ -2,9 +2,8 @@ var config = require("../../config-e2e-tests.js")
 var util = require("../../../lib/e2e/cmTestUtil.js")
 
 describe('Route Conversation - Check Old Message Decryption ', function() {
-    var ptor = util.getPtorInstance()
-
-    var testUser = util.createTestUser()
+    var ptor = util.getPtorInstance(),
+        testUser
 
     var subject = "decryptionTest",
         msg = 'moepchen',
@@ -17,6 +16,11 @@ describe('Route Conversation - Check Old Message Decryption ', function() {
             util.waitAndClickQa("btn-send-answer")
         }
     }
+
+    it('should create a test user', function(){
+       testUser = util.createTestUser(undefined,'check-old-message-decryption')
+    })
+
 
     describe('create encrytpted conversation with ' + qty + ' messages', function(){
         it('login create & create key', function () {

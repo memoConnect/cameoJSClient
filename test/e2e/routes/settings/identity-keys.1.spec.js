@@ -8,7 +8,7 @@ describe('Identity key settings: ', function () {
     var keyName = "Moeps key"
 
     it('create new user and open identity settings', function () {
-        login = util.createTestUser()
+        login = util.createTestUser(undefined, 'identity key settings')
         util.get('/settings/identity/edit')
     })
 
