@@ -38,10 +38,7 @@ module.exports = function (grunt, options) {
     ]);
 
     grunt.registerTask('protractor:config', [
-        'template:config-protractor'
-    ]);
-
-    grunt.registerTask('protractor:e2e:config', [
+        'template:config-protractor',
         'template:config-tests'
     ]);
 

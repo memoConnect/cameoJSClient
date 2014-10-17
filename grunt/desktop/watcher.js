@@ -2,13 +2,12 @@ module.exports = function(grunt, options){
 
     grunt.loadNpmTasks('grunt-contrib-watch');
 
-    grunt.registerTask('watcher', [
-        'app:deploy-without-template',
-        'cockpit:deploy-without-template',
+    grunt.registerTask('desktop:watcher', [
+        'desktop:deploy-without-template',
 
-        'app:gen-all-templates',
+        'desktop:gen-all-templates',
 
-        'concurrent:app'
+        'concurrent:desktop'
     ]);
 
     return {
@@ -17,44 +16,45 @@ module.exports = function(grunt, options){
                 options: {
                     logConcurrentOutput: true
                 },
-                app: {
+                desktop: {
                     tasks: [
-                        'watch:app-other',
-                        'watch:app-css',
-                        'watch:app-js'
+                        'watch:desktop-other',
+                        'watch:desktop-css',
+                        'watch:desktop-js'
                     ]
                 }
             },
             watch: {
-                'app-other':{
+                'desktop-other':{
                     files: [
                         'config/*.json',
                         'resource/templates/**/*',
-                        'app/*.html'
+                        'desktop/**/*.html'
                     ],
                     tasks: [
-                        'app:gen-all-templates'
+                        'desktop:gen-all-templates'
                     ]
                 },
-                'app-css':{
+                'desktop-css':{
                     files: [
                         'core/less/!(_old)/**/*.less',
-                        'core/less/*.less'
+                        'core/less/*.less',
+                        'desktop/less/*.less'
                     ],
                     tasks: [
-                        'app:create-style-via-less'
+                        'desktop:create-style-via-less'
                     ]
                 },
-                'app-js':{
+                'desktop-js':{
                     files: [
-                        'app/base/app.js',
+                        'desktop/base/app.js',
                         'core/comps/**/*',
-                        'app/routes/**/*',
+                        'desktop/routes/**/*',
                         'core/widgets/**/*',
                         'core/vendor/**/*'
                     ],
                     tasks: [
-                        'app:js-files'
+                        'desktop:packages'
                     ]
                 }
             }

@@ -14,7 +14,7 @@ module.exports = function(grunt, options){
     ]);
 
     grunt.registerTask('app:create-style-via-less', [
-        'clean:all-generated-css',
+        'clean:app-all-generated-css',
         'app:concat-less',
         'app:concat-css'
     ]);
@@ -22,7 +22,7 @@ module.exports = function(grunt, options){
     return {
         tasks:{
             clean: {
-                'all-generated-css': [
+                'app-all-generated-css': [
                     'dist/css/',
                     'build/css/',
                     'app/css/style*.css',
