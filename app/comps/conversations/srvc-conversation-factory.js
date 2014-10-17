@@ -95,11 +95,9 @@ angular.module('cmConversations').service('cmConversationFactory', [
             })
         });
 
-        $rootScope.$on('login', function(){
-            cmUserModel.one('update:finished', function(){
-                self.reset('cmConversations');
-                self.getList();
-            })
+        cmUserModel.one('update:finished', function(){
+            self.reset('cmConversations');
+            self.getList();
         });
 
         cmConversationsAdapter.on('message:new', function(event,data){

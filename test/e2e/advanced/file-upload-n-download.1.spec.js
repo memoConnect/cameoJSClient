@@ -88,14 +88,15 @@ function getFilename(file) {
 }
 
 describe('FileUpload create TestUser', function(){
-    var ptor = util.getPtorInstance()
+    var ptor = util.getPtorInstance(),
+        testUser
 
-    var testUser = util.createTestUser()
-
+    it('should create a test user', function(){
+        testUser = util.createTestUser(undefined,'file upload')
+    })
 
     // start init tests
     describe('FileUpload unsafe upload: ', function () {
-        var ptor = util.getPtorInstance()
 
         it('login create & new conversation', function () {
             util.get('/conversation/new')
