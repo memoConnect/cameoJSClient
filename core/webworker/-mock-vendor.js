@@ -32,7 +32,7 @@ var emptyFunction = function(){return this},
         document: document,
         location: location,
         addEventListener: emptyFunction,
-        Base64: Base64,
+        Base64: Base64
     },
 
     angular = {

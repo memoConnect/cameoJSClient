@@ -49,55 +49,55 @@
         */
 
 angular.module('cmCore')
-.factory('cmWebworker',[
+.service('cmWebworker',[
 
     '$q',
     '$timeout',
-    
-    function cmWebWorker($q, $timeout){
 
-        if(!window.Worker)
-            return false
+    function cmWebWorker($q, $timeout, cmFactory){
 
-        return function WebWorkerInstance(job_name){
+        this.available = !!window.Worker;
+
+        var self                = this,
+            number_of_workers   = 0;
+
+        function WebWorkerInstance(job_name){
             var worker      = new Worker('webworker/'+job_name+'.js'),
                 deferred    = $q.defer(),
-                self        = this
+                self        = this;
 
+            number_of_workers ++;
 
-            this.start = function(data, timeout){
-                var onMessage   =  function(event){
-                                        if(event.data.msg == 'finished')
-                                            deferred.resolve(event.data)
+            var onMessage   =  function(event){
+                                        if(event.data.msg == 'finished'){
+                                            deferred.resolve(event.data);
+                                            self.terminate()
+                                        }
 
                                         if(['canceled', 'failed', 'error'].indexOf(event.data.msg) != -1){
-                                            deferred.reject(event.data)
+                                            deferred.reject(event.data);
                                             self.terminate()
                                         }
 
                                         if(event.data.msg == 'notify')
                                             deferred.notify(event.data)
-                                    }
+                                };
 
+            this.start = function(data, timeout){
                 if(timeout)
                     $timeout(function(){ 
-                        deferred.reject('timeout')
+                        deferred.reject('timeout');
                         self.cancel()
-                    }, timeout)
-
-                deferred.promise
-                .then(function(){
-                    worker.removeEventListener('message', onMessage)
-                }) 
-
-                data.cmd = 'start'
-
-                worker.addEventListener('message', onMessage)
-                worker.postMessage(data)
+                    }, timeout);
 
 
-                return  deferred.promise
-            }
+                data.cmd = 'start';
+
+                worker.addEventListener('message', onMessage);
+                worker.postMessage(data);
+
+                return  deferred.promise;
+            };
 
             this.cancel = function(){                
                 worker.postMessage({cmd: 'cancel'})
@@ -106,12 +106,30 @@ angular.module('cmCore')
                                     ?   $q.when('canceled')
                                     :   $q.reject(data)
                         })
-            }
+            };
 
             this.terminate = function(){
-                worker.terminate()
+                worker.removeEventListener('message', onMessage);
+                worker.terminate();
+                number_of_workers --;
+                console.warn('number of workers: '+number_of_workers);
+                //delete worker;
+                worker = null;
+                //delete deferred;
+                deferred = null;
             }
         }
+
+
+        this.new = function(job_name){
+            console.warn('number of workers: '+ (number_of_workers+1));
+            return  number_of_workers < 20
+                    ?   $q.when(new WebWorkerInstance(job_name))
+                    :   $timeout(function(){
+                            return self.new(job_name)
+                        }, 1000, false)
+        }    
+
     }
 
-])
+]);
