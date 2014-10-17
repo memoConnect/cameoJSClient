@@ -12,7 +12,7 @@ describe('Multi Identity: ', function () {
     }
 
     it('create new user and open identity settings', function () {
-        login = util.createTestUser()
+        login = util.createTestUser(undefined, 'multi identity')
         util.expectCurrentUrl('/start/welcome')
 
         util.get('settings/identity/list')
