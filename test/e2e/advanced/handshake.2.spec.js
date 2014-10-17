@@ -74,7 +74,7 @@ describe('Authentication requests -', function () {
 
     }
 
-    var getAuthEvent = function (token, eventSubscription, index, skip) { 
+    var getAuthEvent = function (token, eventSubscription, index, skip) {   
         var s = skip || 0
         var events = []
 
@@ -308,7 +308,6 @@ describe('Authentication requests -', function () {
             util.get("/settings/identity/key/list")
             util.waitForPageLoad("/settings/identity/key/list")
             util.waitForElements("[data-qa='key-list-item']", 3)
-            //ptor.debugger()
             checkKeyTrust(keyName1, false)
             checkKeyTrust(keyName2, true)
             checkKeyTrust(keyName3, false)
@@ -340,7 +339,7 @@ describe('Authentication requests -', function () {
 
         it("send authentication:start event from key1", function () {
             var event = authEvents[1]
-            event.toKeyId = keyId2
+            event.data.toKeyId = keyId2
             util.broadcastEvent(token, event)
         })
 
@@ -370,9 +369,9 @@ describe('Authentication requests -', function () {
         })
 
         it("get authentication:start event from key2", function () {
-            getAuthEvent(token, eventSubscription, 2, 2)
+            getAuthEvent(token, eventSubscription, 2, 3)
             ptor.wait(function () {
-                return authEvents[2] != undefined
+                return authEvents[2].data.fromKeyId == keyId2
             })
         })
 
@@ -404,12 +403,10 @@ describe('Authentication requests -', function () {
         })
 
         it("send authentication:start event from key2", function () {
-            console.log(authEvents[2])
             util.broadcastEvent(token, authEvents[2])
         })
 
         it("a modal asking for authentication start should open", function () {
-            ptor.debugger()
             util.waitForElement("cm-modal.active [data-qa='inp-transactSecret']")
         })
 

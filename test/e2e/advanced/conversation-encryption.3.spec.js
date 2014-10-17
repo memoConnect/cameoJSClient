@@ -125,6 +125,7 @@ describe('Conversation encryption -', function () {
                         expect(icons.length).toBe(positiveAspects)
                     }
                 })
+                ptor.debugger()
                 $('cm-header:not(.ng-hide)').$('cm-icons.negative').$$("i").then(function (icons) {
                     expect(icons.length).toBe(negativeAspects)
                 })
