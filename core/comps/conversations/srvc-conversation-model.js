@@ -264,7 +264,7 @@ angular.module('cmConversations')
                 messages.forEach(
                     function(message_data) {
                         message_data.conversation = self;
-                        self.messages.create(message_data);
+                        self.messages.create(message_data).decrypt();
                     }
                 );
 

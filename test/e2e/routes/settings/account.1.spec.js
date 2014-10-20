@@ -13,7 +13,7 @@ describe('Route Settings Account: ', function(){
 
     describe('Check Form', function() {
         it('should be load at "#/settings/" after registration and btn exists.', function () {
-            util.createTestUser()
+            util.createTestUser(undefined, 'account settings')
             util.expectCurrentUrl('#/start')
 
             util.get('/settings')
