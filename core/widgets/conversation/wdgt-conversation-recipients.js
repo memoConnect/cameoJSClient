@@ -16,7 +16,8 @@ angular.module('cmWidgets')
             restrict: 'AE',
             templateUrl: 'widgets/conversation/wdgt-conversation-recipients.html',
             scope: {
-                conversation: '=cmData'
+                conversation: '=cmData',
+                search: '=cmSearch'
             },
             controller: function () {
 
