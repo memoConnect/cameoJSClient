@@ -34,6 +34,7 @@ angular.module('cmConversations')
                     showedAsymmetricKeyError = false,
                     storageService = new cmKeyStorageService('conversation-recipient-view');
 
+                $scope.goto = $rootScope.goto;
                 $scope.isSending        = false;
                 $scope.isSendingAbort   = false;
 
@@ -396,11 +397,7 @@ angular.module('cmConversations')
                     }
                 });
 
-
-                $scope.$watch($attrs.cmData, function(conversation){
-                    if(conversation)
-                        init(conversation)                    
-                })
+                init($scope.conversation);
             }
         }
     }

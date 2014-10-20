@@ -2,7 +2,7 @@ module.exports = function(grunt, options){
 
     grunt.loadNpmTasks('grunt-contrib-watch');
 
-    grunt.registerTask('watcher', [
+    grunt.registerTask('app:watcher', [
         'app:deploy-without-template',
         'cockpit:deploy-without-template',
 
@@ -30,7 +30,7 @@ module.exports = function(grunt, options){
                     files: [
                         'config/*.json',
                         'resource/templates/**/*',
-                        'app/*.html'
+                        'app/**/*.html'
                     ],
                     tasks: [
                         'app:gen-all-templates'
@@ -54,7 +54,7 @@ module.exports = function(grunt, options){
                         'core/vendor/**/*'
                     ],
                     tasks: [
-                        'app:js-files'
+                        'app:packages'
                     ]
                 }
             }

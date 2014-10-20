@@ -22,9 +22,7 @@ angular.module('cmWidgets')
             restrict:       'AE',
             scope:          true,   
             templateUrl:    'widgets/talks/wdgt-talks.html',
-
             controller: function($scope, $element, $attrs){
-
                 /**
                  * init conversations to scope
                  */

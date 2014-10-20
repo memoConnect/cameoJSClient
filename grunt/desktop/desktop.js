@@ -1,68 +1,63 @@
 module.exports = function(grunt, options) {
-
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-clean');
-    grunt.loadNpmTasks('grunt-template');
 
-    grunt.registerTask('app:gen-all-templates', [
-        'template:app-files',// app.js
-        'template:cockpit-files',// cockpit.js
-        'protractor:e2e:config',// protractor.js
-        'app:create-webworker',// webworker.js
-        'phonegap:app-config',// phonegap-to-buildserver.js
+    grunt.registerTask('desktop:gen-all-templates', [
+        'template:desktop-files',
+        'desktop:create-webworker',// webworker.js
         'protractor:config',// protractor.js
-        'app:create-style-via-less',// less.js
-        'app:js-files'//packages.js
+        'desktop:create-style-via-less',// less.js
+        'desktop:packages'//packages.js
     ]);
 
-    grunt.registerTask('app:deploy-without-template', [
-        'clean:app-dist',
-        'copy:app-files'
+    grunt.registerTask('desktop:deploy-without-template', [
+        'clean:desktop-dist',
+        'copy:desktop-files'
     ]);
 
-    grunt.registerTask('app:deploy-full', [
-        'app:deploy-without-template',
-        'template:app-files'
+    grunt.registerTask('desktop:deploy-to-dist', [
+        'desktop:deploy-without-template',
+        'template:desktop-files'
     ]);
 
     return {
         tasks: {
             clean: {
-                'app-dist': [
-                    'dist/app/'
+                'desktop-dist': [
+                    'dist/desktop/'
                 ]
             },
             copy: {
-                'app-files': {
+                'desktop-files': {
                     files: [
                         {
                             expand: true,
                             cwd: 'core/gfx/',
                             src: ['**'],
-                            dest: 'dist/app/gfx/'
+                            dest: 'dist/desktop/gfx/'
                         },
                         {
                             expand: true,
                             cwd: 'core/i18n/',
                             src: ['**'],
-                            dest: 'dist/app/i18n/'
+                            dest: 'dist/desktop/i18n/'
                         },
                         {
                             expand: true,
                             flatten: true,
                             cwd: 'core/css/fonts/',
                             src: ['**'],
-                            dest: 'dist/app/css/fonts'
+                            dest: 'dist/desktop/css/fonts'
                         },
                         {
                             src: 'core/favicon.ico',
-                            dest: 'dist/app/favicon.ico'
+                            dest: 'dist/desktop/favicon.ico'
                         }
                     ]
                 }
             },
             template: {
-                'app-files': {
+                'desktop-files': {
                     'options': {
                         'data': {
                             'currentVersion': options.globalCameoBuildConfig.config.version,
@@ -70,17 +65,14 @@ module.exports = function(grunt, options) {
                             'autoLogin': options.globalCameoBuildConfig.config.autoLogin,
                             'loadingBar': options.globalCameoBuildConfig.config.loadingBar,
                             'enableDebug': options.globalCameoBuildConfig.config.enableDebug,
-                            'performancePage': options.globalCameoBuildConfig.config.performancePage,
-                            'phonegapFiles': options.globalCameoBuildConfig.debug.weinre ? '<script src="http://' + options.globalCameoBuildConfig.debug.weinreIp + ':8080/target/target-script-min.js#anonymous"></script>' : '',
-                            'phonegapOnload': ''
+                            'performancePage': options.globalCameoBuildConfig.config.performancePage
                         }
                     },
                     'files': {
-                        'dist/app/index.html': ['app/index.html'],
-                        'dist/app/icons.html': ['core/icons.html'],
-                        'build/app/base/config.js': ['app/base/config.js'],
-                        // performance page
-                        'dist/app/performance.html': ['core/performance.html']
+                        'dist/desktop/index.html': ['desktop/index.html'],
+                        'dist/desktop/icons.html': ['core/icons.html'],
+                        'build/desktop/base/config.js': ['desktop/base/config.js'],
+                        'dist/desktop/performance.html': ['core/performance.html']
                     }
                 }
             }

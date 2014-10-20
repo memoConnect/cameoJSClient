@@ -11,9 +11,11 @@ module.exports = function(grunt, options){
 
         'cockpit:deploy-without-template',
 
+        'desktop:deploy-without-template',
+        'desktop:gen-all-templates',
+
         'uglify:app-deploy',
-        'cssmin:app-deploy',
-        'uglify:cockpit-deploy'
+        'cssmin:app-deploy'
     ]);
 
     return {
@@ -29,16 +31,18 @@ module.exports = function(grunt, options){
                             cwd: 'dist/app',
                             src: '**/*.js',
                             dest: 'dist/app'
-                        }
-                    ]
-                },
-                'cockpit-deploy': {
-                    files: [
+                        },
                         {
                             expand: true,
                             cwd: 'dist/cockpit',
                             src: '**/*.js',
                             dest: 'dist/cockpit'
+                        },
+                        {
+                            expand: true,
+                            cwd: 'dist/desktop',
+                            src: '**/*.js',
+                            dest: 'dist/desktop'
                         }
                     ]
                 }
