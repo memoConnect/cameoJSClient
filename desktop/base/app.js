@@ -346,7 +346,7 @@ angular.module('cameoClient', [
                 effective_width = landscape ? Math.min(height, 420) : width;
 
             html.style.fontSize  = (effective_width/rem) +'px';
-            //app.style.maxWidth   = rem+'rem';
+            app.style.minWidth   = (rem*3)+'rem';
             angular.element(app).toggleClass('landscape', landscape);
         }
 

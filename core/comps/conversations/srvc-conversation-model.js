@@ -217,7 +217,7 @@ angular.module('cmConversations')
              * @param {Object} data The conversation data as recieved from the backend.
              */
             this.importData = function(data){
-                cmLogger.debug('cmConversationModel:importData');
+                cmLogger.debug('cmConversationModel:importData',data);
                 if(typeof data !== 'object'){
                     cmLogger.debug('cmConversationModel:import:failed - no data!');
                     return this;

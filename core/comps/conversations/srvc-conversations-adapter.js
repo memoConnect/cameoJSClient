@@ -24,6 +24,7 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
             },
 
             getConversations: function(limit, offset){
+                cmLogger.debug('getConversations');
                 var queryString = cmUtil.handleLimitOffset(limit,offset);
 
                 if(queryString == ''){
@@ -37,7 +38,8 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
                 })
             },
 
-            getConversation: function(id, limit, offset) {
+            getConversation: function(id, limit, offset){
+                cmLogger.debug('getConversation');
                 var queryString = cmUtil.handleLimitOffset(limit,offset);
 
                 if(queryString == ''){
