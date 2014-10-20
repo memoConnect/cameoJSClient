@@ -14,6 +14,7 @@ describe('Route Conversation - Check Old Message Decryption ', function() {
         for(var i = 0; i < qty; i++){
             util.setVal("input-answer", msg)
             util.waitAndClickQa("btn-send-answer")
+            util.waitForElements("cm-message", (i+2))
         }
     }
 
@@ -29,6 +30,7 @@ describe('Route Conversation - Check Old Message Decryption ', function() {
 
         it("create encrypted conversation", function () {
             util.createEncryptedConversation(subject, msg)
+            util.waitForElements("cm-message", 1);
         })
 
         it('should add ' + qty + ' messages', function(){
@@ -88,6 +90,8 @@ describe('Route Conversation - Check Old Message Decryption ', function() {
         })
 
         it('all message should be encrypted', function(){
+            util.waitForElements("cm-message", qty)
+
             $$('cm-message').then(function (elements) {
                 elements.forEach(function(element){
                     expect(element.getText()).toContain(msg)
