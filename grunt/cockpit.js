@@ -9,7 +9,7 @@ module.exports = function(grunt, options) {
         'copy:cockpit-files'
     ]);
 
-    grunt.registerTask('cockpit:deploy-full', [
+    grunt.registerTask('cockpit:deploy-to-dist', [
         'cockpit:deploy-without-template',
         'template:cockpit-files'
     ]);

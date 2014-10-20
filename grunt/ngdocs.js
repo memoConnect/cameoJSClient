@@ -5,7 +5,7 @@ module.exports = function(grunt, options){
 
     grunt.registerTask('build:create-docs', [
         'clean:docs',
-        'app:js-files',
+        'app:packages',
         'ngdocs'
     ]);
 

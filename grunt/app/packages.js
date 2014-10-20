@@ -3,8 +3,8 @@ module.exports = function(grunt, options){
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-clean');
 
-    grunt.registerTask('app:js-files', [
-        'clean:app-js-files',
+    grunt.registerTask('app:packages', [
+        'clean:app-packages',
         'concat:app-vendor',
         'concat:app-packages',
         'concat:app-cameo'
@@ -94,12 +94,8 @@ module.exports = function(grunt, options){
     return {
         tasks:{
             clean: {
-                'app-js-files': [
-                    'app/packages/**/*.js',
-                    'dist/packages/**/*.js',
-                    'build/packages/**/*.js',
-                    'app/vendor*.js',
-                    'app/cameo*.js'
+                'app-packages': [
+                    'build/app/packages/**/*.js'
                 ]
             },
             concat: {

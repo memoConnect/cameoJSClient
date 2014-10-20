@@ -16,13 +16,11 @@ angular.module('cmWidgets')
         return {
             restrict: 'AE',
             templateUrl: 'widgets/conversation/wdgt-conversation-security.html',
-            scope: true,
+            scope: {
+                conversation: '=cmData'
+            },
+            controller: function () {
 
-            controller: function ($scope, $element, $attrs) {
-                $scope.$watch($attrs.cmData, function(conversation){
-                    if(conversation)
-                       $scope.conversation = conversation                    
-                })
             }
         }
     }

@@ -9,9 +9,10 @@ angular.module('cmUi').directive('cmEmojiList',[
 
         var blacklist = ['poop', 'shit', '\\-1', '\\+1', 'facepunch', 'shipit'],
             sortCategories = {
-                "people": ["smiley", "hands", "ape", "cat", "faces", "hearts", "specials", "woman", "unsorted"],
-                "symbols": ["lock", "unsorted"],
-                "nature": ["misc", "pet", "planets"]
+                'cameo': ['moep'],
+                'people': ['smiley', 'hands', 'ape', 'cat', 'faces', 'hearts', 'specials', 'woman', 'unsorted'],
+                'symbols': ['lock', 'unsorted'],
+                'nature': ['misc', 'pet', 'planets']
             };
 
         return{
