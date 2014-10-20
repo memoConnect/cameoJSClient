@@ -1,7 +1,7 @@
 var config = require("../../config-e2e-tests.js")
 var util = require("../../../lib/e2e/cmTestUtil.js")
 
-describe('Route Conversation - Check Old Message Decryption ', function() {
+describe('Route Conversation - Check Old Message Decryption: ', function() {
     var ptor = util.getPtorInstance(),
         testUser
 
@@ -12,7 +12,15 @@ describe('Route Conversation - Check Old Message Decryption ', function() {
 
     function addMessages(qty,msg){
         for(var i = 0; i < qty; i++){
-            util.setVal("input-answer", msg)
+            util.setValQuick("input-answer", msg)
+            util.setVal("input-answer", " ")
+
+            ptor.wait(function(){
+                return util.getVal('input-answer').then(function(val){
+                    return val == msg + ' ';
+                })
+            })
+
             util.waitAndClickQa("btn-send-answer")
             util.waitForElements("cm-message", (i+2))
         }
@@ -30,7 +38,6 @@ describe('Route Conversation - Check Old Message Decryption ', function() {
 
         it("create encrypted conversation", function () {
             util.createEncryptedConversation(subject, msg)
-            util.waitForElements("cm-message", 1);
         })
 
         it('should add ' + qty + ' messages', function(){
