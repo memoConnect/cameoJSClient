@@ -11,7 +11,6 @@ angular.module('cmRoutes').controller('ConversationCtrl', [
         var force_new       =   $routeParams.conversationId == 'new',
             conversation_id =   force_new ?  undefined : $routeParams.conversationId
 
-
         $scope.conversation =   conversation_id
                                 ?   cmConversationFactory.create(conversation_id)
                                 :   ($rootScope.pendingConversation || cmConversationFactory.new())

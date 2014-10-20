@@ -396,11 +396,7 @@ angular.module('cmConversations')
                     }
                 });
 
-
-                $scope.$watch($attrs.cmData, function(conversation){
-                    if(conversation)
-                        init(conversation)                    
-                })
+                init($scope.conversation);
             }
         }
     }
