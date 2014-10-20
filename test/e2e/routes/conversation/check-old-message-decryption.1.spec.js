@@ -1,7 +1,8 @@
 var config = require("../../config-e2e-tests.js")
 var util = require("../../../lib/e2e/cmTestUtil.js")
 
-describe('Route Conversation - Check Old Message Decryption: ', function() {
+console.log('teste removed - check old message decryption')
+xdescribe('Route Conversation - Check Old Message Decryption: ', function() {
     var ptor = util.getPtorInstance(),
         testUser
 
