@@ -29,7 +29,7 @@ angular.module('cmUi').directive('cmLogo',[
                 '<i class="fa cm-logo-m"></i>'+
                 '<i class="fa cm-logo-e"></i>'+
                 '<i class="fa cm-logo-o"></i>'+
-                '<i class="fa cm-logo-net"></i>'
+                '<span class="net-wrap"><i class="fa cm-logo-net"></i></span>'
         }
     }
 ]);
