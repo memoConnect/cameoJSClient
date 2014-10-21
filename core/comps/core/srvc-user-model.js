@@ -59,7 +59,7 @@ angular.module('cmCore')
 
         this.state = new cmStateManagement(['signing']);
 
-        this.comesFromRegistration = false;
+        //this.comesFromRegistration = false;
 
         /**
          * @ngdoc method
