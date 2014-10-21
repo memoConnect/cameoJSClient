@@ -205,7 +205,8 @@ var cameo_config = {
             guests: true
         },
         '404': {
-            templateUrl:'routes/landingpages/404.html'
+            templateUrl: 'routes/404/404.html',
+            guests: true
         },
         'version': {
             hasCtrl: true,
