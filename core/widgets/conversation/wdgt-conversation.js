@@ -18,7 +18,7 @@ angular.module('cmWidgets')
             scope: {
                conversation: '=cmData'
             },
-            controller: function () {
+            controller: function ($scope) {
 
             }
         }

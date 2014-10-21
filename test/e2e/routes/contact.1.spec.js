@@ -83,12 +83,10 @@ describe('Route Contact: ', function () {
             $("[data-qa='input-email']").sendKeys('die@gibts.net')
 
             $('cm-footer button').click()
-
-            util.waitForPageLoad('/contact')
         })
 
         it('search and click to detail',function(){
-            util.expectCurrentUrl('/contact')
+            util.waitForPageLoad('/contact')
             util.waitForElement('cm-contact-tag')
 
             util.headerSearchInList(userName)
