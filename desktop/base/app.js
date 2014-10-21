@@ -8,6 +8,7 @@ angular.module('cameoClient', [
     // cameo dependencies
     'cmRoutes',
     'cmWidgets',
+    'cmDesktopWidgets',
     'cmCore',
     'cmPhonegap',
     'cmUi',

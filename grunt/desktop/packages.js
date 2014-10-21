@@ -128,7 +128,8 @@ module.exports = function(grunt, options){
                         'ui': 'core/comps/ui',
                         'phonegap': 'core/comps/phonegap',
                         'routes': 'desktop/routes',
-                        'widgets': 'core/widgets'
+                        'widgets': 'core/widgets',
+                        'desktop_widgets': 'desktop/widgets'
                     })
                 },
                 'desktop-cameo': {
