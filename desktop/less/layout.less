@@ -1,7 +1,6 @@
 cm-column{
   .dib;
   .vap;
-  width:@cm-column-size;
   min-width:@cm-app-width;
   overflow:scroll;
   overflow-x:hidden;
@@ -30,14 +29,38 @@ cm-column{
     }
   }
 
-  cm-column + cm-column {
-    left:33%;
-  }
-  cm-column + cm-column + cm-column {
-    left:66%;
-    width:@cm-column-size + 1;
+  // normal desktop columns 25 25 50 %
+  cm-column{
+    width:25%;
     cm-footer {
-      width:@cm-column-size + 1;
+      width:25%;
+    }
+  }
+  cm-column + cm-column{
+    width:25%;
+    left:25%;
+  }
+  cm-column + cm-column + cm-column{
+    width:50%;
+    left:50%;
+    cm-footer {
+      width:50%;
+    }
+  }
+  // all same columns 33 33 34 %
+  &.equal-cols {
+    cm-column{
+      width:@cm-column-size;
+    }
+    cm-column + cm-column{
+      left: 33%;
+    }
+    cm-column + cm-column + cm-column{
+      left: 66%;
+      width: @cm-column-size + 1;
+      cm-footer {
+        width: @cm-column-size + 1;
+      }
     }
   }
 }
