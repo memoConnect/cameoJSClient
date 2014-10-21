@@ -23,7 +23,7 @@ xdescribe('Route Conversation - Check Old Message Decryption: ', function() {
             })
 
             util.waitAndClickQa("btn-send-answer")
-            util.waitForElements("cm-message", (i+2))
+            util.waitForElements("cm-message", (i + 2))
         }
     }
 
@@ -42,7 +42,7 @@ xdescribe('Route Conversation - Check Old Message Decryption: ', function() {
         })
 
         it('should add ' + qty + ' messages', function(){
-            addMessages((qty -1), msg);
+            addMessages((qty - 1), msg);
 
             $$('cm-message').then(function (elements) {
                 expect(elements.length).toEqual(qty)
