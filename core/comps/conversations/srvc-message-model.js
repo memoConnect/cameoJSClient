@@ -93,6 +93,8 @@ angular.module('cmConversations')
              * @description import data
              */
             this.importData = function(data){
+                cmLogger.debug('cmMessageModel.importData');
+                console.log('message data', data);
                 this.id         = data.id || this.id;
 
                 if('fromIdentity' in data){
@@ -176,6 +178,8 @@ angular.module('cmConversations')
             };
 
             this.decrypt = function (passphrase) {
+                //cmLogger.debug('cmMessageModel.decrypt');
+
                 if(this.state.is('decrypted') !== true){
 
                     if(typeof this.encryptedData == 'string' && this.encryptedData.length > 0){
