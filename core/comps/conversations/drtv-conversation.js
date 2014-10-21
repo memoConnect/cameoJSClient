@@ -35,6 +35,10 @@ angular.module('cmConversations')
                     storageService = new cmKeyStorageService('conversation-recipient-view');
 
                 $scope.goto = $rootScope.goto;
+                $scope.openFastRegister = $rootScope.openFastRegister;
+                $scope.showLogin = $rootScope.showLogin;
+
+
                 $scope.isSending        = false;
                 $scope.isSendingAbort   = false;
 
@@ -121,9 +125,8 @@ angular.module('cmConversations')
 
                         prepareFiles()
                     }
-                }
+                };
 
-                        
 
                 $rootScope.$$listeners.sendOnReturn = [];
                 $rootScope.$on('sendOnReturn',$scope.send);
@@ -217,13 +220,10 @@ angular.module('cmConversations')
                  * send message to api
                  */
                 function sendMessage() {
-
                     /**
                      * validate answer form
                      * @type {boolean}
                      */
-                    
-                
                     var message_invalid         = !isMessageValid()
 
                     //If anything is invalid, abort and notify the user:
