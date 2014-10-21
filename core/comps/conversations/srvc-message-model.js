@@ -93,8 +93,7 @@ angular.module('cmConversations')
              * @description import data
              */
             this.importData = function(data){
-                cmLogger.debug('cmMessageModel.importData');
-                console.log('message data', data);
+                //cmLogger.debug('cmMessageModel.importData');
                 this.id         = data.id || this.id;
 
                 if('fromIdentity' in data){
