@@ -1,6 +1,7 @@
 {
     "config": {
-        "wwwUrl": "http://localhost:9000/m/"
+        "wwwUrl": "http://localhost:9000/m/",
+        "showConsoleError": false
     },
     "testData": [
         "loginUser1 = 'BMeSfHXQ'",

@@ -142,7 +142,7 @@ this.login = function (username, password, expectedRoute) {
     return this
 }
 
-this.createTestUser = function (testUserId, from) {
+this.createTestUser = function (testUserId, from){
     //console.log('from ->' + from)
 
     this.logout()
@@ -622,7 +622,7 @@ this.createEncryptedConversation = function (subject, message) {
     self.waitAndClick("cm-modal.active [data-qa='cm-modal-close-btn']")
     self.waitAndClickQa("btn-send-answer")
     self.waitForPageLoad("/conversation/*")
-    self.waitForElement("cm-message")
+    self.waitForElements("cm-message", 1)
 }
 
 this.readConversation = function (subject, message) {
