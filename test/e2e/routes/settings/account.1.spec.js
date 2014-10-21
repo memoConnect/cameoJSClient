@@ -18,8 +18,6 @@ describe('Route Settings Account: ', function(){
         })
 
         it('should be load at "#/settings/" after registration and btn exists.', function () {
-            util.expectCurrentUrl('#/start')
-
             util.get('/settings')
             util.expectCurrentUrl('#/settings')
 
