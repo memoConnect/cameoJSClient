@@ -79,6 +79,11 @@ describe('Identity key settings: ', function () {
         })
     })
 
+    it('user should be now at talks route', function(){
+        util.waitForPageLoad("/talks")
+        util.expectCurrentUrl("/talks")
+    })
+
     it('the new key should be displayed as local', function () {
         util.get('/settings/identity/key/list')
         util.waitForPageLoad('/settings/identity/key/list')
@@ -117,6 +122,7 @@ describe('Identity key settings: ', function () {
         util.waitAndClickQa('btn-confirm')
 
         util.logout()
+
         util.login(login, password)
         util.get('/settings/identity/key/list')
         $$("[data-qa='key-list-item']").then(function (elements) {
@@ -126,7 +132,10 @@ describe('Identity key settings: ', function () {
 
     it('generate another local key and delete local storage', function () {
         util.generateKey(1, keyName)
+        util.logout()
+
         util.clearLocalStorage()
+
         util.login(login, password)
         util.get('/settings/identity/key/list')
         util.waitForPageLoad('/settings/identity/key/list')
