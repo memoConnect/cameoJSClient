@@ -126,6 +126,7 @@ module.exports = function(grunt, options){
                         'files': 'core/comps/files',
                         'security_aspects': 'core/comps/security_aspects',
                         'ui': 'core/comps/ui',
+                        'desktop_ui': 'desktop/comps/ui',
                         'phonegap': 'core/comps/phonegap',
                         'routes': 'desktop/routes',
                         'widgets': 'core/widgets',

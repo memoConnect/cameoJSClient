@@ -23,8 +23,7 @@
             <li class="{{menu[btn].css}}"
                 ng-repeat="btn in Object.keys(menu)"
                 ng-click="goTo(menu[btn], btn)"
-                data-qa="{{menu[btn]['data-qa']}}"
-                ng-class="{'is-active':checkActive(btn)}">
+                data-qa="{{menu[btn]['data-qa']}}">
                 <i class="fa icon-left" ng-if="menu[btn].icon != undefined" ng-class="menu[btn].icon"></i>
                 <span>
                     {{menu[btn].i18n|cmTranslate}}

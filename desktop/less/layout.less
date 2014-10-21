@@ -1,9 +1,10 @@
 cm-column{
+  .pos-rel;
   .dib;
   .vap;
   min-width:@cm-app-width;
-  overflow:scroll;
   overflow-x:hidden;
+  overflow-y:auto;
   border-right:@cm-border-width @cm-border-grey solid;
 
   &:last-child{
@@ -31,16 +32,19 @@ cm-column{
 
   // normal desktop columns 25 25 50 %
   cm-column{
+    z-index:3;
     width:25%;
     cm-footer {
       width:25%;
     }
   }
   cm-column + cm-column{
+    z-index:2;
     width:25%;
     left:25%;
   }
   cm-column + cm-column + cm-column{
+    z-index:1;
     width:50%;
     left:50%;
     cm-footer {

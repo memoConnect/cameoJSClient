@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('cmDesktopUi').directive('cmMenu',[
+angular.module('cmDesktopUi').directive('cmDesktopMenu',[
     'cmUserModel', 'cmConfig', 'cmNotify', 'cmUtil',
     '$location', '$window',
     function (cmUserModel, cmConfig, cmNotify, cmUtil,
@@ -8,7 +8,7 @@ angular.module('cmDesktopUi').directive('cmMenu',[
         return {
             restrict: 'AE',
             scope: true,
-            templateUrl: 'comps/ui/drtv-menu.html',
+            templateUrl: 'comps/ui/drtv-desktop-menu.html',
             controller: function($scope){
 
                 $scope.Object = Object;
@@ -22,11 +22,18 @@ angular.module('cmDesktopUi').directive('cmMenu',[
                         cmNotify.trigger('bell:unring');
                 };
 
-                $scope.checkActive = function(url){
-                    if(cmUtil.startsWith($location.$$url,'/' + url)){
-                        return true;
-                    }
-                    return false;
+                $scope.checkActive = function(urls, ignore){
+                    var arrUrl = urls.split(','),
+                        found = false;
+
+                    arrUrl.forEach(function(url){
+                        if(cmUtil.startsWith($location.$$url,'/' + url)){
+                            if(!ignore || $location.$$url.indexOf(ignore) == -1) {
+                                found = true;
+                            }
+                        }
+                    });
+                    return found;
                 };
 
                 $scope.goTo = function(parentBtn, url, isSub){
