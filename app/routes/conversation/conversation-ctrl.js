@@ -14,11 +14,11 @@ angular.module('cmRoutes').controller('ConversationCtrl', [
 
         $scope.conversation =   conversation_id
                                 ?   cmConversationFactory.create(conversation_id)
-                                :   ($rootScope.pendingConversation || cmConversationFactory.new())
+                                :   ($rootScope.pendingConversation || cmConversationFactory.new());
 
 
         if(!$scope.conversation.state.is('new') && force_new)
-            $scope.conversation = cmConversationFactory.create()
+            $scope.conversation = cmConversationFactory.new();
 
         if(!conversation_id){
             $scope.$watchCollection('conversation', function(conversation){

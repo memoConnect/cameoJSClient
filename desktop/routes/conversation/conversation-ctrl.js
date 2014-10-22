@@ -17,7 +17,7 @@ angular.module('cmRoutes').controller('ConversationCtrl', [
 
 
         if(!$scope.conversation.state.is('new') && force_new)
-            $scope.conversation = cmConversationFactory.create()
+            $scope.conversation = cmConversationFactory.new()
 
         if(!conversation_id){
             $scope.$watchCollection('conversation', function(conversation){
