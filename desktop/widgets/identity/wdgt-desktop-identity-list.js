@@ -20,7 +20,7 @@ angular.module('cmDesktopWidgets').directive('cmDesktopWidgetIdentityList', [
                 $scope.identities = cmUserModel.data.identities;
 
                 function refresh(){
-                    console.log('identities', $scope.identities)
+                    //console.log('identities', $scope.identities)
                 }
 
                 refresh();

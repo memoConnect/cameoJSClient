@@ -6,7 +6,7 @@
 <ul>
     <li ng-repeat="page in Object.keys(overview)"
         ng-click="goToSettingsPage($event, page, overview[page].disabled, overview[page])"
-        ng-class="{'is-disabled':overview[page].disabled}"
+        ng-class="{'is-disabled':overview[page].disabled,'is-active':checkActive(page)}"
         data-qa="{{overview[page]['data-qa']}}">
         <span class="item clearfix">
             <span class="title">
