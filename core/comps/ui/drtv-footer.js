@@ -72,21 +72,15 @@
 
 angular.module('cmUi')
 .directive('cmFooter',[
-    'cmConfig',
-    '$location',
-    function (cmConfig, $location){
+    '$rootScope',
+    function ($rootScope){
         return {
             restrict: 'E',
-            scope: true,
-            priority: 0,
-            link: function(scope, element, attrs, controller, transclude){
-                
-                if('cmAlwaysOnTop' in attrs){
-                    element.css('z-index',10);
-                } else {
-                    element.css('z-index',9);
-                }
-                
+            controller: function($scope){
+                $rootScope.$broadcast('cmFooter:stateChanged','show');
+                $scope.$on('$destroy', function(){
+                    $rootScope.$broadcast('cmFooter:stateChanged','hide');
+                });
             }
         }
     }
