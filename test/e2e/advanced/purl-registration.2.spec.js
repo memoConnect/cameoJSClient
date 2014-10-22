@@ -131,7 +131,7 @@ describe('Purl Registration: ', function () {
     })
 
     it("should be in /talks after saving the key", function () {
-        util.waitForElementVisible("[data-qa='page-save-key']", 60000)
+        util.waitForElementVisible("[data-qa='page-save-key']", 30000)
         util.waitAndClickQa("btn-save-key")
         util.waitForPageLoad('/talks')
     })

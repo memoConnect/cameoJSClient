@@ -74,7 +74,7 @@ angular.module('cmContacts').service('cmContactsModel',[
         function init(){
 //            cmLogger.debug('cmContactsModel:init');
             self.getAll();
-            self.getGroups();
+            //self.getGroups();
             self.getFriendRequests();
         }
 

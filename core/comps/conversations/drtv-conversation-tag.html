@@ -1,7 +1,7 @@
 <cm-avatar cm-data="avatarIdentity"></cm-avatar>
 
 <div class="details" cm-weight="3">
-    <div class="subject" data-qa="conversation-subject"> {{(conversation.subject || ('CONVERSATION.NO_SUBJECT' | cmTranslate)) |cmParse }}</div>
+    <div class="subject" data-qa="conversation-subject" ng-bind-html="(conversation.subject || 'CONVERSATION.NO_SUBJECT' )| cmParse"></div>
     <cm-message 
         class       = "message" 
         cm-data     = "conversation.lastMessage" 

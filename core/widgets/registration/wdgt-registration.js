@@ -157,7 +157,7 @@ angular.module('cmWidgets').directive('cmWidgetRegistration', [
                                             //$location.path('/purl/'+$rootScope.pendingPurl);
                                             $rootScope.goto('/start/welcome');
                                         } else {
-                                            cmUserModel.comesFromRegistration = true;
+                                            //cmUserModel.comesFromRegistration = true;
                                             $rootScope.goto("/start/welcome");
                                         }
                                     },
