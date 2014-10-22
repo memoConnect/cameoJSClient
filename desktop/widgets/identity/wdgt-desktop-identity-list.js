@@ -19,14 +19,6 @@ angular.module('cmDesktopWidgets').directive('cmDesktopWidgetIdentityList', [
             controller: function ($scope) {
                 $scope.identities = cmUserModel.data.identities;
 
-                function refresh(){
-                    //console.log('identities', $scope.identities)
-                }
-
-                refresh();
-
-                cmUserModel.on('update:finished', refresh);
-
                 $scope.switchToIdentity = function(identity){
                     cmUserModel.switchToIdentity(identity);
                 };
@@ -38,10 +30,6 @@ angular.module('cmDesktopWidgets').directive('cmDesktopWidgetIdentityList', [
                         $scope.switchToIdentity(identity);
                     }
                 };
-
-                $scope.$on('$destroy', function(){
-                    cmUserModel.off('update:finished', refresh)
-                })
             }
         }
     }

@@ -1,0 +1,19 @@
+<section class="theme-a fixed-layout">
+    <cm-header>
+        <cm-logo></cm-logo>
+    </cm-header>
+
+    <cm-column class="fill-bg">
+        <cm-desktop-widget-menu></cm-desktop-widget-menu>
+    </cm-column>
+    <cm-column class="fill-bg w70">
+        <h2 class="border-bottom">{{'ERROR.HEADER'|cmTranslate}}</h2>
+        <article class="content">
+            <cm-info-bubble class="cm-alert">
+            <pre>
+                {{data_str|strnl2nl}}
+            </pre>
+            </cm-info-bubble>
+        </article>
+    </cm-column>
+</section>
