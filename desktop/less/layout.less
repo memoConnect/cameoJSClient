@@ -53,6 +53,9 @@ cm-column{
   }
   // all same columns 33 33 34 %
   &.equal-cols {
+    cm-footer{
+      width:33%;
+    }
     cm-column{
       width:@cm-column-size;
     }
@@ -80,11 +83,6 @@ cm-column{
   cm-column {
     &.fill-bg {
       background: @theme-b-bg-color;
-    }
-  }
-  &.equal-cols {
-    cm-footer{
-      width:33%;
     }
   }
 }
