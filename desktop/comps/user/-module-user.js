@@ -3,4 +3,4 @@
 angular.module('cmDesktopUser', [
     'cmCore',
     'ngSanitize'
-])
+]);

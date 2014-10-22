@@ -123,9 +123,11 @@ module.exports = function(grunt, options){
                         'files': 'core/comps/files',
                         'security_aspects': 'core/comps/security_aspects',
                         'ui': 'core/comps/ui',
+                        'widgets': 'core/widgets',
                         'phonegap': 'core/comps/phonegap',
-                        'routes': 'app/routes',
-                        'widgets': 'core/widgets'
+                        'app_routes': 'app/routes',
+                        'app_widgets': 'app/widgets',
+                        'app_ui': 'app/comps/ui'
                     })
                 },
                 'app-cameo': {
