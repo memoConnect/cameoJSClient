@@ -21,10 +21,7 @@ module.exports = function(grunt, options){
                 .replace(/\s{2,100}(<)/gm, '<')// clear whitespaces before html tag
                 .replace(/\s{2,100}/gm, ' ')// clear whitespaces on line
                 .replace(/(')/gm, "\\'");// uncomment single quotes,
-            filepath = filepath
-                    .replace('core/', '')
-                    .replace('app/', '')
-                    .replace('desktop/', '');
+            filepath = filepath.replace(/^(app|desktop|core)\//, '');
             // add to template array for module schmusi
             concatCmTemplatesFound.push(filepath);
 
