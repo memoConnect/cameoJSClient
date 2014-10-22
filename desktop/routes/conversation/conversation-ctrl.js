@@ -25,6 +25,5 @@ angular.module('cmRoutes').controller('ConversationCtrl', [
                     $rootScope.goto('conversation/' + conversation.id)
             })
         }
-
     }
 ]);
