@@ -7,17 +7,15 @@ angular.module('cmDesktopUi').directive('cmColumn',[
             restrict: 'E',
             link: function(scope, element){
                 function checkFooter(){
-                    console.log(element.find('cm-footer'))
                     if(element.find('cm-footer').length == 0)
-                        element.addClass('without-footer')
+                        element.addClass('without-footer');
                     else
-                        element.removeClass('without-footer')
+                        element.removeClass('without-footer');
                 }
 
                 checkFooter();
 
                 var watchersEnd = $rootScope.$on('cmFooter:stateChanged',function(){
-                    console.log('footer wech');
                     $timeout(function(){
                         checkFooter();
                     },50);
