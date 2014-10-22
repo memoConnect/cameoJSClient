@@ -127,7 +127,8 @@ module.exports = function(grunt, options){
                         'phonegap': 'core/comps/phonegap',
                         'app_routes': 'app/routes',
                         'app_widgets': 'app/widgets',
-                        'app_ui': 'app/comps/ui'
+                        'app_ui': 'app/comps/ui',
+                        'app_user': 'app/comps/user',
                     })
                 },
                 'app-cameo': {

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('cmUser').directive('cmIdentityTag', [
+angular.module('cmAppUser').directive('cmIdentityTag', [
     // no dependencies
     function(){
         return {
@@ -8,7 +8,7 @@ angular.module('cmUser').directive('cmIdentityTag', [
             scope: {
                 identity: "=cmData"
             },
-            templateUrl: 'comps/user/identity/drtv-identity-tag.html',
+            templateUrl: 'comps/user/drtv-identity-tag.html',
             controller: function ($scope) {
 
             }

@@ -14,6 +14,7 @@ angular.module('cameoClient', [
     'cmUi',
     'cmDesktopUi',
     'cmUser',
+    'cmDesktopUser',
     'cmContacts',
     'cmConversations',
     'cmValidate'
