@@ -2,10 +2,12 @@
     <cm-header>
         <cm-back back-to="conversation/{{conversationId}}"></cm-back>
         <cm-logo></cm-logo>
-        <cm-security-indicator
-            cm-data         = "conversation"
-            ng-click        = "gotoConversation(conversation.id,'security')"
-        ></cm-security-indicator>
+        <section class="icon-list">
+            <cm-security-indicator
+                cm-data         = "conversation"
+                ng-click        = "gotoConversation(conversation.id,'security')"
+            ></cm-security-indicator>
+        </section>
     </cm-header>
 
     <cm-column class="fill-bg">

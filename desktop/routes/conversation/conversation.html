@@ -5,10 +5,12 @@
             <cm-back back-to="/talks" plain-back="true" ng-if="conversationId != 'new'"></cm-back>
         </div>
         <cm-logo></cm-logo>
-        <cm-security-indicator
-            cm-data         = "conversation"
-            ng-click        = "gotoConversation(conversation.id,'security')"
-        ></cm-security-indicator>
+        <section class="icon-list">
+            <cm-security-indicator
+                cm-data         = "conversation"
+                ng-click        = "gotoConversation(conversation.id,'security')"
+            ></cm-security-indicator>
+        </section>
     </cm-header>
 
     <cm-column class="fill-bg">

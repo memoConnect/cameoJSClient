@@ -2,7 +2,9 @@
     <cm-header>
         <cm-back back-to="/contact/list"></cm-back>
         <cm-logo></cm-logo>
-        <cm-add-button ng-click="openModal('add-contact')" data-qa="add-contact-btn" cm-icon="new-contact"></cm-add-button>
+        <section class="icon-list">
+            <cm-add-button ng-click="openModal('add-contact')" data-qa="add-contact-btn" cm-icon="new-contact"></cm-add-button>
+        </section>
     </cm-header>
 
     <cm-modal-add-contact id="add-contact" nose-position="2rem"></cm-modal-add-contact>
