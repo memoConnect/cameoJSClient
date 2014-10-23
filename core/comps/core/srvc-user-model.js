@@ -353,6 +353,7 @@ angular.module('cmCore')
 
         this.switchToIdentity = function(identity, identityToken){
             cmLogger.debug('cmUserModel:switchToIdentity');
+            console.log('new identity', identity.getDisplayName())
 
             function doSwitch(newToken){
                 self.storeToken(newToken, true);
