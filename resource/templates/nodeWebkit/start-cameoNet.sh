@@ -1,6 +1,7 @@
 #!/bin/bash
 WRAPPER="`readlink -f "$0"`"
 HERE="`dirname "$WRAPPER"`"
+EXEC=$(ls $HERE/bin/cameoNet*)
 
 # node-webkit is build against libudev0, newer systems have libudev1
 # check if we have libudev1 and patch the binary accordingly
@@ -20,7 +21,7 @@ then
     if [ -f $path ]
     then
       echo "Found libudev1 on this system, adjusting binary"    
-      sed -i 's/udev\.so\.0/udev.so.1/g' "$HERE/bin/cameoNet"
+      sed -i 's/udev\.so\.0/udev.so.1/g' "$EXEC"
       touch "$HERE/bin/patched"
       break
     fi
@@ -28,4 +29,4 @@ then
 fi
 
 # Run cameoNet
-exec "$HERE/bin/cameoNet" "$@"
+exec "$EXEC" "$@"
