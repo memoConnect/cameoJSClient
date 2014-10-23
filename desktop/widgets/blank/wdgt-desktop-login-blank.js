@@ -2,7 +2,7 @@
 
 /**
  * @ngdoc directive
- * @name cmDesktopWidgets.directive:cmDesktopWidgetMenu
+ * @name cmDesktopWidgets.directive:cmDesktopWidgetLoginBlank
  * @description
  * Desktop menu with identites
  *

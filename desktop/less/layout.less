@@ -77,15 +77,21 @@ cm-column{
     }
     cm-column{
       width:@cm-column-equal-size;
+      cm-footer {
+        left: 0;
+      }
     }
     cm-column + cm-column{
       left: @cm-column-equal-size;
+      cm-footer {
+        left: @cm-column-equal-size;
+      }
     }
     cm-column + cm-column + cm-column{
       left: @cm-column-equal-size * 2;
       width: @cm-column-equal-size + 1;
       cm-footer {
-        width: @cm-column-equal-size + 1;
+        left: @cm-column-equal-size * 2;
       }
     }
   }
@@ -122,5 +128,13 @@ cm-column{
   }
   .cm-block-column{
     background-color: rgba(0,0,0,0.5);
+  }
+}
+
+cm-footer{
+  &.desktop-w-full {
+    .w100;
+    left: 0 !important;
+    z-index: 1;
   }
 }
