@@ -24,7 +24,10 @@ module.exports = function (grunt, options) {
         'clean:nodeWebkit',
         'copy:nwDeploy',
         'template:nodeWebkitPackage',
-        'nodewebkit'
+        'nodewebkit',
+        'copy:nwPackageLinux',
+        'clean:nwPackageLinux',
+        'compress:mwPackageLinux'
     ]);
 
     return {
@@ -69,7 +72,13 @@ module.exports = function (grunt, options) {
                     src: [
                         'dist/nodeWebkit/**',
                         'build/nodeWebkit/**'
-                    ]}
+                    ]
+                },
+                nwPackageLinux: {
+                    src: [
+                        'build/nodeWebkit/cameoNet/linux64/!(bin|*.sh)'
+                    ]
+                }
             },
             copy: {
                 nwDeploy: {
@@ -82,11 +91,42 @@ module.exports = function (grunt, options) {
                         }
                     ]
 
+                },
+                nwPackageLinux: {
+                    files: [
+                        {
+                            expand: true,
+                            cwd: 'build/nodeWebkit/cameoNet/linux64',
+                            src: '**/*',
+                            dest: 'build/nodeWebkit/cameoNet/linux64/bin'
+                        },
+                        {
+                            expand: true,
+                            cwd: 'resource/templates/nodeWebkit',
+                            src: '**/*.sh',
+                            dest: 'build/nodeWebkit/cameoNet/linux64'
+                        }
+                    ],
+                    options: {
+                        mode: true
+                    }
+                }
+            },
+            compress: {
+                mwPackageLinux: {
+                    options: {
+                        archive: 'build/nodeWebkit/cameoNet/linux64/cameoNet--linux-x64.tar.gz',
+                        mode: 'tgz'
+                    },
+                    expand: true,
+                    cwd: 'build/nodeWebkit/cameoNet/linux64/',
+                    src: ['**/*'],
+                    dest: '/'
                 }
             },
             nodewebkit: {
                 options: {
-                    platforms: ['win', 'osx', 'linux32', 'linux64'],
+                    platforms: ['win', 'osx', 'linux64'],
                     buildDir: 'build/nodeWebkit'
                 },
                 src: ['dist/nodeWebkit/**/*']
