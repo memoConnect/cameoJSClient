@@ -10,14 +10,14 @@
         "nw_version": "0.10.5",
         "force_download": false,
         "download_dir": "/tmp",
-        "linux-x32": false,
+        "linux-x32": true,
         "linux-x64": true,
         "windows": true,
         "mac": true
     },
     "window": {
         "fullscreen": false, 
-        "resizable": false, 
+        "resizable": true,
         "title": "cameoNet", 
         "always-on-top": false, 
         "frame": true, 
@@ -32,7 +32,7 @@
         "show_in_taskbar": true, 
         "width": 1280,
         "toolbar": false, 
-        "icon": "dist/nodeWebkit/gfx/icon_128x128.png"
+        "icon": "gfx/icon_128x128.png"
     }, 
     "version": "<%= currentVersion %>",
     "webkit": {

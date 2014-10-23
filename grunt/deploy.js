@@ -1,4 +1,4 @@
-module.exports = function(grunt, options){
+module.exports = function (grunt, options) {
 
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-copy');
@@ -21,13 +21,14 @@ module.exports = function(grunt, options){
 
     grunt.registerTask('app:deployNW', [
         'app:deploy',
+        'clean:nodeWebkit',
         'copy:nwDeploy',
         'template:nodeWebkitPackage',
         'nodewebkit'
     ]);
 
     return {
-        tasks:{
+        tasks: {
             uglify: {
                 options: {
                     mangle: false
@@ -63,6 +64,13 @@ module.exports = function(grunt, options){
                     dest: 'dist/app'
                 }
             },
+            clean: {
+                nodeWebkit: {
+                    src: [
+                        'dist/nodeWebkit/**',
+                        'build/nodeWebkit/**'
+                    ]}
+            },
             copy: {
                 nwDeploy: {
                     files: [
@@ -78,7 +86,7 @@ module.exports = function(grunt, options){
             },
             nodewebkit: {
                 options: {
-                    platforms: ['win','osx'],
+                    platforms: ['win', 'osx'],
                     buildDir: 'build/nodeWebkit'
                 },
                 src: ['dist/nodeWebkit/**/*']
