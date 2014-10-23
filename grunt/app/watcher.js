@@ -49,9 +49,11 @@ module.exports = function(grunt, options){
                     files: [
                         'app/base/app.js',
                         'core/comps/**/*',
-                        'app/routes/**/*',
                         'core/widgets/**/*',
-                        'core/vendor/**/*'
+                        'core/vendor/**/*',
+                        'app/routes/**/*',
+                        'app/comps/**/*',
+                        'app/widgets/**/*'
                     ],
                     tasks: [
                         'app:packages'

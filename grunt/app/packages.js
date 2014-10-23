@@ -21,10 +21,7 @@ module.exports = function(grunt, options){
                 .replace(/\s{2,100}(<)/gm, '<')// clear whitespaces before html tag
                 .replace(/\s{2,100}/gm, ' ')// clear whitespaces on line
                 .replace(/(')/gm, "\\'");// uncomment single quotes,
-            filepath = filepath
-                    .replace('core/', '')
-                    .replace('app/', '')
-                    .replace('desktop/', '');
+            filepath = filepath.replace(/^(app|desktop|core)\//, '');
             // add to template array for module schmusi
             concatCmTemplatesFound.push(filepath);
 
@@ -126,9 +123,12 @@ module.exports = function(grunt, options){
                         'files': 'core/comps/files',
                         'security_aspects': 'core/comps/security_aspects',
                         'ui': 'core/comps/ui',
+                        'widgets': 'core/widgets',
                         'phonegap': 'core/comps/phonegap',
-                        'routes': 'app/routes',
-                        'widgets': 'core/widgets'
+                        'app_routes': 'app/routes',
+                        'app_widgets': 'app/widgets',
+                        'app_ui': 'app/comps/ui',
+                        'app_user': 'app/comps/user',
                     })
                 },
                 'app-cameo': {

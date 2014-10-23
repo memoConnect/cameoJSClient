@@ -32,6 +32,7 @@ var cameo_config = {
         },
         'start-keyinfo': {
             guests: false,
+            hasCtrl: true,
             routes: ['/start/keyinfo'],
             resolveUserModel: true
         },
@@ -184,9 +185,6 @@ var cameo_config = {
         'contact-create': {
             routes:['/contact/create']
         },
-        'contact-import': {
-            routes:['/contact/import']
-        },
         'contact-edit': {
             routes:['/contact/edit/:id?'],
             hasCtrl: true
@@ -270,7 +268,7 @@ var cameo_config = {
         'about': {i18n:'SETTINGS.PAGES.ABOUT_US.TITLE', icon:'cm-rhino-positive'}
     }
 };
-// performance page
-if('<%= performancePage %>' == 'true') {
-    cameo_config.menu['performance'] = {i18n: 'SETTINGS.PAGES.PERFORMANCE.TITLE', icon: 'cm-not-connected', link: 'performance.html'};
-}
+//// performance page
+//if('<%= performancePage %>' == 'true') {
+//    cameo_config.menu['performance'] = {i18n: 'SETTINGS.PAGES.PERFORMANCE.TITLE', icon: 'cm-not-connected', link: 'performance.html'};
+//}

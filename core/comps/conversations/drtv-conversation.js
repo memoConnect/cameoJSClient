@@ -38,7 +38,6 @@ angular.module('cmConversations')
                 $scope.openFastRegister = $rootScope.openFastRegister;
                 $scope.showLogin = $rootScope.showLogin;
 
-
                 $scope.isSending        = false;
                 $scope.isSendingAbort   = false;
 
@@ -295,7 +294,7 @@ angular.module('cmConversations')
                 };
 
                 function init(conversation){
-                    $scope.conversation = conversation
+                    $scope.conversation = conversation;
                     $rootScope.pendingConversation = $scope.conversation;
 
                     // reload details of conversation
