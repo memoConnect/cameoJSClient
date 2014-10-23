@@ -217,6 +217,10 @@ angular.module('cmConversations')
              * @param {Object} data The conversation data as recieved from the backend.
              */
             this.importData = function(data){
+
+                if(data.id == 'Z8mCmNkfdYZsUY3KS8g6')
+                    console.log(data)
+
                 //cmLogger.debug('cmConversationModel:importData',data);
                 if(typeof data !== 'object'){
                     cmLogger.debug('cmConversationModel:import:failed - no data!');
@@ -286,6 +290,9 @@ angular.module('cmConversations')
 
                 this.state.unset('new');
                 this.trigger('update:finished');
+
+                if(this.id == 'Z8mCmNkfdYZsUY3KS8g6')
+                    console.log(this)
 
                 return this;
             };

@@ -23,6 +23,10 @@ angular.module('cmConversations').directive('cmConversationTag',[
                 /**
                  * set Avatar Identity
                  */
+
+                if($scope.conversation.id == 'Z8mCmNkfdYZsUY3KS8g6')
+                    console.log('drtv',$scope.conversation)
+
                 if($scope.conversation.recipients.length > 2){
                     $scope.avatarIdentity = $scope.conversation.lastMessage.from;
                 } else {
