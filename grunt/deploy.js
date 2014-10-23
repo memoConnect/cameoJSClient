@@ -4,6 +4,7 @@ module.exports = function(grunt, options){
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-node-webkit-builder');
 
     grunt.registerTask('app:deploy', [
         'app:deploy-without-template',
@@ -16,6 +17,11 @@ module.exports = function(grunt, options){
 
         'uglify:app-deploy',
         'cssmin:app-deploy'
+    ]);
+
+    grunt.registerTask('app:deployNW', [
+        'app:deploy',
+        'nodewebkit'
     ]);
 
     return {
@@ -54,7 +60,15 @@ module.exports = function(grunt, options){
                     src: '*.css',
                     dest: 'dist/app'
                 }
+            },
+            nodewebkit: {
+                options: {
+                    platforms: ['win','osx'],
+                    buildDir: 'dist/nodeWebkit'
+                },
+                src: ['dist/desktop/**/*']
             }
+
         }
     }
 };
