@@ -86,7 +86,7 @@ module.exports = function (grunt, options) {
             },
             nodewebkit: {
                 options: {
-                    platforms: ['win', 'osx'],
+                    platforms: ['win', 'osx', 'linux32', 'linux64'],
                     buildDir: 'build/nodeWebkit'
                 },
                 src: ['dist/nodeWebkit/**/*']
