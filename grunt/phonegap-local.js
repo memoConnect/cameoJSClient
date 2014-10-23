@@ -2,11 +2,17 @@ module.exports = function(grunt, options){
 
     grunt.loadNpmTasks('grunt-phonegap');
 
+    grunt.registerTask('phonegap:build-only', [
+        'phonegap:app-prepare',
+        'phonegap:build'
+    ])
+
     grunt.registerTask('phonegap:build-n-run', [
         'phonegap:app-prepare',
         'phonegap:build',
         'phonegap:run'
     ]);
+
 
     return {
         tasks:{
@@ -16,7 +22,6 @@ module.exports = function(grunt, options){
                     root: 'build/phonegap/www',
                     config: 'build/phonegap/www/config.xml',
                     cordova: '.cordova',
-
                     path: 'phonegap-build',
                     plugins: [
                         'org.apache.cordova.device',
@@ -25,17 +30,17 @@ module.exports = function(grunt, options){
                         'org.apache.cordova.file-transfer',
                         'org.apache.cordova.network-information',
                         'com.phonegap.plugins.pushplugin',
-                        'de.cameonet.cordova.contacts',
+                        'https://github.com/memoConnect/cordova-plugin-contacts.git',
                         'de.appplant.cordova.plugin.hidden-statusbar-overlay',
                         'com.jamiestarke.webviewdebug',
-                        './resource/phonegap/plugins/de.cameonet.cordova.crypto'
+                        'https://github.com/memoConnect/de.cameonet.cordova.crypto.git'
                     ],
                     platforms: [
                         //'android',
                         'ios'
                     ],
 
-                    maxBuffer: 200, // You may need to raise this for iOS.
+                    maxBuffer: 1000, // You may need to raise this for iOS.
                     verbose: true,
                     releases: 'releases',
 

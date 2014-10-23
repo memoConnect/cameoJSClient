@@ -7,7 +7,7 @@ angular.module('cmPhonegap')
         'cmPhonegap', 'cmDevice', 'cmLogger', 'cmUtil',
         '$window', '$q',
         function (cmPhonegap, cmDevice, cmLogger, cmUtil,
-                  $window) {
+                  $window, $q) {
 
             var self = {
                 plugin: null,
@@ -53,25 +53,7 @@ angular.module('cmPhonegap')
                         deffered.reject('NO PLUGIN EXISITS');
                     }
 
-                    return deffered.promise();
-                },
-
-                getPublicKey: function(length){
-                    var deffered = $q.defer();
-
-                    if(this.isAvailable()){
-                        this.plugin.getPublicKey(function(pubKey){
-                                deffered.resolve(pubKey);
-                            }, function(){
-                                deffered.reject();
-                            },
-                                length | self.keySize
-                        );
-                    } else {
-                        deffered.reject('NO PLUGIN EXISITS');
-                    }
-
-                    return deffered.promise();
+                    return deffered.promise;
                 }
             };
 
