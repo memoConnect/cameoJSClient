@@ -21,6 +21,8 @@ module.exports = function(grunt, options){
 
     grunt.registerTask('app:deployNW', [
         'app:deploy',
+        'copy:nwDeploy',
+        'template:nodeWebkitPackage',
         'nodewebkit'
     ]);
 
@@ -61,12 +63,37 @@ module.exports = function(grunt, options){
                     dest: 'dist/app'
                 }
             },
+            copy: {
+                nwDeploy: {
+                    files: [
+                        {
+                            expand: true,
+                            cwd: 'dist/desktop',
+                            src: '**/*',
+                            dest: 'dist/nodeWebkit'
+                        }
+                    ]
+
+                }
+            },
             nodewebkit: {
                 options: {
                     platforms: ['win','osx'],
-                    buildDir: 'dist/nodeWebkit'
+                    buildDir: 'build/nodeWebkit'
                 },
-                src: ['dist/desktop/**/*']
+                src: ['dist/nodeWebkit/**/*']
+            },
+            template: {
+                'nodeWebkitPackage': {
+                    'options': {
+                        'data': {
+                            'currentVersion': options.globalCameoBuildConfig.config.version
+                        }
+                    },
+                    'files': {
+                        'dist/nodeWebkit/package.json': ['resource/templates/nodeWebkit/package.json']
+                    }
+                }
             }
 
         }
