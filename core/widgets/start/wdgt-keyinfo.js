@@ -16,7 +16,6 @@ angular.module('cmWidgets').directive('cmWidgetKeyinfo', [
                     return false;
                 }
 
-
                 $scope.skipKeyInfo = false;
                 $scope.skipKeyInfo = cmSettings.get('skipKeyInfo') || false;
 

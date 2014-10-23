@@ -10,6 +10,7 @@ angular.module('cmWidgets').directive('cmWidgetSettingsList', [
             templateUrl: 'widgets/settings/wdgt-settings-list.html',
             controller: function ($scope) {
                 $scope.overview = cmConfig.routeSettings;
+
                 $scope.Object = Object;
 
                 $scope.logout = function(){
@@ -36,7 +37,16 @@ angular.module('cmWidgets').directive('cmWidgetSettingsList', [
                         $event.preventDefault();
                         $scope.goTo('/settings/'+pageUrl);
                     }
-                }
+                };
+
+                $scope.checkActive = function(page){
+                    if($location.$$url.indexOf(page) != -1){
+                        return true;
+                    }
+
+                    return false;
+                };
+
             }
         }
     }

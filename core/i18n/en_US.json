@@ -720,6 +720,8 @@
     },
 
     "MENU": {
+        "TALKS": "@:DRTV.FOOTER.TALKS",
+        "CONTACTS": "@:DRTV.FOOTER.CONTACTS",
         "NEW_CONTACT": "New contact",
         "NEW_TALK": "New talk",
         "REQUESTS": "Contact requests",

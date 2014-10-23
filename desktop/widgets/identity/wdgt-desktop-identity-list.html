@@ -1,0 +1,5 @@
+<ul>
+   <li ng-repeat="identity in identities | orderBy:'getDisplayName()':false" ng-click="bam(identity)" ng-class="{'is-active': identity.isActive}">
+       <cm-identity-tag cm-data="identity"></cm-identity-tag>
+   </li>
+</ul>
