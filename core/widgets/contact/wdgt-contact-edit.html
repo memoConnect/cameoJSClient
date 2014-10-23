@@ -1,0 +1,147 @@
+<h2 class="border-bottom">
+    <i class="fa cm-person"></i>
+    {{'CONTACT.HEADLINE'|cmTranslate}}
+</h2>
+
+
+<article class="content edit-identity-head clearfix">
+    <div class="cm-fl mr5">
+        <cm-avatar cm-data="contact.identity" cm-view="{{chooseAvatar?'unknown':''}}" ng-show="contact.identity" class="big"></cm-avatar>
+    </div>
+    <div class="cm-fl w72">
+        <ul class="no-border">
+            <li>
+                <section ng-if="!isTrusted && (!hasKeys || !hasLocalKey)" class="cm-disabled">
+                     <span class="item clearfix">
+                        <i  class="fa cm-no-key cm-ci-color"></i>
+                         {{'CONTACT.TRUST.NO_CAMEOKEYS'|cmTranslate}}
+                     </span>
+                    <section class="icon-list">
+                        <i class="fa cm-info"></i>
+                    </section>
+                </section>
+
+                <section ng-if="!isTrusted && hasKeys && hasLocalKey">
+                     <span class="item clearfix">
+                        <i  class="fa cm-key cm-ci-color"></i>
+                         {{'CONTACT.TRUST.HAS_CAMEOKEYS'|cmTranslate}}
+                     </span>
+                    <section class="icon-list">
+                        <i class="fa cm-info"></i>
+                    </section>
+                </section>
+
+                <section ng-if="isTrusted" data-qa="trust-confirmed">
+                     <span class="item clearfix">
+                        <i  class="fa cm-connection-trusted cm-ci-color"></i>
+                        {{'CONTACT.TRUST.OK'|cmTranslate}}
+                     </span>
+                    <section class="icon-list">
+                        <i class="fa cm-info"></i>
+                    </section>
+                </section>
+            </li>
+
+            <li class="no-border" data-qa="start-trust-handshake-btn" ng-click="goToAuthentication(contact.identity)" ng-if="!isTrusted && hasKeys && hasLocalKey">
+                <span class="item clearfix">
+                        <i  class="fa cm-handshake"></i>
+                        {{'CONTACT.TRUST.START'|cmTranslate}}
+                     </span>
+                <section class="icon-list">
+                    <i class="fa cm-right"></i>
+                </section>
+            </li>
+        </ul>
+    </div>
+</article>
+
+<hr class="margin-small" />
+
+<!-- show all talks with this user -->
+<!--<article class="item">
+    <span class="body">
+        <i class="fa cm-talk"></i>
+        Alle Talks mit diesem Kontakt anzeigen
+    </span>
+    <span class="icon-list">
+        <i class="fa cm-right position-exception"></i>
+    </span>
+</article>
+
+<hr class="margin-small" />
+-->
+
+<form name="cmForm" novalidate autocomplete="off">
+    <article class="content" ng-if="!showCameoId" data-qa="internal-user">
+        <label>{{'CONTACT.PLACEHOLDER.CAMEOID'|cmTranslate}}</label>
+        <div class="cm-input-ctn with-inside-icon cm-icon-grey" ng-class="{'cm-input-disabled':disabled}">
+            <i class="fa cm-rhino-positive"></i>
+            <input data-qa="input-cameoId" disabled
+                   type="text" name="cameoId" ng-model="contact.identity.cameoId" />
+        </div>
+    </article>
+
+    <hr class="margin-small" ng-if="!showCameoId" />
+
+    <article class="content">
+        <label>{{'CONTACT.PLACEHOLDER.DISPLAYNAME'|cmTranslate}}</label>
+        <div class="cm-input-ctn" ng-class="{'cm-input-disabled':disabled}">
+            <input
+                    tabindex="1" data-qa="input-displayname"
+                    type="text" name="displayName" ng-model="contact.identity.displayName"
+                    ng-disabled="disabled" required />
+        </div>
+
+        <cm-info-bubble class="cm-alert" ng-show="cmForm.displayName.$dirty && cmForm.displayName.$invalid">
+            <div ng-show="cmForm.displayName.$error.required">
+                <i class="fa cm-info"></i> {{'CONTACT.INFO.EMPTY.DISPLAYNAME'|cmTranslate}}
+            </div>
+        </cm-info-bubble>
+    </article>
+
+    <hr class="margin-small" />
+
+    <label class="content">{{'CONTACT.PLACEHOLDER.PHONENUMBER'|cmTranslate}}</label>
+    <cm-multi-input cm-collection="formData.phoneNumbers" cm-disabled="disabled" class="content">
+        <ng-form name="formPhone">
+            <div class="cm-input-ctn with-chooser" ng-class="{'cm-input-disabled':disabled}">
+                <input
+                        tabindex="2" data-qa="input-phonenumber"
+                        type="text" name="phoneNumber" ng-model="item.value"
+                        ng-disabled="disabled" cm-validate-phone cm-adaptive-change />
+            </div>
+            <!--<div cm-type-chooser cm-choose-value-to="item" cm-disabled="disabled" ng-class="{'cm-input-disabled':disabled}"></div>-->
+            <cm-info-bubble class="cm-alert" ng-show="formPhone.phoneNumber.$dirty && formPhone.phoneNumber.$invalid">
+                <div ng-show="formPhone.phoneNumber.$invalid">
+                    <i class="fa cm-info"></i> {{'CONTACT.INFO.INVALID.PHONENUMBER'|cmTranslate}}
+                </div>
+            </cm-info-bubble>
+        </ng-form>
+    </cm-multi-input>
+
+    <hr class="margin-small" />
+
+    <label class="content">{{'CONTACT.PLACEHOLDER.EMAIL'|cmTranslate}}</label>
+    <cm-multi-input cm-collection="formData.emails" cm-disabled="disabled" class="content">
+        <ng-form name="formEmail">
+            <div class="cm-input-ctn with-chooser" ng-class="{'cm-input-disabled':disabled}">
+                <input
+                        tabindex="3" data-qa="input-email"
+                        name="email" ng-model="item.value"
+                        ng-disabled="disabled" cm-validate-email />
+            </div>
+            <!--<div cm-type-chooser cm-choose-value-to="item" ng-class="{'cm-input-disabled':disabled}" cm-disabled="disabled"></div>-->
+            <cm-info-bubble class="cm-alert" ng-show="formEmail.email.$dirty && formEmail.email.$invalid">
+                <div ng-show="formEmail.email.$invalid">
+                    <i class="fa cm-info"></i> {{'CONTACT.INFO.INVALID.EMAIL'|cmTranslate}}
+                </div>
+            </cm-info-bubble>
+        </ng-form>
+    </cm-multi-input>
+</form>
+
+<cm-footer ng-hide="disabled">
+    <button data-qa="btn-create-contact" class="cm-btn-grey" id="registerUserButton" ng-click="saveUser()">
+        {{'CONTACT.FOOTER.SAVE'|cmTranslate}} <i class="fa cm-checkbox-right"></i>
+    </button>
+</cm-footer>

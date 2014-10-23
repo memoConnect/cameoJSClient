@@ -2,7 +2,8 @@ var config = require("../../config-e2e-tests.js")
 var util = require("../../../lib/e2e/cmTestUtil.js")
 
 describe('Route Settings Account: ', function(){
-    var ptor = util.getPtorInstance()
+    var ptor = util.getPtorInstance(),
+        testUser
 
     var loginName = 'testuser23_',
         genLoginName = '',
@@ -12,10 +13,11 @@ describe('Route Settings Account: ', function(){
         newPassword = 'holymoly'
 
     describe('Check Form', function() {
-        it('should be load at "#/settings/" after registration and btn exists.', function () {
-            util.createTestUser()
-            util.expectCurrentUrl('#/start')
+        it('should create a test user', function(){
+            testUser = util.createTestUser(undefined,'account settings')
+        })
 
+        it('should be load at "#/settings/" after registration and btn exists.', function () {
             util.get('/settings')
             util.expectCurrentUrl('#/settings')
 
@@ -145,6 +147,10 @@ describe('Route Settings Account: ', function(){
             })
             // do a logout and login
             util.login(genLoginName, newPassword)
+        })
+
+        it('delete test user', function(){
+            util.deleteTestUser(testUser)
         })
     })
 })

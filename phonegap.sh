@@ -17,4 +17,4 @@ fi
 
 echo -e "\e[33m[cameo - build phonegap]\033[0m"
 # do grunt task to make some magic
-./node_modules/grunt-cli/bin/grunt phonegap:adb-run
+./node_modules/grunt-cli/bin/grunt phonegap:build-n-run

@@ -1,0 +1,50 @@
+<div class="cm-handler" ng-click="handleMenu()" data-qa="btn-open-menu">
+    <cm-notify-signal></cm-notify-signal>
+</div>
+<div class="cm-menu-layer" ng-show="menuVisible">
+    <div cm-transparent-bg ng-click="handleMenu()"></div>
+    <div class="cm-menu-list">
+        <ul>
+            <li class="cm-nose-wrapper" ng-click="handleMenu()">
+                <i class="fa cm-nose-up"></i>
+            </li>
+
+            <li class="cm-menu-header">
+                <button ng-click="goTo({},'talks')"
+                        ng-class="{'is-active':checkActive('talks')}">
+                    <i class="fa cm-talk"></i><div class="seperator"></div>
+                </button>
+                <button ng-click="goTo({},'contacts')"
+                        ng-class="{'is-active':checkActive('contact')}">
+                    <i class="fa cm-person"></i>
+                </button>
+            </li>
+
+            <li class="{{menu[btn].css}}"
+                ng-repeat="btn in Object.keys(menu)"
+                ng-click="goTo(menu[btn], btn)"
+                data-qa="{{menu[btn]['data-qa']}}"
+                ng-class="{'is-active':checkActive(btn)}">
+                <i class="fa icon-left" ng-if="menu[btn].icon != undefined" ng-class="menu[btn].icon"></i>
+                <span>
+                    {{menu[btn].i18n|cmTranslate}}
+                    <cm-friend-request-counter ng-if="menu[btn].drtv != undefined && menu[btn].drtv == 'cm-friend-request-counter'"></cm-friend-request-counter>
+                </span>
+                <div class="clearfix"></div>
+            </li>
+
+            <li ng-click="logout()" data-qa="logout-btn">
+                <i class="fa cm-logout icon-left"></i>
+                <a class="logout">{{'MENU.LOGOUT'|cmTranslate}}</a>
+                <div class="clearfix"></div>
+            </li>
+
+            <li>
+                <i class="fa cm-rhino-positive icon-left"></i>
+                <span>{{version}}</span>
+                <div class="clearfix"></div>
+            </li>
+        </ul>
+        <div class="bottom-filler"></div>
+    </div>
+</div>

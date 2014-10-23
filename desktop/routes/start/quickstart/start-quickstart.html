@@ -1,0 +1,23 @@
+<section class="theme-a fixed-layout">
+    <cm-header cm-rubber-space ng-if="startRoute">
+        <cm-identity cm-weight="7"></cm-identity>
+        <cm-menu cm-weight="1"></cm-menu>
+    </cm-header>
+    <div class="cm-header-block" ng-if="startRoute"></div>
+
+    <cm-header cm-rubber-space ng-if="!startRoute">
+        <cm-back cm-weight="1" back-to="/talks"></cm-back>
+        <cm-identity cm-weight="6"></cm-identity>
+        <cm-menu cm-weight="1"></cm-menu>
+    </cm-header>
+
+    <cm-column class="fill-bg without-footer">
+
+    </cm-column>
+    <cm-column class="fill-bg">
+        <cm-widget-quickstart cm-start-route="startRoute"></cm-widget-quickstart>
+    </cm-column>
+    <cm-column class="fill-bg without-footer">
+
+    </cm-column>
+</section>

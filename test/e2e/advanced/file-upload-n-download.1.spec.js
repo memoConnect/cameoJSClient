@@ -87,87 +87,94 @@ function getFilename(file) {
     return file.replace(/^.*(\\|\/|\:)/, '');
 }
 
-// start init tests
-describe('FileUpload unsafe upload: ', function () {
-    var ptor = util.getPtorInstance()
+describe('FileUpload create TestUser', function(){
+    var ptor = util.getPtorInstance(),
+        testUser
 
-    it('login create & new conversation', function () {
-        util.login()
-        util.waitForPageLoad('/start')
-
-        util.get('/conversation/new')
-        util.waitForPageLoad('/conversation/new')
-
-        util.disableEncryption()
-
-        util.setVal('input-subject', subjectUnsafe)
+    it('should create a test user', function(){
+        testUser = util.createTestUser(undefined,'file upload')
     })
 
-    it('click on send message for open modal', function () {
-        $("[data-qa='btn-send-answer']").click()
-    })
+    // start init tests
+    describe('FileUpload unsafe upload: ', function () {
 
-    it('check checkbox and close modal', function () {
-        util.waitAndCloseNotify('checkbox-dont-ask-me-again')
-    })
+        it('login create & new conversation', function () {
+            util.get('/conversation/new')
+            util.waitForPageLoad('/conversation/new')
 
-    // testFile or testImage called for every entry
-    for (index in files) {
-        // prepare file
-        var file = files[index],
-            pathToFile = file[Object.keys(file)[0]],
-            extension = util.getFileExtension(pathToFile),
-            testIndex = parseInt(index) + 1
-        // test image
-        if (file['image'] != undefined)
-            testImage(pathToFile, extension, testIndex)
-        // test html5 element
-        else if (file['html5'] != undefined)
-            testHTML5(pathToFile, extension, testIndex)
-        //test file element
-        else
-            testFile(pathToFile, extension, testIndex)
+            util.disableEncryption()
 
-    }
-})
-
-describe('FileDownload: ',function(){
-    var ptor = util.getPtorInstance()
-
-    it('login goto conversation where files uploaded', function () {
-        util.login()
-        util.waitForPageLoad('/start')
-
-        util.get('/talks')
-        util.waitForPageLoad('/talks')
-
-        util.waitForLoader()
-
-        util.waitForElements("[data-qa='conversation-list-element']")
-        util.headerSearchInList(subjectUnsafe)
-
-        $$("[data-qa='conversation-list-element']").then(function(elements) {
-            expect(elements.length).not.toEqual(0)
-            elements[0].click()
+            util.setVal('input-subject', subjectUnsafe)
         })
-    })
 
-    it('see all files ready for download', function(){
-        util.waitForElements('cm-message cm-message-file .file-download',testFilesNum)
-        $$('cm-message cm-message-file .file-download').then(function(elements){
-            expect(elements.length).toEqual(testFilesNum)
+        it('click on send message for open modal', function () {
+            $("[data-qa='btn-send-answer']").click()
         })
+
+        it('check checkbox and close modal', function () {
+            util.waitAndCloseNotify('checkbox-dont-ask-me-again')
+        })
+
+        // testFile or testImage called for every entry
+        for (index in files) {
+            // prepare file
+            var file = files[index],
+                pathToFile = file[Object.keys(file)[0]],
+                extension = util.getFileExtension(pathToFile),
+                testIndex = parseInt(index) + 1
+            // test image
+            if (file['image'] != undefined)
+                testImage(pathToFile, extension, testIndex)
+            // test html5 element
+            else if (file['html5'] != undefined)
+                testHTML5(pathToFile, extension, testIndex)
+            //test file element
+            else
+                testFile(pathToFile, extension, testIndex)
+
+        }
     })
 
-    it('test download of first file should be an mp3', function(){
-        util.waitForElements('cm-message cm-message-file .file-download',testFilesNum)
-        $$('cm-message cm-message-file .file-download').then(function(elements){
-            elements[0].click()
-            util.waitForProgressbar(20000)
+    describe('FileDownload: ',function(){
 
-            $$('cm-message cm-message-file .file-html5 audio').then(function(elements){
-                expect(elements.length).toEqual(1)
+        it('login goto conversation where files were uploaded', function () {
+            util.login(testUser, 'password')
+            util.waitForPageLoad('/start/keyinfo')
+
+            util.get('/talks')
+            util.waitForPageLoad('/talks')
+
+            util.waitForElements("[data-qa='conversation-list-element']")
+            util.headerSearchInList(subjectUnsafe)
+
+            $$("[data-qa='conversation-list-element']").then(function(elements) {
+                expect(elements.length).not.toEqual(0)
+                elements[0].click()
+            })
+        })
+
+        it('see all files ready for download', function(){
+            util.waitForElements('cm-message cm-message-file .file-download',testFilesNum)
+            $$('cm-message cm-message-file .file-download').then(function(elements){
+                expect(elements.length).toEqual(testFilesNum)
+            })
+        })
+
+        it('test download of first file should be an mp3', function(){
+            util.waitForElements('cm-message cm-message-file .file-download',testFilesNum)
+            $$('cm-message cm-message-file .file-download').then(function(elements){
+                elements[0].click()
+                util.waitForProgressbar(20000)
+
+                $$('cm-message cm-message-file .file-html5 audio').then(function(elements){
+                    expect(elements.length).toEqual(1)
+                })
             })
         })
     })
+
+    it('delete test user', function(){
+        util.deleteTestUser(testUser)
+    })
 })
+

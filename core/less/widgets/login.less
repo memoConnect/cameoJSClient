@@ -1,0 +1,94 @@
+cm-widget-login{
+  .dtb{
+    height: 100%;
+    position: relative;
+  }
+
+  .dtbr{
+    .w100;
+    &:first-child{
+      position: relative;
+      height:20%;
+      background-image: url('gfx/background/app.jpg');
+      .head{
+          position: relative;
+          z-index:2;
+          .bg-transparent {
+            width: @cm-app-width;
+            position: absolute;
+            z-index: 0;
+            top: 0;
+            bottom: 0;
+            left :0;
+            right: 0;
+            margin: 0 auto;
+            background-color: @theme-b-bg-color-light;
+          }
+      }
+
+      .logo, .rhino{
+        z-index: 2;
+        position: relative;
+      }
+    }
+  }
+}
+
+.theme-b {
+  .head {
+    height: @cm-unit*5;
+    .rhino{
+      position: relative;
+      height: @cm-unit*4;
+      .tac;
+      img {
+        width: @cm-unit*3;
+        height: @cm-unit*3;
+        .pos-rel;
+        top: @cm-unit/2;
+      }
+    }
+    .logo {
+      height: @cm-unit;
+    }
+  }
+
+  form.form-signin {
+    ::-webkit-input-placeholder { /* WebKit browsers */
+      color: #8D8D8D;
+    }
+    :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+      color: #8D8D8D;
+      opacity: 0.8;
+    }
+    ::-moz-placeholder { /* Mozilla Firefox 19+ */
+      color: #8D8D8D;
+      opacity: 0.8;
+    }
+    :-ms-input-placeholder { /* Internet Explorer 10+ */
+      color: #8D8D8D;
+    }
+
+    select {
+      width:100%;
+      margin: 0.5em 0;
+      padding: 0.8rem 1.5rem;
+    }
+
+    .btn-submit {
+      display: none;
+    }
+  }
+  .cm-login-text {
+    .content;
+    .taj;
+    color: @cm-base-font-color-black-bg;
+    font-size: @cm-small-font;
+  }
+  .version {
+    .content;
+    .tac;
+    color: @cm-ci-color;
+    font-size: @cm-small-font
+  }
+}

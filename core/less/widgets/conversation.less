@@ -1,0 +1,76 @@
+cm-conversation{
+  .body-group{
+    background-color:@cm-white;
+    padding:0.5rem;
+  }
+
+  h3 {
+    margin-top: 0.2rem !important;
+    font-size: 1.5rem !important;
+  }
+
+  .recipients-counter{
+    padding:@cm-horizontal-padding;
+  }
+  @cm-active-recipient-color:@cm-border-grey;
+  .recipient-name{
+    color:@cm-active-recipient-color;
+    padding:@cm-horizontal-padding;
+    font-size: @cm-small-font;
+  }
+
+  .recipients-list{
+    position:relative;
+    margin-right:@cm-unit;
+
+    h3 {
+      font-size: 1.5rem;
+    }
+
+    .scroller{
+      overflow-y:hidden;
+      overflow-x:auto;
+      height: @cm-unit;
+      white-space: nowrap;
+      &.show-scrollbar{
+        height: @cm-unit+2;
+      }
+      &.disable-scrollbar{
+        //        white-space: pre-wrap;
+        //        line-height: 1rem;
+      }
+    }
+    .add-new-recipients{
+      span{
+        height:@cm-unit;
+        line-height:@cm-unit;
+      }
+    }
+    .cm-add-button{
+      .with-cursor;
+      font-size:@cm-mega-font + 1;
+      position:absolute;
+      right:-(@cm-unit+0.2);
+      top:0;
+      color:@cm-grey-btn;
+      text-align:center;
+      i {
+        height:@cm-unit;
+        width:@cm-unit;
+        line-height:@cm-unit;
+      }
+    }
+    cm-recipients-comma-seperated{
+      display: block;
+      height: 100%;
+      line-height: 4rem;
+      vertical-align: middle;
+    }
+  }
+
+  .subject{}
+
+  #conversation-top{
+    margin-bottom:0.5*@cm-unit;
+  }
+}

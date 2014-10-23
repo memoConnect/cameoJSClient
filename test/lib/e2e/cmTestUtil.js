@@ -23,21 +23,27 @@ this.getPtorInstance = function () {
         self.stopOnError()
     })
 
-    return ptor;
+    return ptor
 }
 
 this.stopOnError = function () {
-    if (config.stopOnError) {
-        var passed = jasmine.getEnv().currentSpec.results().passed();
-        if (!passed) {
-            jasmine.getEnv().specFilter = function (spec) {
-                return false;
-            };
+    if (!config.stopOnError) {
+        return false;
+    }
+
+    var passed = jasmine.getEnv().currentSpec.results().passed();
+    if (!passed) {
+        jasmine.getEnv().specFilter = function (spec) {
+            return false;
         }
     }
 }
 
 this.checkErrorLogs = function(){
+    if(!config.showConsoleError) {
+        return false;
+    }
+
     ptor.manage().logs().get('browser').then(function(browserLog) {
         var errors = [];
 
@@ -115,7 +121,6 @@ this.login = function (username, password, expectedRoute) {
     self.get('/login')
 
     this.scrollToTop()
-    $("[data-qa='login-btn']").click();
 
     var user = $("input[name=user]");
     var pw = $("input[name=pw]");
@@ -137,7 +142,8 @@ this.login = function (username, password, expectedRoute) {
     return this
 }
 
-this.createTestUser = function (testUserId) {
+this.createTestUser = function (testUserId, from){
+    //console.log('from ->' + from)
 
     this.logout()
 
@@ -615,6 +621,8 @@ this.createEncryptedConversation = function (subject, message) {
     self.waitAndClick("cm-modal.active [data-qa='checkbox-dont-ask-me-again']")
     self.waitAndClick("cm-modal.active [data-qa='cm-modal-close-btn']")
     self.waitAndClickQa("btn-send-answer")
+    self.waitForPageLoad("/conversation/*")
+    self.waitForElements("cm-message", 1)
 }
 
 this.readConversation = function (subject, message) {
@@ -638,6 +646,3 @@ this.scrollToTop = function(){
 this.scrollToBottom = function(){
     $("body").sendKeys(protractor.Key.END)
 }
-
-
-

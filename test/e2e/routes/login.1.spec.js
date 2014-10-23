@@ -9,7 +9,7 @@ describe('login screen', function () {
         util.get("");
         util.expectCurrentUrl('#/login$')
 
-        $$("[data-qa='register-btn'],[data-qa='login-btn']").then(function (elements) {
+        $$("[data-qa='register-btn'],[data-qa='login-submit-btn']").then(function (elements) {
             expect(elements.length).toBe(2)
         })
     });
@@ -23,8 +23,6 @@ describe('login screen', function () {
     it('should prompt for username and password after click on login and close it', function () {
         util.get("");
 
-        $("[data-qa='login-btn']").click();
-
         var user = $("input[name=user]");
         var pw = $("input[name=pw]");
 
@@ -34,14 +32,9 @@ describe('login screen', function () {
         pw.getAttribute("placeholder").then(function (text) {
             expect(text).not.toBe("");
         });
-
-        $("body").sendKeys(protractor.Key.ESCAPE);
-        util.waitForModalClose()
     });
 
     it('should show error on wrong login', function () {
-        util.waitAndClickQa("login-btn")
-
         var user = $("input[name='user']");
         var pw = $("input[name='pw']");
 
@@ -51,12 +44,11 @@ describe('login screen', function () {
         util.waitAndClickQa("login-submit-btn")
         util.checkWarning("login-info")
 
-        $("body").sendKeys(protractor.Key.ESCAPE);
-        util.waitForModalClose()
+        user.clear()
+        pw.clear()
     })
 
     it('should login with correct credentials', function () {
-        $("[data-qa='login-btn']").click();
 
         var user = $("input[name='user']");
         var pw = $("input[name='pw']");

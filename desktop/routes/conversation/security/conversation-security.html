@@ -1,0 +1,21 @@
+<section class="theme-a fixed-layout">
+    <cm-header cm-rubber-space>
+        <cm-back cm-weight="1" back-to="conversation/{{conversationId}}"></cm-back>
+        <cm-identity cm-weight="4"></cm-identity>
+        <cm-security-indicator
+            cm-weight       = "2"
+            cm-data         = "conversation"
+        ></cm-security-indicator>
+        <cm-menu cm-weight="1"></cm-menu>
+    </cm-header>
+
+    <cm-column class="fill-bg">
+        <cm-widget-talks></cm-widget-talks>
+    </cm-column>
+    <cm-column>
+        <cm-widget-conversation cm-data="conversation"></cm-widget-conversation>
+    </cm-column>
+    <cm-column class="fill-bg">
+        <cm-widget-conversation-security cm-data="conversation"></cm-widget-conversation-security>
+    </cm-column>
+</section>

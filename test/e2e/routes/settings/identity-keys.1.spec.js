@@ -8,7 +8,7 @@ describe('Identity key settings: ', function () {
     var keyName = "Moeps key"
 
     it('create new user and open identity settings', function () {
-        login = util.createTestUser()
+        login = util.createTestUser(undefined, 'identity key settings')
         util.get('/settings/identity/edit')
     })
 
@@ -56,7 +56,7 @@ describe('Identity key settings: ', function () {
 
     describe('with increased timeout', function () {
         beforeEach(function () {
-            jasmine.getEnv().defaultTimeoutInterval = 120000
+            jasmine.getEnv().defaultTimeoutInterval = 30000
         })
 
         afterEach(function () {
@@ -64,7 +64,7 @@ describe('Identity key settings: ', function () {
         })
 
         it('wait for key generation and display key', function () {
-            util.waitForElementVisible("[data-qa='page-save-key']",120000)
+            util.waitForElementVisible("[data-qa='page-save-key']",30000)
             expect($("[data-qa='input-key-name']").getAttribute('value')).toBeTruthy()
             util.clearInput("input-key-name")
             $("[data-qa='input-key-name']").sendKeys(keyName)
@@ -77,6 +77,11 @@ describe('Identity key settings: ', function () {
             util.waitAndClickQa("btn-save-key")
 
         })
+    })
+
+    it('user should be now at talks route', function(){
+        util.waitForPageLoad("/talks")
+        util.expectCurrentUrl("/talks")
     })
 
     it('the new key should be displayed as local', function () {
@@ -117,6 +122,7 @@ describe('Identity key settings: ', function () {
         util.waitAndClickQa('btn-confirm')
 
         util.logout()
+
         util.login(login, password)
         util.get('/settings/identity/key/list')
         $$("[data-qa='key-list-item']").then(function (elements) {
@@ -124,10 +130,12 @@ describe('Identity key settings: ', function () {
         })
     })
 
-
     it('generate another local key and delete local storage', function () {
         util.generateKey(1, keyName)
+        util.logout()
+
         util.clearLocalStorage()
+
         util.login(login, password)
         util.get('/settings/identity/key/list')
         util.waitForPageLoad('/settings/identity/key/list')

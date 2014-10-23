@@ -1,0 +1,24 @@
+<section class="theme-a fill-bg">
+    <cm-header cm-rubber-space>
+        <cm-logo cm-weight="4"></cm-logo>
+    </cm-header>
+
+    <h2 class="border-bottom">404</h2>
+
+    <!--<article class="content">-->
+        <!--<cm-info-bubble class="cm-alert">-->
+            <!--<pre>-->
+                <!--{{data_str|strnl2nl}}-->
+            <!--</pre>-->
+        <!--</cm-info-bubble>-->
+    <!--</article>-->
+
+    <cm-footer>
+        <button class="cm-btn-grey dib w50" ng-click="goto('/logout')">
+            {{'ERROR.LOGOUT'|cmTranslate}}
+        </button>
+        <button class="cm-btn-grey dib w50" ng-click="goto('/talks')">
+            {{'ERROR.BACK_TO_TALKS'|cmTranslate}}
+        </button>
+    </cm-footer>
+</section>

@@ -12,7 +12,7 @@ describe('Multi Identity: ', function () {
     }
 
     it('create new user and open identity settings', function () {
-        login = util.createTestUser()
+        login = util.createTestUser(undefined, 'multi identity')
         util.expectCurrentUrl('/start/welcome')
 
         util.get('settings/identity/list')
@@ -37,10 +37,11 @@ describe('Multi Identity: ', function () {
         ptor.sleep(1001)//adaptive change delay
 
         util.waitForElement("[data-qa='icon-cameoId-reserved']")
-        $("[data-qa='icon-cameoId-reserved']")
-        .getAttribute('class')
-        .then(function(className){
-            expect(className).toContain('cm-checkbox-right')
+
+        ptor.wait(function () {
+            return $("[data-qa='icon-cameoId-reserved']").getAttribute('class').then(function(className){
+                return (className.indexOf('cm-checkbox-right') != -1)
+            })
         })
 
         util.setVal('input-displayname',newIdentity.displayName)

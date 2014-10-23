@@ -1,6 +1,7 @@
 {
     "config": {
-        "wwwUrl": "https://stage.cameo.io/m/"
+        "wwwUrl": "https://stage.cameo.io/m/",
+        "showConsoleError": false
     },
     "testData": [
         "loginUser1 = 'naughty_thompson'",

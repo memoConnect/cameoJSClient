@@ -1,0 +1,73 @@
+<h2 class="border-bottom">
+    <i class="fa cm-key"></i>
+    {{'IDENTITY.LABEL.KEYMANAGEMENT'|cmTranslate}}
+</h2>
+
+<article class="content">
+    <cm-info-bubble nose-x="50%">
+        <span ng-bind-html="'SETTINGS.PAGES.IDENTITY.KEYS.NO_LOCALKEYS_ON_THIS_DEVICE' | cmParse"></span>
+    </cm-info-bubble>
+</article>
+
+<ul class="border-top border-bottom mt15">
+    <li ng-click="toggleSkipKeyInfo()">
+        <span class="item disabled">
+           {{'START.KEYINFO.SKIP_CHECKBOX_TEXT' | cmTranslate}}
+        </span>
+        <div class="short-links">
+            <input
+                id="skipKeyInfoInput"
+                data-qa="checkbox-skip-key-info-input"
+                name="skip"
+                type="checkbox"
+                class="ng-hide" />
+            <i
+                id="skipKeyInfoIcon"
+                data-qa="checkbox-skip-key-info-icon"
+                class="fa cm-grey"
+                ng-class="{
+                'cm-checkbox':!skipKeyInfo,
+                'cm-checkbox-right':skipKeyInfo
+                }"></i>
+        </div>
+    </li>
+
+    <li ng-click="goTo('/talks')" data-qa="btn-skip-keygen">
+        <span class="item">
+            {{'START.KEYINFO.SKIP_TEXT' | cmTranslate}}
+        </span>
+        <div class="short-links">
+            <i class="fa cm-right"></i>
+        </div>
+    </li>
+
+    <li class="no-border">
+        <span class="item" ng-click="toggleKeySize()">
+        {{'IDENTITY.KEYS.GENERATE.START.KEY_LENGTH.BUTTON_LABEL'|cmTranslate}} <strong>2048 (default)</strong>
+        </span>
+        <div class="short-links" ng-click="toggleKeySize()" data-qa="btn-toggle-keysize">
+            <i class="fa" ng-class="{'cm-down':!showKeySize,'cm-up':showKeySize}"></i>
+        </div>
+        <ul class="cm-submenu" ng-show="showKeySize">
+            <li ng-click="chooseKeySize('2048')" data-qa="checkbox-keysize-2048">
+                <span class="item">2048</span>
+                <div class="short-links">
+                    <i class="fa" ng-class="{'cm-checkbox':keySize != 2048,'cm-checkbox-right':keySize == 2048}"></i>
+                </div>
+            </li>
+            <li ng-click="chooseKeySize('4096')" data-qa="checkbox-keysize-4096">
+                <span class="item">4096</span>
+                <div class="short-links">
+                    <i class="fa" ng-class="{'cm-checkbox':keySize != 4096,'cm-checkbox-right':keySize == 4096}"></i>
+                </div>
+            </li>
+        </ul>
+    </li>
+</ul>
+
+<cm-footer>
+    <button ng-click="generateKey()" class="cm-btn-grey" data-qa="btn-next-step">
+        {{'SETTINGS.PAGES.IDENTITY.KEYS.CREATE.HEADER' | cmTranslate}}
+        <i class="fa cm-right"></i>
+    </button>
+</cm-footer>

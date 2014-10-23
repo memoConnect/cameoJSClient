@@ -1,0 +1,73 @@
+<h2 class="no-margin-bottom">
+    <i class="fa cm-fix"></i>
+    {{'SETTINGS.APP' | cmTranslate}}
+</h2>
+
+<ul>
+    <li>
+        <span class="item clearfix">
+            <span class="title">
+                <span>{{'SETTINGS.PAGES.APP.LANGUAGE' | cmTranslate}}</span>
+            </span>
+
+            <section class="icon-list">
+                <div class="cm-select-ctn" cm-language-select></div>
+            </section>
+        </span>
+    </li>
+    <li ng-click="handleBooleans('convertEmoji')">
+        <span class="item clearfix">
+            <span class="title">
+                <span>{{'SETTINGS.PAGES.APP.EMOJI_CONVERT' | cmTranslate}}</span>
+            </span>
+
+            <section class="icon-list">
+                 <i class="fa" ng-class="{'cm-radio-0':!settings.convertEmoji,'cm-radio-1':settings.convertEmoji}"></i>
+            </section>
+        </span>
+    </li>
+    <li ng-click="handleBooleans('sendOnReturn')">
+        <span class="item clearfix">
+            <span class="title">
+                <span>{{'SETTINGS.PAGES.APP.SEND_ON_RETURN' | cmTranslate}}</span>
+            </span>
+
+            <section class="icon-list">
+                <i class="fa" ng-class="{'cm-radio-0':!settings.sendOnReturn, 'cm-radio-1':settings.sendOnReturn}"></i>
+            </section>
+        </span>
+    </li>
+    <li ng-click="handleBooleans('skipKeyInfo')">
+        <span class="item clearfix">
+            <span class="title">
+                <span>{{'SETTINGS.PAGES.APP.SKIP_KEY_INFO' | cmTranslate}}</span>
+            </span>
+
+            <section class="icon-list">
+                <i class="fa" ng-class="{'cm-radio-0':!settings.skipKeyInfo, 'cm-radio-1':settings.skipKeyInfo}" data-qa="checkbox-skip-keyinfo"></i>
+            </section>
+        </span>
+    </li>
+    <li>
+        <span class="item clearfix">
+            <span class="title">
+                <span>{{'SETTINGS.PAGES.APP.DATE_FORMAT' | cmTranslate}}</span>
+            </span>
+
+            <section class="icon-list">
+                <div class="cm-select-ctn" cm-date-format-select></div>
+            </section>
+        </span>
+    </li>
+    <li>
+        <span class="item clearfix">
+            <span class="title">
+                <span>{{'SETTINGS.PAGES.APP.TIME_FORMAT' | cmTranslate}}</span>
+            </span>
+
+            <section class="icon-list">
+                <div class="cm-select-ctn" cm-time-format-select></div>
+            </section>
+        </span>
+    </li>
+</ul>

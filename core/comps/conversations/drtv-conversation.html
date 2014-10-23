@@ -1,0 +1,133 @@
+<h2 ng-if="conversation.state.is('new')" class="border-bottom no-margin">
+    <i class="fa cm-talk"></i>
+    neuer Talk
+</h2>
+<h2 ng-if="!conversation.state.is('new') && conversation.subject" class="border-bottom no-margin">
+    <i class="fa cm-talk"></i>
+    <span ng-bind-html="conversation.subject|cmParse" data-qa="text-subject"></span>
+</h2>
+<section class="body-group recipients" ng-if="conversation.state.is('new') || !conversation.state.is('new') && conversation.recipients.length > 1">
+    <h3 ng-click="toggleRecipientView()">
+        <i class="fa" ng-class="{'cm-grid':!showGrid,'cm-menu-weight':showGrid}"></i>
+        {{'CONVERSATION.PLACEHOLDER.RECIPIENTS'|cmTranslate}}
+        <span class="recipients-counter">({{conversation.recipients.length-1}})</span>
+        <span class="recipient-name" ng-show="showGrid">{{recipientName}}</span>
+    </h3>
+    <div class="recipients-list">
+        <div
+            class="scroller"
+            ng-class="{
+                'show-scrollbar': conversation.recipients.length > 7 && showGrid,
+                'disable-scrollbar': !showGrid
+            }">
+            <div
+                class="add-new-recipients"
+                ng-click="goto('conversation/'+(conversation.id||'new')+'/recipients')"
+                ng-if="conversation.recipients.length == 1 && conversation.state.is('new')">
+                <cm-avatar cm-view="unknown"></cm-avatar>
+                <span>{{'CONVERSATION.PLACEHOLDER.ADD_RECIPIENTS'|cmTranslate}}</span>
+            </div>
+                <cm-avatar
+                    cm-data="recipient"
+                    ng-click="showName(recipient)"
+                    ng-class="{
+                        'name-shown': recipientName == recipient.getDisplayName()
+                    }"
+                    ng-repeat="recipient in conversation.recipients|cmHideAppOwner|orderBy:'getDisplayName()':false"
+                    cm-first-of-repeat="showName(recipient)"
+                    ng-show="showGrid">
+                </cm-avatar>
+            <cm-recipients-comma-seperated cm-data="conversation" ng-show="!showGrid"></cm-recipients-comma-seperated>
+        </div>
+        <div
+            class="cm-add-button"
+            ng-click="goto('conversation/'+(conversation.id||'new')+'/recipients')"
+            cm-user-rights>
+            <i
+                class="fa"
+                ng-class="{
+                    'cm-checkbox-add':conversation.recipients.length == 1,
+                    'cm-list':conversation.recipients.length > 1
+                }"></i>
+        </div>
+    </div>
+</section>
+
+<section class="body-group no-pad border-top" ng-if="conversation.state.is('new')">
+    <article class="content cm-form-style mt5">
+        <label>{{'CONVERSATION.PLACEHOLDER.SUBJECT' | cmTranslate}}</label>
+        <div class="cm-input-ctn with-inside-icon">
+            <input
+                    type="text"
+                    data-qa="input-subject"
+                    ng-model="conversation.subject"
+                    placeholder="{{'CONVERSATION.PLACEHOLDER.NO_SUBJECT'|cmTranslate}}"
+                    cm-adaptive-change
+                    />
+            <i class="fa cm-write"></i>
+        </div>
+    </article>
+
+    <div style="height:1rem"></div>
+</section>
+
+<button class="cm-btn-grey" ng-if="conversation && conversation.numberOfMessages > conversation.messages.length" ng-show="conversation.numberOfMessages != conversation.messages.length" ng-click="loadPreviousMessages()" data-qa="btn-load-more-messages">
+    {{'CONVERSATION.LABEL.LOAD_PREVIOUS'|cmTranslate}}
+</button>
+
+<div id="conversation-top"></div>
+
+<div
+    ng-repeat="message in (filteredData = (conversation.messages | orderBy:'created':false))"
+    cm-scroll-to="{anchor:'#conversation-bottom',force:'bottom'}">
+    <cm-date-seperator cm-timestamp="message.created" cm-timestamp-prev="filteredData[$index - 1].created"></cm-date-seperator>
+    <cm-message cm-data="message" cm-data-conversation="conversation"></cm-message>
+</div>
+
+<div id="conversation-bottom" cm-scroll-to="{anchor:'#conversation-bottom',force:'bottom',onEvent:true}"></div>
+
+<div class="answer clearfix" id="files-droparea">
+    <div class="wrap">
+        <div class="btns-left">
+            <cm-files ng-model="files" data-qa="attachments-btn">
+                <i class="fa cm-attachment"></i>
+                <div cm-user-rights>
+                    <cm-file-choose cm-droparea="files-droparea"></cm-file-choose>
+                    <cm-files-preview></cm-files-preview>
+                    <cm-choose-source cm-options="{tooltip:'up'}"></cm-choose-source>
+                </div>
+                <div
+                    data-qa="btn-fast-registration"
+                    class="webreader-uploading"
+                    cm-user-rights="showForGuest"
+                    ng-click="openFastRegister()"></div>
+            </cm-files>
+        </div>
+
+        <div class="message" data-qa="answer-ctn">
+            <textarea
+                id="emoji-textarea"
+                data-qa="input-answer"
+                ng-model="newMessageText"
+                cm-resize-textarea
+                cm-max-rows="8"
+                input
+                ></textarea>
+            <div class="inputter"></div>
+        </div>
+
+        <div class="btns-right">
+            <cm-emoji-handler></cm-emoji-handler>
+
+            <div class="post-wrap" data-qa="btn-send-answer" ng-click="send()">
+                <i
+                        class="fa cm-post with-cursor {{conversation.lockStatus.class}}-wrap"
+                        ng-class="{
+                    'cm-post-idle':isSending,
+                    'cm-post-attention':isSendingAbort
+                }"></i>
+            </div>
+        </div>
+    </div>
+    <cm-emoji-list ng-model="newMessageText" cm-textarea="emoji-textarea"></cm-emoji-list>
+</div>

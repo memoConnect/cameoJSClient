@@ -1,0 +1,823 @@
+{
+    "YES":  "Yes",
+    "NO":   "No",
+
+    "CAMEO": {
+        "SLOGAN": "Safer Communication - Made in Germany!",
+        "DESCRIBE": "Register for free.\nWithout obligation.\nEasy and secure communication. Mobile and desktop\nConnect with all your contacts.\nExplore our smart features.\nRegister today!",
+        "MOEP": "moep",
+        "VERSION": "version"
+    },
+
+    "ERROR": {
+        "HEADER": "An error occurred",
+        "LOGOUT": "Logout",
+        "BACK_TO_TALKS": "Back to Talks"
+    },
+
+    "LOGIN": {
+        "HEADING": "Login",
+        "LABEL": {
+            "SUBMIT": "Log in",
+            "REMEMBER_ME": "Remember me",
+            "AUTO": "Choose auto login"
+        },
+        "LINK": "Login",
+        "PLACEHOLDER": {
+            "USERNAME": "Username",
+            "PASSWORD": "Password"
+        },
+        "INFO": {
+            "401": "Invalid username or password",
+            "404": "Login is impossible right now.",
+            "500": "Internal Server Error",
+            "X": "Something went wrong.<br>Please try again.",
+            "PW": "@:LOGIN.INFO.401"
+        }
+    },
+
+    "REGISTER": {
+        "HEADING": "Registration",
+        "LINK": "or Register",
+        "LABEL": {
+            "SUBMIT": "Create account",
+            "USERNAME": "Username",
+            "NAME": "Name",
+            "TERMS": "Terms of use",
+            "TERMS_ACCEPT": "I accept"
+        },
+        "PLACEHOLDER": {
+            "USERNAME": "Username",
+            "DISPLAYNAME": "Display name",
+            "EMAIL": "@:DRTV.VALIDATE_EMAIL.PLACEHOLDER",
+            "PHONENUMBER": "@:DRTV.VALIDATE_PHONE.PLACEHOLDER"
+        },
+        "INFO": {
+            "TERMS": "You need to accept the terms of use.",
+            "EMPTY": {
+                "PASSWORD": "Please enter a Password."
+            },
+            "INVALID_EMAIL": "@:DRTV.VALIDATE_EMAIL.INFO.INVALID",
+            "INVALID_PHONENUMBER": "@:DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER",
+            "USER_INFORMATION": "@todo",
+            "LOGIN_INFORMATION": "@todo"
+        },
+        "TITLE": {
+            "HEAD_LOGIN": "Login Information",
+            "HEAD_IDENTITY": "User Information",
+            "MANDATORY_INFO": "* mandatory fields"
+        },
+         "WARN": {
+             "REGISTRATION_FAILED": "Bei der Registrierung ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut."
+         }
+    },
+
+    "START": {
+        "YOUR_ID": "Your cameoID",
+        "LOGOUT": "Logout",
+        "WELCOME": {
+            "HEADLINE": "Welcome to cameoNet!",
+            "TEXT_1": "<span class='cm-ci-color'>cameoNet</span> is an open source messenger that makes  end-to-end encryption easy for safe, private and business communication.",
+            "TEXT_2": "Attention: This is a first beta version!",
+            "TEXT_3": "The app may contain errors, the user interface is still under development and many new features will be added in future versions. As we cannot guarantee the storage of your messages up to 100% it may be sensible when you copy all your important data first.",
+            "TEXT_4": "Please help us to improve cameoNet.",
+            "TEXT_5": "We are happy about when you post us any error or improvement on http://support.cameonet.de<br> Thank you! Your cameoNet-Team."
+        },
+        "QUICKSTART": {
+            "HEADLINE": "Quick Start",
+            "SUB_TEXT": "Just a few operations are required to design your first secure talk:",
+            "HEADLINE_1": "1. Generate Key",
+            "TEXT_1": "An individual cameoKey is needed for all members of a secure talk. You don't have one? Please open Settings > cameoKeys.",
+            "HEADLINE_2": "2. Search for Peers",
+            "TEXT_2": "To find friends or peers please press 'Add Contact' in the app header and choose 'Search cameoNet' to select a cameoID or display name. If you have selected one, please send him or her a 'Contact Request'. After the confirmation of your request the contact will be included to your 'Contacts'.",
+            "HEADLINE_3": "3. Write Message",
+            "TEXT_3": "You can send messages to contacts from your list by clicking the 'Add Mail' icon right in the line. A new talk will be opened. Please enter a subject (optional), write a message and press the 'Send Button (paper plane)'.<br><br>Congratulations! You have just led your first encrypted talk!",
+            "TEXT_4": "If you have any questions regarding our service, feel free to let us a short notice through our platform http://support.cameonet.de.",
+            "BTN_TEXT": "And - go!..."
+        },
+        "KEYINFO": {
+            "SKIP_CHECKBOX_TEXT": "Don't show me this page again",
+            "SKIP_TEXT": "Skip"
+        },
+        "BTNS": {
+            "NEXT": "next step"
+        }
+    },
+
+    "VERIFICATION": {
+        "REQUEST": {
+            "LABEL": "Request verification"
+        }
+    },
+
+    "PROFILE": {
+        "E-MAIL": "Email",
+        "MOBILE": "Mobile"
+    },
+
+    "LANG": {
+        "DE_DE": "German",
+        "EN_US": "English",
+        "SWITCH": {
+            "SUCCESS": "Language switched to {{lang}}.",
+            "ERROR": "Unable to switch to {{lang}}.",
+            "LABEL": {
+                "DE_DE": "@:LANG.DE_DE",
+                "EN_US": "@:LANG.EN_US"
+            }
+        }
+    },
+
+    "TERMS": {
+        "HEADING": "General Business Conditions",
+        "HEADING_SHORT": "GBC",
+        "PARAGRAPH_1": "German law and regulations applie for the use of the service cameoNet. At the moment, the offer and the use of the service is restricted to the European Union. Germany (Halle) is the exclusive place of jurisdiction for any disputes, in case the user has no general place of jurisdition in Germany.",
+        "PARAGRAPH_2": ""
+    },
+
+    "PASSWORD": {
+        "LABEL_PW": "Password",
+        "LABEL_CONFIRM": "Confirm password",
+        "ERROR": {
+            "EMPTY": "Please enter a password"
+        }
+    },
+
+    "TALKS": {
+        "HEADING": "Talks",
+        "MORE": "Load more",
+        "LIST_EMPTY": "No talks yet!"
+    },
+
+    "CONVERSATION": {
+        "NO_SUBJECT": "no subject",
+        "HEADING": "Talk",
+        "LABEL": {
+            "LOAD_PREVIOUS":"load previous messages",
+            "SEND": "Send",
+            "REQUEST_CAPTCHA": "Request captcha",
+            "SEND_CAPTCHA": "Send captcha",
+            "KEY_GENERATION": "Here you can generate a cameoKey for this identity for better security.",
+            "SHOW_PW_INFO_BECAUSE_USER_HAS_NO_LOCAL_KEYS": "A password is required because there is no cameoKey on this device"
+        },
+        "TAG": {
+            "RECIPIENTS": "Recipients",
+            "SUBJECT": "Subject",
+            "PASSPHRASE": "Password",
+            "MESSAGES": "Messages",
+            "IMAGE": "Image",
+            "FILE": "File"
+        },
+        "TEXT": {
+            "REQUEST_CAPTCHA": "Please send a (new) captcha.",
+            "ENCRYPTED": "- encrypted -"
+        },
+        "WARN": {
+            "MESSAGE_EMPTY": "The message is empty.",
+            "RECIPIENTS_MISSING": "This conversation has no recipients.",
+            "RECIPIENTS_MISSING_OKAY": "I do not want any other recipients than myself.",
+            "PASSPHRASE_INVALID": "Invalid password",
+            "PASSWORD_WRONG": "Wrong password",
+            "NO_PASSWORD": "Password required but not configured.<br> <a href=\"#/{{type}}/{{typeId}}/security\">Configure your encryption settings here</a>",
+            "PASSWORD_NEEDED": "Password required.<br> <a href=\"#/{{type}}/{{typeId}}/security\">enter here</a>",
+            "ASYMMETRIC_DECRYPT_ERROR": "cameoKey missing",
+            "CHECK_ENCRYPTION_ERROR": "CHECK_ENCRYPTION_ERROR",
+            "FILESIZE_REACHED": "The maximum file size of <strong>{{maxFileSize | cmBytesHumanReadable}}</strong> has been exceeded. Your file '<strong>{{fileName}}</strong>' is <strong>{{fileSize | cmBytesHumanReadable}}</strong> big."
+        },
+        "PLACEHOLDER": {
+            "SUBJECT": "Subject",
+            "NO_SUBJECT": "(optional)",
+            "RECIPIENTS": "Recipients",
+            "ADD_RECIPIENTS": "add",
+            "INFO": "Info",
+            "PASSWORD": "Password",
+            "PASSCAPTCHA": "PassCaptcha",
+            "ENCRYPTION": "encrypted"
+        },
+        "CONTROL": {
+            "SAVE": "Save",
+            "CLOSE": "Close"
+        },
+        "SETTINGS": {
+            "OKAY": "Done"
+        }
+    },
+
+    "PURL": {
+        "SIGN_IN": "Register"
+    },
+
+    "RECIPIENTS": {
+        "HEADING": "Add recipients",
+        "LABEL": {
+            "DONE": "Done"
+        }
+    },
+
+    "CONTACTS": {
+        "HEADING": {
+            "LIST": "Contacts",
+            "REQUESTS": "Contact requests",
+            "SEARCH": "Search",
+            "NEW_CONTACTS": "New contacts",
+            "SEND_REQUEST": "Send request",
+            "CREATE": "Create new contact",
+            "IMPORT": "Import local contact"
+        },
+        "LIST_EMPTY": "No contacts yet!",
+        "PLACEHOLDER": {
+            "ADD_NEW_CONTACT": "Enter a cameoID or display name",
+            "REQUEST_MESSAGE": "Add a message to the contact request"
+        },
+        "INFO": {
+            "NO_RESULTS": "No identities found",
+            "MORE_CHARS_NEEDED": "Please type more letters",
+            "NO_REQUESTS": "No contact requests",
+            "REQUEST": {
+                "SENDED": "Request send",
+                "FAILED": "Could not send request",
+                "ACCEPT": "Request accepted",
+                "REJECT": "Request rejected",
+                "IGNORE": "User ignored"
+            },
+            "IMPORT_POSSIBLE": "You can also import a contact from your local addressbook. <a href=\"#/contact/import\">Import now</a>",
+            "IMPORT_RIGHTS": "Now we access your local address book. You select a contact and only this data you picked, are used for a cameo contact. <a>Choose new contact</a>"
+        },
+        "LABEL": {
+            "DISPLAYNAME": "Display name",
+            "NAME": "Name",
+            "SURNAME": "Surname",
+            "SORT": "Sort",
+            "FILTER": "Filter",
+            "SEARCH_IDENTITY": "Search Cameo indentity",
+            "ADD_EXTERN": "Create new external contact",
+            "SEND_REQUEST": "Send",
+            "IMPORT_LOCAL": "Load local contact"
+        },
+        "BUTTON": {
+            "RESET": "Reset",
+            "SUBMIT": "Save"
+        },
+        "TAG": {
+            "FILTER": "Filter"
+        },
+        "REQUESTS": {
+            "ACCEPT": "Accept",
+            "REJECT": "Reject",
+            "IGNORE": "Ignore"
+        }
+    },
+
+    "CONTACT": {
+        "HEADLINE": "Contact",
+        "WIDGET": "Talks",
+        "PLACEHOLDER": {
+            "CAMEOID": "CameoID",
+            "DISPLAYNAME": "@:CONTACTS.LABEL.DISPLAYNAME",
+            "PHONENUMBER": "Phonenumber",
+            "EMAIL": "Email",
+            "STREET": "Street",
+            "STREETNR": "Nr",
+            "ZIP": "Zip",
+            "CITY": "City"
+        },
+        "INFO": {
+            "EMPTY": {
+                "DISPLAYNAME": "@:DRTV.EXTERN_CONTACT.INFO.EMPTY.DISPLAYNAME"
+            },
+            "INVALID": {
+                "EMAIL": "@:DRTV.VALIDATE_EMAIL.INFO.INVALID",
+                "PHONENUMBER": "@:DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER",
+                "MIXED": "Your input isn't valid."
+            },
+            "SUCCESS": {
+                "SAVE": "Contact created",
+                "EDIT": "Contact saved"
+            },
+            "ERROR": {
+                "SAVE": "Could not save contact",
+                "EDIT": "Could not edit contact"
+            },
+            "SELECT": {
+                "EMAIL": "Please select one email",
+                "PHONENUMBER": "Please select one phonenumber"
+            }
+        },
+        "FOOTER": {
+            "SAVE": "Save"
+        },
+        "IMPORT" :{
+            "NOTIFICATION": {
+                "CONFIRMATION" :"You just uploaded 3rd party contact details to our servers. Please tell them about it.",
+                "MESSAGE" : "Hallo {{to}}, I have transfered your contact data into may cameo addressbook. Bye {{from}}"
+            }
+        },
+        "TRUST":{
+            "NO_CAMEOKEYS": "no cameoKey @todo",
+            "HAS_CAMEOKEYS": "has cameoKey @todo",
+            "OK": "trusted",
+            "START": "trust this contact  @todo"
+        }
+    },
+
+    "SYSTEMCHECK": {
+        "HEADLINE": "Systemcheck",
+        "LOCALSTORAGE": {
+            "HEADLINE": "LocalStorage",
+            "TEXT_OK": "LocalStorage is activated!",
+            "TEXT_ERROR": "On the Local Storage can not be accessed!<br>Enable the access, or open the app outside of a private browsing session."
+        },
+        "CLIENTVERSION": {
+            "HEADLINE": "App Version",
+            "TEXT_OK": "Version: {{version}}",
+            "TEXT_ERROR": "Please update the App!<br> This version is not supported anymore!<br>Version: {{version}}"
+        }
+    },
+
+    "IDENTITY": {
+        "LABEL": {
+            "KEYMANAGEMENT": "cameoKeys",
+            "TRUST": "QR-Code",
+            "NEW": "Create new identity",
+            "IDENTITY": "Identity",
+            "IDENTITIES": "Identities"
+        },
+        "MODAL": {
+            "HEADER": "@IDENTITY.LABEL.IDENTITIES"
+        },
+        "NOTIFY": {
+            "UPDATE": {
+                "ERROR": "Something went wrong, please try again",
+                "SUCCESS": "Changes saved"
+            }
+        },
+        "OVERVIEW":{
+            "HEADER": "Identities Overview",
+            "INFO_TEXT": "You can switch between your identities and create new."
+        },
+        "KEYS": {
+            "HEADER": "cameoKeys",
+            "KEYLIST": {
+                "EXPLANATION": {
+                    "UNTRUSTED_KEYS": "For this identity you already obtain cameoKeys. These keys are installed on other devices and are not trusted at the moment.<br>To read encrypted talks on all of your devices, please link the cameoKeys together. ",
+                    "ALL_KEYS_TRUSTED": "For '{{Identity}}' you have a cameoKey that allows you to read all encrypted talks on your device."
+                },
+                "LABEL_LOCALKEY": "Local cameoKey",
+                "LABEL_OTHERKEYS": "cameoKeys on other devices/ other browsers or apps ",
+                "BUTTON_KEY_DETAILS": "cameoKey show details",
+                "BUTTON_AUTHENTICATE": "Link cameoKey",
+                "BUTTON_EXPORT": "Export cameoKey",
+                "BUTTON_DELETE": "Erase cameoKey",
+                "BUTTON_REVOKE": "Disable cameoKey"
+            },
+            "GENERATE": {
+                "START": {
+                    "HEADLINE": "Generate cameoKey",
+                    "EXPLANATION": "On this device you don't have a cameoKey tied to this identity.<br> For secure communication please generate or import a cameoKey first.",
+                    "KEY_LENGTH": {
+                        "BUTTON_LABEL": "Key size",
+                        "LENGTH_2048": "2048Bit (default)",
+                        "LENGTH_4096": "4096Bit"
+                    },
+                    "GENERATE_BUTTON": "Generate cameoKey"
+                },
+                "GENERATING": {
+                    "HEADLINE": "Generation of cameoKey in progress!",
+                    "EXPLANATION": "Please be patient. This process can take some time according to the technical parameter of your device and the size of the cameoKey.<br> If it lasts more than 5 minutes, you may stop the process and start again.",
+                    "TIME_PASSED": "Elapsed time:",
+                    "GENERATION_TIMER": " {{time}}",
+                    "STOP_BUTTON": "Stop generation"
+                },
+                "SAVE": {
+                    "HEADLINE": "cameoKey was generated successfully!",
+                    "EXPLANATION": "Each cameoKey consists of a private part that will be stored on your device only and a public part that has to be transferred and stored on our server.",
+                    "NOTE": "To avoid loss of encrypted data please open your cameoKey and copy it's private part to a safe place on your computer - we recommend to use a password safe.",
+                    "TIME_PASSED": "Elapsed time:",
+                    "GENERATION_TIMER": " {{time}}",
+                    "KEY_NAME": "Key name",
+                    "SAVE_BUTTON": "Save cameoKey "
+                }
+            },
+            "AUTHENTICATION": {
+                "PAGE_HEADLINE": "cameoKeys",
+                "HEADLINE": "Link cameoKey",
+                "EXPLANATION": "To read encrypted messages written under {{identity}} on other devices, please link the local cameoKey with all other keys that you are using there.",
+                "TIMEOUT": "Linking will be canceled in {{timeout}}.",
+                "START": {
+                    "START_BUTTON": "Link up",
+                    "CANCEL_BUTTON": "Not now",
+                    "RETRY_BUTTON": "Retry",
+                    "INSTRUCTIONS": "Please press 'Link up' to start the process.",
+                    "NOTE": "Attention! Before pressing 'Link up' you should first open cameoNet with your identity {{identity}} on another device!"
+                },
+                "WAIT": {
+                    "CANCEL_BUTTON": "Abort request",
+                    "INSTRUCTIONS": "Please press 'Abort request' to stop the process.",
+                    "NOTE": "Request has been started. Please confirm the request on the other device.",
+                    "LABEL_CODE": "Code"
+                },
+                "SUCCESSFUL": {
+                    "INSTRUCTIONS": "You have successfully linked your cameoKeys! In a few seconds, all previous talks that have been created by the linked cameoKeys will be egible.",
+                    "NOTE": "Please close this dialogue.",
+                    "DONE_BUTTON": "Close"
+                },
+                "ERROR": {
+                    "TIMEOUT" :"Timeout - please try again.",
+                    "VERIFY" :"Linking missed - please try again."
+                },
+                "ENTER_TRANSACTION_SECRET": {
+                    "HEADER": "Linking Request",
+                    "INSTRUCTIONS": "On another device a cameoKey is stored that is not linked to this device. Therefore it is not possible to read encrypted data on this device and vice versa.",
+                    "NOTE": "If you want to link cameoKey '{{cameoKey}}' with your local cameoKey, please enter the code displayed on the other device:",
+                    "SUBMIT_BUTTON": "Submit"
+                },
+                "DONE" :{
+                    "INSTRUCTIONS": "You have successfully linked your cameoKeys!",
+                    "NOTE": "Please close this dialogue."
+                },
+                "MODAL":{
+                    "SUCCESS": "You have successfully linked your cameoKeys!",
+                    "CANCELED": "Linking canceled."
+                }
+            },
+            "TRUST": {
+                "PAGE_HEADLINE": "Trust Process",
+                "HEADLINE": "Trust contact",
+                "EXPLANATION": "By using the trust process you can verify whether an identity is of an individual that you know in person.",
+                "TIMEOUT":"The process will be stopped in {{timeout}} seconds.",
+                "START": {
+                    "START_BUTTON": "Request",
+                    "CANCEL_BUTTON": "Not now",
+                    "RETRY_BUTTON": "Retry",
+                    "INSTRUCTIONS": "If you like to trust this contact please press 'Request', to send an inquiry for trusting each other.",
+                    "NOTE": "Attention! Before you press 'Request' the contact has to be registered to cameoNet as {{identity}}."
+                },
+                "WAIT": {
+                    "CANCEL_BUTTON": "Stop request",
+                    "INSTRUCTIONS": "Please press 'Stop request' to stop the process.",
+                    "NOTE": "'{{identity}}' has to enter the above code to confirme your inquiry:",
+                    "LABEL_CODE": "Code"
+                },
+                "SUCCESSFUL": {
+                    "INSTRUCTIONS": "The trust process has been executed successfully.<br> Now '{{identity}} and you are trusting each other.",
+                    "NOTE": "You can close this dialogue now.",
+                    "DONE_BUTTON": "Close"
+                },
+                "ERROR": {
+                    "TIMEOUT" :"Timeout - please try again.",
+                    "VERIFY" :"Trust process missed - please try again."
+                },
+                "ENTER_TRANSACTION_SECRET": {
+                    "HEADER": "Inquiry of trust",
+                    "INSTRUCTIONS": "Recently {{identity}} has started a trust process with you.<br> By using the trust process you can verify whether an identity is of an individual that you know in person.",
+                    "NOTE": "If you like to trust {{identity}}, please enter the code displayed on the device of {{identity}} here:",
+                    "SUBMIT_BUTTON": "Transmit"
+                },
+                "DONE" :{
+                    "INSTRUCTIONS": "Trust process successfull!",
+                    "NOTE": "Please close this dialogue."
+                },
+                "MODAL":{
+                    "SUCCESS": "Trust process successfull!",
+                    "CANCELED": "Trust process canceled."
+                }
+            }
+        }
+    },
+
+    "SETTINGS": {
+        "WELCOME": "Settings",
+        "LABEL": "Settings",
+        "ACCOUNT": "Account Settings",
+        "IDENTITY": "Identity Settings",
+        "NOTIFY": "Notifications",
+        "CONTACTS": "Contact Settings",
+        "APP": "App Settings",
+        "CONTRACTS": "Contracts",
+        "PAGES": {
+            "APP": {
+                "LANGUAGE": "Language Settings",
+                "EMOJI_CONVERT": "Convert Smileys to Emojis",
+                "SEND_ON_RETURN": "Send on Return",
+                "SKIP_KEY_INFO": "Skip cameoKey Information",
+                "DATE_FORMAT": "Dateformat",
+                "TIME_FORMAT": "Timeformat"
+            },
+            "IDENTITY": {
+                "CREATE": {
+                    "HEADER": "Create identity",
+                    "PLACEHOLDER": {
+                        "CAMEOID": "@:CONTACT.PLACEHOLDER.CAMEOID",
+                        "DISPLAYNAME": "@:CONTACT.PLACEHOLDER.DISPLAYNAME",
+                        "EMAIL": "@:CONTACT.PLACEHOLDER.EMAIL",
+                        "PHONENUMBER": "@:CONTACT.PLACEHOLDER.PHONENUMBER"
+                    },
+                    "INFO": {
+                        "EMPTY": {
+                            "DISPLAYNAME": "@:CONTACT.INFO.EMPTY.DISPLAYNAME"
+                        },
+                        "INVALID": {
+                            "EMAIL": "@:CONTACT.INFO.INVALID.EMAIL",
+                            "PHONENUMBER": "@:CONTACT.INFO.INVALID.PHONENUMBER"
+                        }
+                    },
+                    "WARN": {
+                        "FAILED": "The creating of new identity has failed. Please try again later."
+                    },
+                    "FOOTER": "@:CONTACT.FOOTER.SAVE"
+                },
+                "KEYS": {
+                    "HEADER": "@:IDENTITY.LABEL.KEYMANAGEMENT",
+                    "CREATE": {
+                        "HEADER": "Generate cameoKey",
+                        "BUTTON": "Generate"
+                    },
+                    "IMPORT": {
+                        "HEADER": "Import cameoKey",
+                        "BUTTON": "Import"
+                    },
+                    "DETAIL": "cameoKey",
+                    "KEY_SIZE": "Key size",
+                    "FINGERPRINT": "Fingerprint",
+                    "IS_LOCAL": "local",
+                    "IS_LOCAL_ON_THIS_DEVICE": "Is local on this device",
+                    "NO_LOCALKEYS_ON_THIS_DEVICE": "On this device you don't have a cameoKey tied to this identity.<br> For secure communication please generate or import a cameoKey first.",
+                    "UNTRUSTED_PUBLICKEYS_EXISTS": "You have cameoKeys for this identity on several devices that are not authenticated. You cannot read messages written and encrypted on devices with not authenticated cameoKeys. <br>To authenticate a cameoKey click on <ICON> next to the cameoKey in the list below.",
+                    "TRUSTING": "Trust",
+                    "IS_TRUSTED": "trusted",
+                    "IS_UNTRUSTED": "untrusted",
+                    "EXPORT_KEY": "Export cameoKey",
+                    "EXPORT_KEY_DESCRIPTION": "Please export your private cameoKey. Make sure to keep it safe. You can use it to recover all your encrypted data.",
+                    "REMOVE_KEY": "Remove cameoKey",
+                    "REMOVE_KEY_REALLY": "Really remove the cameoKey?",
+                    "CHOOSE_SIZE": "Choose key size",
+                    "GENERATE": "Generate cameoKey",
+                    "GENERATION_IN_PROGRESS": "Key generation in progress",
+                    "GENERATION_TIME_PROGRESS": "Time elapsed:",
+                    "GENERATION_TIMER": "{{time}}",
+                    "GENERATE_INFO_TEXT": "Please be patient. The process time will vary according to the technical parameter of your hardware and the selected key force. If the waiting time exceeds 5 minutes, please stop the process and restart.",
+                    "CANCEL": "Cancel",
+                    "STORE_KEYPAIR": "Save cameoKey",
+                    "STOREKEY_DESCRIPTION": "The cameoKey consists of a public and a private part. The private part will be stored on this device only. It is important to keep it secret since it can decrypt all of your data.\nThe private part should be exported to a safe place for data recovery purpose if the device is lost.",
+                    "PRIVATE_KEY": "Private key",
+                    "PUBLIC_KEY": "Public key",
+                    "KEY_NAME": "Key name",
+                    "STORE": "Save cameoKey",
+                    "WARN": {
+                        "IMPORT_FAILED": "The private key is invalid",
+                        "CHECK_PRIVKEY": "Check private key",
+                        "CHECK_PUBKEY": "Check public key",
+                        "CHECK_KEYNAME": "Check key name"
+                    }
+                }
+            },
+            "ABOUT_US": {
+                "TITLE": "About us",
+                "TEXT": "cameoNet 2014",
+                "3RD_PARTY": {
+                    "TITLE": "3rd party plugins",
+                    "DATE": "1412842948000",
+                    "LIBRARIES": "AngularJS\nhttps://angularjs.org/;AngularJS translate\nhttps://github.com/angular-translate;AngularJS loading bar\nhttps://chieffancypants.github.io/angular-loading-bar;AngularJS emoji filter\nhttps://github.com/globaldev/angular-emoji-filter;captchagen\nhttps://github.com/wearefractal/captchagen;JSEncrypt\nhttps://github.com/travist/jsencrypt;Stanford Javascript Crypto Library (SJCL)\nhttps://crypto.stanford.edu/sjcl;CryptoJS\nhttps://www.code.google.com/p/crypto-js;FileSaver.js\n https://github.com/eligrey/FileSaver.js;Blob.js\nhttps://github.com/eligrey/Blob.js;passchk.js\nhttps://rumkin.com/tools/password/passchk.php;spin.js\nhttp://fgnass.github.io/spin.js;FastClick\nhttps://github.com/ftlabs/fastclick"
+                }
+            },
+            "PERFORMANCE": {
+                "TITLE": "Performance"
+            },
+            "NOTIFY": {
+                "PUSH_NOTIFICATIONS": "Push Notifications"
+            }
+        }
+    },
+
+    "ACCOUNT": {
+        "PLACEHOLDER": {
+            "LOGINNAME": "Login name",
+            "PHONENUMBER": "Phonenumber",
+            "EMAIL": "Email",
+            "PASSWORD_CHANGE": "Password change",
+            "OLD_PASSWORD": "Old password"
+        },
+        "INFO": {
+            "EMPTY": {
+                "LOGINAME": "The login name is empty.",
+                "OLD_PASSWORD": "Please enter a password."
+            },
+            "INVALID": {
+                "EMAIL": "@:DRTV.VALIDATE_EMAIL.INFO.INVALID",
+                "PHONENUMBER": "@:DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER",
+                "OLD_PASSWORD": "Your password is invalid."
+            },
+            "NOTE_ABOUT_THIS_DATA": "Your account data can be edited here. This data is not public. Email and/or phonenumber are used for notifications and password reset.",
+            "LOGINAME": "The login name cannot be changed."
+        },
+        "FOOTER": {
+            "BACK": "Done",
+            "SAVE": "Save"
+        }
+    },
+
+    "NAVIGATION": {
+        "TABS": {
+            "BACK": "Back",
+            "ADD": "Add",
+            "ALL": "Contacts",
+            "REQUESTS": "Requests",
+            "SPINNER": "Spinner",
+            "KEY": "cameoKey",
+            "TALKS": "Talks"
+        }
+    },
+
+    "DRTV": {
+        "PASSWORD": {
+            "PASSWORD": "Password",
+            "PASSWORD_CONFIRM": "Confirm Password",
+            "INFO": {
+                "MIN_LETTER_COUNT": "Bitte mindestens {{count}} Zeichen verwenden!",
+                "EMPTY": "Please add a Password and confirm it"
+            }
+        },
+        "VALIDATE_EMAIL": {
+            "LABEL": "Email",
+            "PLACEHOLDER": "Email",
+            "INFO": {
+                "INVALID": "Invalid email. Please check!",
+                "EMPTY": "The email field is empty"
+            }
+        },
+        "VALIDATE_PHONE": {
+            "LABEL": "Phone number",
+            "PLACEHOLDER": "Phone number",
+            "INFO": {
+                "INVALID_PHONE_NUMBER": "The entered value does not seem to be a phone number.",
+                "EMPTY": "The phone number field is empty"
+            }
+        },
+        "VALIDATE_MIXED": {
+            "LABEL": "Phone number or e-mail address.",
+            "PLACEHOLDER": "Phone number or e-mail address",
+            "INFO": {
+                "INVALID_MIXED": "The entered value appears to be neither a phone number nor an e-mail addresss.",
+                "EMPTY": "You left the input field empty."
+            }
+        },
+        "VALIDATE_CAMEOID": {
+            "INFO": {
+                "MAX_LETTER_COUNT": "Please use a maximum of {{count}} characters.",
+                "MIN_LETTER_COUNT": "Please use at least {{count}} characters.",
+                "INPUT": {
+                    "EXISTS": "Your input already exists! Please choose another.",
+                    "EMPTY": "This field is required. Please fill out",
+                    "INVALID": "Invalid input. Avoid spaces and special characters."
+                }
+            }
+        },
+        "EXTERN_CONTACT": {
+            "HEADER": "Add external contact",
+            "INFO": {
+                "DISPLAYNAME_EXISTS": "The display name already exists in your constact book.",
+                "EMPTY": {
+                    "DISPLAYNAME": "The display name is empty.",
+                    "NAME": "Name is empty.",
+                    "SURNAME": "Surname is empty.",
+                    "PHONE_OR_EMAIL": "Please enter a phone number or a email address."
+                },
+                "SAVE_FAIL": "Contact could not be saved."
+            }
+        },
+        "TYPE_CHOOSER": {
+            "PRIVATE": "private",
+            "BUSINESS": "business",
+            "OTHER": "other",
+            "MOBILE": "mobile",
+            "LANDLINE": "landline",
+            "IP": "ip",
+            "FAX": "fax"
+        },
+        "BULK_REKEYING": {
+            "HEADER": "Encrypting talks",
+            "CONTENT": "The talks on this device are being encrypted for the new cameoKey.",
+            "START": "Start"
+        },
+        "FOOTER": {
+            "TALKS": "Talks",
+            "CONTACTS": "Contacts",
+            "MEDIA": "Media",
+            "SETTINGS": "Settings"
+        },
+        "IMPRINT": {
+            "HEADLINE": "Imprint",
+            "CONTENT": "cameoNet is provided by:<br>memo Connect GmbH<br>Große Nikolaistraße 7 06108 Halle (Saale) Germany<br>Fon: +49 345 213 79 66 5<br>Fax: +49 345 213 79 66 59<br>Amtsgericht Stendal HRB 20018<br>Directors: Michael Merz, Dr. Holger Haedrich"
+        },
+        "CONFIRM": {
+            "HEADER": "Please Confirm!",
+            "STANDARD": "You sure you want to cancel the operation?"
+        },
+        "CHOOSE_SOURCE": {
+            "CAMERA": "Take a photo",
+            "FILE": "Choose an existing file"
+        }
+    },
+
+    "MENU": {
+        "NEW_CONTACT": "New contact",
+        "NEW_TALK": "New talk",
+        "REQUESTS": "Contact requests",
+        "OWN_KEYS": "Own keys",
+        "SETTINGS": "@:SETTINGS.LABEL",
+        "LOGOUT": "Logout"
+    },
+
+    "NOTIFICATIONS": {
+        "HEADER": "Notifications",
+        "MODAL_HEADER": {
+            "INFO": "Info",
+            "WARN": "Warning",
+            "ERROR": "Error",
+            "SUCCESS": "Success"
+        },
+        "TYPES": {
+            "KEYS": {
+                "STORE_NEW": "cameoKey saved!"
+            },
+            "SAVE_AS": {
+                "IOS_NOT_SUPPORT": "Unfortunately iOS does not support downloading this file. Open this talk on a non-iOS device to download this file. Supported formats: .pdf"
+            },
+            "FRIEND_REQUEST": "New contact request"
+        }
+    },
+
+    "MODAL": {
+        "ALERT": {
+            "OK": "OK"
+        },
+        "WEBREADER": {
+            "NOTICE": "Please register to use this feature.",
+            "REGISTRATION": "Register now",
+            "LATER": "Later"
+        },
+        "LABEL": {
+            "OK": "@:MODAL.ALERT.OK",
+            "CLOSE": "Close",
+            "ACCEPT": "Accept",
+            "CANCEL": "Cancel",
+            "START": "Start"
+        },
+        "OFFLINE_HANDLER": {
+            "MESSAGE": "Could not connect to cameoNet.<br> Please try again later or check your internet connection and press 'Reconnect'.",
+            "FOOTER": "Reconnect"
+        }
+    },
+
+    "JOB": {
+        "IN_PROGRESS": "You have edited this site without saving. Do you really want to leave this page?",
+        "FILES_IN_UPLOAD_PROGRESS": "Files are being uploaded. Do you really want to leave this page?"
+    },
+
+    "SECURITY_ASPECT": {
+        "HEADLINE": "Encryption",
+        "CONVERSATION": {
+            "ENCRYPTED": {
+                "NAME": "Talk is encrypted.",
+                "DESCRIPTION": "missing description @todo"
+            },
+            "NOT_ENCRYPTED": {
+                "NAME": "Talk is not encrypted.",
+                "DESCRIPTION": "missing description @todo",
+                "TOGGLE": "Enable encryption."
+            },
+            "KEY_TRANSMISSION_SYMMETRIC": {
+                "NAME": "Encryption relies on a password.",
+                "DESCRIPTION_NEW": "Encryption with a password is not bad in itself, but the strength of the encryption greatly depends on the password you choose. You have to use a password because not all recipients have a proper key available to you.",
+                "DESCRIPTION": "Encryption with a password is not bad in itself, but the strength of the encryption greatly depends on the password you choose. You have to use a password because not all recipients had a proper a key available when the conversation started.",
+                "DESCRIPTION_BAD_RECIPIENTS": "These recipients have no cameoKey:",
+                "DESCRIPTION_PRIVATE_KEY_MISSING": "You do not have a cameoKey on this device."
+            },
+            "NO_SYMMETRIC_KEY_TRANSMISSION": {
+                "NAME": "This talk is safely encrypted with cameoKeys.",
+                "DESCRIPTION": "missing description @todo"
+            },
+            "HAS_PASSCAPTCHA": {
+                "NAME": "PassCaptcha enabled.",
+                "DESCRIPTION": "Using the passCaptcha method makes it harder to automatically decrypt your messages on a large scale, but it is not actually save.",
+                "TOGGLE": "Disable passCaptcha"
+            },
+            "TRUSTING_ALL_RECIPIENTS": {
+                "NAME": "You trust all recipients.",
+                "DESCRIPTION": "missing description @todo"
+            },
+            "MISSING_DATA": "Security aspects missing"
+        }
+    },
+
+    "SYSTEM": {
+        "WELCOME": {
+            "MESSAGE": "Hello, I am the cameoNet support. \n\nIf you have any questions or problems do not hesitate to reply on this message. You can also use our help system at http://support.cameonet.de,\n\nthe cameoNet team.",
+            "SUBJECT": "Welcome to cameoNet!"
+        },
+        "ERROR": {
+            "EMPTY_INPUT": "The input field is empty!",
+            "WRONG_INPUT": "Please check the code and try again!"
+        }
+    }
+}

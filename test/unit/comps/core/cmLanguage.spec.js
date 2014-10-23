@@ -19,7 +19,7 @@ describe("cmLanguage", function() {
             var count = cameo_config.supported_languages.length
 
             cameo_config.supported_languages.forEach(function(lang_key){
-                var file = 'app/'+cameo_config.path_to_languages+'/'+lang_key+'.json';
+                var file = 'dist/app/'+cameo_config.path_to_languages+'/'+lang_key+'.json';
                 language_tables[lang_key] = eval(window.__html__[file])
                 console.log(typeof language_tables[lang_key])
             })
@@ -47,7 +47,7 @@ describe("cmLanguage", function() {
             cameo_config.supported_languages.forEach(function (lang_key) {
                 beforeEach(function(){
                     module('i18n/' + lang_key + '.json')
-                    module('language-keys.json')
+                    module('i18n/language-keys.json')
                 })
             })
 
@@ -72,7 +72,7 @@ describe("cmLanguage", function() {
                 var used_ids,
                     missing_ids = {}
 
-                inject(['languageKeys', function(data){ used_ids = data }])
+                inject(['i18nLanguageKeys', function(data){ used_ids = data }])
 
 
                 $.each(language_tables, function(lang_key, language_data){
@@ -182,26 +182,27 @@ describe("cmLanguage", function() {
 
         describe("cmLanguage filter", function(){
 
-            it('should provide a functionen "getLanguageName" to get the translation of a languages\'s name by its key.', function(){
-                expect(cmLanguage.getLanguageName('en_US')).toEqual('english')
+            it('should provide a function "getLanguageName" to get the translation of a languages\'s name by its key.', function(){
+                cmLanguage.getLanguageName('en_US').then(function(langName){
+                    expect(langName).toEqual('english')
+                })
             })
 
 
-            it('should provide a functionen "getCurrentLanguage" to return the currently active languages\'s key.', function(){
+            it('should provide a function "getCurrentLanguage" to return the currently active languages\'s key.', function(){
                 expect(cmLanguage.getCurrentLanguage()).toEqual('en_US')
             })
 
 
-            it('should provide a functionen "getSupportedLanguages" to return the keys of supported languages\'.', function(){
+            it('should provide a function "getSupportedLanguages" to return the keys of supported languages\'.', function(){
                 expect(cmLanguage.getSupportedLanguages()).toEqual(['en_US, de_DE'])
             })
 
-
-            it('should provide a functionen "getPathToLanguage" to return the path to language files.', function(){
+            it('should provide a function "getPathToLanguage" to return the path to language files.', function(){
                 expect(cmLanguage.getPathToLanguage()).toEqual('i18n')
             })
 
-            it('should provide a functionen "switchLanguage" to switch between supported languages.', function(){
+            it('should provide a function "switchLanguage" to switch between supported languages.', function(){
                 expect(typeof cmLanguage.switchLanguage).toEqual('function')
 
                 $httpBackend.whenGET('i18n/de_DE.json')
@@ -213,7 +214,9 @@ describe("cmLanguage", function() {
                 //resolves all promises
                 $httpBackend.flush();
 
-                expect(cmLanguage.getLanguageName('fr_FR')).toBe('Französisch')
+                cmLanguage.getLanguageName('fr_FR').then(function(langName){
+                    expect(langName).toBe('Französisch')
+                })
                 $httpBackend.verifyNoOutstandingExpectation()
             })
         })

@@ -47,26 +47,38 @@ describe('Authentication requests -', function () {
     }
 
     var checkKeyTrust = function (keyName, isTrusted) {
-        $$("[data-qa='key-list-item']").then(function (keys) {
-            keys.forEach(function (key) {
-                key.getText().then(function (text) {
-                    if (text.search(keyName) > -1) {
-                        if (isTrusted) {
-                            expect(text).toContain("trusted")
-                            expect(text).not.toContain("untrusted")
-                        } else {
-                            expect(text).toContain("untrusted")
-                        }
-                    }
-                })
-            })
+
+        ptor.getCurrentUrl().then(function(url){
+            if(!url.match("/settings/identity/key/list"))
+                util.get("/settings/identity/key/list")
         })
+
+
+        ptor.wait(function(){
+           return   $$("[data-qa='key-list-item']")
+                    .map(function(key){
+                        return  key.getText()
+                                .then(function(text){
+                                    return text
+                                })
+                    })
+                    .then(function(result){      
+                        return  result.some(function(text){
+                                    var result =        (new RegExp(keyName)).test(text)
+                                                    &&  (new RegExp(isTrusted ? "\\btrusted\\b" : "\\buntrusted\\b")).test(text)
+
+                                    return result
+                                })  
+                    })
+        }, 5000, 'for Key "'+keyName+'" to be ' + (isTrusted ? 'trusted' : 'untrusted') + ' .') 
+
     }
 
-    var getAuthEvent = function (token, eventSubscription, index, skip) {
+    var getAuthEvent = function (token, eventSubscription, index, skip) {   
         var s = skip || 0
         var events = []
-        var get = function () {
+
+        function get(){
             util.getEvents(token, eventSubscription).then(function (res) {
 
                 var e = res.data.events.filter(function (event) {
@@ -109,7 +121,7 @@ describe('Authentication requests -', function () {
             })
         })
 
-        it("get event subscription", function () {
+        it("get event asubscription", function () {
             util.getEventSubscription(token).then(function (res) {
                 eventSubscription = res
             })
@@ -166,7 +178,7 @@ describe('Authentication requests -', function () {
             util.createEncryptedConversation(subject3, encryptedMessage3)
         })
 
-        it("should be not able to read conversation from key1", function () {
+        it("should not be able to read conversation from key1", function () {
             util.readConversation(subject1, "- encrypted -")
         })
 
@@ -231,7 +243,7 @@ describe('Authentication requests -', function () {
             checkKeyTrust(keyName3, true)
         })
 
-        it("should be able to read conversation from key3", function () {
+        it("should not be able to read conversation from key3", function () {
             util.readConversation(subject3, encryptedMessage3)
         })
 
@@ -269,8 +281,9 @@ describe('Authentication requests -', function () {
         })
 
         it("both keys should now be trusted", function () {
-            util.get("/settings/identity/key/list")
+            //util.get("/settings/identity/key/list")
             util.waitForElements("[data-qa='key-list-item']", 2)
+
             checkKeyTrust(keyName1, true)
             checkKeyTrust(keyName3, true)
         })
@@ -326,12 +339,13 @@ describe('Authentication requests -', function () {
 
         it("send authentication:start event from key1", function () {
             var event = authEvents[1]
-            event.toKeyId = keyId2
+            event.data.toKeyId = keyId2
             util.broadcastEvent(token, event)
         })
 
         it("a modal asking for authentication start should open", function () {
             util.waitForElement("cm-modal.active [data-qa='inp-transactSecret']")
+
         })
 
         it("enter transaction secret and submit", function () {
@@ -355,13 +369,13 @@ describe('Authentication requests -', function () {
         })
 
         it("get authentication:start event from key2", function () {
-            getAuthEvent(token, eventSubscription, 2, 2)
+            getAuthEvent(token, eventSubscription, 2, 3)
             ptor.wait(function () {
-                return authEvents[2] != undefined
+                return authEvents[2].data.fromKeyId == keyId2
             })
         })
 
-        it("should be not able to read conversation from key1", function () {
+        it("should not be able to read conversation from key1", function () {
             util.readConversation(subject1 , "- encrypted -")
         })
 
@@ -398,7 +412,6 @@ describe('Authentication requests -', function () {
 
         it("enter transaction secret and submit", function () {
             util.setVal("inp-transactSecret", transactionSecret)
-            ptor.debugger()
             util.waitAndClickQa('btn-acceptRequest')
             util.waitForElementDisappear("cm-modal.active [data-qa='inp-transactSecret']")
         })
@@ -441,11 +454,11 @@ describe('Authentication requests -', function () {
         })
 
         it("all three keys should now be trusted", function () {
-            ptor.wait(function () {
-                return $("cm-identity-key-list").getText().then(function (text) {
-                    return text.indexOf("untrusted") == -1
-                })
-            })
+            // ptor.wait(function () {
+            //     return $("cm-identity-key-list").getText().then(function (text) {
+            //         return text.indexOf("untrusted") == -1
+            //     })
+            // })
 
             checkKeyTrust(keyName1, true)
             checkKeyTrust(keyName2, true)
@@ -598,7 +611,11 @@ describe('Authentication requests -', function () {
                 util.waitForElements("cm-contact-tag", 2)
                 util.headerSearchInList(testUser2)
                 util.waitAndClick("cm-contact-tag")
-                expect($("[data-qa='start-trust-handshake-btn']").isElementPresent(by.css(".cm-checkbox-right"))).toBe(true)
+                ptor.wait(function(){
+                    return $$("[data-qa='trust-confirmed']").then(function(items){
+                        return items.length > 0 
+                    })
+                }, 2000, '[data-qa="trust-confirmed"]')
             })
 
             it("get authentication:start event send to testUser2", function () {
@@ -636,7 +653,11 @@ describe('Authentication requests -', function () {
                 util.waitForElements("cm-contact-tag", 2)
                 util.headerSearchInList(testUser1)
                 util.waitAndClick("cm-contact-tag")
-                expect($("[data-qa='start-trust-handshake-btn']").isElementPresent(by.css(".cm-checkbox-right"))).toBe(true)
+                ptor.wait(function(){
+                    return $$("[data-qa='trust-confirmed']").then(function(items){
+                        return items.length > 0 
+                    })
+                }, 2000, '[data-qa="trust-confirmed"]')
             })
         })
 
@@ -663,7 +684,11 @@ describe('Authentication requests -', function () {
                 util.waitForElements("cm-contact-tag", 2)
                 util.headerSearchInList(testUser2)
                 util.waitAndClick("cm-contact-tag")
-                expect($("[data-qa='start-trust-handshake-btn']").isElementPresent(by.css(".cm-checkbox-right"))).toBe(true)
+                ptor.wait(function(){
+                    return $$("[data-qa='trust-confirmed']").then(function(items){
+                        return items.length > 0 
+                    })
+                }, 2000, '[data-qa="trust-confirmed"]')
             })
         })
     })

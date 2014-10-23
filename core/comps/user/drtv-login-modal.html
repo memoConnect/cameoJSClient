@@ -1,0 +1,44 @@
+<section class="theme-a">
+    <div class="modal-outer-title">
+        <cm-logo></cm-logo>
+    </div>
+
+    <h2 class="form-signin-heading ">{{'LOGIN.HEADING'|cmTranslate}}</h2>
+
+    <form class="form-signin mb15" role="form" ng-submit="doLogin()" autocomplete="off" data-qa="modal-login">
+        <select ng-model="formData.autologin" class="cm-form-control btn-block autologin" ng-change="changeAutologin()" ng-if="cmEnv.autoLogin">
+            <option value="none">{{'LOGIN.LABEL.AUTO'|cmTranslate}}</option>
+            <option ng-repeat="(user,prop) in loginData">{{user}}</option>
+        </select>
+
+        <div class="cm-input-ctn" ng-class="{'cm-input-error':alertState!=''}">
+            <input
+                    tabindex="1"
+                    type="text" ng-model="formData.user" ng-class="{'cm-input-error':alertState!=''}"
+                    id="user" name="user" value="" required
+                    placeholder="{{'LOGIN.PLACEHOLDER.USERNAME'|cmTranslate}}" />
+        </div>
+
+        <div class="cm-input-ctn with-inside-icon" ng-class="{'cm-input-error':alertState!=''}">
+            <input
+                    tabindex="2"
+                    type="{{passwordType}}" ng-model="formData.pass" ng-class="{'cm-input-error':alertState!=''}"
+                    id="pw" name="pw" value="" required
+                    placeholder="{{'LOGIN.PLACEHOLDER.PASSWORD'|cmTranslate}}" />
+            <i class="fa cm-icon-grey cm-lg-icon" ng-class="{'cm-visible':passwordType=='password','cm-hidden':passwordType=='text'}" ng-click="handlePassword()"></i>
+        </div>
+
+        <cm-info-bubble class="cm-alert" ng-hide="alertState==''" data-qa="login-info">
+            <div><i class="fa cm-info"></i><span ng-bind-html="'LOGIN.INFO.'+alertState|cmParse"></span></div>
+        </cm-info-bubble>
+
+        <button class="btn-submit" type="submit"></button>
+    </form>
+
+    <button class="cm-btn-grey" ng-click="doLogin()" data-qa="login-submit-btn">
+            <span ng-show="!showLoader">
+                {{'LOGIN.LABEL.SUBMIT'|cmTranslate}} <i class="fa cm-key cm-lg-icon"></i>
+            </span>
+        <cm-loader ng-show="showLoader" cm-color="ci-color"></cm-loader>
+    </button>
+</section>

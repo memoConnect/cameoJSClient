@@ -56,7 +56,8 @@ angular.module('cameoClient', [
 // app route config
 .config([
     '$routeProvider',
-    function ($routeProvider) {
+    '$locationProvider',
+    function ($routeProvider, $locationProvider) {
         /**
          * this option makes location use without #-tag
          * @param settings
@@ -127,7 +128,6 @@ angular.module('cameoClient', [
                     } else {
                         routeParams.templateUrl = 'routes/' + routeKey + '/' + routeKey + '.html';
                     }
-
                 }
                 // check if route has/need controller
                 if (angular.isDefined(_settings_['hasCtrl']) && _settings_.hasCtrl === true){
@@ -160,9 +160,15 @@ angular.module('cameoClient', [
                     return cmBoot.isReady.i18n();
                 };
 
-                if (angular.isDefined(_settings_['resolveOnBoot'])){
+                if (angular.isDefined(_settings_['resolveUserModel']) && _settings_['resolveUserModel'] == true){
                     routeParams.resolve.userModel = function(cmBoot) {
                         return cmBoot.isReady.userModel();
+                    }
+                }
+
+                if (angular.isDefined(_settings_['resolvePurl']) && _settings_['resolvePurl'] == true){
+                    routeParams.resolve.resolveData = function(cmBoot, $route) {
+                        return cmBoot.isReady.purl($route.current.params.purlId);
                     }
                 }
 
@@ -215,6 +221,9 @@ angular.module('cameoClient', [
     // start entropy collection for random number generator
     sjcl.random.startCollectors();
 })
+.run(['cmError',function(cmError){
+    // only an inject is nessarary
+}])
 /**
  * @TODO cmContactsModel anders initialisieren
  */
@@ -226,6 +235,7 @@ angular.module('cameoClient', [
     '$route',
     '$timeout',
     'cmUserModel',
+    'cmConversationFactory',
     'cmContactsModel',
     'cmRootService',
     'cmSettings',
@@ -239,13 +249,17 @@ angular.module('cameoClient', [
     'cmSystemCheck',
     'cmError',
     function ($rootScope, $location, $window, $document, $route, $timeout,
-              cmUserModel, cmContactsModel, cmRootService, cmSettings,
+              cmUserModel, cmConversationFactory, cmContactsModel, cmRootService, cmSettings,
               cmLanguage, cmLogger, cfpLoadingBar, cmEnv, cmVersion,
               cmApi, cmAuthenticationRequest, cmSystemCheck, cmError) {
 
         //prep $rootScope with useful tools
         $rootScope.console  =   window.console;
         $rootScope.alert    =   window.alert;
+
+        // $rootScope.$watch(function(){
+        //     cmLogger.debug('$digest!')
+        // })
 
         //add Overlay handles:
         $rootScope.showOverlay = function(id){ $rootScope.$broadcast('cmOverlay:show', id) };

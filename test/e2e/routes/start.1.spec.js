@@ -10,7 +10,7 @@ describe('Route: Start - ', function () {
 
     describe('After registration with key generation - ', function () {
         it('register user, first url should be "/start/welcome" ', function () {
-            testUserWithKey = util.createTestUser()
+            testUserWithKey = util.createTestUser(undefined, 'start - 1')
             util.waitForPageLoad('/start/welcome')
         })
 
@@ -44,7 +44,7 @@ describe('Route: Start - ', function () {
 
     describe('After registration with canceled key generation - ', function () {
         it('register user, first url should be "/start/welcome" ', function () {
-            testUserWithoutKey = util.createTestUser()
+            testUserWithoutKey = util.createTestUser(undefined, 'start - 2')
             util.waitForPageLoad('/start/welcome')
         })
 

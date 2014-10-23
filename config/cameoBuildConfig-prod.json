@@ -7,6 +7,10 @@
         "logLevel": "ERROR",
         "performancePage": false
     },
+    "cockpit": {
+        "basePath": "/c/",
+        "appPath": "/m/"
+    },
     "debug":{
         "weinre": false,
         "weinreIp": ""
