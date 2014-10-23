@@ -1,37 +1,31 @@
 {
-    "name": "cameoNet", 
+    "name": "<%= appBaseName %>",
     "nodejs": true, 
     "description": "safer communication!", 
-    "single-instance": true, 
+    "single-instance": true,
+    "no-edit-menu" : true,
     "keywords": [
         "messanger"
     ],
-    "webexe_settings": {
-        "nw_version": "0.10.5",
-        "force_download": false,
-        "download_dir": "/tmp",
-        "linux-x32": true,
-        "linux-x64": true,
-        "windows": true,
-        "mac": true
-    },
     "window": {
-        "fullscreen": false, 
+        "fullscreen": false,
+        "show_in_taskbar" : true,
         "resizable": true,
-        "title": "cameoNet", 
+        "position" : "center",
+        "title": "<%= appBaseName %>",
         "always-on-top": false, 
-        "frame": true, 
-        "max_width": 600, 
-        "height": 1024,
-        "min_height": 300, 
+        "frame": true,
         "visible": true, 
-        "as_desktop": false, 
-        "max_height": 1024, 
-        "min_width": 600, 
+        "as_desktop": false,
+        "height": 1024,
+        "max_height": 1600,
+        "min_height": 600,
+        "width": 1280,
+        "min_width": 800,
+        "max_width": 1960,
         "position": "center", 
         "show_in_taskbar": true, 
-        "width": 1280,
-        "toolbar": false, 
+        "toolbar": false,
         "icon": "gfx/icon_128x128.png"
     }, 
     "version": "<%= currentVersion %>",
@@ -41,5 +35,17 @@
         "plugin": true
     }, 
     "main": "index.html", 
-    "node-main": ""
+    "node-main": "",
+    "bugs" : "mailto://support@cameoNet.de",
+    "maintainers":[ {
+        "name": "memo Connect GmbH",
+        "email": "support@cameoNet.de",
+        "web": "https://cameoNet.de"
+    }],
+    "licenses": [
+        {
+            "type": "AGPLv3",
+            "url": "https://github.com/memoConnect/cameoJSClient/blob/master/GNU-AGPL-3.0.txt"
+        }
+    ]
 }
