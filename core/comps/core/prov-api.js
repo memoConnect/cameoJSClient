@@ -493,15 +493,19 @@ angular.module('cmCore').provider('cmApi',[
 
 
                 if(!events_disabled && events_interval){
-                    $rootScope.$on('login',     function(){
+                    $rootScope.$on('login', function(){
+                        api.resetSubscriptionId()
+                        api.listenToEvents()
+                    });
+                    $rootScope.$on('identity:switched', function(){
                         api.resetSubscriptionId()
                         api.listenToEvents()
 
-                    })
-                    $rootScope.$on('logout',    function(){
+                    });
+                    $rootScope.$on('logout', function(){
                         api.stopListeningToEvents()
                         api.resetSubscriptionId()
-                    })
+                    });
                 }
 
                 /**

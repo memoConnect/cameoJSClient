@@ -141,9 +141,9 @@ angular.module('cmCore')
 
                     var identity = cmIdentityFactory.clear(arr_activeIdentity[0]).create(arr_activeIdentity[0], true);
 
-                    identity.on('update:finished', function(event, data){
-                        self.trigger('update:finished');
-                    });
+                    //identity.on('update:finished', function(event, data){
+                    //    self.trigger('update:finished');
+                    //});
 
                     self.importData(identity, accountData.identities);
                     self.importAccount(accountData);

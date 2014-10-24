@@ -122,11 +122,18 @@ angular.module('cmPhonegap')
             },
 
             detectOSAndBrowser: function() {
-                var nAgt = $window.navigator.userAgent.toLowerCase(),
+                var nAgt = '',
                     OSName = 'unknown OS',
                     browserName = 'unknown Browser',
                     nameOffset,
                     verOffset;
+
+                // TODO: iOS8 Bug: Deprecated attempt to access property 'userAgent' on a non-Navigator object.
+                try {
+                    nAgt = $window.navigator.userAgent.toLowerCase()
+                } catch(e){
+                    nAgt = 'Mozilla/5.0 (iPhone; CPU iPhone OS 8_0 like Mac OS X) AppleWebKit';
+                }
 
                 function has(needle){
                     return nAgt.indexOf(needle) != -1
@@ -196,6 +203,12 @@ angular.module('cmPhonegap')
                 // app check overrides all
                 if(this.isApp())
                     browserName = detecable.browser.app;
+
+                console.log({
+                    givenBrowserUserAgent: nAgt,
+                    os: OSName,
+                    browser: browserName
+                })
 
                 return {
                     givenBrowserUserAgent: nAgt,
