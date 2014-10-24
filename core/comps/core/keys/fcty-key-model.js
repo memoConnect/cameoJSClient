@@ -19,8 +19,7 @@ angular.module('cmCore')
             //Wrapper for RSA Keys
             var self        = this,
                 crypt       = undefined, // will be JSEncrypt() once a key is set
-                verified    = {},
-                pubKey      = undefined;
+                verified    = {};
 
             cmObject.addEventHandlingTo(this);
 
@@ -95,13 +94,7 @@ angular.module('cmCore')
             this.getPublicKey = function(){
                 var public_key;
                 try{
-                    if(!pubKey){
-                        public_key = crypt.getPublicKey();
-                        pubKey = public_key;
-                    } else {
-                        public_key = pubKey;
-                    }
-
+                    public_key = crypt.getPublicKey();
                 }catch(e){}
 
                 return public_key;
