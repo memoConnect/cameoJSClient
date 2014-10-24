@@ -24,29 +24,18 @@ angular.module('cmDesktopUi').directive('cmDesktopMenu',[
 
                 $scope.checkActive = function(urls, ignore){
                     var arrUrl = urls.split(','),
-                        found = false,
-                        found_ignore = false;
-
-                    if(ignore){
-                        console.log('ignore',ignore)
-                        console.log('ignore fnc',ignore.split(',').some(function(item){return ($location.$$url.indexOf(item) == -1)}))
-                        console.log('$location.$$url',$location.$$url)
-                        console.log('$location.$$url.indexOf(contact/request/list) == -1',$location.$$url.indexOf('contact/request/list') == -1)
-                        console.log('$location.$$url.indexOf(contact/create) == -1',$location.$$url.indexOf('contact/create') == -1)
-                    }
+                        isActive = false,
+                        foundIgnore = ignore ? ignore.split(',').some(function(item){
+                            return $location.$$url.indexOf(item) >= 0
+                        }) : false;
 
                     arrUrl.forEach(function(url){
-                        if(cmUtil.startsWith($location.$$url,'/' + url) && found_ignore == false){
-                            if(typeof ignore == 'undefined') {
-                                found = true;
-                            } else if(ignore.split(',').some(function(item){return ($location.$$url.indexOf(item) == -1)})) {
-                                found_ignore = true;
-                            } else {
-                                found = true;
-                            }
+                        if(cmUtil.startsWith($location.$$url,'/' + url) && !foundIgnore){
+                            isActive = true;
                         }
                     });
-                    return (found_ignore ? false : found);
+
+                    return isActive;
                 };
 
                 $scope.goTo = function(parentBtn, url, isSub){
