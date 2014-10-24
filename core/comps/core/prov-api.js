@@ -13,7 +13,8 @@ angular.module('cmCore').provider('cmApi',[
             commit_interval = 2000,
             events_disabled = true,
             events_path = "",
-            events_interval = 5000
+            events_interval = 5000,
+            event_call_running = false
 
         this.restApiUrl = function(url){
             rest_api = url;
@@ -438,7 +439,7 @@ angular.module('cmCore').provider('cmApi',[
                 }
 
                 api.getEvents = function(force){
-                    if(!api.subscriptionId){
+                    if(!api.subscriptionId || event_call_running){
 
                         //if no subscriptionId is present, get one and try again later:
                         api.subscribeToEventStream()
@@ -447,11 +448,13 @@ angular.module('cmCore').provider('cmApi',[
                         })
 
                     }else{
+                        event_call_running = true;
+
                         api.get({
                             path: events_path + '/' + api.subscriptionId,
                             exp_ok: 'events'
                         }, force)
-                            .then(
+                        .then(
                             function(events){
                                 events.forEach(function(event){
                                     cmLogger.debug('Backend event: '+event.name)
@@ -462,6 +465,11 @@ angular.module('cmCore').provider('cmApi',[
                                 //Todo: Alle Daten updaten// reload ?
                                 api.resetSubscriptionId()
                                 cmLogger.debug('cmApi.getEvents() reset invalid subscriptionId.')
+                            }
+                        )
+                        .finally(
+                            function(){
+                                event_call_running = false;
                             }
                         )
                     }
