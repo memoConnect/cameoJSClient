@@ -16,24 +16,20 @@ angular.module('cmDesktopUi').directive('cmDesktopMenu',[
                 $scope.version = cmConfig.version;
                 $scope.menuVisible = false;
 
-                $scope.handleMenu = function(){
-                    $scope.menuVisible = $scope.menuVisible ? false : true;
-                    if($scope.menuVisible)
-                        cmNotify.trigger('bell:unring');
-                };
-
                 $scope.checkActive = function(urls, ignore){
                     var arrUrl = urls.split(','),
-                        found = false;
+                        isActive = false,
+                        foundIgnore = ignore ? ignore.split(',').some(function(item){
+                            return $location.$$url.indexOf(item) >= 0
+                        }) : false;
 
                     arrUrl.forEach(function(url){
-                        if(cmUtil.startsWith($location.$$url,'/' + url)){
-                            if(!ignore || $location.$$url.indexOf(ignore) == -1) {
-                                found = true;
-                            }
+                        if(cmUtil.startsWith($location.$$url,'/' + url) && !foundIgnore){
+                            isActive = true;
                         }
                     });
-                    return found;
+
+                    return isActive;
                 };
 
                 $scope.goTo = function(parentBtn, url, isSub){
@@ -52,14 +48,6 @@ angular.module('cmDesktopUi').directive('cmDesktopMenu',[
                             location.href = arr_location[0] + '/' + parentBtn.link;
                         }
 
-                        return false;
-                    }
-
-                    /**
-                     * if current location == url, then only close menu
-                     */
-                    if('/' + url == $location.$$url){
-                        $scope.handleMenu();
                         return false;
                     }
 

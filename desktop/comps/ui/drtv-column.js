@@ -5,7 +5,7 @@ angular.module('cmDesktopUi').directive('cmColumn',[
     function ($rootScope, $timeout) {
         return {
             restrict: 'E',
-            link: function(scope, element){
+            link: function(scope, element, attrs){
                 function addGrabber(){
                     if(element.find('cm-desktop-widget-menu').length == 1)
                         element.append('<div class="grabber"></div>');
@@ -13,6 +13,8 @@ angular.module('cmDesktopUi').directive('cmColumn',[
 
                 addGrabber();
 
+                if('cmWithoutFooterCheck' in attrs)
+                    return false;
 
                 function checkFooter(){
                     if(element.find('cm-footer').length == 0)

@@ -2,14 +2,18 @@
 
 //https://github.com/apache/cordova-plugin-inappbrowser/blob/8ce6b497fa803936784629187e9c66ebaddfbe1b/doc/index.md
 
-angular.module('cmPhonegap').directive('target',[
+angular.module('cmPhonegap')
+.directive('target',[
+    'cmDevice',
     '$window',
-    function ($window){
+    function (cmDevice,
+              $window){
         return {
             restrict: 'A',
             link: function(scope, element, attrs){
-
-                return false;
+                if(!cmDevice.isApp()){
+                    return false;
+                }
 
                 /*
                  target
@@ -22,14 +26,12 @@ angular.module('cmPhonegap').directive('target',[
 
                 if(attrs.target != ''){
                     element.on('click',function(event){
-                        console.log('open external link',attrs.href)
-                        alert('open '+attrs.target+' link ',attrs.href)
                         event.stopPropagation();
                         event.preventDefault();
 
                         //navigator.app.loadUrl(attrs.href, { openExternal:true });
 
-                        var ref = $window.open(attrs.href, attrs.target, 'location=yes');
+                        var ref = $window.open(attrs.href, '_system', 'location=yes');
 
                         // loadstart loadstop loaderror exit
                         // ref.addEventListener(eventname, callback);

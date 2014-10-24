@@ -40,7 +40,14 @@ angular.module('cmWidgets').directive('cmWidgetSettingsList', [
                 };
 
                 $scope.checkActive = function(page){
-                    if($location.$$url.indexOf(page) != -1){
+                    if($location.$$url.indexOf('identity') != -1 && page.indexOf('identity') != -1){
+                        if(page.indexOf('key') != -1 && $location.$$url.indexOf('key') != -1){
+                            return true;
+                        } else if(page.indexOf('key') == -1 && $location.$$url.indexOf('key') == -1){
+                            return true;
+                        }
+
+                    } else if($location.$$url.indexOf(page) != -1){
                         return true;
                     }
 
