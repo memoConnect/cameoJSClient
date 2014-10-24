@@ -2,8 +2,8 @@
 
 angular.module('cmUi')
 .filter('cmParse', [
-    '$filter',
-    function($filter){
+    '$filter', '$compile',
+    function($filter, $compile){
         return function(html, ignore){
             if(ignore == undefined)
                 ignore = {};
@@ -18,7 +18,7 @@ angular.module('cmUi')
                 html = $filter('cmInlineTranslate')(html);
 
             if(!('autolink' in ignore))
-                html = $filter('cmAutolink')(html, 40);// $sce
+                html = $filter('cmAutolink')(html, 40);//$sce
 
             if(!('emoji' in ignore))
                 html = $filter('cmEmoji')(html);

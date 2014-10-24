@@ -1,0 +1,19 @@
+<section class="theme-a fixed-layout">
+    <cm-header>
+        <cm-back back-to="/settings/identity/list"></cm-back>
+        <cm-logo></cm-logo>
+        <section class="icons-list">
+            <cm-add-button cm-weight="1" ng-click="createNewIdentity()" data-qa="create-identity-btn" cm-icon="avatar-add"></cm-add-button>
+        </section>
+    </cm-header>
+
+    <cm-column class="fill-bg">
+        <cm-desktop-widget-menu></cm-desktop-widget-menu>
+    </cm-column>
+    <cm-column class="fill-bg">
+        <cm-widget-settings-list></cm-widget-settings-list>
+    </cm-column>
+    <cm-column class="fill-bg no-scroll">
+        <cm-widget-identity-list></cm-widget-identity-list>
+    </cm-column>
+</section>

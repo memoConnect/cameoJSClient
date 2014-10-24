@@ -55,7 +55,9 @@ angular.module('cmConversations')
             var self                = this,
                 passphraseVault     = undefined,
                 encryption_disabled = undefined,
-                limit               = 10;
+                limit               = 10,
+                moep                = undefined;
+
 
             this.id                 = undefined;
             
@@ -217,7 +219,7 @@ angular.module('cmConversations')
              * @param {Object} data The conversation data as recieved from the backend.
              */
             this.importData = function(data){
-                //cmLogger.debug('cmConversationModel:importData',data);
+//                cmLogger.debug('cmConversationModel:importData');
                 if(typeof data !== 'object'){
                     cmLogger.debug('cmConversationModel:import:failed - no data!');
                     return this;
@@ -330,6 +332,7 @@ angular.module('cmConversations')
              * @returns {ConversationModel} this Returns ConversationModel
              */
             this.load = function(){
+//                cmLogger.debug('cmConversationModel:load');
                 if(typeof this.id == 'string'
                     && this.id.length > 0
                     && this.state.is('loading') === false)
@@ -650,7 +653,14 @@ angular.module('cmConversations')
                 if(!passphraseVault)
                     return $q.reject('passphrase vault missing.')
 
-                return  passphraseVault.get(this.password)
+                /**
+                 * @TODO BLOEDSINN!!!!! Passphrase
+                 */
+                if(!moep){
+                    moep = passphraseVault.get(this.password)
+                }
+
+                return moep;
             };
 
             /**

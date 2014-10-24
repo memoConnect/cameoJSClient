@@ -28,7 +28,7 @@
 
     <hr class="margin-small">
 
-    <cm-password ng-model="formData.password" cm-tabindex="2"></cm-password>
+    <cm-password ng-model="formData.password" cm-tabindex="2" cm-with-stars="true"></cm-password>
 
     <hr class="margin-small">
 
@@ -136,7 +136,7 @@
     </article>
 </form>
 
-<cm-footer>
+<cm-footer class="desktop-w-full">
     <button id="registerUserButton" class="cm-btn-black" ng-click="createUser()" data-qa="btn-createUser">
         <span ng-show="!showLoader">
             {{'REGISTER.LABEL.SUBMIT'|cmTranslate}}
