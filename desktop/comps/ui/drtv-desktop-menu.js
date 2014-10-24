@@ -26,9 +26,12 @@ angular.module('cmDesktopUi').directive('cmDesktopMenu',[
                     var arrUrl = urls.split(','),
                         found = false;
 
+                    console.log('ignore',ignore)
+                    console.log('$location.$$url.indexOf(ignore) == -1',$location.$$url.indexOf(ignore) == -1)
+
                     arrUrl.forEach(function(url){
                         if(cmUtil.startsWith($location.$$url,'/' + url)){
-                            if(!ignore || $location.$$url.indexOf(ignore) == -1) {
+                            if(typeof ignore == 'undefined' || $location.$$url.indexOf(ignore) == -1) {
                                 found = true;
                             }
                         }
