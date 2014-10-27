@@ -100,7 +100,6 @@ angular.module('cmCore').service('cmPassphraseVault',[
              */
 
             this.get = function(password){
-                console.log('PassphraseVault.get')
                 return  $q.reject('unknown.')
                         //try symmetric decryption first:,               
                         .catch(function(){

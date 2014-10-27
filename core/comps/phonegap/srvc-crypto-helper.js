@@ -14,11 +14,7 @@ angular.module('cmPhonegap')
                 keySize: 2048,
 
                 init: function(){
-                    console.log('cmCryptoHelper init')
                     cmPhonegap.isReady(function(){
-                        console.log('isReady')
-                        console.log('!(cmCryptoHelper in $window) ' + (!('cmCryptoHelper' in $window)))
-                        console.log('!cmDevice.isiOS() '+(!cmDevice.isiOS()))
 
                         if(!('cmCryptoHelper' in $window)){
                             //cmLogger.info('CRYPTOHELPER PLUGIN IS MISSING');
