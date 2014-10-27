@@ -16,13 +16,25 @@ module.exports = function(grunt, options){
 
     return {
         tasks:{
+            copy: {
+                'resources-phonegap-local': {
+                    files: [
+                        {
+                            expand: true,
+                            cwd: 'resource/phonegap/res/',
+                            src: ['**'],
+                            dest: 'build/phonegap-tmp/res/'
+                        }
+                    ]
+                }
+            },
             phonegap: {
                 // https://www.npmjs.org/package/grunt-phonegap
                 config: {
                     root: 'build/phonegap/www',
                     config: 'build/phonegap/www/config.xml',
                     cordova: '.cordova',
-                    path: 'phonegap-build',
+                    path: 'build/phonegap-tmp',
                     plugins: [
                         'org.apache.cordova.device',
                         'org.apache.cordova.camera',
