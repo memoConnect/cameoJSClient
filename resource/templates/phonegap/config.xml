@@ -90,21 +90,22 @@
     <preference name="ios-statusbarstyle" value="default" />
     <preference name="auto-hide-splash-screen" value="true" />
     <preference name="disable-cursor" value="true" />
+    <preference name="SplashScreen" value="screen"/>
 
     <!-- Icons / Splash -->
 
     <platform name="android">
-        <icon src="www/res/icons/android/icon-36-ldpi.png" gap:qualifier="ldpi" />
-        <icon src="www/res/icons/android/icon-48-mdpi.png" gap:qualifier="mdpi" />
-        <icon src="www/res/icons/android/icon-72-hdpi.png" gap:qualifier="hdpi" />
-        <icon src="www/res/icons/android/icon-96-xhdpi.png" gap:qualifier="xhdpi" />
+        <icon src="www/res/icons/android/icon-36-ldpi.png" density="port-ldpi"/>
+        <icon src="www/res/icons/android/icon-48-mdpi.png" density="port-mdpi"/>
+        <icon src="www/res/icons/android/icon-72-hdpi.png" density="port-hdpi"/>
+        <icon src="www/res/icons/android/icon-96-xhdpi.png" density="port-xhdpi"/>
+        <icon src="www/res/icons/android/icon-144-xhdpi.png" density="port-xxhdpi"/>
 
-
-        <splash src="www/res/screens/android/drawable-ldpi/screen.9.png" gap:qualifier="ldpi" />
-        <splash src="www/res/screens/android/drawable-mdpi/screen.9.png" gap:qualifier="mdpi" />
-        <splash src="www/res/screens/android/drawable-hdpi/screen.9.png" gap:qualifier="hdpi" />
-        <splash src="www/res/screens/android/drawable-xhdpi/screen.9.png" gap:qualifier="xhdpi" />
-        <splash src="www/res/screens/android/drawable-xxhdpi/screen.9.png" gap:qualifier="xxhdpi" />
+        <splash src="www/res/screens/android/drawable-ldpi/screen.9.png" density="port-ldpi"/>
+        <splash src="www/res/screens/android/drawable-mdpi/screen.9.png" density="port-mdpi"/>
+        <splash src="www/res/screens/android/drawable-hdpi/screen.9.png" density="port-hdpi"/>
+        <splash src="www/res/screens/android/drawable-xhdpi/screen.9.png" density="port-xhdpi"/>
+        <splash src="www/res/screens/android/drawable-xxhdpi/screen.9.png" density="port-xxhdpi"/>
     </platform>
 
     <platform name="ios">
@@ -139,8 +140,8 @@
     </platform>
 
     <platform name="winphone">
-        <icon gap:platform="winphone" src="www/res/icons/winphone/icon-62.png" width="99" height="99" />
-        <icon gap:platform="winphone" src="www/res/icons/winphone/tile-173.png" width="159" height="159" gap:role="background" />
+        <icon src="www/res/icons/winphone/icon-62.png" width="99" height="99" />
+        <icon src="www/res/icons/winphone/tile-173.png" width="159" height="159" gap:role="background" />
 
         <splash src="www/res/screens/windows-phone/screen-portrait.png" />
     </platform>
