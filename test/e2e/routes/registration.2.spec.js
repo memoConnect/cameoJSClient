@@ -50,7 +50,7 @@ describe('Registration: ', function () {
 
         ptor.wait(function () {
             return $("[data-qa='cameoId-info-username-invalid']").isDisplayed()
-        }, 1001, "username invalid timeout")
+        }, "username invalid timeout")
 
         util.checkWarning("cameoId-info-username-invalid")
 

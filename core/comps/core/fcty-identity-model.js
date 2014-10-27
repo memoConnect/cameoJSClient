@@ -45,7 +45,8 @@ angular.module('cmCore')
              * @param identity_data
              */
             this.importData = function(data){
-                //cmLogger.debug('cmIdentityModel.importData');
+                //cmLogger.debug('cmIdentityModel.importData', data);
+
                 if(typeof data !== 'object'){
                     cmLogger.debug('cmIdentityModel:import:failed - no data!');
                     return this;
@@ -61,7 +62,8 @@ angular.module('cmCore')
                     this.email              = data.email        || this.email;
                 else
                     this.email              = {value:data.email};
-                if(typeof data.email != 'string')
+
+                if(typeof data.phoneNumber != 'string')
                     this.phoneNumber        = data.phoneNumber  || this.phoneNumber;
                 else
                     this.phoneNumber        = {value:data.phoneNumber};
