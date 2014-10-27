@@ -653,14 +653,7 @@ angular.module('cmConversations')
                 if(!passphraseVault)
                     return $q.reject('passphrase vault missing.')
 
-                /**
-                 * @TODO BLOEDSINN!!!!! Passphrase
-                 */
-                if(!moep){
-                    moep = passphraseVault.get(this.password)
-                }
-
-                return moep;
+                return passphraseVault.get(this.password)
             };
 
             /**
