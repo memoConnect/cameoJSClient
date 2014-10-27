@@ -103,7 +103,6 @@ angular.module('cmCore').service('cmPassphraseVault',[
              */
 
             this.get = function(password){
-                // console.log('GET PP')
 
                 //@Todo disable caching if not neccessary
                 if(cache_passphrase && couldBeAPassphrase(cached_passphrase))
