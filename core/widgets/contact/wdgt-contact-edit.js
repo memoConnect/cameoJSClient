@@ -25,10 +25,7 @@ angular.module('cmWidgets')
                 },
                 templateUrl:    'widgets/contact/wdgt-contact-edit.html',
                 controller: function($scope, $element, $attrs){
-
                     var loader = new cmLoader($scope);
-
-//                    loader.start();
 
                     $scope.hasLocalKey = !!cmUserModel.loadLocalKeys().length;
 
@@ -105,10 +102,13 @@ angular.module('cmWidgets')
                         var deferred = $q.defer(),
                             objectChange = {};
 
-                        if($scope.formData.displayName != ''){
+                        if($scope.formData.displayName != '' && $scope.formData.displayName != $scope.contact.identity.displayName){
                             objectChange.displayName = $scope.formData.displayName;
                         }
 
+                        /**
+                         * @TODO leerstring besser abfangen
+                         */
                         function checkEmail() {
                             if ($scope.formData.emails.length > 0
                                 && $scope.formData.emails[0].value != undefined
@@ -147,12 +147,8 @@ angular.module('cmWidgets')
 
                         $scope.validateForm().then(
                             function(objectChange) {
-                                cmContactsModel
-                                    .editContact($scope.contact.id, objectChange)
-                                    .then(
+                                $scope.contact.save(objectChange).then(
                                     function () {
-                                        // TODO: update model contact + identity
-                                        //$scope.contact.importData({identity:objectChange});
                                         cmNotify.info('CONTACT.INFO.SUCCESS.EDIT', {ttl: 5000, displayType: 'modal'});
                                         loader.stop();
                                     },
@@ -168,10 +164,10 @@ angular.module('cmWidgets')
                         )
                     };
 
-                    $scope.contact.identity.on('update:finished', refresh)
+                    $scope.contact.identity.on('update:finished', refresh);
 
                     $scope.$on('$destroy', function(){
-                        $scope.contact.identity.off('update:finished', refresh)
+                        $scope.contact.identity.off('update:finished', refresh);
                     })
 
                 }
