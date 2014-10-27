@@ -1008,8 +1008,15 @@ angular.module('cmConversations')
                         self.timeOfLastUpdate = message_data.created;
                     }
 
-                    message_data.conversation = self;
-                    self.messages.create(message_data);
+                    var message = self.messages.find(message_data);
+                    if(message == null){
+                        message_data.conversation = self;
+                        self.numberOfMessages++;
+                        self.messages.create(message_data);
+                    } else {
+                        message.importData(message_data);
+                    }
+
                     self.decrypt();
                     self.setLastMessage();
 
