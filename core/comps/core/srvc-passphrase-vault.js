@@ -62,7 +62,10 @@ angular.module('cmCore').service('cmPassphraseVault',[
 
             var sePassphrase        = data.sePassphrase,
                 aePassphraseList    = data.aePassphraseList || [],
-                self                = this
+                self                = this,
+
+                cache_passphrase            = true,
+                cached_passphrase           = undefined
 
             /**
              * @ngdoc method
@@ -100,6 +103,13 @@ angular.module('cmCore').service('cmPassphraseVault',[
              */
 
             this.get = function(password){
+                // console.log('GET PP')
+
+                //@Todo disable caching if not neccessary
+                if(cache_passphrase && couldBeAPassphrase(cached_passphrase))
+                    return $q.when(cached_passphrase)
+
+
                 return  $q.reject('unknown.')
                         //try symmetric decryption first:,               
                         .catch(function(){
@@ -125,6 +135,10 @@ angular.module('cmCore').service('cmPassphraseVault',[
                         //if not reject 
                         .then(
                             function(new_passphrase){
+
+                                if(couldBeAPassphrase(new_passphrase))
+                                    cached_passphrase = new_passphrase
+
                                 return  couldBeAPassphrase(new_passphrase)
                                         ?   $q.when(new_passphrase)
                                         :   $q.reject('decrypted passphrase invalid.')
