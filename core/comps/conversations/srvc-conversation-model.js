@@ -287,7 +287,7 @@ angular.module('cmConversations')
                 */
 
                 this.state.unset('new');
-                this.trigger('update:finished');
+                this.trigger('update:finished', data);
 
                 return this;
             };
@@ -579,26 +579,6 @@ angular.module('cmConversations')
                         return $q.reject();
                     }
                 );
-
-
-                /**
-                 * @TODO check, problem micha!
-                 */
-                /*
-                if (success) {
-                    this.trigger('decrypt:success');
-
-                    // save password to localstorage
-//                    if (typeof this.password == 'string' && this.password.length > 0 && !this.isUserInPassphraseList()){
-                    if (typeof this.password == 'string' && this.password.length > 0){
-                        this.localPWHandler.set(this.id, this.password);
-                    }
-                } else {
-                    this.trigger('decrypt:failed');
-                }
-
-                return success;
-                */
             };
 
             /**
@@ -976,11 +956,14 @@ angular.module('cmConversations')
                 self.recipients.reset();
             });
 
-            this.on('update:finished', function(){
+            this.on('update:finished', function(event, data){
 //                cmLogger.debug('cmConversationModel:on:update:finished');
-//                cmBoot.resolve();
                 self.setLastMessage();
-                self.decrypt();
+
+                if(typeof data == 'object' && typeof data.messages != 'undefined' && data.messages.length > 0){
+                    self.decrypt();
+                }
+
                 //self.securityAspects.refresh();
                 self.updateLockStatus();
                 //self.handleMissingAePassphrases();
@@ -1008,8 +991,15 @@ angular.module('cmConversations')
                         self.timeOfLastUpdate = message_data.created;
                     }
 
-                    message_data.conversation = self;
-                    self.messages.create(message_data);
+                    var message = self.messages.find(message_data);
+                    if(message == null){
+                        message_data.conversation = self;
+                        self.numberOfMessages++;
+                        self.messages.create(message_data);
+                    } else {
+                        message.importData(message_data);
+                    }
+
                     self.decrypt();
                     self.setLastMessage();
 

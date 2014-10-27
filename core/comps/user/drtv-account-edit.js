@@ -10,7 +10,6 @@ angular.module('cmUser')
             restrict: 'E',
             templateUrl: 'comps/user/drtv-account-edit.html',
             controller: function ($scope) {
-
                 var loader = new cmLoader($scope);
 
                 $scope.showPasswordChange = false;

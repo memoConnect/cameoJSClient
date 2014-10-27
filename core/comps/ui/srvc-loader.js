@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('cmUi').service('cmLoader',[
+angular.module('cmUi').factory('cmLoader',[
     function() {
         return function cmLoader($scope){
             $scope.showLoader = false;

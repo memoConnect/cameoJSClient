@@ -3,7 +3,6 @@
     {{'CONTACT.HEADLINE'|cmTranslate}}
 </h2>
 
-
 <article class="content edit-identity-head clearfix">
     <div class="cm-fl mr5">
         <cm-avatar cm-data="contact.identity" cm-view="{{chooseAvatar?'unknown':''}}" ng-show="contact.identity" class="big"></cm-avatar>
@@ -138,6 +137,10 @@
             </cm-info-bubble>
         </ng-form>
     </cm-multi-input>
+
+    <button ng-click="showTestLoader = showTestLoader?false:true">huhu</button>
+    <cm-loader ng-show="showTestLoader" cm-color="ci-color"></cm-loader>
+
 </form>
 
 <cm-footer ng-hide="disabled">
