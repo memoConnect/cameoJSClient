@@ -55,12 +55,14 @@ angular.module('cmConversations')
             var self                = this,
                 passphraseVault     = undefined,
                 encryption_disabled = undefined,
-                limit               = 10;
+                limit               = 10,
+                moep                = undefined;
+
 
             this.id                 = undefined;
             
             this.recipients         = new cmFactory(cmIdentityModel);      //list of cmIdentityModel objects
-            this.messages           = new cmFactory(cmMessageModel);        //list of MessageModel objects
+            this.messages           = new cmFactory(cmMessageModel);       //list of MessageModel objects
 
             this.timeOfCreation     = 0;          //timestamp of the conversation's creation
             //--> meta
@@ -651,7 +653,7 @@ angular.module('cmConversations')
                 if(!passphraseVault)
                     return $q.reject('passphrase vault missing.')
 
-                return  passphraseVault.get(this.password)
+                return passphraseVault.get(this.password)
             };
 
             /**
