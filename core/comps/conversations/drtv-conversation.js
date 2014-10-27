@@ -214,10 +214,6 @@ angular.module('cmConversations')
                  */
                 $scope.send = function(){
 
-                    // $scope.conversation.messages
-                    // .create({conversation:$scope.conversation})
-                    // .setText('blub')
-
                     return  checkConversationSetup()
                             .then(function(){
                                 $scope.conversation.getPassphrase()
