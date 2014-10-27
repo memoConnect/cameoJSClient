@@ -14,7 +14,7 @@ angular.module('cmUser')
 
                 $scope.showPasswordChange = false;
                 $scope.showReadOnly = false;
-                $scope.isPristine = false;
+                $scope.isPristine = true;
 
                 $scope.togglePasswordChange = function(action){
                     $scope.showPasswordChange = action && action == 'close' || $scope.showPasswordChange ? false : true;
