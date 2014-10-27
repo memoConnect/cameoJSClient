@@ -91,7 +91,8 @@ angular.module('cmUser')
                         }
                     }
 
-
+                    checkEmail();
+                    checkPhoneNumber();
                     checkPassword();
 
                     if($scope.cmForm.$valid !== false){
