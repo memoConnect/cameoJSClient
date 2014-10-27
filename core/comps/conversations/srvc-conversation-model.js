@@ -62,7 +62,7 @@ angular.module('cmConversations')
             this.id                 = undefined;
             
             this.recipients         = new cmFactory(cmIdentityModel);      //list of cmIdentityModel objects
-            this.messages           = new cmFactory(cmMessageModel);        //list of MessageModel objects
+            this.messages           = new cmFactory(cmMessageModel);       //list of MessageModel objects
 
             this.timeOfCreation     = 0;          //timestamp of the conversation's creation
             //--> meta
