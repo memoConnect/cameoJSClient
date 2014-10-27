@@ -965,7 +965,7 @@ angular.module('cmConversations')
                 }
 
                 //self.securityAspects.refresh();
-                //self.updateLockStatus();
+                self.updateLockStatus();
                 //self.handleMissingAePassphrases();
             });
 
