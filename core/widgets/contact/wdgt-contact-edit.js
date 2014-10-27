@@ -106,24 +106,27 @@ angular.module('cmWidgets')
                             objectChange.displayName = $scope.formData.displayName;
                         }
 
-                        /**
-                         * @TODO leerstring besser abfangen
-                         */
                         function checkEmail() {
                             if ($scope.formData.emails.length > 0
                                 && $scope.formData.emails[0].value != undefined
-                                && $scope.formData.emails[0].value != $scope.contact.identity.email.value) {
+                                && $scope.formData.emails[0].value != $scope.contact.identity.email.value
+                                && !($scope.contact.identity.email.value == undefined && $scope.formData.emails[0].value == '')) { // special case to avoid send empty email -> compares empty value with undefined identity value
                                 objectChange.email = $scope.formData.emails[0].value;
-                                objectChange.preferredMessageType = 'mail';
+                                if($scope.formData.emails[0].value != '') {
+                                    objectChange.preferredMessageType = 'mail';
+                                }
                             }
                         }
 
                         function checkPhoneNumber() {
                             if ($scope.formData.phoneNumbers.length > 0
                                 && $scope.formData.phoneNumbers[0].value != undefined
-                                && $scope.formData.phoneNumbers[0].value != $scope.contact.identity.phoneNumber.value) {
-                                objectChange.phoneNumber = $scope.formData.phoneNumbers[0].value;
-                                objectChange.preferredMessageType = 'sms';
+                                && $scope.formData.phoneNumbers[0].value != $scope.contact.identity.phoneNumber.value
+                                && !($scope.contact.identity.phoneNumber.value == undefined && $scope.formData.phoneNumbers[0].value == '')) { // special case to avoid send empty phonenumber -> compares empty value with undefined identity value
+                                    objectChange.phoneNumber = $scope.formData.phoneNumbers[0].value;
+                                    if($scope.formData.phoneNumbers[0].value != ''){
+                                        objectChange.preferredMessageType = 'sms';
+                                    }
                             }
                         }
 
