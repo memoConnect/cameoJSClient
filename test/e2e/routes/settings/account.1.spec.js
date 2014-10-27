@@ -12,7 +12,7 @@ describe('Route Settings Account: ', function(){
         oldPassword = 'password',
         newPassword = 'holymoly'
 
-    describe('Check Form', function() {
+    describe('Check Form - ', function() {
         it('should create a test user', function(){
             testUser = util.createTestUser(undefined,'account settings')
         })
@@ -136,12 +136,17 @@ describe('Route Settings Account: ', function(){
         })
 
         it('check saved data & test login with new password', function(){
+            util.waitForQa('input-loginName');
             util.getVal('input-loginName').then(function(value){
                 expect(value).toMatch(genLoginName)
             })
+
+            util.waitForQa('input-phoneNumber');
             util.getVal('input-phoneNumber').then(function(value){
                 expect(value).toBe(phoneNumber)
             })
+
+            util.waitForQa('input-email');
             util.getVal('input-email').then(function(value){
                 expect(value).toBe(email)
             })

@@ -88,7 +88,7 @@
         <div class="cm-input-ctn" ng-class="{'cm-input-disabled':disabled}">
             <input
                     tabindex="1" data-qa="input-displayname"
-                    type="text" name="displayName" ng-model="contact.identity.displayName"
+                    type="text" name="displayName" ng-model="formData.displayName"
                     ng-disabled="disabled" required />
         </div>
 
@@ -128,7 +128,7 @@
                 <input
                         tabindex="3" data-qa="input-email"
                         name="email" ng-model="item.value"
-                        ng-disabled="disabled" cm-validate-email />
+                        ng-disabled="disabled" cm-validate-email cm-adaptive-change />
             </div>
             <!--<div cm-type-chooser cm-choose-value-to="item" ng-class="{'cm-input-disabled':disabled}" cm-disabled="disabled"></div>-->
             <cm-info-bubble class="cm-alert" ng-show="formEmail.email.$dirty && formEmail.email.$invalid">
@@ -141,7 +141,15 @@
 </form>
 
 <cm-footer ng-hide="disabled">
-    <button data-qa="btn-create-contact" class="cm-btn-grey" id="registerUserButton" ng-click="saveUser()">
-        {{'CONTACT.FOOTER.SAVE'|cmTranslate}} <i class="fa cm-checkbox-right"></i>
+    <button data-qa="btn-create-contact" class="cm-btn-grey" id="registerUserButton" ng-click="saveUser()" data-qa="btn-footer">
+        <span ng-show="!showLoader && !isPristine" data-qa="btn-saveUser">
+            {{'CONTACT.FOOTER.SAVE'|cmTranslate}}
+            <i class="fa cm-checker"></i>
+        </span>
+        <span ng-show="isPristine" data-qa="btn-pristineBack">
+            {{'CONTACT.FOOTER.SAVE'|cmTranslate}}
+            <i class="fa  cm-out"></i>
+        </span>
+        <cm-loader ng-show="showLoader" cm-color="ci-color"></cm-loader>
     </button>
 </cm-footer>

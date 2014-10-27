@@ -7,7 +7,7 @@ angular.module('cmUi')
     function($sce, $compile,
              cmUtil){
         return function(text, attrStrLen){
-            var pattern = /(^|[\s\n]|<br\/?>)(((?:https?|ftp)(:\/\/)|(www|\/\/))[\-A-Z0-9+\u0026\u2019@#\/%?=()~_|!:,.;]*[\-A-Z0-9+\u0026@#\/%=~()_|])/gi;
+            var pattern = /(^|[\s\n]|<br\/?>)(((?:https?|ftp)(:\/\/)|(www|\/\/))[\-A-Z0-9+\u0026\u2019@#\/%?=()~_|!:,.;öäüÖÄÜ]*[\-A-Z0-9+\u0026@#\/%=~()_|])/gi;
             var strLen = attrStrLen||50;
             var slash = '&#x2F;'; // find forward slash '/'
 

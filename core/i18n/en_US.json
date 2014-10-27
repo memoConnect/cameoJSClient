@@ -711,7 +711,7 @@
         },
         "CONFIRM": {
             "HEADER": "Please Confirm!",
-            "STANDARD": "You sure you want to cancel the operation?"
+            "STANDARD": "Are you sure you want to cancel the operation?"
         },
         "CHOOSE_SOURCE": {
             "CAMERA": "Take a photo",

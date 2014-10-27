@@ -204,12 +204,6 @@ angular.module('cmPhonegap')
                 if(this.isApp())
                     browserName = detecable.browser.app;
 
-                console.log({
-                    givenBrowserUserAgent: nAgt,
-                    os: OSName,
-                    browser: browserName
-                })
-
                 return {
                     givenBrowserUserAgent: nAgt,
                     os: OSName,

@@ -221,13 +221,6 @@ angular.module('cmContacts').service('cmContactsModel',[
         this.removeFriendRequest = function(request){
             this.requests.deregister(request)
 
-            /*
-//            cmLogger.debug('cmContactsModel:removeFriendRequest');
-
-            var index = this.requests.indexOf(request);
-            this.requests.splice(index,1);
-            */
-           
             return this;
         };
 
@@ -250,7 +243,12 @@ angular.module('cmContacts').service('cmContactsModel',[
                     })
         };
 
+        /**
+         * @deprecated
+         */
         this.editContact = function(id, data){
+            cmLogger.debug('cmContactsModel.editContact is deprecated! - Use now cmContactModel.save()');
+
             var defer = $q.defer();
             cmContactsAdapter
                 .editContact(id, data)
