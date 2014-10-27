@@ -90,41 +90,42 @@ angular.module('cmSecurityAspects')
                         return ['symmetric', 'mixed'].indexOf(conversation.getKeyTransmission()) == -1
                     }
                 })
-                //.addAspect({
-                //    id: 'TRUSTING_ALL_RECIPIENTS',
-                //    dependencies: ['ENCRYPTED', 'NO_SYMMETRIC_KEY_TRANSMISSION'],
-                //    value: 1,
-                //    check: function(conversation){
-                //        /**
-                //         * @todo work around hack from BB 19.09.2014
-                //         * new workaround for promises 17.10.2014 AP
-                //         */
-                //        if(conversation.recipients.length < 3){
-                //            $q.all(conversation.recipients.map(function(recipient){
-                //                return cmUserModel.verifyTrust(recipient)
-                //            }))
-                //            .then(
-                //                function(){
-                //                    if(!conversation.workaround_aspects_trusted){
-                //                        conversation.workaround_aspects_trusted = true
-                //                        self.refresh()
-                //                    }
-                //
-                //                },
-                //                function(){
-                //                    if(conversation.workaround_aspects_trusted){
-                //                        conversation.workaround_aspects_trusted = false
-                //                        self.refresh()
-                //                    }
-                //
-                //                }
-                //            )
-                //            return conversation.workaround_aspects_trusted
-                //        } else {
-                //            return false
-                //        }
-                //    }
-                //});
+                .addAspect({
+                    id: 'TRUSTING_ALL_RECIPIENTS',
+                    dependencies: ['ENCRYPTED', 'NO_SYMMETRIC_KEY_TRANSMISSION'],
+                    value: 1,
+                    check: function(conversation){
+                        /**
+                         * @todo work around hack from BB 19.09.2014
+                         * new workaround for promises 17.10.2014 AP
+                         */
+                        if(conversation.recipients.length < 3){
+                            $q.all(conversation.recipients.map(function(recipient){
+                                return cmUserModel.verifyTrust(recipient)
+                            }))
+                            .then(
+                                function(){
+
+                                    if(!conversation.workaround_aspects_trusted){
+                                        conversation.workaround_aspects_trusted = true
+                                        self.refresh()
+                                    }
+
+                                },
+                                function(){
+                                    if(conversation.workaround_aspects_trusted){
+                                        conversation.workaround_aspects_trusted = false
+                                        self.refresh()
+                                    }
+
+                                }
+                            )
+                            return conversation.workaround_aspects_trusted
+                        } else {
+                            return false
+                        }
+                    }
+                });
 
             return self;
         }
