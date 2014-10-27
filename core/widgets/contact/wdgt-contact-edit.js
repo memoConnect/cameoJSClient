@@ -40,6 +40,12 @@ angular.module('cmWidgets')
                     $scope.isTrusted    = undefined;
                     $scope.hasKeys      = undefined;
 
+                    $scope.isPristine = true;
+
+                    $rootScope.$on('pristine:false', function(){
+                        $scope.isPristine = false;
+                    })
+
                     function refresh(){
                         //////////////////////
                         // set form
@@ -143,6 +149,12 @@ angular.module('cmWidgets')
                     };
 
                     $scope.saveUser = function(){
+                        if($scope.isPristine){
+                            $rootScope.goBack();
+                            return false;
+                        }
+
+
                         if(loader.isIdle())
                             return false;
 
@@ -153,6 +165,7 @@ angular.module('cmWidgets')
                                 $scope.contact.save(objectChange).then(
                                     function () {
                                         cmNotify.info('CONTACT.INFO.SUCCESS.EDIT', {ttl: 5000, displayType: 'modal'});
+                                        $scope.isPristine = true;
                                         loader.stop();
                                     },
                                     function () {
