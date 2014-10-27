@@ -26,6 +26,7 @@ angular.module('cmWidgets')
                 templateUrl:    'widgets/contact/wdgt-contact-edit.html',
                 controller: function($scope, $element, $attrs){
                     var loader = new cmLoader($scope);
+                    //loader.start();
 
                     $scope.hasLocalKey = !!cmUserModel.loadLocalKeys().length;
 
