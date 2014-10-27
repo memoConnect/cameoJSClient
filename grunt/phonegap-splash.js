@@ -11,7 +11,7 @@ module.exports = function(grunt, options){
             // splashscrenn for apps
             phonegapsplash: {
                 build: {
-                    src: 'resource/phonegap/res/screen/splash-canevas.png',
+                    src: 'resource/phonegap/res/screens/splash-canevas.png',
                     dest: 'build/phonegapsplash/',
                     options: {
                         layouts: ['portrait'],

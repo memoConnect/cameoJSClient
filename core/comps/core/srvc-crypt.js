@@ -2,9 +2,9 @@
 
 angular.module('cmCore')
 .service('cmCrypt',[
-    'cmLogger', 'cmKey', 'cmWebworker',
+    'cmLogger', 'cmKey', 'cmWebworker', 'cmCryptoHelper',
     '$q', '$interval', '$rootScope',
-    function (cmLogger, cmKey, cmWebworker,
+    function (cmLogger, cmKey, cmWebworker, cmCryptoHelper,
               $q, $interval, $rootScope) {
         // private vars
         var async = {
@@ -14,7 +14,6 @@ angular.module('cmCore')
         };
 
         var keygenWorker 
-
 
         return {
 
@@ -222,9 +221,19 @@ angular.module('cmCore')
                 }
 
                 async.promise = $q.defer();
+                console.log('generateAsyncKeypair cmCryptoHelper? '+(cmCryptoHelper.isAvailable()))
+                // start keygen over plugin crypto helper
+                if(cmCryptoHelper.isAvailable()) {
+                    cmCryptoHelper.getPrivateKey(keySize)
+                        .then(function (privKey) {
+                            var key = (new cmKey()).setKey(privKey);
+                            async.promise.resolve({
+                                timeElapsed: 0,
+                                key: key
+                            });
+                        });
                 // start keygen over webworker
-                
-                if(cmWebworker.available){
+                } else if(cmWebworker.available){
                     cmWebworker.new('rsa_keygen')
                     .then(function(worker){
                         keygenWorker = worker

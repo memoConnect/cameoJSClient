@@ -55,7 +55,9 @@ angular.module('cmConversations')
             var self                = this,
                 passphraseVault     = undefined,
                 encryption_disabled = undefined,
-                limit               = 10;
+                limit               = 10,
+                moep                = undefined;
+
 
             this.id                 = undefined;
             
@@ -651,7 +653,7 @@ angular.module('cmConversations')
                 if(!passphraseVault)
                     return $q.reject('passphrase vault missing.')
 
-                return  passphraseVault.get(this.password)
+                return passphraseVault.get(this.password)
             };
 
             /**
