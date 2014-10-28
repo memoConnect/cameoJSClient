@@ -617,8 +617,6 @@ angular.module('cmCore')
 
                         self.state.set('signing');
 
-                        console.info('qty unsigned_ttrusted_keys', unsigned_ttrusted_keys.length)
-
                         $q.all(
                             unsigned_ttrusted_keys.map(function(ttrusted_key){
                                 console.info('signing: '+ttrusted_key.name)
