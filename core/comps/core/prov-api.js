@@ -425,18 +425,24 @@ angular.module('cmCore').provider('cmApi',[
                 }
 
                 api.subscribeToEventStream = function(){
-                    console.log('hier');
-                    return  api.post({
-                        path: events_path,
-                        exp_ok: 'id',
-                        data:{
-                            secret: 'b4plIJMNITRDeJ9vl0JG' //only working on dev
-                        }
-                    }, true)
-                    .then(function(id){
-                        api.subscriptionId = id
-                        window._eventSubscriptionId = id
-                    })
+                    if(!event_call_running){
+                        console.log('hier');
+                        return  api.post({
+                            path: events_path,
+                            exp_ok: 'id',
+                            data:{
+                                secret: 'b4plIJMNITRDeJ9vl0JG' //only working on dev
+                            }
+                        }, true)
+                            .then(function(id){
+                                api.subscriptionId = id
+                                window._eventSubscriptionId = id
+                            })
+                            .finally(function(){
+                                event_call_running = false;
+                            })
+                    }
+
                 }
 
                 api.getEvents = function(force){
