@@ -42,9 +42,9 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
                 }
 
 
-                $scope.BASE =   ($scope.identityId != cmUserModel.data.identity)
-                                ?   'IDENTITY.KEYS.TRUST.'
-                                :   'IDENTITY.KEYS.AUTHENTICATION.';
+                $scope.BASE =   ($scope.toIdentity == cmUserModel.data.identity)
+                                ?   'IDENTITY.KEYS.AUTHENTICATION.'
+                                :   'IDENTITY.KEYS.TRUST.'
 
 
                 $scope.getTimeout = function(){
