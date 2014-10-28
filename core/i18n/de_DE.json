@@ -58,14 +58,11 @@
                 "PASSWORD": "Bitte geben Sie ein Passwort ein!"
             },
             "INVALID_EMAIL": "@:DRTV.VALIDATE_EMAIL.INFO.INVALID",
-            "INVALID_PHONENUMBER": "@:DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER",
-            "LOGIN_INFORMATION": "Hier legen Sie Ihre Zugangsdaten fest, mit denen Sie sich anschließend im cameoNet anmelden können.<br/><br/>Der Nutzername wird automatisch zu Ihrer (ersten) cameoID, über die andere Nutzer Sie im cameoNet finden können.",
-            "USER_INFORMATION": "Die folgenden Felder sind optional:<br/><br/>Wenn Sie einen Anzeigenamen eingeben, wird Ihre Identität überall im cameoNet mit diesem Namen angezeigt. Er muss nicht eindeutig sein. Andere Nutzer können Sie im cameoNet auch über Ihren Anzeigenamen finden.<br/><br/>Wenn Sie eine E-Mail-Adresse und/oder eine Mobilfunknummer eingeben, können Sie sich über neue Nachrichten und Kontaktanfragen informieren lassen und bei Bedarf Ihr Passwort zurücksetzen. Diese Daten sind für andere Nutzer nicht sichtbar und werden nicht in Ihre Identität übertragen."
+            "INVALID_PHONENUMBER": "@:DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER"
         },
         "TITLE": {
-            "HEAD_LOGIN": "Login Informationen",
-            "HEAD_IDENTITY": "Benutzer Informationen",
-            "MANDATORY_INFO": "Mit * gekennzeichnete Felder, müssen ausgefüllt werden."
+            "HEAD_LOGIN": "Login-Informationen",
+            "HEAD_IDENTITY": "Benutzer-Informationen"
         },
         "WARN": {
             "REGISTRATION_FAILED": "Bei der Registrierung ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut."
@@ -81,7 +78,7 @@
             "TEXT_2": "ACHTUNG: Dies ist die erste Beta-Version!",
             "TEXT_3": "Die App enthält Fehler, die Benutzerführung wird noch an vielen Stellen verbessert; noch nicht alle wichtigen Features sind enthalten. Zur Zeit können wir leider auch noch nicht garantieren, dass all Ihre Daten dauerhaft erhalten bleiben. Daher bitten wir Sie, zunächst von wichtigen Daten lokale Kopien anzulegen.",
             "TEXT_4": "Helfen Sie uns, cameoNet zu verbessern!",
-            "TEXT_5": "Wir freuen uns über jeden Fehler und Verbesserungsvorschlag, den Sie unter http://support.cameonet.de einstellen<br>Ihr cameoNet-Team."
+            "TEXT_5": "@:START.QUICKSTART.TEXT_4"
         },
         "QUICKSTART": {
             "HEADLINE": "Schnelleinstieg",
@@ -92,7 +89,7 @@
             "TEXT_2": "Drücken Sie auf 'Kontakt hinzufügen' im Header und wählen 'cameoNet durchsuchen'. Ihre Freunde finden Sie über deren cameoIDs oder Anzeigenamen. Senden Sie ihnen eine Kontaktanfrage. Sobald diese angenommen wurde, sind die Kontakte miteinander verknüpft, um sicher zu kommunizieren.",
             "HEADLINE_3": "3. Nachricht schreiben",
             "TEXT_3": "An verknüpfte Kontakte können Sie direkt aus der Kontakt-Übersicht über das Brief-Symbol Nachrichten senden. Es öffnet sich ein neuer Talk (=Unterhaltung). Geben Sie eine Nachricht ein und drücken Sie auf den Senden-Button.<br><br>Herzlichen Glückwunsch! Sie haben Ihren ersten verschlüsselten Talk geführt!",
-            "TEXT_4": "Wenn Sie Fragen zu cameoNet haben oder auf Probleme stoßen, nutzen Sie unser Forum unter http://support.cameonet.de.",
+            "TEXT_4": "Wenn Sie Fragen oder Verbesserungsvorschläge zu cameoNet haben, nutzen Sie unsere Support- und Hilfeseiten unter http://support.cameonet.de.",
             "BTN_TEXT": "Und los..."
         },
         "KEYINFO": {
@@ -145,7 +142,7 @@
 
     "TALKS": {
         "HEADING": "Talks",
-        "MORE": "Weitere Talks laden",
+        "MORE": "Weitere Talks laden.",
         "LIST_EMPTY": "Bisher keine Talks vorhanden."
     },
 
@@ -240,8 +237,8 @@
                 "REJECT": "Die Anfrage wurde zurückgewiesen.",
                 "IGNORE": "Der User wird nun ignoriert."
             },
-            "IMPORT_POSSIBLE": "Sie können auch aus Ihrem lokalen Adressbuch einen Kontakt zu einem Cameo Kontakt machen. <a href=\"#/contact/import\">jetzt importieren</a>",
-            "IMPORT_RIGHTS": "Jetzt greifen wir auf Ihrem lokalen Adressbuch zu. Sie wählen einen Kontakt, und nur diese Daten die Sie ausgewählt haben, werden für einen Cameo Kontakt verwendet. <a>Neuen Kontakt aussuchen</a>"
+            "IMPORT_POSSIBLE": "Sie können auch einen Kontakt aus Ihrem lokalen Adressbuch importieren.<br/> <a href=\"#/contact/import\">Lokales Adressbuch öffnen...</a>",
+            "IMPORT_RIGHTS": "Jetzt greifen wir auf Ihr lokales Adressbuch zu. Sie wählen einen Kontakt aus, und bestimmen einzeln, welche Daten für den Cameo-Kontakt verwendet werden sollen.<br/><a>Hier neuen Kontakt auswählen...</a>"
         },
         "LABEL": {
             "DISPLAYNAME": "Anzeigename",
@@ -269,7 +266,6 @@
     },
 
     "CONTACT": {
-        "HEADLINE": "Kontakt",
         "WIDGET": "Talks",
         "PLACEHOLDER": {
             "CAMEOID": "CameoID",
@@ -307,14 +303,8 @@
             "SAVE": "Speichern"
         },
         "NOTIFICATION" :{
-            "CONFIRMATION" :"Sie haben Kontaktdaten einer dritten Person auf unseren Servern gespeichert. Informieren Sie sie bitte darüber.",
-            "MESSAGE" : "Hallo {{to}}, ich habe Deine Adressdaten in mein Cameo-Adressbuch übernommen. Ciao {{from}}"
-        },
-        "TRUST":{
-            "NO_CAMEOKEYS": "kein cameoKey",
-            "HAS_CAMEOKEYS": "cameoKey vorhanden",
-            "OK": "Kontakt wird vertraut",
-            "START": "Kontakt vertrauen"
+            "CONFIRMATION" :"Sie haben Kontaktdaten einer dritten Person auf unseren Servern gespeichert. Informieren Sie diese Person bitte darüber.",
+            "MESSAGE" : "Hallo {{to}}, zu Ihrer Information: ich habe Ihre Adressdaten in mein Cameo-Adressbuch übernommen. Viele Grüße {{from}}"
         }
     },
 
@@ -720,8 +710,6 @@
     },
 
     "MENU": {
-        "TALKS": "@:DRTV.FOOTER.TALKS",
-        "CONTACTS": "@:DRTV.FOOTER.CONTACTS",
         "NEW_CONTACT": "Neuer Kontakt",
         "NEW_TALK": "Neuer Talk",
         "REQUESTS": "Kontaktanfragen",
@@ -777,15 +765,14 @@
     },
 
     "SECURITY_ASPECT": {
-        "HEADLINE": "Status Verschlüsselung",
         "CONVERSATION": {
             "ENCRYPTED": {
                 "NAME": "Dieser Talk ist verschlüsselt.",
-                "DESCRIPTION": "missing description @todo"
+                "DESCRIPTION": ""
             },
             "NOT_ENCRYPTED": {
                 "NAME": "Dieser Talk ist nicht verschlüsselt.",
-                "DESCRIPTION": "missing description @todo",
+                "DESCRIPTION": "",
                 "TOGGLE": "Verschlüsselung aktivieren."
             },
             "KEY_TRANSMISSION_SYMMETRIC": {
@@ -806,7 +793,7 @@
             },
             "TRUSTING_ALL_RECIPIENTS": {
                 "NAME": "Du vertraust allen Empfängern.",
-                "DESCRIPTION": "missing description @todo"
+                "DESCRIPTION": ""
             },
             "MISSING_DATA": "Sicherheitsaspekte fehlen!"
         }
