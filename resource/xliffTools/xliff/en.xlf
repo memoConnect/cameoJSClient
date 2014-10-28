@@ -1,10 +1,10 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<xliff version="1.1" xmlns="urn:oasis:names:tc:xliff:document:1.1">
-          <file original="de_DE.json" datatype="plaintext" source-language="de_DE" target-language="en">
+<?xml version='1.0' encoding='utf-8'?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.1" version="1.1">
+          <file original="de_DE.json" datatype="plaintext" source-language="de" target-language="en">
             <body>
-            <trans-unit id="SYSTEMCHECK.LOCALSTORAGE.HEADLINE">
+            <trans-unit id="SYSTEMCHECK.LOCALSTORAGE.HEADLINE" approved="yes">
         <source>LocalStorage</source>
-        <target>LocalStorage</target>
+        <target state="translated">Local Storage</target>
       </trans-unit><trans-unit id="IDENTITY.KEYS.AUTHENTICATION.ENTER_TRANSACTION_SECRET.SUBMIT_BUTTON">
         <source>Übertragen</source>
         <target>Submit</target>
@@ -17,12 +17,12 @@
       </trans-unit><trans-unit id="NAVIGATION.TABS.REQUESTS">
         <source>Anfragen</source>
         <target>Requests</target>
-      </trans-unit><trans-unit id="START.QUICKSTART.TEXT_4">
+      </trans-unit><trans-unit id="START.QUICKSTART.TEXT_4" approved="yes">
         <source>Wenn Sie Fragen zu cameoNet haben oder auf Probleme stoßen, nutzen Sie unser Forum unter http://support.cameonet.de.</source>
-        <target>If you have any questions regarding our service, feel free to let us a short notice through our platform http://support.cameonet.de.</target>
+        <target state="translated">If you have any questions regarding our service, feel free to let us a short notice through our platform at http://support.cameonet.de.</target>
       </trans-unit><trans-unit id="VERIFICATION.REQUEST.LABEL">
         <source>Verifizierung anfragen</source>
-        <target>Request verification</target>
+        <target>Ask for verification</target>
       </trans-unit><trans-unit id="SETTINGS.PAGES.ABOUT_US.3RD_PARTY.TITLE">
         <source>Eingebundene Projekte</source>
         <target>3rd party plugins</target>
@@ -31,7 +31,7 @@
         <target>2. Search for Peers</target>
       </trans-unit><trans-unit id="LOGIN.LABEL.REMEMBER_ME">
         <source>Merken.</source>
-        <target>Remember me</target>
+        <target>Remember.</target>
       </trans-unit><trans-unit id="LOGIN.PLACEHOLDER.PASSWORD">
         <source>Passwort</source>
         <target>Password</target>
@@ -43,7 +43,7 @@
         <target>Account Settings</target>
       </trans-unit><trans-unit id="SECURITY_ASPECT.CONVERSATION.ENCRYPTED.NAME">
         <source>Dieser Talk ist verschlüsselt.</source>
-        <target>Talk is encrypted.</target>
+        <target>This Talk is encrypted.</target>
       </trans-unit><trans-unit id="SETTINGS.PAGES.IDENTITY.KEYS.PRIVATE_KEY">
         <source>Privater Schlüssel</source>
         <target>Private key</target>
@@ -52,7 +52,7 @@
         <target>Please close this dialogue.</target>
       </trans-unit><trans-unit id="CONTACT.PLACEHOLDER.STREETNR">
         <source>Nr.</source>
-        <target>Nr</target>
+        <target>No.</target>
       </trans-unit><trans-unit id="IDENTITY.KEYS.GENERATE.GENERATING.GENERATION_TIMER">
         <source> {{time}}</source>
         <target> {{time}}</target>
@@ -76,16 +76,16 @@
         <target>Language Settings</target>
       </trans-unit><trans-unit id="DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER">
         <source>Die Nummer scheint keine gültige Mobilfunknummer zu sein.</source>
-        <target>The entered value does not seem to be a phone number.</target>
+        <target>The entered value does not seem to be a vaild mobile number.</target>
       </trans-unit><trans-unit id="SETTINGS.PAGES.ABOUT_US.TEXT">
         <source>cameoNet 2014</source>
         <target>cameoNet 2014</target>
       </trans-unit><trans-unit id="IDENTITY.KEYS.AUTHENTICATION.START.INSTRUCTIONS">
         <source>Drücken Sie auf 'Verbinden' um den Vorgang zu starten.</source>
-        <target>Please press 'Link up' to start the process.</target>
+        <target>Please press 'Connect' to start the process.</target>
       </trans-unit><trans-unit id="START.QUICKSTART.TEXT_1">
         <source>Um sicher kommunizieren zu können, brauchen alle Teilnehmer eines Talks einen cameoKey. Wenn Sie keinen haben öffnen Sie Einstellungen &gt; cameoKeys.</source>
-        <target>An individual cameoKey is needed for all members of a secure talk. You don't have one? Please open Settings &gt; cameoKeys.</target>
+        <target>A cameoKey is needed for all members of a secure talk. You don't have one? Please open Settings &gt; cameoKeys.</target>
       </trans-unit><trans-unit id="CONTACT.FOOTER.SAVE">
         <source>Speichern</source>
         <target>Save</target>
@@ -106,19 +106,19 @@
         <target>By using the trust process you can verify whether an identity is of an individual that you know in person.</target>
       </trans-unit><trans-unit id="SECURITY_ASPECT.CONVERSATION.NOT_ENCRYPTED.NAME">
         <source>Dieser Talk ist nicht verschlüsselt.</source>
-        <target>Talk is not encrypted.</target>
+        <target>This talk is not encrypted.</target>
       </trans-unit><trans-unit id="SETTINGS.PAGES.IDENTITY.CREATE.PLACEHOLDER.EMAIL">
         <source>@:CONTACT.PLACEHOLDER.EMAIL</source>
         <target>@:CONTACT.PLACEHOLDER.EMAIL</target>
       </trans-unit><trans-unit id="REGISTER.INFO.LOGIN_INFORMATION">
         <source>Hier legen Sie Ihre Zugangsdaten fest, mit denen Sie sich anschließend im cameoNet anmelden können.&lt;br/&gt;&lt;br/&gt;Der Nutzername wird automatisch zu Ihrer (ersten) cameoID, über die andere Nutzer Sie im cameoNet finden können.</source>
-        <target>@todo</target>
+        <target>Here you will define your account data that you use for the login at cameoNet.&lt;br/&gt;&lt;br/&gt;The choosen user name will become your (first) cameoID automatically. The cameoID can be find by other users to connect with you.</target>
       </trans-unit><trans-unit id="REGISTER.HEADING">
         <source>Registrierung</source>
         <target>Registration</target>
       </trans-unit><trans-unit id="SYSTEMCHECK.HEADLINE">
         <source>Systemcheck</source>
-        <target>Systemcheck</target>
+        <target>System verification</target>
       </trans-unit><trans-unit id="MODAL.OFFLINE_HANDLER.FOOTER">
         <source>Neu verbinden</source>
         <target>Reconnect</target>
@@ -127,49 +127,49 @@
         <target>Identity Settings</target>
       </trans-unit><trans-unit id="DRTV.CONFIRM.STANDARD">
         <source>Möchten Sie den Vorgang wirklich abbrechen?</source>
-        <target>You sure you want to cancel the operation?</target>
+        <target>Are you sure to cancel the operation?</target>
       </trans-unit><trans-unit id="DRTV.PASSWORD.INFO.EMPTY">
         <source>Bitte ein Passwort eingeben und bestätigen!</source>
-        <target>Please add a Password and confirm it</target>
+        <target>Please add a password and confirm.</target>
       </trans-unit><trans-unit id="SETTINGS.PAGES.IDENTITY.KEYS.CHOOSE_SIZE">
         <source>Schlüsselstärke wählen</source>
-        <target>Choose key size</target>
+        <target>Choose key force</target>
       </trans-unit><trans-unit id="IDENTITY.KEYS.AUTHENTICATION.TIMEOUT">
         <source>Der Vorgang wird in {{timeout}} abgebrochen.</source>
-        <target>Linking will be canceled in {{timeout}}.</target>
+        <target>Process will be canceled in {{timeout}}.</target>
       </trans-unit><trans-unit id="SECURITY_ASPECT.HEADLINE">
         <source>Status Verschlüsselung</source>
-        <target>Encryption</target>
+        <target>Encryption status</target>
       </trans-unit><trans-unit id="SECURITY_ASPECT.CONVERSATION.NO_SYMMETRIC_KEY_TRANSMISSION.NAME">
         <source>Dieser Talk wurde ausschließlich mit cameoKeys verschlüsselt.</source>
-        <target>This talk is safely encrypted with cameoKeys.</target>
+        <target>This talk is exclusively encrypted by cameoKeys.</target>
       </trans-unit><trans-unit id="CONVERSATION.LABEL.SHOW_PW_INFO_BECAUSE_USER_HAS_NO_LOCAL_KEYS">
         <source>Es ist ein Passwort notwendig, weil auf diesem Gerät kein cameoKey vorliegt.</source>
         <target>A password is required because there is no cameoKey on this device</target>
       </trans-unit><trans-unit id="CONVERSATION.WARN.RECIPIENTS_MISSING_OKAY">
         <source>Ich möchte keinen Empfänger hinzufügen (Nachricht für mich selbst)</source>
-        <target>I do not want any other recipients than myself.</target>
+        <target>I do not want to include other recipients.</target>
       </trans-unit><trans-unit id="CONVERSATION.PLACEHOLDER.INFO">
         <source>Info</source>
         <target>Info</target>
       </trans-unit><trans-unit id="CONTACTS.LABEL.NAME">
         <source>Vorname</source>
-        <target>Name</target>
+        <target>First Name</target>
       </trans-unit><trans-unit id="SETTINGS.PAGES.IDENTITY.KEYS.REMOVE_KEY_REALLY">
         <source>Soll der cameoKey wirklich gelöscht werden?</source>
-        <target>Really remove the cameoKey?</target>
+        <target>Do you really want to delete the cameoKey?</target>
       </trans-unit><trans-unit id="CONTACT.INFO.SELECT.EMAIL">
         <source>Bitte wählen Sie eine E-Mail aus</source>
-        <target>Please select one email</target>
+        <target>Please select one email.</target>
       </trans-unit><trans-unit id="JOB.FILES_IN_UPLOAD_PROGRESS">
         <source>Es werden zur Zeit Dateien hochgeladen. Wenn Sie die Seite verlassen, wird dieser Prozess abgeprochen. Wollen Sie diese Seite wirklich verlassen?</source>
-        <target>Files are being uploaded. Do you really want to leave this page?</target>
+        <target>Files are being uploaded. If you close the window the process will be cancelled. Do you really want to leave?</target>
       </trans-unit><trans-unit id="DRTV.VALIDATE_EMAIL.INFO.INVALID">
         <source>Bitte geben Sie eine korrekte E-Mail-Adresse ein!</source>
-        <target>Invalid email. Please check!</target>
+        <target>Please enter a correct e-mail.</target>
       </trans-unit><trans-unit id="CONTACTS.INFO.REQUEST.ACCEPT">
         <source>Sie sind nun mit diesem Kontakt verbunden.</source>
-        <target>Request accepted</target>
+        <target>You are now connect.</target>
       </trans-unit><trans-unit id="DRTV.PASSWORD.PASSWORD">
         <source>Passwort</source>
         <target>Password</target>
@@ -184,10 +184,10 @@
         <target>Identities</target>
       </trans-unit><trans-unit id="CONTACT.INFO.SUCCESS.SAVE">
         <source>Kontakt wurde erfolgreich angelegt.</source>
-        <target>Contact created</target>
+        <target>Contact was created successfully.</target>
       </trans-unit><trans-unit id="IDENTITY.KEYS.GENERATE.GENERATING.HEADLINE">
         <source>cameoKey Generierung läuft!</source>
-        <target>Generation of cameoKey in progress!</target>
+        <target>Generation of cameoKey in progress.</target>
       </trans-unit><trans-unit id="LOGIN.LINK">
         <source>Login</source>
         <target>Login</target>
@@ -199,7 +199,7 @@
         <target>missing description @todo</target>
       </trans-unit><trans-unit id="IDENTITY.KEYS.KEYLIST.BUTTON_DELETE">
         <source>cameoKey löschen</source>
-        <target>Erase cameoKey</target>
+        <target>Delete cameoKey</target>
       </trans-unit><trans-unit id="MODAL.LABEL.OK">
         <source>@:MODAL.ALERT.OK</source>
         <target>@:MODAL.ALERT.OK</target>
@@ -216,8 +216,8 @@
         <source>cameoKey Details anzeigen</source>
         <target>cameoKey show details</target>
       </trans-unit><trans-unit id="CONTACTS.INFO.IMPORT_POSSIBLE">
-        <source>Sie können auch aus Ihrem lokalen Adressbuch einen Kontakt zu einem Cameo Kontakt machen. &lt;a href=&quot;#/contact/import&quot;&gt;jetzt importieren&lt;/a&gt;</source>
-        <target>You can also import a contact from your local addressbook. &lt;a href=&quot;#/contact/import&quot;&gt;Import now&lt;/a&gt;</target>
+        <source>Sie können auch aus Ihrem lokalen Adressbuch einen Kontakt zu einem Cameo Kontakt machen. &lt;a href="#/contact/import"&gt;jetzt importieren&lt;/a&gt;</source>
+        <target>You can transform a local contact from your address book to a cameoNet comtact. &lt;a href="#/contact/import"&gt;Import now&lt;/a&gt;</target>
       </trans-unit><trans-unit id="SECURITY_ASPECT.CONVERSATION.TRUSTING_ALL_RECIPIENTS.NAME">
         <source>Du vertraust allen Empfängern.</source>
         <target>You trust all recipients.</target>
@@ -241,52 +241,52 @@
         <target>Disable passCaptcha</target>
       </trans-unit><trans-unit id="START.WELCOME.TEXT_3">
         <source>Die App enthält Fehler, die Benutzerführung wird noch an vielen Stellen verbessert; noch nicht alle wichtigen Features sind enthalten. Zur Zeit können wir leider auch noch nicht garantieren, dass all Ihre Daten dauerhaft erhalten bleiben. Daher bitten wir Sie, zunächst von wichtigen Daten lokale Kopien anzulegen.</source>
-        <target>The app may contain errors, the user interface is still under development and many new features will be added in future versions. As we cannot guarantee the storage of your messages up to 100% it may be sensible when you copy all your important data first.</target>
+        <target>The app may contain errors, as the user interface is still under development and many new features will be added in future versions. We cannot guarantee the storage of your messages up to 100%. It may be sensible when you copy all of your important data first.</target>
       </trans-unit><trans-unit id="IDENTITY.KEYS.GENERATE.START.KEY_LENGTH.LENGTH_4096">
         <source>4096Bit</source>
-        <target>4096Bit</target>
+        <target>4096 bit</target>
       </trans-unit><trans-unit id="CONVERSATION.WARN.ASYMMETRIC_DECRYPT_ERROR">
         <source>Der cameoKey fehlt.</source>
         <target>cameoKey missing</target>
       </trans-unit><trans-unit id="SETTINGS.PAGES.IDENTITY.KEYS.IS_LOCAL_ON_THIS_DEVICE">
         <source>lokal auf diesem Gerät</source>
-        <target>Is local on this device</target>
+        <target>local on this device</target>
       </trans-unit><trans-unit id="TERMS.HEADING_SHORT">
         <source>AGB</source>
-        <target>GBC</target>
+        <target>Terms and Conditions</target>
       </trans-unit><trans-unit id="SETTINGS.PAGES.APP.DATE_FORMAT">
         <source>Datumsformat</source>
-        <target>Dateformat</target>
+        <target>Date format</target>
       </trans-unit><trans-unit id="CONTACTS.INFO.IMPORT_RIGHTS">
         <source>Jetzt greifen wir auf Ihrem lokalen Adressbuch zu. Sie wählen einen Kontakt, und nur diese Daten die Sie ausgewählt haben, werden für einen Cameo Kontakt verwendet. &lt;a&gt;Neuen Kontakt aussuchen&lt;/a&gt;</source>
-        <target>Now we access your local address book. You select a contact and only this data you picked, are used for a cameo contact. &lt;a&gt;Choose new contact&lt;/a&gt;</target>
+        <target>Now we access your local address book. Please select a contact first. Only the picked data will be copied to the cameoNet contact. &lt;a&gt;Choose new contact&lt;/a&gt;</target>
       </trans-unit><trans-unit id="IDENTITY.KEYS.TRUST.DONE.NOTE">
         <source> Klicken sie auf 'Schließen'.</source>
-        <target>Please close this dialogue.</target>
+        <target>Please close this window.</target>
       </trans-unit><trans-unit id="SETTINGS.PAGES.IDENTITY.KEYS.CANCEL">
         <source>Generierung abbrechen</source>
         <target>Cancel</target>
       </trans-unit><trans-unit id="IDENTITY.KEYS.TRUST.START.START_BUTTON">
         <source>Anfragen</source>
-        <target>Request</target>
+        <target>Requests</target>
       </trans-unit><trans-unit id="SECURITY_ASPECT.CONVERSATION.HAS_PASSCAPTCHA.DESCRIPTION">
         <source>Das PassCaptcha-Verfahren erschwert es, Nachrichten - die bei der Übertragung durch das Internet abgefangen oder auf dem cameoNet-Server gespeichert werden - in großem Umfang automatisiert zu entschlüsseln. Sicher verschlüsselt ist die Nachricht aber hiermit nicht, da Entschlüsselungsmethoden für Captchas  immer leistungsfähiger werden und eine Person die Nachricht direkt entschlüsseln könnte.</source>
-        <target>Using the passCaptcha method makes it harder to automatically decrypt your messages on a large scale, but it is not actually save.</target>
+        <target>Using the passCaptcha method makes it difficult to decrypt your messages automatically.</target>
       </trans-unit><trans-unit id="IDENTITY.KEYS.KEYLIST.EXPLANATION.ALL_KEYS_TRUSTED">
         <source>Für '{{Identity}}' haben Sie einen cameoKey auf Ihrem Gerät, mit dem Sie alle Talks lesen können.</source>
         <target>For '{{Identity}}' you have a cameoKey that allows you to read all encrypted talks on your device.</target>
       </trans-unit><trans-unit id="CONTACT.TRUST.OK">
         <source>Kontakt wird vertraut</source>
-        <target>trusted</target>
+        <target>trusted contact</target>
       </trans-unit><trans-unit id="IDENTITY.KEYS.GENERATE.SAVE.HEADLINE">
         <source>cameoKey Generierung erfolgreich!</source>
-        <target>cameoKey was generated successfully!</target>
+        <target>cameoKey was generated successfully.</target>
       </trans-unit><trans-unit id="CONTACTS.HEADING.CREATE">
         <source>Neuen Kontakt anlegen</source>
         <target>Create new contact</target>
       </trans-unit><trans-unit id="SETTINGS.PAGES.IDENTITY.KEYS.WARN.IMPORT_FAILED">
         <source>Der eingegebene Schlüssel ist nicht valide</source>
-        <target>The private key is invalid</target>
+        <target>The entered key is invalid</target>
       </trans-unit><trans-unit id="START.WELCOME.HEADLINE">
         <source>Willkommen im cameoNet!</source>
         <target>Welcome to cameoNet!</target>
@@ -295,7 +295,7 @@
         <target>Elapsed time:</target>
       </trans-unit><trans-unit id="SYSTEM.ERROR.WRONG_INPUT">
         <source>Bitte überprüfen Sie Ihre Eingabe!</source>
-        <target>Please check the code and try again!</target>
+        <target>Please check the code and try again.</target>
       </trans-unit><trans-unit id="CONTACTS.REQUESTS.ACCEPT">
         <source>Akzeptieren</source>
         <target>Accept</target>
@@ -304,13 +304,13 @@
         <target>Please be patient. This process can take some time according to the technical parameter of your device and the size of the cameoKey.&lt;br&gt; If it lasts more than 5 minutes, you may stop the process and start again.</target>
       </trans-unit><trans-unit id="IDENTITY.KEYS.AUTHENTICATION.START.NOTE">
         <source>ACHTUNG! Bevor Sie auf 'Verbinden' klicken müssen Sie auf einem Ihrer Geräte cameoNet als {{identity}} öffnen!</source>
-        <target>Attention! Before pressing 'Link up' you should first open cameoNet with your identity {{identity}} on another device!</target>
+        <target>Attention! Before pressing 'Connect' you should first open cameoNet with your identity {{identity}} on another device!</target>
       </trans-unit><trans-unit id="REGISTER.LINK">
         <source>Registrieren</source>
-        <target>or Register</target>
+        <target>Register</target>
       </trans-unit><trans-unit id="SYSTEMCHECK.LOCALSTORAGE.TEXT_ERROR">
         <source>Auf den LocalStorage kann nicht zugegriffen werden!&lt;br&gt; Schalten die den Zugriff bitte frei, oder öffnen Sie die App nicht mehr einer privaten Browser Session.</source>
-        <target>On the Local Storage can not be accessed!&lt;br&gt;Enable the access, or open the app outside of a private browsing session.</target>
+        <target>Local Storage cannot be accessed!&lt;br&gt;Please enable access or do not open the app during a private browsing session.</target>
       </trans-unit><trans-unit id="IDENTITY.KEYS.TRUST.START.INSTRUCTIONS">
         <source>Wenn Sie diesem Kontakt vertrauen wollen, drücken Sie auf 'Anfragen', um ihm eine Vertrauensanfrage zu senden.</source>
         <target>If you like to trust this contact please press 'Request', to send an inquiry for trusting each other.</target>
@@ -325,10 +325,10 @@
         <target>Save cameoKey</target>
       </trans-unit><trans-unit id="DRTV.TYPE_CHOOSER.LANDLINE">
         <source>Festnetz</source>
-        <target>landline</target>
+        <target>Fixed network</target>
       </trans-unit><trans-unit id="DRTV.EXTERN_CONTACT.INFO.EMPTY.DISPLAYNAME">
         <source>Bitte geben Sie einen Anzeigenamen ein!</source>
-        <target>The display name is empty.</target>
+        <target>Please enter a name.</target>
       </trans-unit><trans-unit id="LANG.EN_US">
         <source>Englisch</source>
         <target>English</target>
@@ -346,7 +346,7 @@
         <target>Unfortunately iOS does not support downloading this file. Open this talk on a non-iOS device to download this file. Supported formats: .pdf</target>
       </trans-unit><trans-unit id="TERMS.HEADING">
         <source>Allgemeine Geschäftsbedingungen</source>
-        <target>General Business Conditions</target>
+        <target>Terms and Conditions</target>
       </trans-unit><trans-unit id="NAVIGATION.TABS.SPINNER">
         <source>Spinner</source>
         <target>Spinner</target>
@@ -355,10 +355,10 @@
         <target>Could not save contact</target>
       </trans-unit><trans-unit id="DRTV.VALIDATE_MIXED.INFO.INVALID_MIXED">
         <source>Die Eigabe scheint weder eine gültige Mobilfunknummer noch eine gültige E-Mail-Adresse zu sein.</source>
-        <target>The entered value appears to be neither a phone number nor an e-mail addresss.</target>
+        <target>The entered value seems to be neither a valid mobile number nor an e-mail addresss.</target>
       </trans-unit><trans-unit id="DRTV.VALIDATE_PHONE.PLACEHOLDER">
         <source>Mobilfunknummer</source>
-        <target>Phone number</target>
+        <target>Mobile number</target>
       </trans-unit><trans-unit id="LANG.SWITCH.LABEL.DE_DE">
         <source>@:LANG.DE_DE</source>
         <target>@:LANG.DE_DE</target>
@@ -368,9 +368,9 @@
       </trans-unit><trans-unit id="SECURITY_ASPECT.CONVERSATION.ENCRYPTED.DESCRIPTION">
         <source>missing description @todo</source>
         <target>missing description @todo</target>
-      </trans-unit><trans-unit id="CONTACT.NOTIFICATION.MESSAGE">
+      </trans-unit><trans-unit id="CONTACT.NOTIFICATION.MESSAGE" approved="yes">
         <source>Hallo {{to}}, ich habe Deine Adressdaten in mein Cameo-Adressbuch übernommen. Ciao {{from}}</source>
-        <target/>
+        <target state="translated">Dear {{to}}, I have included your personal data to my address book on cameoNet. I hope hearing from you soon. Yours {{from}}</target>
       </trans-unit><trans-unit id="SETTINGS.PAGES.IDENTITY.CREATE.INFO.INVALID.PHONENUMBER">
         <source>@:CONTACT.INFO.INVALID.PHONENUMBER</source>
         <target>@:CONTACT.INFO.INVALID.PHONENUMBER</target>
@@ -385,7 +385,7 @@
         <target>cameoKeys</target>
       </trans-unit><trans-unit id="ACCOUNT.PLACEHOLDER.PASSWORD_CHANGE">
         <source>Passwort ändern</source>
-        <target>Password change</target>
+        <target>Change password</target>
       </trans-unit><trans-unit id="IDENTITY.KEYS.AUTHENTICATION.START.CANCEL_BUTTON">
         <source>Nicht jetzt</source>
         <target>Not now</target>
@@ -397,24 +397,23 @@
         <target>* mandatory fields</target>
       </trans-unit><trans-unit id="ERROR.BACK_TO_TALKS">
         <source>Talks öffnen</source>
-        <target>Back to Talks</target>
+        <target>Open talk list</target>
       </trans-unit><trans-unit id="NAVIGATION.TABS.BACK">
         <source>Zurück</source>
         <target>Back</target>
       </trans-unit><trans-unit id="IDENTITY.KEYS.TRUST.START.RETRY_BUTTON">
         <source>Wiederholen</source>
-        <target>Retry</target>
+        <target>Repeat</target>
       </trans-unit><trans-unit id="IDENTITY.KEYS.TRUST.SUCCESSFUL.NOTE">
         <source>Sie können den Dialog nun schließen.</source>
-        <target>You can close this dialogue now.</target>
+        <target>You can close this window now.</target>
       </trans-unit><trans-unit id="SETTINGS.PAGES.IDENTITY.KEYS.STOREKEY_DESCRIPTION">
         <source>Der cameoKey besteht aus einem privaten und einem öffentlichen Schlüssel. Der private Schlüssel wird nur auf Ihrem Gerät gespeichert. Der öffentlichen Schlüssel wird auf dem cameoServer gespeichert.
 Um bei Verlust Ihres cameoKeys Ihre verschlüsselten Nachrichten wieder lesen zu können, sollten Sie Ihren cameoKey exportieren und sicher verwahren.</source>
-        <target>The cameoKey consists of a public and a private part. The private part will be stored on this device only. It is important to keep it secret since it can decrypt all of your data.
-The private part should be exported to a safe place for data recovery purpose if the device is lost.</target>
+        <target>A cameoKey consists of a public and a private part. The private part will be stored on this device only; it is important to keep it secret since it can decrypt all of your data. It should be exported to a safe place for data recovery purpose if the device is lost.</target>
       </trans-unit><trans-unit id="IDENTITY.NOTIFY.UPDATE.ERROR">
         <source>Die Änderungen konnte nicht gespeichert werden.</source>
-        <target>Something went wrong, please try again</target>
+        <target>Changes could not be saved.</target>
       </trans-unit><trans-unit id="CONVERSATION.WARN.RECIPIENTS_MISSING">
         <source>Keine Empfänger angegeben.</source>
         <target>This conversation has no recipients.</target>
@@ -426,7 +425,7 @@ The private part should be exported to a safe place for data recovery purpose if
         <target>Skip</target>
       </trans-unit><trans-unit id="DRTV.VALIDATE_PHONE.LABEL">
         <source>Mobilfunknummer</source>
-        <target>Phone number</target>
+        <target>Mobile number</target>
       </trans-unit><trans-unit id="ACCOUNT.PLACEHOLDER.LOGINNAME">
         <source>Loginname</source>
         <target>Login name</target>
@@ -438,10 +437,10 @@ The private part should be exported to a safe place for data recovery purpose if
         <target>Send on Return</target>
       </trans-unit><trans-unit id="LANG.SWITCH.ERROR">
         <source>Konnte Sprache nicht auf {{lang}} stellen.</source>
-        <target>Unable to switch to {{lang}}.</target>
+        <target>Unable to switch language to {{lang}}.</target>
       </trans-unit><trans-unit id="DRTV.BULK_REKEYING.CONTENT">
         <source>Die Talks auf diesem Gerät werden für den neuen cameoKey verschlüsselt.</source>
-        <target>The talks on this device are being encrypted for the new cameoKey.</target>
+        <target>All talks on this device are now being encrypted by the new cameoKey.</target>
       </trans-unit><trans-unit id="IDENTITY.KEYS.GENERATE.SAVE.GENERATION_TIMER">
         <source> {{time}}</source>
         <target> {{time}}</target>
@@ -453,37 +452,37 @@ The private part should be exported to a safe place for data recovery purpose if
         <target>Confirm password</target>
       </trans-unit><trans-unit id="IDENTITY.KEYS.AUTHENTICATION.SUCCESSFUL.NOTE">
         <source>Sie können den Dialog nun schließen.</source>
-        <target>Please close this dialogue.</target>
+        <target>Please close this window.</target>
       </trans-unit><trans-unit id="REGISTER.LABEL.NAME">
         <source>Anzeigename</source>
-        <target>Name</target>
+        <target>Display name</target>
       </trans-unit><trans-unit id="IDENTITY.OVERVIEW.INFO_TEXT">
         <source>Hier können Sie zwischen Ihren Identitäten wechseln und neue Identitäten anlegen.</source>
-        <target>You can switch between your identities and create new.</target>
+        <target>Here you can switch your identities and create a new one.</target>
       </trans-unit><trans-unit id="SETTINGS.PAGES.IDENTITY.CREATE.PLACEHOLDER.DISPLAYNAME">
         <source>@:CONTACT.PLACEHOLDER.DISPLAYNAME</source>
         <target>@:CONTACT.PLACEHOLDER.DISPLAYNAME</target>
       </trans-unit><trans-unit id="DRTV.VALIDATE_EMAIL.INFO.EMPTY">
         <source>Sie haben keine E-Mail Adresse eingegeben.</source>
-        <target>The email field is empty</target>
+        <target>You have not entered an e-mail.</target>
       </trans-unit><trans-unit id="CONTACT.INFO.EMPTY.DISPLAYNAME">
         <source>@:DRTV.EXTERN_CONTACT.INFO.EMPTY.DISPLAYNAME</source>
         <target>@:DRTV.EXTERN_CONTACT.INFO.EMPTY.DISPLAYNAME</target>
       </trans-unit><trans-unit id="LOGIN.INFO.401">
         <source>Benutzername oder Passwort falsch.</source>
-        <target>Invalid username or password</target>
+        <target>Invalid user name or password</target>
       </trans-unit><trans-unit id="LOGIN.LABEL.SUBMIT">
         <source>Einloggen</source>
         <target>Log in</target>
       </trans-unit><trans-unit id="SETTINGS.PAGES.IDENTITY.KEYS.EXPORT_KEY_DESCRIPTION">
-        <source>Um Ihren cameoKey zu exportieren, kopieren Sie hier bitte den privaten Schlüssel als Text und verwahren ihn sicher (z.B. in einer Passwort-geschützten Textdatei oder in einem Passwort-Safe). Im Fall dass Sie Ihren cameoKey &quot;verlieren&quot; (z.B. bei einer Neuinstalation), können Sie ihn darüber später wieder importieren.</source>
-        <target>Please export your private cameoKey. Make sure to keep it safe. You can use it to recover all your encrypted data.</target>
+        <source>Um Ihren cameoKey zu exportieren, kopieren Sie hier bitte den privaten Schlüssel als Text und verwahren ihn sicher (z.B. in einer Passwort-geschützten Textdatei oder in einem Passwort-Safe). Im Fall dass Sie Ihren cameoKey "verlieren" (z.B. bei einer Neuinstalation), können Sie ihn darüber später wieder importieren.</source>
+        <target>Please export your private cameoKey as a text file. Make sure to keep it safe. You may use it to recover all your encrypted data.</target>
       </trans-unit><trans-unit id="IDENTITY.NOTIFY.UPDATE.SUCCESS">
         <source>Die Änderungen wurde erfolgreich gespeichert.</source>
-        <target>Changes saved</target>
+        <target>Changes saved successfully.</target>
       </trans-unit><trans-unit id="IDENTITY.KEYS.AUTHENTICATION.ERROR.TIMEOUT">
         <source>Zeit überschritten, bitte versuchen sie es erneut.</source>
-        <target>Timeout - please try again.</target>
+        <target>Time out - please try again.</target>
       </trans-unit><trans-unit id="IDENTITY.KEYS.TRUST.ENTER_TRANSACTION_SECRET.INSTRUCTIONS">
         <source>'{{identity}}' hat soeben den Prozess gestartet, mit Ihnen eine Vertrauensbasis einzugehen.&lt;br&gt;Mit dem Vertrauensprozess stellen Sie sicher, dass eine Identität einer Person gehört, die Sie persönlich kennen.</source>
         <target>Recently {{identity}} has started a trust process with you.&lt;br&gt; By using the trust process you can verify whether an identity is of an individual that you know in person.</target>
@@ -495,7 +494,7 @@ The private part should be exported to a safe place for data recovery purpose if
         <target>moep</target>
       </trans-unit><trans-unit id="REGISTER.INFO.EMPTY.PASSWORD">
         <source>Bitte geben Sie ein Passwort ein!</source>
-        <target>Please enter a Password.</target>
+        <target>Please enter a password.</target>
       </trans-unit><trans-unit id="SETTINGS.PAGES.IDENTITY.KEYS.KEY_NAME">
         <source>Schlüsselname</source>
         <target>Key name</target>
@@ -504,19 +503,19 @@ The private part should be exported to a safe place for data recovery purpose if
         <target>Invalid input. Avoid spaces and special characters.</target>
       </trans-unit><trans-unit id="CONVERSATION.WARN.FILESIZE_REACHED">
         <source>Die maximale Dateigröße von &lt;strong&gt;{{maxFileSize | cmBytesHumanReadable}}&lt;/strong&gt; wurde überschritten. Ihre Datei '&lt;strong&gt;{{fileName}}&lt;/strong&gt;' ist &lt;strong&gt;{{fileSize | cmBytesHumanReadable}}&lt;/strong&gt; groß.</source>
-        <target>The maximum file size of &lt;strong&gt;{{maxFileSize | cmBytesHumanReadable}}&lt;/strong&gt; has been exceeded. Your file '&lt;strong&gt;{{fileName}}&lt;/strong&gt;' is &lt;strong&gt;{{fileSize | cmBytesHumanReadable}}&lt;/strong&gt; big.</target>
+        <target>The maximum file size of &lt;strong&gt;{{maxFileSize | cmBytesHumanReadable}}&lt;/strong&gt; has been exceeded. Your file '&lt;strong&gt;{{fileName}}&lt;/strong&gt;' has &lt;strong&gt;{{fileSize | cmBytesHumanReadable}}&lt;/strong&gt; bytes.</target>
       </trans-unit><trans-unit id="SECURITY_ASPECT.CONVERSATION.KEY_TRANSMISSION_SYMMETRIC.DESCRIPTION_NEW">
         <source>Dieser Talk kann zur Zeit nur mit Passwort verschlüsselt werden, weil mindestens einer der Empfänger keinen cameoKey besitzt. Die Sicherheit einer auf einem Passwort basierenden Verschlüsselung hängt von der Güte des Passworts und der Übertragung des Passworts an die Empfänger ab.</source>
-        <target>Encryption with a password is not bad in itself, but the strength of the encryption greatly depends on the password you choose. You have to use a password because not all recipients have a proper key available to you.</target>
+        <target>This talk can be encrypted by passCaptcha or password only as one of the recipients is not in the cameoNet network.</target>
       </trans-unit><trans-unit id="CONTACTS.PLACEHOLDER.REQUEST_MESSAGE">
         <source>Hier ist Platz für eine Mitteilung für die Kontaktanfrage:</source>
-        <target>Add a message to the contact request</target>
+        <target>Add a message to the contact request.</target>
       </trans-unit><trans-unit id="SECURITY_ASPECT.CONVERSATION.KEY_TRANSMISSION_SYMMETRIC.NAME">
         <source>Verschlüsselung muss sich auf ein Passwort verlassen.</source>
         <target>Encryption relies on a password.</target>
       </trans-unit><trans-unit id="REGISTER.LABEL.TERMS">
         <source>die AGB</source>
-        <target>Terms of use</target>
+        <target>Terms and Conditions</target>
       </trans-unit><trans-unit id="YES">
         <source>Ja</source>
         <target>Yes</target>
@@ -534,16 +533,16 @@ The private part should be exported to a safe place for data recovery purpose if
         <target>Save cameoKey</target>
       </trans-unit><trans-unit id="CONTACT.PLACEHOLDER.EMAIL">
         <source>E-Mail</source>
-        <target>Email</target>
+        <target>e-mail</target>
       </trans-unit><trans-unit id="IDENTITY.LABEL.NEW">
         <source>Neue Identität anlegen</source>
         <target>Create new identity</target>
       </trans-unit><trans-unit id="IDENTITY.KEYS.AUTHENTICATION.WAIT.NOTE">
         <source>Übertragen Sie bitte obigen Code auf Ihr anderes Gerät.</source>
-        <target>Request has been started. Please confirm the request on the other device.</target>
+        <target>Please enter the code at the other device.</target>
       </trans-unit><trans-unit id="DRTV.VALIDATE_PHONE.INFO.EMPTY">
         <source>Sie haben keine Mobilfunknummer eingegeben.</source>
-        <target>The phone number field is empty</target>
+        <target>You have not entered a valid mobile number</target>
       </trans-unit><trans-unit id="SETTINGS.PAGES.IDENTITY.KEYS.IMPORT.BUTTON">
         <source>Importieren</source>
         <target>Import</target>
@@ -555,10 +554,10 @@ The private part should be exported to a safe place for data recovery purpose if
         <target>cameoKeys</target>
       </trans-unit><trans-unit id="MODAL.WEBREADER.NOTICE">
         <source>Um diese Funktion nutzen zu können, müssen Sie sich registrieren.</source>
-        <target>Please register to use this feature.</target>
+        <target>To use this feature please register at cameoNet.</target>
       </trans-unit><trans-unit id="ACCOUNT.PLACEHOLDER.PHONENUMBER">
         <source>Telefonnummer</source>
-        <target>Phonenumber</target>
+        <target>Phone number</target>
       </trans-unit><trans-unit id="CONVERSATION.CONTROL.CLOSE">
         <source>Schließen</source>
         <target>Close</target>
@@ -576,7 +575,7 @@ The private part should be exported to a safe place for data recovery purpose if
         <target>cameoKey</target>
       </trans-unit><trans-unit id="REGISTER.INFO.TERMS">
         <source>Bitte akzeptieren Sie die AGB!</source>
-        <target>You need to accept the terms of use.</target>
+        <target>Please accept the Terms and Conditions.</target>
       </trans-unit><trans-unit id="CONTACTS.BUTTON.RESET">
         <source>Zurücksetzen</source>
         <target>Reset</target>
@@ -585,10 +584,10 @@ The private part should be exported to a safe place for data recovery purpose if
         <target>The input field is empty!</target>
       </trans-unit><trans-unit id="CONTACTS.INFO.NO_REQUESTS">
         <source>Keine Anfragen vorhanden.</source>
-        <target>No contact requests</target>
+        <target>No requests are present.</target>
       </trans-unit><trans-unit id="DRTV.IMPRINT.CONTENT">
         <source>cameoNet ein Dienst der:&lt;br&gt;memo Connect GmbH&lt;br&gt;Große Nikolaistraße 7 06108 Halle (Saale) Germany&lt;br&gt;Fon: +49 345 213 79 66 5&lt;br&gt;Fax: +49 345 213 79 66 59&lt;br&gt;Amtsgericht Stendal HRB 20018&lt;br&gt;Geschäftsführer: Michael Merz, Dr. Holger Haedrich</source>
-        <target>cameoNet is provided by:&lt;br&gt;memo Connect GmbH&lt;br&gt;Große Nikolaistraße 7 06108 Halle (Saale) Germany&lt;br&gt;Fon: +49 345 213 79 66 5&lt;br&gt;Fax: +49 345 213 79 66 59&lt;br&gt;Amtsgericht Stendal HRB 20018&lt;br&gt;Directors: Michael Merz, Dr. Holger Haedrich</target>
+        <target>cameoNet is provided by:&lt;br&gt;memo Connect GmbH&lt;br&gt;Große Nikolaistraße 7 06108 Halle (Saale) / Germany&lt;br&gt;Fon: +49 345 213 79 66 5&lt;br&gt;Fax: +49 345 213 79 66 59&lt;br&gt;Legal Court: Stendal HRB 20018&lt;br&gt;Directors: Michael Merz, Dr. Holger Haedrich</target>
       </trans-unit><trans-unit id="CONVERSATION.TAG.SUBJECT">
         <source>Betreff</source>
         <target>Subject</target>
@@ -600,7 +599,7 @@ The private part should be exported to a safe place for data recovery purpose if
         <target>Enable encryption.</target>
       </trans-unit><trans-unit id="DRTV.CONFIRM.HEADER">
         <source>Bitte bestätigen!</source>
-        <target>Please Confirm!</target>
+        <target>Please confirm.</target>
       </trans-unit><trans-unit id="DRTV.EXTERN_CONTACT.HEADER">
         <source>Externen Kontakt hinzufügen</source>
         <target>Add external contact</target>
@@ -609,28 +608,28 @@ The private part should be exported to a safe place for data recovery purpose if
         <target>Cancel</target>
       </trans-unit><trans-unit id="DRTV.EXTERN_CONTACT.INFO.EMPTY.NAME">
         <source>Bitte geben Sie einen Vornamen ein!</source>
-        <target>Name is empty.</target>
+        <target>Please enter a first name.</target>
       </trans-unit><trans-unit id="IDENTITY.KEYS.GENERATE.SAVE.EXPLANATION">
         <source>Der cameoKey besteht aus einem privaten Schlüssel, der nur auf Ihrem Gerät gespeichert wird, und einem öffentlichen Schlüssel, den Sie an den cameoServer übertragen und dort speichern müssen.</source>
-        <target>Each cameoKey consists of a private part that will be stored on your device only and a public part that has to be transferred and stored on our server.</target>
+        <target>Each cameoKey consists of a private part that will be stored on your device only and a public part that will be transferred to our server.</target>
       </trans-unit><trans-unit id="CONVERSATION.HEADING">
         <source>Talk</source>
         <target>Talk</target>
       </trans-unit><trans-unit id="IDENTITY.KEYS.GENERATE.START.KEY_LENGTH.BUTTON_LABEL">
         <source>Schlüsselstärke</source>
-        <target>Key size</target>
+        <target>Key force</target>
       </trans-unit><trans-unit id="START.WELCOME.TEXT_2">
         <source>ACHTUNG: Dies ist die erste Beta-Version!</source>
-        <target>Attention: This is a first beta version!</target>
+        <target>Attention: This is the first beta version!</target>
       </trans-unit><trans-unit id="CONTACTS.REQUESTS.IGNORE">
         <source>Ignorieren</source>
         <target>Ignore</target>
       </trans-unit><trans-unit id="SYSTEMCHECK.LOCALSTORAGE.TEXT_OK">
         <source>Alles in Ordnung!</source>
-        <target>LocalStorage is activated!</target>
+        <target>Everything is o.k.</target>
       </trans-unit><trans-unit id="IDENTITY.KEYS.AUTHENTICATION.EXPLANATION">
         <source>Um Ihre Nachrichten die Sie als {{identity}} geschrieben haben auf allen Geräten lesen zu können, müssen Sie ihren lokalen cameoKey mit Ihren cameoKeys auf anderen Geräten verknüpfen.</source>
-        <target>To read encrypted messages written under {{identity}} on other devices, please link the local cameoKey with all other keys that you are using there.</target>
+        <target>To read your encrypted messages completed as {{identity}} on other devices, please link the local cameoKey to all other keys first.</target>
       </trans-unit><trans-unit id="SETTINGS.PAGES.IDENTITY.KEYS.IS_LOCAL">
         <source>lokal</source>
         <target>local</target>
@@ -639,7 +638,7 @@ The private part should be exported to a safe place for data recovery purpose if
         <target>Create new external contact</target>
       </trans-unit><trans-unit id="CONTACTS.INFO.REQUEST.FAILED">
         <source>Die Anfrage konnte nicht verschickt werden.</source>
-        <target>Could not send request</target>
+        <target>Request was not send.</target>
       </trans-unit><trans-unit id="CONVERSATION.WARN.CHECK_ENCRYPTION_ERROR">
         <source>CHECK_ENCRYPTION_ERROR</source>
         <target>CHECK_ENCRYPTION_ERROR</target>
@@ -651,7 +650,7 @@ The private part should be exported to a safe place for data recovery purpose if
         <target>Don't show me this page again</target>
       </trans-unit><trans-unit id="DRTV.VALIDATE_CAMEOID.INFO.INPUT.EMPTY">
         <source>Dieses Feld wird benötigt! Bitte füllen Sie dieses aus.</source>
-        <target>This field is required. Please fill out</target>
+        <target>This field is required. Please enter.</target>
       </trans-unit><trans-unit id="SECURITY_ASPECT.CONVERSATION.HAS_PASSCAPTCHA.NAME">
         <source>PassCaptcha aktiviert.</source>
         <target>PassCaptcha enabled.</target>
@@ -666,7 +665,7 @@ The private part should be exported to a safe place for data recovery purpose if
         <target>@:CONTACT.PLACEHOLDER.CAMEOID</target>
       </trans-unit><trans-unit id="CONTACTS.INFO.NO_RESULTS">
         <source>Keine passenden Identitäten im cameoNet gefunden.</source>
-        <target>No identities found</target>
+        <target>No identities found at cameoNet</target>
       </trans-unit><trans-unit id="DRTV.FOOTER.MEDIA">
         <source>Media</source>
         <target>Media</target>
@@ -675,13 +674,13 @@ The private part should be exported to a safe place for data recovery purpose if
         <target>Link cameoKey</target>
       </trans-unit><trans-unit id="SECURITY_ASPECT.CONVERSATION.KEY_TRANSMISSION_SYMMETRIC.DESCRIPTION">
         <source>Dieser Talk kann nur mit Passwort verschlüsselt werden, weil mindestens einer der Empfänger beim Erstellen des Talks keinen cameoKey besaß. Die Sicherheit einer auf einem Passwort basierenden Verschlüsselung hängt von der Güte des Passworts und der Übertragung des Passworts an die Empfänger ab.</source>
-        <target>Encryption with a password is not bad in itself, but the strength of the encryption greatly depends on the password you choose. You have to use a password because not all recipients had a proper a key available when the conversation started.</target>
+        <target>As one of the recipients is not present at cameoNet, this talk can be encrypted by passCaptcha or password only.</target>
       </trans-unit><trans-unit id="SETTINGS.APP">
         <source>App Einstellungen</source>
-        <target>App Settings</target>
+        <target>App settings</target>
       </trans-unit><trans-unit id="SYSTEMCHECK.CLIENTVERSION.HEADLINE">
         <source>App Version</source>
-        <target>App Version</target>
+        <target>Version</target>
       </trans-unit><trans-unit id="IDENTITY.KEYS.AUTHENTICATION.SUCCESSFUL.DONE_BUTTON">
         <source>Schließen</source>
         <target>Close</target>
@@ -690,10 +689,10 @@ The private part should be exported to a safe place for data recovery purpose if
         <target>Add</target>
       </trans-unit><trans-unit id="ACCOUNT.INFO.NOTE_ABOUT_THIS_DATA">
         <source>Hier können Sie ihre Account-Zugangsdaten bearbeiten. Im Gegensatz zu den Identitätsdaten sind diese hier nicht Sichtbar. Die Telefonnummer oder E-Mail dienen zur Benachrichtigungen und zur Passwortrücksetzung.</source>
-        <target>Your account data can be edited here. This data is not public. Email and/or phonenumber are used for notifications and password reset.</target>
+        <target>Here you can edit your account data. This data is not public. E-mail and/or phone number are needed for notifications and password reset.</target>
       </trans-unit><trans-unit id="DRTV.EXTERN_CONTACT.INFO.DISPLAYNAME_EXISTS">
         <source>Der gewählte Anzeigename existiert bereits im Adressbuch.</source>
-        <target>The display name already exists in your constact book.</target>
+        <target>The name already exists in your address book.</target>
       </trans-unit><trans-unit id="CONVERSATION.WARN.MESSAGE_EMPTY">
         <source>Die Nachricht ist leer.</source>
         <target>The message is empty.</target>
@@ -705,7 +704,7 @@ The private part should be exported to a safe place for data recovery purpose if
         <target>Settings</target>
       </trans-unit><trans-unit id="CONVERSATION.TEXT.REQUEST_CAPTCHA">
         <source>Bitte ein (neues) PassCaptcha senden.</source>
-        <target>Please send a (new) captcha.</target>
+        <target>Please send a (new) passCaptcha.</target>
       </trans-unit><trans-unit id="NOTIFICATIONS.MODAL_HEADER.WARN">
         <source>Achtung</source>
         <target>Warning</target>
@@ -738,7 +737,7 @@ The private part should be exported to a safe place for data recovery purpose if
         <target>Username</target>
       </trans-unit><trans-unit id="IDENTITY.KEYS.AUTHENTICATION.MODAL.SUCCESS">
         <source>cameoKeys erfolgreich verknüpft.</source>
-        <target>You have successfully linked your cameoKeys!</target>
+        <target>You have successfully linked your cameoKeys.</target>
       </trans-unit><trans-unit id="IDENTITY.KEYS.GENERATE.SAVE.NOTE">
         <source>Um bei Verlust Ihres cameoKeys Ihre verschlüsselten Nachrichten wieder lesen zu können, sollten Sie Ihren cameoKey öffnen, den privaten Schlüssel aus dem Textfeld kopieren und sicher verwahren.</source>
         <target>To avoid loss of encrypted data please open your cameoKey and copy it's private part to a safe place on your computer - we recommend to use a password safe.</target>
@@ -747,7 +746,7 @@ The private part should be exported to a safe place for data recovery purpose if
         <target>Not now</target>
       </trans-unit><trans-unit id="MODAL.LABEL.CLOSE">
         <source>Schließen</source>
-        <target>Close</target>
+        <target>Please close</target>
       </trans-unit><trans-unit id="NAVIGATION.TABS.ALL">
         <source>Kontakte</source>
         <target>Contacts</target>
@@ -759,7 +758,7 @@ The private part should be exported to a safe place for data recovery purpose if
         <target>Stop request</target>
       </trans-unit><trans-unit id="CONTACT.PLACEHOLDER.PHONENUMBER">
         <source>Telefonnummer</source>
-        <target>Phonenumber</target>
+        <target>Phone number</target>
       </trans-unit><trans-unit id="SECURITY_ASPECT.CONVERSATION.KEY_TRANSMISSION_SYMMETRIC.DESCRIPTION_BAD_RECIPIENTS">
         <source>Folgende Empfänger haben keinen cameoKey:</source>
         <target>These recipients have no cameoKey:</target>
@@ -768,13 +767,13 @@ The private part should be exported to a safe place for data recovery purpose if
         <target>Contact requests</target>
       </trans-unit><trans-unit id="CONTACT.PLACEHOLDER.ZIP">
         <source>PLZ</source>
-        <target>Zip</target>
+        <target>ZIP</target>
       </trans-unit><trans-unit id="CONTACT.TRUST.NO_CAMEOKEYS">
         <source>kein cameoKey</source>
         <target>no cameoKey @todo</target>
       </trans-unit><trans-unit id="IDENTITY.KEYS.GENERATE.START.KEY_LENGTH.LENGTH_2048">
         <source>2048Bit (default)</source>
-        <target>2048Bit (default)</target>
+        <target>2048 bit (default)</target>
       </trans-unit><trans-unit id="CONTACTS.REQUESTS.REJECT">
         <source>Zurückweisen</source>
         <target>Reject</target>
@@ -782,17 +781,17 @@ The private part should be exported to a safe place for data recovery purpose if
         <source>Verknüpfung abbrechen</source>
         <target>Abort request</target>
       </trans-unit><trans-unit id="CONVERSATION.WARN.NO_PASSWORD">
-        <source>Sie müssen ein Passwort setzen oder die Verschlüsselung deaktivieren, weil nicht alle Empfänger einen cameoKey besitzen.&lt;br&gt;&lt;br&gt; &lt;a href=&quot;#/{{type}}/{{typeId}}/security&quot;&gt;Hier Verschlüsselung einstellen&lt;/a&gt;</source>
-        <target>Password required but not configured.&lt;br&gt; &lt;a href=&quot;#/{{type}}/{{typeId}}/security&quot;&gt;Configure your encryption settings here&lt;/a&gt;</target>
+        <source>Sie müssen ein Passwort setzen oder die Verschlüsselung deaktivieren, weil nicht alle Empfänger einen cameoKey besitzen.&lt;br&gt;&lt;br&gt; &lt;a href="#/{{type}}/{{typeId}}/security"&gt;Hier Verschlüsselung einstellen&lt;/a&gt;</source>
+        <target>As not all of the recipients are in the cameoNetwork please set a password or disable the encryption first.&lt;br&gt; &lt;a href="#/{{type}}/{{typeId}}/security"&gt;Configure your encryption settings here&lt;/a&gt;</target>
       </trans-unit><trans-unit id="CAMEO.VERSION">
         <source>Version</source>
         <target>version</target>
       </trans-unit><trans-unit id="SECURITY_ASPECT.CONVERSATION.KEY_TRANSMISSION_SYMMETRIC.DESCRIPTION_PRIVATE_KEY_MISSING">
         <source>Sie haben auf diesem Gerät keinen cameoKey.</source>
-        <target>You do not have a cameoKey on this device.</target>
+        <target>On this device you do not have a cameoKey.</target>
       </trans-unit><trans-unit id="SECURITY_ASPECT.CONVERSATION.MISSING_DATA">
         <source>Sicherheitsaspekte fehlen!</source>
-        <target>Security aspects missing</target>
+        <target>Security aspects missing.</target>
       </trans-unit><trans-unit id="CONVERSATION.PLACEHOLDER.PASSWORD">
         <source>Passwort</source>
         <target>Password</target>
@@ -807,13 +806,13 @@ The private part should be exported to a safe place for data recovery purpose if
         <target>Later</target>
       </trans-unit><trans-unit id="CONTACTS.LABEL.SEARCH_IDENTITY">
         <source>CameoNet durchsuchen</source>
-        <target>Search Cameo indentity</target>
+        <target>Search CameoNet indentity</target>
       </trans-unit><trans-unit id="START.QUICKSTART.HEADLINE">
         <source>Schnelleinstieg</source>
         <target>Quick Start</target>
       </trans-unit><trans-unit id="DRTV.CHOOSE_SOURCE.CAMERA">
         <source>Foto aufnehmen</source>
-        <target>Take a photo</target>
+        <target>Take a picture</target>
       </trans-unit><trans-unit id="IDENTITY.KEYS.AUTHENTICATION.DONE.INSTRUCTIONS">
         <source>Verknüfung erfolgreich abgeschlossen.</source>
         <target>You have successfully linked your cameoKeys!</target>
@@ -822,19 +821,19 @@ The private part should be exported to a safe place for data recovery purpose if
         <target>Save</target>
       </trans-unit><trans-unit id="CONVERSATION.LABEL.SEND_CAPTCHA">
         <source>PassCaptcha senden</source>
-        <target>Send captcha</target>
+        <target>Send passCaptcha</target>
       </trans-unit><trans-unit id="START.LOGOUT">
         <source>Abmelden</source>
         <target>Logout</target>
       </trans-unit><trans-unit id="IDENTITY.KEYS.AUTHENTICATION.ERROR.VERIFY">
         <source>Verknüpfung fehlgeschlagen, bitte versuchen sie es erneut.</source>
-        <target>Linking missed - please try again.</target>
+        <target>Linking failed - please try again.</target>
       </trans-unit><trans-unit id="IDENTITY.KEYS.AUTHENTICATION.WAIT.INSTRUCTIONS">
         <source>Drücken Sie auf 'Verknüpfung abbrechen' um den Vorgang zu beenden.</source>
         <target>Please press 'Abort request' to stop the process.</target>
       </trans-unit><trans-unit id="CONTACT.INFO.SELECT.PHONENUMBER">
         <source>Bitte wählen Sie eine Telefonnummer aus</source>
-        <target>Please select one phonenumber</target>
+        <target>Please select one phone number</target>
       </trans-unit><trans-unit id="SETTINGS.PAGES.IDENTITY.CREATE.FOOTER">
         <source>@:CONTACT.FOOTER.SAVE</source>
         <target>@:CONTACT.FOOTER.SAVE</target>
@@ -843,7 +842,7 @@ The private part should be exported to a safe place for data recovery purpose if
         <target>New contacts</target>
       </trans-unit><trans-unit id="DRTV.VALIDATE_EMAIL.PLACEHOLDER">
         <source>E-Mail</source>
-        <target>Email</target>
+        <target>e-mail</target>
       </trans-unit><trans-unit id="ERROR.LOGOUT">
         <source>Abmelden</source>
         <target>Logout</target>
@@ -852,7 +851,7 @@ The private part should be exported to a safe place for data recovery purpose if
         <target>Generate cameoKey</target>
       </trans-unit><trans-unit id="ACCOUNT.INFO.EMPTY.LOGINAME">
         <source>Bitte geben Sie einen Loginname ein.</source>
-        <target>The login name is empty.</target>
+        <target>Please enter a login name.</target>
       </trans-unit><trans-unit id="PROFILE.MOBILE">
         <source>Mobilfunknummer</source>
         <target>Mobile</target>
@@ -893,22 +892,22 @@ https://github.com/ftlabs/fastclick</target>
         <target>Save</target>
       </trans-unit><trans-unit id="SECURITY_ASPECT.CONVERSATION.NO_SYMMETRIC_KEY_TRANSMISSION.DESCRIPTION">
         <source>Die Verschlüsselung arbeitet nur mit cameoKeys; Es wurde kein Passwort gesetzt; die Güte der Verschlüsselung ist nicht abhängig von der Gute eines Passworts; es muss kein Passwort übertragen werden.</source>
-        <target>missing description @todo</target>
+        <target>The encryption is working with cameoKeys only; no password was set up; the quality of encyption is not dependent of the password quality; no password must be transferred.</target>
       </trans-unit><trans-unit id="CONVERSATION.LABEL.REQUEST_CAPTCHA">
         <source>PassCaptcha anfordern</source>
-        <target>Request captcha</target>
+        <target>Request passCaptcha</target>
       </trans-unit><trans-unit id="LOGIN.LABEL.AUTO">
         <source>Automatisches Login auswählen</source>
         <target>Choose auto login</target>
       </trans-unit><trans-unit id="TALKS.MORE">
         <source>Weitere Talks laden</source>
-        <target>Load more</target>
+        <target>List more talks.</target>
       </trans-unit><trans-unit id="IDENTITY.KEYS.GENERATE.START.HEADLINE">
         <source>cameoKey erzeugen</source>
         <target>Generate cameoKey</target>
       </trans-unit><trans-unit id="SETTINGS.PAGES.IDENTITY.CREATE.WARN.FAILED">
         <source>Das Anlegen der neuen Identität ist fehlgeschlagen. Bitte probieren Sie es später noch einmal.</source>
-        <target>The creating of new identity has failed. Please try again later.</target>
+        <target>New identity creation failed. Please try again later.</target>
       </trans-unit><trans-unit id="SETTINGS.PAGES.IDENTITY.KEYS.IMPORT.HEADER">
         <source>cameoKey importieren</source>
         <target>Import cameoKey</target>
@@ -920,25 +919,25 @@ https://github.com/ftlabs/fastclick</target>
         <target>cameoKey</target>
       </trans-unit><trans-unit id="PROFILE.E-MAIL">
         <source>E-Mail</source>
-        <target>Email</target>
+        <target>e-mail</target>
       </trans-unit><trans-unit id="CONTACTS.INFO.REQUEST.REJECT">
         <source>Die Anfrage wurde zurückgewiesen.</source>
-        <target>Request rejected</target>
+        <target>Request was rejected</target>
       </trans-unit><trans-unit id="CONTACTS.INFO.MORE_CHARS_NEEDED">
         <source>Bitte geben Sie mehr Zeichen ein!</source>
-        <target>Please type more letters</target>
+        <target>Please type more letters.</target>
       </trans-unit><trans-unit id="ACCOUNT.INFO.EMPTY.OLD_PASSWORD">
         <source>Bitte geben Sie ihr bisheriges Passwort ein.</source>
-        <target>Please enter a password.</target>
+        <target>Please enter your previous password.</target>
       </trans-unit><trans-unit id="CONTACTS.HEADING.SEND_REQUEST">
         <source>Kontaktanfrage</source>
-        <target>Send request</target>
+        <target>Contact request</target>
       </trans-unit><trans-unit id="SETTINGS.PAGES.IDENTITY.KEYS.CREATE.HEADER">
         <source>cameoKey erzeugen</source>
         <target>Generate cameoKey</target>
       </trans-unit><trans-unit id="CONVERSATION.WARN.PASSWORD_NEEDED">
-        <source>Zum Entschlüsseln des Talks geben Sie bitte ein Passwort ein.&lt;br&gt; &lt;a href=&quot;#/{{type}}/{{typeId}}/security&quot;&gt;Hier ein Passwort eingeben!&lt;/a&gt;</source>
-        <target>Password required.&lt;br&gt; &lt;a href=&quot;#/{{type}}/{{typeId}}/security&quot;&gt;enter here&lt;/a&gt;</target>
+        <source>Zum Entschlüsseln des Talks geben Sie bitte ein Passwort ein.&lt;br&gt; &lt;a href="#/{{type}}/{{typeId}}/security"&gt;Hier ein Passwort eingeben!&lt;/a&gt;</source>
+        <target>Please enter a password to decode the talk.&lt;br&gt; &lt;a href="#/{{type}}/{{typeId}}/security"&gt;Please enter here&lt;/a&gt;</target>
       </trans-unit><trans-unit id="CAMEO.SLOGAN">
         <source>Safer Communication - Made in Germany!</source>
         <target>Safer Communication - Made in Germany!</target>
@@ -962,7 +961,7 @@ https://github.com/ftlabs/fastclick</target>
         <target>New contact request</target>
       </trans-unit><trans-unit id="CONTACT.INFO.SUCCESS.EDIT">
         <source>Kontakt wurde erfolgreich gespeichert.</source>
-        <target>Contact saved</target>
+        <target>Contact was saved successfiully.</target>
       </trans-unit><trans-unit id="DRTV.TYPE_CHOOSER.FAX">
         <source>Fax</source>
         <target>fax</target>
@@ -971,7 +970,7 @@ https://github.com/ftlabs/fastclick</target>
         <target>Surname</target>
       </trans-unit><trans-unit id="REGISTER.WARN.REGISTRATION_FAILED">
         <source>Bei der Registrierung ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.</source>
-        <target>Bei der Registrierung ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.</target>
+        <target>An error was reported. Please try again.</target>
       </trans-unit><trans-unit id="IDENTITY.KEYS.AUTHENTICATION.START.RETRY_BUTTON">
         <source>Wiederholen</source>
         <target>Retry</target>
@@ -986,13 +985,13 @@ https://github.com/ftlabs/fastclick</target>
         <target>Send</target>
       </trans-unit><trans-unit id="DRTV.VALIDATE_MIXED.INFO.EMPTY">
         <source>Sie nichts eingegeben.</source>
-        <target>You left the input field empty.</target>
+        <target>You have not entered anything.</target>
       </trans-unit><trans-unit id="DRTV.TYPE_CHOOSER.PRIVATE">
         <source>privat</source>
         <target>private</target>
       </trans-unit><trans-unit id="REGISTER.INFO.USER_INFORMATION">
         <source>Die folgenden Felder sind optional:&lt;br/&gt;&lt;br/&gt;Wenn Sie einen Anzeigenamen eingeben, wird Ihre Identität überall im cameoNet mit diesem Namen angezeigt. Er muss nicht eindeutig sein. Andere Nutzer können Sie im cameoNet auch über Ihren Anzeigenamen finden.&lt;br/&gt;&lt;br/&gt;Wenn Sie eine E-Mail-Adresse und/oder eine Mobilfunknummer eingeben, können Sie sich über neue Nachrichten und Kontaktanfragen informieren lassen und bei Bedarf Ihr Passwort zurücksetzen. Diese Daten sind für andere Nutzer nicht sichtbar und werden nicht in Ihre Identität übertragen.</source>
-        <target>@todo</target>
+        <target>The following fields are optional:&lt;br/&gt;&lt;br/&gt;If you enter a display name, your identity will be shown accordingly. The display name has not to be unique.&lt;br/&gt;&lt;br/&gt;Please enter a mobile number or e-mail to receive notifications on this channel and to create an option for reset your password. Both data are not visible for others and will not be displayed at your identity.</target>
       </trans-unit><trans-unit id="IDENTITY.KEYS.TRUST.ENTER_TRANSACTION_SECRET.HEADER">
         <source>Vertrauensanfrage</source>
         <target>Inquiry of trust</target>
@@ -1019,7 +1018,7 @@ https://github.com/ftlabs/fastclick</target>
         <target>Wrong password</target>
       </trans-unit><trans-unit id="CONVERSATION.LABEL.KEY_GENERATION">
         <source>Um sicher zu kommunizieren, können Sie hier einen cameoKey für diese Identität erzeugen.</source>
-        <target>Here you can generate a cameoKey for this identity for better security.</target>
+        <target>Here you can generate a cameoKey for this identity.</target>
       </trans-unit><trans-unit id="CAMEO.DESCRIBE">
         <source>Registrieren Sie sich kostenlos und unverbindlich für cameoNet.
 Wirklich sicher kommunizieren. Mobil und Desktop. Mit allen Kontakten. Und tollen Zusatzfunktionen.
@@ -1068,7 +1067,7 @@ Register today!</target>
         <target>Done</target>
       </trans-unit><trans-unit id="REGISTER.LABEL.USERNAME">
         <source>Benutzername</source>
-        <target>Username</target>
+        <target>User name</target>
       </trans-unit><trans-unit id="IDENTITY.KEYS.TRUST.HEADLINE">
         <source>Kontakt vertrauen</source>
         <target>Trust contact</target>
@@ -1086,19 +1085,19 @@ Register today!</target>
         <target>Create identity</target>
       </trans-unit><trans-unit id="DRTV.VALIDATE_EMAIL.LABEL">
         <source>E-Mail</source>
-        <target>Email</target>
+        <target>e-mail</target>
       </trans-unit><trans-unit id="START.WELCOME.TEXT_5">
         <source>Wir freuen uns über jeden Fehler und Verbesserungsvorschlag, den Sie unter http://support.cameonet.de einstellen&lt;br&gt;Ihr cameoNet-Team.</source>
-        <target>We are happy about when you post us any error or improvement on http://support.cameonet.de&lt;br&gt; Thank you! Your cameoNet-Team.</target>
+        <target>We are happy when you post us any error or improvement on http://support.cameonet.de&lt;br&gt; Thank you! Your cameoNet-Team.</target>
       </trans-unit><trans-unit id="CONTACTS.HEADING.LIST">
         <source>Kontakte</source>
         <target>Contacts</target>
       </trans-unit><trans-unit id="DRTV.EXTERN_CONTACT.INFO.EMPTY.SURNAME">
         <source>Bitte geben Sie einen Nachnamen ein!</source>
-        <target>Surname is empty.</target>
+        <target>Please enter a surname.</target>
       </trans-unit><trans-unit id="CONTACT.INFO.ERROR.EDIT">
         <source>Kontakt konnte nicht gespeichert werden.</source>
-        <target>Could not edit contact</target>
+        <target>Contact could not be saved.</target>
       </trans-unit><trans-unit id="IDENTITY.KEYS.TRUST.WAIT.NOTE">
         <source>'{{identity}}' muss obigen Code auf seinem/ihrem Gerät eingeben, um mit Ihnen eine Vertrauensbasis einzugehen.</source>
         <target>'{{identity}}' has to enter the above code to confirme your inquiry:</target>
@@ -1110,7 +1109,7 @@ Register today!</target>
         <target>1. Generate Key</target>
       </trans-unit><trans-unit id="IDENTITY.KEYS.TRUST.ERROR.TIMEOUT">
         <source>Zeit überschritten, bitte versuchen sie es erneut.</source>
-        <target>Timeout - please try again.</target>
+        <target>Time out - please try again.</target>
       </trans-unit><trans-unit id="SETTINGS.PAGES.ABOUT_US.TITLE">
         <source>Über uns</source>
         <target>About us</target>
@@ -1131,22 +1130,22 @@ Register today!</target>
         <target>Messages</target>
       </trans-unit><trans-unit id="SETTINGS.PAGES.IDENTITY.KEYS.UNTRUSTED_PUBLICKEYS_EXISTS">
         <source>Sie haben für diese Identität auf mehreren Geräten cameoKeys, die Sie noch nicht gegeneinander authentifiziert haben. Dadurch können Sie Nachrichten, die Sie auf einem anderen Gerät geschrieben und verschlüsselt haben, hier nicht lesen und umgekehrt.&lt;br&gt;Um dieses Gerät gegen ein anderes zu authentifizieren, klicken sie in der Liste unten auf &lt;ICON&gt;.</source>
-        <target>You have cameoKeys for this identity on several devices that are not authenticated. You cannot read messages written and encrypted on devices with not authenticated cameoKeys. &lt;br&gt;To authenticate a cameoKey click on &lt;ICON&gt; next to the cameoKey in the list below.</target>
+        <target>For this identity you have cameoKeys on different devices that are not trusted. You cannot read messages written and encrypted on devices with untrusted cameoKeys. &lt;br&gt;To trust a cameoKey click on &lt;ICON&gt; next to the cameoKey in the list below.</target>
       </trans-unit><trans-unit id="CONVERSATION.PLACEHOLDER.NO_SUBJECT">
         <source>(optional)</source>
         <target>(optional)</target>
       </trans-unit><trans-unit id="NOTIFICATIONS.TYPES.KEYS.STORE_NEW">
         <source>cameoKey erfolgreich gespeichert!</source>
-        <target>cameoKey saved!</target>
+        <target>cameoKey saved successfully.</target>
       </trans-unit><trans-unit id="SETTINGS.PAGES.IDENTITY.KEYS.WARN.CHECK_PRIVKEY">
         <source>Überprüfe den privaten Schlüssel!</source>
-        <target>Check private key</target>
+        <target>Please check private key.</target>
       </trans-unit><trans-unit id="IDENTITY.KEYS.AUTHENTICATION.SUCCESSFUL.INSTRUCTIONS">
         <source>Die Verknüpfung Ihrer cameoKeys war erfolgreich! In Kürze können Sie alle Talks lesen, die Sie mit Ihren verknüpften cameoKeys verschlüsselt haben.</source>
-        <target>You have successfully linked your cameoKeys! In a few seconds, all previous talks that have been created by the linked cameoKeys will be egible.</target>
+        <target>You have successfully linked your cameoKeys! In a few seconds, all previous talks will be egible.</target>
       </trans-unit><trans-unit id="REGISTER.PLACEHOLDER.USERNAME">
         <source>Benutzername</source>
-        <target>Username</target>
+        <target>User name</target>
       </trans-unit><trans-unit id="SETTINGS.CONTACTS">
         <source>Kontakte Einstellungen</source>
         <target>Contact Settings</target>
@@ -1161,7 +1160,7 @@ Register today!</target>
         <target>Settings</target>
       </trans-unit><trans-unit id="IDENTITY.KEYS.AUTHENTICATION.MODAL.CANCELED">
         <source>Verknüfung abgebrochen.</source>
-        <target>Linking canceled.</target>
+        <target>Linking was canceled.</target>
       </trans-unit><trans-unit id="CONTACTS.TAG.FILTER">
         <source>Filter</source>
         <target>Filter</target>
@@ -1170,22 +1169,22 @@ Register today!</target>
         <target>other</target>
       </trans-unit><trans-unit id="REGISTER.TITLE.HEAD_LOGIN">
         <source>Login Informationen</source>
-        <target>Login Information</target>
+        <target>Login information</target>
       </trans-unit><trans-unit id="MODAL.LABEL.START">
         <source>Start</source>
         <target>Start</target>
       </trans-unit><trans-unit id="SETTINGS.PAGES.APP.TIME_FORMAT">
         <source>Zeitformat</source>
-        <target>Timeformat</target>
+        <target>Time format</target>
       </trans-unit><trans-unit id="IDENTITY.LABEL.TRUST">
         <source>QR-Code</source>
         <target>QR-Code</target>
       </trans-unit><trans-unit id="IDENTITY.KEYS.TRUST.ERROR.VERIFY">
         <source>Vertrauensprozess fehlgeschlagen, bitte versuchen sie es erneut.</source>
-        <target>Trust process missed - please try again.</target>
+        <target>Trust process failed - please try again.</target>
       </trans-unit><trans-unit id="DRTV.VALIDATE_CAMEOID.INFO.INPUT.EXISTS">
         <source>Dieser Name ist bereits vergeben. Bitte wählen Sie einen anderen!</source>
-        <target>Your input already exists! Please choose another.</target>
+        <target>This name already exists. Please choose another.</target>
       </trans-unit><trans-unit id="START.YOUR_ID">
         <source>Deine cameoID</source>
         <target>Your cameoID</target>
@@ -1194,10 +1193,10 @@ Register today!</target>
         <target>cameoKeys</target>
       </trans-unit><trans-unit id="ACCOUNT.PLACEHOLDER.EMAIL">
         <source>E-Mail</source>
-        <target>Email</target>
+        <target>e-mail</target>
       </trans-unit><trans-unit id="CONVERSATION.TAG.FILE">
         <source>Datei</source>
-        <target>File</target>
+        <target>file</target>
       </trans-unit><trans-unit id="IDENTITY.KEYS.TRUST.WAIT.INSTRUCTIONS">
         <source>Drücken Sie auf 'Anfrage abbrechen' um den Vorgang zu beenden.</source>
         <target>Please press 'Stop request' to stop the process.</target>
@@ -1206,10 +1205,10 @@ Register today!</target>
         <target>@:LANG.EN_US</target>
       </trans-unit><trans-unit id="JOB.IN_PROGRESS">
         <source>Sie haben diese Seite bearbeitet ohne zu speichern. Wollen Sie diese wirklich verlassen?</source>
-        <target>You have edited this site without saving. Do you really want to leave this page?</target>
+        <target>You have edited this site without saving. Do you really want to leave the page?</target>
       </trans-unit><trans-unit id="SETTINGS.PAGES.IDENTITY.KEYS.WARN.CHECK_KEYNAME">
         <source>Überprüfe den Schlüsselnamen!</source>
-        <target>Check key name</target>
+        <target>Please check key name.</target>
       </trans-unit><trans-unit id="IDENTITY.OVERVIEW.HEADER">
         <source>Übersicht Identitäten</source>
         <target>Identities Overview</target>
@@ -1218,10 +1217,10 @@ Register today!</target>
         <target>@:CONTACT.PLACEHOLDER.PHONENUMBER</target>
       </trans-unit><trans-unit id="CONTACTS.INFO.REQUEST.IGNORE">
         <source>Der User wird nun ignoriert.</source>
-        <target>User ignored</target>
+        <target>The user will now be ignored.</target>
       </trans-unit><trans-unit id="NOTIFICATIONS.MODAL_HEADER.SUCCESS">
         <source>Erfolgreich</source>
-        <target>Success</target>
+        <target>Successfully</target>
       </trans-unit><trans-unit id="LOGIN.INFO.404">
         <source>Ein Login ist zur Zeit nicht möglich. 404</source>
         <target>Login is impossible right now.</target>
@@ -1230,7 +1229,7 @@ Register today!</target>
         <target>cameoKeys on other devices/ other browsers or apps </target>
       </trans-unit><trans-unit id="NOTIFICATIONS.MODAL_HEADER.INFO">
         <source>Hinweis</source>
-        <target>Info</target>
+        <target>tip</target>
       </trans-unit><trans-unit id="REGISTER.INFO.INVALID_EMAIL">
         <source>@:DRTV.VALIDATE_EMAIL.INFO.INVALID</source>
         <target>@:DRTV.VALIDATE_EMAIL.INFO.INVALID</target>
@@ -1239,7 +1238,7 @@ Register today!</target>
         <target>Contracts</target>
       </trans-unit><trans-unit id="DRTV.EXTERN_CONTACT.INFO.EMPTY.PHONE_OR_EMAIL">
         <source>Bitte geben Sie eine Mobilfunknummer oder eine E-Mail-Adresse ein!</source>
-        <target>Please enter a phone number or a email address.</target>
+        <target>Please enter a phone number or a e-mail address.</target>
       </trans-unit><trans-unit id="SETTINGS.PAGES.IDENTITY.KEYS.GENERATE">
         <source>cameoKey erzeugen</source>
         <target>Generate cameoKey</target>
@@ -1254,34 +1253,34 @@ Register today!</target>
         <target>CameoID</target>
       </trans-unit><trans-unit id="PASSWORD.ERROR.EMPTY">
         <source>Bitte ein Passwort eingeben und bestätigen!</source>
-        <target>Please enter a password</target>
+        <target>Please enter a password and confim.</target>
       </trans-unit><trans-unit id="CONTACT.PLACEHOLDER.STREET">
         <source>Straße</source>
         <target>Street</target>
       </trans-unit><trans-unit id="SETTINGS.PAGES.IDENTITY.KEYS.WARN.CHECK_PUBKEY">
         <source>Überprüfe den öffentlichen Schlüssel!</source>
-        <target>Check public key</target>
+        <target>Please check public key.</target>
       </trans-unit><trans-unit id="CONTACT.INFO.INVALID.EMAIL">
         <source>@:DRTV.VALIDATE_EMAIL.INFO.INVALID</source>
         <target>@:DRTV.VALIDATE_EMAIL.INFO.INVALID</target>
-      </trans-unit><trans-unit id="CONTACT.NOTIFICATION.CONFIRMATION">
+      </trans-unit><trans-unit id="CONTACT.NOTIFICATION.CONFIRMATION" approved="yes">
         <source>Sie haben Kontaktdaten einer dritten Person auf unseren Servern gespeichert. Informieren Sie sie bitte darüber.</source>
-        <target/>
+        <target state="translated">Personal data of a third person have been stored on our server. Please inform her or him.</target>
       </trans-unit><trans-unit id="TERMS.PARAGRAPH_1">
         <source>Für die Nutzung des Dienstes cameoNet gelten die Gesetze der Bundesrepublik Deutschland. Das Angebot und die Nutzung des Dienstes ist derzeit auf die Europäische Union beschränkt. Der Gerichtsstandort ist, sofern der Nutzer keinen allgemeinen Gerichtsstand in  Deutschland hat, Deutschland, Halle.</source>
-        <target>German law and regulations applie for the use of the service cameoNet. At the moment, the offer and the use of the service is restricted to the European Union. Germany (Halle) is the exclusive place of jurisdiction for any disputes, in case the user has no general place of jurisdition in Germany.</target>
+        <target>German law and regulations apply for the use of cameoNet. At the moment, the offer and the use of our service is restricted to the European Union. Germany (Halle) is the exclusive place of jurisdiction for any disputes, in case the user has no general place of jurisdition in Germany.</target>
       </trans-unit><trans-unit id="ERROR.HEADER">
         <source>Ein Fehler ist aufgetreten.</source>
         <target>An error occurred</target>
       </trans-unit><trans-unit id="IDENTITY.KEYS.AUTHENTICATION.ENTER_TRANSACTION_SECRET.HEADER">
         <source>cameoKeys verknüpfen</source>
-        <target>Linking Request</target>
+        <target>Link cameoKeys</target>
       </trans-unit><trans-unit id="SETTINGS.PAGES.IDENTITY.KEYS.IS_TRUSTED">
         <source>ist authentifiziert</source>
-        <target>trusted</target>
+        <target>is trusted</target>
       </trans-unit><trans-unit id="SETTINGS.PAGES.APP.SKIP_KEY_INFO">
         <source>cameoKey Information überspringen</source>
-        <target>Skip cameoKey Information</target>
+        <target>Skip cameoKey information</target>
       </trans-unit><trans-unit id="SETTINGS.PAGES.IDENTITY.KEYS.PUBLIC_KEY">
         <source>Öffentlicher Schlüssel</source>
         <target>Public key</target>
@@ -1290,25 +1289,25 @@ Register today!</target>
         <target>Transmit</target>
       </trans-unit><trans-unit id="SETTINGS.PAGES.IDENTITY.KEYS.IS_UNTRUSTED">
         <source>ist nicht authentifiziert</source>
-        <target>untrusted</target>
+        <target>is untrusted</target>
       </trans-unit><trans-unit id="REGISTER.PLACEHOLDER.DISPLAYNAME">
         <source>Anzeigename</source>
         <target>Display name</target>
       </trans-unit><trans-unit id="CONTACTS.LABEL.IMPORT_LOCAL">
         <source>Lokalen Kontakt importieren</source>
-        <target>Load local contact</target>
+        <target>Import local contact</target>
       </trans-unit><trans-unit id="CONVERSATION.NO_SUBJECT">
         <source>Kein Betreff</source>
         <target>no subject</target>
       </trans-unit><trans-unit id="DRTV.BULK_REKEYING.HEADER">
         <source>Neuverschlüsselung</source>
-        <target>Encrypting talks</target>
+        <target>New encryption of talks</target>
       </trans-unit><trans-unit id="PASSWORD.LABEL_PW">
         <source>Passwort</source>
         <target>Password</target>
       </trans-unit><trans-unit id="DRTV.VALIDATE_MIXED.PLACEHOLDER">
         <source>Mobilfunknummer oder e-mail-Adresse</source>
-        <target>Phone number or e-mail address</target>
+        <target>Mobile number or e-mail address</target>
       </trans-unit><trans-unit id="CONVERSATION.CONTROL.SAVE">
         <source>Speichern</source>
         <target>Save</target>
@@ -1320,7 +1319,7 @@ Register today!</target>
         <target>City</target>
       </trans-unit><trans-unit id="SETTINGS.PAGES.IDENTITY.KEYS.KEY_SIZE">
         <source>Schlüsselstärke</source>
-        <target>Key size</target>
+        <target>Key force</target>
       </trans-unit><trans-unit id="IDENTITY.KEYS.GENERATE.SAVE.KEY_NAME">
         <source>Schlüsselname</source>
         <target>Key name</target>
@@ -1332,7 +1331,7 @@ Register today!</target>
         <target>Error</target>
       </trans-unit><trans-unit id="CONTACT.TRUST.START">
         <source>Kontakt vertrauen</source>
-        <target>trust this contact  @todo</target>
+        <target>contact can be trusted</target>
       </trans-unit><trans-unit id="MODAL.LABEL.ACCEPT">
         <source>Annehmen</source>
         <target>Accept</target>
@@ -1372,7 +1371,7 @@ the cameoNet team.</target>
         <target>Request send</target>
       </trans-unit><trans-unit id="IDENTITY.KEYS.TRUST.MODAL.CANCELED">
         <source>Vertrauensprozess abgebrochen.</source>
-        <target>Trust process canceled.</target>
+        <target>Trust process was canceled.</target>
       </trans-unit><trans-unit id="IDENTITY.LABEL.IDENTITY">
         <source>Identität</source>
         <target>Identity</target>
@@ -1381,7 +1380,7 @@ the cameoNet team.</target>
         <target>@:DRTV.VALIDATE_EMAIL.PLACEHOLDER</target>
       </trans-unit><trans-unit id="ACCOUNT.PLACEHOLDER.OLD_PASSWORD">
         <source>Bisheriges Passwort</source>
-        <target>Old password</target>
+        <target>Previous password</target>
       </trans-unit><trans-unit id="START.QUICKSTART.HEADLINE_3">
         <source>3. Nachricht schreiben</source>
         <target>3. Write Message</target>
@@ -1408,10 +1407,10 @@ the cameoNet team.</target>
         <target>Recipients</target>
       </trans-unit><trans-unit id="CONTACT.INFO.INVALID.MIXED">
         <source>Ihre Eingabe ist nicht valide.</source>
-        <target>Your input isn't valid.</target>
+        <target>Your input was unvalid.</target>
       </trans-unit><trans-unit id="DRTV.VALIDATE_MIXED.LABEL">
         <source>Mobilfunknummer oder e-mail-Adresse</source>
-        <target>Phone number or e-mail address.</target>
+        <target>Mobile number or e-mail address.</target>
       </trans-unit><trans-unit id="SYSTEMCHECK.CLIENTVERSION.TEXT_ERROR">
         <source>Bitte aktualisieren Sie die App!&lt;br&gt; Die Version wird nicht mehr unterstützt!&lt;br&gt;Version: {{version}}</source>
         <target>Please update the App!&lt;br&gt; This version is not supported anymore!&lt;br&gt;Version: {{version}}</target>
@@ -1420,7 +1419,7 @@ the cameoNet team.</target>
         <target/>
       </trans-unit><trans-unit id="SETTINGS.PAGES.IDENTITY.KEYS.REMOVE_KEY">
         <source>cameoKey löschen</source>
-        <target>Remove cameoKey</target>
+        <target>Delete cameoKey</target>
       </trans-unit><trans-unit id="CONTACT.INFO.INVALID.PHONENUMBER">
         <source>@:DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER</source>
         <target>@:DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER</target>
@@ -1435,10 +1434,10 @@ the cameoNet team.</target>
         <target>Talks</target>
       </trans-unit><trans-unit id="IDENTITY.KEYS.TRUST.START.NOTE">
         <source>ACHTUNG! Bevor Sie auf 'Anfragen' klicken muss Ihr Kontakt im cameoNet als {{identity}} angemeldet sein!</source>
-        <target>Attention! Before you press 'Request' the contact has to be registered to cameoNet as {{identity}}.</target>
+        <target>Attention! Before you press 'Request' the requested identity has to be registered at cameoNet.</target>
       </trans-unit><trans-unit id="IDENTITY.KEYS.AUTHENTICATION.ENTER_TRANSACTION_SECRET.INSTRUCTIONS">
         <source>Sie haben auf einem anderen Gerät einen cameoKey, den Sie auf diesem Gerät noch nicht kennen. D.h. Sie können Nachrichten, die Sie hier verschlüsselt haben, auf dem anderen Gerät nicht lesen und umgekehrt.</source>
-        <target>On another device a cameoKey is stored that is not linked to this device. Therefore it is not possible to read encrypted data on this device and vice versa.</target>
+        <target>A cameoKey is stored on another device that is not linked. Therefore it is not possible to read encrypted data on this device and vice versa.</target>
       </trans-unit><trans-unit id="CONTACTS.LABEL.FILTER">
         <source>Filtern</source>
         <target>Filter</target>
