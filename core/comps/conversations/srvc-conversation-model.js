@@ -394,7 +394,7 @@ angular.module('cmConversations')
                                 .savePassCaptcha();
 
                                 if(typeof self.password == 'string' && self.password.length > 0){
-                                    self.localPWHandler.get(conversation_data.id, self.password);
+                                    self.localPWHandler.set(conversation_data.id, self.password);
                                 }
 
                                 self.state.unset('new');
@@ -522,26 +522,6 @@ angular.module('cmConversations')
                 return this.state.is('new')
                         ?   !encryption_disabled
                         :   this.keyTransmission != "none";
-                
-                // var bool = true;
-
-                // if(this.state.is('new')){
-                //     bool = !encryption_disabled;
-                // } else {
-                //     if(this.messages.length > 0){
-                //         bool = this.messages[0].isEncrypted();
-                //     } else if(this.keyTransmission != ''){
-                //         *
-                //          * if no messages exists
-                         
-                //         bool = (this.keyTransmission == 'asymmetric' || this.keyTransmission == 'symmetric' || this.keyTransmission == 'mixed')
-                //     } else {
-                //         //cmLogger.debug('cmConversationModel.isEncrypted Error Line 525');
-                //     }
-                // }
-
-
-                // return bool;
             };
 
             /**
@@ -557,11 +537,8 @@ angular.module('cmConversations')
             this.decrypt = function () {
                 //cmLogger.debug('cmConversationModel.decrypt', + this.subject);
 
-                //if(this.isEncrypted()
-                //    && this.messages.some(function(message){return !message.state.is('decrypted')})) {
-                //    console.log('conversation have to decrypt!')
-
-                    this.getPassphrase()
+                function run(){
+                    self.getPassphrase()
                         .then(function (passphrase) {
                             return $q.all(self.messages.map(function (message) {
                                 return message.decrypt(passphrase)
@@ -572,8 +549,9 @@ angular.module('cmConversations')
                             self.trigger('decrypt:success');
 
                             // save password to localstorage
-                            if (typeof self.password == 'string' && self.password.length > 0)
+                            if (typeof self.password == 'string' && self.password.length > 0){
                                 self.localPWHandler.set(self.id, self.password);
+                            }
 
                             return $q.when()
 
@@ -583,7 +561,12 @@ angular.module('cmConversations')
                             return $q.reject();
                         }
                     );
-                //}
+                }
+
+                if(this.isEncrypted() && this.messages.some(function(message){return !message.state.is('decrypted')})){
+                    cmLogger.debug('conversation has to decrypt!')
+                    run();
+                }
             };
 
             /**
