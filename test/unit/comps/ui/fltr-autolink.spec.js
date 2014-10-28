@@ -11,7 +11,10 @@ describe('Filter cmAutolink', function () {
         linkWithHashTag = 'http://localhost:8000/app/#/conversation/123',
         linkFullHttps = 'https://www.moep.de/123',
         linkWww = 'www.moep.de/123',
-        linkLong = 'https://memo-berlin.atlassian.net/secure/RapidBoard.jspa?rapidView=1&view=detail&selectedIssue=CAM-500'
+        linkLong = 'https://memo-berlin.atlassian.net/secure/RapidBoard.jspa?rapidView=1&view=detail&selectedIssue=CAM-500',
+        linkUmlOe = 'http://dasörtliche.de',
+        linkUmlUe = 'http://dasürtliche.de',
+        linkUmlAe = 'http://dasärtliche.de'
 
     // example:
     // <div ng-data-bind="www.google.de | cmAutolink:50"></div>
@@ -84,5 +87,23 @@ describe('Filter cmAutolink', function () {
         // because of truncate text isnt the same like before
         expect(truncate2).not.toBe(linkLong)
         expect(truncate2).not.toBe(truncate1)
+    })
+
+    it('links with umlaut', function(){
+        //linkUmlOe linkUmlAe linkUmlUe
+        createDrtv(linkUmlOe)
+        expect(element.find('a').length).toBe(1)
+        expect(element.text()).toBe(linkUmlOe)
+        expect(element.find('a').attr('href')).toBe(linkUmlOe)
+
+        createDrtv(linkUmlAe)
+        expect(element.find('a').length).toBe(1)
+        expect(element.text()).toBe(linkUmlAe)
+        expect(element.find('a').attr('href')).toBe(linkUmlAe)
+
+        createDrtv(linkUmlUe)
+        expect(element.find('a').length).toBe(1)
+        expect(element.text()).toBe(linkUmlUe)
+        expect(element.find('a').attr('href')).toBe(linkUmlUe)
     })
 })

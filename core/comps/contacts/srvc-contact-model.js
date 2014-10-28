@@ -8,7 +8,8 @@ angular.module('cmContacts')
     'cmStateManagement',
     'cmUtil',
     'cmLogger',
-    function(cmContactsAdapter, cmIdentityFactory, cmObject, cmStateManagement, cmUtil, cmLogger){
+    '$q',
+    function(cmContactsAdapter, cmIdentityFactory, cmObject, cmStateManagement, cmUtil, cmLogger, $q){
         function ContactModel(data){
             var self = this;
 
@@ -81,6 +82,29 @@ angular.module('cmContacts')
                         }
                     );
                 }
+            };
+
+            this.save = function(objectChange){
+                cmLogger.debug('cmContactModel.save');
+
+                var defer = $q.defer();
+
+                if(this.id){
+                    cmContactsAdapter.editContact(this.id, objectChange).then(
+                        function(){
+                            self.identity.importData(objectChange);
+                            defer.resolve();
+                        },
+                        function(){
+                            defer.reject();
+                        }
+                    );
+                } else {
+                    cmLogger.debug('cmContactModel.save fails - no contact id!');
+                    defer.reject();
+                }
+
+                return defer.promise;
             };
 
             init(data);

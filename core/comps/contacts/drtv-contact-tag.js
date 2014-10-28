@@ -2,14 +2,22 @@
 
 angular.module('cmContacts').directive('cmContactTag',[
     'cmUserModel',
-    '$rootScope',
-    function (cmUserModel,$rootScope){
+    '$rootScope', '$routeParams',
+    function (cmUserModel,
+              $rootScope, $routeParams){
         return {
             restrict: 'AE',
             scope: {
                 contact: "=cmContact"
             },
             templateUrl: 'comps/contacts/drtv-contact-tag.html',
+            link: function(scope, element){
+                if('id' in $routeParams
+                    && scope.contact
+                    && scope.contact.id == $routeParams.id){
+                    element.addClass('is-active');
+                }
+            },
             controller: function($scope){
                 $scope.isTrusted = function(contact){
                     return      contact.identity

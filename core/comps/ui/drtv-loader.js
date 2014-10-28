@@ -6,7 +6,7 @@ angular.module('cmUi').directive('cmLoader',[
             restrict:   'AE',
             template:   function(element, attrs){
                             return  {
-                                        'spinner'   :   '<div class="spinner-wrapper" ng-show="loading"><div class="spinner"></div></div>',
+                                        'spinner'   :   '<div class="spinner-wrapper"><div class="spinner"></div></div>',
                                         'balls'     :   '<div class="followingBallsWrapper halt">'+
                                                             '<div class="G_1 followingBallsG"></div>'+
                                                             '<div class="G_2 followingBallsG"></div>'+
@@ -15,13 +15,11 @@ angular.module('cmUi').directive('cmLoader',[
                                                         '</div>'
                                     }[attrs.type || 'spinner']
                         },
-
+            scope: true,
             controller: function($scope, $element, $attrs){
-                $scope.loading = false;
+                var type = $attrs.type || 'spinner';
 
-                var type = $attrs.type || 'spinner'
-
-                $element.addClass(type)
+                $element.addClass(type);
 
                 var opts = {};
                 if($attrs.cmLength)
@@ -49,7 +47,8 @@ angular.module('cmUi').directive('cmLoader',[
                         if(start){
                             spinner = spinner.spin()
                             loadingContainer.appendChild(spinner.el);
-                        }else{
+                        } else {
+                            spinner.stop()
                             loadingContainer.innerHTML = '';
                         }
                     }
@@ -61,26 +60,22 @@ angular.module('cmUi').directive('cmLoader',[
                             $element.children().addClass('halt')
                         }
                     }
-                }
+                };
 
                 $scope.$watch($attrs.ngShow, function(bool){
                     if(bool != false){
-                        $scope.animate(true)
-                        $scope.loading = true
+                        $scope.animate(true);
                         $element.attr('cm-count', parseInt($element.attr('cm-count') || 0)+1)
                     } else {
-                        $scope.animate(false)
-                        $scope.loading = false
+                        $scope.animate(false);
                     }
                 });
 
                 $scope.$watch($attrs.cmHalt, function(bool){
                     if(bool != false){
-                        $scope.animate(true)
-                        $scope.loading = true
+                        $scope.animate(true);
                     } else {
-                        $scope.animate(false)
-                        $scope.loading = false
+                        $scope.animate(false);
                     }
                 });
 
@@ -92,8 +87,7 @@ angular.module('cmUi').directive('cmLoader',[
                  * $scope.$on('cmSpinner:start',...)
                  */
                 $scope.$on('cmLoader:start', function(){
-                    $scope.animate(true)
-                    $scope.loading = true
+                    $scope.animate(true);
                 });
 
                 /**
@@ -104,8 +98,7 @@ angular.module('cmUi').directive('cmLoader',[
                  * $scope.$on('cmSpinner:stop',...)
                  */
                 $scope.$on('cmLoader:stop', function(){
-                    $scope.animate(false)
-                    $scope.loading = false
+                    $scope.animate(false);
                 });
             }
         }
