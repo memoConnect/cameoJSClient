@@ -175,7 +175,6 @@
         "WARN": {
             "MESSAGE_EMPTY": "Die Nachricht ist leer.",
             "RECIPIENTS_MISSING": "Keine Empfänger angegeben.",
-            "RECIPIENTS_MISSING_OKAY": "Ich möchte keinen Empfänger hinzufügen (Nachricht für mich selbst)",
             "PASSPHRASE_INVALID": "Ungültiges Passwort.",
             "PASSWORD_WRONG": "Das eingegebene Passwort ist falsch.",
             "NO_PASSWORD": "Sie müssen ein Passwort setzen oder die Verschlüsselung deaktivieren, weil nicht alle Empfänger einen cameoKey besitzen.<br><br> <a href=\"#/{{type}}/{{typeId}}/security\">Hier Verschlüsselung einstellen</a>",
@@ -183,6 +182,9 @@
             "ASYMMETRIC_DECRYPT_ERROR": "Der cameoKey fehlt.",
             "CHECK_ENCRYPTION_ERROR": "CHECK_ENCRYPTION_ERROR",
             "FILESIZE_REACHED": "Die maximale Dateigröße von <strong>{{maxFileSize | cmBytesHumanReadable}}</strong> wurde überschritten. Ihre Datei '<strong>{{fileName}}</strong>' ist <strong>{{fileSize | cmBytesHumanReadable}}</strong> groß."
+        },
+        "CONFIRM": {
+            "RECIPIENTS_MISSING": "Möchten Sie die Nachricht ohne weitere Empfänger abschicken? Sie werden die einzige Person sein, die diese Nachricht lesen kann."
         },
         "PLACEHOLDER": {
             "SUBJECT": "Betreff",
