@@ -161,42 +161,40 @@ angular.module('cmConversations')
 
                     return  checkConversationSetup()
                             .then(function(){
-                                $scope.conversation.getPassphrase()
-                                .catch(function(){
-                                        return  $scope.conversation.isEncrypted()
-                                                ?   $q.reject('access denied')
-                                                :   $q.when(null)       //Todo: null for 'not encrypted' old convention
-                                })
-                                .then(function(passphrase){
-                                    return  $q.when()
-                                            .then(function(){
-                                                return prepareFiles(passphrase)
-                                            })
-                                            .then(function(){
-                                                console.log(filesForMessage)
-                                                if(
-                                                        (!new_message.text || new_message.text.length == 0)
-                                                    &&  filesForMessage.length  == 0
-                                                ){
-                                                    cmNotify.warn('CONVERSATION.WARN.MESSAGE_EMPTY', {ttl:5000});
-                                                    return $q.reject('message invalid.')
-                                                }           
-
-
+                                return  $scope.conversation.getPassphrase()
+                                        .catch(function(){
                                                 return  $scope.conversation.isEncrypted()
+                                                        ?   $q.reject('access denied')
+                                                        :   $q.when(null)       //Todo: null for 'not encrypted' old convention
+                                        })
+                                        .then(function(passphrase){
+                                            return  $q.when()
+                                                    .then(function(){
+                                                        return prepareFiles(passphrase)
+                                                    })
+                                                    .then(function(){
+                                                        if(
+                                                                (!new_message.text || new_message.text.length == 0)
+                                                            &&  filesForMessage.length  == 0
+                                                        ){
+                                                            cmNotify.warn('CONVERSATION.WARN.MESSAGE_EMPTY', {ttl:5000});
+                                                            return $q.reject('message invalid.')
+                                                        }           
 
-                                                        ?   new_message
-                                                            .addFiles(filesForMessage)
-                                                            .encrypt(passphrase)
-                                                            .save()
+                                                        return  $scope.conversation.isEncrypted()
 
-                                                        :   new_message
-                                                            .addFiles(filesForMessage)
-                                                            .setPublicData(['text','fileIds'])
-                                                            .save()  
-                                            })
+                                                                ?   new_message
+                                                                    .addFiles(filesForMessage)
+                                                                    .encrypt(passphrase)
+                                                                    .save()
 
-                                })
+                                                                :   new_message
+                                                                    .addFiles(filesForMessage)
+                                                                    .setPublicData(['text','fileIds'])
+                                                                    .save()  
+                                                    })
+
+                                        })
                             })
                             .then(
                                 function(){
@@ -208,10 +206,13 @@ angular.module('cmConversations')
                                     //Todo: This is not the right place to count messages:
                                     $scope.conversation.numberOfMessages ++
 
-                                    if(conversation.state.is('new'))
-                                        $rootScope.gotoConversation(conversation.id)
+                                    console.log('success')
+
+                                    if($scope.conversation.state.is('new'))
+                                        $rootScope.gotoConversation($scope.conversation.id)
                                 },
                                 function(){
+                                    console.log('fail')
                                     $scope.conversation.messages.deregister(new_message)
                                 }
                             )
