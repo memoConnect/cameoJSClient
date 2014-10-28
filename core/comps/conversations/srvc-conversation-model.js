@@ -287,7 +287,7 @@ angular.module('cmConversations')
                 */
 
                 this.state.unset('new');
-                this.trigger('update:finished', data);
+                this.trigger('update:finished');
 
                 return this;
             };
@@ -555,30 +555,35 @@ angular.module('cmConversations')
              * @returns {Boolean} succees Returns Boolean
              */
             this.decrypt = function () {
-                //cmLogger.debug('cmConversationModel.decrypt', + self.subject);
+                //cmLogger.debug('cmConversationModel.decrypt', + this.subject);
 
-                this.getPassphrase()
-                .then(function(passphrase){
-                    return $q.all(self.messages.map(function (message){
+                //if(this.isEncrypted()
+                //    && this.messages.some(function(message){return !message.state.is('decrypted')})) {
+                //    console.log('conversation have to decrypt!')
+
+                    this.getPassphrase()
+                        .then(function (passphrase) {
+                            return $q.all(self.messages.map(function (message) {
                                 return message.decrypt(passphrase)
                             }))
-                })
-                .then(
-                    function(){
-                        self.trigger('decrypt:success');
+                        })
+                        .then(
+                        function () {
+                            self.trigger('decrypt:success');
 
-                        // save password to localstorage
-                        if (typeof self.password == 'string' && self.password.length > 0)
-                            self.localPWHandler.set(self.id, self.password);
+                            // save password to localstorage
+                            if (typeof self.password == 'string' && self.password.length > 0)
+                                self.localPWHandler.set(self.id, self.password);
 
-                        return $q.when()
-                        
-                    },
-                    function(){
-                        self.trigger('decrypt:failed');
-                        return $q.reject();
-                    }
-                );
+                            return $q.when()
+
+                        },
+                        function () {
+                            self.trigger('decrypt:failed');
+                            return $q.reject();
+                        }
+                    );
+                //}
             };
 
             /**
@@ -956,14 +961,10 @@ angular.module('cmConversations')
                 self.recipients.reset();
             });
 
-            this.on('update:finished', function(event, data){
+            this.on('update:finished', function(){
 //                cmLogger.debug('cmConversationModel:on:update:finished');
                 self.setLastMessage();
-
-                if(typeof data == 'object' && typeof data.messages != 'undefined' && data.messages.length > 0){
-                    self.decrypt();
-                }
-
+                self.decrypt();
                 //self.securityAspects.refresh();
                 self.updateLockStatus();
                 //self.handleMissingAePassphrases();
@@ -1013,24 +1014,11 @@ angular.module('cmConversations')
                 self.updateLockStatus();
             });
 
-//            this.recipients.on('deregister', function(){
-////                cmLogger.debug('cmConversationModel:on:recipient:unregistered');
-//                self.checkPreferences();
-//                //self.securityAspects.refresh();
-//                self.updateLockStatus();
-//            });
-
             this.on('captcha:enabled captcha:disabled', function(){
 //                cmLogger.debug('cmConversationModel:on:captcha:enabled');
 //                self.securityAspects.refresh();
                 self.updateLockStatus();
             });
-
-//            this.on('captcha:disabled', function(){
-////                cmLogger.debug('cmConversationModel:on:captcha:disabled');
-//                self.securityAspects.refresh();
-//                self.updateLockStatus();
-//            });
 
             this.messages.on('message:saved', function(){
                 self.setLastMessage();
