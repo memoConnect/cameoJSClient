@@ -557,9 +557,9 @@ angular.module('cmConversations')
             this.decrypt = function () {
                 //cmLogger.debug('cmConversationModel.decrypt', + this.subject);
 
-                if(this.isEncrypted()
-                    && this.messages.some(function(message){return !message.state.is('decrypted')})) {
-                    console.log('conversation have to decrypt!')
+                //if(this.isEncrypted()
+                //    && this.messages.some(function(message){return !message.state.is('decrypted')})) {
+                //    console.log('conversation have to decrypt!')
 
                     this.getPassphrase()
                         .then(function (passphrase) {
@@ -583,7 +583,7 @@ angular.module('cmConversations')
                             return $q.reject();
                         }
                     );
-                }
+                //}
             };
 
             /**
