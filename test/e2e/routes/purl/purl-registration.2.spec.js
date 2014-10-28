@@ -120,10 +120,13 @@ describe('Purl Registration: ', function () {
         util.waitForPageLoad('/start/welcome')
     })
 
-    it("next step should be the /start/quickstart", function () {
-        util.waitAndClickQa("btn-next-step")
-        util.waitForPageLoad('/start/quickstart')
-    })
+    /**
+     * @deprecated
+     */
+    //it("next step should be the /start/quickstart", function () {
+    //    util.waitAndClickQa("btn-next-step")
+    //    util.waitForPageLoad('/start/quickstart')
+    //})
 
     it("the next step should be key generation", function () {
         util.waitAndClickQa("btn-next-step")
