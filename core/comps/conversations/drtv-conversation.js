@@ -151,6 +151,14 @@ angular.module('cmConversations')
                  */
                 $scope.send = function(){
 
+                    if(
+                            (!$scope.newMessageText || $scope.newMessageText.length == 0)
+                        &&  $scope.files.length  == 0
+                    ){
+                        cmNotify.warn('CONVERSATION.WARN.MESSAGE_EMPTY', {ttl:5000});
+                        return $q.reject('message invalid.')
+                    }      
+
                     var new_message =   $scope.conversation.messages
                                         .create({conversation:$scope.conversation})
                                         .setText($scope.newMessageText)
@@ -173,14 +181,6 @@ angular.module('cmConversations')
                                                         return prepareFiles(passphrase)
                                                     })
                                                     .then(function(){
-                                                        if(
-                                                                (!new_message.text || new_message.text.length == 0)
-                                                            &&  filesForMessage.length  == 0
-                                                        ){
-                                                            cmNotify.warn('CONVERSATION.WARN.MESSAGE_EMPTY', {ttl:5000});
-                                                            return $q.reject('message invalid.')
-                                                        }           
-
                                                         return  $scope.conversation.isEncrypted()
 
                                                                 ?   new_message
@@ -206,13 +206,10 @@ angular.module('cmConversations')
                                     //Todo: This is not the right place to count messages:
                                     $scope.conversation.numberOfMessages ++
 
-                                    console.log('success')
-
-                                    if($scope.conversation.state.is('new'))
-                                        $rootScope.gotoConversation($scope.conversation.id)
+                                    console.log('ID;',$scope.conversation.id)
+                                    $rootScope.gotoConversation($scope.conversation.id)
                                 },
                                 function(){
-                                    console.log('fail')
                                     $scope.conversation.messages.deregister(new_message)
                                 }
                             )
@@ -221,42 +218,7 @@ angular.module('cmConversations')
                                 $scope.isSending = false;
                             })                                    
 
-                    // if($scope.isSending !== true){
-                    //     $scope.isSending = true;
-                    //     $scope.isSendingAbort = false;
-
-                    //     if($scope.conversation.checkConsistency() !== true){
-                    //         $scope.conversation.trigger('save:aborted');
-                    //         $scope.isSendingAbort = true;
-                    //         return false;
-                    //     }
-
-                    //     if(!$scope.conversation.state.is('new')
-                    //         && $scope.conversation.getKeyTransmission() == 'asymmetric'
-                    //         && $scope.conversation.userHasPrivateKey() == false){
-
-                    //         $scope.isSending = false;
-
-                    //         return false;
-                    //     }
-
-
-                    //     //Is the conversation newly created and has not been saved to the backend yet?                  
-                    
-                    //     if($scope.conversation.state.is('new')){                        
-                    //         //The conversations has not been saved to the Backend, do it now:
-                    //         $scope.conversation.save()
-                    //         //When that is done try again to send the message:
-                    //         .then( function(conversation_data){ 
-                    //             $scope.conversation.importData(conversation_data)
-                    //             cmConversationFactory.register($scope.conversation);
-                    //             prepareFiles();
-                    //         });
-                    //         return false
-                    //     }
-
-                    //     prepareFiles()
-                    // }
+                  
                 };
 
 
@@ -349,23 +311,33 @@ angular.module('cmConversations')
 
                     function callback_recipients_missing(){
                         // switcher for purl and conversation, @Todo: vereinheitlichen
-                        var settingsLinker = {type:'',typeId:''};
-                        if('purlId' in $routeParams){
-                            settingsLinker.type = 'purl';
-                            settingsLinker.typeId = $routeParams.purlId;
-                        } else {
-                            settingsLinker.type = 'conversation';
-                            settingsLinker.typeId = $routeParams.conversationId;
-                        }
-                        cmNotify.warn('CONVERSATION.WARN.RECIPIENTS_MISSING',
-                            {
-                                ttl:0, 
-                                i18n: settingsLinker,
-                                template: '<small>{{\'CONVERSATION.WARN.RECIPIENTS_MISSING_OKAY\'|cmTranslate}}</small>'+
-                                          '<i ng-click="conversation.solitary = !conversation.solitary" ng-class="{\'cm-checkbox\':!conversation.solitary, \'cm-checkbox-right\':conversation.solitary}" class="fa cm-ci-color ml15" data-qa="checkbox-dont-ask-me-again"></i>',
-                                templateScope: $scope
-                            }
-                        );
+                        // var settingsLinker = {type:'',typeId:''};
+                        // if('purlId' in $routeParams){
+                        //     settingsLinker.type = 'purl';
+                        //     settingsLinker.typeId = $routeParams.purlId;
+                        // } else {
+                        //     settingsLinker.type = 'conversation';
+                        //     settingsLinker.typeId = $routeParams.conversationId;
+                        // }
+                        // cmNotify.warn('CONVERSATION.WARN.RECIPIENTS_MISSING',
+                        //     {
+                        //         ttl:0, 
+                        //         i18n: settingsLinker,
+                        //         template: '<small>{{\'CONVERSATION.WARN.RECIPIENTS_MISSING_OKAY\'|cmTranslate}}</small>'+
+                        //                   '<i ng-click="conversation.solitary = !conversation.solitary" ng-class="{\'cm-checkbox\':!conversation.solitary, \'cm-checkbox-right\':conversation.solitary}" class="fa cm-ci-color ml15" data-qa="checkbox-dont-ask-me-again"></i>',
+                        //         templateScope: $scope
+                        //     }
+                        // );
+                        
+                        cmModal.confirm({
+                            title:  'CONVERSATION.WARN.RECIPIENTS_MISSING',
+                            text:   'CONVERSATION.CONFIRM.RECIPIENTS_MISSING',
+                        })
+                        .then(function(){
+                            $scope.conversation.solitary = true
+                            $scope.send()
+                        })
+                    
                     }
 
                     function callback_save_aborted(){
@@ -379,13 +351,13 @@ angular.module('cmConversations')
                     .on('save:aborted',          callback_save_aborted)
 
                     var stop_listening_to_logout =  $rootScope.$on('logout', function(){
-                                $rootScope.pendingRecipients = [];
-                                $rootScope.pendingConversation = null;
+                            $rootScope.pendingRecipients = [];
+                            $rootScope.pendingConversation = null;
                         });
 
                     var stop_listening_to_idenity_switch =  $rootScope.$on('identity:switched', function(){
-                                $rootScope.pendingRecipients = [];
-                                $rootScope.pendingConversation = null;
+                            $rootScope.pendingRecipients = [];
+                            $rootScope.pendingConversation = null;
                         });
 
                     $scope.$on('$destroy', function(){

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cameoAwesome</title>
+
+    <link rel="stylesheet" href="style.0.2.6.css">
+    <link rel="stylesheet" href="css/cameofont.css">
+    <script type="text/javascript" src="vendor.0.2.6.js"></script>
+    <style>
+		html {background:none !important}
+        header{height:8rem;position:fixed;left:0;top:0;padding:0.5rem 1rem;background:#fff;z-index:2;box-sizing:border-box;width:100%}
+        body{font-size:6rem;font-family:verdana;width:auto;padding:1rem;padding-top:8rem;background:none !important;}
+        a{font-size:40px;color:#02BED2}
+        h1{font-size:5rem;color:#02BED2}
+        h3{font-size:3rem;border-bottom:solid 1px #02BED2;color:#02BED2,font-weight:normal}
+        figure{margin:5px;position:relative;display:inline-block;text-align:center}
+        figure i{background-color:#02BED2!important}
+        figure figcaption{display:none;white-space:nowrap;background:rgba(255,255,255,0.9);padding-right:10px}
+        figure:hover i{background-color:transparent!important}
+        figure:hover figcaption, .captions-show figcaption{z-index:1;display:inline-block!important}
+        label{font-size:2rem;cursor:pointer}
+        .maincat{padding-left:0.25rem}
+        .subcat{padding-left:0.5rem}
+        .anchor{top:-10rem;left:0;position:relative;display:block}
+        .baseline-check{position:relative}
+        .baseline{position:absolute;height:0.1rem;width:100%;background:#02BED2;top:6.6rem;z-index:-1}
+        .baseline-check select{font-size:2rem;width:30rem}
+        .nose-check{position:relative;height:12rem}
+        .nose-check i{position:absolute}
+        .nose-check i.cm-nose-left{left:0.3rem;top:4.3rem}
+        .nose-check i.cm-nose-right{left:9.9rem;top:1rem}
+        .nose-check i.cm-nose-up{left:1.9rem;top:-5rem}
+        .nose-check i.cm-nose-down{left:5.3rem;top:9rem}
+        .nose-check .box{position:absolute;border:solid 0.1rem #000;height:8rem;width:8rem;left:2rem;top:1.5rem}
+        .nose-check .proof{margin-left:15rem}
+    </style>
+</head>
+<body ng-app="icons" ng-controller="ctrl" ng-class="{'captions-show':withFigcaption}">
+
+    <header>
+        <a href="#icons">icons</a>
+        <a href="#filetypes">filetypes</a>
+        <a href="#emojis">emojis</a>
+        <label>
+            <input type="checkbox" ng-model="withFigcaption" value="true">
+            mit classNames
+        </label>
+    </header>
+
+    <h1><span class="anchor" id="icons"></span>cameofont</h1>
+
+    <h1>baseline check</h1>
+
+    <div class="baseline-check">
+        <div class="baseline"></div>
+        <i class="fa {{baselineIcon}}"></i>
+        Texty
+        <select ng-model="baselineIcon">
+            <option>choose icon</option>
+            <optgroup ng-repeat="bundle in icons" label="{{bundle.title}}">
+                <option ng-repeat="css in bundle.css.split(' ')">{{css}}</option>
+            </optgroup>
+        </select>
+    </div>
+
+    <h1>nose check</h1>
+
+    <div class="nose-check">
+        <i class="fa cm-nose-left"></i>
+        <i class="fa cm-nose-right"></i>
+        <i class="fa cm-nose-down"></i>
+        <i class="fa cm-nose-up fa-flip-horizontal"></i>
+        <div class="box"></div>
+        <div class="proof">
+            =
+            <img src="data:image/jpg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAAAAAAD/4QMqaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjUtYzAyMSA3OS4xNTQ5MTEsIDIwMTMvMTAvMjktMTE6NDc6MTYgICAgICAgICI+IDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+IDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bXA6Q3JlYXRvclRvb2w9IkFkb2JlIFBob3Rvc2hvcCBDQyAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6N0QyQjMxMUY0N0YwMTFFNEFFOTBBQkU0N0FCQzE2RjUiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6N0QyQjMxMjA0N0YwMTFFNEFFOTBBQkU0N0FCQzE2RjUiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo3RDJCMzExRDQ3RjAxMUU0QUU5MEFCRTQ3QUJDMTZGNSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo3RDJCMzExRTQ3RjAxMUU0QUU5MEFCRTQ3QUJDMTZGNSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pv/uAA5BZG9iZQBkwAAAAAH/2wCEABsaGikdKUEmJkFCLy8vQkc/Pj4/R0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0cBHSkpNCY0PygoP0c/NT9HR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR//AABEIAHIAcgMBIgACEQEDEQH/xAB2AAEBAAMBAQAAAAAAAAAAAAAABAEFBgMCAQEAAAAAAAAAAAAAAAAAAAAAEAABAwEEBQoEBAcAAAAAAAAAAQIDBBHRMhQhMZJTBUFRcYGhEiKyczRhkROz8OFSYrHBQoIjM6MRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AOmAAGu4jW5ZljcbtXw+Jz9LVuhmSVyq63F0KOITfWncvInhTqIwO6Y9sjUc1bUU+zjaWukpl8K2t/Sur8jeQ8YhfjtYvzTsuA2wPFlRFJhc1etD2AAAAAAAAAAAAAANdTUsMjVc+NjlWSXSrUVf9j/ge+Rp91HsNuFHgX1JfuvKgJcjT7qPYbcMjT7qPYbcVACXI0+6j2G3DI0+6j2G3FQAlyNPuo9htwyNPuo9htxUAJcjT7qPYbcFoqfdR7DbiowuoDjKaumgaiNctiImhdKfl1HQ0XEm1Pgd4X9i9FxybMKdBXTU8szrYk1cvInWB2gJLKj9uDnXH8tQArAAEtHgX1JfuvKiWjwL6kv3XlQAAAAAAAAAwuoyYXUBxVDTLUuaxNVmlfgdlFE2JqMYliIajgcPdh+out38EN2AAAAAwq2aQJqPAvqS/deVEPDnd+BHc7pF/wCji4AAAAAAAAAYXUZMKBJw9vdpo0/Y1fmlpYS0Pt4vTZ5UKgAAAEdfN9GBy8q6E6ytVs0qcrxOszD+6zAztXnA3XCfas6X+dxsTXcJ9qzpf53GxAAAAAAAAAAACWh9vF6bPKhUS0Pt4vTZ5UKgAAA5TiFTOr3RSLYiLqTQipydJrTsKyiZVJp0OTU78chz0/DZ4f6e8nO3T2awN7wn2rOl/ncbE0/DKqGKnax72NcivtRzkRU8buRVLs9T72PbbeBUCXPU+9j223jPU+9j223gVAlz1PvY9tt4z1PvY9tt4FQJc9T72PbbeM9T72PbbeBUCXPU+9j223jPU+9j223gKH28Xps8qFRLQ+3i9NnlQqAAAAAAAAAAADFlp4vpYn4mNXqQ9wBqpeDwvwWsX5p23mlquHy02lfE39Sfz5jrzCoipYuoDgz0hjWV6MTW5bCziNJlpLG4XaUuNnwqhWL/ADSJY5cKcwG4a1GoiJqQ+gAAAAAAAAAAAAAAAAAJ5cbMHLixf2lAAAAAAAB//9k="/>
+        </div>
+    </div>
+
+    <h1><span></span>glyphs</h1>
+
+    <div ng-repeat="bundle in icons" class="maincat">
+        <h3 ng-if="bundle.title">{{bundle.title}}</h3>
+        <figure ng-repeat="css in bundle.css.split(' ')">
+            <i class="fa {{css}}"></i><figcaption ng-show="withFigcaption">{{css}}</figcaption>
+        </figure>
+    </div>
+
+    <h1><span class="anchor" id="filetypes"></span>filetypes</h1>
+
+    <div ng-repeat="bundle in types" class="maincat">
+        <h3 ng-if="bundle.title">{{bundle.title}}</h3>
+        <figure ng-repeat="css in bundle.css.split(' ')">
+            <i class="file {{css}}"></i><figcaption ng-show="withFigcaption">{{css}}</figcaption>
+        </figure>
+    </div>
+
+    <h1><span class="anchor" id="emojis"></span>emojis</h1>
+
+    <div ng-repeat="(index,mainCat) in Object.keys(emojis)" class="maincat">
+        <h3 ng-if="mainCat">{{mainCat}}</h3>
+        <div ng-repeat="(index,subCat) in Object.keys(emojis[mainCat])" class="subcat">
+            <h3 ng-if="subCat">{{subCat}}</h3>
+            <figure ng-repeat="icon in emojis[mainCat][subCat]" class="emoji-figure">
+                <i class="emoji emoji_{{icon | clearClassName}}"></i><figcaption ng-show="withFigcaption">{{icon | clearClassName}}</figcaption>
+            </figure>
+        </div>
+    </div>
+
+    <script>
+        angular
+        .module('icons',['emoji'])
+        .controller('ctrl',function ($scope, emoji){
+            $scope.baselineIcon = 'cm-checkbox-wrong';
+			$scope.withFigcaption = false;
+            $scope.Object = Object;
+            $scope.icons = [
+                {title:'ci icons',css:'cm-logo cm-logo-c cm-logo-a cm-logo-m cm-logo-e cm-logo-o cm-logo-net cm-rhino-bubble-glyph cm-rhino-positive cm-beta cm-cameo-beta'},
+                {title:'specials',css:'cm-edge cm-edge-add cm-scroll-pane cm-grip'},
+                {title:'contact handler',css:'cm-client-add cm-address-book-positive cm-address-book cm-load-to-rhino cm-load-to'},
+                {title:'checkbox',css:'cm-checkbox-bg cm-checkbox cm-checker cm-checkbox-right cm-checkbox-wrong cm-checkbox-add cm-checkbox-minus cm-radio-0 cm-radio-1'},
+		{title:'menu',css:'cm-menu cm-menue-bell cm-menu-right-close cm-menu-right-open cm-menu-weight cm-menu-weight-bell'},
+                {title:'directions',css:'cm-nose-left cm-nose-right cm-nose-up cm-nose-down cm-left cm-right cm-down cm-up'},
+                {title:'notifications',css:'cm-info cm-attention cm-reject cm-ignore cm-bell cm-bell-ring cm-notification cm-notification-on cm-key-plus cm-key-minus'},
+                {title:'message states',css:'cm-envelope-closed cm-envelope-open cm-send cm-lock cm-unlock'},
+                {title:'handler',css:'cm-write cm-contacts cm-key cm-no-key cm-export cm-visible cm-hidden cm-group cm-person cm-arrange cm-filter cm-anchor cm-clipboard cm-search cm-change cm-grid cm-close cm-fix cm-settings cm-in cm-out cm-logout cm-register cm-add-recipient cm-talk cm-talk-full cm-new-talk cm-new-contact cm-new-contact-query cm-list cm-import-key cm-export-key cm-create-key cm-cancel-key cm-handshake cm-key-request cm-key-response cm-trust cm-tag cm-connection-trusted cm-not-connected cm-connected cm-trash cm-save cm-avatar cm-avatar-add cm-qr-code'},
+                {title:'answer',css:'cm-plus cm-smile-negative cm-smile-positive cm-post cm-post-attention cm-post-idle cm-attachment'},
+                {title:'media',css:'cm-video cm-file cm-sound cm-location cm-pictures cm-camera cm-mobile cm-contract'}
+            ];
+
+            $scope.types = [
+                {title:'default',css:'unknown moep test-if-none-exists-selector-get-question-mark'},
+                {title:'dirs',css:'dir dir-download dir-safe dir-public zip rar sit apk'},
+                {title:'docs',css:'pdf txt xls xlsx doc docx php css ppt pps pptx'},
+                {title:'images',css:'jpg gif bmp tif eps png'},
+                {title:'videos',css:'mov mpg mp4 flv avi'},
+                {title:'audio',css:'mp3 wav wma aif ogg 3gpp aac'},
+                {title:'misc',css:'xml html chm ttf exe dmg'}
+            ];
+
+            $scope.emojis = emoji.items;
+        }).filter('clearClassName', function(){
+            return function(className) {
+                return className.replace('\\','');
+            }
+        });
+    </script>
+</body>
+</html>

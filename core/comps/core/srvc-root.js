@@ -62,7 +62,7 @@ angular.module('cmCore').service('cmRootService', [
         };
 
         $rootScope.gotoConversation = function(conversationId, subpath){
-            $rootScope.goTo('/conversation/'+(conversationId || 'new')+'/'+subpath)
+            $rootScope.goTo('/conversation/'+(conversationId || 'new')+ (subpath ? '/'+subpath : ''))
         };
 
         /**
