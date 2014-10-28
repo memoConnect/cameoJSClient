@@ -643,9 +643,8 @@
       "KEY_GENERATION" : "Here you can generate a cameoKey for this identity."
     },
     "WARN" : {
-      "RECIPIENTS_MISSING_OKAY" : "I do not want to include other recipients.",
       "ASYMMETRIC_DECRYPT_ERROR" : "cameoKey missing",
-      "RECIPIENTS_MISSING" : "This conversation has no recipients.",
+      "RECIPIENTS_MISSING" : "Missing recipients.",
       "FILESIZE_REACHED" : "The maximum file size of <strong>{{maxFileSize | cmBytesHumanReadable}}</strong> has been exceeded. Your file '<strong>{{fileName}}</strong>' has <strong>{{fileSize | cmBytesHumanReadable}}</strong> bytes.",
       "CHECK_ENCRYPTION_ERROR" : "CHECK_ENCRYPTION_ERROR",
       "MESSAGE_EMPTY" : "The message is empty.",
@@ -653,6 +652,9 @@
       "PASSWORD_NEEDED" : "Please enter a password to decode the talk.<br> <a href=\"#/{{type}}/{{typeId}}/security\">Please enter here</a>",
       "PASSWORD_WRONG" : "Wrong password",
       "PASSPHRASE_INVALID" : "Invalid password"
+    },
+    "CONFIRM": {
+      "RECIPIENTS_MISSING" : "Would you like to send this message without further recipients. You will be the only one to read it."
     },
     "PLACEHOLDER" : {
       "INFO" : "Info",
