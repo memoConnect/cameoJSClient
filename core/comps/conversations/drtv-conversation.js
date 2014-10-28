@@ -145,71 +145,19 @@ angular.module('cmConversations')
 
 
                 /**
-                 * send message to api
-                 */
-                function sendMessage(passphrase) {
-                    /**
-                     * validate answer form
-                     * @type {boolean}
-                     */
-                    var message_invalid         = !isMessageValid()
-
-                    //If anything is invalid, abort and notify the user:
-                    if(message_invalid){
-                        cmNotify.warn('CONVERSATION.WARN.MESSAGE_EMPTY', {ttl:5000});
-
-                        // enable send button
-                        $scope.isSending = false;
-
-                        return $q.reject('message invalid.')
-                    }
-
-                    //If we got this far everything should be valid.
-
-                    //Create a new message:
-                    
-
-                    //@Todo should make better use of promises here (ie. $scope.isSending or $scope.isSendingAbort should be handeled at the end of the promise chain.)
-                    
-                    return  $q.when()
-                            .then(function(){
-                                return  $scope.conversation.isEncrypted()
-
-                                        ?   $scope.conversation.messages
-                                            .create({conversation:$scope.conversation})
-                                            .addFiles(filesForMessage)
-                                            .setText($scope.newMessageText)
-                                            .encrypt(passphrase)
-                                            .save()
-
-                                        :   $scope.conversation.messages
-                                            .create({conversation:$scope.conversation})
-                                            .addFiles(filesForMessage)
-                                            .setText($scope.newMessageText)
-                                            .setPublicData(['text','fileIds'])
-                                            .save()  
-
-                            })
-                            .then(function(){
-                                // tidy up:
-                                clearTransferScopeData();
-                                $scope.newMessageText = '';
-                                filesForMessage = [];
-                                $scope.isSending = false;
-
-                                //Todo: This is not the right place to count messages:
-                                $scope.conversation.numberOfMessages ++
-                            }, function(){
-                                $scope.isSending = false;
-                            });
-                }
-
-                /**
                  * start sending process
                  * with preparing files for upload
                  * after preparation send message
                  */
                 $scope.send = function(){
+
+                    var new_message =   $scope.conversation.messages
+                                        .create({conversation:$scope.conversation})
+                                        .setText($scope.newMessageText)
+
+                    new_message.state.set('sending')
+                    new_message.created = new Date().getTime()
+                    new_message.id      = '#new_message'
 
                     return  checkConversationSetup()
                             .then(function(){
@@ -225,11 +173,50 @@ angular.module('cmConversations')
                                                 return prepareFiles(passphrase)
                                             })
                                             .then(function(){
-                                                return sendMessage(passphrase)
+                                                console.log(filesForMessage)
+                                                if(
+                                                        (!new_message.text || new_message.text.length == 0)
+                                                    &&  filesForMessage.length  == 0
+                                                ){
+                                                    cmNotify.warn('CONVERSATION.WARN.MESSAGE_EMPTY', {ttl:5000});
+                                                    return $q.reject('message invalid.')
+                                                }           
+
+
+                                                return  $scope.conversation.isEncrypted()
+
+                                                        ?   new_message
+                                                            .addFiles(filesForMessage)
+                                                            .encrypt(passphrase)
+                                                            .save()
+
+                                                        :   new_message
+                                                            .addFiles(filesForMessage)
+                                                            .setPublicData(['text','fileIds'])
+                                                            .save()  
                                             })
-                                    
+
                                 })
                             })
+                            .then(
+                                function(){
+                                    // tidy up:
+                                    clearTransferScopeData();
+                                    $scope.newMessageText = '';
+                                    filesForMessage = [];
+                                    
+                                    //Todo: This is not the right place to count messages:
+                                    $scope.conversation.numberOfMessages ++
+                                },
+                                function(){
+                                    console.log('Q"!$§"!$§$')
+                                    $scope.conversation.messages.deregister(new_message)
+                                }
+                            )
+                            .finally(function(){
+                                new_message.state.unset('sending')
+                                $scope.isSending = false;
+                            })                                    
 
                     // if($scope.isSending !== true){
                     //     $scope.isSending = true;
@@ -307,20 +294,6 @@ angular.module('cmConversations')
 
                     return false
                 };
-
-                
-
-                /**
-                 * validator helper
-                 * @returns {boolean}
-                 */
-                function isMessageValid(){
-                    if((typeof $scope.newMessageText == 'string' &&  $scope.newMessageText != '') || filesForMessage.length > 0){
-                        return true;
-                    }
-                    return false;
-                }
-
                 
 
                 this.addPendingRecipients = function(){
