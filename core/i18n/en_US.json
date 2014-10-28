@@ -447,19 +447,19 @@
     "CONVERSATION" : {
       "ENCRYPTED" : {
         "NAME" : "This Talk is encrypted.",
-        "DESCRIPTION" : "missing description @todo"
+        "DESCRIPTION" : ""
       },
       "NOT_ENCRYPTED" : {
         "NAME" : "This talk is not encrypted.",
         "TOGGLE" : "Enable encryption.",
-        "DESCRIPTION" : "missing description @todo"
+        "DESCRIPTION" : ""
       },
       "NO_SYMMETRIC_KEY_TRANSMISSION" : {
         "NAME" : "This talk is exclusively encrypted by cameoKeys.",
         "DESCRIPTION" : "The encryption is working with cameoKeys only; no password was set up; the quality of encyption is not dependent of the password quality; no password must be transferred."
       },
       "TRUSTING_ALL_RECIPIENTS" : {
-        "DESCRIPTION" : "missing description @todo",
+        "DESCRIPTION" : "",
         "NAME" : "You trust all recipients."
       },
       "HAS_PASSCAPTCHA" : {
@@ -516,8 +516,8 @@
     },
     "TRUST" : {
       "OK" : "trusted contact",
-      "HAS_CAMEOKEYS" : "has cameoKey @todo",
-      "NO_CAMEOKEYS" : "no cameoKey @todo",
+      "HAS_CAMEOKEYS" : "has a cameoKey",
+      "NO_CAMEOKEYS" : "no cameoKey",
       "START" : "contact can be trusted"
     },
     "NOTIFICATION" : {
@@ -685,7 +685,7 @@
   "TERMS" : {
     "HEADING_SHORT" : "Terms and Conditions",
     "HEADING" : "Terms and Conditions",
-    "PARAGRAPH_1" : "German law and regulations apply for the use of cameoNet. At the moment, the offer and the use of our service is restricted to the European Union. Germany (Halle) is the exclusive place of jurisdiction for any disputes, in case the user has no general place of jurisdition in Germany.",
+    "PARAGRAPH_1" : "German law and regulations apply for the use of cameoNet. At the moment, the offer and the use of our service is restricted to the European Union. Germany (Halle) is the exclusive place of jurisdiction for any disputes, in case the user has no general place of jurisdiction in Germany.",
     "PARAGRAPH_2" : ""
   },
   "SYSTEM" : {
