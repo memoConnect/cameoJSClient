@@ -48,8 +48,8 @@ module.exports = function(grunt, options){
                         'https://github.com/memoConnect/de.cameonet.cordova.crypto.git'
                     ],
                     platforms: [
-                        'android'
-                        //'ios'
+                        //'android'
+                        'ios'
                     ],
 
                     maxBuffer: 1000, // You may need to raise this for iOS.
