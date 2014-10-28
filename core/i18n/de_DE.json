@@ -81,7 +81,7 @@
             "TEXT_2": "ACHTUNG: Dies ist die erste Beta-Version!",
             "TEXT_3": "Die App enthält Fehler, die Benutzerführung wird noch an vielen Stellen verbessert; noch nicht alle wichtigen Features sind enthalten. Zur Zeit können wir leider auch noch nicht garantieren, dass all Ihre Daten dauerhaft erhalten bleiben. Daher bitten wir Sie, zunächst von wichtigen Daten lokale Kopien anzulegen.",
             "TEXT_4": "Helfen Sie uns, cameoNet zu verbessern!",
-            "TEXT_5": "Wir freuen uns über jeden Fehler und Verbesserungsvorschlag, den Sie unter http://support.cameonet.de einstellen<br>Ihr cameoNet-Team."
+            "TEXT_5": "@:START.QUICKSTART.TEXT_4"
         },
         "QUICKSTART": {
             "HEADLINE": "Schnelleinstieg",
@@ -92,7 +92,7 @@
             "TEXT_2": "Drücken Sie auf 'Kontakt hinzufügen' im Header und wählen 'cameoNet durchsuchen'. Ihre Freunde finden Sie über deren cameoIDs oder Anzeigenamen. Senden Sie ihnen eine Kontaktanfrage. Sobald diese angenommen wurde, sind die Kontakte miteinander verknüpft, um sicher zu kommunizieren.",
             "HEADLINE_3": "3. Nachricht schreiben",
             "TEXT_3": "An verknüpfte Kontakte können Sie direkt aus der Kontakt-Übersicht über das Brief-Symbol Nachrichten senden. Es öffnet sich ein neuer Talk (=Unterhaltung). Geben Sie eine Nachricht ein und drücken Sie auf den Senden-Button.<br><br>Herzlichen Glückwunsch! Sie haben Ihren ersten verschlüsselten Talk geführt!",
-            "TEXT_4": "Wenn Sie Fragen zu cameoNet haben oder auf Probleme stoßen, nutzen Sie unser Forum unter http://support.cameonet.de.",
+            "TEXT_4": "Wenn Sie Fragen oder Verbesserungsvorschläge zu cameoNet haben, nutzen Sie unsere Support- und Hilfeseiten unter http://support.cameonet.de.",
             "BTN_TEXT": "Und los..."
         },
         "KEYINFO": {
