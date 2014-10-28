@@ -20,5 +20,14 @@ angular.module('cmRoutes').controller('ConversationCtrl', [
         if(!$scope.conversation.state.is('new') && force_new)
             $scope.conversation = cmConversationFactory.new();
 
+        if(!conversation_id){
+
+            $rootScope.$on('new-conversation:ready', function(){
+                if($location.path().match(/\/new$/))
+                    $rootScope.gotoConversation($scope.conversation.id)
+            })
+            
+        }
+
     }
 ]);

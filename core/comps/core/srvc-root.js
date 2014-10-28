@@ -27,7 +27,7 @@ angular.module('cmCore').service('cmRootService', [
             } else {
                 $location.path(path);
 
-                //Todo: find foifferent solution:
+                //Todo: find different solution:
                 if(replace){
                     $location.replace();
                 }

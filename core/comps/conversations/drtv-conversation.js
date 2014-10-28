@@ -206,8 +206,7 @@ angular.module('cmConversations')
                                     //Todo: This is not the right place to count messages:
                                     $scope.conversation.numberOfMessages ++
 
-                                    console.log('ID;',$scope.conversation.id)
-                                    $rootScope.gotoConversation($scope.conversation.id)
+                                    $rootScope.$broadcast('new-conversation:ready')
                                 },
                                 function(){
                                     $scope.conversation.messages.deregister(new_message)

@@ -43,8 +43,7 @@ describe('Route conversation:', function () {
 
     it('display warning when there is no recipient', function(){
         $("[data-qa='btn-send-answer']").click()
-        util.waitForElement("[data-qa='checkbox-dont-ask-me-again']")
-        util.waitAndCloseNotify()
+        util.waitAndClickQa('btn-cancel')
     })
 
     it('add recipient', function () {
