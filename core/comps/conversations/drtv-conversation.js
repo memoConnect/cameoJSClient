@@ -82,9 +82,6 @@ angular.module('cmConversations')
                     $scope.conversation.update();
                 };
 
-
-
-
                 function checkConversationSetup(){
                     if($scope.isSending)
                         return $q.reject('message upload already in progress.')

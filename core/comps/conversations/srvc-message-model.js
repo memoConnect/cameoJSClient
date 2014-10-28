@@ -247,7 +247,6 @@ angular.module('cmConversations')
                 });
             };
 
-
             this.isOwn = function(){
 //                return (!this.from || cmUserModel.data.id == this.from.id);
                 return (cmUserModel.data.id == this.from.id);

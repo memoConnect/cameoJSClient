@@ -105,6 +105,7 @@ angular.module('cmSecurityAspects')
                             }))
                             .then(
                                 function(){
+
                                     if(!conversation.workaround_aspects_trusted){
                                         conversation.workaround_aspects_trusted = true
                                         self.refresh()
