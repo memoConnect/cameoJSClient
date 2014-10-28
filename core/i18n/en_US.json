@@ -528,6 +528,8 @@
     "HEADLINE" : "Contact"
   },
   "MENU" : {
+    "TALKS": "@:DRTV.FOOTER.TALKS",
+    "CONTACTS": "@:DRTV.FOOTER.CONTACTS",
     "LOGOUT" : "Logout",
     "NEW_CONTACT" : "New contact",
     "REQUESTS" : "Contact requests",
