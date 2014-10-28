@@ -22,6 +22,9 @@ for i in "$@" ; do
 		--phonegap)
 			command=phonegap:to-build-server
 		;;
+		--local-ios)
+		    command=phonegap:build-only
+		;;
 	    *)
 	      echo Unknown option: ${i}
 	      exit 1
