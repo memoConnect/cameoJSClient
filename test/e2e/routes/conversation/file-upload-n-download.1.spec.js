@@ -74,7 +74,7 @@ function chooseFileAndUpload(file, selector, index) {
     it(getFilename(file) + ' fill message and send check preview', function () {
         $("[data-qa='btn-send-answer']").click()
 
-        util.waitForElements('cm-message', index)
+        util.waitForElements('cm-message', index+1)
 
         // preview should be empty
         $$('cm-files-preview ' + selector).then(function (elements) {
@@ -105,6 +105,7 @@ describe('FileUpload create TestUser', function(){
             util.disableEncryption()
 
             util.setVal('input-subject', subjectUnsafe)
+            util.setVal('input-answer', 'test')
         })
 
         it('click on send message for open modal', function () {
@@ -112,7 +113,7 @@ describe('FileUpload create TestUser', function(){
         })
 
         it('check checkbox and close modal', function () {
-            util.waitAndCloseNotify('checkbox-dont-ask-me-again')
+            util.waitAndClickQa('btn-confirm')
         })
 
         // testFile or testImage called for every entry

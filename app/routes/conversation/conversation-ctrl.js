@@ -21,10 +21,12 @@ angular.module('cmRoutes').controller('ConversationCtrl', [
             $scope.conversation = cmConversationFactory.new();
 
         if(!conversation_id){
-            $scope.$watchCollection('conversation', function(conversation){
-                if(conversation.id)
-                    $rootScope.goto('conversation/' + conversation.id)
+
+            $rootScope.$on('new-conversation:ready', function(){
+                if($location.path().match(/\/new$/))
+                    $rootScope.gotoConversation($scope.conversation.id)
             })
+            
         }
 
     }

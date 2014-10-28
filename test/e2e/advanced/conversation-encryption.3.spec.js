@@ -224,15 +224,16 @@ describe('Conversation encryption -', function () {
                                 return text.indexOf("moep") != -1
                             })
                         })
-                    })
-                    $$('cm-message').then(function (elements) {
-                        expect(elements.length).toBe(messages.length)
-                        for (var j = 1; j < messages.length; j++) {
-                            expect(elements[j].getText()).toContain(messages[j].text)
-                            if (messages[j].author != recipient) {
-                                expect(elements[j].$("[data-qa='message-author']").getText()).toBe(messages[j].author)
+                    }).then(function(){
+                        $$('cm-message').then(function (elements) {
+                            expect(elements.length).toBe(messages.length)
+                            for (var j = 1; j < messages.length; j++) {
+                                expect(elements[j].getText()).toContain(messages[j].text)
+                                if (messages[j].author != recipient) {
+                                    expect(elements[j].$("[data-qa='message-author']").getText()).toBe(messages[j].author)
+                                }
                             }
-                        }
+                        })
                     })
                 })
 
