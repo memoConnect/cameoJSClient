@@ -61,6 +61,7 @@ angular.module('cmCore').provider('cmApi',[
 
             'cmLogger',
             'cmObject',
+            'cmStateManagement',
             '$http',
             '$httpBackend',
             '$injector',
@@ -69,7 +70,7 @@ angular.module('cmCore').provider('cmApi',[
             '$cacheFactory',
             '$rootScope',
 
-            function(cmLogger, cmObject, $http, $httpBackend, $injector, $q, $interval, $cacheFactory, $rootScope){
+            function(cmLogger, cmObject, cmStateManagement, $http, $httpBackend, $injector, $q, $interval, $cacheFactory, $rootScope){
                 /***
                  All api calls require a config object:
 
@@ -396,7 +397,7 @@ angular.module('cmCore').provider('cmApi',[
                                 var response =  {
                                         data   : responses[index].body,
                                         status : responses[index].status,
-                                        config : items_to_commit[index].config,
+                                        config : items_to_commit[index].config
                                     },
 
                                     deferred = items_to_commit[index].deferred
@@ -417,16 +418,27 @@ angular.module('cmCore').provider('cmApi',[
                 //API EVENTS:
 
                 cmObject.addEventHandlingTo(api)
+                api.state = new cmStateManagement(['event_call_running']);
                 api.subscriptionId = undefined
 
                 api.resetSubscriptionId = function(){
+                    cmLogger.debug('api.resetSubscriptionId');
+
                     api.subscriptionId = undefined
                     window._eventSubscriptionId = undefined
                 }
 
+                api.setSubscriptionId = function(id){
+                    api.subscriptionId = id
+                    window._eventSubscriptionId = id
+                }
+
                 api.subscribeToEventStream = function(){
-                    if(!event_call_running){
-                        console.log('hier');
+                    cmLogger.debug('api.subscribeToEventStream');
+
+                    if(!api.state.is('event_call_running')){
+                        api.state.set('event_call_running');
+
                         return  api.post({
                             path: events_path,
                             exp_ok: 'id',
@@ -435,49 +447,55 @@ angular.module('cmCore').provider('cmApi',[
                             }
                         }, true)
                             .then(function(id){
-                                api.subscriptionId = id
-                                window._eventSubscriptionId = id
+                                api.setSubscriptionId(id);
                             })
                             .finally(function(){
-                                event_call_running = false;
+                                api.state.unset('event_call_running');
                             })
+                    } else {
+                        return $q.reject('event_call_running');
                     }
 
                 }
 
                 api.getEvents = function(force){
-                    console.log('event_call_running',event_call_running)
-                    if(!api.subscriptionId || event_call_running){
+                    cmLogger.debug('api.getEvents');
 
-                        //if no subscriptionId is present, get one and try again later:
-                        api.subscribeToEventStream()
-                        .then(function(){
-                            api.getEvents()
-                        })
+                    if(!api.state.is('event_call_running')) {
+                        if (!api.subscriptionId) {
 
-                    }else{
-                        console.log('moep');
-                        event_call_running = true;
-
-                        api.get({
-                            path: events_path + '/' + api.subscriptionId,
-                            exp_ok: 'events'
-                        }, force)
-                        .then(
-                            function(events){
-                                events.forEach(function(event){
-                                    cmLogger.debug('Backend event: '+event.name)
-                                    api.trigger(event.name, event.data, event)
+                            //if no subscriptionId is present, get one and try again later:
+                            api.subscribeToEventStream()
+                                .then(function () {
+                                    api.getEvents()
                                 })
-                                event_call_running = false;
-                            },
-                            function(){
-                                //Todo: Alle Daten updaten// reload ?
-                                //api.resetSubscriptionId()
-                                cmLogger.debug('cmApi.getEvents() reset invalid subscriptionId.')
-                                event_call_running = false;
-                            }
-                        )
+
+                        } else {
+                            api.state.set('event_call_running');
+
+                            api.get({
+                                path: events_path + '/' + api.subscriptionId,
+                                exp_ok: 'events'
+                            }, force)
+                            .then(
+                                function (events) {
+                                    events.forEach(function (event) {
+                                        cmLogger.debug('Backend event: ' + event.name)
+                                        api.trigger(event.name, event.data, event)
+                                    })
+                                },
+                                function (response) {
+                                    if(typeof response.data == 'object' && 'subscriptionId' in response.data){
+                                        api.setSubscriptionId(id);
+                                        api.trigger('subscriptionId:changed')
+                                    }
+
+                                    cmLogger.debug('cmApi.getEvents() reset invalid subscriptionId.')
+                                }
+                            ).finally(function(){
+                                api.state.unset('event_call_running');
+                            })
+                        }
                     }
                 }
 
@@ -531,7 +549,6 @@ angular.module('cmCore').provider('cmApi',[
                         data: data
                     });
                 }
-                
 
                 return api
             }

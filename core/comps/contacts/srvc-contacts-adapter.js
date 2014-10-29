@@ -104,17 +104,22 @@ angular.module('cmContacts').service('cmContactsAdapter',[
         cmObject.addEventHandlingTo(adapter)
 
         cmApi.on('identity:update', function (event, data){
-//            console.log('cmContactsAdapter.on:identity:update')
+//            cmLogger.debug('cmContactsAdapter.on:identity:update')
             adapter.trigger('identity:updated', data)
-        })
+        });
 
         cmApi.on('friendRequest:new', function(event, data){
             adapter.trigger('friendRequest:new', data)
-        })
+        });
 
         cmApi.on('friendRequest:accepted', function(event, data){
             adapter.trigger('friendRequest:accepted', data)
-        })
+        });
+
+        cmApi.on('subscriptionId:changed', function(){
+            cmLogger.debug('cmConversationsAdapter.on subscriptionId:changed');
+            adapter.trigger('subscriptionId:changed');
+        });
 
         return adapter
 
