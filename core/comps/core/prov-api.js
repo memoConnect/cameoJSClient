@@ -13,8 +13,7 @@ angular.module('cmCore').provider('cmApi',[
             commit_interval = 2000,
             events_disabled = true,
             events_path = "",
-            events_interval = 5000,
-            event_call_running = false
+            events_interval = 5000
 
         this.restApiUrl = function(url){
             rest_api = url;
@@ -413,8 +412,6 @@ angular.module('cmCore').provider('cmApi',[
 
                 if(!call_stack_disabled && commit_interval) $interval(function(){ api.commit() }, commit_interval, false)
 
-
-
                 //API EVENTS:
 
                 cmObject.addEventHandlingTo(api)
@@ -422,7 +419,7 @@ angular.module('cmCore').provider('cmApi',[
                 api.subscriptionId = undefined
 
                 api.resetSubscriptionId = function(){
-                    cmLogger.debug('api.resetSubscriptionId');
+                    //cmLogger.debug('api.resetSubscriptionId');
 
                     api.subscriptionId = undefined
                     window._eventSubscriptionId = undefined
@@ -434,7 +431,7 @@ angular.module('cmCore').provider('cmApi',[
                 }
 
                 api.subscribeToEventStream = function(){
-                    cmLogger.debug('api.subscribeToEventStream');
+                    //cmLogger.debug('api.subscribeToEventStream');
 
                     if(!api.state.is('event_call_running')){
                         api.state.set('event_call_running');
@@ -459,7 +456,7 @@ angular.module('cmCore').provider('cmApi',[
                 }
 
                 api.getEvents = function(force){
-                    cmLogger.debug('api.getEvents');
+                    //cmLogger.debug('api.getEvents');
 
                     if(!api.state.is('event_call_running')) {
                         if (!api.subscriptionId) {
@@ -485,12 +482,12 @@ angular.module('cmCore').provider('cmApi',[
                                     })
                                 },
                                 function (response) {
-                                    if(typeof response.data == 'object' && 'subscriptionId' in response.data){
-                                        api.setSubscriptionId(id);
+                                    if(typeof response == 'object' && 'subscriptionId' in response){
+                                        //cmLogger.debug('cmApi.getEvents() reset invalid subscriptionId.')
+
+                                        api.setSubscriptionId(response.subscriptionId);
                                         api.trigger('subscriptionId:changed')
                                     }
-
-                                    cmLogger.debug('cmApi.getEvents() reset invalid subscriptionId.')
                                 }
                             ).finally(function(){
                                 api.state.unset('event_call_running');

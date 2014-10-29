@@ -117,7 +117,7 @@ angular.module('cmContacts').service('cmContactsAdapter',[
         });
 
         cmApi.on('subscriptionId:changed', function(){
-            cmLogger.debug('cmConversationsAdapter.on subscriptionId:changed');
+            //cmLogger.debug('cmContactsAdapter.on subscriptionId:changed');
             adapter.trigger('subscriptionId:changed');
         });
 

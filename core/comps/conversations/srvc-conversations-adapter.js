@@ -146,7 +146,7 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
         });
 
         cmApi.on('subscriptionId:changed', function(){
-            cmLogger.debug('cmConversationsAdapter.on subscriptionId:changed');
+            //cmLogger.debug('cmConversationsAdapter.on subscriptionId:changed');
             adapter.trigger('subscriptionId:changed');
         });
 
