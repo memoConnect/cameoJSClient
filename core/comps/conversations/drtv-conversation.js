@@ -104,6 +104,7 @@ angular.module('cmConversations')
                                 .then( function(conversation_data){ 
                                     $scope.conversation.importData(conversation_data)
                                     cmConversationFactory.register($scope.conversation);
+                                    //$rootScope.$broadcast('new-conversation:ready')
                                     return $q.when()
                                 })
                             :   $q.when()
@@ -205,8 +206,6 @@ angular.module('cmConversations')
                                     
                                     //Todo: This is not the right place to count messages:
                                     $scope.conversation.numberOfMessages ++
-
-                                    $rootScope.$broadcast('new-conversation:ready')
                                 },
                                 function(){
                                     $scope.conversation.messages.deregister(new_message)

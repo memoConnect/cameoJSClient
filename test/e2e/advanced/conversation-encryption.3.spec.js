@@ -16,6 +16,7 @@ describe('Conversation encryption -', function () {
         var sender = recipients[0]
         var getPurl = false
         var purl
+        var subject = undefined
 
         // use first recipient to create conversation
         it("create new conversation", function () {
@@ -26,7 +27,8 @@ describe('Conversation encryption -', function () {
         })
 
         it("add subject", function () {
-            $("[data-qa='input-subject']").sendKeys(encryptionType + "_" + date)
+            subject = encryptionType + "_" + date + Math.random()
+            $("[data-qa='input-subject']").sendKeys(subject)
         })
 
         it("add recipients to conversation", function () {
@@ -136,6 +138,8 @@ describe('Conversation encryption -', function () {
         it("send initial message", function () {
 
             $("[data-qa='btn-send-answer']").click()
+            util.waitForElement('cm-message')
+            util.getConversation(subject)
 
             // get conversation Id
             ptor.wait(function () {
