@@ -619,7 +619,7 @@ angular.module('cmCore')
 
                         $q.all(
                             unsigned_ttrusted_keys.map(function(ttrusted_key){
-                                console.info('signing: '+ttrusted_key.name)
+                                cmLogger.debug('signing: '+ttrusted_key.name)
                                 return self.signPublicKey(ttrusted_key, ttrusted_key.getFingerprint(), identity)
                             })
                         )
