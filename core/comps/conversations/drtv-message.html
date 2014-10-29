@@ -12,13 +12,10 @@
         <div 
             class       = "text" 
             ng-class    = "{'own-message':is_my_own_message}"
-            ng-show     = "!message.state.is('sending')"
         >
             <span ng-if="!displayEncrypted() && message.text != ''" ng-bind-html="message.text|cmParse" cm-html-compile></span>
             <span ng-if="displayEncrypted()">{{'CONVERSATION.TEXT.ENCRYPTED'|cmTranslate}}</span>
         </div>
-
-        <cm-loader ng-show = "message.state.is('sending')" cm-color = "ci-color"></cm-loader>
 
         <div>
             <cm-message-file ng-repeat="file in message.files"></cm-message-file>
