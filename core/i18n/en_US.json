@@ -520,9 +520,11 @@
       "NO_CAMEOKEYS" : "no cameoKey",
       "START" : "contact can be trusted"
     },
-    "NOTIFICATION" : {
-      "MESSAGE" : "Dear {{to}}, I have included your personal data to my address book on cameoNet. I hope hearing from you soon. Yours {{from}}",
-      "CONFIRMATION" : "Personal data of a third person have been stored on our server. Please inform her or him."
+    "IMPORT" :{
+        "NOTIFICATION" : {
+          "MESSAGE" : "Dear {{to}}, I have included your personal data to my address book on cameoNet. I hope hearing from you soon. Yours {{from}}",
+          "CONFIRMATION" : "Personal data of a third person have been stored on our server. Please inform her or him."
+        }
     },
     "WIDGET" : "Talks",
     "HEADLINE" : "Contact"

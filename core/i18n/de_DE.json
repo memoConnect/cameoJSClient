@@ -308,9 +308,11 @@
         "FOOTER": {
             "SAVE": "Speichern"
         },
-        "NOTIFICATION" :{
-            "CONFIRMATION" :"Sie haben Kontaktdaten einer dritten Person auf unseren Servern gespeichert. Informieren Sie sie bitte darüber.",
-            "MESSAGE" : "Hallo {{to}}, ich habe Deine Adressdaten in mein Cameo-Adressbuch übernommen. Ciao {{from}}"
+        "IMPORT" :{
+            "NOTIFICATION" :{
+                "CONFIRMATION" :"Sie haben Kontaktdaten einer dritten Person auf unseren Servern gespeichert. Informieren Sie sie bitte darüber.",
+                "MESSAGE" : "Hallo {{to}}, ich habe Deine Adressdaten in mein Cameo-Adressbuch übernommen. Ciao {{from}}"
+            }
         },
         "TRUST":{
             "NO_CAMEOKEYS": "kein cameoKey",
