@@ -279,11 +279,6 @@ angular.module('cmConversations')
                     self.addPendingRecipients();
                     // $scope.showAsymmetricKeyError();
 
-                    // first focus on message
-                    if($scope.conversation.state.is('new') && cmEnv.isNotMobile){
-                        $document[0].querySelector('cm-conversation .answer textarea').focus();
-                    }
-
                     $scope.show_contacts  = false;
 
     //                $scope.showGoToSettingsModal(); 18.07.2014 BS can be removed because on updated:finished event do this check
