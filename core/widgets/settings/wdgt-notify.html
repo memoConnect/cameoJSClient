@@ -1,0 +1,22 @@
+<h2 class="border-bottom">
+    <i class="fa cm-bell"></i>
+    {{'SETTINGS.NOTIFY'|cmTranslate}}
+</h2>
+
+<ul>
+    <li ng-click="handlePushNotifications()"
+        ng-class="{'is-disabled':!isApp()}">
+        <span class="item clearfix">
+            <span class="title">
+                <span>{{'SETTINGS.PAGES.NOTIFY.PUSH_NOTIFICATIONS' | cmTranslate}}</span>
+            </span>
+
+            <section class="icon-list">
+                 <i class="fa" ng-class="{
+                    'cm-radio-0':!settings.pushNotifications,
+                    'cm-radio-1':settings.pushNotifications
+                }"></i>
+            </section>
+        </span>
+    </li>
+</ul>

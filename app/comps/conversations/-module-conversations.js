@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('cmConversations', [
+angular.module('cmAppConversations', [
     'cmCore',
     'cmFiles',
     'cmSecurityAspects',

@@ -8,6 +8,7 @@
 /target/
 /project/
 /dist/
+/build/
 /docs/
 *.iml
 *.log
@@ -17,3 +18,4 @@
 /atlassian-ide-plugin.xml
 /projectFilesBackup/
 .DS_Store
+/cache/

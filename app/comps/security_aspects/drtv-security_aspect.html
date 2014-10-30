@@ -1,7 +1,0 @@
-<div class="name" ng-click ="show = !show">
-    <cm-icons count="{{count}}" icons="{{icons}}"    class="{{class}}"></cm-icons>
-    {{aspect.languagePrefix+"."+aspect.id+".NAME"|cmTranslate:aspect}}
-</div>
-<div class="description" ng-if = "show" cm-bind-template = "aspect.template"></div>
-
-<a ng-click="aspect.toggle()" ng-if="aspect.isToggleAble" class="classic-link">{{aspect.languagePrefix+"."+aspect.id+".TOGGLE"|cmTranslate}}</a>

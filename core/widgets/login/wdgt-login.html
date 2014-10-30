@@ -1,0 +1,38 @@
+<section class="theme-b dtb">
+    <div class="dtbr">
+        <div class="head">
+            <div class="rhino">
+                <img src="gfx/rhino-bubble.png" />
+            </div>
+            <div class="logo tac">
+                <cm-logo class="fa-2x"></cm-logo>
+            </div>
+            <div class="bg-transparent"></div>
+        </div>
+    </div>
+
+    <div class="dtbr">
+        <hr class="margin-small mt1">
+        <cm-login></cm-login>
+
+        <hr class="margin-small">
+
+        <article class="item tac" ng-click="goTo('/registration')" data-qa="register-btn">
+            <span class="body">
+                {{'REGISTER.LINK'|cmTranslate}}
+            </span>
+            <span class="icon-list">
+                <i class="fa cm-right position-exception"></i>
+            </span>
+        </article>
+
+        <hr class="margin-small">
+
+        <article class="cm-login-text">
+            {{'CAMEO.DESCRIBE'|cmTranslate}}
+        </article>
+        <article class="version">
+            {{'CAMEO.VERSION'|cmTranslate}}: {{cmVersion.version}}
+        </article>
+    </div>
+</section>

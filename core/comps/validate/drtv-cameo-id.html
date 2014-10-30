@@ -1,0 +1,32 @@
+<label>{{placeholder|cmTranslate}} *</label>
+<div
+    data-qa="form-input"
+    class="cm-input-ctn with-inside-icon"
+    ng-class="{'cm-input-error':hasError()}" cm-input-watcher>
+    <input
+        tabindex="{{tabindex}}" data-qa="input-cameoId"
+        type="text" id="cameoId" name="cameoId" ng-class="{'cm-input-error':hasError()}"
+        ng-model="cameoId" cm-adaptive-change />
+    <i
+        class="fa cm-input-addon"
+        ng-class="{
+            'cm-write': !hasReservationSecret(),
+            'cm-checkbox-right':hasReservationSecret()
+        }"
+        data-qa="icon-cameoId-reserved"></i>
+</div>
+<cm-info-bubble class="cm-alert" ng-show="errors.toolong" data-qa="cameoId-info-user-max-letter-count">
+    <i class="fa cm-info"></i>{{'DRTV.VALIDATE_CAMEOID.INFO.MAX_LETTER_COUNT'|cmTranslate:{count: max} }}
+</cm-info-bubble>
+<cm-info-bubble class="cm-alert" ng-show="errors.tooshort" data-qa="cameoId-info-user-min-letter-count">
+    <i class="fa cm-info"></i>{{'DRTV.VALIDATE_CAMEOID.INFO.MIN_LETTER_COUNT'|cmTranslate:{count: min} }}
+</cm-info-bubble>
+<cm-info-bubble class="cm-alert" ng-show="errors.exists" data-qa="cameoId-info-username-exists">
+    <i class="fa cm-info"></i>{{'DRTV.VALIDATE_CAMEOID.INFO.INPUT.EXISTS'|cmTranslate}}
+</cm-info-bubble>
+<cm-info-bubble class="cm-alert" ng-show="errors.empty" data-qa="cameoId-info-username-empty">
+    <i class="fa cm-info"></i>{{'DRTV.VALIDATE_CAMEOID.INFO.INPUT.EMPTY'|cmTranslate}}
+</cm-info-bubble>
+<cm-info-bubble class="cm-alert" ng-show="errors.invalid" data-qa="cameoId-info-username-invalid">
+    <i class="fa cm-info"></i>{{'DRTV.VALIDATE_CAMEOID.INFO.INPUT.INVALID'|cmTranslate}}
+</cm-info-bubble>

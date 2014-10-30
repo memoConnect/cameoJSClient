@@ -1,0 +1,116 @@
+cm-message {
+  .dbl;
+  margin: 0.5em 0;
+  word-wrap: break-word;
+  &.right {
+    .tar;
+  }
+  &.file-view{
+    div.message {
+      min-width: @cm-message-min-width !important;
+    }
+  }
+  article {
+    .dib;
+    div.message {
+      .pos-rel;
+      .border-radius;
+      .no-border;
+      .tal;
+      min-height: @cm-unit/2;
+      padding:0 0.3rem;
+      &.left {
+        background-color: @cm-msg-bg-color-other;
+        max-width: @cm-message-left-max-width;
+      }
+      &.right {
+        background-color: @cm-msg-bg-color-own;
+        margin-right: 0.7rem;
+        max-width: @cm-message-right-max-width;
+      }
+    }
+    span {
+      .dbl;
+      &.nose {
+        .pos-abs;
+        &.left {
+          top: 0.2em;
+          left: -0.4em;
+          i {
+            color: @cm-msg-bg-color-other
+          }
+        }
+        &.right {
+          top: 0.5em;
+          right: -0.39em;
+          i {
+            color: @cm-msg-bg-color-own
+          }
+        }
+        i {
+          font-size: 1.5em;
+        }
+      }
+    }
+    .author {
+      .mt5;
+      height:0.6rem;
+      white-space:nowrap;
+      span {
+        font-size: 0.6rem;
+        color: @cm-grey;
+      }
+    }
+    .text{
+      .mt5;
+    }
+    cm-message-assets {
+      .dbl;
+      .tar;
+      white-space:nowrap;
+      > *{
+        .vam;
+      }
+      &.green {
+        span {
+          color: @cm-green;
+        }
+      }
+      span {
+        font-size: @cm-small-font;
+        &.date, &.envelope {
+          .dib;
+        }
+      }
+
+      cm-loader {
+        display:inline-block !important;
+        font-size: 0.5em;
+        padding: 0.125*@cm-unit;
+        min-width: 2*@cm-unit;
+      }
+    }
+  }
+  &.file-view{
+    article{
+      color:@cm-white;
+
+      .author span{
+        color:@cm-light-grey;
+      }
+      div.message{
+        &.left, &.right{
+          background-color:@cm-overlay-dark;
+        }
+      }
+      span.nose{
+        &.left, &.right{
+          i {
+            color: @cm-overlay-dark;
+          }
+        }
+      }
+    }
+  }
+  
+}

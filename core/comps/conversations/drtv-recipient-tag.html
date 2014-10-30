@@ -1,0 +1,12 @@
+<cm-avatar cm-data="identity" cm-weight="1" cm-stop-download></cm-avatar>
+<cm-key-level cm-data="identity.keys.getWeakestKeySize()" cm-weight="1"></cm-key-level>
+<section cm-weight="4" class="identityName">
+    <div class="displayName" data-qa="contact-display-name">{{identity.getDisplayName()}}</div>
+</section>
+<section class="icon-list" data-qa="btn-select-contact" ng-click="toggleRecipient()">
+    <cm-contact-type cm-data="identity"></cm-contact-type>
+    <i class="fa"
+       ng-class="{'cm-checkbox':!selected[identity.id],
+               'cm-checkbox-right':selected[identity.id]}">
+   </i>
+</section>

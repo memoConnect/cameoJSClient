@@ -1,12 +1,23 @@
 <section class="theme-a fill-bg">
     <cm-header></cm-header>
-    <h2>{{'APP.ERROR'|cmTranslate}}</h2>
-    <pre class = "error">
-        {{data_str}}
-    </pre>
-        <a ng-click ="goto('/logout')">{{'APP.ERROR.LOGOUT'|cmTranslate}}</a>
-        <br/>
-        <br/>
-        <a ng-click ="goto('/talks')">{{'APP.ERROR.BACK_TO_TALKS'|cmTranslate}}</a>
+
+    <h2 class="border-bottom">{{'ERROR.HEADER'|cmTranslate}}</h2>
+
+    <article class="content">
+        <cm-info-bubble class="cm-alert">
+            <pre>
+                {{data_str|strnl2nl}}
+            </pre>
+        </cm-info-bubble>
+    </article>
+
+    <cm-footer>
+        <button class="cm-btn-grey dib w50" ng-click="goto('/logout')">
+            {{'ERROR.LOGOUT'|cmTranslate}}
+        </button>
+        <button class="cm-btn-grey dib w50" ng-click="goto('/talks')">
+            {{'ERROR.BACK_TO_TALKS'|cmTranslate}}
+        </button>
+    </cm-footer>
 </section>
 

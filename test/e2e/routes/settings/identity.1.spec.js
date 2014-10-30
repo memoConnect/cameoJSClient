@@ -12,7 +12,7 @@ describe('Route Settings Identity: ', function(){
     var newEmail = 'moeper@moep.moep';
 
     describe('Test 1 - GUI', function(){
-        it('should be load at "#/settings/identity/edit" after login.', function(){
+        it('should load at "#/settings/identity/edit" after login.', function(){
             util.login()
             util.expectCurrentUrl('#/start')
 
@@ -20,17 +20,17 @@ describe('Route Settings Identity: ', function(){
             util.expectCurrentUrl('#/settings/identity/edit')
         })
 
-        it('should exists a key management button', function(){
+        it('should have key management button', function(){
             util.waitForElement("[data-qa='btn-identity-keys']")
             expect($("[data-qa='btn-identity-keys']").isPresent()).toBe(true)
         })
 
-        it('should be exists a trust button', function(){
+        it('should have a trust button', function(){
             util.waitForElement("[data-qa='btn-identity-trust']")
             expect($("[data-qa='btn-identity-trust']").isPresent()).toBe(true)
         })
 
-        it('should be exists a form with following elements', function(){
+        it('should have a form with following elements', function(){
             util.waitForElement("[data-qa='input-cameoId']")
             expect($("[data-qa='input-cameoId']").isPresent()).toBe(true)
 
@@ -38,7 +38,7 @@ describe('Route Settings Identity: ', function(){
             expect($("[data-qa='input-displayname']").isPresent()).toBe(true)
         })
 
-        it('should be exists a save button', function(){
+        it('should have a save button', function(){
             util.waitForElement("[data-qa='btn-saveIdentity']")
             expect($("[data-qa='btn-saveIdentity']").isPresent()).toBe(true)
         })

@@ -1,0 +1,31 @@
+<article class="cm-modal-plain" data-qa = "modal-confirm">
+    <header>
+        <button ng-click="close()" class="close" ng-show="closeBtn" data-qa="cm-modal-close-btn"><i class="fa cm-close"></i></button>
+        <h2 class="{{severity}}">{{title|cmTranslate}}</h2>
+    </header>
+    <div class="content">
+        <div class="modal-row tac">
+            <span ng-bind-html="text | cmParse"></span>
+            <ng-transclude></ng-transclude>
+        </div>
+    </div>
+    <footer>
+        <button
+                class       = "cm-btn-grey cm-white-border-right dib w50"
+                data-qa     = "btn-cancel"
+                ng-click    = "cancel()"
+                >
+            {{ (labelCancel || 'MODAL.LABEL.CANCEL') | cmTranslate }}
+            <i class="fa cm-checkbox-wrong"></i>
+        </button>
+        <button
+                class       = "cm-btn-grey dib w50"
+                data-qa     = "btn-confirm"
+                ng-click    =   "confirm()"
+                >
+            {{ (labelOkay || 'MODAL.LABEL.OK') | cmTranslate }}
+            <i class="fa cm-checker"></i>
+        </button>
+    </footer>
+</article>
+<div class="backdrop" ng-hide="options.withoutBackdrop"></div>

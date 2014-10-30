@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cmDesign</title>
+
+    <link rel="stylesheet" href="style.<%= currentVersion %>.css">
+    <script type="text/javascript" src="vendor.<%= currentVersion %>.js"></script>
+    <style>
+        html{background:none !important;font-size:16px}
+        body{font-family:verdana;width:auto;padding:3rem 1rem;background:none !important}
+        header{font-size:2rem;height:4rem;position:fixed;left:0;top:0;padding:0.5rem 1rem;background:#fff;z-index:2;box-sizing:border-box;width:100%}
+        header a.is-active{text-decoration:none;color:#000;transition:color 500ms ease}
+        a{color:#02BED2}
+        h1{color:#02BED2}
+        h2{color:#02BED2}
+        h3{border-bottom:solid 0.1rem #02BED2;color:#02BED2;font-weight:normal}
+        figure{margin:0.2rem;position:relative;display:inline-block;text-align:center}
+        figure i{font-size:4rem!important;background-color:#02BED2!important}
+        figure figcaption{display:none;position:absolute;left:0;top:0;padding:0.5rem;white-space:nowrap;background:#ffffff}
+        figure.showCaption figcaption{z-index:1;display:block!important}
+        label{cursor:pointer}
+        .maincat{padding-left:0.25rem}
+        .subcat{padding-left:0.5rem}
+        .anchor{top:-10rem;left:0;position:relative;display:block}
+        .baseline-check{position:relative}
+        .baseline{position:absolute;height:0.09rem;width:100%;background:#02BED2;top:1.3rem;z-index:-1}
+        .baseline-check select{width:15rem}
+        .nose-check{position:relative;height:12rem}
+        .nose-check figure{font-size:4rem;margin:0}
+        .nose-check i{position:absolute;background:none!important}
+        .nose-check i.cm-nose-left{left:1.9rem;top:3.8rem}
+        .nose-check i.cm-nose-right{left:8.5rem;top:0.9rem}
+        .nose-check i.cm-nose-up{left:1.7rem;top:-3rem}
+        .nose-check i.cm-nose-down{left:5rem;top:6.9rem}
+        .nose-check .box{position:absolute;border:solid 0.1rem #000;height:6rem;width:6rem;left:3rem;top:3rem}
+        .nose-check .proof{margin-left:15rem}
+    </style>
+</head>
+<body ng-app="icons" ng-controller="ctrl">
+
+<header>
+    <a ng-click="active='cameofont'" ng-class="{'is-active':active=='cameofont'}">cameofont</a>
+    <a ng-click="active='filetypes'" ng-class="{'is-active':active=='filetypes'}">filetypes</a>
+    <a ng-click="active='emojis'" ng-class="{'is-active':active=='emojis'}">emojis</a>
+</header>
+
+<section ng-if="active == 'cameofont'">
+
+    <h1><span class="anchor"></span>cameofont</h1>
+
+    <h2>baseline check</h2>
+
+    <div class="baseline-check">
+        <div class="baseline"></div>
+        <i class="fa {{baselineIcon}}"></i>
+        Texty
+        <select ng-model="baselineIcon">
+            <option>choose icon</option>
+            <optgroup ng-repeat="bundle in icons" label="{{bundle.title}}">
+                <option ng-repeat="css in bundle.css.split(' ')">{{css}}</option>
+            </optgroup>
+        </select>
+    </div>
+
+    <h2>nose check</h2>
+
+    <div class="nose-check">
+        <figure><i class="fa cm-nose-left"></i></figure>
+        <figure><i class="fa cm-nose-right"></i></figure>
+        <figure><i class="fa cm-nose-down"></i></figure>
+        <figure><i class="fa cm-nose-up fa-flip-horizontal"></i></figure>
+        <div class="box"></div>
+        <div class="proof">
+            =
+            <img src="data:image/jpg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAAAAAAD/4QMqaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjUtYzAyMSA3OS4xNTQ5MTEsIDIwMTMvMTAvMjktMTE6NDc6MTYgICAgICAgICI+IDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+IDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bXA6Q3JlYXRvclRvb2w9IkFkb2JlIFBob3Rvc2hvcCBDQyAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6N0QyQjMxMUY0N0YwMTFFNEFFOTBBQkU0N0FCQzE2RjUiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6N0QyQjMxMjA0N0YwMTFFNEFFOTBBQkU0N0FCQzE2RjUiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo3RDJCMzExRDQ3RjAxMUU0QUU5MEFCRTQ3QUJDMTZGNSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo3RDJCMzExRTQ3RjAxMUU0QUU5MEFCRTQ3QUJDMTZGNSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pv/uAA5BZG9iZQBkwAAAAAH/2wCEABsaGikdKUEmJkFCLy8vQkc/Pj4/R0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0cBHSkpNCY0PygoP0c/NT9HR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR//AABEIAHIAcgMBIgACEQEDEQH/xAB2AAEBAAMBAQAAAAAAAAAAAAAABAEFBgMCAQEAAAAAAAAAAAAAAAAAAAAAEAABAwEEBQoEBAcAAAAAAAAAAQIDBBHRMhQhMZJTBUFRcYGhEiKyczRhkROz8OFSYrHBQoIjM6MRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AOmAAGu4jW5ZljcbtXw+Jz9LVuhmSVyq63F0KOITfWncvInhTqIwO6Y9sjUc1bUU+zjaWukpl8K2t/Sur8jeQ8YhfjtYvzTsuA2wPFlRFJhc1etD2AAAAAAAAAAAAAANdTUsMjVc+NjlWSXSrUVf9j/ge+Rp91HsNuFHgX1JfuvKgJcjT7qPYbcMjT7qPYbcVACXI0+6j2G3DI0+6j2G3FQAlyNPuo9htwyNPuo9htxUAJcjT7qPYbcFoqfdR7DbiowuoDjKaumgaiNctiImhdKfl1HQ0XEm1Pgd4X9i9FxybMKdBXTU8szrYk1cvInWB2gJLKj9uDnXH8tQArAAEtHgX1JfuvKiWjwL6kv3XlQAAAAAAAAAwuoyYXUBxVDTLUuaxNVmlfgdlFE2JqMYliIajgcPdh+out38EN2AAAAAwq2aQJqPAvqS/deVEPDnd+BHc7pF/wCji4AAAAAAAAAYXUZMKBJw9vdpo0/Y1fmlpYS0Pt4vTZ5UKgAAAEdfN9GBy8q6E6ytVs0qcrxOszD+6zAztXnA3XCfas6X+dxsTXcJ9qzpf53GxAAAAAAAAAAACWh9vF6bPKhUS0Pt4vTZ5UKgAAA5TiFTOr3RSLYiLqTQipydJrTsKyiZVJp0OTU78chz0/DZ4f6e8nO3T2awN7wn2rOl/ncbE0/DKqGKnax72NcivtRzkRU8buRVLs9T72PbbeBUCXPU+9j223jPU+9j223gVAlz1PvY9tt4z1PvY9tt4FQJc9T72PbbeM9T72PbbeBUCXPU+9j223jPU+9j223gKH28Xps8qFRLQ+3i9NnlQqAAAAAAAAAAADFlp4vpYn4mNXqQ9wBqpeDwvwWsX5p23mlquHy02lfE39Sfz5jrzCoipYuoDgz0hjWV6MTW5bCziNJlpLG4XaUuNnwqhWL/ADSJY5cKcwG4a1GoiJqQ+gAAAAAAAAAAAAAAAAAJ5cbMHLixf2lAAAAAAAB//9k="/>
+        </div>
+    </div>
+
+    <h2><span></span>glyphs</h2>
+
+    <div ng-repeat="bundle in icons" class="maincat">
+        <h3 ng-if="bundle.title">{{bundle.title}}</h3>
+        <figure ng-repeat="css in bundle.css.split(' ')">
+            <i class="fa {{css}}"></i><figcaption ng-show="withFigcaption">{{css}}</figcaption>
+        </figure>
+    </div>
+
+</section>
+<section ng-if="active == 'filetypes'">
+    <h1><span class="anchor"></span>filetypes</h1>
+
+    <div ng-repeat="bundle in types" class="maincat">
+        <h3 ng-if="bundle.title">{{bundle.title}}</h3>
+        <figure ng-repeat="css in bundle.css.split(' ')">
+            <i class="file {{css}}"></i><figcaption ng-show="withFigcaption">{{css}}</figcaption>
+        </figure>
+    </div>
+</section>
+
+<section ng-if="active == 'emojis'">
+    <h1><span class="anchor"></span>emojis</h1>
+
+    <div ng-repeat="(index,mainCat) in Object.keys(emojis)" class="maincat">
+        <h3 ng-if="mainCat">{{mainCat}}</h3>
+        <div ng-repeat="(index,subCat) in Object.keys(emojis[mainCat])" class="subcat">
+            <h3 ng-if="subCat">{{subCat}}</h3>
+            <figure ng-repeat="icon in emojis[mainCat][subCat]" class="emoji-figure">
+                <i class="emoji emoji_{{icon | clearClassName}}"></i><figcaption ng-show="withFigcaption">{{icon | clearClassName}}</figcaption>
+            </figure>
+        </div>
+    </div>
+</section>
+
+<script>
+
+    function loadCSS( href, before, media ){
+        "use strict";
+        // Arguments explained:
+        // `href` is the URL for your CSS file.
+        // `before` optionally defines the element we'll use as a reference for injecting our <link>
+        // By default, `before` uses the first <script> element in the page.
+        // However, since the order in which stylesheets are referenced matters, you might need a more specific location in your document.
+        // If so, pass a different reference element to the `before` argument and it'll insert before that instead
+        // note: `insertBefore` is used instead of `appendChild`, for safety re: http://www.paulirish.com/2011/surefire-dom-element-insertion/
+        var ss = window.document.createElement( "link" );
+        var ref = before || window.document.getElementsByTagName( "script" )[ 0 ];
+        ss.rel = "stylesheet";
+        ss.href = href;
+        // temporarily, set media to something non-matching to ensure it'll fetch without blocking render
+        ss.media = "only x";
+        // inject link
+        ref.parentNode.insertBefore( ss, ref );
+        // set media back to `all` so that the stylesheet applies once it loads
+        setTimeout( function(){
+            ss.media = media || "all";
+        } );
+        return ss;
+    }
+
+    // load teamdrive css
+    if(location.href.indexOf('cameoTeam') >= 0){
+        loadCSS('cameofont.css');
+    }
+
+    angular
+            .module('icons',['emoji'])
+            .controller('ctrl',function ($scope, emoji){
+                $scope.active = 'cameofont';
+                $scope.baselineIcon = 'cm-checkbox-wrong';
+                $scope.Object = Object;
+                $scope.icons = [
+                    {title:'ci icons',css:'cm-logo cm-logo-c cm-logo-a cm-logo-m cm-logo-e cm-logo-o cm-logo-net cm-rhino-bubble-glyph cm-rhino-positive cm-beta cm-cameo-beta'},
+                    {title:'specials',css:'cm-edge cm-edge-add cm-scroll-pane cm-grip'},
+                    {title:'contact handler',css:'cm-client-add cm-address-book-positive cm-address-book cm-load-to-rhino cm-load-to'},
+                    {title:'checkbox',css:'cm-checkbox-bg cm-checkbox cm-checker cm-checkbox-right cm-checkbox-wrong cm-checkbox-add cm-checkbox-minus cm-radio-0 cm-radio-1'},
+                    {title:'menu',css:'cm-menu cm-menue-bell cm-menu-right-close cm-menu-right-open cm-menu-weight cm-menu-weight-bell'},
+                    {title:'directions',css:'cm-nose-left cm-nose-right cm-nose-up cm-nose-down cm-left cm-right cm-down cm-up'},
+                    {title:'notifications',css:'cm-info cm-attention cm-reject cm-ignore cm-bell cm-bell-ring cm-notification cm-notification-on cm-key-plus cm-key-minus'},
+                    {title:'message states',css:'cm-envelope-closed cm-envelope-open cm-send cm-lock cm-unlock'},
+                    {title:'handler',css:'cm-write cm-contacts cm-key cm-no-key cm-export cm-visible cm-hidden cm-group cm-person cm-arrange cm-filter cm-anchor cm-clipboard cm-search cm-change cm-grid cm-close cm-fix cm-settings cm-in cm-out cm-logout cm-register cm-add-recipient cm-talk cm-talk-full cm-new-talk cm-new-contact cm-new-contact-query cm-list cm-import-key cm-export-key cm-create-key cm-cancel-key cm-handshake cm-key-request cm-key-response cm-trust cm-tag cm-connection-trusted cm-not-connected cm-connected cm-trash cm-save cm-avatar cm-avatar-add cm-qr-code'},
+                    {title:'answer',css:'cm-plus cm-smile-negative cm-smile-positive cm-post cm-post-attention cm-post-idle cm-attachment'},
+                    {title:'media',css:'cm-video cm-file cm-sound cm-location cm-pictures cm-camera cm-mobile cm-contract'}
+                ];
+
+                $scope.types = [
+                    {title:'default',css:'unknown moep test-if-none-exists-selector-get-question-mark'},
+                    {title:'dirs',css:'dir dir-download dir-safe dir-public zip rar sit apk'},
+                    {title:'docs',css:'pdf txt xls xlsx doc docx php css ppt pps pptx'},
+                    {title:'images',css:'jpg gif bmp tif eps png'},
+                    {title:'videos',css:'mov mpg mp4 flv avi'},
+                    {title:'audio',css:'mp3 wav wma aif ogg 3gpp aac'},
+                    {title:'misc',css:'xml html chm ttf exe dmg'}
+                ];
+
+                $scope.emojis = emoji.items;
+            }).filter('clearClassName', function(){
+                return function(className) {
+                    return className.replace('\\','');
+                }
+            }).directive('figure',function($window, $document){
+
+                function getDocHeight() {
+                    return Math.max(
+                            $document[0].body.scrollHeight, document.documentElement.scrollHeight,
+                            $document[0].body.offsetHeight, document.documentElement.offsetHeight,
+                            $document[0].body.clientHeight, document.documentElement.clientHeight
+                    );
+                }
+
+                return {
+                    restrict: 'E',
+                    link: function(scope, element){
+
+                        var viewport = {
+                            w: $window.innerWidth,
+                            h: $window.innerHeight
+                        };
+
+                        element.on('mouseenter', function(){
+
+                            if(element.find('figcaption').length == 0)
+                                return false;
+
+                            element.addClass('showCaption')
+
+                            var pos = {},
+                                    caption = element.find('figcaption'),
+                                    top = (element[0].offsetHeight),
+                                    left = (caption[0].offsetWidth / 2)-(element[0].offsetWidth / 2);
+
+                            // fix for leftedge viewport
+                            if(left > element[0].offsetLeft){
+                                pos.left = 0;
+                            } else {
+                                pos.left = left;
+                            }
+
+                            // fix for right edge viewport
+                            var rightCaption = (element[0].offsetLeft-left)+caption[0].offsetWidth;
+                            if(rightCaption > viewport.w){
+                                pos.left = 'auto';
+                                pos.right = 0;
+                            }
+
+                            // fix viewport bottom
+                            // TODO
+
+                            // fix doc bottom
+                            var topCaption = (element[0].offsetTop + top + caption[0].offsetHeight);
+                            if(topCaption > getDocHeight()){
+                                top = -(element.find('i')[0].offsetHeight - caption[0].offsetHeight)
+                            }
+
+                            pos.top = top+'px'
+
+                            if('left' in pos && pos.left != 'auto')
+                                pos.left = -(pos.left)+'px';
+
+                            caption.css(pos);
+                        }).on('mouseleave', function(){
+                            element.removeClass('showCaption');
+                        })
+                    }
+                }
+            });
+</script>
+</body>
+</html>

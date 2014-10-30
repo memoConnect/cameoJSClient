@@ -1,0 +1,49 @@
+<form class="form-signin" role="form" autocomplete="off" data-qa="login" ng-submit="doLogin()">
+
+    <article class="content" ng-if="cmEnv.autoLogin">
+        <select ng-model="formData.autologin" class="cm-form-control btn-block autologin" ng-change="changeAutologin()">
+            <option value="none">{{'LOGIN.LABEL.AUTO'|cmTranslate}}</option>
+            <option ng-repeat="(user,prop) in loginData">{{user}}</option>
+        </select>
+    </article>
+
+    <hr class="margin-small" ng-if="cmEnv.autoLogin">
+
+    <article class="content">
+        <div class="cm-input-ctn" ng-class="{'cm-input-error':alertState!=''}" cm-input-watcher>
+            <input
+                tabindex="1"
+                type="text" ng-model="formData.user" ng-class="{'cm-input-error':alertState!=''}"
+                id="user" name="user" value="" required
+                placeholder="{{'LOGIN.PLACEHOLDER.USERNAME'|cmTranslate}}"  />
+        </div>
+    </article>
+
+    <article class="content">
+        <div class="cm-input-ctn with-inside-icon" ng-class="{'cm-input-error':alertState!=''}" cm-input-watcher>
+            <input
+                tabindex="2"
+                type="{{passwordType}}" ng-model="formData.pass" ng-class="{'cm-input-error':alertState!=''}"
+                id="pw" name="pw" value="" required
+                placeholder="{{'LOGIN.PLACEHOLDER.PASSWORD'|cmTranslate}}" />
+            <i class="fa cm-icon-grey" ng-class="{'cm-visible':passwordType=='password','cm-hidden':passwordType=='text'}" ng-click="handlePassword()"></i>
+        </div>
+    </article>
+
+    <article class="content" ng-hide="alertState==''" data-qa="login-info">
+        <cm-info-bubble class="cm-alert">
+            <div><i class="fa cm-info"></i><span ng-bind-html="'LOGIN.INFO.'+alertState|cmParse"></span></div>
+        </cm-info-bubble>
+    </article>
+
+    <hr class="margin-small">
+
+    <button class="btn-submit" type="submit"></button>
+
+    <article class="item" data-qa="login-submit-btn" ng-click="doLogin()">
+        <span class="body tac" ng-show="!showLoader">
+            <span class="with-icon">{{'LOGIN.LABEL.SUBMIT'|cmTranslate}}<i class="fa cm-key"></i></span>
+        </span>
+        <cm-loader ng-show="showLoader" cm-color="ci-color"></cm-loader>
+    </article>
+</form>

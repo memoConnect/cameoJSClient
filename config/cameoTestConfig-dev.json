@@ -1,6 +1,7 @@
 {
     "config": {
-        "wwwUrl": "https://dev.cameo.io/m/"
+        "wwwUrl": "https://dev.cameo.io/m/",
+        "showConsoleError": false
     },
     "testData": [
         "loginUser1 = 'angry_bardeen'",

@@ -1,0 +1,13 @@
+<cm-loader ng-show="isLoading" class="fullscreen"></cm-loader>
+
+<article class="content" ng-if="!contacts.length && !isLoading">
+    <cm-info-bubble class="cm-alert">
+        <i class="fa cm-info"></i> {{"CONTACTS.LIST_EMPTY"|cmTranslate}}
+    </cm-info-bubble>
+</article>
+
+<ul>
+    <li ng-repeat="contact in contacts | cmSearch:'contacts':search | cmPendingFirst">
+        <cm-contact-tag cm-contact="contact" ng-class="{'cm-disabled':contact.contactType == 'pending'}" ng-click="editContact(contact)"></cm-contact-tag>
+    </li>
+</ul>

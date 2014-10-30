@@ -1,0 +1,21 @@
+<section class="theme-a fixed-layout">
+    <cm-header>
+        <cm-back back-to="/contact/list"></cm-back>
+        <cm-logo></cm-logo>
+        <section class="icons-list">
+            <cm-add-button ng-click="openModal('add-contact')" data-qa="add-contact-btn" cm-icon="new-contact"></cm-add-button>
+        </section>
+    </cm-header>
+
+    <cm-modal-add-contact id="add-contact" nose-position="6rem"></cm-modal-add-contact>
+
+    <cm-column class="fill-bg">
+        <cm-desktop-widget-menu></cm-desktop-widget-menu>
+    </cm-column>
+    <cm-column class="fill-bg">
+        <cm-widget-contact-list></cm-widget-contact-list>
+    </cm-column>
+    <cm-column class="fill-bg">
+        <cm-widget-contact-edit cm-data="contact" ng-if="contact"></cm-widget-contact-edit>
+    </cm-column>
+</section>

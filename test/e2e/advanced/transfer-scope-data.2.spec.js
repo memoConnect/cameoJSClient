@@ -75,8 +75,7 @@ describe('transfer scope data conversation', function () {
     it('send message & create conversation', function () {
         util.waitForElement("[data-qa='btn-send-answer']")
         $("[data-qa='btn-send-answer']").click()
-        util.waitAndCloseNotify('checkbox-dont-ask-me-again', true)
-        $("[data-qa='btn-send-answer']").click()
+        util.waitAndClickQa('btn-confirm')
 
         util.waitForElements('cm-message', 1)
 

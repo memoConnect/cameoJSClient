@@ -1,40 +1,13 @@
-<section>
+<section class="theme-a fill-bg">
+    <cm-header cm-rubber-space>
+        <cm-back cm-weight="1" back-to="conversation/{{conversationId}}"></cm-back>
+        <cm-identity cm-weight="4"></cm-identity>
+        <cm-security-indicator
+            cm-weight       = "2"
+            cm-data         = "conversation"
+        ></cm-security-indicator>
+        <cm-menu cm-weight="1"></cm-menu>
+    </cm-header>
 
-<cm-header cm-rubber-space ng-show="!isPurl">
-    <cm-back cm-weight="1" back-to="conversation/{{conversationId}}"></cm-back>
-    <cm-identity cm-weight="4"></cm-identity>
-    <cm-security-indicator
-        cm-weight       = "2"
-        cm-data         = "conversation"
-    ></cm-security-indicator>
-    <cm-menu cm-weight="1"></cm-menu>
-</cm-header>
-
-<!--
-<cm-header cm-rubber-space ng-show="isPurl">
-    <cm-back cm-weight="1" back-to="purl/{{purlId}}"></cm-back>
-    <div cm-weight="1"></div>
-    <cm-logo cm-weight="4"></cm-logo>
-    <cm-security-indicator
-        cm-weight       = "2"
-        cm-data         = "conversation.securityAspects"
-        cm-leading-icon = "cm-lock"
-        ng-click        = "goto('purl/'+purlId+'/security-settings')"
-    ></cm-security-indicator>
-</cm-header>
-
--->
-    <cm-widget-conversation-security cm-data = "conversation">
-    </cm-widget-conversation-security>
+    <cm-widget-conversation-security cm-data="conversation"></cm-widget-conversation-security>
 </section>
-
-
-<!--
-<div ng-controller="ConversationCtrl">
-    <section ng-switch="pageChild1">
-        <cm-conversation      cm-data="conversation" ng-switch-default></cm-conversation>
-        <cm-recipients        cm-data="conversation" ng-switch-when= "recipients"></cm-recipients>
-        <cm-security-settings cm-data="conversation" ng-switch-when= "security-settings"></cm-security-settings>
-    </section>
-</div>
--->

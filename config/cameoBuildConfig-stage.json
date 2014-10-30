@@ -5,7 +5,11 @@
         "loadingBar": true,
         "enableDebug": true,
         "logLevel": "WARN",
-        "performancePage": true
+        "performancePage": false
+    },
+    "cockpit": {
+        "basePath": "/c/",
+        "appPath": "/m/"
     },
     "debug":{
         "weinre": false,

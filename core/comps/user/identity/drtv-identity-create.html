@@ -1,0 +1,93 @@
+<form name="cmForm" novalidate autocomplete="off">
+    <article class="content">
+        <cm-cameo-id
+            ng-model="formData.cameoId" form-name="cmForm" cm-tabindex="1"
+            placeholder="SETTINGS.PAGES.IDENTITY.CREATE.PLACEHOLDER.CAMEOID"
+        ></cm-cameo-id>
+    </article>
+
+    <hr class="margin-small" />
+
+    <article class="content">
+        <label>{{'SETTINGS.PAGES.IDENTITY.CREATE.PLACEHOLDER.DISPLAYNAME'|cmTranslate}}</label>
+        <div class="cm-input-ctn with-inside-icon">
+            <input
+                tabindex="2" data-qa="input-displayname"
+                type="text" name="displayName" ng-model="formData.displayName" ng-keyup="validateDisplayName()" />
+            <i class="fa cm-write"></i>
+        </div>
+        <cm-info-bubble
+            class="cm-alert"
+            ng-show="
+                cmForm.displayName.$dirty &&
+                cmForm.displayName.$invalid &&
+                cmForm.displayName.length > 0
+            ">
+            <div ng-show="cmForm.displayName.$error.required">
+                <i class="fa cm-info"></i>
+                {{'SETTINGS.PAGES.IDENTITY.CREATE.INFO.EMPTY.DISPLAYNAME'|cmTranslate}}
+            </div>
+        </cm-info-bubble>
+    </article>
+
+    <hr class="margin-small" />
+
+    <article class="content">
+        <label>{{'SETTINGS.PAGES.IDENTITY.CREATE.PLACEHOLDER.PHONENUMBER'|cmTranslate}}</label>
+        <cm-multi-input cm-collection="formData.phoneNumbers">
+            <ng-form name="formPhone" autocomplete="off">
+                <div class="cm-input-ctn with-chooser with-inside-icon">
+                    <input
+                        tabindex="3" data-qa="input-phonenumber"
+                        type="text" name="phoneNumber" ng-model="item.value" cm-validate-phone cm-adaptive-change />
+                    <i class="fa cm-write"></i>
+                </div>
+                <!--<div cm-type-chooser cm-choose-value-to="item"></div>-->
+                <cm-info-bubble
+                    class="cm-alert"
+                    ng-show="
+                        formPhone.phoneNumber.$dirty &&
+                        formPhone.phoneNumber.$invalid
+                    "
+                    data-qa="form-error-phoneNumber-invalid">
+                    <div ng-show="formPhone.phoneNumber.$invalid">
+                        <i class="fa cm-info"></i>
+                        {{'SETTINGS.PAGES.IDENTITY.CREATE.INFO.INVALID.PHONENUMBER'|cmTranslate}}
+                    </div>
+                </cm-info-bubble>
+            </ng-form>
+        </cm-multi-input>
+    </article>
+
+    <hr class="margin-small" />
+
+    <article class="content">
+        <label>{{'SETTINGS.PAGES.IDENTITY.CREATE.PLACEHOLDER.EMAIL'|cmTranslate}}</label>
+        <cm-multi-input cm-collection="formData.emails">
+            <ng-form name="formEmail" autocomplete="off">
+                <div class="cm-input-ctn with-chooser with-inside-icon">
+                    <input
+                        tabindex="4" data-qa="input-email"
+                        name="email" ng-model="item.value" cm-validate-email />
+                    <i class="fa cm-write"></i>
+                </div>
+                <!--<div cm-type-chooser cm-choose-value-to="item"></div>-->
+                <cm-info-bubble class="cm-alert" ng-show="formEmail.email.$dirty && formEmail.email.$invalid">
+                    <div ng-show="formEmail.email.$invalid" data-qa="form-error-email-invalid">
+                        <i class="fa cm-info"></i>
+                        {{'SETTINGS.PAGES.IDENTITY.CREATE.INFO.INVALID.EMAIL'|cmTranslate}}
+                    </div>
+                </cm-info-bubble>
+            </ng-form>
+        </cm-multi-input>
+    </article>
+</form>
+
+<cm-footer>
+    <button class="cm-btn-grey" ng-click="addIdentity()" data-qa="btn-identity-create">
+        <span ng-show="!showLoader">
+            {{'SETTINGS.PAGES.IDENTITY.CREATE.FOOTER'|cmTranslate}} <i class="fa cm-checker"></i>
+        </span>
+        <cm-loader ng-show="showLoader" cm-color="ci-color"></cm-loader>
+    </button>
+</cm-footer>

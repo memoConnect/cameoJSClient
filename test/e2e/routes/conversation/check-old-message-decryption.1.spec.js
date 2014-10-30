@@ -1,7 +1,8 @@
 var config = require("../../config-e2e-tests.js")
 var util = require("../../../lib/e2e/cmTestUtil.js")
 
-describe('Route Conversation - Check Old Message Decryption ', function() {
+console.log('test removed - check old message decryption')
+xdescribe('Route Conversation - Check Old Message Decryption: ', function() {
     var ptor = util.getPtorInstance(),
         testUser
 
@@ -12,8 +13,17 @@ describe('Route Conversation - Check Old Message Decryption ', function() {
 
     function addMessages(qty,msg){
         for(var i = 0; i < qty; i++){
-            util.setVal("input-answer", msg)
+            util.setValQuick("input-answer", msg)
+            util.setVal("input-answer", " ")
+
+            ptor.wait(function(){
+                return util.getVal('input-answer').then(function(val){
+                    return val == msg + ' ';
+                })
+            })
+
             util.waitAndClickQa("btn-send-answer")
+            util.waitForElements("cm-message", (i + 2))
         }
     }
 
@@ -22,7 +32,7 @@ describe('Route Conversation - Check Old Message Decryption ', function() {
     })
 
 
-    describe('create encrytpted conversation with ' + qty + ' messages', function(){
+    describe('create encrytpted conversation with ' + qty + ' messages - ', function(){
         it('login create & create key', function () {
             util.generateKey(1)
         })
@@ -31,8 +41,8 @@ describe('Route Conversation - Check Old Message Decryption ', function() {
             util.createEncryptedConversation(subject, msg)
         })
 
-        it('should add ' + qty + ' messages', function(){
-            addMessages((qty -1), msg);
+        it('should add ' + (qty - 1) + ' messages', function(){
+            addMessages((qty - 1), msg);
 
             $$('cm-message').then(function (elements) {
                 expect(elements.length).toEqual(qty)
@@ -44,7 +54,7 @@ describe('Route Conversation - Check Old Message Decryption ', function() {
         })
     })
 
-    describe('check if messages will be decrypted', function(){
+    describe('check if messages will be decrypted - ', function(){
         it('user should be at talks after login', function(){
             util.login(testUser,'password');
 
@@ -88,9 +98,14 @@ describe('Route Conversation - Check Old Message Decryption ', function() {
         })
 
         it('all message should be encrypted', function(){
+            util.waitForElements("cm-message", qty)
+
             $$('cm-message').then(function (elements) {
                 elements.forEach(function(element){
                     expect(element.getText()).toContain(msg)
+                    //ptor.wait(function () {
+                    //    return (element.getText().indexOf(msg) != -1)
+                    //})
                 })
             })
         })

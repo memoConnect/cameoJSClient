@@ -1,0 +1,14 @@
+<article class="cm-modal-alert">
+    <header ng-show="closeBtn">
+        <button ng-click="close()" class="close">
+            <i class="fa cm-close"></i></button>
+    </header>
+    <ng-transclude class="content"></ng-transclude>
+    <footer>
+        <button class="cm-btn-grey" ng-click="close()" data-qa="cm-modal-close-btn">
+            {{(footerLabel||'MODAL.ALERT.OK')|cmTranslate}}
+            <i ng-if="footerIcon" class="fa {{footerIcon}}"></i>
+        </button>
+    </footer>
+</article>
+<div class="backdrop"></div>

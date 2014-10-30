@@ -1,0 +1,18 @@
+<section class="content clearfix" ng-click="show = !show">
+    <cm-icons class="{{class}} cm-fl w15" count="{{count}}" icons="{{icons}}"></cm-icons>
+    <span class="item cm-fl w80" >
+        {{aspect.languagePrefix+"."+aspect.id+".NAME"|cmTranslate:aspect}}
+    </span>
+</section>
+
+<span class="icon-list security-settings" ng-click="show = !show">
+    <i class="fa cm-info"></i>
+</span>
+
+<section class="content" ng-if="show">
+    <cm-info-bubble cm-bind-template="aspect.template"></cm-info-bubble>
+</section>
+
+<span class="toggleOption" ng-if="showToggleOptions">
+    <a ng-click="aspect.toggle()" ng-if="aspect.isToggleAble" class="classic-link">{{aspect.languagePrefix+"."+aspect.id+".TOGGLE"|cmTranslate}}</a>
+</span>

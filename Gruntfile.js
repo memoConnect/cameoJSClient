@@ -134,6 +134,14 @@ module.exports = function (grunt) {
         // URL Bust for requireJS
         testConfig.config.urlBust = (new Date()).getTime();
 
+        if(typeof testConfig.config.stopOnError == 'undefined'){
+            testConfig.config.stopOnError = false;
+        }
+
+        if(typeof testConfig.config.showConsoleError == 'undefined'){
+            testConfig.config.showConsoleError = true;
+        }
+
         var protractorDebug = grunt.option('debug');
         if (protractorDebug) {
             testConfig.config.protractorDebug = true
@@ -156,7 +164,7 @@ module.exports = function (grunt) {
     // http://creynders.github.io/load-grunt-configs/
     var configs = require('load-grunt-configs')(grunt, {
         config : {
-            src: 'config/grunt/*.js'
+            src: 'grunt/**/*.js'
         },
         globalCameoSecrets: globalCameoSecrets,
         globalCameoBuildConfig: globalCameoBuildConfig,
@@ -164,6 +172,8 @@ module.exports = function (grunt) {
     });
 
     configs.pkg = grunt.file.readJSON('package.json');
+
+    require('load-grunt-tasks')(grunt);
 
     grunt.initConfig(configs);
 

@@ -1,0 +1,93 @@
+div.answer{
+  .box-shadow-top;
+  .pos-fxd;
+  .vam;
+  .margin-hr-auto;
+  width:@cm-app-width;
+  min-height:@cm-footer-height;
+  bottom:0;
+  z-index:2;
+  background-color:@cm-white;
+  left:0;
+  right:0;
+  font-size:@cm-unit - 1;
+
+  .wrap{
+    .pos-rel;
+    min-height:@cm-unit;
+  }
+
+  .btns{
+    &-left{
+      .pos-bl;
+    }
+    &-right{
+      .pos-br;
+    }
+  }
+  // btns-left
+  cm-files{
+    .tac;
+  }
+  // btns-right
+  cm-emoji-handler{
+    .cm-unit-btn;
+  }
+  .post-wrap{
+    .cm-unit-btn;
+    i.cm-post {
+      &.is-disabled {
+        color:@cm-grey;
+      }
+    }
+  }
+
+  .message{
+    // (@cm-unit*3) = fileupload emojis post
+    width:@cm-app-width - (@cm-unit*3);
+    left:@cm-unit;
+    .pos-rel;
+    .tal;
+    .no-margin;
+    height:100%;
+    bottom:0;
+    textarea{
+      .w100;
+      .no-border;
+      .no-bg;
+      margin-bottom:0.5em;
+      padding:2px;
+      &[rows='1']{
+        margin:1rem 0;
+      }
+    }
+    cm-answer-textarea{
+      display:block;
+    }
+    textarea, .textarea-shadow{
+      font-size:@cm-large-font;
+    }
+    .inputter {
+      .w100;
+      .pos-abs;
+      height:0.3rem;
+      bottom:0.3rem;
+
+      border-color: -moz-use-text-color @cm-black @cm-black;
+      border-image: none;
+      border-right: @cm-border-width solid @cm-black;
+      border-left: @cm-border-width solid @cm-black;
+      border-style: none solid solid;
+      border-width: medium @cm-border-width @cm-border-width;
+    }
+  }
+  div.message.large {
+    width:26rem;
+    margin-left:0.5rem;
+  }
+}
+
+.answer.files-dragged{
+  opacity:0.8;
+  background-color:@cm-black;
+}

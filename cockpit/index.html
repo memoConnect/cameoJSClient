@@ -6,28 +6,27 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="/m/css/bootstrap.min.css">
-        <link rel="stylesheet" href="/c/css/cockpit.css">
 
-        <script src="/m/vendor/angular/angular.js"></script>
-        <script src="/m/vendor/angular/angular-route.js"></script>
-        <script src="/m/vendor/angular/angular-sanitize.js"></script>
-        <script src="/c/js/jquery/jquery-2.1.0.js"></script>
-        <script src="/c/js/bootstrap.min.js"></script>
-        <script src="/c/js/ui-bootstrap/ui-bootstrap-0.10.0.min.js"></script>
-        <script src="/c/js/ui-bootstrap/ui-bootstrap-tpls-0.10.0.min.js"></script>
+        <base href="<%= basePath %>">
 
-        <script src="/m/packages/comps/core/package-cockpit.js"></script>
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/cockpit.css">
 
-        <script src="/m/base/config.js"></script>
-        <script src="/c/js/cockpitList.js"></script>
-        <script src="/c/js/cockpitEdit.js"></script>
-        <script src="/c/js/cockpitMain.js"></script>
-        <script src="/c/js/twoFactorModal.js"></script>
-        <script src="/c/js/app.js"></script>
+        <script src="<%= appPath %>vendor.<%= currentVersion %>.js"></script>
+        <script src="<%= appPath %>cameo.<%= currentVersion %>.js"></script>
+        <script src="js/jquery/jquery-2.1.0.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/ui-bootstrap/ui-bootstrap-0.10.0.min.js"></script>
+        <script src="js/ui-bootstrap/ui-bootstrap-tpls-0.10.0.min.js"></script>
+
+        <script src="js/cockpitList.js"></script>
+        <script src="js/cockpitEdit.js"></script>
+        <script src="js/cockpitMain.js"></script>
+        <script src="js/twoFactorModal.js"></script>
+        <script src="js/app.js"></script>
     </head>
-    <body style="background-image: url(/c/images/cockpit.jpg); background-size: cover">
-        <a href="/c/">
+    <body style="background-image: url('images/cockpit.jpg'); background-size: cover">
+        <a href="#">
             <div class="page-header">
                 <h1>Cockpit
                     <small>Welcome on board captain</small>

@@ -1,0 +1,8 @@
+<ul>
+    <li ng-show="showLoader">
+        <cm-loader cm-color="ci-color"></cm-loader>
+    </li>
+    <li ng-repeat="identity in identities | orderBy:'getDisplayName()':false" ng-click="bam(identity)" ng-class="{'is-active': identity.isActive}" ng-show="!showLoader">
+        <cm-identity-tag cm-data="identity"></cm-identity-tag>
+    </li>
+</ul>

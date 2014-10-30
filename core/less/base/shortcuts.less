@@ -1,0 +1,106 @@
+/* layout */
+.w10{width:10% !important}
+.w15{width:15% !important}
+.w20{width:20% !important}
+.w30{width:30% !important}
+.w40{width:40% !important}
+.w50{width:50% !important}
+.w60{width:60% !important}
+.w70{width:70% !important}
+.w72{width:72% !important}
+.w75{width:75% !important}
+.w80{width:80% !important}
+.w90{width:90% !important}
+.w100{width:100% !important}
+.h100{height:100%}
+.full-height{.h100}
+.full-view{
+  min-height: 100%; /* Mindesthöhe für moderne Browser */
+  height: auto !important; /* Für moderne Browser */
+  .h100; /* "Mindesthöhe" für IE <7 */
+}
+
+/* inner space */
+.mt1{margin-top: 0.1rem !important}
+.mt5{margin-top:0.3rem !important}
+.mb5{margin-bottom:0.3rem}
+.mr5{margin-right:0.3rem}
+.ml15{margin-left:1rem}
+.mt15{margin-top:1rem}
+.mr15{margin-right:1rem}
+.mb10{margin-bottom:0.6rem}
+.mb15{margin-bottom:1rem}
+.mb30{margin-bottom:2rem}
+.mr30{margin-right:2rem}
+.mt30{margin-top:2rem}
+
+.pt5{padding-top:0.3rem !important}
+.pt15{padding-top:1rem !important}
+
+
+/* text position */
+.tac{text-align:center}
+.tar{text-align:right}
+.tal{text-align:left}
+.taj{text-align:justify}
+.vap{vertical-align:top}
+.vam{vertical-align:middle}
+.vat{vertical-align:text-bottom}
+.vab{vertical-align:bottom}
+.single-line{
+  text-overflow:ellipsis;
+  overflow:hidden;
+  white-space:nowrap;
+}
+
+/* positionize */
+.pos-rel{position:relative}
+.pos-abs{position:absolute}
+.pos-fxd{position:fixed}
+.pos-tr{.pos-abs;right:0;top:0}
+.pos-tl{.pos-abs;right:0;left:0}
+.pos-br{.pos-abs;bottom:0;right:0}
+.pos-bl{.pos-abs;bottom:0;left:0}
+.pos-full{.pos-abs;bottom:0;left:0;width:100%;height:100%}
+
+/* floating */
+.cm-fl{.pos-rel;float:left}
+.cm-fr{.pos-rel;float:right}
+
+/* font styles */
+.cm-bold{font-weight:bold}
+
+/* border */
+.no-border{border:0 !important}
+.border-complete {border: @cm-border-grey @cm-border-width solid}
+.border-top {border-top: @cm-border-grey @cm-border-width solid}
+.border-bottom {border-bottom: @cm-border-grey @cm-border-width solid}
+
+/* box/btn styles */
+.no-pad{padding:0 !important}
+.no-bg{background:transparent !important}
+.no-mar{margin:0 !important}
+.no-margin{.no-mar}
+.no-margin-bottom {margin-bottom: 0 !important}
+.margin-hr-auto{margin:0 auto}
+.margin-auto{margin:auto}
+.dib{display:inline-block !important;}
+.dbl{display:block}
+.dpn{display:none}
+.dtb{display:table;.w100;}
+.dtbc{display:table-cell}
+.dtbr{display:table-row}
+.cm-disabled{
+  .opacity-25;
+  cursor:default;
+}
+.cm-clear-bg {
+  background-color:transparent !important;
+}
+
+/* Icons */
+.cm-lg-icon{
+  font-size:@cm-mega-font;
+  position:relative;
+  vertical-align:middle;
+}

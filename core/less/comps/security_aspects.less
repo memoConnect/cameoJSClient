@@ -1,0 +1,89 @@
+section cm-security-indicator{
+    display:block;
+    height: 1.6em;
+    > * {
+        display:inline-block;
+        white-space:nowrap;
+        line-height:1em;
+        font-size:1.6em;
+    }
+    .positive{
+        color: @cm-color-positive;
+        float:right;
+    }
+    .negative{
+        color: @cm-color-negative;
+    }
+}
+
+cm-header cm-security-indicator{
+  display:block;
+  line-height: 0.5*@cm-unit;
+  cursor: pointer;
+  background: @cm-black;
+  height: @cm-unit;
+
+  &:hover i, &:focus i{
+    color:@cm-ci-color;
+  }
+
+  .leading-icon {
+    display:inline-block;
+    float:left;
+    line-height: @cm-unit;
+    font-size: 0.7*@cm-unit;
+  }
+
+  .positive{
+    float:none;
+    display: block;
+    font-size: 0.4*@cm-unit;
+    color: @cm-white;
+    line-height: 1;
+    height: 1em;
+    margin-top: 0.1*@cm-unit;
+    text-align:left;
+  }
+
+  .negative{
+    float:none;
+    display: block;
+    font-size: 0.4*@cm-unit;
+    color: @cm-white;
+    line-height: 1;
+    height: 1em;
+    margin-bottom: 0.1*@cm-unit;
+    text-align:left;
+  }
+}
+
+cm-security-aspect{
+  .dbl;
+  .pos-rel;
+  .border-bottom;
+  overflow:auto;
+  min-height: @cm-unit;
+  section.content{
+    width: @cm-app-width;
+  }
+  .item {
+    display: inline-block;
+    font-weight: bold;
+    padding-top: 0.5rem;
+  }
+  cm-icons{
+    padding-top: 0.2rem;
+    font-size: 1.6em;
+    line-height: 1em;
+    margin-right: 0.5em;
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  .toggleOption {
+    .content;
+    display: inline-block;
+    .mt5;
+    .mb15;
+  }
+}

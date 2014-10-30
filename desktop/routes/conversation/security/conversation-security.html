@@ -1,0 +1,22 @@
+<section class="theme-a fixed-layout">
+    <cm-header>
+        <cm-back back-to="conversation/{{conversationId}}"></cm-back>
+        <cm-logo></cm-logo>
+        <section class="icons-list">
+            <cm-security-indicator
+                cm-data         = "conversation"
+                ng-click        = "gotoConversation(conversation.id,'security')"
+            ></cm-security-indicator>
+        </section>
+    </cm-header>
+
+    <cm-column class="fill-bg">
+        <cm-desktop-widget-menu></cm-desktop-widget-menu>
+    </cm-column>
+    <cm-column class="fill-bg">
+        <cm-widget-talks></cm-widget-talks>
+    </cm-column>
+    <cm-column class="fill-bg">
+        <cm-widget-conversation-security cm-data="conversation"></cm-widget-conversation-security>
+    </cm-column>
+</section>

@@ -1,0 +1,96 @@
+@cm-ci-color: #02BED2;
+@cm-base-font-color: #333333;
+@cm-base-font-color-black-bg: #888888;
+@cm-light-grey: #EDEDED;
+@cm-readed-grey: #B5B5B5;
+@cm-lightdark-grey: #999999;
+@cm-grey: #666666;
+@cm-grey-new: #555555;
+@cm-dark-grey: #444444;
+@cm-border-grey: #CCCCCC;
+@cm-border-lightgrey: #eeeeee;
+@cm-white: #FFFFFF;
+@cm-dark-white: #DFDFDF;
+@cm-black: #000000;
+@cm-green: #66CC00;
+@cm-yellow: #FFCC00;
+@cm-red: #CC0000;
+@cm-bg-color: @cm-black;
+@cm-warning-color: #FF6600;
+@cm-input-bg-color: @cm-light-grey;
+@cm-overlay-dark:rgba(0,0,0,0.7);
+@cm-overlay-light:rgba(255,255,255,1);
+@cm-overlay-light-transparent:rgba(255,255,255,0.4);
+@cm-color-positive: @cm-green;
+@cm-color-negative: @cm-red;
+
+@cm-form-alert-red: #F4DFDF;
+
+@cm-notify-success: @cm-green;
+@cm-notify-info: @cm-ci-color;
+@cm-notify-warn: @cm-warning-color;
+@cm-notify-error: @cm-red;
+
+// new color!!!
+@cm-grey-btn: @cm-grey-new;
+@cm-grey-font: @cm-grey-new;
+
+@cm-msg-bg-color-own: #F3F3F3;
+@cm-msg-bg-color-other: @cm-white;
+
+@cm-font-color: @cm-dark-grey;
+@cm-font-color-light: @cm-grey;
+
+.cm-ci-color{color:@cm-ci-color}
+.cm-ci-color-bg{background-color:@cm-ci-color}
+
+.cm-orange{color:@cm-warning-color}
+.cm-grey{color:@cm-grey}
+.cm-green{color: @cm-green}
+
+.cm-btn-grey{background-color:@cm-grey-new;color:@cm-white}
+.cm-btn-black{background-color:@cm-bg-color;color:@cm-white}
+
+.safetylevel {
+  &-safer{
+    &-btn{background-color:@cm-green}
+    &-wrap{color:@cm-green !important}
+  }
+  &-safe{
+    &-btn{background-color:@cm-yellow}
+    &-wrap{color:@cm-yellow !important}
+  }
+  &-unsafe{
+    &-btn{background-color:@cm-red}
+    &-wrap{color:@cm-red !important}
+  }
+}
+
+cm-security-aspect {
+  cm-icons {
+    &.positive{
+      color: @cm-green !important;
+    }
+    &.negative{
+      color: @cm-red !important;
+    }
+  }
+}
+
+.pw-strength-{
+  &very-weak {
+    background-color: #d9534f;
+  }
+  &week {
+    background-color: #f0ad4e;
+  }
+  &reasonable-normal {
+    background-color: #f0df43;
+  }
+  &strong {
+    background-color: #c4f04e;
+  }
+  &very-strong {
+    background-color: #5cb85c;
+  }
+}

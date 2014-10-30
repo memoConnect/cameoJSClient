@@ -23,21 +23,27 @@ this.getPtorInstance = function () {
         self.stopOnError()
     })
 
-    return ptor;
+    return ptor
 }
 
 this.stopOnError = function () {
-    if (config.stopOnError) {
-        var passed = jasmine.getEnv().currentSpec.results().passed();
-        if (!passed) {
-            jasmine.getEnv().specFilter = function (spec) {
-                return false;
-            };
+    if (!config.stopOnError) {
+        return false;
+    }
+
+    var passed = jasmine.getEnv().currentSpec.results().passed();
+    if (!passed) {
+        jasmine.getEnv().specFilter = function (spec) {
+            return false;
         }
     }
 }
 
 this.checkErrorLogs = function(){
+    if(!config.showConsoleError) {
+        return false;
+    }
+
     ptor.manage().logs().get('browser').then(function(browserLog) {
         var errors = [];
 
@@ -115,7 +121,6 @@ this.login = function (username, password, expectedRoute) {
     self.get('/login')
 
     this.scrollToTop()
-    $("[data-qa='login-btn']").click();
 
     var user = $("input[name=user]");
     var pw = $("input[name=pw]");
@@ -137,7 +142,7 @@ this.login = function (username, password, expectedRoute) {
     return this
 }
 
-this.createTestUser = function (testUserId, from) {
+this.createTestUser = function (testUserId, from){
     //console.log('from ->' + from)
 
     this.logout()
@@ -613,18 +618,28 @@ this.createEncryptedConversation = function (subject, message) {
     self.setVal("input-subject", subject)
     self.setVal("input-answer", message)
     self.waitAndClickQa("btn-send-answer")
-    self.waitAndClick("cm-modal.active [data-qa='checkbox-dont-ask-me-again']")
-    self.waitAndClick("cm-modal.active [data-qa='cm-modal-close-btn']")
-    self.waitAndClickQa("btn-send-answer")
+    self.waitAndClickQa("btn-confirm")
+    self.waitForPageLoad("/conversation/*")
+    self.waitForElements("cm-message", 1)
 }
 
-this.readConversation = function (subject, message) {
+this.getConversation = function(subject){
     self.get("/talks")
     self.waitForPageLoad("/talks")
     self.headerSearchInList(subject)
-    self.waitAndClick("cm-conversation-tag")
-    self.waitForElement("cm-message")
-//    ptor.debugger()
+    ptor.wait(function(){
+            return $$('cm-conversation-tag').then(function(tags){
+                return tags.length == 1
+            })
+    })
+    .then(function(){
+        self.waitAndClick("cm-conversation-tag")
+        self.waitForElement("cm-message")
+    })
+}
+
+this.readConversation = function (subject, message) {
+    self.getConversation(subject)
     ptor.wait(function(){
         return $("cm-message").getText().then(function(text){
             return text.search(message) != -1
@@ -639,6 +654,3 @@ this.scrollToTop = function(){
 this.scrollToBottom = function(){
     $("body").sendKeys(protractor.Key.END)
 }
-
-
-

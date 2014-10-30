@@ -1,0 +1,29 @@
+cm-multi-input{
+  display:block;
+  .cm-multi-input-wrap{
+    position: relative;
+    .cm-multiplier{
+      display:none;
+    }
+    &:last-child{
+      .cm-multiplier {
+        .with-cursor;
+        .dbl;
+        position: absolute;
+        right:3em;
+        top:-0.3em;
+        background:#ff0000;
+        i{
+          position:absolute;
+          font-size:3em;
+        }
+        i.cm-checkbox-bg {
+          color:@cm-white;
+        }
+        i.cm-checkbox-add {
+          color:@cm-grey;
+        }
+      }
+    }
+  }
+}

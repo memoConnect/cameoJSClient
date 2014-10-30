@@ -1,0 +1,21 @@
+<section class="theme-a fixed-layout" ng-class="{'equal-cols':startRoute}">
+    <cm-header ng-if="startRoute">
+        <cm-logo></cm-logo>
+    </cm-header>
+    <div class="cm-header-block" ng-if="startRoute"></div>
+
+    <cm-header ng-if="!startRoute">
+        <cm-back back-to="/talks"></cm-back>
+        <cm-logo></cm-logo>
+    </cm-header>
+
+    <cm-column class="fill-bg">
+        <cm-desktop-widget-menu ng-show="!startRoute"></cm-desktop-widget-menu>
+    </cm-column>
+    <cm-column class="fill-bg">
+        <cm-widget-quickstart cm-start-route="startRoute"></cm-widget-quickstart>
+    </cm-column>
+    <cm-column class="fill-bg">
+
+    </cm-column>
+</section>

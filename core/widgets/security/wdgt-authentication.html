@@ -1,0 +1,150 @@
+<h2 class="border-bottom">
+    <i class="fa cm-key"></i>
+    {{
+    [
+    BASE+"PAGE_HEADLINE",
+    BASE+"PAGE_HEADLINE",
+    BASE+"PAGE_HEADLINE",
+    BASE+"PAGE_HEADLINE"
+    ][step]
+
+    | cmTranslate}}
+</h2>
+
+<article class="content">
+    <div class= "authentication-status">
+        <i class= "fa cm-key-request"   ng-class="{'active': step > 0}"></i>
+        <i class= "fa cm-key-response"  ng-class="{'active': step > 1}"></i>
+        <i class= "fa cm-handshake"     ng-class="{'active': step > 2}"></i>
+    </div>
+    <div class="space-for-loader">
+        <cm-loader cm-halt="waiting" type="balls"></cm-loader>
+    </div>
+    <cm-info-bubble class="cm-alert" ng-show="ERROR">
+        <div>
+            <i class="fa cm-attention"></i> {{BASE+"ERROR."+ERROR |cmTranslate}}
+        </div>
+    </cm-info-bubble>
+    
+</article>
+
+<hr/>
+
+<article class="content">
+    <h3>
+        {{
+        [
+        BASE+"HEADLINE",
+        BASE+"HEADLINE",
+        BASE+"HEADLINE",
+        BASE+"HEADLINE"
+        ][step]
+
+        | cmTranslate}}
+    </h3>
+    <cm-info-bubble nose-x = "40%">
+        {{
+        [
+        BASE+"EXPLANATION",
+        BASE+"EXPLANATION",
+        BASE+"EXPLANATION",
+        BASE+"EXPLANATION"
+        ][step]
+
+        | cmTranslate:{'identity': toIdentity.getDisplayName()} }}
+
+        <br/>
+        <br/>
+
+        <strong>
+            {{
+            [
+            BASE+"START.INSTRUCTIONS",
+            BASE+"WAIT.INSTRUCTIONS",
+            BASE+"WAIT.INSTRUCTIONS",
+            BASE+"DONE.INSTRUCTIONS"
+            ] [step]
+
+            | cmTranslate }}
+        </strong>
+    </cm-info-bubble>
+</article>
+
+<hr/>
+
+<article ng-if="step > 0 && step <3" class="content">
+    <div class="transaction-secret" ng-if="transactionSecret" data-qa="transaction-secret-value">
+        {{transactionSecret || '...'}}
+    </div>
+    <ng-loader ng-if = "!transactionSecret"></ng-loader>
+</article>
+
+<article class="content">
+    <strong>
+        {{
+        [
+        BASE+"START.NOTE",
+        BASE+"WAIT.NOTE",
+        BASE+"WAIT.NOTE",
+        BASE+"DONE.NOTE"
+        ][step]
+
+        | cmTranslate:{'identity': toIdentity.getDisplayName()} }}
+    </strong>
+</article>
+
+<br/>
+
+<article ng-if="step != 3 && !!getTimeout()" class="content">
+    <cm-timeout cm-data = "getTimeout()">
+        {{BASE+"TIMEOUT" | cmTranslate: {'timeout' : cmTimeout } }}
+    </cm-timeout>
+</article>
+
+<cm-footer ng-if="step == 0">
+    <button
+            ng-click    = "done()"
+            class       = "cm-btn-grey dib w50"
+            data-qa     = "btn-cancel-authentication"
+            >
+        {{BASE+"START.CANCEL_BUTTON"|cmTranslate}}
+        <i class="fa cm-checkbox-wrong"></i>
+    </button>
+
+    <button
+            ng-click    = "startAuthenticationRequest()"
+            class       = "cm-btn-grey dib w50"
+            data-qa     = "btn-start-authentication"
+            >
+        <span ng-if = "!ERROR">
+            {{BASE+"START.START_BUTTON"|cmTranslate}}
+        </span>
+        <span ng-if = "ERROR">
+            {{BASE+"START.RETRY_BUTTON"|cmTranslate}}
+        </span>
+        <i class="fa cm-handshake"></i>
+    </button>
+
+</cm-footer>
+
+<cm-footer ng-if = "step > 0 && step < 3" cm-rubber-space>
+    <button
+            ng-click    = "cancel()"
+            class       = "cm-btn-grey"
+            data-qa     = "btn-cancel-authentication"
+            >
+        {{BASE+"WAIT.CANCEL_BUTTON"|cmTranslate}}
+        <i class="fa cm-checkbox-wrong"></i>
+    </button>
+</cm-footer>
+
+<cm-footer ng-if = "step == 3" cm-rubber-space>
+    <button
+            ng-click    = "done()"
+            class       = "cm-btn-grey"
+            data-qa     = "btn-start-authentication"
+            >
+        {{BASE+"SUCCESSFUL.DONE_BUTTON"|cmTranslate}}
+        <i class="fa cm-checkbox-wrong"></i>
+    </button>
+</cm-footer>

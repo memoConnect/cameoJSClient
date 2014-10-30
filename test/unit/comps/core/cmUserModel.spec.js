@@ -1,7 +1,11 @@
 'use strict';
 
 var cmUserModel,
-    cmCrypt
+    cmCrypt,
+    $rootScope,
+    $httpBackend
+
+window.Worker = undefined
 
 describe('cmUserModel', function(){
     var cmUserModel,
@@ -15,9 +19,11 @@ describe('cmUserModel', function(){
 
     beforeEach(module('cmCore'))
 
-    beforeEach(inject(function(_cmUserModel_, _cmKey_, _cmIdentityModel_) {
+    beforeEach(inject(function(_cmUserModel_, _cmKey_, _$rootScope_, _$httpBackend_) {
         //@TODO: UserModel initiert sich beim inject und ruft die api auf, promises werden erst mit flush oder $apply aufgelöst, überlegen wir wir das anders organisieren
-        cmUserModel = _cmUserModel_
+        cmUserModel     = _cmUserModel_
+        $rootScope      = _$rootScope_
+        $httpBackend    = _$httpBackend_
 //
         cmKey = _cmKey_
         cmUserModel.setAuth() //@todo ???
@@ -140,21 +146,61 @@ describe('cmUserModel', function(){
             expect(cmUserModel.loadLocalKeys().length).toBe(0)
         })
 
-        it('should provide a function "decryptPassphrase" to decrypt passphrase.', function(){            
-            var decrypted_secret
-            
-            expect(cmUserModel.decryptPassphrase).toBeDefined()
+        describe('passphrase decryption', function(){
 
-            cmUserModel.clearLocalKeys()
-                        
-            cmUserModel.storeKey(bad_key)
-            decrypted_secret = cmUserModel.decryptPassphrase(encrypted_secret)
-            expect(decrypted_secret).toBeFalsy()
 
-            cmUserModel.storeKey(good_key)
+            it('should provide a decrypting function.', function(){
+                expect(cmUserModel.decryptPassphrase).toBeDefined()             
+            })
 
-            decrypted_secret = cmUserModel.decryptPassphrase(encrypted_secret)
-            expect(decrypted_secret).toBe('priv')
+            it('should fail with bad local keys.', function(){            
+                
+                var failed
+
+                runs(function(){
+                    cmUserModel.clearLocalKeys()
+                    cmUserModel.storeKey(bad_key)
+                    cmUserModel.decryptPassphrase(encrypted_secret)
+                    .catch(function(){
+                        failed = true
+                    })
+                    $rootScope.$apply()
+                })
+
+                $httpBackend.expectGET('/account').respond({})
+
+                waitsFor(function(){
+                    return failed
+                }, "decryption to fail.", 1000)
+
+            })                    
+
+            it('should properly decrypt with good local keys.', function(){            
+                
+                var decrypted_secret
+
+                runs(function(){
+                    cmUserModel.storeKey(good_key)
+                    cmUserModel.decryptPassphrase(encrypted_secret)    
+                    .then(function(result){
+                        decrypted_secret = result
+                    })
+                    $rootScope.$apply()
+                })
+
+                $httpBackend.expectGET('/account').respond({})
+
+                waitsFor(function(){
+                    return decrypted_secret !== undefined
+                }, "decryption to finish", 1000)
+                
+                runs(function(){                
+                    expect(decrypted_secret).toBe('priv')
+                })
+            })            
+
         })
+
+
     })
 })

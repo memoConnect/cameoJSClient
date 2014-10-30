@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('cmUser',[
+angular.module('cmAppUser',[
     'cmCore',
     'cmFiles'
 ]);
