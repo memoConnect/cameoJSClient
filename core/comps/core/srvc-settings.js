@@ -20,7 +20,8 @@ angular.module('cmCore').service('cmSettings', [
                 skipKeyInfo: false,
                 dateFormat: 'dd.MM.yyyy',
                 timeFormat: 'HH:mm',
-                pushNotifications: true
+                pushNotifications: true,
+                browserNotifications: false
             };
 
         cmObject.addEventHandlingTo(this);

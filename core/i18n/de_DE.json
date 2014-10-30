@@ -588,7 +588,8 @@
             },
 
             "NOTIFY": {
-                "PUSH_NOTIFICATIONS": "Push Notifications"
+                "PUSH_NOTIFICATIONS": "Push Notifications",
+                "BROWSER_NOTIFICATIONS": "Browser Notifications"
             }
         }
     },
