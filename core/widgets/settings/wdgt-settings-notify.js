@@ -2,8 +2,8 @@
 
 angular.module('cmWidgets')
 .directive('cmWidgetSettingsNotify', [
-    'cmSettings', 'cmPushNotificationAdapter', 'cmDevice',
-    function(cmSettings, cmPushNotificationAdapter, cmDevice){
+    'cmSettings', 'cmPushNotificationAdapter', 'cmBrowserNotifications', 'cmDevice',
+    function(cmSettings, cmPushNotificationAdapter, cmBrowserNotifications, cmDevice){
         return {
             restrict: 'E',
             templateUrl: 'widgets/settings/wdgt-settings-notify.html',

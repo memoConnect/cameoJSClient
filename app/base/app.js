@@ -223,7 +223,7 @@ angular.module('cameoClient', [
     // start entropy collection for random number generator
     sjcl.random.startCollectors();
 })
-.run(['cmError',function(cmError){
+.run(['cmError', 'cmBrowserNotifications', function(cmError, cmBrowserNotifications){
     // only an inject is nessarary
 }])
 /**
