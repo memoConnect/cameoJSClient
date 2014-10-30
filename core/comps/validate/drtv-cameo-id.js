@@ -17,7 +17,7 @@ angular.module('cmValidate').directive('cmCameoId',[
             },
             controller: function($scope){
 
-                $scope.min = 6;
+                $scope.min = 3;
                 $scope.max = 20;
 
                 $scope.parentForm = $scope.$parent[$scope.formName];
