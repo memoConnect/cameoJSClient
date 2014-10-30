@@ -13,6 +13,7 @@ angular.module('cameoClient', [
     'cmUi',
     'cmUser',
     'cmAppUser',
+    'cmAppConversations',
     'cmContacts',
     'cmConversations',
     'cmValidate'

@@ -112,7 +112,7 @@ angular.module('cmCore')
                 worker.removeEventListener('message', onMessage);
                 worker.terminate();
                 number_of_workers --;
-                console.warn('number of workers: '+number_of_workers);
+                //console.warn('number of workers: '+number_of_workers);
                 //delete worker;
                 worker = null;
                 //delete deferred;

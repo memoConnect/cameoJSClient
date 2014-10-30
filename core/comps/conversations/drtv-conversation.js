@@ -83,8 +83,6 @@ angular.module('cmConversations')
                 };
 
                 function checkConversationSetup(){
-                    if($scope.isSending)
-                        return $q.reject('message upload already in progress.')
 
                     $scope.isSending        = true;
                     $scope.isSendingAbort   = false;
@@ -159,6 +157,10 @@ angular.module('cmConversations')
                         cmNotify.warn('CONVERSATION.WARN.MESSAGE_EMPTY', {ttl:5000});
                         return $q.reject('message invalid.')
                     }      
+
+                    if($scope.isSending)
+                        return $q.reject('message upload already in progress.')
+
 
                     var new_message =   $scope.conversation.messages
                                         .create({conversation:$scope.conversation})
@@ -278,11 +280,6 @@ angular.module('cmConversations')
 
                     self.addPendingRecipients();
                     // $scope.showAsymmetricKeyError();
-
-                    // first focus on message
-                    if($scope.conversation.state.is('new') && cmEnv.isNotMobile){
-                        $document[0].querySelector('cm-conversation .answer textarea').focus();
-                    }
 
                     $scope.show_contacts  = false;
 
