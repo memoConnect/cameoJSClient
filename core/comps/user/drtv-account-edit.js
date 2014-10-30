@@ -105,7 +105,7 @@ angular.module('cmUser')
 
                 $scope.saveAccount = function(){
                     if($scope.isPristine)
-                        $scope.goBack();
+                        $scope.goTo('/settings');
 
                     if(loader.isIdle())
                         return false;
