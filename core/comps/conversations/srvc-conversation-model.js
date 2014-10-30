@@ -564,7 +564,7 @@ angular.module('cmConversations')
                 }
 
                 if(this.isEncrypted() && this.messages.some(function(message){return !message.state.is('decrypted')})){
-                    cmLogger.debug('conversation has to decrypt!')
+                    //cmLogger.debug('conversation has to decrypt!')
                     run();
                 }
             };
