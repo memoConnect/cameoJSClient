@@ -104,17 +104,7 @@
             </cm-files>
         </div>
 
-        <div class="message" data-qa="answer-ctn">
-            <textarea
-                id="emoji-textarea"
-                data-qa="input-answer"
-                ng-model="newMessageText"
-                cm-resize-textarea
-                cm-max-rows="8"
-                input
-                ></textarea>
-            <div class="inputter"></div>
-        </div>
+        <cm-answer-textarea cm-data ="newMessageText"></cm-answer-textarea>
 
         <div class="btns-right">
             <cm-emoji-handler></cm-emoji-handler>

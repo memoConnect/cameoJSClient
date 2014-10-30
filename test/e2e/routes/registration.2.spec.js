@@ -30,12 +30,12 @@ describe('Registration: ', function () {
         util.get("/registration");
         util.waitForPageLoad('/registration')
 
-        $("[data-qa='input-cameoId']").sendKeys("moep")
+        $("[data-qa='input-cameoId']").sendKeys("mo")
         ptor.sleep(1001)//adaptive change delay
         util.checkWarning("cameoId-info-user-min-letter-count")
 
         // it should disappear if we type more letters
-        $("[data-qa='input-cameoId']").sendKeys("moep")
+        $("[data-qa='input-cameoId']").sendKeys("ep")
         ptor.sleep(1001)//adaptive change delay
         expect($("[data-qa='cameoId-info-user-min-letter-count']").isDisplayed()).toBe(false)
 

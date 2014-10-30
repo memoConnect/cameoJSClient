@@ -83,8 +83,6 @@ angular.module('cmConversations')
                 };
 
                 function checkConversationSetup(){
-                    if($scope.isSending)
-                        return $q.reject('message upload already in progress.')
 
                     $scope.isSending        = true;
                     $scope.isSendingAbort   = false;
@@ -104,6 +102,7 @@ angular.module('cmConversations')
                                 .then( function(conversation_data){ 
                                     $scope.conversation.importData(conversation_data)
                                     cmConversationFactory.register($scope.conversation);
+                                    //$rootScope.$broadcast('new-conversation:ready')
                                     return $q.when()
                                 })
                             :   $q.when()
@@ -159,6 +158,10 @@ angular.module('cmConversations')
                         return $q.reject('message invalid.')
                     }      
 
+                    if($scope.isSending)
+                        return $q.reject('message upload already in progress.')
+
+
                     var new_message =   $scope.conversation.messages
                                         .create({conversation:$scope.conversation})
                                         .setText($scope.newMessageText)
@@ -205,8 +208,6 @@ angular.module('cmConversations')
                                     
                                     //Todo: This is not the right place to count messages:
                                     $scope.conversation.numberOfMessages ++
-
-                                    $rootScope.$broadcast('new-conversation:ready')
                                 },
                                 function(){
                                     $scope.conversation.messages.deregister(new_message)
@@ -279,11 +280,6 @@ angular.module('cmConversations')
 
                     self.addPendingRecipients();
                     // $scope.showAsymmetricKeyError();
-
-                    // first focus on message
-                    if($scope.conversation.state.is('new') && cmEnv.isNotMobile){
-                        $document[0].querySelector('cm-conversation .answer textarea').focus();
-                    }
 
                     $scope.show_contacts  = false;
 
