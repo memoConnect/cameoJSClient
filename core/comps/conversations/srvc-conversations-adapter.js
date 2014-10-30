@@ -145,6 +145,11 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
             adapter.trigger('passphrases:updated', data);
         });
 
+        cmApi.on('subscriptionId:changed', function(){
+            //cmLogger.debug('cmConversationsAdapter.on subscriptionId:changed');
+            adapter.trigger('subscriptionId:changed');
+        });
+
         return adapter
     }
 ])
