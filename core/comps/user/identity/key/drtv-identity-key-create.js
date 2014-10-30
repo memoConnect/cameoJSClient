@@ -27,7 +27,12 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
 
                 // only one privKey!!!
                 if(cmUserModel.hasPrivateKey()){
-                    $scope.goTo('/settings/identity/key/list', true);
+                    if($rootScope.urlHistory.length > 1 && $rootScope.urlHistory[$rootScope.urlHistory.length - 2] == '/authentication'){
+                        $scope.goTo('/talks', true);
+                    } else {
+                        $scope.goTo('/settings/identity/key/list', true);
+                    }
+
                     return false;
                 }
 
