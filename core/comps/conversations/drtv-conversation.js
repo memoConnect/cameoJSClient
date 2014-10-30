@@ -164,7 +164,7 @@ angular.module('cmConversations')
 
                     var new_message =   $scope.conversation.messages
                                         .create({conversation:$scope.conversation})
-                                        .setText($scope.newMessageText)
+                                        .setText($scope.newMessageText || '...')
 
                     new_message.state.set('sending')
                     new_message.created = new Date().getTime()
@@ -187,11 +187,13 @@ angular.module('cmConversations')
                                                         return  $scope.conversation.isEncrypted()
 
                                                                 ?   new_message
+                                                                    .setText($scope.newMessageText)
                                                                     .addFiles(filesForMessage)
                                                                     .encrypt(passphrase)
                                                                     .save()
 
                                                                 :   new_message
+                                                                    .setText($scope.newMessageText)
                                                                     .addFiles(filesForMessage)
                                                                     .setPublicData(['text','fileIds'])
                                                                     .save()  
