@@ -142,7 +142,6 @@ angular.module('cmConversations')
                     return deferred.promise
                 }
 
-
                 /**
                  * start sending process
                  * with preparing files for upload
@@ -163,12 +162,11 @@ angular.module('cmConversations')
 
 
                     var new_message =   $scope.conversation.messages
-                                        .create({conversation:$scope.conversation})
+                                        .create({conversation:$scope.conversation, id:'#new_message', fromIdentity:cmUserModel.data.identity})
                                         .setText($scope.newMessageText)
 
                     new_message.state.set('sending');
-                    new_message.created = new Date().getTime();
-                    new_message.id      = '#new_message';
+
                     /**
                      * important to set file view to dummy
                      */
@@ -228,7 +226,6 @@ angular.module('cmConversations')
                   
                 };
 
-
                 $rootScope.$$listeners.sendOnReturn = [];
                 $rootScope.$on('sendOnReturn',$scope.send);
 
@@ -266,7 +263,6 @@ angular.module('cmConversations')
 
                     return false
                 };
-                
 
                 this.addPendingRecipients = function(){
                     if($scope.conversation.state.is('new')){
