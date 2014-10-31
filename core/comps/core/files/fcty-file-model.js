@@ -95,6 +95,8 @@ angular.module('cmCore')
             this.importFile = function(){
                 var self = this;
 
+                console.log('importFile')
+
                 return cmFilesAdapter.getFile(this.id).then(
                     function(details){
                         self.encryptedName = details.fileName;

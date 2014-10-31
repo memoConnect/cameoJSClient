@@ -286,6 +286,7 @@ angular.module('cmConversations')
                     });
                     this.trigger('init:files');
                 } else {
+                    console.log('buh');
                     this.state.unset('incomplete')
                 }
 
@@ -392,7 +393,9 @@ angular.module('cmConversations')
             this.incompleteFiles = [];
             if(conversation != undefined && ('on' in conversation)) {
                 conversation.on('message:reInitFiles', function () {
+                    console.log('self.state.is(incomplete)', self.state.is('incomplete'))
                     if (self.state.is('incomplete')) {
+                        console.log('moep2')
                         self.incompleteFiles.forEach(function (file) {
                             file.importFile();
                         });
