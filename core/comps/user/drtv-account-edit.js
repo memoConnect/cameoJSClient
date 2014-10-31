@@ -10,7 +10,6 @@ angular.module('cmUser')
             restrict: 'E',
             templateUrl: 'comps/user/drtv-account-edit.html',
             controller: function ($scope) {
-
                 var loader = new cmLoader($scope);
 
                 $scope.showPasswordChange = false;
@@ -56,7 +55,6 @@ angular.module('cmUser')
                     function checkEmail() {
                         if ($scope.account.emails.length > 0
                             && $scope.account.emails[0].value != undefined
-                            //&& $scope.account.emails[0].value != ''
                             && $scope.account.emails[0].value != cmUserModel.data.account.email) {
                             objectChange.email = $scope.account.emails[0].value;
                         }
@@ -65,7 +63,6 @@ angular.module('cmUser')
                     function checkPhoneNumber() {
                         if ($scope.account.phoneNumbers.length > 0
                             && $scope.account.phoneNumbers[0].value != undefined
-                            //&& $scope.account.phoneNumbers[0].value != ''
                             && $scope.account.phoneNumbers[0].value != cmUserModel.data.account.phoneNumber) {
                             objectChange.phoneNumber = $scope.account.phoneNumbers[0].value;
                         }
@@ -108,7 +105,7 @@ angular.module('cmUser')
 
                 $scope.saveAccount = function(){
                     if($scope.isPristine)
-                        $scope.goBack();
+                        $scope.goTo('/settings');
 
                     if(loader.isIdle())
                         return false;

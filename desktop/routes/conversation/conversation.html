@@ -5,7 +5,7 @@
             <cm-back back-to="/talks" plain-back="true" ng-if="conversationId != 'new'"></cm-back>
         </div>
         <cm-logo></cm-logo>
-        <section class="icon-list">
+        <section class="icons-list">
             <cm-security-indicator
                 cm-data         = "conversation"
                 ng-click        = "gotoConversation(conversation.id,'security')"
@@ -19,7 +19,7 @@
     <cm-column class="fill-bg">
         <cm-widget-talks></cm-widget-talks>
     </cm-column>
-    <cm-column>
+    <cm-column class="without-footer">
         <cm-widget-conversation cm-data="conversation"></cm-widget-conversation>
     </cm-column>
 </section>

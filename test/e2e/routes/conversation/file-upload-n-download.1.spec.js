@@ -1,12 +1,12 @@
-var config = require("../config-e2e-tests.js"),
-    util = require("../../lib/e2e/cmTestUtil.js"),
+var config = require("../../config-e2e-tests.js"),
+    util = require("../../../lib/e2e/cmTestUtil.js"),
     path = require('path'),
     subjectUnsafe = 'subjectUnsafe FileUpload',
     subjectSafe = 'subjectSafe FileUpload',
-    smallImageJPG = path.resolve(__dirname, '../data/file-upload-image-24KB.jpg'),
-    largeImageJPG = path.resolve(__dirname, '../data/file-upload-image-1.4MB.jpg'),
-    smallFileMP3 = path.resolve(__dirname, '../data/file-upload-audio-23KB.mp3'),
-    smallFilePDF = path.resolve(__dirname, '../data/file-upload-file-12KB.pdf'),
+    smallImageJPG = path.resolve(__dirname, '../../data/file-upload-image-24KB.jpg'),
+    largeImageJPG = path.resolve(__dirname, '../../data/file-upload-image-1.4MB.jpg'),
+    smallFileMP3 = path.resolve(__dirname, '../../data/file-upload-audio-23KB.mp3'),
+    smallFilePDF = path.resolve(__dirname, '../../data/file-upload-file-12KB.pdf'),
     files = [
         {html5: smallFileMP3},
         {image: smallImageJPG},
@@ -74,7 +74,7 @@ function chooseFileAndUpload(file, selector, index) {
     it(getFilename(file) + ' fill message and send check preview', function () {
         $("[data-qa='btn-send-answer']").click()
 
-        util.waitForElements('cm-message', index)
+        util.waitForElements('cm-message', index+1)
 
         // preview should be empty
         $$('cm-files-preview ' + selector).then(function (elements) {
@@ -105,6 +105,7 @@ describe('FileUpload create TestUser', function(){
             util.disableEncryption()
 
             util.setVal('input-subject', subjectUnsafe)
+            util.setVal('input-answer', 'test')
         })
 
         it('click on send message for open modal', function () {
@@ -112,7 +113,7 @@ describe('FileUpload create TestUser', function(){
         })
 
         it('check checkbox and close modal', function () {
-            util.waitAndCloseNotify('checkbox-dont-ask-me-again')
+            util.waitAndClickQa('btn-confirm')
         })
 
         // testFile or testImage called for every entry

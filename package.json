@@ -35,7 +35,7 @@
         "load-grunt-tasks": "~0.6.0",
         "time-grunt": "~1.0.0",
         "grunt-merge-json": "0.9.4",
-        "grunt-phonegap": "~0.13.3",
+        "grunt-phonegap": "~0.15.2",
         "grunt-phonegap-build": "~0.0.8",
         "grunt-phonegapsplash": "~0.2.1",
         "grunt-contrib-compress": "~0.12.0",

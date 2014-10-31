@@ -112,7 +112,7 @@ angular.module('cmCore')
                 worker.removeEventListener('message', onMessage);
                 worker.terminate();
                 number_of_workers --;
-                console.warn('number of workers: '+number_of_workers);
+                //console.warn('number of workers: '+number_of_workers);
                 //delete worker;
                 worker = null;
                 //delete deferred;
@@ -122,7 +122,6 @@ angular.module('cmCore')
 
 
         this.new = function(job_name){
-            console.warn('number of workers: '+ (number_of_workers+1));
             return  number_of_workers < 20
                     ?   $q.when(new WebWorkerInstance(job_name))
                     :   $timeout(function(){

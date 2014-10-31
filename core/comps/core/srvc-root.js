@@ -19,7 +19,7 @@ angular.module('cmCore').service('cmRootService', [
          * @param replace {boolean}
          */
         $rootScope.goTo = function(path, replace){
-            cmLogger.debug('cmRootService.goTo ' + path);
+            //cmLogger.debug('cmRootService.goTo ' + path);
 
             path = path[0] == '/' ? path : '/'+path;
             if(cmJob.isActive() !== false){
@@ -27,7 +27,7 @@ angular.module('cmCore').service('cmRootService', [
             } else {
                 $location.path(path);
 
-                //Todo: find foifferent solution:
+                //Todo: find different solution:
                 if(replace){
                     $location.replace();
                 }
@@ -62,7 +62,7 @@ angular.module('cmCore').service('cmRootService', [
         };
 
         $rootScope.gotoConversation = function(conversationId, subpath){
-            $rootScope.goTo('/conversation/'+(conversationId || 'new')+'/'+subpath)
+            $rootScope.goTo('/conversation/'+(conversationId || 'new')+ (subpath ? '/'+subpath : ''))
         };
 
         /**

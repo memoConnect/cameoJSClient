@@ -20,22 +20,33 @@ angular.module('cmConversations').directive('cmConversationTag',[
                 }
             },
             controller: function($scope){
-                /**
-                 * set Avatar Identity
-                 */
-                if($scope.conversation.recipients.length > 2){
-                    $scope.avatarIdentity = $scope.conversation.lastMessage.from;
-                } else {
-                    if($scope.conversation.recipients.length == 1){
-                        $scope.avatarIdentity = cmUserModel.data.identity;
-                    } else {
-                        var arr_recipients = $scope.conversation.recipients.filter(function(recipient){
-                            return recipient.id != cmUserModel.data.identity.id;
-                        });
 
-                        $scope.avatarIdentity = arr_recipients[0];
+                function update(){
+                    /**
+                     * set Avatar Identity
+                     */
+                    if($scope.conversation.recipients.length > 2){
+                        $scope.avatarIdentity = $scope.conversation.lastMessage.from;
+                    } else {
+                        if($scope.conversation.recipients.length == 1){
+                            $scope.avatarIdentity = cmUserModel.data.identity;
+                        } else {
+                            var arr_recipients = $scope.conversation.recipients.filter(function(recipient){
+                                return recipient.id != cmUserModel.data.identity.id;
+                            });
+
+                            $scope.avatarIdentity = arr_recipients[0];
+                        }
                     }
+
+                    $scope.timeOfLastUpdate = $scope.conversation.timeOfLastUpdate;
                 }
+
+                $scope.conversation.on('update:finished message:new',function(){
+                    update();
+                });
+
+                update();
             }
         }
     }

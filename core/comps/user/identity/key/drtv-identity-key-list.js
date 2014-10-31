@@ -43,8 +43,8 @@ angular.module('cmUser').directive('cmIdentityKeyList', [
                     $scope.isHandshakePossible = ($scope.privateKeys.length > 0);
 
                     // no key exists
-                    $scope.showNoLocalKeysOnThisDevice =
-                        $scope.trustedKeys.length == 0;
+                    //$scope.showNoLocalKeysOnThisDevice = $scope.trustedKeys.length == 0;
+                    $scope.showNoLocalKeysOnThisDevice = $scope.canCreate;
 
                     // publickeys doesnt match trustedkeys
                     $scope.showUntrustedPublickeysExists =

@@ -403,9 +403,44 @@ describe('base config', function(){
                 $httpBackend.flush()
             })
 
+            it('should change the subscription id, when backend returns a "KO" at a getEvent call and return a new id', function(){
+                cmApi.subscriptionId = 'my_id'
+
+                $httpBackend
+                    .expect('GET', 'my_rest_api/events/my_id')
+                    .respond(232,{
+                        res : "KO",
+                        data : {
+                            "subscriptionId": "my_id_new"
+                        }
+                    })
+
+                cmApi.getEvents(true)
+
+                $httpBackend.flush()
+
+                expect(cmApi.subscriptionId).toBe('my_id_new')
+            })
+
+            it('should not change the subscription id, when backend returns a "KO" at a getEvent call and return no id', function(){
+                cmApi.subscriptionId = 'my_id'
+
+                $httpBackend
+                    .expect('GET', 'my_rest_api/events/my_id')
+                    .respond(232,{
+                        res : "KO",
+                        data : {
+                            "subscription": "my_id_new"
+                        }
+                    })
+
+                cmApi.getEvents(true)
+
+                $httpBackend.flush()
+
+                expect(cmApi.subscriptionId).toBe('my_id')
+            })
         })
-
-
     })
 })
 

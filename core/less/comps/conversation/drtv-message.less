@@ -18,8 +18,7 @@ cm-message {
       .no-border;
       .tal;
       min-height: @cm-unit/2;
-      padding: 0.5em;
-      min-width: @cm-unit+2;
+      padding:0 0.3rem;
       &.left {
         background-color: @cm-msg-bg-color-other;
         max-width: @cm-message-left-max-width;
@@ -28,21 +27,6 @@ cm-message {
         background-color: @cm-msg-bg-color-own;
         margin-right: 0.7rem;
         max-width: @cm-message-right-max-width;
-      }
-    }
-    cm-message-assets {
-      .dbl;
-      .mt15;
-    }
-    .text{
-      span{
-        margin: 0.5rem 0;
-      }
-      &.own-message{
-        span {
-          .no-margin;
-          margin-bottom: 0.5rem;
-        }
       }
     }
     span {
@@ -68,22 +52,22 @@ cm-message {
         }
       }
     }
-    div.author {
-      .pos-abs;
-      top: -0.3rem;
-      left: 0;
-      margin-left: 0.6rem;
+    .author {
+      .mt5;
+      height:0.6rem;
+      white-space:nowrap;
       span {
-        .dib;
-        font-size: 0.6em;
+        font-size: 0.6rem;
         color: @cm-grey;
       }
     }
-    div.assets {
-      .pos-abs;
-      bottom:0rem;
-      right:0.2rem;
-      white-space: nowrap;
+    .text{
+      .mt5;
+    }
+    cm-message-assets {
+      .dbl;
+      .tar;
+      white-space:nowrap;
       > *{
         .vam;
       }
@@ -93,18 +77,17 @@ cm-message {
         }
       }
       span {
-        .dib;
         font-size: @cm-small-font;
-        &.date {
-          .tar;
-          overflow: hidden;
+        &.date, &.envelope {
+          .dib;
         }
-        &.security {
-          .tar;
-        }
-        &.envelope {
-          .tar;
-        }
+      }
+
+      cm-loader {
+        display:inline-block !important;
+        font-size: 0.5em;
+        padding: 0.125*@cm-unit;
+        min-width: 2*@cm-unit;
       }
     }
   }
@@ -116,17 +99,8 @@ cm-message {
         color:@cm-light-grey;
       }
       div.message{
-        padding-bottom:1.5em;
         &.left, &.right{
           background-color:@cm-overlay-dark;
-        }
-        &.left{
-          padding-top:1.5rem;
-          .text{
-            span {
-              margin-top: 0;
-            }
-          }
         }
       }
       span.nose{
@@ -138,4 +112,5 @@ cm-message {
       }
     }
   }
+  
 }

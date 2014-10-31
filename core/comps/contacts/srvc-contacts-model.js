@@ -94,32 +94,8 @@ angular.module('cmContacts').service('cmContactsModel',[
          * @private
          */
 
-        function _add(contact){
-            return self.contacts.create(contact)
-            /*
-            var check = false,
-                i = 0;
-
-            if(typeof contact === 'object' && cmUtil.objLen(contact) > 0){
-                while(i < self.contacts.length){
-
-                    if(self.contacts[i].identity.id == contact.identity.id){
-                        check = true;
-                        break;
-                    }
-                    i++;
-                }
-
-                if(check !== true){
-                    self.contacts.push({
-                        id: contact.id,
-                        contactType: contact.contactType,
-                        groups: contact.groups,
-                        identity: cmIdentityFactory.create(contact.identity, true)
-                    });
-                }
-            }
-            */
+        function _add(contact, forceImport){
+            return self.contacts.create(contact, forceImport)
         }
 
         this._clearContacts = function(){
@@ -133,7 +109,7 @@ angular.module('cmContacts').service('cmContactsModel',[
             return cmContactsAdapter.searchCameoIdentity(cameoId, true);
         };
 
-        this.getAll = function(limit, offset){
+        this.getAll = function(limit, offset, forceImport){
 //            cmLogger.debug('cmContactsModel:getAll');
             var i = 0;
 
@@ -145,7 +121,7 @@ angular.module('cmContacts').service('cmContactsModel',[
                     cmContactsAdapter.getAll().then(
                         function(data){
                             while(i < data.length){
-                                _add(data[i]);
+                                _add(data[i], forceImport);
                                 i++;
                             }
                         }
@@ -221,13 +197,6 @@ angular.module('cmContacts').service('cmContactsModel',[
         this.removeFriendRequest = function(request){
             this.requests.deregister(request)
 
-            /*
-//            cmLogger.debug('cmContactsModel:removeFriendRequest');
-
-            var index = this.requests.indexOf(request);
-            this.requests.splice(index,1);
-            */
-           
             return this;
         };
 
@@ -250,7 +219,12 @@ angular.module('cmContacts').service('cmContactsModel',[
                     })
         };
 
+        /**
+         * @deprecated
+         */
         this.editContact = function(id, data){
+            cmLogger.debug('cmContactsModel.editContact is deprecated! - Use now cmContactModel.save()');
+
             var defer = $q.defer();
             cmContactsAdapter
                 .editContact(id, data)
@@ -338,6 +312,11 @@ angular.module('cmContacts').service('cmContactsModel',[
                     contact.identity.importData(data);
                 }
             }
+        });
+
+        cmContactsAdapter.on('subscriptionId:changed', function(){
+            self.getAll(true);
+            self.getFriendRequests();
         });
 
         cmUserModel.on('update:finished', function(){

@@ -24,7 +24,7 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
             },
 
             getConversations: function(limit, offset){
-                cmLogger.debug('getConversations');
+                //cmLogger.debug('getConversations');
                 var queryString = cmUtil.handleLimitOffset(limit,offset);
 
                 if(queryString == ''){
@@ -39,7 +39,7 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
             },
 
             getConversation: function(id, limit, offset){
-                cmLogger.debug('getConversation');
+                //cmLogger.debug('getConversation');
                 var queryString = cmUtil.handleLimitOffset(limit,offset);
 
                 if(queryString == ''){
@@ -143,6 +143,11 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
         cmApi.on('rekeying:finished', function(event, data){
             cmLogger.debug('cmConversationsAdapter.on rekeying:finished');
             adapter.trigger('passphrases:updated', data);
+        });
+
+        cmApi.on('subscriptionId:changed', function(){
+            //cmLogger.debug('cmConversationsAdapter.on subscriptionId:changed');
+            adapter.trigger('subscriptionId:changed');
         });
 
         return adapter

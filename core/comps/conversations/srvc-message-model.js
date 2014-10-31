@@ -55,7 +55,7 @@ angular.module('cmConversations')
             this.files = [];
             this.fileIds = [];
 
-            this.state = new cmStateManagement(['new','decrypted','loading', 'incomplete']);
+            this.state = new cmStateManagement(['new','decrypted','loading', 'incomplete', 'sending']);
 
             /**
              * Initialize Message Object
@@ -239,6 +239,9 @@ angular.module('cmConversations')
                     plain: this.publicData
                 })
                 .then(function (message_data) {
+                    //Since this message is our own message,
+                    //we already know the original data, thus it actually is decrypted and wont need further decryption.
+                    self.state.set('decrypted') 
                     self.importData(message_data);
                     self.trigger('message:saved');
                 });

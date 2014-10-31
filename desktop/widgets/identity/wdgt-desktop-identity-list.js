@@ -17,7 +17,9 @@ angular.module('cmDesktopWidgets').directive('cmDesktopWidgetIdentityList', [
             scope: true,
             templateUrl: 'widgets/identity/wdgt-desktop-identity-list.html',
             controller: function ($scope) {
+                $scope.showLoader = false;
                 $scope.identities = cmUserModel.data.identities;
+
 
                 $scope.switchToIdentity = function(identity){
                     cmUserModel.switchToIdentity(identity);

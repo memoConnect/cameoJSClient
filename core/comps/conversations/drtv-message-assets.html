@@ -1,4 +1,5 @@
 <div class="assets clearfix {{conversation.lockStatus.class}}-wrap">
+    <!-- <cm-loader ng-show = "message.state.is('sending')" cm-color = "ci-color" type = "balls"></cm-loader> -->
     <span class="date"><cm-time-converter  cm-timestamp="message.created" cm-date-format="settings.get('timeFormat')"></cm-time-converter></span>
-    <span class="envelope"><i class="fa cm-envelope-open"></i></span>
+    <span class="envelope"><i class="fa" ng-class = "{'cm-send' : message.state.is('sending'), 'cm-envelope-closed' : !message.state.is('sending')}"></i></span>
 </div>

@@ -1,5 +1,5 @@
-var config = require("../config-e2e-tests.js")
-var util = require("../../lib/e2e/cmTestUtil.js")
+var config = require("../../config-e2e-tests.js")
+var util = require("../../../lib/e2e/cmTestUtil.js")
 
 describe('Route conversation:', function () {
     var ptor = util.getPtorInstance()
@@ -43,8 +43,7 @@ describe('Route conversation:', function () {
 
     it('display warning when there is no recipient', function(){
         $("[data-qa='btn-send-answer']").click()
-        util.waitForElement("[data-qa='checkbox-dont-ask-me-again']")
-        util.waitAndCloseNotify()
+        util.waitAndClickQa('btn-cancel')
     })
 
     it('add recipient', function () {

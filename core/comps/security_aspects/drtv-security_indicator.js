@@ -34,40 +34,30 @@ angular.module('cmSecurityAspects').directive('cmSecurityIndicator',[
                       
                 }
 
+                function refresh_callback(){
+                    $scope.conversation.securityAspects.refresh();
+                }
+
                 if($scope.conversation){
                     $scope.conversation.securityAspects.on('refresh', refresh);
-
-
-                    $scope.conversation.on('update:finished encryption:enabled encryption:disabled captcha:enabled captcha:disabled aspects:added', function () {
-                        $scope.conversation.securityAspects.refresh();
-                    });
-
-                    $scope.conversation.recipients.on('register update:finished deregister', function(){
-                        $scope.conversation.securityAspects.refresh();
-                    });
-
-                    cmUserModel.on('key:stored key:removed', function(){
-                        $scope.conversation.securityAspects.refresh();
-                    });
+                    $scope.conversation.on('update:finished encryption:enabled encryption:disabled captcha:enabled captcha:disabled aspects:added', refresh_callback);
+                    $scope.conversation.recipients.on('register update:finished deregister', refresh_callback);
+                    cmUserModel.on('key:stored key:removed', refresh_callback);
 
                     $scope.conversation.securityAspects.refresh();
+
+
+                    $scope.$on('$destroy', function(){
+                        $scope.conversation.securityAspects.off('refresh', refresh);
+                        $scope.conversation.off('update:finished encryption:enabled encryption:disabled captcha:enabled captcha:disabled aspects:added', refresh_callback);
+                        $scope.conversation.recipients.off('register update:finished deregister', refresh_callback);
+                        cmUserModel.off('key:stored key:removed', refresh_callback);
+                    })
+
                 } else {
                     cmLogger.debug('cmSecurityIndicator - Conversation not found!')
                 }
 
-
-
-                //$scope.$watchCollection($attrs.cmData, function(security_aspects){
-                //    if(security_aspects){
-                //        $scope.positive = security_aspects.getPositiveAspects().reduce(function(sum, aspect){ return sum+aspect.value } ,0)
-                //        $scope.negative = security_aspects.getNegativeAspects().reduce(function(sum, aspect){ return sum-aspect.value } ,0)
-                //        $scope.missing_aspects = false
-                //    } else {
-                //        $scope.missing_aspects = true
-                //    }
-                //
-                //    $scope.leading_icon = ($scope.positive >= $scope.negative)?'cm-lock':'cm-unlock';
-                //});
             }
         }
     }

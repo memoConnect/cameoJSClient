@@ -2,12 +2,12 @@
     <cm-header>
         <cm-back back-to="conversation/{{conversation.id}}"></cm-back>
         <cm-logo></cm-logo>
-        <section class="icon-list">
-            <cm-header-list-search ng-model="search" cm-options="{scrollTo:true}"></cm-header-list-search>
+        <section class="icons-list">
             <cm-security-indicator
                 cm-data         = "conversation"
                 ng-click        = "gotoConversation(conversation.id,'security')"
             ></cm-security-indicator>
+            <cm-header-list-search ng-model="search" cm-options="{scrollTo:true}"></cm-header-list-search>
         </section>
     </cm-header>
 

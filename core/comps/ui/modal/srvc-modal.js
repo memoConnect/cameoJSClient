@@ -103,10 +103,10 @@ angular.module('cmUi')
 
             config  =   {
                             text:   config.text,
-                            cancel: config.cancel,
-                            okay:   config.okay,
-                            title:  config.title || 'DRTV.CONFIRM.HEADER',
-                            html:   config.html || '',
+                            cancel: config.cancel   || 'MODAL.LABEL.CANCEL',
+                            okay:   config.okay     || 'MODAL.LABEL.OK',
+                            title:  config.title    || 'DRTV.CONFIRM.HEADER',
+                            html:   config.html     || '',
                             data:   config.data
                         }
 

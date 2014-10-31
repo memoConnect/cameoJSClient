@@ -95,17 +95,22 @@ angular.module('cmConversations').directive('cmMessage', [
                 };
                 
                 $scope.messageProper = function(){
-                    var isInComplete   =    $scope.message.state.is('incomplete'),
-                        textAvailable  =    typeof $scope.message.text == 'string'
+                    var isInComplete    =   $scope.message.state.is('incomplete'),
+
+                        textAvailable   =       typeof $scope.message.text == 'string'
                                             &&  $scope.message.text.length > 0,
-                        encrypted      =    $scope.message.isEncrypted(),
-                        filesAvailable =    typeof $scope.message.fileIds == 'object'
-                                            &&  $scope.message.fileIds.length > 0;
+
+                        encrypted       =       $scope.message.isEncrypted(),
+
+                        filesAvailable  =       typeof $scope.message.fileIds == 'object'
+                                            &&  $scope.message.fileIds.length > 0,
+
+                        isSending       =   $scope.message.state.is('sending')
 
                     if(isInComplete)
                         return false;
 
-                    return filesAvailable || textAvailable || encrypted;
+                    return filesAvailable || textAvailable || encrypted || isSending;
                 }
             }
         }

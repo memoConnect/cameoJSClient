@@ -618,20 +618,28 @@ this.createEncryptedConversation = function (subject, message) {
     self.setVal("input-subject", subject)
     self.setVal("input-answer", message)
     self.waitAndClickQa("btn-send-answer")
-    self.waitAndClick("cm-modal.active [data-qa='checkbox-dont-ask-me-again']")
-    self.waitAndClick("cm-modal.active [data-qa='cm-modal-close-btn']")
-    self.waitAndClickQa("btn-send-answer")
+    self.waitAndClickQa("btn-confirm")
     self.waitForPageLoad("/conversation/*")
     self.waitForElements("cm-message", 1)
 }
 
-this.readConversation = function (subject, message) {
+this.getConversation = function(subject){
     self.get("/talks")
     self.waitForPageLoad("/talks")
     self.headerSearchInList(subject)
-    self.waitAndClick("cm-conversation-tag")
-    self.waitForElement("cm-message")
-//    ptor.debugger()
+    ptor.wait(function(){
+            return $$('cm-conversation-tag').then(function(tags){
+                return tags.length == 1
+            })
+    })
+    .then(function(){
+        self.waitAndClick("cm-conversation-tag")
+        self.waitForElement("cm-message")
+    })
+}
+
+this.readConversation = function (subject, message) {
+    self.getConversation(subject)
     ptor.wait(function(){
         return $("cm-message").getText().then(function(text){
             return text.search(message) != -1

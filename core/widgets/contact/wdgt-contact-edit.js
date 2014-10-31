@@ -9,22 +9,14 @@
  * @restrict AE
  */
 
-//Todo: Widget should not access $roueParams
-
 angular.module('cmWidgets')
     .directive('cmWidgetContactEdit', [
-
-        '$rootScope',
-        '$routeParams',
-        '$timeout',
-        'cmIdentityFactory',
-        'cmUtil',
-        'cmNotify',
-        'cmUserModel',
-        'cmLogger',
-
-        function( $rootScope,$routeParams, $timeout,
-                  cmIdentityFactory, cmUtil, cmNotify, cmUserModel, cmLogger){
+        'cmIdentityFactory', 'cmUtil', 'cmNotify', 'cmUserModel',
+        'cmContactsModel', 'cmLogger', 'cmLoader',
+        '$rootScope', '$q',
+        function(cmIdentityFactory, cmUtil, cmNotify, cmUserModel,
+                 cmContactsModel, cmLogger, cmLoader,
+                 $rootScope, $q){
 
             return {
                 restrict:       'AE',
@@ -32,13 +24,14 @@ angular.module('cmWidgets')
                     contact: '=cmData'
                 },
                 templateUrl:    'widgets/contact/wdgt-contact-edit.html',
-
                 controller: function($scope, $element, $attrs){
-                    $scope.cmUtil = cmUtil;
+                    var loader = new cmLoader($scope);
+                    //loader.start();
 
                     $scope.hasLocalKey = !!cmUserModel.loadLocalKeys().length;
 
                     $scope.formData = {
+                        displayName: '',
                         phoneNumbers: [{value:''}],
                         emails: [{value:''}]
                     };
@@ -48,15 +41,21 @@ angular.module('cmWidgets')
                     $scope.isTrusted    = undefined;
                     $scope.hasKeys      = undefined;
 
+                    $scope.isPristine = true;
+
+                    $rootScope.$on('pristine:false', function(){
+                        $scope.isPristine = false;
+                    })
 
                     function refresh(){
                         //////////////////////
-                        // TODO: mock workarround json in array
+                        // set form
+                        $scope.formData.displayName = $scope.contact.identity.displayName;
                         $scope.formData.phoneNumbers = [
-                            $scope.contact.identity.phoneNumber || {value:''}
+                            {value: $scope.contact.identity.phoneNumber.value || ''}
                         ];
                         $scope.formData.emails = [
-                            $scope.contact.identity.email || {value:''}
+                            {value: $scope.contact.identity.email.value || ''}
                         ];
                         //////////////////////
 
@@ -106,65 +105,86 @@ angular.module('cmWidgets')
                         }
                     };
 
+                    $scope.validateForm = function() {
+                        var deferred = $q.defer(),
+                            objectChange = {};
+
+                        if($scope.formData.displayName != '' && $scope.formData.displayName != $scope.contact.identity.displayName){
+                            objectChange.displayName = $scope.formData.displayName;
+                        }
+
+                        function checkEmail() {
+                            if ($scope.formData.emails.length > 0
+                                && $scope.formData.emails[0].value != undefined
+                                && $scope.formData.emails[0].value != $scope.contact.identity.email.value
+                                && !($scope.contact.identity.email.value == undefined && $scope.formData.emails[0].value == '')) { // special case to avoid send empty email -> compares empty value with undefined identity value
+                                objectChange.email = $scope.formData.emails[0].value;
+                                if($scope.formData.emails[0].value != '') {
+                                    objectChange.preferredMessageType = 'mail';
+                                }
+                            }
+                        }
+
+                        function checkPhoneNumber() {
+                            if ($scope.formData.phoneNumbers.length > 0
+                                && $scope.formData.phoneNumbers[0].value != undefined
+                                && $scope.formData.phoneNumbers[0].value != $scope.contact.identity.phoneNumber.value
+                                && !($scope.contact.identity.phoneNumber.value == undefined && $scope.formData.phoneNumbers[0].value == '')) { // special case to avoid send empty phonenumber -> compares empty value with undefined identity value
+                                    objectChange.phoneNumber = $scope.formData.phoneNumbers[0].value;
+                                    if($scope.formData.phoneNumbers[0].value != ''){
+                                        objectChange.preferredMessageType = 'sms';
+                                    }
+                            }
+                        }
+
+                        checkEmail();
+                        checkPhoneNumber();
+
+                        if($scope.cmForm.$valid !== false){
+                            deferred.resolve(objectChange);
+                        } else {
+                            deferred.reject();
+                        }
+
+                        return deferred.promise;
+                    };
+
                     $scope.saveUser = function(){
-                        // declaration
-                        var emptyIdentity = {
-                                displayName: null,
-                                email: null,
-                                phoneNumber: null,
-                                preferredMessageType: 'default',
-                                // TODO: not implemented in BE
-                                name: null,
-                                surName: null,
-                                phoneProvider: null,
-                                groups: []
-                            },
-                        // merge given identity with default
-                            identity = angular.extend({}, emptyIdentity, $scope.identity.exportData());
-
-                        // validation
-                        //////////////////////
-                        // TODO: mock workarround for multiinput from array to single string
-                        if($scope.formData.phoneNumbers.length > 0 && $scope.formData.phoneNumbers[0].value != ''){
-                            identity.phoneNumber = $scope.formData.phoneNumbers[0].value;
-                            identity.preferredMessageType = 'sms';
-                        } else {
-                            identity.phoneNumber = null;
-                        }
-
-                        if($scope.formData.emails.length > 0 && $scope.formData.emails[0].value != ''){
-                            identity.email = $scope.formData.emails[0].value;
-                            identity.preferredMessageType = 'mail';
-                        } else {
-                            identity.email = null;
-                        }
-                        //////////////////////
-                        if($scope.cmForm.$invalid){
+                        if($scope.isPristine){
+                            $rootScope.goBack();
                             return false;
                         }
 
 
-                        // everything is fine let's add the contact
-                        cmContactsModel
-                        .editContact($routeParams.id, identity)
-                        .then(
-                            function () {
-                                cmNotify.info('CONTACT.INFO.SUCCESS.EDIT',{ttl:5000,displayType:'modal'});
+                        if(loader.isIdle())
+                            return false;
+
+                        loader.start();
+
+                        $scope.validateForm().then(
+                            function(objectChange) {
+                                $scope.contact.save(objectChange).then(
+                                    function () {
+                                        cmNotify.info('CONTACT.INFO.SUCCESS.EDIT', {ttl: 5000, displayType: 'modal'});
+                                        $scope.isPristine = true;
+                                        loader.stop();
+                                    },
+                                    function () {
+                                        cmNotify.error('CONTACT.INFO.ERROR.EDIT', {ttl: 5000});
+                                        loader.stop();
+                                    }
+                                );
                             },
-                            function () {
-                                cmNotify.error('CONTACT.INFO.ERROR.EDIT',{ttl:5000});
+                            function(){
+                                loader.stop();
                             }
-                        );
+                        )
                     };
 
-                    $scope.startTrustHandshake = function(){
-                        cmHooks.openKeyRequest($scope.identity);
-                    };
-
-                    $scope.contact.identity.on('update:finished', refresh)
+                    $scope.contact.identity.on('update:finished', refresh);
 
                     $scope.$on('$destroy', function(){
-                        $scope.contact.identity.off('update:finished', refresh)
+                        $scope.contact.identity.off('update:finished', refresh);
                     })
 
                 }

@@ -246,7 +246,7 @@ var cameo_config = {
     menu: {
         'conversation/new': {i18n:'MENU.NEW_TALK', icon:'cm-new-talk'},
         'contact/create': {i18n:'MENU.NEW_CONTACT', icon:'cm-new-contact'},
-        'settings/identity/key/list': {i18n:'MENU.OWN_KEYS', icon:'cm-key'},
+        //'settings/identity/key/list': {i18n:'MENU.OWN_KEYS', icon:'cm-key'},
         'contact/request/list': {'data-qa':'btn-menu-contact-requests', i18n:'MENU.REQUESTS', icon:'cm-new-contact-query', css:'cm-menu-notify qa-btn-request-notify', drtv:'cm-friend-request-counter'},
         'settings': {i18n:'MENU.SETTINGS', icon:'cm-settings'},
         'start/quickstart': {i18n:'START.QUICKSTART.HEADLINE', icon:'cm-info'}
@@ -259,7 +259,7 @@ var cameo_config = {
 
     routeSettings: {
         'account': {i18n:'SETTINGS.ACCOUNT', icon:'cm-person', 'data-qa':'btn-settingsAccount'},
-        'identity/edit': {i18n:'SETTINGS.IDENTITY', icon:'cm-avatar'},
+        'identity/list': {i18n:'SETTINGS.IDENTITY', icon:'cm-avatar'},
         'identity/key/list': {i18n:'MENU.OWN_KEYS', icon:'cm-key'},
         'notify': {i18n:'SETTINGS.NOTIFY', icon:'cm-bell'},
         'contacts': {i18n:'SETTINGS.CONTACTS', icon:'cm-address-book', disabled:true},
