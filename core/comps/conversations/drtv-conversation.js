@@ -124,18 +124,37 @@ angular.module('cmConversations')
                                 filesForMessage = files;
                             deferred.resolve()
                         },
-                        error: function(maxFileSize, header) {
+                        error: function(errorCode, error, header) {
                             $scope.isSending = false;
                             $scope.isSendingAbort = true;
-                            cmNotify.warn('CONVERSATION.WARN.FILESIZE_REACHED', {
-                                ttl: 0,
-                                i18n: {
-                                    maxFileSize: maxFileSize,
-                                    fileSize: header['X-File-Size'],
-                                    fileName: header['X-File-Name']
+
+                            if(!errorCode){
+                                deferred.reject('problem with prepare file upload');
+                            } else {
+                                deferred.reject('problem with prepare file upload');
+
+                                var i18n = {};
+                                if(errorCode == 'FILE.UPLOAD.QUOTA.EXCEEDED'){
+                                    i18n = {
+                                        totalQuota: error.totalQuota,
+                                        quotaLeft: error.quotaLeft,
+                                        fileSize: error.fileSize
+                                    }
+                                } else if(errorCode == 'FILE.UPLOAD.FILESIZE.EXCEEDED'){
+                                    i18n = {
+                                        fileSize: header['X-File-Size'],
+                                        fileName: header['X-File-Name'],
+                                        maxFileSize: error.maxFileSize
+                                    }
                                 }
-                            });
-                            deferred.reject('file too large.')
+
+                                cmNotify.warn(errorCode, {
+                                    ttl: 0,
+                                    i18n: i18n
+                                });
+
+                                deferred.reject(errorCode);
+                            }
                         }
                     });   
 
@@ -307,28 +326,9 @@ angular.module('cmConversations')
                     }
 
                     function callback_recipients_missing(){
-                        // switcher for purl and conversation, @Todo: vereinheitlichen
-                        // var settingsLinker = {type:'',typeId:''};
-                        // if('purlId' in $routeParams){
-                        //     settingsLinker.type = 'purl';
-                        //     settingsLinker.typeId = $routeParams.purlId;
-                        // } else {
-                        //     settingsLinker.type = 'conversation';
-                        //     settingsLinker.typeId = $routeParams.conversationId;
-                        // }
-                        // cmNotify.warn('CONVERSATION.WARN.RECIPIENTS_MISSING',
-                        //     {
-                        //         ttl:0, 
-                        //         i18n: settingsLinker,
-                        //         template: '<small>{{\'CONVERSATION.WARN.RECIPIENTS_MISSING_OKAY\'|cmTranslate}}</small>'+
-                        //                   '<i ng-click="conversation.solitary = !conversation.solitary" ng-class="{\'cm-checkbox\':!conversation.solitary, \'cm-checkbox-right\':conversation.solitary}" class="fa cm-ci-color ml15" data-qa="checkbox-dont-ask-me-again"></i>',
-                        //         templateScope: $scope
-                        //     }
-                        // );
-                        
                         cmModal.confirm({
                             title:  'CONVERSATION.WARN.RECIPIENTS_MISSING',
-                            text:   'CONVERSATION.CONFIRM.RECIPIENTS_MISSING',
+                            text:   'CONVERSATION.CONFIRM.RECIPIENTS_MISSING'
                         })
                         .then(function(){
                             $scope.conversation.solitary = true
