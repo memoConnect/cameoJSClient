@@ -166,9 +166,15 @@ angular.module('cmConversations')
                                         .create({conversation:$scope.conversation})
                                         .setText($scope.newMessageText)
 
-                    new_message.state.set('sending')
-                    new_message.created = new Date().getTime()
-                    new_message.id      = '#new_message'
+                    new_message.state.set('sending');
+                    new_message.created = new Date().getTime();
+                    new_message.id      = '#new_message';
+                    /**
+                     * important to set file view to dummy
+                     */
+                    if($scope.files.length > 0){
+                        new_message.state.set('waitForFiles')
+                    }
 
                     return  checkConversationSetup()
                             .then(function(){
@@ -215,6 +221,7 @@ angular.module('cmConversations')
                             )
                             .finally(function(){
                                 new_message.state.unset('sending')
+                                new_message.state.unset('waitForFiles')
                                 $scope.isSending = false;
                             })                                    
 

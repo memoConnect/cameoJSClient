@@ -55,7 +55,7 @@ angular.module('cmConversations')
             this.files = [];
             this.fileIds = [];
 
-            this.state = new cmStateManagement(['new','decrypted','loading', 'incomplete', 'sending']);
+            this.state = new cmStateManagement(['new','decrypted','loading', 'incomplete', 'sending', 'waitForFiles']);
 
             /**
              * Initialize Message Object
