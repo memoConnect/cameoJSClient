@@ -220,8 +220,8 @@ angular.module('cmConversations')
                                 }
                             )
                             .finally(function(){
-                                new_message.state.unset('sending')
-                                new_message.state.unset('waitForFiles')
+                                new_message.state.unset('sending');
+                                new_message.state.unset('waitForFiles');
                                 $scope.isSending = false;
                             })                                    
 
@@ -312,25 +312,6 @@ angular.module('cmConversations')
                     }
 
                     function callback_recipients_missing(){
-                        // switcher for purl and conversation, @Todo: vereinheitlichen
-                        // var settingsLinker = {type:'',typeId:''};
-                        // if('purlId' in $routeParams){
-                        //     settingsLinker.type = 'purl';
-                        //     settingsLinker.typeId = $routeParams.purlId;
-                        // } else {
-                        //     settingsLinker.type = 'conversation';
-                        //     settingsLinker.typeId = $routeParams.conversationId;
-                        // }
-                        // cmNotify.warn('CONVERSATION.WARN.RECIPIENTS_MISSING',
-                        //     {
-                        //         ttl:0, 
-                        //         i18n: settingsLinker,
-                        //         template: '<small>{{\'CONVERSATION.WARN.RECIPIENTS_MISSING_OKAY\'|cmTranslate}}</small>'+
-                        //                   '<i ng-click="conversation.solitary = !conversation.solitary" ng-class="{\'cm-checkbox\':!conversation.solitary, \'cm-checkbox-right\':conversation.solitary}" class="fa cm-ci-color ml15" data-qa="checkbox-dont-ask-me-again"></i>',
-                        //         templateScope: $scope
-                        //     }
-                        // );
-                        
                         cmModal.confirm({
                             title:  'CONVERSATION.WARN.RECIPIENTS_MISSING',
                             text:   'CONVERSATION.CONFIRM.RECIPIENTS_MISSING',
