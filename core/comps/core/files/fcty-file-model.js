@@ -95,8 +95,6 @@ angular.module('cmCore')
             this.importFile = function(){
                 var self = this;
 
-                console.log('importFile')
-
                 return cmFilesAdapter.getFile(this.id).then(
                     function(details){
                         self.encryptedName = details.fileName;
@@ -111,8 +109,10 @@ angular.module('cmCore')
 
                         // is file complete of chunks?
                         if(details.isCompleted) {
+                            self.state.unset('incomplete');
                             self.trigger('importFile:finish',self);
                         } else {
+                            self.state.set('incomplete');
                             self.trigger('importFile:incomplete',self);
                         }
                     },
@@ -390,8 +390,6 @@ angular.module('cmCore')
             };
 
             this.promptSaveAs = function(){
-                //console.log('promptSaveAs')
-
                 try {
                     var isFileSaverSupported = !!new Blob;
                 } catch (e) {
@@ -411,11 +409,9 @@ angular.module('cmCore')
                 } else {
                     // phonegap download
                     if(cmDeviceDownload.isSupported()) {
-                        //console.log('cmDeviceDownload called')
                         cmDeviceDownload.saveAs(this);
                     // browser download
                     } else if(this.blob){
-                        //console.log('saveAs called')
                         saveAs(this.blob, this.name != false ? this.name : 'download');
                     } else {
                         cmLogger.debug('Unable to prompt saveAs; cmFile.blob is missing, try cmFile.importByFile().');

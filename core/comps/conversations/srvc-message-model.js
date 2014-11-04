@@ -178,8 +178,7 @@ angular.module('cmConversations')
 
             this.decrypt = function (passphrase) {
                 //cmLogger.debug('cmMessageModel.decrypt');
-
-                if(this.state.is('decrypted') !== true){
+                if(this.state.is('decrypted') !== true || this.state.is('incomplete')){
 
                     if(typeof this.encryptedData == 'string' && this.encryptedData.length > 0){
                         /**
@@ -194,8 +193,16 @@ angular.module('cmConversations')
 
                         if(decrypted_data){
                             this.importData(decrypted_data);
-                            this.state.set('decrypted');
-                            this.trigger('decrypt:success');
+
+                            if(!this.hasFiles()){
+                                self.state.set('decrypted');
+                                self.trigger('decrypt:success');
+                            } else {
+                                this.allFilesReady().then(function(){
+                                    self.state.set('decrypted');
+                                    self.trigger('decrypt:success');
+                                });
+                            }
                         }
 
                         return !!decrypted_data
@@ -252,6 +259,32 @@ angular.module('cmConversations')
                 return (cmUserModel.data.id == this.from.id);
             };
 
+            this.hasFiles = function(){
+                return this.files.length > 0;
+            };
+
+            this.allFilesReady = function(){
+                var defered = $q.defer(),
+                    filesReady = [];
+
+                angular.forEach(this.files, function(file){
+                    var filePromise = $q.defer();
+                    if(file.state.is('onlyFileId')) {
+                        filesReady.push(filePromise.promise);
+                        file.one('importFile:finish', function(event, file){
+                            filePromise.resolve();
+                        });
+                    }
+                });
+
+                $q.all(filesReady)
+                .then(function(){
+                    defered.resolve();
+                });
+
+                return defered.promise;
+            };
+
             /**
              * Handle Upload from new Files
              * @returns {cmMessageModel.Message}
@@ -286,8 +319,7 @@ angular.module('cmConversations')
                     });
                     this.trigger('init:files');
                 } else {
-                    console.log('buh');
-                    this.state.unset('incomplete')
+                    this.state.unset('incomplete');
                 }
 
                 return this;
@@ -353,19 +385,20 @@ angular.module('cmConversations')
             };
 
             this.decryptFiles = function(passphrase){
-                angular.forEach(this.files, function(file){
+                // todo: more files
+                angular.forEach(this.files, function(file, index){
                     if(file.state.is('onlyFileId')) {
                         file
                             .setPassphrase(passphrase)
                             .downloadStart();
 
-                        file.on('importFile:incomplete',function(event, file){
+                        file.one('importFile:incomplete',function(event, file){
                             self.state.set('incomplete');
                             // add to queue
                             self.incompleteFiles.push(file);
                         });
 
-                        file.on('importFile:finish', function(event, file){
+                        file.one('importFile:finish', function(event, file){
                             self.state.unset('incomplete');
                             // clear from queue
                             var index = self.incompleteFiles.indexOf(file);
@@ -393,9 +426,7 @@ angular.module('cmConversations')
             this.incompleteFiles = [];
             if(conversation != undefined && ('on' in conversation)) {
                 conversation.on('message:reInitFiles', function () {
-                    console.log('self.state.is(incomplete)', self.state.is('incomplete'))
                     if (self.state.is('incomplete')) {
-                        console.log('moep2')
                         self.incompleteFiles.forEach(function (file) {
                             file.importFile();
                         });
