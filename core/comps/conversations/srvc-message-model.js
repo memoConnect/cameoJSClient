@@ -385,7 +385,7 @@ angular.module('cmConversations')
             };
 
             this.decryptFiles = function(passphrase){
-                // todo: more files
+
                 angular.forEach(this.files, function(file, index){
                     if(file.state.is('onlyFileId')) {
                         file
@@ -399,12 +399,15 @@ angular.module('cmConversations')
                         });
 
                         file.one('importFile:finish', function(event, file){
-                            self.state.unset('incomplete');
                             // clear from queue
                             var index = self.incompleteFiles.indexOf(file);
                             self.incompleteFiles.splice(index,1);
                         });
                     }
+                });
+
+                this.allFilesReady().then(function(){
+                    self.state.unset('incomplete');
                 });
 
                 return this;
