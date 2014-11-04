@@ -53,8 +53,10 @@ angular.module('cmCore')
 
     '$q',
     '$timeout',
+    'cmDevice',
+    'cmLogger',
 
-    function cmWebWorker($q, $timeout, cmFactory){
+    function cmWebWorker($q, $timeout, cmDevice, cmLogger){
 
         this.available = !!window.Worker;
 
@@ -67,6 +69,8 @@ angular.module('cmCore')
                 self        = this;
 
             number_of_workers ++;
+
+            cmLogger.debug("New webworker \"" + job_name +"\". Total: " + number_of_workers)
 
             var onMessage   =  function(event){
                                         if(event.data.msg == 'finished'){
@@ -85,7 +89,7 @@ angular.module('cmCore')
 
             this.start = function(data, timeout){
                 if(timeout)
-                    $timeout(function(){ 
+                    $timeout(function(){
                         deferred.reject('timeout');
                         self.cancel()
                     }, timeout);
@@ -99,7 +103,7 @@ angular.module('cmCore')
                 return  deferred.promise;
             };
 
-            this.cancel = function(){                
+            this.cancel = function(){
                 worker.postMessage({cmd: 'cancel'})
                 return  deferred.promise.catch(function(data){
                             return  data.msg == 'canceled'
@@ -112,7 +116,7 @@ angular.module('cmCore')
                 worker.removeEventListener('message', onMessage);
                 worker.terminate();
                 number_of_workers --;
-                //console.warn('number of workers: '+number_of_workers);
+                cmLogger.debug('Webworker terminated. Total: ' +number_of_workers);
                 //delete worker;
                 worker = null;
                 //delete deferred;
@@ -122,13 +126,16 @@ angular.module('cmCore')
 
 
         this.new = function(job_name){
-            return  number_of_workers < 20
+
+            var maxWebWorkers = cmDevice.isApp() ? 5 : 20;
+            cmLogger.debug("isApp: " + cmDevice.isApp())
+
+            return  number_of_workers < maxWebWorkers
                     ?   $q.when(new WebWorkerInstance(job_name))
                     :   $timeout(function(){
                             return self.new(job_name)
                         }, 1000, false)
-        }    
-
+        }
     }
 
 ]);
