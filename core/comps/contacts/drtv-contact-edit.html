@@ -79,16 +79,17 @@
 
     <article class="content">
         <label>{{'CONTACT.PLACEHOLDER.DISPLAYNAME'|cmTranslate}}</label>
-        <div class="cm-input-ctn" ng-class="{'cm-input-disabled':disabled}">
+        <div class="cm-input-ctn" ng-class="{'cm-input-disabled':disabled,'with-inside-icon':!disabled}">
             <input
                     tabindex="1" data-qa="input-displayname"
                     type="text" name="displayName" ng-model="identity.displayName"
                     ng-disabled="disabled" required />
+            <i class="fa cm-write"></i>
         </div>
 
         <cm-info-bubble class="cm-alert" ng-show="cmForm.displayName.$dirty && cmForm.displayName.$invalid">
             <div ng-show="cmForm.displayName.$error.required">
-                <i class="fa cm-info"></i> {{'CONTACT.INFO.EMPTY.DISPLAYNAME'|cmTranslate}}
+                <i class="fa cm-info" ng-show="!disabled"></i> {{'CONTACT.INFO.EMPTY.DISPLAYNAME'|cmTranslate}}
             </div>
         </cm-info-bubble>
     </article>
@@ -98,16 +99,17 @@
     <label class="content">{{'CONTACT.PLACEHOLDER.PHONENUMBER'|cmTranslate}}</label>
     <cm-multi-input cm-collection="formData.phoneNumbers" cm-disabled="disabled" class="content">
         <ng-form name="formPhone">
-            <div class="cm-input-ctn with-chooser" ng-class="{'cm-input-disabled':disabled}">
+            <div class="cm-input-ctn with-chooser" ng-class="{'cm-input-disabled':disabled,'with-inside-icon':!disabled}">
                 <input
                         tabindex="2" data-qa="input-phonenumber"
                         type="text" name="phoneNumber" ng-model="item.value"
                         ng-disabled="disabled" cm-validate-phone cm-adaptive-change />
+                <i class="fa cm-write"></i>
             </div>
             <!--<div cm-type-chooser cm-choose-value-to="item" cm-disabled="disabled" ng-class="{'cm-input-disabled':disabled}"></div>-->
             <cm-info-bubble class="cm-alert" ng-show="formPhone.phoneNumber.$dirty && formPhone.phoneNumber.$invalid">
                 <div ng-show="formPhone.phoneNumber.$invalid">
-                    <i class="fa cm-info"></i> {{'CONTACT.INFO.INVALID.PHONENUMBER'|cmTranslate}}
+                    <i class="fa cm-info" ng-show="!disabled"></i> {{'CONTACT.INFO.INVALID.PHONENUMBER'|cmTranslate}}
                 </div>
             </cm-info-bubble>
         </ng-form>
@@ -118,11 +120,12 @@
     <label class="content">{{'CONTACT.PLACEHOLDER.EMAIL'|cmTranslate}}</label>
     <cm-multi-input cm-collection="formData.emails" cm-disabled="disabled" class="content">
         <ng-form name="formEmail">
-            <div class="cm-input-ctn with-chooser" ng-class="{'cm-input-disabled':disabled}">
+            <div class="cm-input-ctn with-chooser" ng-class="{'cm-input-disabled':disabled,'with-inside-icon':!disabled}">
                 <input
                         tabindex="3" data-qa="input-email"
                         name="email" ng-model="item.value"
                         ng-disabled="disabled" cm-validate-email />
+                <i class="fa cm-write" ng-show="!disabled"></i>
             </div>
             <!--<div cm-type-chooser cm-choose-value-to="item" ng-class="{'cm-input-disabled':disabled}" cm-disabled="disabled"></div>-->
             <cm-info-bubble class="cm-alert" ng-show="formEmail.email.$dirty && formEmail.email.$invalid">
