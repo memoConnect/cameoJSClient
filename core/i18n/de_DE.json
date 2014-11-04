@@ -65,7 +65,7 @@
         "TITLE": {
             "HEAD_LOGIN": "Login Informationen",
             "HEAD_IDENTITY": "Benutzer Informationen",
-            "MANDATORY_INFO": "Mit * gekennzeichnete Felder, müssen ausgefüllt werden."
+            "MANDATORY_INFO": "Nur mit * gekennzeichnete Felder, müssen ausgefüllt werden."
         },
         "WARN": {
             "REGISTRATION_FAILED": "Bei der Registrierung ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut."
