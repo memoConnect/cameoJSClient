@@ -42,12 +42,21 @@
         /* reactive */
         .cm-re-header {background:#000;height:4rem;width:32rem;position:relative;color:#fff}
         .cm-re-header .icon-list{position:absolute;right:0;top:0}
-        .cm-re-header .icon-list i{width:4rem;height:4rem;text-align:center;line-height:4rem;font-size:2rem}
+        .cm-re-header .icon-list i{width:4rem;height:4rem;text-align:center;line-height:4rem;font-size:3rem}
+        .cm-re-body {width:32rem;}
+        .cm-re-body cm-any-tag{display:block;}
+        .cm-re-body cm-any-tag > *, .cm-re-body li .icon-list > *{vertical-align:top;}
+        .cm-re-body cm-avatar{display:inline-block;width:4rem;height:4rem;background:#000}
+        .cm-re-body span{display:inline-block;line-height:4rem;}
         .cm-re-footer {background:#555;height:4rem;width:32rem;color:#fff}
         .cm-re-footer button{height:4rem;display:block;width:100%}
 
         [cm-reactive]{cursor:pointer}
+        [cm-reactive='header']{background:#000}
         [cm-reactive='header']:hover{background:#555555}
+        [cm-reactive='list']{background:#FFF}
+        [cm-reactive='list']:hover{background:#EDEDED}
+        [cm-reactive='footer']{background:#555555}
         [cm-reactive='footer']:hover{background:#8D8D8D}
     </style>
 </head>
@@ -135,13 +144,25 @@
 
     <div class="cm-re-header">
         <div class="icon-list">
-            <i class="fa cm-new-contact" cm-reactive="header"></i>
-            <i class="fa cm-search" cm-reactive="header"></i>
-            <i class="fa cm-menu" cm-reactive="header"></i>
+            <i class="fa cm-new-contact" cm-reactive="header"></i><i class="fa cm-search" cm-reactive="header"></i><i class="fa cm-menu" cm-reactive="header"></i>
         </div>
     </div>
 
     <h2>list items</h2>
+
+    <div class="cm-re-body theme-a">
+        <ul>
+            <li>
+                <cm-any-tag cm-reactive="list">
+                   <cm-avatar></cm-avatar>
+                   <span>Text</span>
+                </cm-any-tag>
+                <div class="icon-list">
+                    <i class="fa cm-new-talk" cm-reactive="list"></i>
+                </div>
+            </li>
+        </ul>
+    </div>
 
     <h2>footer</h2>
 
@@ -186,7 +207,7 @@
 
     angular
     .module('icons',['emoji'])
-            
+
     .controller('ctrl',function ($scope, emoji){
         $scope.active = location.hash != '' ? location.hash.replace('#','') : 'cameofont';
         $scope.baselineIcon = 'cm-checkbox-wrong';
@@ -303,11 +324,14 @@
                 restrict: 'A',
                 controller: function($scope, $element){
                     console.log($element)
+
                     $element.on('click',function(){
 
                     })
 
-
+                    $element.on('touchstart',function(){
+                        console.log(event)
+                    })
                 }
             }
         }
