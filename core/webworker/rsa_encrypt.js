@@ -9,9 +9,9 @@ self.addEventListener('message', function(event) {
     switch (data.cmd) {
         case 'start':
             try {
-                crypt.setKey(data.pubKey)
+                crypt.setKey(data.params.pubKey)
 
-                var result = crypt.encrypt(data.secret)
+                var result = crypt.encrypt(data.params.secret)
 
                 self.postMessage({
                     msg:    result ? 'finished' : 'failed',

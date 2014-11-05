@@ -181,17 +181,20 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
 
 
                 return  fromKey.verify(hashed_data, request.signature)
-                        .then(function(result){
-                            result
-                            ?   self.trigger('verification:successful', {
-                                    identity:           fromIdentity,
-                                    key:                fromKey,
-                                    transactionSecret:  secret,
+                        .then(
+                            function(result){
+                                self.trigger('verification:successful', {
+                                        identity:           fromIdentity,
+                                        key:                fromKey,
+                                        transactionSecret:  secret,
                                 })
-                            :   self.trigger('verification:failed')
-
-                            return $q.when(result)
-                        })
+                                return $q.when(result)
+                            },
+                            function(reason){
+                                self.trigger('verification:failed')
+                                return $q.reject(reason)
+                            }
+                        )
             },
 
             //Todo: maybe find a more suitabble place for this function:
@@ -341,8 +344,7 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
                                             scope.error.wrongSecret = true
                                             return $q.reject('verification failed.')
                                         })
-                                        .then(function(){
-
+                                        .then(function(res){
                                             // Modal is no longer needed:
                                             cmModal.close('incoming-authentication-request')
 
@@ -408,6 +410,7 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
                                                 */
                                             }
 
+                                            console.log('before send')
                                             //Send a request in return:
                                             self.send(
                                                 data.fromIdentity.id,    //Sender of the initial requests

@@ -4,61 +4,68 @@ angular.module('cmCore')
 .service('cmWebworkerFactory',[
 
     '$q',
-    '$timeout',
+    'cmFactory',
     'cmObject',
 
-    function cmWebWorkerFactory($q, $timeout, cmFactory){
+    function cmWebWorkerFactory($q, cmFactory, cmObject){
+
+        var limit = 5
 
         function cmWebWorker(data){
-            var self        =   this
+            var instance    =   this,
+                worker      =   undefined,
+                deferred    =   undefined,
+                onMessage   =   undefined
 
-            this.worker     =   new Worker('webworker/'+data.jobName+'.js')
-            this.params     =   data.params
-            this.deferred   =   undefined
+            instance.params     =   data.params
+            instance.jobName    =   data.jobName
 
-            cmObject.addEventHandlingTo(this)
-
-            var onMessage   =   function(event){
-                                    if(event.data.msg == 'finished'){
-                                        self.deferred.resolve(event.data.result);
-                                        self.terminate()
-                                    }
-
-                                    if(['canceled', 'failed', 'error'].indexOf(event.data.msg) != -1){
-                                        self.deferred.reject(event.data);
-                                        self.terminate()
-                                    }
-
-                                    if(event.data.msg == 'notify')
-                                        self.deferred.notify(event.data.notify)
-                                }
+            cmObject.addEventHandlingTo(instance)
 
             this.run = function(timeout){
 
                 //if the worker is already running, return its promise
-                if(self.deferred)
-                    return this.deferred.promise
+                if(deferred)
+                    return deferred.promise
 
-                self.deferred = $q.defer()
+                worker      = new Worker('webworker/'+data.jobName+'.js')
+                deferred    = $q.defer()
 
                 if(timeout)
                     $timeout(function(){ 
-                        self.deferred.reject('timeout');
-                        self.cancel()
+                        deferred.reject('timeout');
+                        instance.cancel()
                     }, timeout);
 
 
-                data.cmd = 'start'
+                onMessage   =   function(event){
+                                    if(event.data.msg == 'finished'){
+                                        deferred.resolve(event.data.result);
+                                        instance.terminate()
+                                    }
+
+                                    if(['canceled', 'failed', 'error'].indexOf(event.data.msg) != -1){
+                                        deferred.reject(event.data);
+                                        instance.terminate()
+                                    }
+
+                                    if(event.data.msg == 'notify')
+                                        deferred.notify(event.data)
+                                }
 
                 worker.addEventListener('message', onMessage)
-                worker.postMessage(this.params)
+                worker.postMessage({
+                    cmd:        'start',
+                    params:     data.params
+                })
 
-                return  self.deferred.promise
+
+                return deferred.promise
             };
 
             this.cancel = function(){                
                 worker.postMessage({cmd: 'cancel'})
-                return  self.deferred.promise
+                return  deferred.promise
                         .catch(function(reason){
                             return  data.msg == 'canceled'
                                     ?   $q.when('canceled')
@@ -69,10 +76,11 @@ angular.module('cmCore')
             this.terminate = function(){
                 worker.removeEventListener('message', onMessage)
                 worker.terminate()
-                this.worker      = null
-                this.deferred    = null
-                this.params      = null
-                this.trigger('done')
+                worker      = null
+                deferred    = null
+                instance.params     = null
+                instance.jobName    = null
+                instance.trigger('done')
             }
         }
         
@@ -85,18 +93,43 @@ angular.module('cmCore')
                     )
 
 
-        this.new = function(data){
-            return  !!window.Worker
-                    ?   $q.when(
-                            self.create(data)
-                            .on('done', function(event){
-                                console.dir(event)
-                                self.trigger('worker:done', this)
-                            })
-                        )
-                    :   $q.reject('Browser does not support webWorkers.')
-        }    
+        self.get = function(data){
+            if(!window.Worker)
+                return $q.reject('Browser does not support webWorkers.')
 
+
+            var worker      =   self.create(data),
+                promise     =   worker
+                                .when('available')
+                                .then(function(){
+                                    return worker
+                                })
+
+
+            worker.on('done', function(event){
+                self.trigger('worker:done', event.target)
+            })
+
+            self.advance()
+
+            return  promise
+
+        }
+
+        self.advance = function(){
+            for(var i = 0; i < limit; i++){
+                self[i] && self[i].trigger('available')
+            }
+
+            return this
+        }
+
+        self.on('worker:done', function(worker){
+            self.deregister(worker)
+            self.advance()
+        })
+
+        return self
     }
 
 ]);

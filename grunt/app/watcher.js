@@ -29,6 +29,7 @@ module.exports = function(grunt, options){
                 'app-other':{
                     files: [
                         'config/*.json',
+                        'core/webworker/*',
                         'resource/templates/**/*',
                         'app/**/*.html'
                     ],
@@ -54,6 +55,7 @@ module.exports = function(grunt, options){
                         'app/routes/**/*',
                         'app/comps/**/*',
                         'app/widgets/**/*'
+
                     ],
                     tasks: [
                         'app:packages'

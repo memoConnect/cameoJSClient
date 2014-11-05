@@ -28,6 +28,7 @@ module.exports = function(grunt, options){
                 'desktop-other':{
                     files: [
                         'config/*.json',
+                        'core/webworker/*',
                         'resource/templates/**/*',
                         'desktop/**/*.html'
                     ],

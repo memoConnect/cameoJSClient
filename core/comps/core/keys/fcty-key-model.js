@@ -37,13 +37,13 @@ angular.module('cmCore')
             }
 
 
-            function addTrustingKey = function(key){
-                this.trustCache.push(key.id)
+            function addTrustingKey(key){
+                trustCache.push(key.id)
                 return this
             }
 
-            function clearTrustCahe = function(){
-                this.trustCache = []
+            function clearTrustCahe(){
+                trustCache = []
                 return this
             }
 
@@ -140,8 +140,8 @@ angular.module('cmCore')
 
             this.sign = function(data){
 
-                return  cmWebworkerFactory.new({
-                            jobName:    'rsa_sign'
+                return  cmWebworkerFactory.get({
+                            jobName:    'rsa_sign',
                             params:     {
                                             privKey:    self.getPrivateKey(),
                                             data:       data
@@ -163,7 +163,7 @@ angular.module('cmCore')
             };
 
             this.verify = function(data, signature){ 
-                return  cmWebworker.new({
+                return  cmWebworkerFactory.get({
                             jobName :   'rsa_verify',
                             params  :   {
                                             pubKey:     self.getPublicKey(),
@@ -186,11 +186,12 @@ angular.module('cmCore')
                         )
                         .catch(function(reason){
                             cmLogger.warn('keyModel.verify() failed.')
+                            return $q.reject(reason)
                         })
             }
 
             this.encrypt = function(secret){
-                return  cmWebworker.new({
+                return  cmWebworkerFactory.get({
                             jobName :   'rsa_encrypt',
                             params  :   {
                                             pubKey:     self.getPublicKey(),
@@ -212,11 +213,12 @@ angular.module('cmCore')
                         )
                         .catch(function(reason){
                             cmLogger.warn('keyModel.encrypt() failed.')
+                            return $q.reject(reason)
                         })
             };
 
             this.decrypt = function(encrypted_secret){
-                return  cmWebworker.new({
+                return  cmWebworkerFactory.get({
                             jobName :   'rsa_decrypt',
                             params  :   {
                                             privKey:            self.getPrivateKey(),
@@ -238,14 +240,15 @@ angular.module('cmCore')
                         )
                         .catch(function(reason){
                             cmLogger.warn('keyModel.decrypt() failed.')
+                            return $q.reject(reason)
                         })
 
             };
 
-            this.verifyKey = function(key, data){
-
-                return  (this.getPublicKey() == key.getPublicKey() 
-                        ?   $q.when(key)   //always verifies itself
+            this.verifyKey = function(key, data, force){
+                return      (this.getPublicKey() == key.getPublicKey() 
+                        //||  (!force && trustCache.indexOf(key.id) != -1)
+                        ?   console.log('cached!') && $q.when(key)   //always verifies itself
                         :   key.signatures.reduce(function(previous_try, signature){
                                 return  previous_try
                                         .catch(function(){
@@ -254,6 +257,10 @@ angular.module('cmCore')
                                                     :   $q.reject('keyIds not matching.')
                                         })
                             }, $q.reject('no signatures.'))
+                            .then(function(result){
+                                addTrustingKey(key)
+                                return result
+                            })
                         )
             };
 

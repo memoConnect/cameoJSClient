@@ -2,7 +2,7 @@
 
 angular.module('cmCore')
 .service('cmCrypt',[
-    'cmLogger', 'cmKey', 'cmWebworker', 'cmCryptoHelper',
+    'cmLogger', 'cmKey', 'cmWebworkerFactory', 'cmCryptoHelper', 
     '$q', '$interval', '$rootScope',
     function (cmLogger, cmKey, cmWebworker, cmCryptoHelper,
               $q, $interval, $rootScope) {
@@ -233,56 +233,61 @@ angular.module('cmCore')
                             });
                         });
                 // start keygen over webworker
-                } else if(cmWebworker.available){
-                    cmWebworker.new('rsa_keygen')
-                    .then(function(worker){
-                        keygenWorker = worker
-                        return  keygenWorker
-                                .start( {keySize: keySize} )
-                     })   
+                } else { 
+
+                    cmWebworker.get({
+                        jobName :   'rsa_keygen',
+                        params  :   { keySize: keySize }
+
+                    })
                     .then(
-                        function(result){
+                        function(worker){
+                            keygenWorker = worker
 
-                            var key = (new cmKey()).setKey(result.privKey);
+                            worker.run()
+                            .then(
+                                function(result){
+                                    var key = (new cmKey()).setKey(result.privKey);
 
-                            async.promise.resolve({
-                                timeElapsed: result.timeElapsed,
-                                key: key
-                            });
+                                    async.promise.resolve({
+                                        timeElapsed:    result.timeElapsed,
+                                        key:            key
+                                    })
+                                },
+                                function(reason){
+                                    console.log('Webworker "keygen" failed', reason)
+                                    async.promise.reject(reason);
+                                }
+                            )
                         },
-                        function(reason){
-                            console.log('webwroker failed', reason)
-                            async.promise.reject(reason);
+                        function(){
+                            var self = this,
+                            time = -((new Date()).getTime()),
+                            counts = 0;
+
+                            // init vars
+                            async.crypt = new JSEncrypt({default_key_size: keySize})
+
+                            // start keypair generation
+                            async.crypt.getKey(function () {
+
+                                // only resolve if keypair exists
+                                if (async.crypt.getPrivateKey() == undefined)
+                                    return false;
+
+                                self.cancelGeneration(true);
+                                if (async.promise != null) {
+                                    async.promise.resolve({
+                                        timeElapsed:    (time + ((new Date()).getTime())),
+                                        counts:         counts,
+                                        key:            async.crypt
+                                    });
+                                    // !!! important for unit test, don't remove !!!
+                                    $rootScope.$apply();
+                                }
+                            })
                         }
                     )
-
-                // otherwise use browser instance
-                } else {
-                    var self = this,
-                        time = -((new Date()).getTime()),
-                        counts = 0;
-
-                    // init vars
-                    async.crypt = new JSEncrypt({default_key_size: keySize}),
-
-                        // start keypair generation
-                        async.crypt.getKey(function () {
-
-                            // only resolve if keypair exists
-                            if (async.crypt.getPrivateKey() == undefined)
-                                return false;
-
-                            self.cancelGeneration(true);
-                            if (async.promise != null) {
-                                async.promise.resolve({
-                                    timeElapsed: (time + ((new Date()).getTime())),
-                                    counts: counts,
-                                    key: async.crypt
-                                });
-                                // !!! important for unit test, don't remove !!!
-                                $rootScope.$apply();
-                            }
-                        });
                 }
 
                 return async.promise.promise;
