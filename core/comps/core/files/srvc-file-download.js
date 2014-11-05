@@ -47,7 +47,7 @@ angular.module('cmCore')
             if(typeof file == 'object' && file.state.is('onlyFileId')){
                 file.downloadChunks();
 
-                file.on('file:readyForDownload file:crashed file:cached', function(){
+                file.on('file:readyForDownload file:crashed file:cached importFile:incomplete', function(){
                     self.run(self.stack.shift());
                 });
             } else {

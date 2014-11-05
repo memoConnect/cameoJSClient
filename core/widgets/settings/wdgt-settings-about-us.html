@@ -11,9 +11,9 @@
 
 <hr>
 
-<h4 ng-bind-html="'DRTV.IMPRINT.HEADLINE'| cmParse" class="content"></h4>
+<h4 ng-bind-html="'DRTV.IMPRINT.HEADLINE'| cmParse" cm-html-compile class="content"></h4>
 
-<article ng-bind-html="'DRTV.IMPRINT.CONTENT'| cmParse" class="content"></article>
+<article ng-bind-html="'DRTV.IMPRINT.CONTENT'| cmParse" cm-html-compile class="content"></article>
 
 <hr>
 
@@ -24,6 +24,6 @@
 
 <ul class="no-border">
     <li ng-repeat="lib in ('SETTINGS.PAGES.ABOUT_US.3RD_PARTY.LIBRARIES'|cmTranslate).split(';')">
-        <span class="item text" ng-bind-html="lib|cmParse"></span>
+        <span class="item text" ng-bind-html="lib|cmParse" cm-html-compile></span>
     </li>
 </ul>
