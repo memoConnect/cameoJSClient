@@ -20,8 +20,6 @@ angular.module('cmCore')
             instance.params     =   data.params
             instance.jobName    =   data.jobName
 
-            console.dir(data)
-
             cmObject.addEventHandlingTo(instance)
 
             this.run = function(timeout){
