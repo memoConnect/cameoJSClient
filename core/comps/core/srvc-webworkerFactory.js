@@ -6,8 +6,9 @@ angular.module('cmCore')
     '$q',
     'cmFactory',
     'cmObject',
+    'cmLogger',
 
-    function cmWebWorkerFactory($q, cmFactory, cmObject){
+    function cmWebWorkerFactory($q, cmFactory, cmObject, cmLogger){
 
         var limit = 5
 
@@ -27,6 +28,8 @@ angular.module('cmCore')
                 //if the worker is already running, return its promise
                 if(deferred)
                     return deferred.promise
+
+                instance.trigger("run", instance)
 
                 worker      = new Worker('webworker/'+data.jobName+'.js')
                 deferred    = $q.defer()
@@ -77,6 +80,7 @@ angular.module('cmCore')
                 worker.removeEventListener('message', onMessage)
                 worker.terminate()
                 instance.trigger('done')
+
             }
         }
         
@@ -95,6 +99,9 @@ angular.module('cmCore')
 
 
         self.get = function(data){
+
+            cmLogger.debug("Get webworker. Total before: " + self.length )
+
             if(!window.Worker)
                 return $q.reject('Browser does not support webWorkers.')
 
@@ -106,9 +113,16 @@ angular.module('cmCore')
                                     return $q.when(worker)
                                 })
 
+            cmLogger.debug("Get webworker. Total after: " + self.length )
+
 
             worker.on('done', function(event){
                 self.trigger('worker:done', event.target)
+                cmLogger.debug("Finished webworker. Queued: " + self.length)
+            })
+
+            worker.on('run', function(event, worker){
+                cmLogger.debug("Starting webworker \"" + worker.jobName +"\". Queued: " + self.length)
             })
 
             self.advance()
@@ -129,6 +143,7 @@ angular.module('cmCore')
             self.deregister(worker)
             self.advance()
         })
+
 
         return self
     }
