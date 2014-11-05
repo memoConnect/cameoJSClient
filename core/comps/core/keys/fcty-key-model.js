@@ -5,11 +5,11 @@ angular.module('cmCore')
 
     'cmLogger',
     'cmObject',
-    'cmWebworker',
+    'cmWebworkerFactory',
     '$rootScope',
     '$q',
 
-    function(cmLogger, cmObject, cmWebworker, $rootScope, $q){
+    function(cmLogger, cmObject, cmWebworkerFactory, $rootScope, $q){
         /**
          * @TODO TEsts!!!!!
          * @param args
@@ -128,110 +128,105 @@ angular.module('cmCore')
 
             this.sign = function(data){
 
-                return  cmWebworker.available
-                        ?   cmWebworker.new('rsa_sign')
-                            .then(function(worker){
-                                return  worker.start({
+                return  cmWebworkerFactory.new({
+                            jobName:    'rsa_sign'
+                            params:     {
                                             privKey:    self.getPrivateKey(),
                                             data:       data
+                                        }
+                        })
+                        .then(
+                            function(worker){
+                                return  worker.run()
+                            },
+                            function(reason){
+                                return  $q.when(crypt && crypt.sign(data))
+                                        .then(function(signature){
+                                            return  signature
+                                                    ?   $q.when(signature)
+                                                    :   $q.reject()
                                         })
-                            })
-                            .then(function(result){
-                                return $q.when(result.signature)
-                            })
-                        :   $q.when(crypt && crypt.sign(data))
-                            .then(function(signature){
-                                return  signature
-                                        ?   $q.when(signature)
-                                        :   $q.reject()
-                            })
+                            }
+                        )
             };
 
-            this.verify = function(data, signature, force){ 
-                return  $q.reject()
-                        // .catch(function(){
-                        //     return  !force && (verified[data] && verified[data][signature])
-                        //             ?   $q.when(verified[data][signature])
-                        //             :   $q.reject()
-                        // })
-                        .catch(function(){
-                            return  cmWebworker.available
-                                    ?   cmWebworker.new('rsa_verify')
-                                        .then(function(worker){
-                                            return  worker.start({
-                                                        pubKey:     self.getPublicKey(),
-                                                        signature:  signature,
-                                                        data:       data
-                                                    })
-                                            
-                                        })
-                                        .then(function(result){
-                                            return $q.when(result.result)
-                                        })
-                                    :   $q.when(crypt && crypt.verify(data, signature, function(x){ return x }))
+            this.verify = function(data, signature){ 
+                return  cmWebworker.new({
+                            jobName :   'rsa_verify',
+                            params  :   {
+                                            pubKey:     self.getPublicKey(),
+                                            signature:  signature,
+                                            data:       data
+                                        }
+                        })
+                        .then(
+                            function(worker){
+                                return  worker.run()
+                            },
+                            function(reason){
+                                return  $q.when(crypt && crypt.verify(data, signature, function(x){ return x }))
                                         .then(function(result){
                                             return  result
                                                     ?   $q.when(result)
-                                                    :   $q.reject()
+                                                    :   $q.reject('webWorker substitute failed.')
                                         })
-                        })
-                        .then(
-                            function(signature){
-                                verified[data] = verified[data] || {}
-                                verified[data][signature] = true
-                                return signature
-                            },
-                            function(){
-                                cmLogger.warn('keyModel.verify() failed.')
-                                return $q.reject()
                             }
                         )
+                        .catch(function(reason){
+                            cmLogger.warn('keyModel.verify() failed.')
+                        })
             }
 
             this.encrypt = function(secret){
-                return  cmWebworker.available
-                        ?   cmWebworker.new('rsa_encrypt')
-                            .then(function(worker){
-                                return  worker.start({
+                return  cmWebworker.new({
+                            jobName :   'rsa_encrypt',
+                            params  :   {
                                             pubKey:     self.getPublicKey(),
                                             secret:     secret
-                                        }) 
-                            })
-                            .then(function(result){
-                                return  result.secret
-                            })
-
-                        :   $q.when(crypt && crypt.encrypt(secret))
-                            .then(function(result){
-                                return  result
-                                        ?   $q.when(result)
-                                        :   $q.reject()
-                            });
+                                        }
+                        })
+                        .then(
+                            function(worker){
+                                return  worker.run()
+                            },
+                            function(reason){
+                                return  $q.when(crypt && crypt.encrypt(secret))
+                                        .then(function(result){
+                                            return  result
+                                                    ?   $q.when(result)
+                                                    :   $q.reject('webWorker substitute failed.')
+                                        })
+                            }
+                        )
+                        .catch(function(reason){
+                            cmLogger.warn('keyModel.encrypt() failed.')
+                        })
             };
 
             this.decrypt = function(encrypted_secret){
-                return  cmWebworker.available
-                        ?   cmWebworker.new('rsa_decrypt')
-                            .then(function(worker){
-                                return  worker.start({
+                return  cmWebworker.new({
+                            jobName :   'rsa_decrypt',
+                            params  :   {
                                             privKey:            self.getPrivateKey(),
                                             encryptedSecret:    encrypted_secret
+                                        }
+                        })
+                        .then(
+                            function(worker){
+                                return  worker.run()
+                            },
+                            function(reason){
+                                return  $q.when(crypt && crypt.decrypt(encrypted_secret))
+                                        .then(function(result){
+                                            return  result
+                                                    ?   $q.when(result)
+                                                    :   $q.reject('webWorker substitute failed.')
                                         })
-                            })
-                            .then(
-                                function(result){
-                                    return result.secret
-                                },
-                                function(){
-                                    return $q.reject()
-                                }
-                            )
-                        :   $q.when(crypt && crypt.decrypt(encrypted_secret))
-                            .then(function(result){
-                                return  result
-                                        ?   $q.when(result)
-                                        :   $q.reject()
-                            })
+                            }
+                        )
+                        .catch(function(reason){
+                            cmLogger.warn('keyModel.decrypt() failed.')
+                        })
 
             };
 
