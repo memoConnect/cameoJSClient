@@ -51,13 +51,34 @@
         .cm-re-footer {background:#555;height:4rem;width:32rem;color:#fff}
         .cm-re-footer button{height:4rem;display:block;width:100%}
 
-        [cm-reactive]{cursor:pointer}
-        [cm-reactive='header']{background:#000}
-        [cm-reactive='header']:hover{background:#555555}
-        [cm-reactive='list']{background:#FFF}
-        [cm-reactive='list']:hover{background:#EDEDED}
-        [cm-reactive='footer']{background:#555555}
-        [cm-reactive='footer']:hover{background:#8D8D8D}
+        [cm-reactive]{
+            cursor:pointer;
+            -webkit-transition: background 0.15s ease-in-out; /* Firefox */
+            -moz-transition: background 0.15s ease-in-out; /* WebKit */
+            -o-transition: background 0.15s ease-in-out; /* Opera */
+            transition: background 0.15s ease-in-out; /* Standard */
+        }
+        [cm-reactive='header']
+            {background:#000}
+        [cm-reactive='header'].is-hover,[cm-reactive='header'].is-touched
+            {background:#555555}
+        [cm-reactive='header'].is-clicked
+            {background:#000}
+
+
+        [cm-reactive='list']
+            {background:#FFF}
+        [cm-reactive='list'].is-hover,[cm-reactive='list'].is-touched
+            {background:#EDEDED}
+        [cm-reactive='list'].is-clicked
+            {background:#FFF}
+
+        [cm-reactive='footer']
+            {background:#555555}
+        [cm-reactive='footer'].is-hover,[cm-reactive='footer'].is-touched
+            {background:#8D8D8D}
+        [cm-reactive='footer'].is-clicked
+            {background:#555555}
     </style>
 </head>
 <body ng-app="icons" ng-controller="ctrl">
@@ -318,24 +339,37 @@
                 }
             })
 
-    .directive('cmReactive',[
-        function (){
+    .directive('cmReactive',
+        function ($timeout){
             return {
                 restrict: 'A',
                 controller: function($scope, $element){
-                    console.log($element)
+                    $element.on('mouseenter', function(){
+                        $element.addClass('is-hover');
+                    });
+
+                    $element.on('mouseleave', function(){
+                        $element.removeClass('is-hover');
+                    });
 
                     $element.on('click',function(){
-
-                    })
+                        $element.addClass('is-clicked');
+                        $timeout(function(){$element.removeClass('is-clicked')},250)
+                    });
 
                     $element.on('touchstart',function(){
-                        console.log(event)
-                    })
+                        $element.removeClass('is-hover');
+                    });
+
+                    $element.on('touchend',function(){
+                        $element.removeClass('is-hover');
+                        $element.addClass('is-touched');
+                        $timeout(function(){$element.removeClass('is-touched')},250)
+                    });
                 }
             }
         }
-    ]);
+    );
 </script>
 </body>
 </html>
