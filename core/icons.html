@@ -326,12 +326,17 @@
                     console.log($element)
 
                     $element.on('click',function(){
+                        console.log('click');
+                    });
 
-                    })
+                    $element.on('touchstart', function(){
+                        console.log('touchstart');
+                    });
 
-                    $element.on('touchstart',function(){
-                        console.log(event)
-                    })
+                    $element.on('touchend', function(){
+                        console.log('touchend');
+                    });
+
                 }
             }
         }
