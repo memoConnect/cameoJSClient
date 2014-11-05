@@ -16,9 +16,9 @@
         "weinreIp": ""
     },
     "phonegap": {
-        "baseName": "cameoNet-test" ,
-        "appId": "io.cameo.cameonet.client.web.mobile.app.test",
-        "bundleId": "de.cameonet.app.test.test",
+        "baseName": "cameoNet-local",
+        "appId": "1085010",
+        "bundleId": "io.cameo.local.cameo",
         "extraName" : ""
     }
 }
