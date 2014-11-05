@@ -33,6 +33,7 @@ module.exports = function(grunt, options){
                     'options': {
                         'data': {
                             'phonegapBaseFilename': options.globalCameoBuildConfig.phonegap.phonegapBaseFilename,
+                            'currentVersion': options.globalCameoBuildConfig.config.version,
                             'testFlightiOSURL': function () {
                                 return options.globalCameoBuildConfig.iosTestFlightURL
                             }

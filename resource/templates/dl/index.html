@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>cameoNET App Center</title>
 
-    <link rel="stylesheet" href="../../app/css/cameofont.css">
+    <link rel="stylesheet" href="../app/style.<%= currentVersion %>.css">
     <style>
         body,html,.table{height:100%;padding:0;margin:0}
         body{font-size:12px;background:#000;color:#fff;font-family: "Helvetica Neue",Helvetica,Arial,sans-serif}
@@ -14,13 +14,15 @@
         .cell{display:table-cell;text-align:center;vertical-align:middle}
         .center-box{padding:25px;margin:50px 0;box-shadow:0 0 10px 10px rgba(255, 255, 255, 0.5);border-radius:50px}
         .header{color:#02BED2;font-size:40px;line-height:20px;white-space:nowrap;margin-bottom:20px}
-        .header .cm-rhino-positive{font-size:80px}
+        .header i.cm-rhino-positive{font-size:80px}
+        .header i{font-size:25px}
         .header span{font-size:20px}
         a {color:#fff}
         a:hover, a:focus {color:#02BED2}
         ul{list-style:none;padding:0;margin:0}
         li{display:block;border-top:dotted 1px #02BED2}
-        li a{display:block;padding:20px 0}
+        li a{display:block;padding:10px 0}
+        .is-disabled{opacity:0.25}
     </style>
 </head>
 <body>
@@ -37,23 +39,65 @@
                 </div>
                 <ul>
                     <li>
-                        <a href="/dl/<%= phonegapBaseFilename %>.apk">
-                            <img src="/dl/gfx/172x60_android_store.png" />
+                        <a href="https://market.android.com/details?id=de.cameonet">
+                            <img src="gfx/172x60_android_store.png" />
                         </a>
+                        <a href="<%= phonegapBaseFilename %>.apk">.apk from our server</a>
                     </li>
                     <li>
-                        <a href="<%= testFlightiOSURL() %>">
-                            <img src="/dl/gfx/172x60_apple_store.png" />
+                        <a class="is-disabled" >
+                            <img src="gfx/172x60_apple_store.png" />
                         </a>
+                        <a href="<%= testFlightiOSURL() %>">.ipa from Testflight</a>
                     </li>
                     <li>
-                        <a href="/dl/<%= phonegapBaseFilename %>.xap">
-                            <img src="/dl/gfx/172x60_windows_store.png" />
+                        <a class="is-disabled">
+                            <img src="gfx/172x60_windows_store.png" />
                         </a>
+                        <a href="<%= phonegapBaseFilename %>.xap">.xap from our server</a>
                     </li>
                 </ul>
             </div>
         </div>
     </div>
+    <script>
+        (function(_location_, _navigator_,_document_){
+            function checkHashbang() {
+                if (_location_.hash != '') {
+                    var href = '';
+
+                    switch (_location_.hash.replace('#', '')) {
+                        case 'apk':
+                            href = '/dl/<%= phonegapBaseFilename %>.apk';
+                            break;
+                        case 'ipa':
+                            href = '<%= testFlightiOSURL() %>';
+                            break;
+                        case 'xap':
+                            href = '/dl/c<%= phonegapBaseFilename %>.xap';
+                            break;
+                    }
+
+                    if (href != '')
+                        _location_.href = href;
+                }
+            }
+
+            function updateAndroidMarketLinks(){
+                var ua = _navigator_.userAgent.toLowerCase();
+                if (0 <= ua.indexOf("android")) {
+                    // we have android
+                    var links = _document_.querySelectorAll("a[href^='http://market.android.com/']");
+                    [].forEach.call(links,function() {
+                        this.href = this.href.replace(/^https:\/\/market\.android\.com\//,"market://");
+                    });
+                }
+            }
+
+            checkHashbang();
+            updateAndroidMarketLinks();
+
+        })(location, navigator, document);
+    </script>
 </body>
 </html>
