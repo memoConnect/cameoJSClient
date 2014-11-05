@@ -15,12 +15,12 @@ angular.module('cmContacts')
     'cmContactsModel', 'cmUtil', 'cmModal', 'cmNotify',
     'cmLocalContacts', 'cmConversationFactory', 'cmIdentityFactory', 'cmTranslate',
     'cmUserModel', 'cmLoader',
-    '$rootScope', '$q',
+    '$rootScope', '$q', '$filter',
 
     function(cmContactsModel, cmUtil, cmModal, cmNotify,
              cmLocalContacts, cmConversationFactory, cmIdentityFactory, cmTranslate,
              cmUserModel, cmLoader,
-             $rootScope, $q){
+             $rootScope, $q, $filter){
 
         return {
             restrict:       'AE',
@@ -187,17 +187,17 @@ angular.module('cmContacts')
                                     loader.stop();
                                     identity = cmIdentityFactory.create(data.identity, true);
 
+                                    var messageData = {
+                                        from: cmUserModel.data.identity.getDisplayName(),
+                                        to: identity.getDisplayName()
+                                    };
+
                                     return  cmModal.confirm({
                                                 title: '',
                                                 text:  'CONTACT.IMPORT.NOTIFICATION.CONFIRMATION',
-                                                html:  '<textarea cm-resize-textarea cm-max-rows="10">' +
-                                                    '{{\'CONTACT.IMPORT.NOTIFICATION.MESSAGE\'|cmTranslate:data.message}}'+
-                                                    '</textarea>',
+                                                html:  '<textarea cm-resize-textarea class="confirm-textarea" ng-model="data.message"> </textarea>',
                                                 data:  {
-                                                    message: {
-                                                        from: cmUserModel.data.identity.getDisplayName(),
-                                                        to: identity.getDisplayName()
-                                                    }
+                                                    message: $filter('cmTranslate')('CONTACT.IMPORT.NOTIFICATION.MESSAGE',messageData)
                                                 }
                                             })
                                 },
@@ -211,17 +211,15 @@ angular.module('cmContacts')
                                 var conversation =  cmConversationFactory
                                                     .create()
                                                     .addRecipient(identity)
-                                                    .disableEncryption()
+                                                    .disableEncryption();
 
                                 return  conversation
                                         .save()
                                         .then(function(){
                                             return  conversation
                                                     .messages
-                                                    .create({conversation:conversation})
-                                                    .setText(modal_scope.data.message)
+                                                    .create({conversation:conversation,text:modal_scope.data.message})
                                                     .setPublicData(['text'])
-                                                    .encrypt()
                                                     .save()
                                         })
 
