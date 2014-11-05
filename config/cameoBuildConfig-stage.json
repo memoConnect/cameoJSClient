@@ -7,9 +7,10 @@
         "logLevel": "WARN",
         "performancePage": false
     },
-    "cockpit": {
-        "basePath": "/c/",
-        "appPath": "/m/"
+    "path": {
+        "cockpit": "/c/",
+        "app": "/m/",
+        "dl": "/dl/"
     },
     "debug":{
         "weinre": false,

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>cameoNET App Center</title>
 
-    <link rel="stylesheet" href="../app/style.<%= currentVersion %>.css">
+    <link rel="stylesheet" href="<%= appPath %>style.<%= currentVersion %>.css">
     <style>
         body,html,.table{height:100%;padding:0;margin:0}
         body{font-size:12px;background:#000;color:#fff;font-family: "Helvetica Neue",Helvetica,Arial,sans-serif}
@@ -40,21 +40,21 @@
                 <ul>
                     <li>
                         <a href="https://market.android.com/details?id=de.cameonet">
-                            <img src="gfx/172x60_android_store.png" />
+                            <img src="<%= dlPath %>gfx/172x60_android_store.png" />
                         </a>
-                        <a href="<%= phonegapBaseFilename %>.apk">.apk from our server</a>
+                        <a href="<%= dlPath %><%= phonegapBaseFilename %>.apk">.apk from our server</a>
                     </li>
                     <li>
                         <a class="is-disabled" >
-                            <img src="gfx/172x60_apple_store.png" />
+                            <img src="<%= dlPath %>gfx/172x60_apple_store.png" />
                         </a>
                         <a href="<%= testFlightiOSURL() %>">.ipa from Testflight</a>
                     </li>
                     <li>
                         <a class="is-disabled">
-                            <img src="gfx/172x60_windows_store.png" />
+                            <img src="<%= dlPath %>gfx/172x60_windows_store.png" />
                         </a>
-                        <a href="<%= phonegapBaseFilename %>.xap">.xap from our server</a>
+                        <a href="<%= dlPath %><%= phonegapBaseFilename %>.xap">.xap from our server</a>
                     </li>
                 </ul>
             </div>
@@ -68,13 +68,13 @@
 
                     switch (_location_.hash.replace('#', '')) {
                         case 'apk':
-                            href = '/dl/<%= phonegapBaseFilename %>.apk';
+                            href = '<%= dlPath %><%= phonegapBaseFilename %>.apk';
                             break;
                         case 'ipa':
                             href = '<%= testFlightiOSURL() %>';
                             break;
                         case 'xap':
-                            href = '/dl/c<%= phonegapBaseFilename %>.xap';
+                            href = '<%= dlPath %><%= phonegapBaseFilename %>.xap';
                             break;
                     }
 
