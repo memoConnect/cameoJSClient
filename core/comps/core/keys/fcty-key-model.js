@@ -19,12 +19,13 @@ angular.module('cmCore')
             //Wrapper for RSA Keys
             var self        = this,
                 crypt       = undefined, // will be JSEncrypt() once a key is set
-                verified    = {};
+                trustCache  = []
 
             cmObject.addEventHandlingTo(this);
 
-            this.created    = 0;
-            this.signatures = [];
+            this.created    = 0
+            this.signatures = []
+            
 
             function init(data){
                 self.importData(data)
@@ -33,6 +34,17 @@ angular.module('cmCore')
             function reset(){
                 self.created    = 0;
                 self.signatures = [];
+            }
+
+
+            function addTrustingKey = function(key){
+                this.trustCache.push(key.id)
+                return this
+            }
+
+            function clearTrustCahe = function(){
+                this.trustCache = []
+                return this
             }
 
             this.importData = function(data){
