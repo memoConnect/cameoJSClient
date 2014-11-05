@@ -245,10 +245,10 @@ angular.module('cmCore')
 
             };
 
-            this.verifyKey = function(key, data, force){
+            this.verifyKey = function(key, data, use_cache){
                 return      (this.getPublicKey() == key.getPublicKey() 
-                        //||  (!force && trustCache.indexOf(key.id) != -1)
-                        ?   console.log('cached!') && $q.when(key)   //always verifies itself
+                        //||  (use_cache && trustCache.indexOf(key.id) != -1)
+                        ?   $q.when(key)   //always verifies itself
                         :   key.signatures.reduce(function(previous_try, signature){
                                 return  previous_try
                                         .catch(function(){
@@ -259,7 +259,7 @@ angular.module('cmCore')
                             }, $q.reject('no signatures.'))
                             .then(function(result){
                                 addTrustingKey(key)
-                                return result
+                                return $q.when(result)
                             })
                         )
             };

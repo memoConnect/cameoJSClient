@@ -102,7 +102,7 @@ angular.module('cmCore')
                 promise     =   worker
                                 .when('available')
                                 .then(function(){
-                                    return worker
+                                    return $q.when(worker)
                                 })
 
 
