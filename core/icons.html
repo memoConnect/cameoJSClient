@@ -11,7 +11,7 @@
     <style>
         html{background:none !important;font-size:16px}
         body{font-family:verdana;width:auto;padding:3rem 1rem;background:none !important}
-        header{font-size:2rem;height:4rem;position:fixed;left:0;top:0;padding:0.5rem 1rem;background:#fff;z-index:2;box-sizing:border-box;width:100%}
+        header{font-size:2rem;height:4rem;position:fixed;left:0;top:0;padding:0.5rem 1rem;background:#fff;z-index:2;box-sizing:border-box;width:100%;white-space:nowrap}
         header a.is-active{text-decoration:none;color:#000;transition:color 500ms ease}
         a{color:#02BED2}
         h1{color:#02BED2}
@@ -39,10 +39,15 @@
         .nose-check .proof{margin-left:15rem}
 
         /* reactive */
-        .cm-re-header {background:#000;height:4rem;width:32rem;position:relative}
+        .cm-re-header {background:#000;height:4rem;width:32rem;position:relative;color:#fff}
         .cm-re-header .icon-list{position:absolute;right:0;top:0}
-        .cm-re-header .icon-list i{width:4rem;height:4rem;color:#fff;text-align:center;line-height:4rem;font-size:2rem;}
-        .cm-re-footer {background:#555;height:4rem;width:32rem}
+        .cm-re-header .icon-list i{width:4rem;height:4rem;text-align:center;line-height:4rem;font-size:2rem}
+        .cm-re-footer {background:#555;height:4rem;width:32rem;color:#fff}
+        .cm-re-footer button{height:4rem;display:block;width:100%}
+
+        [cm-reactive]{cursor:pointer}
+        [cm-reactive='header']:hover{background:#555555}
+        [cm-reactive='footer']:hover{background:#8D8D8D}
     </style>
 </head>
 <body ng-app="icons" ng-controller="ctrl">
@@ -129,9 +134,9 @@
 
     <div class="cm-re-header">
         <div class="icon-list">
-            <i class="fa cm-new-contact"></i>
-            <i class="fa cm-search"></i>
-            <i class="fa cm-menu"></i>
+            <i class="fa cm-new-contact" cm-reactive="header"></i>
+            <i class="fa cm-search" cm-reactive="header"></i>
+            <i class="fa cm-menu" cm-reactive="header"></i>
         </div>
     </div>
 
@@ -140,7 +145,10 @@
     <h2>footer</h2>
 
     <div class="cm-re-footer">
-
+        <button cm-reactive="footer">
+            Close
+            <i class="fa cm-close"></i>
+        </button>
     </div>
 </section>
 
