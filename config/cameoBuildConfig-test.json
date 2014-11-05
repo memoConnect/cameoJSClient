@@ -7,18 +7,19 @@
         "logLevel": "DEBUG",
         "performancePage": true
     },
-    "cockpit": {
-        "basePath": "/c/",
-        "appPath": "/m/"
+    "path": {
+        "cockpit": "/c/",
+        "app": "/m/",
+        "dl": "/dl/"
     },
     "debug":{
         "weinre": false,
         "weinreIp": ""
     },
     "phonegap": {
-        "baseName": "cameoNet-test" ,
-        "appId": "io.cameo.cameonet.client.web.mobile.app.test",
-        "bundleId": "de.cameonet.app.test.test",
+        "baseName": "cameoNet-local",
+        "appId": "1085010",
+        "bundleId": "io.cameo.local.cameo",
         "extraName" : ""
     }
 }
