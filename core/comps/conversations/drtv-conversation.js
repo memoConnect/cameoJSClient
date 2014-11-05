@@ -142,7 +142,6 @@ angular.module('cmConversations')
                     return deferred.promise
                 }
 
-
                 /**
                  * start sending process
                  * with preparing files for upload
@@ -163,12 +162,17 @@ angular.module('cmConversations')
 
 
                     var new_message =   $scope.conversation.messages
-                                        .create({conversation:$scope.conversation})
+                                        .create({conversation:$scope.conversation, id:'#new_message', fromIdentity:cmUserModel.data.identity})
                                         .setText($scope.newMessageText)
 
-                    new_message.state.set('sending')
-                    new_message.created = new Date().getTime()
-                    new_message.id      = '#new_message'
+                    new_message.state.set('sending');
+
+                    /**
+                     * important to set file view to dummy
+                     */
+                    if($scope.files.length > 0){
+                        new_message.state.set('waitForFiles')
+                    }
 
                     return  checkConversationSetup()
                             .then(function(){
@@ -214,13 +218,13 @@ angular.module('cmConversations')
                                 }
                             )
                             .finally(function(){
-                                new_message.state.unset('sending')
+                                new_message.state.unset('sending');
+                                new_message.state.unset('waitForFiles');
                                 $scope.isSending = false;
                             })                                    
 
                   
                 };
-
 
                 $rootScope.$$listeners.sendOnReturn = [];
                 $rootScope.$on('sendOnReturn',$scope.send);
@@ -259,7 +263,6 @@ angular.module('cmConversations')
 
                     return false
                 };
-                
 
                 this.addPendingRecipients = function(){
                     if($scope.conversation.state.is('new')){
@@ -305,25 +308,6 @@ angular.module('cmConversations')
                     }
 
                     function callback_recipients_missing(){
-                        // switcher for purl and conversation, @Todo: vereinheitlichen
-                        // var settingsLinker = {type:'',typeId:''};
-                        // if('purlId' in $routeParams){
-                        //     settingsLinker.type = 'purl';
-                        //     settingsLinker.typeId = $routeParams.purlId;
-                        // } else {
-                        //     settingsLinker.type = 'conversation';
-                        //     settingsLinker.typeId = $routeParams.conversationId;
-                        // }
-                        // cmNotify.warn('CONVERSATION.WARN.RECIPIENTS_MISSING',
-                        //     {
-                        //         ttl:0, 
-                        //         i18n: settingsLinker,
-                        //         template: '<small>{{\'CONVERSATION.WARN.RECIPIENTS_MISSING_OKAY\'|cmTranslate}}</small>'+
-                        //                   '<i ng-click="conversation.solitary = !conversation.solitary" ng-class="{\'cm-checkbox\':!conversation.solitary, \'cm-checkbox-right\':conversation.solitary}" class="fa cm-ci-color ml15" data-qa="checkbox-dont-ask-me-again"></i>',
-                        //         templateScope: $scope
-                        //     }
-                        // );
-                        
                         cmModal.confirm({
                             title:  'CONVERSATION.WARN.RECIPIENTS_MISSING',
                             text:   'CONVERSATION.CONFIRM.RECIPIENTS_MISSING',

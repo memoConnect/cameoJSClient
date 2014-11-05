@@ -1,7 +1,7 @@
 <div class="file-wrap" ng-repeat="file in files" ng-click="removeFile(file)">
     <i class="fa cm-close"></i>
     <div class="file-image" ng-if="file.isImage()">
-        <cm-loader ng-show="!file.loaded"></cm-loader>
+        <cm-loader ng-show="!file.loaded" class="full-inline"></cm-loader>
         <img cm-blob-image="file" />
     </div>
     <div ng-if="!file.isImage()" class="file {{file.detectedExtension}}"></div>

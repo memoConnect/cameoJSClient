@@ -55,7 +55,7 @@ angular.module('cmConversations')
             this.files = [];
             this.fileIds = [];
 
-            this.state = new cmStateManagement(['new','decrypted','loading', 'incomplete', 'sending']);
+            this.state = new cmStateManagement(['new','decrypted','loading', 'incomplete', 'sending', 'waitForFiles']);
 
             /**
              * Initialize Message Object
@@ -178,8 +178,7 @@ angular.module('cmConversations')
 
             this.decrypt = function (passphrase) {
                 //cmLogger.debug('cmMessageModel.decrypt');
-
-                if(this.state.is('decrypted') !== true){
+                if(this.state.is('decrypted') !== true || this.state.is('incomplete')){
 
                     if(typeof this.encryptedData == 'string' && this.encryptedData.length > 0){
                         /**
@@ -194,8 +193,16 @@ angular.module('cmConversations')
 
                         if(decrypted_data){
                             this.importData(decrypted_data);
-                            this.state.set('decrypted');
-                            this.trigger('decrypt:success');
+
+                            if(!this.hasFiles()){
+                                self.state.set('decrypted');
+                                self.trigger('decrypt:success');
+                            } else {
+                                this.allFilesReady().then(function(){
+                                    self.state.set('decrypted');
+                                    self.trigger('decrypt:success');
+                                });
+                            }
                         }
 
                         return !!decrypted_data
@@ -252,6 +259,32 @@ angular.module('cmConversations')
                 return (cmUserModel.data.id == this.from.id);
             };
 
+            this.hasFiles = function(){
+                return this.files.length > 0;
+            };
+
+            this.allFilesReady = function(){
+                var defered = $q.defer(),
+                    filesReady = [];
+
+                angular.forEach(this.files, function(file){
+                    var filePromise = $q.defer();
+                    if(file.state.is('onlyFileId')) {
+                        filesReady.push(filePromise.promise);
+                        file.one('importFile:finish', function(event, file){
+                            filePromise.resolve();
+                        });
+                    }
+                });
+
+                $q.all(filesReady)
+                .then(function(){
+                    defered.resolve();
+                });
+
+                return defered.promise;
+            };
+
             /**
              * Handle Upload from new Files
              * @returns {cmMessageModel.Message}
@@ -286,7 +319,7 @@ angular.module('cmConversations')
                     });
                     this.trigger('init:files');
                 } else {
-                    this.state.unset('incomplete')
+                    this.state.unset('incomplete');
                 }
 
                 return this;
@@ -352,25 +385,29 @@ angular.module('cmConversations')
             };
 
             this.decryptFiles = function(passphrase){
-                angular.forEach(this.files, function(file){
+
+                angular.forEach(this.files, function(file, index){
                     if(file.state.is('onlyFileId')) {
                         file
                             .setPassphrase(passphrase)
                             .downloadStart();
 
-                        file.on('importFile:incomplete',function(event, file){
+                        file.one('importFile:incomplete',function(event, file){
                             self.state.set('incomplete');
                             // add to queue
                             self.incompleteFiles.push(file);
                         });
 
-                        file.on('importFile:finish', function(event, file){
-                            self.state.unset('incomplete');
+                        file.one('importFile:finish', function(event, file){
                             // clear from queue
                             var index = self.incompleteFiles.indexOf(file);
                             self.incompleteFiles.splice(index,1);
                         });
                     }
+                });
+
+                this.allFilesReady().then(function(){
+                    self.state.unset('incomplete');
                 });
 
                 return this;
