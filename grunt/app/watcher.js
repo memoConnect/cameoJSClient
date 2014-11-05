@@ -30,7 +30,9 @@ module.exports = function(grunt, options){
                     files: [
                         'config/*.json',
                         'resource/templates/**/*',
-                        'app/**/*.html'
+                        'app/**/*.html',
+                        'core/webworker/*',
+                        'core/*.html'
                     ],
                     tasks: [
                         'app:gen-all-templates'
