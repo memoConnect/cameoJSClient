@@ -20,6 +20,8 @@ angular.module('cmCore')
             instance.params     =   data.params
             instance.jobName    =   data.jobName
 
+            console.dir(data)
+
             cmObject.addEventHandlingTo(instance)
 
             this.run = function(timeout){
@@ -76,19 +78,20 @@ angular.module('cmCore')
             this.terminate = function(){
                 worker.removeEventListener('message', onMessage)
                 worker.terminate()
-                worker      = null
-                deferred    = null
-                instance.params     = null
-                instance.jobName    = null
                 instance.trigger('done')
             }
         }
         
-        var self =  cmFactory(cmWebWorker, 
+        var self =  cmFactory(cmWebWorker,
                         //sameByData:
                         function(instance, data){
-                        return      instance.jobName = data.jobName
-                                &&  JSON.stringify(instance.params) == JSON.stringify(data.params)
+                            return      instance.jobName = data.jobName
+                                    &&  JSON.stringify(instance.params) == JSON.stringify(data.params)
+                        }, 
+                        //sameByInstance:
+                        function(instance1, instance2){
+                            return      instance1.jobName = instance2.jobName
+                                    &&  JSON.stringify(instance1.params) == JSON.stringify(instance2.params)
                         }
                     )
 
@@ -124,7 +127,7 @@ angular.module('cmCore')
             return this
         }
 
-        self.on('worker:done', function(worker){
+        self.on('worker:done', function(event, worker){
             self.deregister(worker)
             self.advance()
         })

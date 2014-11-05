@@ -179,10 +179,12 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
                                         }),
                     fromKey         =   fromIdentity.keys.find(request.fromKeyId)
 
+                console.log('verifying...')
 
                 return  fromKey.verify(hashed_data, request.signature)
                         .then(
                             function(result){
+                                console.log('...success')
                                 self.trigger('verification:successful', {
                                         identity:           fromIdentity,
                                         key:                fromKey,
@@ -191,6 +193,7 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
                                 return $q.when(result)
                             },
                             function(reason){
+                                console.log('...failed.')
                                 self.trigger('verification:failed')
                                 return $q.reject(reason)
                             }
