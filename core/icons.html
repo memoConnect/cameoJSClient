@@ -37,6 +37,12 @@
         .nose-check i.cm-nose-down{left:5rem;top:6.9rem}
         .nose-check .box{position:absolute;border:solid 0.1rem #000;height:6rem;width:6rem;left:3rem;top:3rem}
         .nose-check .proof{margin-left:15rem}
+
+        /* reactive */
+        .cm-re-header {background:#000;height:4rem;width:32rem;position:relative}
+        .cm-re-header .icon-list{position:absolute;right:0;top:0}
+        .cm-re-header .icon-list i{width:4rem;height:4rem;color:#fff;text-align:center;line-height:4rem;font-size:2rem;}
+        .cm-re-footer {background:#555;height:4rem;width:32rem}
     </style>
 </head>
 <body ng-app="icons" ng-controller="ctrl">
@@ -121,9 +127,21 @@
 
     <h2>header</h2>
 
+    <div class="cm-re-header">
+        <div class="icon-list">
+            <i class="fa cm-new-contact"></i>
+            <i class="fa cm-search"></i>
+            <i class="fa cm-menu"></i>
+        </div>
+    </div>
+
     <h2>list items</h2>
 
     <h2>footer</h2>
+
+    <div class="cm-re-footer">
+
+    </div>
 </section>
 
 <script>
