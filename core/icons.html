@@ -8,6 +8,7 @@
 
     <link rel="stylesheet" href="style.<%= currentVersion %>.css">
     <script type="text/javascript" src="vendor.<%= currentVersion %>.js"></script>
+
     <style>
         html{background:none !important;font-size:16px}
         body{font-family:verdana;width:auto;padding:3rem 1rem;background:none !important}
@@ -185,6 +186,7 @@
 
     angular
     .module('icons',['emoji'])
+            
     .controller('ctrl',function ($scope, emoji){
         $scope.active = location.hash != '' ? location.hash.replace('#','') : 'cameofont';
         $scope.baselineIcon = 'cm-checkbox-wrong';
@@ -221,11 +223,13 @@
             location.hash = section;
         };
     })
+
     .filter('clearClassName', function(){
         return function(className) {
             return className.replace('\\','');
         }
     })
+
     .directive('figure',function($window, $document){
 
                 function getDocHeight() {
@@ -291,7 +295,23 @@
                         })
                     }
                 }
-            });
+            })
+
+    .directive('cmReactive',[
+        function (){
+            return {
+                restrict: 'A',
+                controller: function($scope, $element){
+                    console.log($element)
+                    $element.on('click',function(){
+
+                    })
+
+
+                }
+            }
+        }
+    ]);
 </script>
 </body>
 </html>
