@@ -82,17 +82,21 @@ angular.module('cmCore')
                 instance.trigger('done')
 
             }
+
+            console.log('constructor:', instance.jobName)
+
+            return instance
         }
         
         var self =  cmFactory(cmWebWorker,
                         //sameByData:
                         function(instance, data){
-                            return      instance.jobName = data.jobName
+                            return      instance.jobName == data.jobName
                                     &&  JSON.stringify(instance.params) == JSON.stringify(data.params)
                         }, 
                         //sameByInstance:
                         function(instance1, instance2){
-                            return      instance1.jobName = instance2.jobName
+                            return      instance1.jobName == instance2.jobName
                                     &&  JSON.stringify(instance1.params) == JSON.stringify(instance2.params)
                         }
                     )
@@ -113,16 +117,15 @@ angular.module('cmCore')
                                     return $q.when(worker)
                                 })
 
-            cmLogger.debug("Get webworker. Total after: " + self.length )
+            console.log('get Webworker: ', data.jobName)
+            console.log('returned webworker:', worker.jobName)
 
 
             worker.on('done', function(event){
                 self.trigger('worker:done', event.target)
-                cmLogger.debug("Finished webworker. Queued: " + self.length)
             })
 
             worker.on('run', function(event, worker){
-                cmLogger.debug("Starting webworker \"" + worker.jobName +"\". Queued: " + self.length)
             })
 
             self.advance()
