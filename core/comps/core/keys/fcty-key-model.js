@@ -1,15 +1,36 @@
 'use strict';
 
 angular.module('cmCore')
+.service('cmKeyCache',[
+    function(){
+        var cache = {}
+
+        return {
+            storeVerificationResult : function(key, data, signature, result){
+                cache.verify                = cache.verify || {}
+                cache.verify[key.id]        = cache.verify[key.id] || {}
+                cache.verify[key.id][data]  = cache.verify[key.id][data] || {}
+                cache.verify[key.id][data][signature] = result
+            },
+
+            getVerificationResult : function(key, data, signature){
+                return  cache.verify && cache.verify[key.id] && cache.verify[key.id][data]
+                        ?   cache.verify[key.id][data][signature]
+                        :   null
+            }
+        }
+    }
+])
 .factory('cmKey', [
 
     'cmLogger',
     'cmObject',
     'cmWebworkerFactory',
+    'cmKeyCache',
     '$rootScope',
     '$q',
 
-    function(cmLogger, cmObject, cmWebworkerFactory, $rootScope, $q){
+    function(cmLogger, cmObject, cmWebworkerFactory, cmKeyCache, $rootScope, $q){
         /**
          * @TODO TEsts!!!!!
          * @param args
@@ -19,7 +40,8 @@ angular.module('cmCore')
             //Wrapper for RSA Keys
             var self        = this,
                 crypt       = undefined, // will be JSEncrypt() once a key is set
-                trustCache  = []
+                verificationCache = {}
+
 
             cmObject.addEventHandlingTo(this);
 
@@ -36,16 +58,6 @@ angular.module('cmCore')
                 self.signatures = [];
             }
 
-
-            function addTrustingKey(key){
-                trustCache.push(key.id)
-                return this
-            }
-
-            function clearTrustCahe(){
-                trustCache = []
-                return this
-            }
 
             this.importData = function(data){
                 if(!data){
@@ -160,9 +172,24 @@ angular.module('cmCore')
                                         })
                             }
                         )
+                        .then(function(signature){
+                            cmKeyCache.storeVerificationResult(self, data, signature, true)
+                            return $q.when(signature)
+                        })
             };
 
-            this.verify = function(data, signature){ 
+            this.verify = function(data, signature, use_cache){ 
+                if( 
+                        use_cache
+                    &&  cmKeyCache.getVerificationResult(self, data, signature) != null
+                   
+                ){
+                    console.log('cached!')
+                    return  cmKeyCache.getVerificationResult(self, data, signature)
+                            ?   $q.when(true)
+                            :   $q.reject(false)
+                }
+
                 return  cmWebworkerFactory.get({
                             jobName :   'rsa_verify',
                             params  :   {
@@ -185,8 +212,12 @@ angular.module('cmCore')
                             }
                         )
                         .catch(function(reason){
-                            cmLogger.warn('keyModel.verify() failed.')
+                            cmKeyCache.storeVerificationResult(self, data, signature, false)
                             return $q.reject(reason)
+                        })
+                        .then(function(result){
+                            cmKeyCache.storeVerificationResult(self, data, signature, true)
+                            return $q.when(result)
                         })
             }
 
@@ -247,18 +278,16 @@ angular.module('cmCore')
 
             this.verifyKey = function(key, data, use_cache){
                 return      (this.getPublicKey() == key.getPublicKey() 
-                        //||  (use_cache && trustCache.indexOf(key.id) != -1)
                         ?   $q.when(key)   //always verifies itself
                         :   key.signatures.reduce(function(previous_try, signature){
                                 return  previous_try
                                         .catch(function(){
                                             return  (self.id == signature.keyId)
-                                                    ?   self.verify(data, signature.content)
+                                                    ?   self.verify(data, signature.content, use_cache)
                                                     :   $q.reject('keyIds not matching.')
                                         })
                             }, $q.reject('no signatures.'))
                             .then(function(result){
-                                addTrustingKey(key)
                                 return $q.when(result)
                             })
                         )

@@ -15,7 +15,7 @@ self.addEventListener('message', function(event) {
 
                 self.postMessage({
                     msg:    result ? 'finished' : 'failed',
-                    secret: result
+                    result: result
                 })
 
             } catch(e){

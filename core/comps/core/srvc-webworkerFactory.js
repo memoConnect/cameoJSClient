@@ -109,11 +109,11 @@ angular.module('cmCore')
                 promise     =   worker
                                 .when('available')
                                 .then(function(){
-                                    console.log('Worker available:', data.jobName)
+                                    //console.log('Worker available:', data.jobName)
                                     return $q.when(worker)
                                 })
 
-            console.warn('Number of queued webworkers: ', self.length)
+            console.warn('new WW "'+data.jobName+'" Number of queued webworkers: ', self.length)
 
             worker.on('done', function(event){
                 self.trigger('worker:done', worker)
@@ -138,7 +138,7 @@ angular.module('cmCore')
 
         self.on('worker:done', function(event, worker){
             self.deregister(worker)
-            console.warn('Number of queued webworkers: ', self.length)
+            console.info('Worker done; number of queued webworkers: ', self.length)
             self.advance()
         })
 

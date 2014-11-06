@@ -101,7 +101,7 @@ angular.module('cmSecurityAspects')
                          */
                         if(conversation.recipients.length < 3){
                             $q.all(conversation.recipients.map(function(recipient){
-                                return cmUserModel.verifyTrust(recipient, 'use cache')
+                                return cmUserModel.verifyTrust(recipient)
                             }))
                             .then(
                                 function(){

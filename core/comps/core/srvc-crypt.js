@@ -13,7 +13,7 @@ angular.module('cmCore')
             crypt: null
         };
 
-        var keygenWorker 
+        var keygenWorker
 
         return {
 
@@ -220,6 +220,8 @@ angular.module('cmCore')
                     return false;
                 }
 
+                var self = this
+
                 async.promise = $q.defer();
                 console.log('generateAsyncKeypair cmCryptoHelper? '+(cmCryptoHelper.isAvailable()))
                 // start keygen over plugin crypto helper
@@ -261,9 +263,8 @@ angular.module('cmCore')
                             )
                         },
                         function(){
-                            var self = this,
-                            time = -((new Date()).getTime()),
-                            counts = 0;
+                            var time = -((new Date()).getTime()),
+                                counts = 0;
 
                             // init vars
                             async.crypt = new JSEncrypt({default_key_size: keySize})
