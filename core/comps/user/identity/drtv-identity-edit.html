@@ -5,20 +5,20 @@
     </div>
     <div class="cm-fl w72">
         <ul class="no-border">
-            <li ng-click="goTo('/settings/identity/key/list')" data-qa="btn-identity-keys">
-                 <span class="item clearfix">
-                     <i class="fa cm-key fa-2x"></i>
-                    {{'IDENTITY.LABEL.KEYMANAGEMENT'|cmTranslate}}
-                 </span>
+            <li class="cm-disabled" data-qa="btn-identity-trust">
+                <span class="item clearfix">
+                    <i class="fa cm-qr-code fa-2x"></i>
+                    {{'IDENTITY.LABEL.TRUST'|cmTranslate}}
+                </span>
                 <section class="icon-list">
                     <i class="fa cm-right position-exception"></i>
                 </section>
             </li>
-            <li class="no-border cm-disabled" data-qa="btn-identity-trust">
-                <span class="item clearfix">
-                    <i class="fa cm-checker fa-2x"></i>
-                    {{'IDENTITY.LABEL.TRUST'|cmTranslate}}
-                </span>
+            <li class="no-border" ng-click="goTo('/settings/identity/key/list')" data-qa="btn-identity-keys">
+                 <span class="item clearfix">
+                     <i class="fa cm-key fa-2x"></i>
+                    {{'IDENTITY.LABEL.KEYMANAGEMENT'|cmTranslate}}
+                 </span>
                 <section class="icon-list">
                     <i class="fa cm-right position-exception"></i>
                 </section>
