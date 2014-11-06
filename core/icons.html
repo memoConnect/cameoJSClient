@@ -43,8 +43,15 @@
         .cm-re-header {background:#000;height:4rem;width:32rem;position:relative;color:#fff}
         .cm-re-header .icon-list{position:absolute;right:0;top:0}
         .cm-re-header .icon-list i{width:4rem;height:4rem;text-align:center;line-height:4rem;font-size:3rem}
-        .cm-re-body {width:32rem;}
-        .cm-re-body cm-any-tag{display:block;}
+        .cm-re-header-sub{background:#EDEDED;height:4rem;width:32rem;position:relative;color:#4F4F4F}
+        .cm-re-header-sub div{display:inline-block;width:50%;text-align:center;line-height:4rem}
+        .cm-re-header-sub div.is-active{
+            -webkit-box-shadow: inset 0px -10px 0px 0px rgba(0,0,0,0.75);
+            -moz-box-shadow: inset 0px -10px 0px 0px rgba(0,0,0,0.75);
+            box-shadow: inset 0px -10px 0px 0px rgba(0,0,0,0.75);
+        }
+        .cm-re-body {width:32rem;color:#4F4F4F}
+        .cm-re-body cm-any-tag{display:block}
         .cm-re-body cm-any-tag > *, .cm-re-body li .icon-list > *{vertical-align:top;}
         .cm-re-body cm-avatar{display:inline-block;width:4rem;height:4rem;background:#000}
         .cm-re-body span{display:inline-block;line-height:4rem;}
@@ -64,7 +71,6 @@
             {background:#555555}
         [cm-reactive='header'].is-clicked
             {background:#8D8D8D}
-
 
         [cm-reactive='list']
             {background:#FFF}
@@ -92,7 +98,10 @@
 
 <section ng-if="active == 'cameofont'">
 
-    <h1><span class="anchor"></span>cameofont</h1>
+    <h1>
+        <span class="anchor"></span>
+        cameofont
+    </h1>
 
     <h2>baseline check</h2>
 
@@ -168,6 +177,12 @@
             <i class="fa cm-new-contact" cm-reactive="header"></i><i class="fa cm-search" cm-reactive="header"></i><i class="fa cm-menu" cm-reactive="header"></i>
         </div>
     </div>
+
+    <h2>default pages</h2>
+    <div class="cm-re-header-sub">
+        <div><i class="fa cm-talk"></i> Talks</div><div class="is-active"><i class="fa cm-person"></i> Kontakte</div>
+    </div>
+
 
     <h2>list items</h2>
 
