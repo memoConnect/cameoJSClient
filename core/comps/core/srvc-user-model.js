@@ -583,7 +583,7 @@ angular.module('cmCore')
          * @param  {cmIdentitymodel} identity [description]
          * @return {cmKeyFactory}   cmKeyFactory returning all transitively trusted keys of identity. Users local keys are assumed to be trusted.
          */
-        this.verifyIdentityKeys = function(identity, sign){
+        this.verifyIdentityKeys = function(identity, sign, cache){
             //cmLogger.debug('cmUserModel.verifyIdentityKeys');
 
             if(!identity.keys)

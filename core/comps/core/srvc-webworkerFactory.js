@@ -83,8 +83,6 @@ angular.module('cmCore')
 
             }
 
-            console.log('constructor:', instance.jobName)
-
             return instance
         }
         
@@ -104,25 +102,21 @@ angular.module('cmCore')
 
         self.get = function(data){
 
-            cmLogger.debug("Get webworker. Total before: " + self.length )
-
             if(!window.Worker)
                 return $q.reject('Browser does not support webWorkers.')
-
 
             var worker      =   self.create(data),
                 promise     =   worker
                                 .when('available')
                                 .then(function(){
+                                    console.log('Worker available:', data.jobName)
                                     return $q.when(worker)
                                 })
 
-            console.log('get Webworker: ', data.jobName)
-            console.log('returned webworker:', worker.jobName)
-
+            console.warn('Number of queued webworkers: ', self.length)
 
             worker.on('done', function(event){
-                self.trigger('worker:done', event.target)
+                self.trigger('worker:done', worker)
             })
 
             worker.on('run', function(event, worker){
@@ -144,6 +138,7 @@ angular.module('cmCore')
 
         self.on('worker:done', function(event, worker){
             self.deregister(worker)
+            console.warn('Number of queued webworkers: ', self.length)
             self.advance()
         })
 
