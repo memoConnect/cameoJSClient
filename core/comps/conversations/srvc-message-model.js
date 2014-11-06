@@ -245,13 +245,15 @@ angular.module('cmConversations')
                     encrypted: this.encryptedData,
                     plain: this.publicData
                 })
-                .then(function (message_data) {
-                    //Since this message is our own message,
-                    //we already know the original data, thus it actually is decrypted and wont need further decryption.
-                    self.state.set('decrypted') 
-                    self.importData(message_data);
-                    self.trigger('message:saved');
-                });
+                .then(
+                    function (message_data) {
+                        //Since this message is our own message,
+                        //we already know the original data, thus it actually is decrypted and wont need further decryption.
+                        self.state.set('decrypted');
+                        self.importData(message_data);
+                        self.trigger('message:saved');
+                    }
+                );
             };
 
             this.isOwn = function(){
