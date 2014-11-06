@@ -378,7 +378,7 @@
                     });
 
                     $element.on('click',function(){
-                        if(isTouch){
+                        if(!isTouch){
                             $element.addClass('is-clicked');
                             $timeout(function(){$element.removeClass('is-clicked')},250)
                         }
