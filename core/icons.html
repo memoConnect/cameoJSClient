@@ -46,17 +46,20 @@
         .cm-re-header-sub{background:#EDEDED;height:4rem;width:32rem;position:relative;color:#4F4F4F}
         .cm-re-header-sub div{display:inline-block;width:50%;text-align:center;line-height:4rem}
         .cm-re-header-sub div.is-active{
-            -webkit-box-shadow: inset 0px -10px 0px 0px rgba(0,0,0,0.75);
-            -moz-box-shadow: inset 0px -10px 0px 0px rgba(0,0,0,0.75);
-            box-shadow: inset 0px -10px 0px 0px rgba(0,0,0,0.75);
+            -webkit-box-shadow: inset 0px -10px 0px 0px #555555;
+            -moz-box-shadow: inset 0px -10px 0px 0px #555555;
+            box-shadow: inset 0px -10px 0px 0px #555555;
         }
         .cm-re-body {width:32rem;color:#4F4F4F}
         .cm-re-body cm-any-tag{display:block}
         .cm-re-body cm-any-tag > *, .cm-re-body li .icon-list > *{vertical-align:top;}
         .cm-re-body cm-avatar{display:inline-block;width:4rem;height:4rem;background:#000}
         .cm-re-body span{display:inline-block;line-height:4rem;}
+
         .cm-re-footer {background:#555;height:4rem;width:32rem;color:#fff}
         .cm-re-footer button{height:4rem;display:block;width:100%}
+        .cm-re-footer-dark {background:#000;height:4rem;width:32rem;color:#fff}
+        .cm-re-footer-dark button{height:4rem;display:block;width:100%}
 
         [cm-reactive]{
             cursor:pointer;
@@ -65,26 +68,33 @@
             -o-transition: background 0.15s ease-in-out; /* Opera */
             transition: background 0.15s ease-in-out; /* Standard */
         }
-        [cm-reactive='header']
+        [cm-reactive='dark']
             {background:#000}
-        [cm-reactive='header'].is-hover,[cm-reactive='header'].is-touched
+        [cm-reactive='dark'].is-hover,[cm-reactive='dark'].is-touched
             {background:#555555}
-        [cm-reactive='header'].is-clicked
+        [cm-reactive='dark'].is-clicked
             {background:#8D8D8D}
 
-        [cm-reactive='list']
+        [cm-reactive='light']
             {background:#FFF}
-        [cm-reactive='list'].is-hover,[cm-reactive='list'].is-touched
+        [cm-reactive='light'].is-hover,[cm-reactive='light'].is-touched
             {background:#EDEDED}
-        [cm-reactive='list'].is-clicked
+        [cm-reactive='light'].is-clicked
             {background:#DCDCDC}
 
-        [cm-reactive='footer']
+        [cm-reactive='light-grey']
+            {background:#ECECEC}
+        [cm-reactive='light-grey'].is-hover,[cm-reactive='light-grey'].is-touched
+            {background:#DBDBDB}
+        [cm-reactive='light-grey'].is-clicked
+            {background:#BFBFBF}
+
+        [cm-reactive='grey']
             {background:#555555}
-        [cm-reactive='footer'].is-hover,[cm-reactive='footer'].is-touched
+        [cm-reactive='grey'].is-hover,[cm-reactive='grey'].is-touched
             {background:#8D8D8D}
-        [cm-reactive='footer'].is-clicked
-            {background:#555555}
+        [cm-reactive='grey'].is-clicked
+            {background:#A0A0A0}
     </style>
 </head>
 <body ng-app="icons" ng-controller="ctrl">
@@ -174,27 +184,26 @@
 
     <div class="cm-re-header">
         <div class="icon-list">
-            <i class="fa cm-new-contact" cm-reactive="header"></i><i class="fa cm-search" cm-reactive="header"></i><i class="fa cm-menu" cm-reactive="header"></i>
+            <i class="fa cm-new-contact" cm-reactive="dark"></i><i class="fa cm-search" cm-reactive="dark"></i><i class="fa cm-menu" cm-reactive="dark"></i>
         </div>
     </div>
 
     <h2>default pages</h2>
     <div class="cm-re-header-sub">
-        <div><i class="fa cm-talk"></i> Talks</div><div class="is-active"><i class="fa cm-person"></i> Kontakte</div>
+        <div cm-reactive="light-grey"><i class="fa cm-talk"></i> Talks</div><div cm-reactive="light-grey" class="is-active"><i class="fa cm-person"></i> Kontakte</div>
     </div>
-
 
     <h2>list items</h2>
 
     <div class="cm-re-body theme-a">
         <ul>
             <li>
-                <cm-any-tag cm-reactive="list">
+                <cm-any-tag cm-reactive="light">
                    <cm-avatar></cm-avatar>
                    <span>Text</span>
                 </cm-any-tag>
                 <div class="icon-list">
-                    <i class="fa cm-new-talk" cm-reactive="list"></i>
+                    <i class="fa cm-new-talk" cm-reactive="light"></i>
                 </div>
             </li>
         </ul>
@@ -203,7 +212,14 @@
     <h2>footer</h2>
 
     <div class="cm-re-footer">
-        <button cm-reactive="footer">
+        <button cm-reactive="grey">
+            Close
+            <i class="fa cm-close"></i>
+        </button>
+    </div>
+
+    <div class="cm-re-footer-dark">
+        <button cm-reactive="dark">
             Close
             <i class="fa cm-close"></i>
         </button>
