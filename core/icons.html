@@ -63,7 +63,7 @@
         [cm-reactive='header'].is-hover,[cm-reactive='header'].is-touched
             {background:#555555}
         [cm-reactive='header'].is-clicked
-            {background:#000}
+            {background:#8D8D8D}
 
 
         [cm-reactive='list']
@@ -71,7 +71,7 @@
         [cm-reactive='list'].is-hover,[cm-reactive='list'].is-touched
             {background:#EDEDED}
         [cm-reactive='list'].is-clicked
-            {background:#FFF}
+            {background:#DCDCDC}
 
         [cm-reactive='footer']
             {background:#555555}
@@ -385,11 +385,15 @@
                     });
 
                     $element.on('touchstart',function(){
+                        console.log('touchstart')
+
                         isTouch = true;
                         $element.removeClass('is-hover');
                     });
 
                     $element.on('touchend',function(evt){
+                        evt.preventDefault();
+
                         $element.removeClass('is-hover');
 
                         if(isValidTouch(evt)){
