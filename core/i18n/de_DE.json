@@ -830,10 +830,10 @@
     "FILE": {
         "UPLOAD": {
             "QUOTA": {
-                "EXCEEDED": "FILE.UPLOAD.QUOTA.EXCEEDED @ todo <br> {{totalQuota | cmBytesHumanReadable}} <br> {{quotaLeft | cmBytesHumanReadable}} <br> {{fileSize | cmBytesHumanReadable}}"
+                "EXCEEDED": "Sie haben nicht mehr genug Speicherplatz! <br> Die Datei die Sie hochladen möchten hat {{fileSize | cmBytesHumanReadable}}.<br>Sie haben nur noch {{quotaLeft | cmBytesHumanReadable}} freien Speicherplatz (von {{totalQuota | cmBytesHumanReadable}})."
             },
             "FILESIZE": {
-                "EXCEEDED": "Die maximale Dateigröße von <strong>{{maxFileSize | cmBytesHumanReadable}}</strong> wurde überschritten. Ihre Datei '<strong>{{fileName}}</strong>' ist <strong>{{fileSize | cmBytesHumanReadable}}</strong> groß."
+                "EXCEEDED": "Die maximale Dateigröße wurde überschritten. <br>Die Datei die Sie hochladen möchten ist {{fileSize | cmBytesHumanReadable}} groß. <br>Die maximale Dateigröße beträgt <strong>{{maxFileSize | cmBytesHumanReadable}}</strong>."
             }
         }
     }

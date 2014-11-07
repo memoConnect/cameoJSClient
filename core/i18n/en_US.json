@@ -799,11 +799,11 @@
     "FILE": {
         "UPLOAD": {
             "QUOTA": {
-                "EXCEEDED": "FILE.UPLOAD.QUOTA.EXCEEDED @ todo <br> {{totalQuota | cmBytesHumanReadable}} <br> {{quotaLeft | cmBytesHumanReadable}} <br> {{fileSize | cmBytesHumanReadable}}"
+                "EXCEEDED": "@todo FILE.UPLOAD.QUOTA.EXCEEDED <br> {{totalQuota | cmBytesHumanReadable}} <br> {{quotaLeft | cmBytesHumanReadable}} <br> {{fileSize | cmBytesHumanReadable}}"
             }
         },
         "FILESIZE": {
-            "EXCEEDED": "The maximum file size of <strong>{{maxFileSize | cmBytesHumanReadable}}</strong> has been exceeded. Your file '<strong>{{fileName}}</strong>' has <strong>{{fileSize | cmBytesHumanReadable}}</strong> bytes."
+            "EXCEEDED": "@todo The maximum file size of <strong>{{maxFileSize | cmBytesHumanReadable}}</strong> has been exceeded. Your file has <strong>{{fileSize | cmBytesHumanReadable}}</strong> bytes."
         }
     }
 }
