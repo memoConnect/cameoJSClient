@@ -46,7 +46,7 @@ angular.module('cmPhonegap')
                                 length | self.keySize
                         );
                     } else {
-                        deffered.reject('NO PLUGIN EXISITS');
+                        deffered.reject('NO PLUGIN EXISTS');
                     }
 
                     return deffered.promise;
