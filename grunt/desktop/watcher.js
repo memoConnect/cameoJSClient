@@ -2,12 +2,19 @@ module.exports = function(grunt, options){
 
     grunt.loadNpmTasks('grunt-contrib-watch');
 
+    //grunt.registerTask('desktop:watcher', [
+    //    'desktop:deploy-without-template',
+    //    'desktop:gen-all-templates',
+    //
+    //    'concurrent:desktop'
+    //]);
+
     grunt.registerTask('desktop:watcher', [
-        'desktop:deploy-without-template',
+        'app:deploy-without-template',
+        'cockpit:deploy-without-template',
+        'app:gen-all-templates',
 
-        'desktop:gen-all-templates',
-
-        'concurrent:desktop'
+        'watch:desktop'
     ]);
 
     return {
@@ -25,6 +32,19 @@ module.exports = function(grunt, options){
                 }
             },
             watch: {
+                'desktop': {
+                    files: [
+                        'config/*.json',
+                        'resource/templates/**/*',
+                        'desktop/**/*',
+                        'core/**/*'
+                    ],
+                    tasks: [
+                        'desktop:gen-all-templates',
+                        'desktop:create-style-via-less',
+                        'desktop:packages'
+                    ]
+                },
                 'desktop-other':{
                     files: [
                         'config/*.json',
