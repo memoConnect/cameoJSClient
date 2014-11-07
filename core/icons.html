@@ -188,13 +188,13 @@
 
     <div class="cm-re-header">
         <div class="icon-list">
-            <i class="fa cm-new-contact" cm-reactive="dark"></i><i class="fa cm-search" cm-reactive="dark"></i><i class="fa cm-menu" cm-reactive="dark"></i>
+            <i class="fa cm-new-contact" cm-reactive="dark" ng-click="testClick('new contact')"></i><i class="fa cm-search" cm-reactive="dark" ng-click="testClick('search')"></i><i class="fa cm-menu" cm-reactive="dark" ng-click="testClick('menu')"></i>
         </div>
     </div>
 
     <h2>default pages</h2>
     <div class="cm-re-header-sub">
-        <div cm-reactive="light-grey"><i class="fa cm-talk"></i> Talks</div><div cm-reactive="light-grey" class="is-active"><i class="fa cm-person"></i> Kontakte</div>
+        <div cm-reactive="light-grey" ng-click="testClick('goTo Talks')"><i class="fa cm-talk"></i> Talks</div><div cm-reactive="light-grey" class="is-active" ng-click="testClick('goTo Contact')"><i class="fa cm-person"></i> Kontakte</div>
     </div>
 
     <h2>list items</h2>
@@ -202,12 +202,12 @@
     <div class="cm-re-body theme-a">
         <ul>
             <li>
-                <cm-any-tag cm-reactive="light">
+                <cm-any-tag cm-reactive="light" ng-click="testClick('open Item')">
                    <cm-avatar></cm-avatar>
                    <span>Text</span>
                 </cm-any-tag>
                 <div class="icon-list">
-                    <i class="fa cm-new-talk" cm-reactive="light"></i>
+                    <i class="fa cm-new-talk" cm-reactive="light" ng-click="testClick('goTo new Talk')"></i>
                 </div>
             </li>
         </ul>
@@ -216,14 +216,14 @@
     <h2>footer</h2>
 
     <div class="cm-re-footer">
-        <button cm-reactive="grey">
+        <button cm-reactive="grey" ng-click="testClick('close grey')">
             Close
             <i class="fa cm-close"></i>
         </button>
     </div>
 
     <div class="cm-re-footer-dark">
-        <button cm-reactive="dark">
+        <button cm-reactive="dark" ng-click="testClick('close black')">
             Close
             <i class="fa cm-close"></i>
         </button>
@@ -375,10 +375,10 @@
             })
 
     .directive('cmReactive',
-        function ($timeout){
+        function ($timeout,$parse){
             return {
                 restrict: 'A',
-                controller: function($scope, $element){
+                link: function(scope, element, attrs){
                     var isTouch = false;
 
                     function isValidTouch(evt){
@@ -393,10 +393,10 @@
                             return {top: top, left: left};
                         }
 
-                        var offset = getOffsetSum($element[0]);
+                        var offset = getOffsetSum(element[0]);
 
-                        if(evt.changedTouches[0].pageY <= (offset.top + $element[0].offsetHeight) && evt.changedTouches[0].pageY > offset.top
-                            && evt.changedTouches[0].pageX <= (offset.left + $element[0].offsetWidth) && evt.changedTouches[0].pageX > offset.left
+                        if(evt.changedTouches[0].pageY <= (offset.top + element[0].offsetHeight) && evt.changedTouches[0].pageY > offset.top
+                            && evt.changedTouches[0].pageX <= (offset.left + element[0].offsetWidth) && evt.changedTouches[0].pageX > offset.left
                         ){
                             return true;
                         }
@@ -404,38 +404,50 @@
                         return false;
                     }
 
-                    $element.on('mouseenter', function(){
-                        $element.addClass('is-hover');
+                    element.on('mouseenter', function(){
+                        element.addClass('is-hover');
                     });
 
-                    $element.on('mouseleave', function(){
-                        $element.removeClass('is-hover');
+                    element.on('mouseleave', function(){
+                        element.removeClass('is-hover');
                     });
 
-                    $element.on('click',function(){
+                    element.on('click',function(){
                         if(!isTouch){
-                            $element.addClass('is-clicked');
-                            $timeout(function(){$element.removeClass('is-clicked')},250)
+                            element.addClass('is-clicked');
+                            $timeout(function(){element.removeClass('is-clicked')},250)
                         }
                     });
 
-                    $element.on('touchstart',function(){
+                    element.on('touchstart',function(){
                         isTouch = true;
-                        $element.removeClass('is-hover');
+                        element.removeClass('is-hover');
                     });
 
-                    $element.on('touchend',function(evt){
+                    element.on('touchend',function(evt){
                         evt.preventDefault();
 
-                        $element.removeClass('is-hover');
+                        element.removeClass('is-hover');
 
                         if(isValidTouch(evt)){
-                            $element.addClass('is-touched');
-                            $timeout(function(){$element.removeClass('is-touched')},250)
+                            element.addClass('is-touched');
+                            $timeout(function(){element.removeClass('is-touched')},250)
+                        }
+
+                        if('ngClick' in attrs){
+                            var fn = $parse(attrs['ngClick']);
+                            fn(scope,{$event:evt});
                         }
 
                         isTouch = false;
                     });
+                },
+                controller: function($scope){
+                    $scope.testClick = function(e){
+                        console.log('_-] MOEP [ -_ ', e);
+
+                        return false;
+                    };
                 }
             }
         }
