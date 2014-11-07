@@ -38,19 +38,19 @@
                     </span>
                 </div>
                 <ul>
-                    <li>
+                    <li class="linker and">
                         <a href="https://market.android.com/details?id=de.cameonet">
                             <img src="<%= dlPath %>gfx/172x60_android_store.png" />
                         </a>
                         <a href="<%= dlPath %><%= phonegapBaseFilename %>.apk">.apk from our server</a>
                     </li>
-                    <li>
+                    <li class="linker ios">
                         <a class="is-disabled" >
                             <img src="<%= dlPath %>gfx/172x60_apple_store.png" />
                         </a>
                         <a href="<%= testFlightiOSURL() %>">.ipa from Testflight</a>
                     </li>
-                    <li>
+                    <li class="linker win">
                         <a class="is-disabled">
                             <img src="<%= dlPath %>gfx/172x60_windows_store.png" />
                         </a>
@@ -64,22 +64,34 @@
         (function(_location_, _navigator_,_document_){
             function checkHashbang() {
                 if (_location_.hash != '') {
-                    var href = '';
+                    var href = '',
+                        section = '';
 
-                    switch (_location_.hash.replace('#', '')) {
+                    switch (_location_.hash.replace('#','')) {
                         case 'apk':
                             href = '<%= dlPath %><%= phonegapBaseFilename %>.apk';
-                            break;
+                            section = 'and';
+                        break;
                         case 'ipa':
                             href = '<%= testFlightiOSURL() %>';
-                            break;
+                            section = 'ios';
+                        break;
                         case 'xap':
                             href = '<%= dlPath %><%= phonegapBaseFilename %>.xap';
-                            break;
+                            section = 'win';
+                        break;
                     }
 
-                    if (href != '')
+                    if (href != '') {
                         _location_.href = href;
+                    }
+                    if (section != ''){
+                        [].forEach.call(document.querySelectorAll('.linker'),function(linker){
+                            if(linker.className.indexOf(section) < 0){
+                                linker.style.display = 'none';
+                            }
+                        });
+                    }
                 }
             }
 
