@@ -39,20 +39,20 @@
                 </div>
                 <ul>
                     <li class="linker and">
-                        <a href="https://market.android.com/details?id=de.cameonet">
-                            <img src="<%= dlPath %>gfx/172x60_android_store.png" />
+                        <a href="<%= appLinks.android.href %>">
+                            <img src="<%= appLinks.android.icon %>" />
                         </a>
                         <a href="<%= dlPath %><%= phonegapBaseFilename %>.apk">.apk from our server</a>
                     </li>
                     <li class="linker ios">
                         <a class="is-disabled" >
-                            <img src="<%= dlPath %>gfx/172x60_apple_store.png" />
+                            <img src="<%= appLinks.ios.icon %>" />
                         </a>
                         <a href="<%= testFlightiOSURL() %>">.ipa from Testflight</a>
                     </li>
                     <li class="linker win">
                         <a class="is-disabled">
-                            <img src="<%= dlPath %>gfx/172x60_windows_store.png" />
+                            <img src="<%= appLinks.windows.icon %>" />
                         </a>
                         <a href="<%= dlPath %><%= phonegapBaseFilename %>.xap">.xap from our server</a>
                     </li>
@@ -99,7 +99,7 @@
                 var ua = _navigator_.userAgent.toLowerCase();
                 if (0 <= ua.indexOf("android")) {
                     // we have android
-                    var links = _document_.querySelectorAll("a[href^='http://market.android.com/']");
+                    var links = _document_.querySelectorAll("a[href^='https://market.android.com/']");
                     [].forEach.call(links,function() {
                         this.href = this.href.replace(/^https:\/\/market\.android\.com\//,"market://");
                     });

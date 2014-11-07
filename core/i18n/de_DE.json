@@ -95,6 +95,11 @@
             "TEXT_4": "Wenn Sie Fragen oder Verbesserungsvorschläge zu cameoNet haben, nutzen Sie unsere Support- und Hilfeseiten unter http://support.cameonet.de.",
             "BTN_TEXT": "Und los..."
         },
+        "DOWNLOAD": {
+            "HEADER": "@todo App Download",
+            "SUB_TEXT": "@todo Herzlich Willkommen bei cameoNet. Sie haben auf einem mobilen Browser registriert. Für Ihr Gerät gibt es eine App. Laden Sie sich diese herrunter und fahren Sie dort fort.",
+            "SKIP_TEXT": "@todo Keine App herrunterladen"
+        },
         "KEYINFO": {
             "SKIP_CHECKBOX_TEXT": "Diese Seite nicht mehr anzeigen",
             "SKIP_TEXT": "Diesen Schritt überspringen"

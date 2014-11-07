@@ -2,10 +2,10 @@
 
 angular.module('cmWidgets').directive('cmWidgetRegistration', [
     'cmAuth', 'cmUserModel', 'cmUtil', 'cmLogger', 'cmTransferScopeData',
-    'cmNotify', 'cmSystemCheck', 'cmLoader',
+    'cmNotify', 'cmSystemCheck', 'cmLoader', 'cmDevice',
     '$rootScope', '$location', '$q',
     function (cmAuth, cmUserModel, cmUtil, cmLogger, cmTransferScopeData,
-              cmNotify, cmSystemCheck, cmLoader,
+              cmNotify, cmSystemCheck, cmLoader, cmDevice,
               $rootScope, $location, $q) {
         return {
             restrict: 'AE',
@@ -152,16 +152,13 @@ angular.module('cmWidgets').directive('cmWidgetRegistration', [
                             function (accountData) {
 
                                 cmUserModel.doLogin($scope.formData.cameoId, $scope.formData.password, accountData).then(
-                                    function () {
-                                        if ($scope.handleGuest !== false) {
-                                            //$location.path('/purl/'+$rootScope.pendingPurl);
-                                            $rootScope.goto('/start/welcome');
-                                        } else {
-                                            //cmUserModel.comesFromRegistration = true;
+                                    function() {
+                                        if(cmDevice.isDesktop() || cmDevice.isApp())
                                             $rootScope.goto("/start/welcome");
-                                        }
+                                        else
+                                            $rootScope.goto("/start/download");
                                     },
-                                    function () {
+                                    function() {
                                         $scope.spinner('stop');
                                     }
                                 );
