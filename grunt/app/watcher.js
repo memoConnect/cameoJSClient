@@ -42,9 +42,9 @@ module.exports = function(grunt, options){
                         'core/**/*'
                     ],
                     tasks: [
+                        'app:deploy-without-template',
                         'app:gen-all-templates',
-                        'app:create-style-via-less',
-                        'app:packages'
+                        'cockpit:deploy-without-template'
                     ]
                 },
                 'app-other':{

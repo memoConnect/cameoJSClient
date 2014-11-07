@@ -56,15 +56,15 @@ angular.module('cmPhonegap').service('cmLocalContacts', [
             },
 
             canRead: function() {
-                if(cmDevice.debug)
+                if(cmDevice.emulateDevice)
                     cmLogger.warn('cmPhonegap.cmLocalContacts.debug == true!!!');
-                return cmDevice.debug || !cmDevice.debug && this.plugin != null;
+                return cmDevice.emulateDevice || !cmDevice.emulateDevice && this.plugin != null;
             },
 
             selectOne: function() {
                 var loaded = $q.defer();
 
-                if(cmDevice.debug){
+                if(cmDevice.emulateDevice){
                     loaded.resolve({
                         displayName: "GiverName FamilyName",
                         name: {

@@ -1,10 +1,7 @@
 'use strict';
 
-angular.module('cmWidgets').directive('cmWidgetSystemcheck', [
-    'cmSystemCheck',
-    'cmVersion',
-    'cmDevice',
-    function(cmSystemCheck, cmVersion, cmDevice){
+angular.module('cmWidgets').directive('cmWidgetSystemcheck',
+    function(cmSystemCheck, cmVersion, cmDevice, cmEnv){
         return {
             restrict: 'E',
             templateUrl: 'widgets/systemcheck/wdgt-systemcheck.html',
@@ -26,8 +23,8 @@ angular.module('cmWidgets').directive('cmWidgetSystemcheck', [
                 $scope.icon = 'gfx/pixel.png';
                 if($scope.isApp){
                     if(cmDevice.isAndroid()){
-                        $scope.icon = 'gfx/stores/playStore_aktiv.png';
-                        $scope.storeLink = 'https://play.google.com/store/apps/details?id=de.cameonet';
+                        $scope.storeLink = cmEnv.appLinks.android.href;
+                        $scope.icon = cmEnv.appLinks.android.icon;
                     } else if(cmDevice.isiOS()){
                         $scope.storeLink = '';
                     } else if(cmDevice.isWinPhone()){
@@ -39,4 +36,4 @@ angular.module('cmWidgets').directive('cmWidgetSystemcheck', [
             }
         }
     }
-]);
+);

@@ -20,6 +20,10 @@ var cameo_config = {
             routes: ['/start'],
             resolveUserModel: true
         },
+        'start-download': {
+            guests: false,
+            routes: ['/start/download']
+        },
         'start-welcome': {
             guests: false,
             routes: ['/start/welcome'],
@@ -226,7 +230,8 @@ var cameo_config = {
     env: {
         autoLogin: ('<%= autoLogin %>' == 'true'),
         loadingBar: ('<%= loadingBar %>' == 'true'),
-        enableDebug: ('<%= enableDebug %>' == 'true')
+        enableDebug: ('<%= enableDebug %>' == 'true'),
+        appLinks: <%= appLinks %>
     },
 
     autologin: {
