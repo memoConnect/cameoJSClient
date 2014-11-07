@@ -830,5 +830,16 @@
             "EMPTY_INPUT": "Eingabe ist leer!",
             "WRONG_INPUT": "Bitte überprüfen Sie Ihre Eingabe!"
         }
+    },
+
+    "FILE": {
+        "UPLOAD": {
+            "QUOTA": {
+                "EXCEEDED": "Sie haben nicht mehr genug Speicherplatz! <br> Die Datei die Sie hochladen möchten hat {{fileSize | cmBytesHumanReadable}}.<br>Sie haben nur noch {{quotaLeft | cmBytesHumanReadable}} freien Speicherplatz (von {{totalQuota | cmBytesHumanReadable}})."
+            },
+            "FILESIZE": {
+                "EXCEEDED": "Die maximale Dateigröße wurde überschritten. <br>Die Datei die Sie hochladen möchten ist {{fileSize | cmBytesHumanReadable}} groß. <br>Die maximale Dateigröße beträgt <strong>{{maxFileSize | cmBytesHumanReadable}}</strong>."
+            }
+        }
     }
 }
