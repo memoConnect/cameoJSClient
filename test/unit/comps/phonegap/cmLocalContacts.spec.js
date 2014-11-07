@@ -28,13 +28,13 @@ describe('cmLocalContacts default none app', function() {
         })
     })
 
-    describe('var emulateDevice',function(){
+    describe('var debug',function(){
         it('should be defined',function(){
-            expect(cmDevice.emulateDevice).toBeDefined()
+            expect(cmDevice.debug).toBeDefined()
         })
 
         it('should be false on default',function(){
-            expect(cmDevice.emulateDevice).toBeFalsy()
+            expect(cmDevice.debug).toBeFalsy()
         })
     })
 

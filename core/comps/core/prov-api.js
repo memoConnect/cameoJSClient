@@ -497,9 +497,10 @@ angular.module('cmCore').provider('cmApi',[
                 }
 
                 api.listenToEvents = function(){
-                    // Dont listen to Events twice:
+                    return false;
+                    //Dont listen to Events twice: 
                     api.stopListeningToEvents()
-                    // Start listening:
+                    //Start listening:
                     if(!events_disabled && events_interval) {
 //                        api.getEvents(false)
                         api._events_promise = $interval(function () {
