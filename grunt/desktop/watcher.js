@@ -29,7 +29,9 @@ module.exports = function(grunt, options){
                     files: [
                         'config/*.json',
                         'resource/templates/**/*',
-                        'desktop/**/*.html'
+                        'desktop/**/*.html',
+                        'core/webworker/*',
+                        'core/*.html'
                     ],
                     tasks: [
                         'desktop:gen-all-templates'
