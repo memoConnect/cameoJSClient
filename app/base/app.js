@@ -6,6 +6,7 @@ angular.module('cameoClient', [
     'swipe',
     'angular-loading-bar',
     // cameo dependencies
+    'cmConfig',
     'cmRoutes',
     'cmWidgets',
     'cmCore',
@@ -19,35 +20,30 @@ angular.module('cameoClient', [
     'cmValidate'
 ])
 
-.constant('cmEnv',cameo_config.env)
-.constant('cmVersion',{version:cameo_config.version, last_build:'-'})
-.constant('cmConfig',cameo_config)
-
 // cameo configuration for our providers
 .config([
-    'cmLanguageProvider',
-    'cmLoggerProvider',
-    'cmApiProvider',
-    'cmCallbackQueueProvider',
+    'cmLanguageProvider', 'cmLoggerProvider', 'cmApiProvider', 'cmCallbackQueueProvider',
+    'cmConfigProvider', 'cmEnvProvider',
+    function (cmLanguageProvider, cmLoggerProvider, cmApiProvider, cmCallbackQueueProvider,
+              cmConfigProvider, cmEnvProvider){
 
-    function (cmLanguageProvider, cmLoggerProvider, cmApiProvider, cmCallbackQueueProvider){
         cmLoggerProvider
-            .debugEnabled(cameo_config.env.enableDebug)
+            .debugEnabled( cmEnvProvider.get('enableDebug') )
 
         cmApiProvider
-            .restApiUrl( cameo_config.restApi )
-            .callStackPath( cameo_config.callStackPath )
-            .useCallStack( cameo_config.useCallStack )
-            .commitSize( cameo_config.commitSize )
-            .commitInterval( cameo_config.commitInterval )
-            .useEvents( cameo_config.useEvents )
-            .eventsPath( cameo_config.eventsPath )
-            .eventsInterval( cameo_config.eventsInterval )
+            .restApiUrl( cmConfigProvider.get('restApi') )
+            .callStackPath( cmConfigProvider.get('callStackPath') )
+            .useCallStack( cmConfigProvider.get('useCallStack') )
+            .commitSize( cmConfigProvider.get('commitSize') )
+            .commitInterval( cmConfigProvider.get('commitInterval') )
+            .useEvents( cmConfigProvider.get('useEvents') )
+            .eventsPath( cmConfigProvider.get('eventsPath') )
+            .eventsInterval( cmConfigProvider.get('eventsInterval') )
 
         cmLanguageProvider
-            .cacheLangFiles(cameo_config.cache_lang_files)
-            .supportedLanguages( cameo_config.supported_languages)
-            .pathToLanguages( cameo_config.path_to_languages)
+            .cacheLangFiles( cmConfigProvider.get('cacheLangFiles') )
+            .supportedLanguages( cmConfigProvider.get('supportedLanguages') )
+            .pathToLanguages( cmConfigProvider.get('pathToLanguages') )
             .preferredLanguage('en_US')   //for now
             .useLocalStorage()
 
@@ -57,9 +53,8 @@ angular.module('cameoClient', [
 ])
 // app route config
 .config([
-    '$routeProvider',
-    '$locationProvider',
-    function ($routeProvider, $locationProvider) {
+    '$routeProvider', '$locationProvider', 'cmConfigProvider',
+    function ($routeProvider, $locationProvider, cmConfigProvider) {
         /**
          * this option makes location use without #-tag
          * @param settings
@@ -202,11 +197,12 @@ angular.module('cameoClient', [
         }
 
         // start creation of routes
-        createRoutes(cameo_config.routes);
+        createRoutes(cmConfigProvider.get('routes'));
     }
 ])
 // app run handling
-.run(['cmNetworkInformation', 'cmPushNotificationAdapter', 'cmPhonegap',
+.run([
+    'cmNetworkInformation', 'cmPushNotificationAdapter', 'cmPhonegap',
     function(cmNetworkInformation, cmPushNotificationAdapter, cmPhonegap){
         cmPhonegap.isReady(function(){
             // check internet connection
@@ -214,7 +210,8 @@ angular.module('cameoClient', [
             // register device for pushnotification
             cmPushNotificationAdapter.init();
         });
-}])
+    }
+])
 .run(function() {
     // disabled the 3000 seconds delay on click when touch ;)
     FastClick.attach(document.body);

@@ -73,7 +73,8 @@ module.exports = function(grunt, options) {
                             'phonegapFiles': options.globalCameoBuildConfig.debug.weinre ? '<script src="http://' + options.globalCameoBuildConfig.debug.weinreIp + ':8080/target/target-script-min.js#anonymous"></script>' : '',
                             'phonegapOnload': '',
                             'appProtocol': options.globalCameoBuildConfig.static.appProtocol,
-                            'appLinks': JSON.stringify(options.globalCameoBuildConfig.static.appLinks)
+                            'appLinks': JSON.stringify(options.globalCameoBuildConfig.static.appLinks),
+                            'errorOnTodoInI18n': options.globalCameoBuildConfig.config.errorOnTodoInI18n
                         }
                     },
                     'files': {

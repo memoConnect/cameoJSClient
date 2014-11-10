@@ -5,7 +5,8 @@
         "loadingBar": false,
         "enableDebug": false,
         "logLevel": "ERROR",
-        "performancePage": false
+        "performancePage": false,
+        "errorOnTodoInI18n": true
     },
     "path": {
         "cockpit": "/c/",

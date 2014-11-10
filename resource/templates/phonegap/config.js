@@ -1,14 +1,14 @@
-var phonegap_cameo_config = {
+var phonegapCameoConfig = {
     deviceReady: false,
     pushIpAppId: '<%= pushIpAppId %>',
     googleSenderId: '<%= googleSenderId %>',
-    onBootParams: {}
+    onLaunchParams: {}
 };
 // device plugin handle that
 function deviceReady(){
     document.addEventListener('deviceready', function () {
-        console.log('deviceready triggered and now phonegap_cameo_config.deviceReady=true')
-        phonegap_cameo_config.deviceReady = true;
+        console.log('deviceready triggered and now phonegapCameoConfig.deviceReady=true')
+        phonegapCameoConfig.deviceReady = true;
     });
 }
 // applauncher plugin call that method
@@ -18,7 +18,7 @@ function handleOpenURL(url) {
 
     url
     .replace(new RegExp( protocolRegexp, 'g' ),'')
-    .replace(new RegExp( queryRegexp, 'g' ),function( $0, $1, $2, $3 ){ phonegap_cameo_config.onBootParams[ $1 ] = $3; });
+    .replace(new RegExp( queryRegexp, 'g' ),function( $0, $1, $2, $3 ){ phonegapCameoConfig.onLaunchParams[ $1 ] = $3; });
 
-    console.log(phonegap_cameo_config.onBootParams)
+    console.log('onLaunchParams '+JSON.stringify(phonegapCameoConfig.onLaunchParams))
 }
