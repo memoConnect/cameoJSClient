@@ -63,7 +63,7 @@ angular.module('cmFiles').directive('cmFiles',[
                         },
                         function(result){
                             if(typeof options.error == 'function'){
-                                options.error(result.data.error.maxFileSize, result.config.headers);
+                                options.error(result.data.errorCode, result.data.error, result.config.headers);
                             }
                         }
                     )

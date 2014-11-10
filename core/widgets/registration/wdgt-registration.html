@@ -48,10 +48,11 @@
 
     <article class="content">
         <label>{{'REGISTER.PLACEHOLDER.DISPLAYNAME'|cmTranslate}}</label>
-        <div class="cm-input-ctn" data-qa="form-input" cm-input-watcher>
+        <div class="cm-input-ctn with-inside-icon" data-qa="form-input" cm-input-watcher>
             <input
                     tabindex="4" data-qa="input-displayName"
                     type="text" id="displayName" name="displayName" ng-model="formData.displayName" />
+            <i class="fa cm-write"></i>
         </div>
     </article>
 
@@ -59,20 +60,19 @@
 
     <article class="content">
         <label>{{'REGISTER.PLACEHOLDER.EMAIL'|cmTranslate}}</label>
-        <div class="cm-input-ctn" ng-class="{'cm-input-error':registrationForm.email.$invalid}" data-qa="form-input" cm-input-watcher>
+        <div class="cm-input-ctn with-inside-icon" ng-class="{'cm-input-error':registrationForm.email.$invalid}" data-qa="form-input" cm-input-watcher>
             <input
                     tabindex="5" data-qa="input-email"
                     type="text" id="email" name="email"
                     ng-model="formData.email" ng-class="{'cm-input-error':registrationForm.email.$invalid}"
                     cm-validate-email cm-adaptive-change />
             <i
-                    class="fa cm-input-addon"
+                    class="fa cm-write"
                     ng-class="{
-                    'cm-checkbox-wrong':registrationForm.email.$dirty && registrationForm.email.$invalid,
+                    'cm-write':registrationForm.email.$dirty && registrationForm.email.$invalid,
                     'cm-checkbox-right':!(registrationForm.email.$dirty && registrationForm.email.$invalid)
                 }"
-                    ng-show="formData.email"
-                    data-qa="icon-phone-correct"></i>
+                    data-qa="icon-email-correct"></i>
         </div>
         <cm-info-bubble class="cm-alert" ng-show="registrationForm.email.$dirty && registrationForm.email.$invalid" data-qa="register-info-invalid-mail">
             <div ng-show="registrationForm.email.$invalid">
@@ -85,19 +85,18 @@
 
     <article class="content">
         <label>{{'REGISTER.PLACEHOLDER.PHONENUMBER'|cmTranslate}}</label>
-        <div class="cm-input-ctn" ng-class="{'cm-input-error':registrationForm.phone.$invalid}" data-qa="form-input" cm-input-watcher>
+        <div class="cm-input-ctn with-inside-icon" ng-class="{'cm-input-error':registrationForm.phone.$invalid}" data-qa="form-input" cm-input-watcher>
             <input
                     tabindex="6" data-qa="input-phone"
                     type="text" id="phone" name="phone"
                     ng-model="formData.phone" cm-validate-phone cm-adaptive-change ng-minlength="6"
                     ng-class="{'cm-input-error':registrationForm.phone.$invalid}" />
             <i
-                    class="fa cm-input-addon"
+                    class="fa"
                     ng-class="{
-                    'cm-checkbox-wrong':registrationForm.phone.$dirty && registrationForm.phone.$invalid,
-                    'cm-checkbox-right':!(registrationForm.phone.$dirty && registrationForm.phone.$invalid)
+                    'cm-write':registrationForm.phone.$pristine || (registrationForm.phone.$dirty && registrationForm.phone.$invalid),
+                    'cm-checkbox-right':!registrationForm.phone.$pristine && !(registrationForm.phone.$dirty && registrationForm.phone.$invalid)
                 }"
-                    ng-show="formData.phone"
                     data-qa="icon-phone-correct"></i>
         </div>
         <cm-info-bubble class="cm-alert" ng-show="registrationForm.phone.$dirty && registrationForm.phone.$invalid" data-qa="register-info-invalid-phonenumber">
@@ -112,7 +111,7 @@
     <article class="content">
         <div class="cm-clear-bg terms-link" data-qa="form-input">
             {{'REGISTER.LABEL.TERMS_ACCEPT'|cmTranslate}}&nbsp;
-            <a href="#/terms" data-qa="link-terms" class="classic-link">{{'REGISTER.LABEL.TERMS'|cmTranslate}}</a>
+            <a href="#/terms" data-qa="link-terms" class="classic-link">{{'REGISTER.LABEL.TERMS'|cmTranslate}}</a>&nbsp;*
             <input
                     data-qa="checkbox-agb"
                     type="checkbox" id="agbCheckboxInput" name="agb" ng-model="formData.agb"

@@ -7,13 +7,28 @@
         "logLevel": "WARN",
         "performancePage": false
     },
-    "cockpit": {
-        "basePath": "/c/",
-        "appPath": "/m/"
+    "path": {
+        "cockpit": "/c/",
+        "app": "/m/",
+        "dl": "/dl/"
     },
     "debug":{
         "weinre": false,
         "weinreIp": ""
+    },
+    "app_links":{
+        "android": {
+            "href": "https://market.android.com/details?id=de.cameonet",
+            "icon": "gfx/stores/172x60_android_store.png"
+        },
+        "ios": {
+            "href": "",
+            "icon": "gfx/stores/172x60_apple_store.png"
+        },
+        "winphone": {
+            "href": "",
+            "icon": "gfx/stores/172x60_windows_store.png"
+        }
     },
     "phonegap": {
         "baseName": "cameoNet-stage",

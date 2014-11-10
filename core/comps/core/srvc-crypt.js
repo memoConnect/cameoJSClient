@@ -223,7 +223,6 @@ angular.module('cmCore')
                 var self = this
 
                 async.promise = $q.defer();
-                console.log('generateAsyncKeypair cmCryptoHelper? '+(cmCryptoHelper.isAvailable()))
                 // start keygen over plugin crypto helper
                 if(cmCryptoHelper.isAvailable()) {
                     cmCryptoHelper.getPrivateKey(keySize)

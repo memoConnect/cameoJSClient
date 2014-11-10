@@ -39,7 +39,7 @@
     <gap:plugin name="com.phonegap.plugins.pushplugin" version="2.1.1" />
     <gap:plugin name="de.cameonet.cordova.contacts.readonly" version="0.2.13" />
     <!-- utils & debug -->
-    <gap:plugin name="com.verso.cordova.clipboard" version="0.1.0" />
+    <!--<gap:plugin name="com.verso.cordova.clipboard" version="0.1.0" />-->
     <gap:plugin name="de.appplant.cordova.plugin.hidden-statusbar-overlay" version="1.2.0" />
     <gap:plugin name="com.jamiestarke.webviewdebug" version="1.0.8" />
 

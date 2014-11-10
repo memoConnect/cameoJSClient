@@ -65,7 +65,7 @@
         "TITLE": {
             "HEAD_LOGIN": "Login Informationen",
             "HEAD_IDENTITY": "Benutzer Informationen",
-            "MANDATORY_INFO": "Mit * gekennzeichnete Felder, müssen ausgefüllt werden."
+            "MANDATORY_INFO": "Nur mit * gekennzeichnete Felder, müssen ausgefüllt werden."
         },
         "WARN": {
             "REGISTRATION_FAILED": "Bei der Registrierung ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut."
@@ -94,6 +94,11 @@
             "TEXT_3": "An verknüpfte Kontakte können Sie direkt aus der Kontakt-Übersicht über das Brief-Symbol Nachrichten senden. Es öffnet sich ein neuer Talk (=Unterhaltung). Geben Sie eine Nachricht ein und drücken Sie auf den Senden-Button.<br><br>Herzlichen Glückwunsch! Sie haben Ihren ersten verschlüsselten Talk geführt!",
             "TEXT_4": "Wenn Sie Fragen oder Verbesserungsvorschläge zu cameoNet haben, nutzen Sie unsere Support- und Hilfeseiten unter http://support.cameonet.de.",
             "BTN_TEXT": "Und los..."
+        },
+        "DOWNLOAD": {
+            "HEADER": "@todo App Download",
+            "SUB_TEXT": "@todo Herzlich Willkommen bei cameoNet. Sie haben auf einem mobilen Browser registriert. Für Ihr Gerät gibt es eine App. Laden Sie sich diese herrunter und fahren Sie dort fort.",
+            "SKIP_TEXT": "@todo Keine App herrunterladen"
         },
         "KEYINFO": {
             "SKIP_CHECKBOX_TEXT": "Diese Seite nicht mehr anzeigen",
@@ -824,6 +829,17 @@
         "ERROR": {
             "EMPTY_INPUT": "Eingabe ist leer!",
             "WRONG_INPUT": "Bitte überprüfen Sie Ihre Eingabe!"
+        }
+    },
+
+    "FILE": {
+        "UPLOAD": {
+            "QUOTA": {
+                "EXCEEDED": "Sie haben nicht mehr genug Speicherplatz! <br> Die Datei die Sie hochladen möchten hat {{fileSize | cmBytesHumanReadable}}.<br>Sie haben nur noch {{quotaLeft | cmBytesHumanReadable}} freien Speicherplatz (von {{totalQuota | cmBytesHumanReadable}})."
+            },
+            "FILESIZE": {
+                "EXCEEDED": "Die maximale Dateigröße wurde überschritten. <br>Die Datei die Sie hochladen möchten ist {{fileSize | cmBytesHumanReadable}} groß. <br>Die maximale Dateigröße beträgt <strong>{{maxFileSize | cmBytesHumanReadable}}</strong>."
+            }
         }
     }
 }

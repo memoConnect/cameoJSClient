@@ -305,6 +305,11 @@
       "TEXT_1" : "<span class='cm-ci-color'>cameoNet</span> is an open source messenger that makes  end-to-end encryption easy for safe, private and business communication.",
       "TEXT_5" : "We are happy when you post us any error or improvement on http://support.cameonet.de<br> Thank you! Your cameoNet-Team."
     },
+    "DOWNLOAD": {
+      "HEADER": "@todo App Download",
+      "SUB_TEXT": "@todo Herzlich Willkommen bei cameoNet. Sie haben auf einem mobilen Browser registriert. Für Ihr Gerät gibt es eine App. Laden Sie sich diese herrunter und fahren Sie dort fort.",
+      "SKIP_TEXT": "@todo Keine App herrunterladen"
+    },
     "KEYINFO" : {
       "SKIP_TEXT" : "Skip",
       "SKIP_CHECKBOX_TEXT" : "Don't show me this page again"
@@ -795,5 +800,15 @@
   },
   "PURL" : {
     "SIGN_IN" : "Register"
-  }
+  },
+    "FILE": {
+        "UPLOAD": {
+            "QUOTA": {
+                "EXCEEDED": "@todo FILE.UPLOAD.QUOTA.EXCEEDED <br> {{totalQuota | cmBytesHumanReadable}} <br> {{quotaLeft | cmBytesHumanReadable}} <br> {{fileSize | cmBytesHumanReadable}}"
+            }
+        },
+        "FILESIZE": {
+            "EXCEEDED": "@todo The maximum file size of <strong>{{maxFileSize | cmBytesHumanReadable}}</strong> has been exceeded. Your file has <strong>{{fileSize | cmBytesHumanReadable}}</strong> bytes."
+        }
+    }
 }

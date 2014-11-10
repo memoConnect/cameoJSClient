@@ -31,7 +31,7 @@ cameo Web / MobileWeb / Hybrid client <br>
   [link](https://crypto.stanford.edu/sjcl)
 
 * CryptoJS <br>
-  [code.google](https://www.code.google.com/p/crypto-js)
+  [code.google](https://code.google.com/p/crypto-js/)
 
 * FileSaver.js <br>
   [github](https://github.com/eligrey/FileSaver.js)

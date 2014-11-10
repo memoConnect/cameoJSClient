@@ -532,14 +532,14 @@ angular.module('cmCore')
                         //Keys should not sign themselves
                         if(signingKey.id == keyToSign.id && (signingKey.getFingerprint() == keyToSign.getFingerprint())){
                             self.trigger('signatures:cancel');
-                            cmLogger.debug('cmUserModel.signPublicKey() failed; key tried to sign itself.')
+                            //cmLogger.debug('cmUserModel.signPublicKey() failed; key tried to sign itself.')
                             return $q.when(false);
                         }
 
                         //Dont sign twice:
                         if(keyToSign.signatures.some(function(signature){ return signature.keyId == signingKey.id })){
                             self.trigger('signatures:cancel');
-                            cmLogger.debug('cmUserModel.signPublicKey() failed; dublicate signature.')
+                            //cmLogger.debug('cmUserModel.signPublicKey() failed; dublicate signature.')
                             return $q.when(false); 
                         }
 
@@ -629,7 +629,7 @@ angular.module('cmCore')
 
                         $q.all(
                             unsigned_ttrusted_keys.map(function(ttrusted_key){
-                                cmLogger.debug('signing: '+ttrusted_key.name)
+                                //console.info('signing: '+ttrusted_key.name)
                                 return self.signPublicKey(ttrusted_key, ttrusted_key.getFingerprint(), identity)
                             })
                         )
