@@ -18,7 +18,7 @@
 <hr ng-if="(showNoLocalKeysOnThisDevice || showUntrustedPublickeysExists)  && (publicKeys.length > 0)" class="margin-small" />
 
 <ul class="no-border" ng-if="(publicKeys.length > 0)">
-    <li ng-repeat="key in publicKeys | orderBy:sortByPrivKeys" data-qa="key-list-item">
+    <li ng-repeat="key in publicKeys | orderBy:sortByPrivKeys" data-qa="key-list-item" cm-reactive>
         <div ng-click="goTo('settings/identity/key/edit/'+key.id)" class="item tal clearfix">
             <strong>{{key.name}}</strong>
             <span class="second-row">
