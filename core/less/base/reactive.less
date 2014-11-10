@@ -15,7 +15,16 @@ cm-header {
   {background:#8D8D8D}
 }
 
-section.default-pages, .cm-menu-header{
+.cm-menu-list {
+  [cm-reactive]
+  {background:#FFF}
+  [cm-reactive].is-hover,[cm-reactive].is-touched
+  {background:#EDEDED}
+  [cm-reactive].is-clicked
+  {background:#DCDCDC}
+}
+
+section.default-pages, .cm-menu-list li.cm-menu-header{
   [cm-reactive]
   {background:#ECECEC}
   [cm-reactive].is-hover,[cm-reactive].is-touched

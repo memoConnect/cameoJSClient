@@ -10,10 +10,8 @@ module.exports = function(grunt, options){
     //]);
 
     grunt.registerTask('desktop:watcher', [
-        'app:deploy-without-template',
-        'cockpit:deploy-without-template',
-        'app:gen-all-templates',
-
+        'desktop:deploy-without-template',
+        'desktop:gen-all-templates',
         'watch:desktop'
     ]);
 

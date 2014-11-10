@@ -23,16 +23,17 @@
             <li class="{{menu[btn].css}}"
                 ng-repeat="btn in Object.keys(menu)"
                 ng-click="goTo(menu[btn], btn)"
-                data-qa="{{menu[btn]['data-qa']}}">
+                data-qa="{{menu[btn]['data-qa']}}"
+                cm-reactive>
                 <i class="fa icon-left" ng-if="menu[btn].icon != undefined" ng-class="menu[btn].icon"></i>
                 <span>
                     {{menu[btn].i18n|cmTranslate}}
-                    <cm-friend-request-counter ng-if="menu[btn].drtv != undefined && menu[btn].drtv == 'cm-friend-request-counter'"></cm-friend-request-counter>
+                    <cm-friend-request-counter ng-if="menu[btn].drtv != undefined && menu[btn].drtv == 'cm-friend-request-counter'" ></cm-friend-request-counter>
                 </span>
                 <div class="clearfix"></div>
             </li>
 
-            <li ng-click="logout()" data-qa="logout-btn">
+            <li ng-click="logout()" data-qa="logout-btn" cm-reactive>
                 <i class="fa cm-logout icon-left"></i>
                 <a class="logout">{{'MENU.LOGOUT'|cmTranslate}}</a>
                 <div class="clearfix"></div>
