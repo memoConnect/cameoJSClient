@@ -18,42 +18,42 @@ angular.module('cmCore')
         return {
 
             randomString: function (length, smallAlphabet) {
-                    var alphabet = smallAlphabet ? "abcdefghijklmnopqrstuvwxyz0123456789" : "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_"
-                    var randomInts;
+                var alphabet = smallAlphabet ? "abcdefghijklmnopqrstuvwxyz0123456789" : "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_"
+                var randomInts;
 
-                    // First we're going to try to use the browsers RNG
-                    if (window.crypto && window.crypto.getRandomValues) {
-                        randomInts = new Int32Array(length);
-                        window.crypto.getRandomValues(randomInts);
-                    }
-                    // Of course IE calls it msCrypto instead of being standard
-                    else if (window.msCrypto && window.msCrypto.getRandomValues) {
-                        randomInts = new Int32Array(length);
-                        window.crypto.getRandomValues(randomInts);
-                    }
-                    // So, no built-in functionality - bummer. If the user has wiggled the mouse enough,
-                    // sjcl might help us out here
-                    else if (sjcl.random.isReady()) {
-                        randomInts = sjcl.random.randomWords(length);
-                    }
-                    // Last resort - we'll use isaac.js to get a random number. It's seeded from Math.random(),
-                    // so this isn't ideal, but it'll still greatly increase the space of guesses needed to crack the password.
-                    else {
-                        cmLogger.warn("Random Number Generator: not enough entropy, using weak seed")
-                        randomInts = [];
-                        for (var i = 0; i < length; i++) {
-                            randomInts.push(isaac.rand());
-                        }
-                    }
-
-                    var randomWord = ""
-                    // use random ints to select char from alphabet
+                // First we're going to try to use the browsers RNG
+                if (window.crypto && window.crypto.getRandomValues) {
+                    randomInts = new Int32Array(length);
+                    window.crypto.getRandomValues(randomInts);
+                }
+                // Of course IE calls it msCrypto instead of being standard
+                else if (window.msCrypto && window.msCrypto.getRandomValues) {
+                    randomInts = new Int32Array(length);
+                    window.crypto.getRandomValues(randomInts);
+                }
+                // So, no built-in functionality - bummer. If the user has wiggled the mouse enough,
+                // sjcl might help us out here
+                else if (sjcl.random.isReady()) {
+                    randomInts = sjcl.random.randomWords(length);
+                }
+                // Last resort - we'll use isaac.js to get a random number. It's seeded from Math.random(),
+                // so this isn't ideal, but it'll still greatly increase the space of guesses needed to crack the password.
+                else {
+                    cmLogger.warn("Random Number Generator: not enough entropy, using weak seed")
+                    randomInts = [];
                     for (var i = 0; i < length; i++) {
-                        var index = Math.abs(randomInts[i]) % alphabet.length
-                        randomWord += alphabet[index]
+                        randomInts.push(isaac.rand());
                     }
-                    return randomWord;
-                },
+                }
+
+                var randomWord = ""
+                // use random ints to select char from alphabet
+                for (var i = 0; i < length; i++) {
+                    var index = Math.abs(randomInts[i]) % alphabet.length
+                    randomWord += alphabet[index]
+                }
+                return randomWord;
+            },
 
             /**
              * this method calculates a secure hash
