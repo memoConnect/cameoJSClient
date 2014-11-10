@@ -71,7 +71,8 @@ module.exports = function(grunt, options) {
                             'enableDebug': options.globalCameoBuildConfig.config.enableDebug,
                             'performancePage': options.globalCameoBuildConfig.config.performancePage,
                             'phonegapFiles': options.globalCameoBuildConfig.debug.weinre ? '<script src="http://' + options.globalCameoBuildConfig.debug.weinreIp + ':8080/target/target-script-min.js#anonymous"></script>' : '',
-                            'phonegapOnload': ''
+                            'phonegapOnload': '',
+                            'appLinks': JSON.stringify(options.globalCameoBuildConfig.app_links)
                         }
                     },
                     'files': {

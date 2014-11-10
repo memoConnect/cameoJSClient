@@ -1,11 +1,7 @@
 'use strict';
 
 angular.module('cmCore')
-.service('cmUtil', [
-
-    'cmLogger',
-    '$window',
-    '$injector',
+.service('cmUtil',
     function(cmLogger, $window, $injector){
         /**
          * Checks if Key exists in an Object or Array
@@ -255,4 +251,4 @@ angular.module('cmCore')
             return matches != null;
         };
     }
-]);
+);
