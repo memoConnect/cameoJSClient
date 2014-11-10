@@ -1,12 +1,14 @@
-<cm-avatar cm-data="identity" cm-weight="1" cm-stop-download></cm-avatar>
-<cm-key-level cm-data="identity.keys.getWeakestKeySize()" cm-weight="1"></cm-key-level>
-<section cm-weight="4" class="identityName">
-    <div class="displayName" data-qa="contact-display-name">{{identity.getDisplayName()}}</div>
-</section>
-<section class="icon-list" data-qa="btn-select-contact" ng-click="toggleRecipient()">
+<div class="wrap" cm-reactive ng-click="goToContactWithIdentity(identity)">
+    <cm-avatar cm-data="identity" cm-weight="1" cm-stop-download></cm-avatar>
+    <cm-key-level cm-data="identity.keys.getWeakestKeySize()" cm-weight="1"></cm-key-level>
+    <section cm-weight="4" class="identityName">
+        <div class="displayName" data-qa="contact-display-name">{{identity.getDisplayName()}}</div>
+    </section>
     <cm-contact-type cm-data="identity"></cm-contact-type>
+</div>
+<section class="icon-list" data-qa="btn-select-contact" ng-click="toggleRecipient()" cm-reactive>
     <i class="fa"
        ng-class="{'cm-checkbox':!selected[identity.id],
                'cm-checkbox-right':selected[identity.id]}">
-   </i>
+    </i>
 </section>

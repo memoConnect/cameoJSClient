@@ -72,6 +72,12 @@ angular.module('cmCore').service('cmRootService', [
             $rootScope.goTo('/contact/list')
         };
 
+        $rootScope.gotoContact = function (contact) {
+            if(contact.contactType != 'pending') {
+                $rootScope.goTo('/contact/edit/' + contact.id);
+            }
+        };
+
         $rootScope.gotoPurl = function(purlId, subpath){
             $rootScope.goTo('/purl/'+purlId+'/'+subpath)
         };

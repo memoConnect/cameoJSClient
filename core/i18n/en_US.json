@@ -805,10 +805,10 @@
         "UPLOAD": {
             "QUOTA": {
                 "EXCEEDED": "@todo FILE.UPLOAD.QUOTA.EXCEEDED <br> {{totalQuota | cmBytesHumanReadable}} <br> {{quotaLeft | cmBytesHumanReadable}} <br> {{fileSize | cmBytesHumanReadable}}"
+            },
+            "FILESIZE": {
+                "EXCEEDED": "@todo The maximum file size of <strong>{{maxFileSize | cmBytesHumanReadable}}</strong> has been exceeded. Your file has <strong>{{fileSize | cmBytesHumanReadable}}</strong> bytes."
             }
-        },
-        "FILESIZE": {
-            "EXCEEDED": "@todo The maximum file size of <strong>{{maxFileSize | cmBytesHumanReadable}}</strong> has been exceeded. Your file has <strong>{{fileSize | cmBytesHumanReadable}}</strong> bytes."
         }
     }
 }

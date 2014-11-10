@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('cmConversations').directive('cmRecipientTag',[
-    // no dependencies
-    function (){
+    'cmContactsModel',
+    '$rootScope',
+    function (cmContactsModel,$rootScope){
         return {
             restrict: 'AE',
             scope: {
@@ -31,6 +32,13 @@ angular.module('cmConversations').directive('cmRecipientTag',[
                     $scope.selected[$scope.identity.id]
                         ?   $scope.removeRecipient($scope.identity)
                         :   $scope.addRecipient($scope.identity);
+                };
+
+                $scope.goToContactWithIdentity  = function(identity){
+                    var contact = cmContactsModel.findByIdentity(identity);
+                    if(typeof contact == 'object'){
+                        $rootScope.gotoContact(contact);
+                    }
                 };
             }
         }
