@@ -6,9 +6,9 @@
     <div class="cm-header-block" ng-if="startRoute"></div>
 
     <cm-header cm-rubber-space ng-if="!startRoute">
-        <cm-back cm-weight="1" back-to="/talks"></cm-back>
-        <cm-identity cm-weight="6"></cm-identity>
-        <cm-menu cm-weight="1"></cm-menu>
+        <cm-back cm-weight="1" back-to="/talks cm-reactive"></cm-back>
+        <cm-identity cm-weight="6" cm-reactive></cm-identity>
+        <cm-menu cm-weight="1" cm-reactive></cm-menu>
     </cm-header>
 
     <cm-widget-quickstart cm-start-route="startRoute"></cm-widget-quickstart>

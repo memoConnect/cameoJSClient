@@ -1,0 +1,16 @@
+[cm-reactive]{
+  cursor:pointer;
+  -webkit-transition: background 0.15s ease-in-out; /* Firefox */
+  -moz-transition: background 0.15s ease-in-out; /* WebKit */
+  -o-transition: background 0.15s ease-in-out; /* Opera */
+  transition: background 0.15s ease-in-out; /* Standard */
+}
+
+cm-header {
+  [cm-reactive]
+  {background:#000}
+  [cm-reactive].is-hover,[cm-reactive].is-touched
+  {background:#555555}
+  [cm-reactive].is-clicked
+  {background:#8D8D8D}
+}

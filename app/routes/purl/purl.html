@@ -1,15 +1,16 @@
 <section class="theme-a" ng-show="!showSignIn">
     <cm-header cm-rubber-space ng-if="!headerGuest">
-        <cm-back cm-weight="1" back-to="/talks" plain-back="true"></cm-back>
-        <cm-identity cm-weight="4"></cm-identity>
+        <cm-back cm-weight="1" back-to="/talks" plain-back="true" cm-reactive></cm-back>
+        <cm-identity cm-weight="4" cm-reactive></cm-identity>
         <cm-security-indicator
             cm-weight="2"
             ng-if           = "conversation"
             cm-data         = "conversation"
             cm-leading-icon = "cm-lock"
             ng-click        = "gotoPurl(purlId, 'security')"
+            cm-reactive
         ></cm-security-indicator>
-        <cm-menu cm-weight="1"></cm-menu>
+        <cm-menu cm-weight="1" cm-reactive></cm-menu>
     </cm-header>
 
 <!--
@@ -17,29 +18,20 @@
 -->
 
     <cm-header cm-rubber-space ng-if="headerGuest">
-        <div class="fast-sign-in" ng-click="gotoRegistration()" data-qa="btn-fast-sign-in" cm-weight="2">
+        <div class="fast-sign-in" ng-click="gotoRegistration()" data-qa="btn-fast-sign-in" cm-weight="2" cm-reactive>
             <i class="fa cm-register"></i>
             <span>{{'PURL.SIGN_IN'|cmTranslate}}</span>
         </div>
-        <cm-logo cm-weight="4"></cm-logo>
+        <cm-logo cm-weight="4" cm-reactive></cm-logo>
         <cm-security-indicator
             cm-weight="2"
             ng-if           = "conversation"
             cm-data         = "conversation"
             cm-leading-icon = "cm-lock"
             ng-click        = "gotoPurl(purlId, 'security')"
+            cm-reactive
         ></cm-security-indicator>
     </cm-header>
 
     <cm-widget-conversation cm-data="conversation"></cm-widget-conversation>
 </section>
-
-<!--
-<div>
-    <section ng-switch="pageChild1" ng-if="showConversation">
-        <cm-conversation      cm-data="conversation" ng-switch-default></cm-conversation>
-        <cm-recipients        cm-data="conversation" ng-switch-when="recipients"></cm-recipients>
-        <cm-security-settings cm-data="conversation" ng-switch-when="security-settings"></cm-security-settings>
-    </section>
-</div>
--->

@@ -1,12 +1,13 @@
 <section class="theme-a fill-bg">
     <cm-header cm-rubber-space>
-        <cm-back cm-weight="1" back-to="conversation/{{conversationId}}"></cm-back>
-        <cm-identity cm-weight="4"></cm-identity>
+        <cm-back cm-weight="1" back-to="conversation/{{conversationId}}" cm-reactive></cm-back>
+        <cm-identity cm-weight="4" cm-reactive></cm-identity>
         <cm-security-indicator
             cm-weight       = "2"
             cm-data         = "conversation"
+            cm-reactive
         ></cm-security-indicator>
-        <cm-menu cm-weight="1"></cm-menu>
+        <cm-menu cm-weight="1" cm-reactive></cm-menu>
     </cm-header>
 
     <cm-widget-conversation-security cm-data="conversation"></cm-widget-conversation-security>
