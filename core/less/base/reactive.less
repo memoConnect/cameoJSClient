@@ -1,9 +1,21 @@
+.cm-reactive-default(){
+  background: @cm-white;
+  &.is-hover,&.is-touched{
+    background:#EDEDED;
+  }
+  &.is-clicked{
+    background:#DCDCDC;
+  }
+}
+
 [cm-reactive]{
   cursor:pointer;
   -webkit-transition: background 0.15s ease-in-out; /* Firefox */
   -moz-transition: background 0.15s ease-in-out; /* WebKit */
   -o-transition: background 0.15s ease-in-out; /* Opera */
   transition: background 0.15s ease-in-out; /* Standard */
+
+  .cm-reactive-default;
 }
 
 cm-header {
@@ -15,13 +27,8 @@ cm-header {
   {background:#8D8D8D}
 }
 
-.cm-menu-list {
-  [cm-reactive]
-  {background:#FFF}
-  [cm-reactive].is-hover,[cm-reactive].is-touched
-  {background:#EDEDED}
-  [cm-reactive].is-clicked
-  {background:#DCDCDC}
+.cm-menu-list [cm-reactive]{
+  .cm-reactive-default;
 }
 
 section.default-pages, .cm-menu-list li.cm-menu-header{

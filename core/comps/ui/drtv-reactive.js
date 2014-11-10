@@ -32,7 +32,7 @@ angular.module('cmUi').directive('cmReactive',[
                     return false;
                 }
 
-                element.on('mouseenter', function(){
+                element.on('mouseenter', function(evt){
                     element.addClass('is-hover');
                 });
 

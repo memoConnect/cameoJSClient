@@ -49,6 +49,21 @@ angular.module('cmCore').service('cmRootService', [
             $rootScope.goTo('/conversation/new');
         };
 
+        $rootScope.startConversationWithContact = function($event, contact){
+            $event.stopPropagation();
+            $event.preventDefault();
+
+            if(contact.contactType != 'pending'){
+                delete $rootScope.pendingConversation;
+                if (contact.identity) {
+                    $rootScope.pendingRecipients = [contact.identity]
+                } else {
+                    cmLogger.error('Unable to find identity on contact. ' + contact)
+                }
+                $rootScope.goTo('/conversation/new');
+            }
+        };
+
         $rootScope.createNewIdentity = function(){
             $rootScope.goTo('/settings/identity/create');
         };
