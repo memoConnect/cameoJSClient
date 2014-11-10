@@ -32,8 +32,7 @@ module.exports = function (grunt) {
         var buildConfigUser = './config/cameoBuildConfig-local.json';
         if (grunt.file.exists(buildConfigUser)) {
             buildConfig = grunt.file.readJSON(buildConfigUser);
-        }
-        else {
+        } else {
             buildConfig = grunt.file.readJSON('./config/cameoBuildConfig.json');
         }
 
@@ -53,6 +52,9 @@ module.exports = function (grunt) {
             default:
                 break;
         }
+
+        // load static data
+        buildConfig.static = grunt.file.readJSON('./config/cameoBuildConfig-static.json');
 
         //check whether apiUrl should be overwritten
         var apiUrl = grunt.option('apiUrl');

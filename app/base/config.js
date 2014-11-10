@@ -130,6 +130,13 @@ var cameo_config = {
             hasCtrl: true,
             resolveUserModel: true
         },
+        'prepurl': {
+            routes:[
+                '/prepurl/:purlId'
+            ],
+            hasCtrl: true,
+            guests: true
+        },
         'purl': {
             routes:[
                 '/purl/:purlId'
@@ -231,7 +238,8 @@ var cameo_config = {
         autoLogin: ('<%= autoLogin %>' == 'true'),
         loadingBar: ('<%= loadingBar %>' == 'true'),
         enableDebug: ('<%= enableDebug %>' == 'true'),
-        appLinks: <%= appLinks %>
+        appLinks: <%= appLinks %>,
+        appProtocol: '<%= appProtocol %>',
     },
 
     autologin: {
