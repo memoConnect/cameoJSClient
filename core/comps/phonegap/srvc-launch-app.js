@@ -4,16 +4,17 @@
 
 angular.module('cmPhonegap')
 .service('cmLauncher', [
-    '$rootScope',
-    function ($rootScope) {
+    '$rootScope', '$window',
+    function ($rootScope, $window) {
 
         var self = {
             params: {},
 
             init: function(){
-                // applauncher plugin call that method
-                window.handleOpenURL = function(url) {
-                    var protocolRegexp = '.*://',
+                // triggered at phonegapCameoConfig 'resources/tempaltes/phonegap/config.js'
+                angular.element($window).on('launchApp',function(event) {
+                    var url = event.detail.url,
+                        protocolRegexp = '.*://',
                         queryRegexp = '([^?=&]+)(=([^&]*))?';
 
                     url
@@ -22,27 +23,19 @@ angular.module('cmPhonegap')
                             self.params[ $1 ] = $3;
                         });
 
-                    console.log('handleOpenURL',self.params)
-
                     self.doLaunch();
-                }
+                });
             },
 
             doLaunch: function(){
-
                 // on launch with params
                 if(Object.keys(self.params).length > 0) {
-
-                    console.log('doLaunch',JSON.stringify(self.params))
-
                     switch (true) {
                         case ('purlId' in self.params):
                             $rootScope.goTo('purl/'+self.params.purlId, true);
-                            return false;
                         break;
                     }
                 }
-
             }
         };
 

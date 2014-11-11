@@ -12,6 +12,7 @@ function deviceReady(){
 }
 // applauncher plugin call that method
 function handleOpenURL(url) {
-    if('handleOpenURL' in window)
-        window.handleOpenURL(url);
+    // watcher in 'core/comps/phonegap/srvc-launch-app.js'
+    var event = new CustomEvent('launchApp', { 'detail': {url:url} });
+    window.dispatchEvent(event);
 }
