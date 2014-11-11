@@ -1,8 +1,7 @@
 var phonegapCameoConfig = {
     deviceReady: false,
     pushIpAppId: '<%= pushIpAppId %>',
-    googleSenderId: '<%= googleSenderId %>',
-    onLaunchParams: {}
+    googleSenderId: '<%= googleSenderId %>'
 };
 // device plugin handle that
 function deviceReady(){
@@ -13,12 +12,6 @@ function deviceReady(){
 }
 // applauncher plugin call that method
 function handleOpenURL(url) {
-    var protocolRegexp = '.*://',
-        queryRegexp = '([^?=&]+)(=([^&]*))?';
-
-    url
-    .replace(new RegExp( protocolRegexp, 'g' ),'')
-    .replace(new RegExp( queryRegexp, 'g' ),function( $0, $1, $2, $3 ){ phonegapCameoConfig.onLaunchParams[ $1 ] = $3; });
-
-    console.log('onLaunchParams '+JSON.stringify(phonegapCameoConfig.onLaunchParams))
+    if('handleOpenURL' in window)
+        window.handleOpenURL(url);
 }

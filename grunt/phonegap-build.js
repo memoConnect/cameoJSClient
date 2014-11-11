@@ -8,11 +8,15 @@ module.exports = function(grunt, options){
 
     grunt.registerTask('phonegap:app-prepare', [
         'clean:app-phonegap',
+        'phonegap:app-to-build-dir',
+        'compress:app-zip'
+    ]);
+
+    grunt.registerTask('phonegap:app-to-build-dir', [
         'app:deploy',
         'copy:resources-phonegap',
         'template:app-index-phonegap',
-        'phonegap:app-config',
-        'compress:app-zip'
+        'phonegap:app-config'
     ]);
 
     grunt.registerTask('phonegap:to-build-server', [
@@ -30,6 +34,7 @@ module.exports = function(grunt, options){
     grunt.registerTask('phonegap:app-config', [
         'template:app-config-phonegap'
     ]);
+
 
     var archive = {
         app: 'dist/dl/cameoNetApp.zip'

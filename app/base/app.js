@@ -202,13 +202,15 @@ angular.module('cameoClient', [
 ])
 // app run handling
 .run([
-    'cmNetworkInformation', 'cmPushNotificationAdapter', 'cmPhonegap',
-    function(cmNetworkInformation, cmPushNotificationAdapter, cmPhonegap){
+    'cmNetworkInformation', 'cmPushNotificationAdapter', 'cmPhonegap', 'cmLauncher',
+    function(cmNetworkInformation, cmPushNotificationAdapter, cmPhonegap, cmLauncher){
         cmPhonegap.isReady(function(){
             // check internet connection
             cmNetworkInformation.init();
             // register device for pushnotification
             cmPushNotificationAdapter.init();
+            // app launcher
+            cmLauncher.init();
         });
     }
 ])
@@ -223,6 +225,33 @@ angular.module('cameoClient', [
 .run(['cmError',function(cmError){
     // only an inject is nessarary
 }])
+
+// router passing wrong route calls
+.run([
+    '$rootScope', '$location',
+    'cmUserModel',
+    function($rootScope, $location,
+             cmUserModel){
+        $rootScope.$on('$routeChangeStart', function(){
+
+            // expections
+            var path_regex = /^(\/login|\/registration|\/systemcheck|\/terms|\/disclaimer|\/404|\/version|\/purl\/[a-zA-Z0-9]{1,})$/;
+            var path = $location.$$path;
+            // exists none token then otherwise to login
+            if (cmUserModel.isAuth() === false){
+                if (!path_regex.test(path)) {
+                    $location.path('/login');
+                }
+            // when token exists
+            } else if ((path == '/login' || path == '/registration') && cmUserModel.isGuest() !== true) {
+                $location.path('/talks');
+            // logout route
+            } else if (path == '/logout'){
+                cmUserModel.doLogout(true,'app.js logout-route');
+            }
+        });
+    }
+])
 /**
  * @TODO cmContactsModel anders initialisieren
  */
@@ -256,30 +285,9 @@ angular.module('cameoClient', [
         $rootScope.console  =   window.console;
         $rootScope.alert    =   window.alert;
 
-        // $rootScope.$watch(function(){
-        //     cmLogger.debug('$digest!')
-        // })
-
         //add Overlay handles:
         $rootScope.showOverlay = function(id){ $rootScope.$broadcast('cmOverlay:show', id) };
         $rootScope.hideOverlay = function(id){ $rootScope.$broadcast('cmOverlay:hide', id) };
-
-        // passing wrong route calls
-        $rootScope.$on('$routeChangeStart', function(){
-            // expections
-            var path_regex = /^(\/login|\/registration|\/systemcheck|\/terms|\/disclaimer|\/404|\/version|\/purl\/[a-zA-Z0-9]{1,})$/;
-            var path = $location.$$path;
-            // exists none token then otherwise to login
-            if (cmUserModel.isAuth() === false){
-                if (!path_regex.test(path)) {
-                    $location.path('/login');
-                }
-            } else if ((path == '/login' || path == '/registration') && cmUserModel.isGuest() !== true) {
-                $location.path('/talks');
-            } else if (path == '/logout'){
-                cmUserModel.doLogout(true,'app.js logout-route');
-            }
-        });
 
         // url hashing for backbutton
         $rootScope.urlHistory = [];
