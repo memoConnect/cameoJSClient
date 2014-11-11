@@ -39,3 +39,21 @@ section.default-pages, .cm-menu-list li.cm-menu-header{
   [cm-reactive].is-clicked
   {background:#BFBFBF}
 }
+
+button[cm-reactive] {
+  &.cm-btn-grey{
+    background:#555555;
+    &.is-hover, &.is-touched
+    {background:#8D8D8D}
+    .is-clicked
+    {background:#A0A0A0}
+  }
+
+  &.cm-btn-black {
+    background:#000;
+    &.is-hover, &.is-touched
+    {background:#555555}
+    .is-clicked
+    {background:#A0A0A0}
+  }
+}

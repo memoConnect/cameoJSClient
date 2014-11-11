@@ -32,7 +32,7 @@
     </ul>
 
     <cm-footer>
-        <button ng-click="generate()" class="cm-btn-grey" data-qa="btn-generate-key">
+        <button ng-click="generate()" class="cm-btn-grey" data-qa="btn-generate-key" cm-reactive>
             {{'IDENTITY.KEYS.GENERATE.START.GENERATE_BUTTON'|cmTranslate}}
             <i class="fa cm-checker"></i>
         </button>
@@ -66,7 +66,7 @@
     </div>
 
     <cm-footer>
-        <button ng-click="cancel()" class="cm-btn-grey" data-qa="btn-cancel-key-generation">
+        <button ng-click="cancel()" class="cm-btn-grey" data-qa="btn-cancel-key-generation" cm-reactive>
             {{'IDENTITY.KEYS.GENERATE.GENERATING.STOP_BUTTON'|cmTranslate}}
             <i class="fa cm-checkbox-wrong"></i>
         </button>
@@ -111,7 +111,7 @@
         </article>
     </form>
     <cm-footer>
-        <button ng-click="store()" class="cm-btn-grey" data-qa="btn-save-key">
+        <button ng-click="store()" class="cm-btn-grey" data-qa="btn-save-key" cm-reactive>
             <span ng-show="!showLoader">
                 {{'IDENTITY.KEYS.GENERATE.SAVE.SAVE_BUTTON'|cmTranslate}}
                 <i class="fa cm-checker"></i>
