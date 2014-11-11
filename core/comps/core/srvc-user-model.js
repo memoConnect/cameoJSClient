@@ -24,14 +24,16 @@ angular.module('cmCore')
     'cmBoot', 'cmAuth', 'cmLocalStorage', 'cmIdentityFactory', 'cmIdentityModel', 'cmFactory',
     'cmCrypt', 'cmKeyFactory', 'cmKey', 'cmStateManagement', 'cmObject', 'cmUtil',
     'cmNotify', 'cmLogger', 'cmCallbackQueue', 'cmPushNotificationAdapter', 'cmApi',
-    '$rootScope', '$q', '$location',
+    '$rootScope', '$q', '$location', '$timeout',
     function(cmBoot, cmAuth, cmLocalStorage, cmIdentityFactory, cmIdentityModel, cmFactory,
              cmCrypt, cmKeyFactory, cmKey, cmStateManagement, cmObject, cmUtil,
              cmNotify, cmLogger, cmCallbackQueue, cmPushNotificationAdapter, cmApi,
-             $rootScope, $q, $location){
+             $rootScope, $q, $location, $timeout){
+
         var self = this,
             isAuth = false,
             initialize = ''; // empty, run, done ! important for isAuth check
+
 
         cmObject.addEventHandlingTo(this);
 
@@ -574,17 +576,24 @@ angular.module('cmCore')
         };
 
         this.signOwnKeys = function(){
-            //cmLogger.debug('cmUserModel.signOwnKeys');
+            cmLogger.debug('cmUserModel.signOwnKeys');
             return this.verifyIdentityKeys(this.data.identity, true)
         }
 
         /**
-         * [verifyIdentityKeys Checks for keys that are either signed by a local key or keys that are signed by a key of the former kind and have the same owner]
+         * [verifyIdentityKeys Checks for keys that are either signed by a local key or keys that are signed by a key of the former kind and have the same owner as the signing key]
          * @param  {cmIdentitymodel} identity [description]
          * @return {cmKeyFactory}   cmKeyFactory returning all transitively trusted keys of identity. Users local keys are assumed to be trusted.
          */
-        this.verifyIdentityKeys = function(identity, sign){
+        this.verifyIdentityKeys = function(identity, sign, use_cache){
             //cmLogger.debug('cmUserModel.verifyIdentityKeys');
+
+            identity = identity || self.data.identity
+
+            if(sign && use_cache){
+                cmLogger.error('Tried to sign keys relying on cache.')
+                throw('Tried to sign keys relying on cache.')
+            }
 
             if(!identity.keys)
                 return $q.when([]);
@@ -594,15 +603,16 @@ angular.module('cmCore')
             return  $q.when()
                     .then(function(){
                         return  self.data.identity.keys.getTransitivelyTrustedKeys(local_keys, function trust(trusted_key, key){
-                                    return trusted_key.verifyKey(key, self.getTrustToken(key, self.data.identity.cameoId))
+                                    return trusted_key.verifyKey(key, self.getTrustToken(key, self.data.identity.cameoId), use_cache)
                                 })
                     })
                     .then(function(own_ttrusted_keys){
                         return  identity.keys.getTransitivelyTrustedKeys(own_ttrusted_keys, function trust(trusted_key, key){
-                                    return trusted_key.verifyKey(key, self.getTrustToken(key, identity.cameoId))
+                                    return trusted_key.verifyKey(key, self.getTrustToken(key, identity.cameoId), use_cache)
                                 });
                     })
                     .then(function(ttrusted_keys){
+
                         //looks for keys that are transitively trusted but not yet signed by all local keys:
                         var unsigned_ttrusted_keys  =   ttrusted_keys.filter(function(ttrusted_key){
                                                             return  local_keys.some(function(local_key){
@@ -631,9 +641,9 @@ angular.module('cmCore')
                     })
         };
 
-        this.verifyTrust = function(identity){
+        this.verifyTrust = function(identity, use_cache){
             return  identity.keys.length != 0
-                    ?   this.verifyIdentityKeys(identity, true)
+                    ?   this.verifyIdentityKeys(identity, null, use_cache)
                         .then(function(trusted_keys){
                             return  identity.keys.length == trusted_keys.length
                                     ?   $q.when()
@@ -873,11 +883,20 @@ angular.module('cmCore')
             cmBoot.ready.userModel();
         });
 
+        var signOwnKeys_scheduled = false
+
         cmAuth.on('identity:updated signatures:updated', function(event, data){
             if(typeof data.id != 'undefined' && data.id == self.data.identity.id) {
                 self.data.identity.importData(data);
-                self.syncLocalKeys();
-                self.signOwnKeys()
+                self.syncLocalKeys()
+
+                //Todo: find a more general solution: AP
+                if(!signOwnKeys_scheduled)     
+                    signOwnKeys_scheduled = true             
+                    $timeout(function(){
+                        signOwnKeys_scheduled = false
+                        self.signOwnKeys()
+                    }, 5000)
             }
         });
 

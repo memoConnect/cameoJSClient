@@ -9,13 +9,13 @@ self.addEventListener('message', function(event) {
     switch (data.cmd) {
         case 'start':
             try {
-                crypt.setKey(data.privKey)
+                crypt.setKey(data.params.privKey)
 
-                var result = crypt.decrypt(data.encryptedSecret)
+                var result = crypt.decrypt(data.params.encryptedSecret)
 
                 self.postMessage({
                     msg:    result ? 'finished' : 'failed',
-                    secret: result
+                    result: result
                 })
 
             } catch(e){

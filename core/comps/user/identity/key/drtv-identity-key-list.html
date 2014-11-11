@@ -26,16 +26,16 @@
                     <span class="seperator">|</span>
                 </strong>
 
-                <span ng-if="checking[key.id]" class = "is-checking">
+                <span ng-if="stillChecking(key)" class = "is-checking">
                     ???
                     <span class="seperator">|</span>
                 </span>
 
-                <span ng-if="!checking[key.id] && isTrustedKey(key)" class="is-trusted">{{'SETTINGS.PAGES.IDENTITY.KEYS.IS_TRUSTED'|cmTranslate}}
+                <span ng-if="!stillChecking(key) && isTrustedKey(key)" class="is-trusted">{{'SETTINGS.PAGES.IDENTITY.KEYS.IS_TRUSTED'|cmTranslate}}
                     <span class="seperator">|</span>
                 </span>
 
-                <span ng-if="!checking[key.id] && !isTrustedKey(key)" class="is-untrusted">{{'SETTINGS.PAGES.IDENTITY.KEYS.IS_UNTRUSTED'|cmTranslate}}
+                <span ng-if="!stillChecking(key) && !isTrustedKey(key)" class="is-untrusted">{{'SETTINGS.PAGES.IDENTITY.KEYS.IS_UNTRUSTED'|cmTranslate}}
                     <span class="seperator">|</span>
                 </span>
                 {{key.created | date:'dd.MM.yy - HH:mm'}}

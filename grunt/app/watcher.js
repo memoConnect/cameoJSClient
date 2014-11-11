@@ -12,10 +12,7 @@ module.exports = function(grunt, options){
     //]);
 
     grunt.registerTask('app:watcher', [
-        'app:deploy-without-template',
-        'cockpit:deploy-without-template',
-        'app:gen-all-templates',
-
+        'app:to-dist',
         'watch:app'
     ]);
 
@@ -42,14 +39,13 @@ module.exports = function(grunt, options){
                         'core/**/*'
                     ],
                     tasks: [
-                        'app:deploy-without-template',
-                        'app:gen-all-templates',
-                        'cockpit:deploy-without-template'
+                        'app:to-dist'
                     ]
                 },
                 'app-other':{
                     files: [
                         'config/*.json',
+                        'core/webworker/*',
                         'resource/templates/**/*',
                         'app/**/*.html',
                         'core/webworker/*',
@@ -77,6 +73,7 @@ module.exports = function(grunt, options){
                         'app/routes/**/*',
                         'app/comps/**/*',
                         'app/widgets/**/*'
+
                     ],
                     tasks: [
                         'app:packages'

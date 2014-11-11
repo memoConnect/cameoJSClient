@@ -36,7 +36,7 @@ module.exports = function(grunt, options){
                             'currentVersion': options.globalCameoBuildConfig.config.version,
                             'appPath': options.globalCameoBuildConfig.path.app,
                             'dlPath': options.globalCameoBuildConfig.path.dl,
-                            'appLinks': options.globalCameoBuildConfig.app_links,
+                            'appLinks': options.globalCameoBuildConfig.static.appLinks,
                             'testFlightiOSURL': function () {
                                 return options.globalCameoBuildConfig.iosTestFlightURL
                             }

@@ -6,14 +6,14 @@ angular.module('cmCore').provider('cmApi',[
 //Service to handle all api calls
 
     function($injector){
-        var rest_api    = "",
+        var rest_api            = "",
             call_stack_disabled = true,
-            call_stack_path = "",
-            commit_size = 10,
-            commit_interval = 2000,
-            events_disabled = true,
-            events_path = "",
-            events_interval = 5000
+            call_stack_path     = "",
+            commit_size         = 10,
+            commit_interval     = 2000,
+            events_disabled     = true,
+            events_path         = "",
+            events_interval     = 5000
 
         this.restApiUrl = function(url){
             rest_api = url;

@@ -65,7 +65,10 @@ module.exports = function(grunt, options) {
                             'autoLogin': options.globalCameoBuildConfig.config.autoLogin,
                             'loadingBar': options.globalCameoBuildConfig.config.loadingBar,
                             'enableDebug': options.globalCameoBuildConfig.config.enableDebug,
-                            'performancePage': options.globalCameoBuildConfig.config.performancePage
+                            'performancePage': options.globalCameoBuildConfig.config.performancePage,
+                            'appProtocol': options.globalCameoBuildConfig.static.appProtocol,
+                            'appLinks': JSON.stringify(options.globalCameoBuildConfig.static.appLinks),
+                            'errorOnTodoInI18n': options.globalCameoBuildConfig.config.errorOnTodoInI18n
                         }
                     },
                     'files': {
