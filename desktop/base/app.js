@@ -25,12 +25,18 @@ angular.module('cameoClient', [
 // cameo configuration for our providers
 .config([
     'cmLanguageProvider', 'cmLoggerProvider', 'cmApiProvider', 'cmCallbackQueueProvider',
-    'cmConfigProvider', 'cmEnvProvider',
+    'cmConfigProvider', 'cmEnvProvider', 'cmWebworkerFactoryProvider',
     function (cmLanguageProvider, cmLoggerProvider, cmApiProvider, cmCallbackQueueProvider,
-              cmConfigProvider, cmEnvProvider){
+              cmConfigProvider, cmEnvProvider, cmWebworkerFactoryProvider){
 
         cmLoggerProvider
             .debugEnabled( cmEnvProvider.get('enableDebug') )
+
+        cmWebworkerFactoryProvider
+            .setGlobalDefaultLimit( cmConfigProvider.get('webworkerDefaultGlobalLimit') )
+            .setMobileDefaultLimit( cmConfigProvider.get('WebworkerDefaultLimitMobile') )
+            .setAppDefaultLimit( cmConfigProvider.get('WebworkerDefaultLimitApp') )
+            .setDesktopDefaultLimit( cmConfigProvider.get('WebworkerDefaultLimitDesktop') )
 
         cmApiProvider
             .restApiUrl( cmConfigProvider.get('restApi') )
