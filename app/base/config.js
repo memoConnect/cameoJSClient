@@ -248,7 +248,7 @@ angular.module('cmConfig',[])
             appProtocol: '<%= appProtocol %>',
 
 
-            autologin: {
+            autoLoginData: {
                 'Dumpuser local': {
                     user: '2VqTftqh',
                     pass: 'password'
