@@ -29,30 +29,38 @@ angular.module('cameoClient', [
     'cmLoggerProvider',
     'cmApiProvider',
     'cmCallbackQueueProvider',
+    'cmWebworkerFactoryProvider',
 
-    function (cmLanguageProvider, cmLoggerProvider, cmApiProvider, cmCallbackQueueProvider){
+    function (cmLanguageProvider, cmLoggerProvider, cmApiProvider, cmCallbackQueueProvider, cmWebworkerFactoryProvider){
         cmLoggerProvider
-            .debugEnabled(cameo_config.env.enableDebug)
+            .debugEnabled(  cameo_config.env.enableDebug)
+
+        cmWebworkerFactoryProvider
+            .setGlobalDefaultLimit(     cameo_config.webworkerDefaultGlobalLimit)
+            .setMobileDefaultLimit(     cameo_config.WebworkerDefaultLimitMobile)
+            .setAppDefaultLimit(        cameo_config.WebworkerDefaultLimitApp)
+            .setDesktopDefaultLimit(    cameo_config.WebworkerDefaultLimitDesktop)
 
         cmApiProvider
-            .restApiUrl( cameo_config.restApi )
-            .callStackPath( cameo_config.callStackPath )
-            .useCallStack( cameo_config.useCallStack )
-            .commitSize( cameo_config.commitSize )
-            .commitInterval( cameo_config.commitInterval )
-            .useEvents( cameo_config.useEvents )
-            .eventsPath( cameo_config.eventsPath )
-            .eventsInterval( cameo_config.eventsInterval )
+            .restApiUrl(        cameo_config.restApi )
+            .callStackPath(     cameo_config.callStackPath )
+            .useCallStack(      cameo_config.useCallStack )
+            .commitSize(        cameo_config.commitSize )
+            .commitInterval(    cameo_config.commitInterval )
+            .useEvents(         cameo_config.useEvents )
+            .eventsPath(        cameo_config.eventsPath )
+            .eventsInterval(    cameo_config.eventsInterval )
 
         cmLanguageProvider
-            .cacheLangFiles(cameo_config.cache_lang_files)
-            .supportedLanguages( cameo_config.supported_languages)
-            .pathToLanguages( cameo_config.path_to_languages)
-            .preferredLanguage('en_US')   //for now
+            .cacheLangFiles(        cameo_config.cache_lang_files)
+            .supportedLanguages(    cameo_config.supported_languages)
+            .pathToLanguages(       cameo_config.path_to_languages)
+            .preferredLanguage(     'en_US')   //for now
             .useLocalStorage()
 
         cmCallbackQueueProvider
             .setQueueTime(250)
+
     }
 ])
 // app route config
