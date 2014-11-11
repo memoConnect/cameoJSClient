@@ -24,6 +24,13 @@ module.exports = function(grunt, options) {
         'template:app-files'
     ]);
 
+    // used by watcher, protractor and karma
+    grunt.registerTask('app:to-dist', [
+        'app:deploy-without-template',
+        'cockpit:deploy-without-template',
+        'app:gen-all-templates'
+    ]);
+
     return {
         tasks: {
             clean: {
