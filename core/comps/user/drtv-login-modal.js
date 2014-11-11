@@ -6,16 +6,17 @@ angular.module('cmUser').directive('cmLoginModal', [
     'cmKeyStorageService',
     'cmCrypt',
     'cmConfig',
+    'cmEnv',
     'cmLoader',
     '$location',
-    function (cmNotify, cmUserModel, cmKeyStorageService, cmCrypt, cmConfig, cmLoader,
+    function (cmNotify, cmUserModel, cmKeyStorageService, cmCrypt, cmConfig, cmEnv, cmLoader,
               $location) {
         return  {
             restrict    :   'AE',
             templateUrl :   'comps/user/drtv-login-modal.html',
             scope       :   {},
             controller  :   function ($scope, $rootScope) {
-                $scope.cmEnv = cmConfig.env;
+                $scope.cmEnv = cmEnv;
                 var loader = new cmLoader($scope);
                 $scope.alertState = '';
                 $scope.passwordType = 'password';
