@@ -457,10 +457,6 @@ angular.module('cmCore').service('cmAuth', [
             auth.trigger('identity:updated', data)
         });
 
-        cmApi.on('signatures:updated', function(event, data){
-//            console.log('cmAuth.on:signatures:updated')
-            auth.trigger('signatures:updated', data)
-        });
 
         cmApi.on('conversation:new-aePassphrase', function(event, data){
            //console.log('conversation:new-aePassphrase');

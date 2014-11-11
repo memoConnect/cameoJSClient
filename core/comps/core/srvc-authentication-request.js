@@ -179,12 +179,10 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
                                         }),
                     fromKey         =   fromIdentity.keys.find(request.fromKeyId)
 
-                console.log('verifying...')
 
                 return  fromKey.verify(hashed_data, request.signature)
                         .then(
                             function(result){
-                                console.log('...success')
                                 self.trigger('verification:successful', {
                                         identity:           fromIdentity,
                                         key:                fromKey,
@@ -193,7 +191,6 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
                                 return $q.when(result)
                             },
                             function(reason){
-                                console.log('...failed.')
                                 self.trigger('verification:failed')
                                 return $q.reject(reason)
                             }
@@ -443,7 +440,7 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
                 var modal = cmModal.instances['incoming-authentication-request']
 
                 // If some other authentication request is meant to be canceled:
-                if(modal && modal.request.fromIdentityId != data.fromIdentityId){
+                if(modal && data && (modal.request.fromIdentityId != data.fromIdentityId)){
                     cmLogger.debug('cmAuthenticationRequest, received cancel event, but with different origin or inactive modal.')
                     return false    // dont remove the event binding
                 }
