@@ -178,7 +178,7 @@
     .border-top;
     li {
       .with-cursor;
-      .border-bottom;
+      .border-top;
       .pos-rel;
       min-height:@cm-unit;
       ul.cm-submenu{
@@ -191,7 +191,7 @@
         color: @cm-grey;
         padding: 0.8rem;
         width: 100%;
-
+        height: @cm-unit;
         &.text{
           padding:1rem 2rem;
         }
@@ -239,6 +239,14 @@
         }
       }
     }
+  }
+
+  ul li:first-child{
+    border-top: none !important;
+  }
+
+  ul li:last-child {
+    .border-bottom;
   }
 
   .authentication-status{
