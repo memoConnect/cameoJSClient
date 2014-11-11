@@ -127,7 +127,7 @@ angular.module('cmPhonegap')
             plugin: null,
 
             init: function () {
-                if (typeof $phonegapCameoConfig == 'undefined'){
+                if ($phonegapCameoConfig == 'undefined'){
                     return false;
                 }
 

@@ -40,7 +40,7 @@ angular.module('cmPhonegap').service('cmLocalContacts', [
             plugin: null,
 
             init: function () {
-                if(typeof $phonegapCameoConfig == 'undefined') {
+                if($phonegapCameoConfig == 'undefined') {
                     return false;
                 }
 
