@@ -153,7 +153,7 @@ angular.module('cmWidgets').directive('cmWidgetRegistration', [
 
                                 cmUserModel.doLogin($scope.formData.cameoId, $scope.formData.password, accountData).then(
                                     function() {
-                                        if(cmDevice.isDesktop() || cmDevice.isApp())
+                                        if(cmDevice.isDesktop('cmWidgetRegistration') || cmDevice.isApp())
                                             $rootScope.goto("/start/welcome");
                                         else
                                             $rootScope.goto("/start/download");

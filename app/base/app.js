@@ -6,6 +6,7 @@ angular.module('cameoClient', [
     'swipe',
     'angular-loading-bar',
     // cameo dependencies
+    'cmConfig',
     'cmRoutes',
     'cmWidgets',
     'cmCore',
@@ -19,43 +20,37 @@ angular.module('cameoClient', [
     'cmValidate'
 ])
 
-.constant('cmEnv',cameo_config.env)
-.constant('cmVersion',{version:cameo_config.version, last_build:'-'})
-.constant('cmConfig',cameo_config)
-
 // cameo configuration for our providers
 .config([
-    'cmLanguageProvider',
-    'cmLoggerProvider',
-    'cmApiProvider',
-    'cmCallbackQueueProvider',
-    'cmWebworkerFactoryProvider',
+    'cmLanguageProvider', 'cmLoggerProvider', 'cmApiProvider', 'cmCallbackQueueProvider',
+    'cmConfigProvider', 'cmEnvProvider', 'cmWebworkerFactoryProvider',
+    function (cmLanguageProvider, cmLoggerProvider, cmApiProvider, cmCallbackQueueProvider,
+              cmConfigProvider, cmEnvProvider, cmWebworkerFactoryProvider){
 
-    function (cmLanguageProvider, cmLoggerProvider, cmApiProvider, cmCallbackQueueProvider, cmWebworkerFactoryProvider){
         cmLoggerProvider
-            .debugEnabled(  cameo_config.env.enableDebug)
+            .debugEnabled( cmEnvProvider.get('enableDebug') )
 
-        cmWebworkerFactoryProvider
-            .setGlobalDefaultLimit(     cameo_config.webworkerDefaultGlobalLimit)
-            .setMobileDefaultLimit(     cameo_config.WebworkerDefaultLimitMobile)
-            .setAppDefaultLimit(        cameo_config.WebworkerDefaultLimitApp)
-            .setDesktopDefaultLimit(    cameo_config.WebworkerDefaultLimitDesktop)
+		cmWebworkerFactoryProvider
+            .setGlobalDefaultLimit( cmConfigProvider.get('webworkerDefaultGlobalLimit') )
+            .setMobileDefaultLimit( cmConfigProvider.get('WebworkerDefaultLimitMobile') )
+            .setAppDefaultLimit( cmConfigProvider.get('WebworkerDefaultLimitApp') )
+            .setDesktopDefaultLimit( cmConfigProvider.get('.WebworkerDefaultLimitDesktop') )
 
         cmApiProvider
-            .restApiUrl(        cameo_config.restApi )
-            .callStackPath(     cameo_config.callStackPath )
-            .useCallStack(      cameo_config.useCallStack )
-            .commitSize(        cameo_config.commitSize )
-            .commitInterval(    cameo_config.commitInterval )
-            .useEvents(         cameo_config.useEvents )
-            .eventsPath(        cameo_config.eventsPath )
-            .eventsInterval(    cameo_config.eventsInterval )
+            .restApiUrl( cmConfigProvider.get('restApi') )
+            .callStackPath( cmConfigProvider.get('callStackPath') )
+            .useCallStack( cmConfigProvider.get('useCallStack') )
+            .commitSize( cmConfigProvider.get('commitSize') )
+            .commitInterval( cmConfigProvider.get('commitInterval') )
+            .useEvents( cmConfigProvider.get('useEvents') )
+            .eventsPath( cmConfigProvider.get('eventsPath') )
+            .eventsInterval( cmConfigProvider.get('eventsInterval') )
 
         cmLanguageProvider
-            .cacheLangFiles(        cameo_config.cache_lang_files)
-            .supportedLanguages(    cameo_config.supported_languages)
-            .pathToLanguages(       cameo_config.path_to_languages)
-            .preferredLanguage(     'en_US')   //for now
+            .cacheLangFiles( cmConfigProvider.get('cacheLangFiles') )
+            .supportedLanguages( cmConfigProvider.get('supportedLanguages') )
+            .pathToLanguages( cmConfigProvider.get('pathToLanguages') )
+            .preferredLanguage('en_US')   //for now
             .useLocalStorage()
 
         cmCallbackQueueProvider
@@ -65,9 +60,8 @@ angular.module('cameoClient', [
 ])
 // app route config
 .config([
-    '$routeProvider',
-    '$locationProvider',
-    function ($routeProvider, $locationProvider) {
+    '$routeProvider', '$locationProvider', 'cmConfigProvider',
+    function ($routeProvider, $locationProvider, cmConfigProvider) {
         /**
          * this option makes location use without #-tag
          * @param settings
@@ -210,19 +204,23 @@ angular.module('cameoClient', [
         }
 
         // start creation of routes
-        createRoutes(cameo_config.routes);
+        createRoutes(cmConfigProvider.get('routes'));
     }
 ])
 // app run handling
-.run(['cmNetworkInformation', 'cmPushNotificationAdapter', 'cmPhonegap',
-    function(cmNetworkInformation, cmPushNotificationAdapter, cmPhonegap){
+.run([
+    'cmNetworkInformation', 'cmPushNotificationAdapter', 'cmPhonegap', 'cmLauncher',
+    function(cmNetworkInformation, cmPushNotificationAdapter, cmPhonegap, cmLauncher){
         cmPhonegap.isReady(function(){
             // check internet connection
             cmNetworkInformation.init();
             // register device for pushnotification
             cmPushNotificationAdapter.init();
+            // app launcher
+            cmLauncher.init();
         });
-}])
+    }
+])
 .run(function() {
     // disabled the 3000 seconds delay on click when touch ;)
     FastClick.attach(document.body);
@@ -234,6 +232,33 @@ angular.module('cameoClient', [
 .run(['cmError',function(cmError){
     // only an inject is nessarary
 }])
+
+// router passing wrong route calls
+.run([
+    '$rootScope', '$location',
+    'cmUserModel',
+    function($rootScope, $location,
+             cmUserModel){
+        $rootScope.$on('$routeChangeStart', function(){
+
+            // expections
+            var path_regex = /^(\/login|\/registration|\/systemcheck|\/terms|\/disclaimer|\/404|\/version|\/purl\/[a-zA-Z0-9]{1,})$/;
+            var path = $location.$$path;
+            // exists none token then otherwise to login
+            if (cmUserModel.isAuth() === false){
+                if (!path_regex.test(path)) {
+                    $location.path('/login');
+                }
+            // when token exists
+            } else if ((path == '/login' || path == '/registration') && cmUserModel.isGuest() !== true) {
+                $location.path('/talks');
+            // logout route
+            } else if (path == '/logout'){
+                cmUserModel.doLogout(true,'app.js logout-route');
+            }
+        });
+    }
+])
 /**
  * @TODO cmContactsModel anders initialisieren
  */
@@ -267,30 +292,9 @@ angular.module('cameoClient', [
         $rootScope.console  =   window.console;
         $rootScope.alert    =   window.alert;
 
-        // $rootScope.$watch(function(){
-        //     cmLogger.debug('$digest!')
-        // })
-
         //add Overlay handles:
         $rootScope.showOverlay = function(id){ $rootScope.$broadcast('cmOverlay:show', id) };
         $rootScope.hideOverlay = function(id){ $rootScope.$broadcast('cmOverlay:hide', id) };
-
-        // passing wrong route calls
-        $rootScope.$on('$routeChangeStart', function(){
-            // expections
-            var path_regex = /^(\/login|\/registration|\/systemcheck|\/terms|\/disclaimer|\/404|\/version|\/purl\/[a-zA-Z0-9]{1,})$/;
-            var path = $location.$$path;
-            // exists none token then otherwise to login
-            if (cmUserModel.isAuth() === false){
-                if (!path_regex.test(path)) {
-                    $location.path('/login');
-                }
-            } else if ((path == '/login' || path == '/registration') && cmUserModel.isGuest() !== true) {
-                $location.path('/talks');
-            } else if (path == '/logout'){
-                cmUserModel.doLogout(true,'app.js logout-route');
-            }
-        });
 
         // url hashing for backbutton
         $rootScope.urlHistory = [];

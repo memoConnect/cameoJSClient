@@ -114,24 +114,6 @@ angular.module('cmCore')
                     return instance
                 }
 
-
-
-
-
-
-                if(cmDevice.isMobile())
-                    limit = default_mobile_limit
-
-                if(cmDevice.isDesktop())
-                    limit = default_desktop_limit
-
-                if(cmDevice.isApp())
-                    limit = default_app_limit
-
-
-
-
-                
                 var self =  cmFactory(cmWebworker,
                                 //sameByData:
                                 function(instance, data){
@@ -174,7 +156,14 @@ angular.module('cmCore')
 
                 }
 
-                self.advance = function(){
+                self.advance = function() {
+                    if (cmDevice.isApp())
+                        limit = default_app_limit;
+                    else if(cmDevice.isMobile('cmWebworkerFactory'))
+                        limit = default_mobile_limit;
+                    else if(cmDevice.isDesktop('cmWebworkerFactory'))
+                        limit = default_desktop_limit;
+
                     for(var i = 0; i < limit; i++){
                         self[i] && self[i].trigger('available')
                     }
@@ -187,7 +176,6 @@ angular.module('cmCore')
                     //console.info('Worker done; number of queued webworkers: ', self.length)
                     self.advance()
                 })
-
 
                 return self
             }
