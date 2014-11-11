@@ -103,12 +103,12 @@
 
     <label class="content">{{'CONTACT.PLACEHOLDER.PHONENUMBER'|cmTranslate}}</label>
     <cm-multi-input cm-collection="formData.phoneNumbers" cm-disabled="disabled" class="content">
-        <ng-form name="formPhone">
+        <ng-form name="formPhone" ng-model-options="{ getterSetter: true }">
             <div class="cm-input-ctn with-chooser" ng-class="{'cm-input-disabled':disabled,'with-inside-icon':!disabled}">
                 <input
                         tabindex="2" data-qa="input-phonenumber"
                         type="text" name="phoneNumber" ng-model="item.value"
-                        ng-disabled="disabled" cm-validate-phone cm-adaptive-change />
+                        ng-disabled="disabled" cm-validate-phone cm-adaptive-change  />
                 <i class="fa cm-write" ng-show="!disabled"></i>
             </div>
             <!--<div cm-type-chooser cm-choose-value-to="item" cm-disabled="disabled" ng-class="{'cm-input-disabled':disabled}"></div>-->

@@ -126,6 +126,10 @@ angular.module('cmWidgets')
                         }
 
                         function checkPhoneNumber() {
+                            console.log($scope.formData.phoneNumbers)
+                            console.log($scope.formData.phoneNumbers[0].value)
+                            console.log($scope.formData.phoneNumbers[0].$viewValue)
+
                             if ($scope.formData.phoneNumbers.length > 0
                                 && $scope.formData.phoneNumbers[0].value != undefined
                                 && $scope.formData.phoneNumbers[0].value != $scope.contact.identity.phoneNumber.value
@@ -163,6 +167,10 @@ angular.module('cmWidgets')
 
                         $scope.validateForm().then(
                             function(objectChange) {
+
+                                console.log(objectChange)
+                                return false;
+
                                 $scope.contact.save(objectChange).then(
                                     function () {
                                         cmNotify.info('CONTACT.INFO.SUCCESS.EDIT', {ttl: 5000, displayType: 'modal'});

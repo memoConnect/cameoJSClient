@@ -127,6 +127,9 @@ angular.module('cmContacts')
                             return false;
                         }
 
+                        console.log(identity)
+                        return false;
+
                         // everything is fine let's add the contact
                         cmContactsModel
                         .editContact($routeParams.id, identity)
