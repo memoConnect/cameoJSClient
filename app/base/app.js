@@ -36,7 +36,6 @@ angular.module('cameoClient', [
             .setAppDefaultLimit( cmConfigProvider.get('WebworkerDefaultLimitApp') )
             .setDesktopDefaultLimit( cmConfigProvider.get('.WebworkerDefaultLimitDesktop') )
 
-            
         cmApiProvider
             .restApiUrl( cmConfigProvider.get('restApi') )
             .callStackPath( cmConfigProvider.get('callStackPath') )

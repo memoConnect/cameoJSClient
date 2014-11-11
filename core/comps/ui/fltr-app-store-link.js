@@ -11,7 +11,7 @@ angular.module('cmUi')
                     if(cmDevice.is(store) && objectStoreLinks[store].href != ''){
                         var storeData = objectStoreLinks[store];
                         // compile default to app link
-                        if(cmDevice.isMobile() && cmDevice.isAndroid()){
+                        if(cmDevice.isMobile('appStoreLink') && cmDevice.isAndroid()){
                             storeData.href.replace(/^https:\/\/market\.android\.com\//,"market://");
                         }
                         filteredArray.push(storeData);

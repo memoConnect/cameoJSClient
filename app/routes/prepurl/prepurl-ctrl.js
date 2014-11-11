@@ -6,7 +6,7 @@ angular.module('cmRoutes')
              $routeParams, $rootScope) {
 
         // on mobile browser call app otherwise go to purl
-        if (!cmDevice.isApp() && cmDevice.isMobile()) {
+        if (!cmDevice.isApp() && cmDevice.isMobile('PrepurlCtrl')) {
             setTimeout(function(){
                 $rootScope.goTo('/purl/'+$routeParams.purlId);
             }, 25);
