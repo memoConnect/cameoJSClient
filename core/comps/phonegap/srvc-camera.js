@@ -132,7 +132,7 @@ angular.module('cmPhonegap')
                 }
 
                 cmPhonegap.isReady(function () {
-                    if(typeof $navigator == 'undefined'
+                    if($navigator == 'undefined'
                     || !('camera' in $navigator)) {
                         //cmLogger.info('CAMERA PLUGIN IS MISSING');
                         return false;

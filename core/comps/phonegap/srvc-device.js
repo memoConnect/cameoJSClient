@@ -21,7 +21,7 @@ angular.module('cmPhonegap')
                 }
 
                 cmPhonegap.isReady(function(){
-                    if(typeof $device.get() == 'undefined'){
+                    if($device.get() == 'undefined'){
                         //cmLogger.info('DEVICE PLUGIN IS MISSING');
                         return false;
                     }
