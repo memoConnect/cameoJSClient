@@ -10,6 +10,12 @@ var cameo_config = {
     eventsPath: '/eventSubscription',
     eventsInterval: '5000',
 
+
+    webworkerDefaultGlobalLimit : 2,
+    WebworkerDefaultLimitMobile: 2,
+    WebworkerDefaultLimitApp: 2,
+    WebworkerDefaultLimitDesktop: 2,
+
     token: null,
     supported_languages: ['de_DE', 'en_US'],
     path_to_languages: 'i18n',

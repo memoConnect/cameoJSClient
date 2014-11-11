@@ -4,7 +4,8 @@ angular.module('cmUser').directive('cmIdentityKeyList', [
     'cmUserModel',
     'cmModal',
     'cmKey',
-    function(cmUserModel, cmModal, cmKey){
+    '$timeout',
+    function(cmUserModel, cmModal, cmKey, $timeout){
         return {
             restrict: 'E',
             templateUrl: 'comps/user/identity/key/drtv-identity-key-list.html',
@@ -18,25 +19,32 @@ angular.module('cmUser').directive('cmIdentityKeyList', [
                 $scope.showUntrustedPublickeysExists = true;
                 $scope.canCreate = true;
 
+                var refresh_scheduled = false
+
+                function schedule_refresh(){
+                    if(!refresh_scheduled)
+                        refresh_scheduled = true
+                        $timeout(function(){
+                            refresh_scheduled = false
+                            refresh()
+                        }, 1000)
+                }
+
                 function refresh(){
                     $scope.canCreate    =   !cmUserModel.hasPrivateKey();
                     $scope.privateKeys  =   cmUserModel.loadLocalKeys() || [];
                     $scope.publicKeys   =   cmUserModel.data.identity.keys || [];
+
                     $scope.trustedKeys  =   []
+                    $scope.checking     =   $scope.publicKeys
 
-                    $scope.checking     =   {}
 
-                    $scope.publicKeys.forEach(function(key){
-                        $scope.checking[key.id] = true
-                        cmUserModel
-                        .verifyOwnPublicKey(key)
-                        .then(function(){
-                            $scope.trustedKeys.push(key)
-                        })
-                        .finally(function(){
-                            $scope.checking[key.id] = false
-                        })
-                    });
+                    cmUserModel.verifyIdentityKeys(null, null, true)
+                    .then(function(ttrusted_keys){
+                        $scope.checking     =   []
+                        $scope.trustedKeys = ttrusted_keys
+                    })
+                        
 
                     $scope.signing      =   cmUserModel.state.is('signing');
 
@@ -69,6 +77,10 @@ angular.module('cmUser').directive('cmIdentityKeyList', [
                     return $scope.trustedKeys.indexOf(key) != -1
                 };
 
+                $scope.stillChecking = function(key){
+                    return $scope.checking.indexOf(key) != -1
+                };
+
                 $scope.sortByPrivKeys = function(key) {
                     return !($scope.privateKeys.find(key) instanceof cmKey);
                 };
@@ -78,8 +90,8 @@ angular.module('cmUser').directive('cmIdentityKeyList', [
                 };
 
                 //Todo: check if refresh has to be called that often
-                cmUserModel.state.on('change', refresh);
-                cmUserModel.on('key:stored key:removed signatures:saved identity:updated update:finished', refresh);
+                cmUserModel.state.on('change', schedule_refresh);
+                cmUserModel.on('key:stored key:removed signatures:saved identity:updated update:finished cache:updated', schedule_refresh);
 
 
                 refresh()
