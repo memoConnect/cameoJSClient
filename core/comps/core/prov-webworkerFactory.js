@@ -164,6 +164,8 @@ angular.module('cmCore')
                     else if(cmDevice.isDesktop('cmWebworkerFactory'))
                         limit = default_desktop_limit;
 
+                    console.log('advance',limit)
+
                     for(var i = 0; i < limit; i++){
                         self[i] && self[i].trigger('available')
                     }
