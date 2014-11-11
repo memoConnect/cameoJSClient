@@ -1,7 +1,7 @@
 .cm-reactive-default(){
   background: @cm-white;
   &.is-hover,&.is-touched{
-    background:#EDEDED;
+    background:@cm-light-grey;
   }
   &.is-clicked{
     background:#DCDCDC;
@@ -20,9 +20,9 @@
 
 cm-header {
   [cm-reactive]
-  {background:#000}
+  {background:@cm-black}
   [cm-reactive].is-hover,[cm-reactive].is-touched
-  {background:#555555}
+  {background:@cm-grey-new}
   [cm-reactive].is-clicked
   {background:#8D8D8D}
 }
@@ -42,7 +42,7 @@ section.default-pages, .cm-menu-list li.cm-menu-header{
 
 button[cm-reactive] {
   &.cm-btn-grey{
-    background:#555555;
+    background:@cm-grey-new;
     &.is-hover, &.is-touched
     {background:#8D8D8D}
     .is-clicked
@@ -50,9 +50,9 @@ button[cm-reactive] {
   }
 
   &.cm-btn-black {
-    background:#000;
+    background:@cm-black;
     &.is-hover, &.is-touched
-    {background:#555555}
+    {background:@cm-grey-new}
     .is-clicked
     {background:#A0A0A0}
   }
@@ -62,7 +62,7 @@ button[cm-reactive] {
   article[cm-reactive]{
     background: transparent;
     &.is-hover, &.is-touched
-    {background:#555555}
+    {background:@cm-grey-new}
     .is-clicked
     {background:#A0A0A0}
   }
