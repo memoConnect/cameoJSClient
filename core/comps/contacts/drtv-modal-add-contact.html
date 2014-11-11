@@ -6,19 +6,19 @@
     severity="info"
     nose-position="{{nosePosition||0}}"
     class="no-padding">
-    <div class="modal-row">
+    <div class="modal-row" cm-reactive>
         <a href="#/contact/search" class="modal-link">
             <i class="fa cm-search"></i>
             {{"CONTACTS.LABEL.SEARCH_IDENTITY"|cmTranslate}}
         </a>
     </div>
-    <div class="modal-row">
+    <div class="modal-row" cm-reactive>
         <a href="#/contact/create" class="modal-link">
             <i class="fa cm-new-contact"></i>
             {{"CONTACTS.LABEL.ADD_EXTERN"|cmTranslate}}
         </a>
     </div>
-    <div class="modal-row" ng-if="canReadLocalContacts()">
+    <div class="modal-row" ng-if="canReadLocalContacts()" cm-reactive>
         <a href="#/contact/import" class="modal-link">
             <i class="fa cm-mobile"></i>
             {{"CONTACTS.LABEL.IMPORT_LOCAL"|cmTranslate}}
