@@ -9,7 +9,6 @@
     <author href="www.cameonet.de" email="support@cameonet.de">cameoNet</author>
 
     <access origin="*" subdomains="true"  />
-    <!-- <access origin="http://puship.cloudapp.net" /> -->
     <content src="index.html" />
 
     <log level="<%= logLevel %>"/>
@@ -22,6 +21,9 @@
 
     <!-- <preference name="permissions" value="all-permissions" /> -->
     <preference name="permissions" value="none" />
+
+    <!-- plugins cameo -->
+    <gap:plugin name="de.cameonet.cordova.contacts.readonly" version="0.2.13" />
 
     <!-- plugins origin from adobe -->
     <gap:plugin name="org.apache.cordova.device" version="0.2.12" />
@@ -37,7 +39,9 @@
         <param name="LAUNCHMODE" value="singleTop" />
     </gap:plugin>-->
     <gap:plugin name="com.phonegap.plugins.pushplugin" version="2.1.1" />
-    <gap:plugin name="de.cameonet.cordova.contacts.readonly" version="0.2.13" />
+    <gap:plugin name="nl.x-services.plugins.launchmyapp">
+        <param name="URL_SCHEME" value="<%= appProtocol %>" />
+    </gap:plugin>
     <!-- utils & debug -->
     <!--<gap:plugin name="com.verso.cordova.clipboard" version="0.1.0" />-->
     <gap:plugin name="de.appplant.cordova.plugin.hidden-statusbar-overlay" version="1.2.0" />

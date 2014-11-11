@@ -10,7 +10,7 @@ angular.module('cmAppConversations').directive('cmAnswerTextarea',[
             },
             templateUrl: 'comps/conversations/drtv-answer-textarea.html',
             link: function (scope, element) {
-                if(cmDevice.isDesktop())
+                if(cmDevice.isDesktop('cmAnswerTextarea'))
                     element.find('textarea')[0].focus();
             }
         }

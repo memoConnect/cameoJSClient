@@ -1,9 +1,7 @@
 'use strict';
 
 angular.module('cmRoutes')
-.controller('PurlCtrl',[
-    'cmModal', 'cmPurlModel', 'cmConversationFactory',
-    '$scope', '$rootScope', '$routeParams', 'resolveData',
+.controller('PurlCtrl',
     function(cmModal, cmPurlModel, cmConversationFactory,
              $scope, $rootScope, $routeParams, resolveData){
 
@@ -38,4 +36,4 @@ angular.module('cmRoutes')
             }
         }
     }
-]);
+);

@@ -26,7 +26,7 @@ module.exports = function (grunt, options) {
     ]);
     grunt.registerTask('tests-e2e:prepare', [
         'test:generate-keys',
-        'app:gen-all-templates',
+        'app:to-dist'
     ]);
 
     grunt.registerTask('tests-2e2', ['tests-e2e']);
