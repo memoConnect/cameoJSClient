@@ -80,6 +80,7 @@ angular.module('cmCore')
             self.trigger('init');// deprecated
             self.trigger('init:finish');
 
+
             self.one('update:finished', function(){
                 if(self.data.identity.keys){
                     self.signOwnKeys();
@@ -885,18 +886,19 @@ angular.module('cmCore')
 
         var signOwnKeys_scheduled = false
 
-        cmAuth.on('identity:updated signatures:updated', function(event, data){
+        cmAuth.on('identity:updated', function(event, data){
             if(typeof data.id != 'undefined' && data.id == self.data.identity.id) {
                 self.data.identity.importData(data);
                 self.syncLocalKeys()
 
                 //Todo: find a more general solution: AP
-                if(!signOwnKeys_scheduled)     
-                    signOwnKeys_scheduled = true             
+                if(signOwnKeys_scheduled === false){
+                    signOwnKeys_scheduled = true         
                     $timeout(function(){
                         signOwnKeys_scheduled = false
                         self.signOwnKeys()
-                    }, 5000)
+                    }, 20000, false)
+                }
             }
         });
 
