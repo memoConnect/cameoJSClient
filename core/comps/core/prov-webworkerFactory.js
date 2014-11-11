@@ -5,7 +5,7 @@ angular.module('cmCore')
 
     function(){
 
-        var default_global_limit    = 3,
+        var default_global_limit    = 2,
             default_mobile_limit    = 2,
             default_app_limit       = 2,
             default_desktop_limit   = 5,
@@ -159,7 +159,7 @@ angular.module('cmCore')
                                             return $q.when(worker)
                                         })
 
-                    console.warn('new WW "'+data.jobName+'" Number of queued webworkers: ', self.length)
+                    //console.warn('new WW "'+data.jobName+'" Number of queued webworkers: ', self.length)
 
                     worker.on('done', function(event){
                         self.trigger('worker:done', worker)
@@ -184,7 +184,7 @@ angular.module('cmCore')
 
                 self.on('worker:done', function(event, worker){
                     self.deregister(worker)
-                    console.info('Worker done; number of queued webworkers: ', self.length)
+                    //console.info('Worker done; number of queued webworkers: ', self.length)
                     self.advance()
                 })
 

@@ -890,10 +890,8 @@ angular.module('cmCore')
                 self.data.identity.importData(data);
                 self.syncLocalKeys()
 
-                console.log('try SOK...')
                 //Todo: find a more general solution: AP
                 if(!signOwnKeys_scheduled)     
-                    console.log('... sched')  
                     signOwnKeys_scheduled = true             
                     $timeout(function(){
                         signOwnKeys_scheduled = false

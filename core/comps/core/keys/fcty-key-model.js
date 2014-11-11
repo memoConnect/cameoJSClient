@@ -184,7 +184,7 @@ angular.module('cmCore')
                     &&  cmKeyCache.getVerificationResult(self, data, signature) != null
                    
                 ){
-                    console.log('cached!')
+                    //console.log('cached!')
                     return  cmKeyCache.getVerificationResult(self, data, signature)
                             ?   $q.when(true)
                             :   $q.reject(false)
