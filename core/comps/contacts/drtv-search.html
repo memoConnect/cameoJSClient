@@ -13,7 +13,7 @@
     <div class="modal-row">
         <textarea placeholder="{{'CONTACTS.PLACEHOLDER.REQUEST_MESSAGE'|cmTranslate}}" ng-model="contact.message" data-qa="input-friendrequestMessage"></textarea>
     </div>
-    <button class="cm-btn-grey" ng-click="sendRequest(contact)" data-qa="btn-sendRequest">
+    <button class="cm-btn-grey" ng-click="sendRequest(contact)" data-qa="btn-sendRequest" cm-reactive>
         {{'CONTACTS.LABEL.SEND_REQUEST'|cmTranslate}}
         <i class="fa cm-send"></i>
     </button>
@@ -39,7 +39,7 @@
 
 <section class="mt15" ng-if="(results.length > 0)">
     <ul>
-        <li ng-repeat="contact in results" ng-click="openModal('modalSendRequest',contact)" data-qa="btn-openModal" class="contact-search-item">
+        <li class="contact-search-item"  ng-repeat="contact in results" ng-click="openModal('modalSendRequest',contact)" data-qa="btn-openModal" cm-reactive>
             <cm-avatar cm-data="contact"></cm-avatar>
             <section class="identityName" cm-weight="1">
                 <strong>{{contact.getDisplayName()}}</strong>

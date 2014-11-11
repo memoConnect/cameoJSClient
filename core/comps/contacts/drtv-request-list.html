@@ -24,14 +24,14 @@
             </article>
 
             <div class="cm-request-bar">
-                <button ng-click="acceptRequest(request)" data-qa="btn-acceptRequest">
+                <button ng-click="acceptRequest(request)" data-qa="btn-acceptRequest" cm-reactive>
                     <i class="fa cm-checkbox-right"></i>{{'CONTACTS.REQUESTS.ACCEPT'|cmTranslate}}
                 </button>
-                <button ng-click="rejectRequest(request)" data-qa="btn-rejectRequest">
+                <button ng-click="rejectRequest(request)" data-qa="btn-rejectRequest" cm-reactive>
                     <i class="fa cm-reject"></i>
                     {{'CONTACTS.REQUESTS.REJECT'|cmTranslate}}
                 </button>
-                <!--<button ng-click="ignoreRequest(request)" ng-if="false">
+                <!--<button ng-click="ignoreRequest(request)" ng-if="false" cm-reactive>
                     <i class="fa cm-ignore"></i>
                     {{'CONTACTS.REQUESTS.IGNORE'|cmTranslate}}
                 </button>-->
