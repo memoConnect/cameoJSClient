@@ -1,7 +1,7 @@
 <section class="theme-a" ng-show="!showSignIn">
     <cm-header cm-rubber-space ng-if="!headerGuest">
-        <cm-back cm-weight="1" back-to="/talks" plain-back="true" cm-reactive></cm-back>
-        <cm-identity cm-weight="4" cm-reactive></cm-identity>
+        <cm-back cm-weight="1" back-to="/talks" plain-back="true"></cm-back>
+        <cm-identity cm-weight="4"></cm-identity>
         <cm-security-indicator
             cm-weight="2"
             ng-if           = "conversation"
@@ -10,7 +10,7 @@
             ng-click        = "gotoPurl(purlId, 'security')"
             cm-reactive
         ></cm-security-indicator>
-        <cm-menu cm-weight="1" cm-reactive></cm-menu>
+        <cm-menu cm-weight="1"></cm-menu>
     </cm-header>
 
 <!--
@@ -22,7 +22,7 @@
             <i class="fa cm-register"></i>
             <span>{{'PURL.SIGN_IN'|cmTranslate}}</span>
         </div>
-        <cm-logo cm-weight="4" cm-reactive></cm-logo>
+        <cm-logo cm-weight="4"></cm-logo>
         <cm-security-indicator
             cm-weight="2"
             ng-if           = "conversation"

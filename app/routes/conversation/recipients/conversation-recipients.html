@@ -1,15 +1,15 @@
 <section class="theme-a fill-bg">
     <cm-header cm-rubber-space>
-        <cm-back cm-weight="1" back-to="conversation/{{conversation.id}}" cm-reactive></cm-back>
-        <cm-identity cm-weight="3" cm-reactive></cm-identity>
+        <cm-back cm-weight="1" back-to="conversation/{{conversation.id}}"></cm-back>
+        <cm-identity cm-weight="3"></cm-identity>
         <cm-security-indicator
             cm-weight       = "2"
             cm-data         = "conversation"
             ng-click        = "gotoConversation(conversation.id,'security')"
             cm-reactive
         ></cm-security-indicator>
-        <cm-header-list-search cm-weight="1" ng-model="search" cm-options="{scrollTo:true}" cm-reactive></cm-header-list-search>
-        <cm-menu cm-weight="1" cm-reactive></cm-menu>
+        <cm-header-list-search cm-weight="1" ng-model="search" cm-options="{scrollTo:true}"></cm-header-list-search>
+        <cm-menu cm-weight="1"></cm-menu>
     </cm-header>
 
     <cm-widget-conversation-recipients cm-data="conversation" cm-search="search"></cm-widget-conversation-recipients>
