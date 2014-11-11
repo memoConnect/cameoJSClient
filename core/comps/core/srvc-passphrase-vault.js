@@ -134,7 +134,6 @@ angular.module('cmCore').service('cmPassphraseVault',[
                         //if not reject 
                         .then(
                             function(new_passphrase){
-
                                 if(couldBeAPassphrase(new_passphrase))
                                     cached_passphrase = new_passphrase
 

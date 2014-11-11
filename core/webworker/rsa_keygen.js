@@ -10,23 +10,27 @@ self.addEventListener('message', function(event) {
     switch (data.cmd) {
         case 'start':
             time = -((new Date()).getTime());
-            crypt = new JSEncrypt({default_key_size: data.keySize});
+            crypt = new JSEncrypt({default_key_size: data.params.keySize});
             crypt.getKey(function(){
                 self.postMessage({
                     msg:        'finished',
-                    timeElapsed:(time + ((new Date()).getTime())),
-                    privKey:    crypt.key.getPrivateKey()
+                    result:     {
+                                    timeElapsed:(time + ((new Date()).getTime())),
+                                    privKey:    crypt.key.getPrivateKey()
+                                }
                 });
             });
         break;
         case 'start-sync':
             time = -((new Date()).getTime());
-            crypt = new JSEncrypt({default_key_size: data.keySize});
+            crypt = new JSEncrypt({default_key_size: data.params.keySize});
             crypt.getKey();
             self.postMessage({
                 msg:        'finished',
-                timeElapsed:(time + ((new Date()).getTime())),
-                privKey:    crypt.key.getPrivateKey()
+                result:     {
+                                timeElapsed:    (time + ((new Date()).getTime())),
+                                privKey:        crypt.key.getPrivateKey()
+                            }
             });
         break;
         case 'cancel':
