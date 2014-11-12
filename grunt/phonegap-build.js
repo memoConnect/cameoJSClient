@@ -93,7 +93,8 @@ module.exports = function(grunt, options){
                             'currentAppId': options.globalCameoBuildConfig.phonegap.bundleId,
                             'logLevel': options.globalCameoBuildConfig.config.logLevel || 'DEBUG',
                             'googleSenderId': options.globalCameoSecrets.google.senderId,
-                            'appProtocol': options.globalCameoBuildConfig.static.appProtocol
+                            'appProtocol': options.globalCameoBuildConfig.static.appProtocol,
+                            'androidDebuggable': options.globalCameoBuildConfig.phonegap.androidDebuggable || "false"
                         }
                     },
                     'files': {

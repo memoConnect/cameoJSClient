@@ -21,6 +21,7 @@
         "baseName": "cameoNet-stage",
         "appId": "1028315",
         "bundleId": "de.cameonet.app.test.stage",
-        "extraName": ""
+        "extraName": "" ,
+        "androidDebuggable": false
     }
 }
