@@ -36,7 +36,7 @@
                 </section>
             </li>
 
-            <li class="no-border" data-qa="start-trust-handshake-btn" ng-click="goToAuthentication(contact.identity)" ng-if="!isTrusted && hasKeys && hasLocalKey">
+            <li data-qa="start-trust-handshake-btn" ng-click="goToAuthentication(contact.identity)" ng-if="!isTrusted && hasKeys && hasLocalKey">
                 <span class="item clearfix">
                         <i  class="fa cm-handshake"></i>
                         {{'CONTACT.TRUST.START'|cmTranslate}}
