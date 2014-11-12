@@ -140,7 +140,7 @@ describe('Route Contact: ', function () {
 
             $('cm-footer button').click()
 
-            util.waitAndCloseNotify();
+            util.waitForQa('btn-pristineBack');
         })
 
         it('should be the same details in contact after updating', function(){
