@@ -15,6 +15,10 @@ exports.config = {
     onPrepare: function () {
         require('jasmine-reporters');
         jasmine.getEnv().addReporter(new jasmine.JUnitXmlReporter('target/test-reports/', true, true, "e2e-"));
+
+        var SpecReporter = require('jasmine-spec-reporter');
+        // add jasmine spec reporter
+        jasmine.getEnv().addReporter(new SpecReporter({displayStacktrace: true, displaySpecDuration: true}));
     },
 
     jasmineNodeOpts: {
@@ -23,6 +27,7 @@ exports.config = {
         showColors: true,
         includeStackTrace: false,
         defaultTimeoutInterval: 30000,
-        realtimeFailure: true
+        realtimeFailure: true,
+        silent:true
     }
 };

@@ -6,7 +6,8 @@ module.exports = function (grunt, options) {
         'tests-e2e:prepare',
         'protractor:tier1',
         'protractor:tier2',
-        'protractor:tier3'
+        'protractor:tier3',
+        'protractor:perf'
     ]);
     grunt.registerTask('tests-e2e:tier1', [
         'tests-e2e:prepare',
@@ -19,6 +20,10 @@ module.exports = function (grunt, options) {
     grunt.registerTask('tests-e2e:tier3', [
         'tests-e2e:prepare',
         'protractor:tier3'
+    ]);
+    grunt.registerTask('tests-e2e:perf', [
+        'tests-e2e:prepare',
+        'protractor:perf'
     ]);
     grunt.registerTask('tests-e2e:all', [
         'tests-e2e:prepare',
@@ -68,6 +73,15 @@ module.exports = function (grunt, options) {
                         "args": {
                             "specs": [
                                 "test/e2e/**/*.1.spec.js"
+                            ]
+                        }
+                    }
+                },
+                "perf": {
+                    options: {
+                        "args": {
+                            "specs": [
+                                "test/e2e/performance/perf.spec.js"
                             ]
                         }
                     }
