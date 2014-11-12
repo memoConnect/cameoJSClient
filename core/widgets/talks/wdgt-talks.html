@@ -1,7 +1,7 @@
 <!--<cm-loader ng-show="conversations.state.is('initial-loading')" class="fullscreen"></cm-loader>-->
 
-<ul class="no-border">
-    <li ng-show="!conversations.length && !conversations.state.is('loading')" class="empty-list">
+<ul>
+    <li ng-if="!conversations.length && !conversations.state.is('loading')" class="empty-list">
         <i class="fa cm-info"></i>  {{'TALKS.LIST_EMPTY'|cmTranslate}}
     </li>
     <li ng-repeat="conversation in conversations | orderBy:'timeOfLastUpdate':true | cmSearch:'talks':search" ng-click="goto('/conversation/'+conversation.id)" data-qa="conversation-list-element">
