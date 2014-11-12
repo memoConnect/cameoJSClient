@@ -1,14 +1,14 @@
-<ul class="no-border" ng-if="(conversation.recipients.length > 1)">
+<ul ng-if="(conversation.recipients.length > 1)" ng-class="{'mb15': conversation.state.is('new') && (conversation.recipients.length > 1)}">
     <li ng-repeat="identity in conversation.recipients|cmHideAppOwner|orderBy:'getDisplayName()':false">
         <cm-recipient-tag cm-data-selected="selected" cm-data="identity" cm-data-conversation="conversation"></cm-recipient-tag>
     </li>
 </ul>
 
-<hr ng-if="conversation.state.is('new') && (conversation.recipients.length > 1)">
+<!--<hr ng-if="conversation.state.is('new') && (conversation.recipients.length > 1)">-->
 
 <div id="possible-recipient-list" cm-scroll-to="{anchor:'#possible-recipient-list',onEvent:true,timeout:50,addElementsHeight:'cm-header'}"></div>
 
-<ul ng-if="conversation.state.is('new')" class="no-border contact-list">
+<ul ng-if="conversation.state.is('new')" class="contact-list">
     <li
         ng-repeat = "contact in contacts|cmRecipients:false:selected|cmSearch:'contacts':search"
         ng-if     = "contact.contactType != 'pending'"

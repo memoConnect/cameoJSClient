@@ -9,7 +9,8 @@ angular.module('cmUi').directive('cmReactive',[
             restrict: 'A',
             link: function(scope, element, attrs){
                 var isTouch = false,
-                    hasClicked = false; // for older browser ans iOS mobile devices
+                    hasClicked = false, // for older browser ans iOS mobile devices
+                    touchMove = false;
 
                 function isValidTouch(evt){
 
@@ -35,6 +36,8 @@ angular.module('cmUi').directive('cmReactive',[
                 }
 
                 function runClick(evt){
+                    //console.log('runClick', hasClicked, attrs)
+
                     if(!hasClicked){
                         if('ngClick' in attrs){
                             var fn = $parse(attrs['ngClick']);
@@ -67,6 +70,13 @@ angular.module('cmUi').directive('cmReactive',[
                 element.on('touchstart',function(){
                     isTouch = true;
                     element.removeClass('is-hover');
+                    element.addClass('is-touched');
+                });
+
+                element.on('touchmove',function(){
+                    touchMove = true;
+                    element.removeClass('is-hover');
+                    element.removeClass('is-touched');
                 });
 
                 element.on('touchend',function(evt){
@@ -74,13 +84,17 @@ angular.module('cmUi').directive('cmReactive',[
 
                     element.removeClass('is-hover');
 
-                    if(isValidTouch(evt)){
-                        element.addClass('is-touched');
-                        $timeout(function(){element.removeClass('is-touched'); runClick(evt); isTouch = false;},250)
+                    //console.log('touchMove', touchMove)
+
+                    if(isValidTouch(evt) && !touchMove){
+                        runClick(evt);
+                        $timeout(function(){element.removeClass('is-touched'); isTouch = false;},250)
                     } else {
+                        element.removeClass('is-touched');
                         isTouch = false;
                     }
 
+                    touchMove = false; // default
                 });
             }
         }
