@@ -3,7 +3,8 @@
 angular.module('cmContacts')
 .directive('cmModalAddContact',[
     'cmLocalContacts',
-    function (cmLocalContacts){
+    '$rootScope',
+    function (cmLocalContacts, $rootScope){
         return {
             restrict: 'E',
             templateUrl: 'comps/contacts/drtv-modal-add-contact.html',
@@ -15,6 +16,8 @@ angular.module('cmContacts')
                 $scope.canReadLocalContacts = function(){
                     return cmLocalContacts.canRead();
                 };
+
+                $scope.goTo = $rootScope.goTo;
             }
         }
     }
