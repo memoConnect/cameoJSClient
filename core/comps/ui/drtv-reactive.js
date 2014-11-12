@@ -1,13 +1,15 @@
 'use strict';
 
 angular.module('cmUi').directive('cmReactive',[
+    'cmDevice',
     '$timeout',
     '$parse',
-    function ($timeout,$parse){
+    function (cmDevice,$timeout,$parse){
         return {
             restrict: 'A',
             link: function(scope, element, attrs){
-                var isTouch = false;
+                var isTouch = false,
+                    hasClicked = false; // for older browser ans iOS mobile devices
 
                 function isValidTouch(evt){
 
@@ -33,13 +35,17 @@ angular.module('cmUi').directive('cmReactive',[
                 }
 
                 function runClick(evt){
-                    if('ngClick' in attrs){
-                        var fn = $parse(attrs['ngClick']);
-                        fn(scope,{$event:evt});
+                    if(!hasClicked){
+                        if('ngClick' in attrs){
+                            var fn = $parse(attrs['ngClick']);
+                            fn(scope,{$event:evt});
+                        }
                     }
+
+                    hasClicked = false; // set to default
                 }
 
-                element.on('mouseenter', function(evt){
+                element.on('mouseenter', function(){
                     element.addClass('is-hover');
                 });
 
@@ -48,9 +54,13 @@ angular.module('cmUi').directive('cmReactive',[
                 });
 
                 element.on('click',function(){
-                    if(!isTouch){
-                        element.addClass('is-clicked');
-                        $timeout(function(){element.removeClass('is-clicked')},250)
+                    if(!cmDevice.isMobile()){
+                        if(!isTouch){
+                            element.addClass('is-clicked');
+                            $timeout(function(){element.removeClass('is-clicked');},250)
+                        }
+                    } else {
+                        hasClicked = true;
                     }
                 });
 
@@ -66,10 +76,11 @@ angular.module('cmUi').directive('cmReactive',[
 
                     if(isValidTouch(evt)){
                         element.addClass('is-touched');
-                        $timeout(function(){element.removeClass('is-touched'); runClick(evt);},250)
+                        $timeout(function(){element.removeClass('is-touched'); runClick(evt); isTouch = false;},250)
+                    } else {
+                        isTouch = false;
                     }
 
-                    isTouch = false;
                 });
             }
         }
