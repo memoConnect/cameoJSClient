@@ -46,7 +46,8 @@ angular.module('cmUser').directive('cmIdentityCreate', [
 
                     function checkDisplayName() {
                         var value = $scope.formData.displayName;
-                        if (value != cmUserModel.data.identity.displayName) {
+                        if (value != undefined
+                         && value != '') {
                             objectChange.displayName = value;
                         }
                     }
@@ -54,7 +55,7 @@ angular.module('cmUser').directive('cmIdentityCreate', [
                     function checkPhoneNumber() {
                         var value = $scope.formData.phoneNumber;
                         if (value != undefined
-                            && value != cmUserModel.data.identity.phoneNumber) {
+                         && value != '') {
                             objectChange.phoneNumber = value;
                         }
                     }
@@ -62,7 +63,7 @@ angular.module('cmUser').directive('cmIdentityCreate', [
                     function checkEmail() {
                         var value = $scope.formData.email;
                         if (value != undefined
-                            && value != cmUserModel.data.identity.email) {
+                         && value != '') {
                             objectChange.email = value;
                         }
                     }

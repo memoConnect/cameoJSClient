@@ -54,7 +54,7 @@ angular.module('cmUser')
                         var defValue = $scope.account.phoneNumber,
                             value = $scope.formData.phoneNumber;
                         if (value != undefined
-                            && defValue && value != defValue.value) {
+                         && (!defValue || (defValue && value != defValue.value))) {
                             objectChange.phoneNumber = value;
                         }
                     }
@@ -63,7 +63,7 @@ angular.module('cmUser')
                         var defValue = $scope.account.email,
                             value = $scope.formData.email;
                         if (value != undefined
-                            && defValue && value != defValue.value) {
+                        && (!defValue || (defValue && value != defValue.value))) {
                             objectChange.email = value;
                         }
                     }
@@ -93,6 +93,8 @@ angular.module('cmUser')
                     checkPhoneNumber();
                     checkEmail();
                     checkPassword();
+
+                    console.log(objectChange)
 
                     if($scope.cmForm.$valid !== false && Object.keys(objectChange).length > 0){
                         deferred.resolve(objectChange);
