@@ -495,7 +495,8 @@
       "CITY" : "City"
     },
     "FOOTER" : {
-      "SAVE" : "Save"
+      "SAVE" : "Save",
+      "BACK" : "Done"
     },
     "INFO" : {
       "SELECT" : {

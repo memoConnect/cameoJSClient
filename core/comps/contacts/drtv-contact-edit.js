@@ -13,61 +13,78 @@
 
 angular.module('cmContacts')
     .directive('cmContactEdit', [
-
-        '$rootScope',
-        '$routeParams',
-        'cmContactsModel',
-        'cmIdentityFactory',
-        'cmUtil',
-        'cmNotify',
-        'cmUserModel',
-
-        function( $rootScope,$routeParams,
-                  cmContactsModel, cmIdentityFactory, cmUtil, cmNotify, cmUserModel){
+        'cmIdentityFactory', 'cmUtil', 'cmNotify', 'cmUserModel',
+        'cmContactsModel', 'cmLogger', 'cmLoader',
+        '$rootScope', '$q',
+        function(cmIdentityFactory, cmUtil, cmNotify, cmUserModel,
+                 cmContactsModel, cmLogger, cmLoader,
+                 $rootScope, $q){
 
             return {
-                restrict:       'AE',
-                scope:          {
-                    contactId: '=cmContactId'
+                restrict: 'AE',
+                scope: {
+                    contact: '=cmData'
                 },
-                templateUrl:    'comps/contacts/drtv-contact-edit.html',
-
+                templateUrl: 'comps/contacts/drtv-contact-edit.html',
                 controller: function($scope, $element, $attrs){
-                    $scope.cmUtil = cmUtil;
+                    var loader = new cmLoader($scope);
+                    //loader.start();
+
+                    $scope.hasLocalKey = !!cmUserModel.loadLocalKeys().length;
 
                     $scope.formData = {
+                        displayName: '',
                         phoneNumbers: [{value:''}],
                         emails: [{value:''}]
                     };
 
                     $scope.chooseAvatar = false;
-                    cmContactsModel.getOne($scope.contactId).then(
-                        function (data) {
-                            // set data froom api
-                            $scope.contact = data;
-                            // get identity model
-                            $scope.identity = cmIdentityFactory.create(data.identity,true);
 
-                            //////////////////////
-                            // TODO: mock workarround json in array
-                            $scope.formData.phoneNumbers = [
-                                    $scope.identity.phoneNumber || {value:''}
-                            ];
-                            $scope.formData.emails = [
-                                    $scope.identity.email || {value:''}
-                            ];
-                            //////////////////////
+                    $scope.isTrusted    = undefined;
+                    $scope.hasKeys      = undefined;
 
-                            // cameo user can't edit only extern end local
-                            $scope.disabled = data.contactType == 'internal' ? true : false;
+                    $scope.isPristine = true;
 
-                            if(!$scope.disabled){
-                                $scope.showCameoId = true;
-                            } else {
-                                $scope.showCameoId = false;
-                            }
+                    $rootScope.$on('pristine:false', function(){
+                        $scope.isPristine = false;
+                    })
+
+                    function refresh(){
+                        //////////////////////
+                        // set form
+                        $scope.formData.displayName = $scope.contact.identity.displayName;
+                        $scope.formData.phoneNumbers = [
+                            {value: $scope.contact.identity.phoneNumber.value || ''}
+                        ];
+                        $scope.formData.emails = [
+                            {value: $scope.contact.identity.email.value || ''}
+                        ];
+                        //////////////////////
+
+                        $scope.hasLocalKey = !!cmUserModel.loadLocalKeys().length;
+
+                        $scope.chooseAvatar = false;
+
+                        $scope.isTrusted    = undefined;
+                        $scope.hasKeys      = undefined;
+
+                        $scope.disabled = $scope.contact.contactType == 'internal' ? true : false;
+
+                        if(!$scope.disabled){
+                            $scope.showCameoId = true;
+                        } else {
+                            $scope.showCameoId = false;
                         }
-                    );
+
+                        $scope.hasKeys = ($scope.contact.identity.keys.length > 0);
+
+                        cmUserModel.verifyTrust($scope.contact.identity)
+                            .then(function(){
+                                $scope.isTrusted = true;
+                            });
+                    }
+
+                    refresh();
 
                     /**
                      * handle every single contact via model
@@ -85,74 +102,92 @@ angular.module('cmContacts')
                     };
 
                     $scope.goToAuthentication = function(identity){
-                        if(identity.userType != 'external' && identity.publicKeys.length > 0){
+                        if(identity.userType != 'external' && identity.keys.length > 0){
                             $rootScope.goTo('authentication/identity/' + identity.id);
                         }
                     };
 
+                    $scope.validateForm = function() {
+                        var deferred = $q.defer(),
+                            objectChange = {};
+
+                        if($scope.formData.displayName != '' && $scope.formData.displayName != $scope.contact.identity.displayName){
+                            objectChange.displayName = $scope.formData.displayName;
+                        }
+
+                        function checkEmail() {
+                            if ($scope.formData.emails.length > 0
+                                && $scope.formData.emails[0].value != undefined
+                                && $scope.formData.emails[0].value != $scope.contact.identity.email.value
+                                && !($scope.contact.identity.email.value == undefined && $scope.formData.emails[0].value == '')) { // special case to avoid send empty email -> compares empty value with undefined identity value
+                                objectChange.email = $scope.formData.emails[0].value;
+                                if($scope.formData.emails[0].value != '') {
+                                    objectChange.preferredMessageType = 'mail';
+                                }
+                            }
+                        }
+
+                        function checkPhoneNumber() {
+                            if ($scope.formData.phoneNumbers.length > 0
+                                && $scope.formData.phoneNumbers[0].value != undefined
+                                && $scope.formData.phoneNumbers[0].value != $scope.contact.identity.phoneNumber.value
+                                && !($scope.contact.identity.phoneNumber.value == undefined && $scope.formData.phoneNumbers[0].value == '')) { // special case to avoid send empty phonenumber -> compares empty value with undefined identity value
+                                objectChange.phoneNumber = $scope.formData.phoneNumbers[0].value;
+                                if($scope.formData.phoneNumbers[0].value != ''){
+                                    objectChange.preferredMessageType = 'sms';
+                                }
+                            }
+                        }
+
+                        checkEmail();
+                        checkPhoneNumber();
+
+                        if($scope.cmForm.$valid !== false){
+                            deferred.resolve(objectChange);
+                        } else {
+                            deferred.reject();
+                        }
+
+                        return deferred.promise;
+                    };
+
                     $scope.saveUser = function(){
-                        // declaration
-                        var emptyIdentity = {
-                                displayName: null,
-                                email: null,
-                                phoneNumber: null,
-                                preferredMessageType: 'default',
-                                // TODO: not implemented in BE
-                                name: null,
-                                surName: null,
-                                phoneProvider: null,
-                                groups: []
-                            },
-                        // merge given identity with default
-                            identity = angular.extend({}, emptyIdentity, $scope.identity.exportData());
-
-                        // validation
-                        //////////////////////
-                        // TODO: mock workarround for multiinput from array to single string
-                        if($scope.formData.phoneNumbers.length > 0 && $scope.formData.phoneNumbers[0].value != ''){
-                            identity.phoneNumber = $scope.formData.phoneNumbers[0].value;
-                            identity.preferredMessageType = 'sms';
-                        } else {
-                            identity.phoneNumber = null;
-                        }
-
-                        if($scope.formData.emails.length > 0 && $scope.formData.emails[0].value != ''){
-                            identity.email = $scope.formData.emails[0].value;
-                            identity.preferredMessageType = 'mail';
-                        } else {
-                            identity.email = null;
-                        }
-                        //////////////////////
-                        if($scope.cmForm.$invalid){
+                        if($scope.isPristine){
+                            $rootScope.goBack();
                             return false;
                         }
 
-                        // everything is fine let's add the contact
-                        cmContactsModel
-                        .editContact($routeParams.id, identity)
-                        .then(
-                            function () {
-                                cmNotify.info('CONTACT.INFO.SUCCESS.EDIT',{ttl:5000,displayType:'modal'});
+
+                        if(loader.isIdle())
+                            return false;
+
+                        loader.start();
+
+                        $scope.validateForm().then(
+                            function(objectChange) {
+                                $scope.contact.save(objectChange).then(
+                                    function () {
+                                        $scope.isPristine = true;
+                                        loader.stop();
+                                    },
+                                    function () {
+                                        cmNotify.error('CONTACT.INFO.ERROR.EDIT', {ttl: 5000});
+                                        loader.stop();
+                                    }
+                                );
                             },
-                            function () {
-                                cmNotify.error('CONTACT.INFO.ERROR.EDIT',{ttl:5000});
+                            function(){
+                                loader.stop();
                             }
-                        );
+                        )
                     };
 
-                    $scope.startTrustHandshake = function(){
-                        cmHooks.openKeyRequest($scope.identity);
-                    };
+                    $scope.contact.identity.on('update:finished', refresh);
 
-                    $scope.getTrust = function(){
-                        return $scope.identity && cmUserModel.verifyTrust($scope.identity);
-                    };
+                    $scope.$on('$destroy', function(){
+                        $scope.contact.identity.off('update:finished', refresh);
+                    })
 
-                    $scope.hasKey = function(){
-                        return $scope.identity && $scope.identity.keys.length > 0;
-                    };
-
-                    $scope.hasLocalKey = !!cmUserModel.loadLocalKeys().length;
                 }
             }
         }

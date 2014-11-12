@@ -311,7 +311,8 @@
             }
         },
         "FOOTER": {
-            "SAVE": "Speichern"
+            "SAVE": "Speichern",
+            "BACK": "Zurück"
         },
         "IMPORT" :{
             "NOTIFICATION" :{
