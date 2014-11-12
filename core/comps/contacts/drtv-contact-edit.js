@@ -152,7 +152,7 @@ angular.module('cmContacts')
                     };
 
                     $scope.saveUser = function(){
-                        if($scope.isPristine){
+                        if($scope.isPristine || $scope.disabled){
                             $rootScope.goBack();
                             return false;
                         }
