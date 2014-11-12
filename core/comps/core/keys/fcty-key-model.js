@@ -178,7 +178,8 @@ angular.module('cmCore')
                         })
             };
 
-            this.verify = function(data, signature, use_cache){ 
+            this.verify = function(data, signature, use_cache){
+                console.warn('verify') 
                 if( 
                         use_cache
                     &&  cmKeyCache.getVerificationResult(self, data, signature) != null
