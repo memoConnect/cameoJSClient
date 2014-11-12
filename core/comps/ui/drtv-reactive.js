@@ -32,6 +32,13 @@ angular.module('cmUi').directive('cmReactive',[
                     return false;
                 }
 
+                function runClick(evt){
+                    if('ngClick' in attrs){
+                        var fn = $parse(attrs['ngClick']);
+                        fn(scope,{$event:evt});
+                    }
+                }
+
                 element.on('mouseenter', function(evt){
                     element.addClass('is-hover');
                 });
@@ -59,12 +66,7 @@ angular.module('cmUi').directive('cmReactive',[
 
                     if(isValidTouch(evt)){
                         element.addClass('is-touched');
-                        $timeout(function(){element.removeClass('is-touched')},250)
-                    }
-
-                    if('ngClick' in attrs){
-                        var fn = $parse(attrs['ngClick']);
-                        fn(scope,{$event:evt});
+                        $timeout(function(){element.removeClass('is-touched'); runClick(evt);},250)
                     }
 
                     isTouch = false;
