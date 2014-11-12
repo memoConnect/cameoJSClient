@@ -1,14 +1,14 @@
 <article class="content" ng-show="isLoading">
     <cm-loader></cm-loader>
 </article>
-<article class="content"ng-show="!requests.length && !isLoading">
+<article class="content mb15"ng-show="!requests.length && !isLoading">
     <cm-info-bubble nose-x="45%" class="cm-alert">
         <i class="fa cm-info"></i> {{'CONTACTS.INFO.NO_REQUESTS'|cmTranslate}}
     </cm-info-bubble>
 </article>
 
-<section class="mt15" ng-if="(requests.length > 0)">
-    <ul class="no-border">
+<section ng-if="(requests.length > 0)">
+    <ul class="no-border-top">
         <li ng-repeat="request in requests" class="contact-request-item" data-qa="contact-list-element">
             <div>
                 <cm-avatar cm-data="request.identity"></cm-avatar>
