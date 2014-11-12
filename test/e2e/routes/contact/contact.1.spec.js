@@ -139,8 +139,6 @@ describe('Route Contact: ', function () {
             util.setVal('input-email', extUserMail2)
 
             $('cm-footer button').click()
-
-            util.waitAndCloseNotify();
         })
 
         it('should be the same details in contact after updating', function(){

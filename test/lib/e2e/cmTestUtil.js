@@ -595,7 +595,6 @@ this.waitAndClick = function (selector) {
 
 
 this.setVal = function (dataQa, text) {
-    console.log('setVal',"[data-qa='" + dataQa + "']",text)
     $("[data-qa='" + dataQa + "']").sendKeys(text)
 }
 

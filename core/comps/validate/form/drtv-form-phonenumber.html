@@ -1,0 +1,15 @@
+<article class="content" ng-form="cmInnerForm">
+    <label>{{label|cmTranslate}}</label>
+    <div class="cm-input-ctn with-chooser" ng-class="{'cm-input-disabled':disabled,'with-inside-icon':!disabled}">
+        <input
+                tabindex="{{tabIndex}}" data-qa="input-phonenumber"
+                type="text" name="phoneNumber" ng-model="ngModel"
+                ng-disabled="disabled" cm-validate-phone cm-adaptive-change />
+        <i class="fa cm-write" ng-show="!disabled"></i>
+    </div>
+    <cm-info-bubble class="cm-alert" ng-show="cmInnerForm.phoneNumber.$dirty && cmInnerForm.phoneNumber.$invalid">
+        <div ng-show="cmInnerForm.phoneNumber.$invalid">
+            <i class="fa cm-info"></i> {{info|cmTranslate}}
+        </div>
+    </cm-info-bubble>
+</article>

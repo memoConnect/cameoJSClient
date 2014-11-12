@@ -9,12 +9,12 @@
  * @restrict AE
  */
 
-//Todo: Widget should not access $roueParams
-
 angular.module('cmContacts')
     .directive('cmContactCreate', [
         'cmContactsModel', 'cmIdentityFactory', 'cmUtil', 'cmNotify', 'cmLoader',
-        function(cmContactsModel, cmIdentityFactory, cmUtil, cmNotify, cmLoader){
+        '$q',
+        function(cmContactsModel, cmIdentityFactory, cmUtil, cmNotify, cmLoader,
+                 $q){
 
             return {
                 restrict:       'AE',
@@ -24,31 +24,58 @@ angular.module('cmContacts')
                 controller: function($scope, $element, $attrs){
                     $scope.cmUtil = cmUtil;
                     var loader = new cmLoader($scope);
-                    $scope.formData = {
-                        phoneNumbers: [{value:''}],
-                        emails: [{value:''}]
-                    };
 
-                    $scope.contact = {};
-                    $scope.identity = {
-                        displayName: '',
-                        phoneNumber: '',
-                        email: '',
-                        exportData: function(){
-                            return {
-                                displayName: this.displayName,
-                                phoneNumber: this.phoneNumber,
-                                email: this.email
-                            }
-                        }
-                    };
                     $scope.disabled = false;
                     $scope.chooseAvatar = true;
                     $scope.showCameoId = true;
 
-                    /**
-                     * handle every single contact via model
-                     */
+                    function reset(){
+                        $scope.formData = {
+                            displayName: '',
+                            phoneNumber: '',
+                            email: ''
+                        };
+                    }
+
+                    reset();
+
+                    $scope.validateForm = function(){
+                        var deferred = $q.defer(),
+                            objectChange = {};
+
+                        function checkDisplayName() {
+                            var value = $scope.formData.displayName;
+                            if (value != undefined && value != '') {
+                                objectChange.displayName = value;
+                            }
+                        }
+
+                        function checkPhoneNumber() {
+                            var value = $scope.formData.phoneNumber;
+                            if (value != undefined && value != '') {
+                                objectChange.phoneNumber = value;
+                            }
+                        }
+
+                        function checkEmail() {
+                            var value = $scope.formData.email;
+                            if (value != undefined && value != '') {
+                                objectChange.email = value;
+                            }
+                        }
+
+                        checkDisplayName();
+                        checkPhoneNumber();
+                        checkEmail();
+
+                        if($scope.cmForm.$valid !== false && Object.keys(objectChange).length > 0){
+                            deferred.resolve(objectChange);
+                        } else {
+                            deferred.reject();
+                        }
+
+                        return deferred.promise;
+                    };
 
                     $scope.saveUser = function(){
                         if(loader.isIdle())
@@ -56,57 +83,27 @@ angular.module('cmContacts')
 
                         loader.start();
 
-                        // declaration
-                        var emptyIdentity = {
-                                displayName: null,
-                                email: null,
-                                phoneNumber: null,
-                                preferredMessageType: 'default',
-                                // TODO: not implemented in BE
-                                name: null,
-                                surName: null,
-                                phoneProvider: null,
-                                groups: []
+                        $scope.validateForm().then(
+                            function(objectChange) {
+                                // everything is fine let's add the contact
+                                cmContactsModel
+                                    .addContact({
+                                        identity: objectChange
+                                    })
+                                    .then(
+                                        function () {
+                                            $scope.gotoContactList();
+                                        },
+                                        function () {
+                                            loader.stop();
+                                            cmNotify.error('CONTACT.INFO.ERROR.SAVE', {ttl: 5000});
+                                        }
+                                    );
                             },
-                        // merge given identity with default
-                            identity = angular.extend({}, emptyIdentity, $scope.identity.exportData());
-
-                        // validation
-                        //////////////////////
-                        // TODO: mock workarround for multiinput from array to single string
-                        if($scope.formData.phoneNumbers.length > 0 && $scope.formData.phoneNumbers[0].value != ''){
-                            identity.phoneNumber = $scope.formData.phoneNumbers[0].value;
-                            identity.preferredMessageType = 'sms';
-                        } else {
-                            identity.phoneNumber = null;
-                        }
-                        if($scope.formData.emails.length > 0 && $scope.formData.emails[0].value != ''){
-                            identity.email = $scope.formData.emails[0].value;
-                            identity.preferredMessageType = 'mail';
-                        } else {
-                            identity.email = null;
-                        }
-                        //////////////////////
-                        if($scope.cmForm.$invalid){
-                            loader.stop();
-                            return false;
-                        }
-
-                        // everything is fine let's add the contact
-                        cmContactsModel
-                        .addContact({
-                            identity: identity,
-                            groups: identity.groups
-                        })
-                        .then(
-                            function () {
-                                $scope.gotoContactList();
-                            },
-                            function () {
+                            function(){
                                 loader.stop();
-                                cmNotify.error('CONTACT.INFO.ERROR.SAVE',{ttl:5000});
                             }
-                        );
+                        )
                     };
                 }
             }

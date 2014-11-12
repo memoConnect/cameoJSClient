@@ -71,8 +71,6 @@ describe('Route Settings Identity: ', function(){
             $("[data-qa='input-displayname']").sendKeys(newDisplayName)
 
             $("[data-qa='btn-saveIdentity']").click()
-
-            util.waitAndCloseNotify()
         })
 
         it('should change the phoneNumber and E-Mail', function(){
@@ -85,8 +83,6 @@ describe('Route Settings Identity: ', function(){
             expect($("[data-qa='input-email']").getAttribute('value')).toBe(newEmail)
 
             $("[data-qa='btn-saveIdentity']").click()
-
-            util.waitAndCloseNotify()
         })
     })
 
