@@ -1,10 +1,13 @@
 .cm-reactive-default(){
-  background-color: transparent;
+  background-color: @cm-white;
+  -webkit-tap-highlight-color:@cm-white;
   &.is-hover,&.is-touched{
     background-color:@cm-light-grey;
+    -webkit-tap-highlight-color:@cm-light-grey;
   }
   &.is-clicked{
     background-color:#DCDCDC;
+    -webkit-tap-highlight-color:#DCDCDC;
   }
 }
 
@@ -19,12 +22,18 @@
 }
 
 cm-header {
-  [cm-reactive]
-  {background-color:@cm-black}
-  [cm-reactive].is-hover,[cm-reactive].is-touched
-  {background-color:@cm-grey-new}
-  [cm-reactive].is-clicked
-  {background-color:#8D8D8D}
+  [cm-reactive] {
+    background-color:@cm-black;
+    -webkit-tap-highlight-color:@cm-black;
+  }
+  [cm-reactive].is-hover,[cm-reactive].is-touched {
+    background-color:@cm-grey-new;
+    -webkit-tap-highlight-color:@cm-grey-new;
+  }
+  [cm-reactive].is-clicked {
+    background-color:#8D8D8D;
+    -webkit-tap-highlight-color:#8D8D8D;
+  }
 }
 
 .cm-menu-list [cm-reactive]{
@@ -32,53 +41,77 @@ cm-header {
 }
 
 section.default-pages{
-  [cm-reactive]
-  {background-color:#ECECEC}
-  [cm-reactive].is-hover,[cm-reactive].is-touched
-  {background-color:#DBDBDB}
-  [cm-reactive].is-clicked
-  {background-color:#BFBFBF}
+  [cm-reactive] {
+    background-color:#ECECEC;
+    -webkit-tap-highlight-color:#ECECEC;
+  }
+  [cm-reactive].is-hover,[cm-reactive].is-touched {
+    background-color:#DBDBDB;
+    -webkit-tap-highlight-color:#DBDBDB;
+  }
+  [cm-reactive].is-clicked {
+    background-color:#BFBFBF;
+    -webkit-tap-highlight-color:#BFBFBF;
+  }
 }
 
 .cm-menu-list li.cm-menu-header {
   [cm-reactive] {
     .border-radius-tl;
     background-color:#ECECEC;
+    -webkit-tap-highlight-color:#ECECEC;
   }
   [cm-reactive].is-hover,[cm-reactive].is-touched {
     .border-radius-tl;
     background-color:#DBDBDB;
+    -webkit-tap-highlight-color:#DBDBDB;
   }
   [cm-reactive].is-clicked {
     .border-radius-tl;
     background-color:#BFBFBF;
+    -webkit-tap-highlight-color:#BFBFBF;
   }
 }
 
 button[cm-reactive] {
   &.cm-btn-grey{
     background-color:@cm-grey-new;
-    &.is-hover, &.is-touched
-    {background-color:#8D8D8D}
-    .is-clicked
-    {background-color:#A0A0A0}
+    -webkit-tap-highlight-color:@cm-grey-new;
+    &.is-hover, &.is-touched {
+      background-color:#8D8D8D;
+      -webkit-tap-highlight-color:#8D8D8D;
+    }
+    .is-clicked {
+      background-color:#A0A0A0;
+      -webkit-tap-highlight-color:#A0A0A0;
+    }
   }
 
   &.cm-btn-black {
     background-color:@cm-black;
-    &.is-hover, &.is-touched
-    {background-color:@cm-grey-new}
-    .is-clicked
-    {background-color:#A0A0A0}
+    -webkit-tap-highlight-color:@cm-black;
+    &.is-hover, &.is-touched {
+      background-color:@cm-grey-new;
+      -webkit-tap-highlight-color:@cm-grey-new;
+    }
+    .is-clicked {
+      background-color:#A0A0A0;
+      -webkit-tap-highlight-color:#A0A0A0;
+    }
   }
 }
 
 .theme-b {
   article[cm-reactive]{
     background-color: transparent;
-    &.is-hover, &.is-touched
-    {background-color:@cm-grey-new}
-    .is-clicked
-    {background-color:#A0A0A0}
+    -webkit-tap-highlight-color:transparent;
+    &.is-hover, &.is-touched {
+      background-color:@cm-grey-new;
+      -webkit-tap-highlight-color:@cm-grey-new;
+    }
+    .is-clicked {
+      background-color:#A0A0A0;
+      -webkit-tap-highlight-color:#A0A0A0;
+    }
   }
 }
