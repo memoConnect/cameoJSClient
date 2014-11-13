@@ -67,9 +67,11 @@ describe('Route Contact: ', function () {
         it('open modal and click create new contact',function(){
             util.expectCurrentUrl('#/contact/list')
 
-            $("[data-qa='add-contact-btn']").click()
+            //$("[data-qa='add-contact-btn']").click()
+            util.waitAndClickQa('add-contact-btn');
 
-            $$('cm-modal.active .content a').last().click()
+            //$$('cm-modal.active .content a').last().click()
+            util.waitAndClickQa('btn-modal-contact-create');
 
             util.expectCurrentUrl('#/contact/create')
         })
