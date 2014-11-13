@@ -21,6 +21,7 @@ angular.module('cmValidate').directive('cmValidatePhone',[
                                 correctValue = phoneNumber;
                                 ngModel.$setValidity('phone', true);
                                 ngModel.$setViewValue(phoneNumber);
+                                ngModel.$commitViewValue();
                                 ngModel.$render();
                             },
                             //error

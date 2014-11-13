@@ -12,23 +12,16 @@ angular.module('cmUser').directive('cmIdentityCreate', [
 
                 var loader = new cmLoader($scope);
 
-                $scope.formData = {
-                    cameoId: '',
-                    password: '',
-                    email: '',
-                    phone: '',
-                    displayName: ''
-                };
+                function reset() {
+                    $scope.formData = {
+                        cameoId: '',
+                        email: '',
+                        phoneNumber: '',
+                        displayName: ''
+                    };
+                }
 
-                //////////////////////
-                // TODO: mock workarround json in array
-                $scope.formData.phoneNumbers = [
-                    {value:''}
-                ];
-                $scope.formData.emails = [
-                    {value:''}
-                ];
-                //////////////////////
+                reset();
 
                 $scope.validateDisplayName = function(){
                     if($scope.formData.displayName == undefined
@@ -41,36 +34,37 @@ angular.module('cmUser').directive('cmIdentityCreate', [
 
                 $scope.validateForm = function(){
                     var deferred = $q.defer(),
-                        data = {};
+                        objectChange = {};
 
                     function checkCameoId() {
-                        if ($scope.formData.cameoId && $scope.formData.cameoId != '') {
-                            data.cameoId = $scope.formData.cameoId;
-                            data.reservationSecret = $scope.reservationSecrets[data.cameoId];
+                        var value = $scope.formData.cameoId;
+                        if (value && value != '') {
+                            objectChange.cameoId = value;
+                            objectChange.reservationSecret = $scope.reservationSecrets[objectChange.cameoId];
                         }
                     }
 
                     function checkDisplayName() {
-                        if ($scope.formData.displayName && $scope.formData.displayName != '') {
-                            data.displayName = $scope.formData.displayName;
-                        }
-                    }
-
-                    function checkEmail() {
-                        if ($scope.formData.emails.length > 0
-                            && $scope.formData.emails[0].value != undefined
-                            && $scope.formData.emails[0].value != ''
-                            ) {
-                            data.email = $scope.formData.emails[0].value;
+                        var value = $scope.formData.displayName;
+                        if (value != undefined
+                         && value != '') {
+                            objectChange.displayName = value;
                         }
                     }
 
                     function checkPhoneNumber() {
-                        if ($scope.formData.phoneNumbers.length > 0
-                            && $scope.formData.phoneNumbers[0].value != undefined
-                            && $scope.formData.phoneNumbers[0].value != ''
-                            ) {
-                            data.phoneNumber = $scope.formData.phoneNumbers[0].value;
+                        var value = $scope.formData.phoneNumber;
+                        if (value != undefined
+                         && value != '') {
+                            objectChange.phoneNumber = value;
+                        }
+                    }
+
+                    function checkEmail() {
+                        var value = $scope.formData.email;
+                        if (value != undefined
+                         && value != '') {
+                            objectChange.email = value;
                         }
                     }
 
@@ -85,11 +79,11 @@ angular.module('cmUser').directive('cmIdentityCreate', [
 
                     checkCameoId();
                     checkDisplayName();
-                    checkEmail();
                     checkPhoneNumber();
+                    checkEmail();
 
-                    if($scope.cmForm.$valid !== false){
-                        deferred.resolve(data);
+                    if($scope.cmForm.$valid !== false && Object.keys(objectChange).length > 0){
+                        deferred.resolve(objectChange);
                     } else {
                         deferred.reject();
                     }
@@ -104,8 +98,8 @@ angular.module('cmUser').directive('cmIdentityCreate', [
                     loader.start();
 
                     $scope.validateForm().then(
-                        function(data){
-                            cmAuth.addIdentity(data).then(
+                        function(objectChange){
+                            cmAuth.addIdentity(objectChange).then(
                                 function(res){
                                     loader.stop();
                                     cmUserModel.switchToIdentity(res.identity, res.token.token);
@@ -115,6 +109,7 @@ angular.module('cmUser').directive('cmIdentityCreate', [
                                     cmNotify.warn('SETTINGS.PAGES.IDENTITY.CREATE.WARN.FAILED');
                                 }
                             );
+                            reset();
                         },
                         function(){
                             loader.stop();
