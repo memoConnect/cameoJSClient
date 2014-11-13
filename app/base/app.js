@@ -23,18 +23,8 @@ angular.module('cameoClient', [
 .config([
     'cmLanguageProvider', 'cmLoggerProvider', 'cmApiProvider', 'cmCallbackQueueProvider',
     'cmConfigProvider', 'cmEnvProvider', 'cmWebworkerFactoryProvider',
-    '$sceDelegateProvider',
     function (cmLanguageProvider, cmLoggerProvider, cmApiProvider, cmCallbackQueueProvider,
-              cmConfigProvider, cmEnvProvider, cmWebworkerFactoryProvider,
-              $sceDelegateProvider){
-
-        $sceDelegateProvider.resourceUrlWhitelist([
-            'self',
-            'https://dev.cameo.io/**',
-            'https://dev.cameo.io/**',
-            'https://cameonet.de/**',
-            cmConfigProvider.get('appProtocol')+'://**'
-        ]);
+              cmConfigProvider, cmEnvProvider, cmWebworkerFactoryProvider){
 
         cmLoggerProvider
             .debugEnabled( cmEnvProvider.get('enableDebug') )

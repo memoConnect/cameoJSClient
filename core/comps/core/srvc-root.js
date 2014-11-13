@@ -1,14 +1,10 @@
 'use strict';
 
 angular.module('cmCore').service('cmRootService', [
-    '$rootScope',
-    '$window',
-    '$location',
-    'cmLogger',
-    'cmJob',
-    'cmModal',
-
-    function($rootScope, $window, $location, cmLogger, cmJob, cmModal){
+    '$rootScope', '$window', '$location',
+    'cmLogger', 'cmJob', 'cmModal', 'cmConfig',
+    function($rootScope, $window, $location,
+             cmLogger, cmJob, cmModal, cmConfig){
 
         $rootScope.goBack = function(){
             $window.history.back();
@@ -63,6 +59,10 @@ angular.module('cmCore').service('cmRootService', [
 
         $rootScope.gotoConversation = function(conversationId, subpath){
             $rootScope.goTo('/conversation/'+(conversationId || 'new')+ (subpath ? '/'+subpath : ''))
+        };
+
+        $rootScope.goToApp = function(params){
+            window.location = cmConfig.appProtocol + '://?'+params;
         };
 
         /**

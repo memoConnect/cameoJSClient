@@ -1,14 +1,23 @@
 'use strict';
 
 angular.module('cmRoutes')
-.controller('PurlCtrl',
-    function(cmModal, cmPurlModel, cmConversationFactory,
+.controller('PurlCtrl',[
+    'cmModal', 'cmPurlModel', 'cmConversationFactory', 'cmDevice',
+    '$scope', '$rootScope', '$routeParams', 'resolveData',
+    function(cmModal, cmPurlModel, cmConversationFactory, cmDevice,
              $scope, $rootScope, $routeParams, resolveData){
 
         $rootScope.pendingPurl      = null;
         $scope.showSignIn           = false;
         $scope.purlId               = $routeParams.purlId || '';
         $scope.headerGuest          = true;
+
+        $scope.appParams = 'purlId=' + $routeParams.purlId;
+
+        $scope.showSecondHeader = true;
+        $scope.closeSecondHeader = function(){
+            $scope.showSecondHeader = false;
+        };
 
         if(typeof resolveData == 'object'){
             if(typeof resolveData.identity == 'object' && typeof resolveData.conversation == 'object'){
@@ -36,4 +45,4 @@ angular.module('cmRoutes')
             }
         }
     }
-);
+]);
