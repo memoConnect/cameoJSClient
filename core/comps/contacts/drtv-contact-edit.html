@@ -113,8 +113,8 @@
     ></cm-form-email>
 </form>
 
-<cm-footer ng-hide="disabled">
-    <button data-qa="btn-create-contact" class="cm-btn-grey" id="registerUserButton" ng-click="saveUser()" data-qa="btn-footer">
+<cm-footer>
+    <button data-qa="btn-create-contact" class="cm-btn-grey" id="registerUserButton" ng-click="saveUser()" data-qa="btn-footer"  cm-reactive>
         <span ng-show="!showLoader && !isPristine" data-qa="btn-saveUser">
             {{'CONTACT.FOOTER.SAVE'|cmTranslate}}
             <i class="fa cm-checker"></i>
