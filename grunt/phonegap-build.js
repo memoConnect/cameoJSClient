@@ -44,6 +44,7 @@ module.exports = function(grunt, options){
         tasks:{
             clean: {
                 'app-phonegap': [
+                    'dist/dl',
                     'dist/phonegap',
                     'dist/phonegap-target',
                     'build/phonegap',
