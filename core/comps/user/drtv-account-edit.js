@@ -24,7 +24,8 @@ angular.module('cmUser')
                 $scope.togglePasswordChange = function(action){
                     $scope.showPasswordChange = action && action == 'close' || $scope.showPasswordChange ? false : true;
                     if(!$scope.showPasswordChange){
-                        $scope.account.oldPassword = '';
+                        $scope.formData.oldPassword = '';
+                        $scope.formData.password = '';
                         $rootScope.$broadcast('cm-password:reset');
                     }
                 };

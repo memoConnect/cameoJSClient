@@ -30,7 +30,7 @@ describe('Purl Registration: ', function () {
         util.waitForPageLoad('/contact/create')
 
         $("[data-qa='input-displayname']").sendKeys(externalLogin)
-        $("[data-qa='input-phonenumber']").sendKeys('12345')
+        $("[data-qa='input-phoneNumber']").sendKeys('12345')
 
         $('cm-footer button').click()
 

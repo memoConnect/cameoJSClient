@@ -16,7 +16,7 @@ angular.module('cmUser').directive('cmIdentityCreate', [
                     $scope.formData = {
                         cameoId: '',
                         email: '',
-                        phone: '',
+                        phoneNumber: '',
                         displayName: ''
                     };
                 }
