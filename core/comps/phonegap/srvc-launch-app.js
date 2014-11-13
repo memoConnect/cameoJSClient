@@ -28,6 +28,7 @@ angular.module('cmPhonegap')
             },
 
             doLaunch: function(){
+                console.log('doLaunch',self.params)
                 // on launch with params
                 if(Object.keys(self.params).length > 0) {
                     switch (true) {

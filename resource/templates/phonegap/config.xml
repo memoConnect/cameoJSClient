@@ -96,8 +96,13 @@
     <preference name="disable-cursor" value="true" />
     <preference name="SplashScreen" value="screen"/>
 
-    <!-- Icons / Splash -->
+    <!-- platform config files -->
+    <gap:config-file platform="android" parent="/manifest">
+        <application android:debuggable="<%= androidDebuggable %>" />
+    </gap:config-file>
 
+
+    <!-- Icons / Splash -->
     <platform name="android">
         <icon src="www/res/icons/android/icon-36-ldpi.png" density="port-ldpi"/>
         <icon src="www/res/icons/android/icon-48-mdpi.png" density="port-mdpi"/>
@@ -111,6 +116,8 @@
         <splash src="www/res/screens/android/drawable-xhdpi/screen.9.png" density="port-xhdpi"/>
         <splash src="www/res/screens/android/drawable-xxhdpi/screen.9.png" density="port-xxhdpi"/>
     </platform>
+
+
 
     <platform name="ios">
         <!-- iPhone / iPod Touch  -->

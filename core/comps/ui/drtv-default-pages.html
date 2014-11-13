@@ -1,9 +1,9 @@
 <section class="default-pages">
-    <button ng-click="goTo('/talks')" ng-class="{'isActive':isTalks}" cm-reactive>
+    <button ng-click="goTo('/talks')" ng-class="{'isActive':isTalks}" cm-reactive data-qa="btn-talks">
         <i class="fa fa-lg-icon cm-talk"></i>
         {{'DRTV.FOOTER.TALKS' | cmTranslate}}
     </button>
-    <button ng-click="goTo('/contact/list')" ng-class="{'isActive':isContacts}" cm-reactive>
+    <button ng-click="goTo('/contact/list')" ng-class="{'isActive':isContacts}" cm-reactive data-qa="btn-contacts">
         <i class="fa fa-lg-icon cm-person"></i>
         {{'DRTV.FOOTER.CONTACTS' | cmTranslate}}
     </button>

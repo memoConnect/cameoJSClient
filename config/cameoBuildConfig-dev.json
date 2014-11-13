@@ -21,6 +21,7 @@
         "baseName": "cameoNet-dev",
         "appId": "864855",
         "bundleId": "io.cameo.dev.cameo",
-        "extraName": ""
+        "extraName": "" ,
+        "androidDebuggable": true
     }
 }
