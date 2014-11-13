@@ -37,15 +37,15 @@ module.exports = function(grunt, options){
                     path: 'build/phonegap-tmp',
                     plugins: [
                         'org.apache.cordova.device',
-//                        'org.apache.cordova.camera',
-//                        'org.apache.cordova.file',
-//                        'org.apache.cordova.file-transfer',
-//                        'org.apache.cordova.network-information',
-//                        'com.phonegap.plugins.pushplugin',
-//                        'https://github.com/memoConnect/cordova-plugin-contacts.git',
-//                        'de.appplant.cordova.plugin.hidden-statusbar-overlay',
-//                        'com.jamiestarke.webviewdebug',
-//                        'https://github.com/memoConnect/de.cameonet.cordova.crypto.git'
+                        'org.apache.cordova.camera',
+                        'org.apache.cordova.file',
+                        'org.apache.cordova.file-transfer',
+                        'org.apache.cordova.network-information',
+                        'com.phonegap.plugins.pushplugin',
+                        'https://github.com/memoConnect/cordova-plugin-contacts.git',
+                        'de.appplant.cordova.plugin.hidden-statusbar-overlay',
+                        'com.jamiestarke.webviewdebug',
+                        'https://github.com/memoConnect/de.cameonet.cordova.crypto.git'
                     ],
                     platforms: [
                         'android'

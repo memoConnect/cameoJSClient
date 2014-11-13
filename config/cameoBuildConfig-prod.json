@@ -21,6 +21,7 @@
         "baseName": "cameoNet",
         "appId": "1028579",
         "bundleId": "de.cameonet",
-        "extraName": ""
+        "extraName": "",
+        "androidDebuggable": false
     }
 }

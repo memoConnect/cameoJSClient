@@ -22,12 +22,13 @@ angular.module('cmUser').directive('cmIdentityKeyList', [
                 var refresh_scheduled = false
 
                 function schedule_refresh(){
-                    if(!refresh_scheduled)
+                    if(!refresh_scheduled){
                         refresh_scheduled = true
                         $timeout(function(){
                             refresh_scheduled = false
                             refresh()
                         }, 1000)
+                    }
                 }
 
                 function refresh(){

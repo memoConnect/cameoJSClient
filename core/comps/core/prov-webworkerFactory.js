@@ -59,6 +59,8 @@ angular.module('cmCore')
 
                         instance.trigger("run", instance)
 
+                        //console.warn('running WebWorker "'+data.jobName)
+
                         worker      = new Worker('webworker/'+data.jobName+'.js')
                         deferred    = $q.defer()
 
@@ -141,7 +143,7 @@ angular.module('cmCore')
                                             return $q.when(worker)
                                         })
 
-                    //console.warn('new WW "'+data.jobName+'" Number of queued webworkers: ', self.length)
+                    //console.warn('new WebWorker "'+data.jobName+'" Number of queued webworkers: '+ self.length)
 
                     worker.on('done', function(event){
                         self.trigger('worker:done', worker)
@@ -173,7 +175,7 @@ angular.module('cmCore')
 
                 self.on('worker:done', function(event, worker){
                     self.deregister(worker)
-                    //console.info('Worker done; number of queued webworkers: ', self.length)
+                    //console.info('Worker done; number of queued webworkers: ' + self.length)
                     self.advance()
                 })
 

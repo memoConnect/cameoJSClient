@@ -21,6 +21,7 @@
         "baseName": "cameoNet-local",
         "appId": "1085010",
         "bundleId": "io.cameo.local.cameo",
-        "extraName" : ""
+        "extraName" : "" ,
+        "androidDebuggable": true
     }
 }
