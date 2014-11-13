@@ -40,7 +40,7 @@ angular.module('cmPhonegap').service('cmLocalContacts', [
             plugin: null,
 
             init: function () {
-                if(typeof $phonegapCameoConfig == 'undefined') {
+                if($phonegapCameoConfig == 'undefined') {
                     return false;
                 }
 
@@ -79,6 +79,12 @@ angular.module('cmPhonegap').service('cmLocalContacts', [
                                 pref: false,
                                 type: "mobile", // mobile | work | fax
                                 value: "+49 123 4567890"
+                            },
+                            {
+                                id: "2343",
+                                pref: false,
+                                type: "work", // mobile | work | fax
+                                value: "+49 123 "
                             }
                         ],
                         emails: [
@@ -87,6 +93,12 @@ angular.module('cmPhonegap').service('cmLocalContacts', [
                                 pref: false,
                                 type: "work", // other
                                 value: "some.coworker@cameo.io"
+                            },
+                            {
+                                id: "3534",
+                                pref: false,
+                                type: "other", // other
+                                value: "other.coworker@cameo.io"
                             }
                         ]
                     });// return mock use above

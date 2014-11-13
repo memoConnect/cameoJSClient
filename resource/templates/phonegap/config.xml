@@ -60,8 +60,8 @@
     <preference name="AndroidPersistentFileLocation" value="Internal" />
     <!-- build -->
     <!-- http://de.wikipedia.org/wiki/Liste_von_Android-Versionen -->
-    <preference name="android-minSdkVersion" value="7" />
-    <preference name="android-maxSdkVersion" value="19" />
+    <preference name="android-minSdkVersion" value="15" />
+    <preference name="android-maxSdkVersion" value="21" />
     <preference name="android-targetSdkVersion" value="15" />
     <preference name="android-installLocation" value="internalOnly" />
     <preference name="android-windowSoftInputMode" value="adjustResize" />

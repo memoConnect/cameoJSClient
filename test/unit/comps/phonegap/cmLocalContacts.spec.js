@@ -6,7 +6,7 @@ describe('cmLocalContacts default none app', function() {
     beforeEach(function () {
         module('cmPhonegap', function ($provide) {
             $provide.factory('$navigator', function () {
-                return {}
+                return 'undefined'
             })
         })
     })

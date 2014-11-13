@@ -4,7 +4,7 @@
 </h2>
 
 <ul>
-    <li ng-repeat="page in Object.keys(overview)"
+    <li ng-repeat="page in overviewKeys"
         ng-click="goToSettingsPage($event, page, overview[page].disabled, overview[page])"
         ng-class="{'is-disabled':overview[page].disabled,'is-active':checkActive(page)}"
         data-qa="{{overview[page]['data-qa']}}">

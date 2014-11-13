@@ -10,9 +10,9 @@ angular.module('cmUi').directive('cmMenu',[
             scope: true,
             templateUrl: 'comps/ui/drtv-menu.html',
             controller: function($scope){
-
-                $scope.Object = Object;
                 $scope.menu = cmConfig.menu;
+                $scope.menuKeys = Object.keys($scope.menu);
+
                 $scope.version = cmConfig.version;
                 $scope.menuVisible = false;
 

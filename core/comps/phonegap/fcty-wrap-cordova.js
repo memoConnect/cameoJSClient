@@ -4,7 +4,7 @@ angular.module('cmPhonegap')
 .factory('$cordova', ['cmPhonegap',
     function(cmPhonegap){
         function init(){
-            return typeof cordova != 'undefined' ? cordova : undefined;
+            return typeof cordova != 'undefined' ? cordova : 'undefined';
         }
 
         var $cordova = init();
