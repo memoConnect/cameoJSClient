@@ -21,7 +21,8 @@ angular.module('cmValidate').directive('cmValidateMixed',[
                             function (mixed){
                                 correctValue = mixed[Object.keys(mixed)[0]];
                                 ngModel.$setValidity('mixed', true);
-                                ngModel.$setViewValue(correctValue)
+                                ngModel.$setViewValue(correctValue);
+                                ngModel.$commitViewValue();
                                 ngModel.$render();
                             },
                             //error

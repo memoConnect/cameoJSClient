@@ -3,6 +3,6 @@
 angular.module('cmPhonegap')
 .factory('$phonegapCameoConfig', [
     function(){
-        return typeof phonegapCameoConfig != 'undefined' ? phonegapCameoConfig : undefined;
+        return typeof phonegapCameoConfig != 'undefined' ? phonegapCameoConfig : 'undefined';
     }
 ]);

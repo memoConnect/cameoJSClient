@@ -87,11 +87,8 @@ describe('Route Contact: ', function () {
         })
 
         it('create external contact', function(){
-            //$("[data-qa='input-displayname']").sendKeys(extUserName)
             util.setVal('input-displayname', extUserName)
-            //$("[data-qa='input-phonenumber']").sendKeys(extUserTel)
-            util.setVal('input-phonenumber', extUserTel)
-            //$("[data-qa='input-email']").sendKeys(extUserMail1)
+            util.setVal('input-phoneNumber', extUserTel)
             util.setVal('input-email', extUserMail1)
 
             $('cm-footer button').click()
@@ -123,8 +120,8 @@ describe('Route Contact: ', function () {
                 expect(value).toBe(extUserName)
             })
 
-            util.waitForQa('input-phonenumber');
-            util.getVal('input-phonenumber').then(function(value){
+            util.waitForQa('input-phoneNumber');
+            util.getVal('input-phoneNumber').then(function(value){
                 expect(value).toBe(extUserTel)
             })
 
@@ -135,7 +132,7 @@ describe('Route Contact: ', function () {
         })
 
         it('should update external User', function(){
-            util.clearInput('input-phonenumber')
+            util.clearInput('input-phoneNumber')
 
             util.clearInput('input-email')
             util.setVal('input-email', extUserMail2)
@@ -151,8 +148,8 @@ describe('Route Contact: ', function () {
                 expect(value).toBe(extUserName)
             })
 
-            util.waitForQa('input-phonenumber');
-            util.getVal('input-phonenumber').then(function(value){
+            util.waitForQa('input-phoneNumber');
+            util.getVal('input-phoneNumber').then(function(value){
                 expect(value).toBe('')
             })
 
@@ -179,8 +176,8 @@ describe('Route Contact: ', function () {
                 expect(value).toBe(extUserName)
             })
 
-            util.waitForQa('input-phonenumber');
-            util.getVal('input-phonenumber').then(function(value){
+            util.waitForQa('input-phoneNumber');
+            util.getVal('input-phoneNumber').then(function(value){
                 expect(value).toBe('')
             })
 

@@ -36,7 +36,7 @@
                 </section>
             </li>
 
-            <li data-qa="start-trust-handshake-btn" ng-click="goToAuthentication(contact.identity)" ng-if="!isTrusted && hasKeys && hasLocalKey">
+            <li class="no-border" data-qa="start-trust-handshake-btn" ng-click="goToAuthentication(contact.identity)" ng-if="!isTrusted && hasKeys && hasLocalKey">
                 <span class="item clearfix">
                         <i  class="fa cm-handshake"></i>
                         {{'CONTACT.TRUST.START'|cmTranslate}}
@@ -96,59 +96,32 @@
 
     <hr class="margin-small" />
 
-    <label class="content">{{'CONTACT.PLACEHOLDER.PHONENUMBER'|cmTranslate}}</label>
-    <cm-multi-input cm-collection="formData.phoneNumbers" cm-disabled="disabled" class="content">
-        <ng-form name="formPhone">
-            <div class="cm-input-ctn with-chooser" ng-class="{'cm-input-disabled':disabled,'with-inside-icon':!disabled}">
-                <input
-                        tabindex="2" data-qa="input-phonenumber"
-                        type="text" name="phoneNumber" ng-model="item.value"
-                        ng-disabled="disabled" cm-validate-phone cm-adaptive-change />
-                <i class="fa cm-write" ng-show="!disabled"></i>
-            </div>
-            <!--<div cm-type-chooser cm-choose-value-to="item" cm-disabled="disabled" ng-class="{'cm-input-disabled':disabled}"></div>-->
-            <cm-info-bubble class="cm-alert" ng-show="formPhone.phoneNumber.$dirty && formPhone.phoneNumber.$invalid">
-                <div ng-show="formPhone.phoneNumber.$invalid">
-                    <i class="fa cm-info"></i> {{'CONTACT.INFO.INVALID.PHONENUMBER'|cmTranslate}}
-                </div>
-            </cm-info-bubble>
-        </ng-form>
-    </cm-multi-input>
+    <cm-form-phonenumber
+        ng-model="formData.phoneNumber"
+        cm-tabindex="2"
+        cm-label="CONTACT.PLACEHOLDER.PHONENUMBER"
+        cm-info="CONTACT.INFO.INVALID.PHONENUMBER"
+    ></cm-form-phonenumber>
 
     <hr class="margin-small" />
 
-    <label class="content">{{'CONTACT.PLACEHOLDER.EMAIL'|cmTranslate}}</label>
-    <cm-multi-input cm-collection="formData.emails" cm-disabled="disabled" class="content">
-        <ng-form name="formEmail">
-            <div class="cm-input-ctn with-chooser" ng-class="{'cm-input-disabled':disabled,'with-inside-icon':!disabled}">
-                <input
-                        tabindex="3" data-qa="input-email"
-                        name="email" ng-model="item.value"
-                        ng-disabled="disabled" cm-validate-email cm-adaptive-change />
-                <i class="fa cm-write" ng-show="!disabled"></i>
-            </div>
-            <!--<div cm-type-chooser cm-choose-value-to="item" ng-class="{'cm-input-disabled':disabled}" cm-disabled="disabled"></div>-->
-            <cm-info-bubble class="cm-alert" ng-show="formEmail.email.$dirty && formEmail.email.$invalid">
-                <div ng-show="formEmail.email.$invalid">
-                    <i class="fa cm-info"></i> {{'CONTACT.INFO.INVALID.EMAIL'|cmTranslate}}
-                </div>
-            </cm-info-bubble>
-        </ng-form>
-    </cm-multi-input>
-
-    <cm-loader ng-show="showTestLoader" cm-color="ci-color"></cm-loader>
-
+    <cm-form-email
+        ng-model="formData.email"
+        cm-tabindex="3"
+        cm-label="CONTACT.PLACEHOLDER.EMAIL"
+        cm-info="CONTACT.INFO.INVALID.EMAIL"
+    ></cm-form-email>
 </form>
 
-<cm-footer>
-    <button data-qa="btn-create-contact" class="cm-btn-grey" id="registerUserButton" ng-click="saveUser()" data-qa="btn-footer" cm-reactive>
+<cm-footer ng-hide="disabled">
+    <button data-qa="btn-create-contact" class="cm-btn-grey" id="registerUserButton" ng-click="saveUser()" data-qa="btn-footer">
         <span ng-show="!showLoader && !isPristine" data-qa="btn-saveUser">
             {{'CONTACT.FOOTER.SAVE'|cmTranslate}}
             <i class="fa cm-checker"></i>
         </span>
         <span ng-show="isPristine" data-qa="btn-pristineBack">
             {{'CONTACT.FOOTER.BACK'|cmTranslate}}
-            <i class="fa  cm-out"></i>
+            <i class="fa cm-out"></i>
         </span>
         <cm-loader ng-show="showLoader" cm-color="ci-color"></cm-loader>
     </button>

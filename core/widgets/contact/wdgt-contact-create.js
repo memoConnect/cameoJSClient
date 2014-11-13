@@ -9,8 +9,6 @@
  * @restrict AE
  */
 
-//Todo: Widget should not access $roueParams
-
 angular.module('cmWidgets')
 .directive('cmWidgetContactCreate', [
     'cmLocalContacts',

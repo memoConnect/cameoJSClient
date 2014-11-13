@@ -19,7 +19,13 @@ angular.module('cmUi').directive('cmRubberSpace',[
                     // calculate total weight:
                     var available_space = 100,
                         total_weight    = 0,
-                        width           = element[0].offsetWidth
+                        width           = element[0].offsetWidth,
+                        children        = []
+
+                    angular.forEach(element.children(), function(child){ 
+                        children.push(angular.element(child))
+                    })
+
 
                     //substract padding:
                     available_space -= 100*(element.css('paddingLeft')+element.css('paddingRight'))/width
@@ -27,29 +33,26 @@ angular.module('cmUi').directive('cmRubberSpace',[
                         //console.log(element.css('paddingRight'))
 
                     //substract children's margin:
-                    angular.forEach(element.children(), function(child){  
-                        available_space -= 100*(angular.element(child).css('marginLeft')+angular.element(child).css('marginRight'))/width    
+                    children.forEach(function(child){  
+                        available_space -= 100*(child.css('marginLeft')+child.css('marginRight'))/width    
                     })
 
                     //substract width of element width undefined weight:
-                    angular.forEach(element.children(), function(child){                         
-                        var weight = parseInt( angular.element(child).attr('cm-weight')) || false
-
+                    children.forEach(function(child){                         
+                        var weight = parseInt( child.attr('cm-weight')) || false
 
                         if(weight){
-                            child.weight     = weight
-                            total_weight    += child.weight
+                            child.weight     =  weight
+                            total_weight     += child.weight
                         }else{
-                            available_space -= 100 * child.offsetWidth/width
+                            available_space -= 100 * child[0].offsetWidth/width
                         }
                     });
                     
                     // stretch children according to their weight:
-                    angular.forEach(element.children(), function (child) {
-                        child = angular.element(child)
-
-                        if (child[0].weight) {
-                            child.css('width', (available_space * child[0].weight / total_weight) + '%')
+                    children.forEach(function (child) {
+                        if (child.weight) {
+                            child.css('width', (available_space * child.weight / total_weight) + '%')
                         }
                     })
 

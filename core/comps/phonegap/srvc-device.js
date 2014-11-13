@@ -16,12 +16,12 @@ angular.module('cmPhonegap')
             flags: {},
 
             init: function(){
-                if(typeof $phonegapCameoConfig == 'undefined') {
+                if($phonegapCameoConfig == 'undefined') {
                     return false;
                 }
 
                 cmPhonegap.isReady(function(){
-                    if(typeof $device.get() == 'undefined'){
+                    if($device.get() == 'undefined'){
                         //cmLogger.info('DEVICE PLUGIN IS MISSING');
                         return false;
                     }

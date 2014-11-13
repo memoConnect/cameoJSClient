@@ -7,7 +7,7 @@ var cmDevice,
         beforeEach(function () {
             module('cmPhonegap', function ($provide) {
                 $provide.factory('$device', function () {
-                    return undefined
+                    return 'undefined'
                 })
             })
         })

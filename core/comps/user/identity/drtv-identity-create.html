@@ -32,55 +32,21 @@
 
     <hr class="margin-small" />
 
-    <article class="content">
-        <label>{{'SETTINGS.PAGES.IDENTITY.CREATE.PLACEHOLDER.PHONENUMBER'|cmTranslate}}</label>
-        <cm-multi-input cm-collection="formData.phoneNumbers">
-            <ng-form name="formPhone" autocomplete="off">
-                <div class="cm-input-ctn with-chooser with-inside-icon">
-                    <input
-                        tabindex="3" data-qa="input-phonenumber"
-                        type="text" name="phoneNumber" ng-model="item.value" cm-validate-phone cm-adaptive-change />
-                    <i class="fa cm-write"></i>
-                </div>
-                <!--<div cm-type-chooser cm-choose-value-to="item"></div>-->
-                <cm-info-bubble
-                    class="cm-alert"
-                    ng-show="
-                        formPhone.phoneNumber.$dirty &&
-                        formPhone.phoneNumber.$invalid
-                    "
-                    data-qa="form-error-phoneNumber-invalid">
-                    <div ng-show="formPhone.phoneNumber.$invalid">
-                        <i class="fa cm-info"></i>
-                        {{'SETTINGS.PAGES.IDENTITY.CREATE.INFO.INVALID.PHONENUMBER'|cmTranslate}}
-                    </div>
-                </cm-info-bubble>
-            </ng-form>
-        </cm-multi-input>
-    </article>
+    <cm-form-phonenumber
+        ng-model="formData.phoneNumber"
+        cm-tabindex="3"
+        cm-label="SETTINGS.PAGES.IDENTITY.CREATE.PLACEHOLDER.PHONENUMBER"
+        cm-info="SETTINGS.PAGES.IDENTITY.CREATE.INFO.INVALID.PHONENUMBER"
+    ></cm-form-phonenumber>
 
     <hr class="margin-small" />
 
-    <article class="content">
-        <label>{{'SETTINGS.PAGES.IDENTITY.CREATE.PLACEHOLDER.EMAIL'|cmTranslate}}</label>
-        <cm-multi-input cm-collection="formData.emails">
-            <ng-form name="formEmail" autocomplete="off">
-                <div class="cm-input-ctn with-chooser with-inside-icon">
-                    <input
-                        tabindex="4" data-qa="input-email"
-                        name="email" ng-model="item.value" cm-validate-email />
-                    <i class="fa cm-write"></i>
-                </div>
-                <!--<div cm-type-chooser cm-choose-value-to="item"></div>-->
-                <cm-info-bubble class="cm-alert" ng-show="formEmail.email.$dirty && formEmail.email.$invalid">
-                    <div ng-show="formEmail.email.$invalid" data-qa="form-error-email-invalid">
-                        <i class="fa cm-info"></i>
-                        {{'SETTINGS.PAGES.IDENTITY.CREATE.INFO.INVALID.EMAIL'|cmTranslate}}
-                    </div>
-                </cm-info-bubble>
-            </ng-form>
-        </cm-multi-input>
-    </article>
+    <cm-form-email
+        ng-model="formData.email"
+        cm-tabindex="4"
+        cm-label="SETTINGS.PAGES.IDENTITY.CREATE.PLACEHOLDER.EMAIL"
+        cm-info="SETTINGS.PAGES.IDENTITY.CREATE.INFO.INVALID.EMAIL"
+    ></cm-form-email>
 </form>
 
 <cm-footer>
