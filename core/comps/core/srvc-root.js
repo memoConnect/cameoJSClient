@@ -68,7 +68,7 @@ angular.module('cmCore').service('cmRootService', [
         /**
          * modal for login
          */
-        $rootScope.showLogin = function () {
+        $rootScope.showLogin = function (scopeVar) {
             cmModal.create({
                 id: 'login',
                 'class': 'with-title no-padding theme-b',
@@ -77,7 +77,11 @@ angular.module('cmCore').service('cmRootService', [
             },'<div cm-login-modal></div>');
             cmModal.open('login');
 
+            if(scopeVar)
+                scopeVar = true;
+
             $rootScope.$on('cmLogin:success', function(){
+                // TODO: schould that happen?
                 location.reload();
             });
         };

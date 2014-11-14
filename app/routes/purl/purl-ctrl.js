@@ -39,7 +39,7 @@ angular.module('cmRoutes')
                 $scope.conversation = cmConversationFactory.create(conversation_id);
             } else if(typeof resolveData.status == 'number' && resolveData.status == 401){
                 $rootScope.$broadcast('logout', {goToLogin: false, where: 'purl-ctrl getPurl reject'})
-                $rootScope.showLogin();
+                $rootScope.showLogin($scope.showSignIn);
             } else {
                 $rootScope.goTo('/404');
             }

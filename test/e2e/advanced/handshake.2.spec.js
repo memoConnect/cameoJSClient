@@ -70,7 +70,7 @@ describe('Authentication requests -', function () {
                                     return result
                                 })  
                     })
-        }, 5000, 'for Key "'+keyName+'" to be ' + (isTrusted ? 'trusted' : 'untrusted') + ' .') 
+        }, 10000, 'for Key "'+keyName+'" to be ' + (isTrusted ? 'trusted' : 'untrusted') + ' .')
 
     }
 
