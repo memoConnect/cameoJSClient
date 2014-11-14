@@ -13,9 +13,12 @@ angular.module('cmCore').service('cmSystemCheck', [
     'cmLanguage',
     'LocalStorageAdapter',
     'cmLogger',
+    'cmDevice',
     '$rootScope',
     '$q',
-    function(cmUserModel, cmObject, cmApi, cmVersion, cmLanguage, LocalStorageAdapter, cmLogger, $rootScope, $q){
+    function(cmUserModel, cmObject, cmApi, cmVersion, cmLanguage,
+             LocalStorageAdapter, cmLogger, cmDevice,
+             $rootScope, $q){
         var self = this;
 
         cmObject.addEventHandlingTo(this);
@@ -32,12 +35,17 @@ angular.module('cmCore').service('cmSystemCheck', [
                 }
             }).then(
                 function(data){
+                    // without token
                     if(!cmUserModel.isAuth()){
                         var language = data.languageCode.substr(0,2),
                             lc       = language == 'de' ? 'de_DE' : 'en_US';
                         cmLanguage.switchLanguage(lc);
                     }
-
+                    // flag handling
+                    if('isDesktop' in data){
+                        cmDevice.setFlag('isDesktop',data.isDesktop);
+                    }
+                    // version check
                     if('versionIsSupported' in data && data.versionIsSupported == false){
                         $rootScope.clientVersionCheck = false;
                     } else {

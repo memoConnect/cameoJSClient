@@ -11,8 +11,8 @@ angular.module('cmDesktopUi').directive('cmDesktopMenu',[
             templateUrl: 'comps/ui/drtv-desktop-menu.html',
             controller: function($scope){
 
-                $scope.Object = Object;
                 $scope.menu = cmConfig.menu;
+                $scope.menuKeys = Object.keys($scope.menu);
                 $scope.version = cmConfig.version;
                 $scope.menuVisible = false;
 

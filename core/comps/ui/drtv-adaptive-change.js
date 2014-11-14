@@ -49,12 +49,14 @@ angular.module('cmUi').directive('cmAdaptiveChange', [
                     timeout = $timeout(function(){
                         scope.$apply(function() {
                             ngModel.$setViewValue(element.val());
+                            ngModel.$commitViewValue();
                             $rootScope.$broadcast('multi-input:changed',ngModel);
                         });
                     },attrs.cmAdaptiveChange || 1000);
                 })
                 .on('blur', function(){
                     ngModel.$setViewValue(element.val());
+                    ngModel.$commitViewValue();
                     $rootScope.$broadcast('multi-input:changed',ngModel);
                 })
             }

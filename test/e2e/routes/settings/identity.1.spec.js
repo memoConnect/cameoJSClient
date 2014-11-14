@@ -71,22 +71,18 @@ describe('Route Settings Identity: ', function(){
             $("[data-qa='input-displayname']").sendKeys(newDisplayName)
 
             $("[data-qa='btn-saveIdentity']").click()
-
-            util.waitAndCloseNotify()
         })
 
         it('should change the phoneNumber and E-Mail', function(){
-            util.clearInput('input-phonenumber')
-            $("[data-qa='input-phonenumber']").sendKeys(newPhoneNumber)
-            expect($("[data-qa='input-phonenumber']").getAttribute('value')).toBe(newPhoneNumber)
+            util.clearInput('input-phoneNumber')
+            $("[data-qa='input-phoneNumber']").sendKeys(newPhoneNumber)
+            expect($("[data-qa='input-phoneNumber']").getAttribute('value')).toBe(newPhoneNumber)
 
             util.clearInput('input-email')
             $("[data-qa='input-email']").sendKeys(newEmail)
             expect($("[data-qa='input-email']").getAttribute('value')).toBe(newEmail)
 
             $("[data-qa='btn-saveIdentity']").click()
-
-            util.waitAndCloseNotify()
         })
     })
 
@@ -107,10 +103,10 @@ describe('Route Settings Identity: ', function(){
         })
 
         it('phoneNumber should be ('+ newPhoneNumber +')', function(){
-            util.waitForElement("[data-qa='input-phonenumber']");
-            expect($("[data-qa='input-phonenumber']").isPresent()).toBe(true)
+            util.waitForElement("[data-qa='input-phoneNumber']");
+            expect($("[data-qa='input-phoneNumber']").isPresent()).toBe(true)
 
-            expect($("[data-qa='input-phonenumber']").getAttribute('value')).toBe(newPhoneNumber)
+            expect($("[data-qa='input-phoneNumber']").getAttribute('value')).toBe(newPhoneNumber)
         })
 
         it('phoneNumber should be ('+ newEmail +')', function(){
@@ -161,22 +157,22 @@ describe('Route Settings Identity: ', function(){
         })
 
         it('should be shown an error, if phonenumber is wrong', function(){
-            util.waitForElement("[data-qa='input-phonenumber']")
-            expect($("[data-qa='input-phonenumber']").isPresent()).toBe(true)
+            util.waitForElement("[data-qa='input-phoneNumber']")
+            expect($("[data-qa='input-phoneNumber']").isPresent()).toBe(true)
 
-            util.clearInput('input-phonenumber')
-            $("[data-qa='input-phonenumber']").sendKeys('abcdefg')
+            util.clearInput('input-phoneNumber')
+            $("[data-qa='input-phoneNumber']").sendKeys('abcdefg')
             $("body").click()
 
             util.waitForElement("[data-qa='form-error-phoneNumber-invalid']");
         })
 
         it('should not be shown an error, if phonenumber is okay', function(){
-            util.waitForElement("[data-qa='input-phonenumber']")
-            expect($("[data-qa='input-phonenumber']").isPresent()).toBe(true)
+            util.waitForElement("[data-qa='input-phoneNumber']")
+            expect($("[data-qa='input-phoneNumber']").isPresent()).toBe(true)
 
-            util.clearInput('input-phonenumber')
-            $("[data-qa='input-phonenumber']").sendKeys('123456789')
+            util.clearInput('input-phoneNumber')
+            $("[data-qa='input-phoneNumber']").sendKeys('123456789')
             $("body").click()
 
             ptor.wait(function() {

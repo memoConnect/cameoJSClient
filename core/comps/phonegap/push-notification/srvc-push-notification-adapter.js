@@ -23,7 +23,7 @@ angular.module('cmPhonegap')
             },
 
             init: function(){
-                if (typeof $phonegapCameoConfig == 'undefined'){
+                if ($phonegapCameoConfig == 'undefined'){
                     return false;
                 }
 

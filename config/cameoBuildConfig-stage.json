@@ -5,7 +5,8 @@
         "loadingBar": true,
         "enableDebug": true,
         "logLevel": "WARN",
-        "performancePage": false
+        "performancePage": false,
+        "errorOnTodoInI18n": true
     },
     "path": {
         "cockpit": "/c/",
@@ -16,24 +17,11 @@
         "weinre": false,
         "weinreIp": ""
     },
-    "app_links":{
-        "android": {
-            "href": "https://market.android.com/details?id=de.cameonet",
-            "icon": "gfx/stores/172x60_android_store.png"
-        },
-        "ios": {
-            "href": "",
-            "icon": "gfx/stores/172x60_apple_store.png"
-        },
-        "winphone": {
-            "href": "",
-            "icon": "gfx/stores/172x60_windows_store.png"
-        }
-    },
     "phonegap": {
         "baseName": "cameoNet-stage",
         "appId": "1028315",
         "bundleId": "de.cameonet.app.test.stage",
-        "extraName": ""
+        "extraName": "" ,
+        "androidDebuggable": false
     }
 }

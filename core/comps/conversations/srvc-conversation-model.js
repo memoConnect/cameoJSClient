@@ -539,12 +539,12 @@ angular.module('cmConversations')
 
                 function run(){
                     self.getPassphrase()
-                        .then(function (passphrase) {
-                            return $q.all(self.messages.map(function (message) {
-                                return message.decrypt(passphrase)
-                            }))
-                        })
-                        .then(
+                    .then(function (passphrase) {
+                        return $q.all(self.messages.map(function (message) {
+                            return message.decrypt(passphrase)
+                        }))
+                    })
+                    .then(
                         function () {
                             self.trigger('decrypt:success');
 
@@ -556,9 +556,9 @@ angular.module('cmConversations')
                             return $q.when()
 
                         },
-                        function () {
+                        function (reason) {
                             self.trigger('decrypt:failed');
-                            return $q.reject();
+                            return $q.reject(reason);
                         }
                     );
                 }

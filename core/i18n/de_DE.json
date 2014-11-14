@@ -311,7 +311,8 @@
             }
         },
         "FOOTER": {
-            "SAVE": "Speichern"
+            "SAVE": "Speichern",
+            "BACK": "Fertig"
         },
         "IMPORT" :{
             "NOTIFICATION" :{
@@ -497,7 +498,7 @@
         "LABEL": "Einstellungen",
         "ACCOUNT": "Account Einstellungen",
         "IDENTITY": "Identität Einstellungen",
-        "NOTIFY": "Benachrichtungen",
+        "NOTIFY": "Benachrichtigungen",
         "CONTACTS": "Kontakte Einstellungen",
         "APP": "App Einstellungen",
         "CONTRACTS": "Verträge",

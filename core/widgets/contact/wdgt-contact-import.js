@@ -2,14 +2,12 @@
 
 /**
  * @ngdoc directive
- * @name cmWidgets.directive:cmWidgetContactList
+ * @name cmWidgets.directive:cmWidgetContactImport
  * @description
  * Lists contacts.
  *
  * @restrict AE
  */
-
-//Todo: Widget should not access $roueParams
 
 angular.module('cmWidgets')
 .directive('cmWidgetContactImport', [

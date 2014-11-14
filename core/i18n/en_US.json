@@ -49,7 +49,7 @@
           "TIMEOUT" : "Time out - please try again.",
           "VERIFY" : "Linking failed - please try again."
         },
-        "EXPLANATION" : "To read your encrypted messages completed as {{identity}} on other devices, please link the local cameoKey to all other keys first.",
+        "EXPLANATION" : "TODO: To read your encrypted messages completed as {{identity}} on other devices, please link the local cameoKey to all other keys first.",
         "MODAL" : {
           "SUCCESS" : "You have successfully linked your cameoKeys.",
           "CANCELED" : "Linking was canceled."
@@ -495,7 +495,8 @@
       "CITY" : "City"
     },
     "FOOTER" : {
-      "SAVE" : "Save"
+      "SAVE" : "Save",
+      "BACK": "Done"
     },
     "INFO" : {
       "SELECT" : {
@@ -803,12 +804,12 @@
   },
     "FILE": {
         "UPLOAD": {
-            "QUOTA": {
-                "EXCEEDED": "@todo FILE.UPLOAD.QUOTA.EXCEEDED <br> {{totalQuota | cmBytesHumanReadable}} <br> {{quotaLeft | cmBytesHumanReadable}} <br> {{fileSize | cmBytesHumanReadable}}"
-            }
-        },
-        "FILESIZE": {
+          "QUOTA": {
+            "EXCEEDED": "@todo FILE.UPLOAD.QUOTA.EXCEEDED <br> {{totalQuota | cmBytesHumanReadable}} <br> {{quotaLeft | cmBytesHumanReadable}} <br> {{fileSize | cmBytesHumanReadable}}"
+          },
+          "FILESIZE": {
             "EXCEEDED": "@todo The maximum file size of <strong>{{maxFileSize | cmBytesHumanReadable}}</strong> has been exceeded. Your file has <strong>{{fileSize | cmBytesHumanReadable}}</strong> bytes."
+          }
         }
     }
 }

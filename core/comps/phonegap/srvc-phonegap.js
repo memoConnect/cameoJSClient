@@ -10,7 +10,7 @@ angular.module('cmPhonegap').service('cmPhonegap', [
 
         var self = {
             isReady: function(callback){
-                if(typeof $phonegapCameoConfig == 'undefined'){
+                if($phonegapCameoConfig == 'undefined'){
                     return false;
                 }
 

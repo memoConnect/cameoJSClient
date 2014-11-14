@@ -170,9 +170,9 @@
 <section ng-if="active == 'emojis'">
     <h1><span class="anchor"></span>emojis</h1>
 
-    <div ng-repeat="(index,mainCat) in Object.keys(emojis)" class="maincat">
+    <div ng-repeat="(index,mainCat) in getKeys(emojis)" class="maincat">
         <h3 ng-if="mainCat">{{mainCat}}</h3>
-        <div ng-repeat="(index,subCat) in Object.keys(emojis[mainCat])" class="subcat">
+        <div ng-repeat="(index,subCat) in getKeys(emojis[mainCat])" class="subcat">
             <h3 ng-if="subCat">{{subCat}}</h3>
             <figure ng-repeat="icon in emojis[mainCat][subCat]" class="emoji-figure">
                 <i class="emoji emoji_{{icon | clearClassName}}"></i><figcaption ng-show="withFigcaption">{{icon | clearClassName}}</figcaption>
@@ -267,7 +267,9 @@
     .controller('ctrl',function ($scope, emoji){
         $scope.active = location.hash != '' ? location.hash.replace('#','') : 'cameofont';
         $scope.baselineIcon = 'cm-checkbox-wrong';
-        $scope.Object = Object;
+        $scope.getKeys = function(object){
+            return Object.keys(object);
+        }
 
         $scope.icons = [
             {title:'ci icons',css:'cm-logo cm-logo-c cm-logo-a cm-logo-m cm-logo-e cm-logo-o cm-logo-net cm-rhino-bubble-glyph cm-rhino-positive cm-beta cm-cameo-beta'},

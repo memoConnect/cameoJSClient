@@ -2,7 +2,7 @@
 
 angular.module('cmCore')
 .service('cmCrypt',[
-    'cmLogger', 'cmKey', 'cmWebworker', 'cmCryptoHelper',
+    'cmLogger', 'cmKey', 'cmWebworkerFactory', 'cmCryptoHelper', 
     '$q', '$interval', '$rootScope',
     function (cmLogger, cmKey, cmWebworker, cmCryptoHelper,
               $q, $interval, $rootScope) {
@@ -13,47 +13,47 @@ angular.module('cmCore')
             crypt: null
         };
 
-        var keygenWorker 
+        var keygenWorker
 
         return {
 
             randomString: function (length, smallAlphabet) {
-                    var alphabet = smallAlphabet ? "abcdefghijklmnopqrstuvwxyz0123456789" : "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_"
-                    var randomInts;
+                var alphabet = smallAlphabet ? "abcdefghijklmnopqrstuvwxyz0123456789" : "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_"
+                var randomInts;
 
-                    // First we're going to try to use the browsers RNG
-                    if (window.crypto && window.crypto.getRandomValues) {
-                        randomInts = new Int32Array(length);
-                        window.crypto.getRandomValues(randomInts);
-                    }
-                    // Of course IE calls it msCrypto instead of being standard
-                    else if (window.msCrypto && window.msCrypto.getRandomValues) {
-                        randomInts = new Int32Array(length);
-                        window.crypto.getRandomValues(randomInts);
-                    }
-                    // So, no built-in functionality - bummer. If the user has wiggled the mouse enough,
-                    // sjcl might help us out here
-                    else if (sjcl.random.isReady()) {
-                        randomInts = sjcl.random.randomWords(length);
-                    }
-                    // Last resort - we'll use isaac.js to get a random number. It's seeded from Math.random(),
-                    // so this isn't ideal, but it'll still greatly increase the space of guesses needed to crack the password.
-                    else {
-                        cmLogger.warn("Random Number Generator: not enough entropy, using weak seed")
-                        randomInts = [];
-                        for (var i = 0; i < length; i++) {
-                            randomInts.push(isaac.rand());
-                        }
-                    }
-
-                    var randomWord = ""
-                    // use random ints to select char from alphabet
+                // First we're going to try to use the browsers RNG
+                if (window.crypto && window.crypto.getRandomValues) {
+                    randomInts = new Int32Array(length);
+                    window.crypto.getRandomValues(randomInts);
+                }
+                // Of course IE calls it msCrypto instead of being standard
+                else if (window.msCrypto && window.msCrypto.getRandomValues) {
+                    randomInts = new Int32Array(length);
+                    window.crypto.getRandomValues(randomInts);
+                }
+                // So, no built-in functionality - bummer. If the user has wiggled the mouse enough,
+                // sjcl might help us out here
+                else if (sjcl.random.isReady()) {
+                    randomInts = sjcl.random.randomWords(length);
+                }
+                // Last resort - we'll use isaac.js to get a random number. It's seeded from Math.random(),
+                // so this isn't ideal, but it'll still greatly increase the space of guesses needed to crack the password.
+                else {
+                    cmLogger.warn("Random Number Generator: not enough entropy, using weak seed")
+                    randomInts = [];
                     for (var i = 0; i < length; i++) {
-                        var index = Math.abs(randomInts[i]) % alphabet.length
-                        randomWord += alphabet[index]
+                        randomInts.push(isaac.rand());
                     }
-                    return randomWord;
-                },
+                }
+
+                var randomWord = ""
+                // use random ints to select char from alphabet
+                for (var i = 0; i < length; i++) {
+                    var index = Math.abs(randomInts[i]) % alphabet.length
+                    randomWord += alphabet[index]
+                }
+                return randomWord;
+            },
 
             /**
              * this method calculates a secure hash
@@ -220,6 +220,8 @@ angular.module('cmCore')
                     return false;
                 }
 
+                var self = this
+
                 async.promise = $q.defer();
                 // start keygen over plugin crypto helper
                 if(cmCryptoHelper.isAvailable()) {
@@ -232,56 +234,60 @@ angular.module('cmCore')
                             });
                         });
                 // start keygen over webworker
-                } else if(cmWebworker.available){
-                    cmWebworker.new('rsa_keygen')
-                    .then(function(worker){
-                        keygenWorker = worker
-                        return  keygenWorker
-                                .start( {keySize: keySize} )
-                     })   
+                } else { 
+
+                    cmWebworker.get({
+                        jobName :   'rsa_keygen',
+                        params  :   { keySize: keySize }
+
+                    })
                     .then(
-                        function(result){
+                        function(worker){
+                            keygenWorker = worker
 
-                            var key = (new cmKey()).setKey(result.privKey);
+                            worker.run()
+                            .then(
+                                function(result){
+                                    var key = (new cmKey()).setKey(result.privKey);
 
-                            async.promise.resolve({
-                                timeElapsed: result.timeElapsed,
-                                key: key
-                            });
+                                    async.promise.resolve({
+                                        timeElapsed:    result.timeElapsed,
+                                        key:            key
+                                    })
+                                },
+                                function(reason){
+                                    console.log('Webworker "keygen" failed', reason)
+                                    async.promise.reject(reason);
+                                }
+                            )
                         },
-                        function(reason){
-                            console.log('webwroker failed', reason)
-                            async.promise.reject(reason);
+                        function(){
+                            var time = -((new Date()).getTime()),
+                                counts = 0;
+
+                            // init vars
+                            async.crypt = new JSEncrypt({default_key_size: keySize})
+
+                            // start keypair generation
+                            async.crypt.getKey(function () {
+
+                                // only resolve if keypair exists
+                                if (async.crypt.getPrivateKey() == undefined)
+                                    return false;
+
+                                self.cancelGeneration(true);
+                                if (async.promise != null) {
+                                    async.promise.resolve({
+                                        timeElapsed:    (time + ((new Date()).getTime())),
+                                        counts:         counts,
+                                        key:            async.crypt
+                                    });
+                                    // !!! important for unit test, don't remove !!!
+                                    $rootScope.$apply();
+                                }
+                            })
                         }
                     )
-
-                // otherwise use browser instance
-                } else {
-                    var self = this,
-                        time = -((new Date()).getTime()),
-                        counts = 0;
-
-                    // init vars
-                    async.crypt = new JSEncrypt({default_key_size: keySize}),
-
-                        // start keypair generation
-                        async.crypt.getKey(function () {
-
-                            // only resolve if keypair exists
-                            if (async.crypt.getPrivateKey() == undefined)
-                                return false;
-
-                            self.cancelGeneration(true);
-                            if (async.promise != null) {
-                                async.promise.resolve({
-                                    timeElapsed: (time + ((new Date()).getTime())),
-                                    counts: counts,
-                                    key: async.crypt
-                                });
-                                // !!! important for unit test, don't remove !!!
-                                $rootScope.$apply();
-                            }
-                        });
                 }
 
                 return async.promise.promise;
