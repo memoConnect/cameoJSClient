@@ -1,14 +1,10 @@
 'use strict';
 
 angular.module('cmCore').service('cmRootService', [
-    '$rootScope',
-    '$window',
-    '$location',
-    'cmLogger',
-    'cmJob',
-    'cmModal',
-
-    function($rootScope, $window, $location, cmLogger, cmJob, cmModal){
+    '$rootScope', '$window', '$location',
+    'cmLogger', 'cmJob', 'cmModal', 'cmConfig',
+    function($rootScope, $window, $location,
+             cmLogger, cmJob, cmModal, cmConfig){
 
         $rootScope.goBack = function(){
             $window.history.back();
@@ -41,7 +37,7 @@ angular.module('cmCore').service('cmRootService', [
         $rootScope.goto = $rootScope.goTo;
 
         $rootScope.gotoRegistration = function(){
-            this.goTo('/registration')
+            this.goTo('/registration');
         };
 
         $rootScope.createNewConversation = function(){
@@ -65,6 +61,10 @@ angular.module('cmCore').service('cmRootService', [
             $rootScope.goTo('/conversation/'+(conversationId || 'new')+ (subpath ? '/'+subpath : ''))
         };
 
+        $rootScope.goToApp = function(params){
+            window.location = cmConfig.appProtocol + '://?'+params;
+        };
+
         /**
          * modal for login
          */
@@ -78,6 +78,7 @@ angular.module('cmCore').service('cmRootService', [
             cmModal.open('login');
 
             $rootScope.$on('cmLogin:success', function(){
+                // TODO: schould that happen?
                 location.reload();
             });
         };
