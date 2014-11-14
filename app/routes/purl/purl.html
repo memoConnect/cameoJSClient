@@ -26,16 +26,15 @@
         ></cm-security-indicator>
     </cm-header>
 
-    <cm-second-header cm-rubber-space ng-if="showSecondHeader">
-        <div cm-weight="3" cm-reactive ng-click="gotoRegistration()" data-qa="btn-fast-sign-in">
+    <cm-second-header cm-rubber-space>
+        <div cm-weight="1" cm-reactive ng-click="gotoRegistration()" data-qa="btn-fast-sign-in">
             <i class="fa cm-register"></i>
             <span>{{'PURL.SIGN_IN'|cmTranslate}}</span>
         </div>
-        <div cm-weight="4" cm-reactive ng-click="goToApp(appParams)">
+        <div cm-weight="1" cm-reactive ng-click="goToApp(appParams)" ng-show="isMobile">
             <i class="fa cm-rhino-bubble-glyph"></i>
             <span>{{'PURL.TO_APP'|cmTranslate}}</span>
         </div>
-        <i class="fa cm-close" cm-reactive cm-weight="1" ng-click="closeSecondHeader()"></i>
     </cm-second-header>
 
     <cm-widget-conversation cm-data="conversation"></cm-widget-conversation>

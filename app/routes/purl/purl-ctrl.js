@@ -13,11 +13,7 @@ angular.module('cmRoutes')
         $scope.headerGuest          = true;
 
         $scope.appParams = 'purlId=' + $routeParams.purlId;
-
-        $scope.showSecondHeader = true;
-        $scope.closeSecondHeader = function(){
-            $scope.showSecondHeader = false;
-        };
+        $scope.isMobile = cmDevice.isMobile() && !cmDevice.isApp();
 
         if(typeof resolveData == 'object'){
             if(typeof resolveData.identity == 'object' && typeof resolveData.conversation == 'object'){
