@@ -140,13 +140,6 @@ angular.module('cmConfig',[])
                     hasCtrl: true,
                     resolveUserModel: true
                 },
-                'prepurl': {
-                    routes:[
-                        '/prepurl/:purlId'
-                    ],
-                    hasCtrl: true,
-                    guests: true
-                },
                 'purl': {
                     routes:[
                         '/purl/:purlId'

@@ -270,7 +270,7 @@ angular.module('cameoClient', [
         $rootScope.hideOverlay = function(id){ $rootScope.$broadcast('cmOverlay:hide', id) };
 
         // passing wrong route calls
-        $rootScope.$on('$routeChangeStart', function(){
+        $rootScope.$on('$routeChangeSuccess', function(){
             // expections
             var path_regex = /^(\/login|\/registration|\/systemcheck|\/terms|\/disclaimer|\/404|\/version|\/purl\/[a-zA-Z0-9]{1,})$/;
             var path = $location.$$path;
