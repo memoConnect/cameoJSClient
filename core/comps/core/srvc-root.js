@@ -37,7 +37,7 @@ angular.module('cmCore').service('cmRootService', [
         $rootScope.goto = $rootScope.goTo;
 
         $rootScope.gotoRegistration = function(){
-            this.goTo('/registration')
+            this.goTo('/registration');
         };
 
         $rootScope.createNewConversation = function(){
@@ -68,7 +68,7 @@ angular.module('cmCore').service('cmRootService', [
         /**
          * modal for login
          */
-        $rootScope.showLogin = function (scopeVar) {
+        $rootScope.showLogin = function () {
             cmModal.create({
                 id: 'login',
                 'class': 'with-title no-padding theme-b',
@@ -76,9 +76,6 @@ angular.module('cmCore').service('cmRootService', [
                 'cm-close-on-backdrop': false
             },'<div cm-login-modal></div>');
             cmModal.open('login');
-
-            if(scopeVar)
-                scopeVar = true;
 
             $rootScope.$on('cmLogin:success', function(){
                 // TODO: schould that happen?
