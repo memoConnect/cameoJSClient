@@ -800,7 +800,8 @@
     }
   },
   "PURL" : {
-    "SIGN_IN" : "Register"
+    "SIGN_IN" : "Register",
+    "TO_APP": "@todo open in App"
   },
     "FILE": {
         "UPLOAD": {
