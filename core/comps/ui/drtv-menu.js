@@ -17,7 +17,10 @@ angular.module('cmUi').directive('cmMenu',[
                 $scope.menuVisible = false;
 
                 $scope.handleMenu = function(){
+                    console.log('handleMenu -> $scope.menuVisible', $scope.menuVisible)
                     $scope.menuVisible = $scope.menuVisible ? false : true;
+
+                    console.log('handleMenu -> check $scope.menuVisible', $scope.menuVisible)
                     if($scope.menuVisible)
                         cmNotify.trigger('bell:unring');
                 };

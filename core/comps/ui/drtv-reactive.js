@@ -36,7 +36,7 @@ angular.module('cmUi').directive('cmReactive',[
                 }
 
                 function runClick(evt){
-                    //console.log('runClick', hasClicked, attrs)
+                    console.log('runClick', hasClicked, attrs)
 
                     if(!hasClicked){
                         if('ngClick' in attrs){
@@ -87,11 +87,12 @@ angular.module('cmUi').directive('cmReactive',[
                     //console.log('touchMove', touchMove)
 
                     if(isValidTouch(evt) && !touchMove){
+                        console.log('miep')
                         runClick(evt);
                         $timeout(function(){element.removeClass('is-touched'); isTouch = false;},250)
                     } else {
                         element.removeClass('is-touched');
-                        isTouch = false;
+                        isTouch = false;  // default
                     }
 
                     touchMove = false; // default
