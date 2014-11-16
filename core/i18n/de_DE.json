@@ -211,7 +211,8 @@
     },
 
     "PURL": {
-        "SIGN_IN": "Registrieren"
+        "SIGN_IN": "Registrieren",
+        "TO_APP": "@todo In App öffnen"
     },
 
     "RECIPIENTS": {

@@ -8,19 +8,13 @@
             cm-data         = "conversation"
             cm-leading-icon = "cm-lock"
             ng-click        = "gotoPurl(purlId, 'security')"
+            cm-reactive
         ></cm-security-indicator>
-        <cm-menu cm-weight="1"></cm-menu>
+        <cm-menu cm-weight="1" cm-reactive></cm-menu>
     </cm-header>
 
-<!--
-    Todo: solve headers differently
--->
-
-    <cm-header cm-rubber-space ng-if="headerGuest">
-        <div class="fast-sign-in" ng-click="gotoRegistration()" data-qa="btn-fast-sign-in" cm-weight="2">
-            <i class="fa cm-register"></i>
-            <span>{{'PURL.SIGN_IN'|cmTranslate}}</span>
-        </div>
+    <cm-header ng-if="headerGuest" cm-rubber-space>
+        <div cm-weight="2"></div>
         <cm-logo cm-weight="4"></cm-logo>
         <cm-security-indicator
             cm-weight="2"
@@ -28,8 +22,20 @@
             cm-data         = "conversation"
             cm-leading-icon = "cm-lock"
             ng-click        = "gotoPurl(purlId, 'security')"
+            cm-reactive
         ></cm-security-indicator>
     </cm-header>
+
+    <cm-second-header cm-rubber-space>
+        <div cm-weight="1" cm-reactive ng-click="gotoRegistration()" data-qa="btn-fast-sign-in">
+            <i class="fa cm-register"></i>
+            <span>{{'PURL.SIGN_IN'|cmTranslate}}</span>
+        </div>
+        <div cm-weight="1" cm-reactive ng-click="goToApp(appParams)" ng-show="isMobile">
+            <i class="fa cm-rhino-bubble-glyph"></i>
+            <span>{{'PURL.TO_APP'|cmTranslate}}</span>
+        </div>
+    </cm-second-header>
 
     <cm-widget-conversation cm-data="conversation"></cm-widget-conversation>
 </section>
