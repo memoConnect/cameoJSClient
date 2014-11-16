@@ -1,117 +1,101 @@
-.cm-reactive-default(){
-  background-color: @cm-white;
-  -webkit-tap-highlight-color:@cm-white;
-  &.is-hover,&.is-touched{
-    background-color:@cm-light-grey;
-    -webkit-tap-highlight-color:@cm-light-grey;
-  }
-  &.is-clicked{
-    background-color:#DCDCDC;
-    -webkit-tap-highlight-color:#DCDCDC;
-  }
-}
-
 [cm-reactive]{
+  outline: none;
   cursor:pointer;
   -webkit-transition: background-color 0.15s ease-in-out; /* Firefox */
   -moz-transition: background-color 0.15s ease-in-out; /* WebKit */
   -o-transition: background-color 0.15s ease-in-out; /* Opera */
   transition: background-color 0.15s ease-in-out; /* Standard */
 
-  .cm-reactive-default;
+  .cm-reactive-default();
 }
 
-cm-header, cm-second-header {
+// lighten makes dark color lighter
+.createReactive(@normal-color) when(lightness(@normal-color) < 50%){
   [cm-reactive] {
-    background-color:@cm-black;
-    -webkit-tap-highlight-color:@cm-black;
+    background-color:@normal-color;
   }
-  [cm-reactive].is-hover,[cm-reactive].is-touched {
-    background-color:@cm-grey-new;
-    -webkit-tap-highlight-color:@cm-grey-new;
+  [cm-reactive].is-hover {
+    background-color: lighten(hsl(hue(@normal-color), saturation(@normal-color), lightness(@normal-color)), 22%);
   }
-  [cm-reactive].is-clicked {
-    background-color:#8D8D8D;
-    -webkit-tap-highlight-color:#8D8D8D;
+  [cm-reactive].ng-click-active {
+    background-color: lighten(hsl(hue(@normal-color), saturation(@normal-color), lightness(@normal-color)), 33%);
+  }
+}
+.createInnerReactive(@normal-color) when(lightness(@normal-color) < 50%){
+  background-color:@normal-color;
+  &.is-hover {
+    background-color:lighten(hsl(hue(@normal-color), saturation(@normal-color), lightness(@normal-color)), 22%);
+  }
+  &.ng-click-active {
+    background-color:lighten(hsl(hue(@normal-color), saturation(@normal-color), lightness(@normal-color)), 33%);
+  }
+}
+// darken makes lighter color to darker
+.createReactive(@normal-color) when(lightness(@normal-color) >= 50%){
+  [cm-reactive] {
+    background-color:@normal-color;
+  }
+  [cm-reactive].is-hover {
+    background-color: darken(hsl(hue(@normal-color), saturation(@normal-color), lightness(@normal-color)), 3%);
+  }
+  [cm-reactive].ng-click-active {
+    background-color: darken(hsl(hue(@normal-color), saturation(@normal-color), lightness(@normal-color)), 7%);
+  }
+}
+.createInnerReactive(@normal-color) when(lightness(@normal-color) >= 50%){
+  background-color:@normal-color;
+  &.is-hover {
+    background-color:darken(hsl(hue(@normal-color), saturation(@normal-color), lightness(@normal-color)), 3%);
+  }
+  &.ng-click-active {
+    background-color:darken(hsl(hue(@normal-color), saturation(@normal-color), lightness(@normal-color)), 7%);
   }
 }
 
+
+// white -> darken
+.cm-reactive-default(){
+  .createInnerReactive(@cm-white);//, @cm-light-grey
+}
+// header dark -> lighten
+cm-header, cm-second-header, .cm-demo-header {
+  .createReactive(@cm-black);//, @cm-grey-new
+}
+// menu white -> lighten
 .cm-menu-list [cm-reactive]{
-  .cm-reactive-default;
+  .cm-reactive-default();
 }
-
-section.default-pages{
-  [cm-reactive] {
-    background-color:#ECECEC;
-    -webkit-tap-highlight-color:#ECECEC;
-  }
-  [cm-reactive].is-hover,[cm-reactive].is-touched {
-    background-color:#DBDBDB;
-    -webkit-tap-highlight-color:#DBDBDB;
-  }
-  [cm-reactive].is-clicked {
-    background-color:#BFBFBF;
-    -webkit-tap-highlight-color:#BFBFBF;
-  }
+// sub header grey -> darken
+section.default-pages, .cm-demo-default-pages{
+  .createReactive(#ECECEC);//, #DBDBDB
 }
-
+// menu header grey -> darken
 .cm-menu-list li.cm-menu-header {
+  .createReactive(#ECECEC);//, #DBDBDB)
   [cm-reactive] {
     .border-radius-tl;
-    background-color:#ECECEC;
-    -webkit-tap-highlight-color:#ECECEC;
   }
-  [cm-reactive].is-hover,[cm-reactive].is-touched {
+  [cm-reactive].is-hover {
     .border-radius-tl;
-    background-color:#DBDBDB;
-    -webkit-tap-highlight-color:#DBDBDB;
   }
-  [cm-reactive].is-clicked {
+  [cm-reactive].ng-click-active {
     .border-radius-tl;
-    background-color:#BFBFBF;
-    -webkit-tap-highlight-color:#BFBFBF;
   }
 }
-
+// footer
 button[cm-reactive] {
+  // grey -> darken
   &.cm-btn-grey{
-    background-color:@cm-grey-new;
-    -webkit-tap-highlight-color:@cm-grey-new;
-    &.is-hover, &.is-touched {
-      background-color:#8D8D8D;
-      -webkit-tap-highlight-color:#8D8D8D;
-    }
-    .is-clicked {
-      background-color:#A0A0A0;
-      -webkit-tap-highlight-color:#A0A0A0;
-    }
+    .createInnerReactive(@cm-grey-new);//, #8D8D8D
   }
-
+  // black -> lighten
   &.cm-btn-black {
-    background-color:@cm-black;
-    -webkit-tap-highlight-color:@cm-black;
-    &.is-hover, &.is-touched {
-      background-color:@cm-grey-new;
-      -webkit-tap-highlight-color:@cm-grey-new;
-    }
-    .is-clicked {
-      background-color:#A0A0A0;
-      -webkit-tap-highlight-color:#A0A0A0;
-    }
+    .createInnerReactive(@cm-black);//, @cm-grey-new
   }
 }
-
+// ??? -> lighten! transparent -> lighter??? ;)
 .theme-b {
   article[cm-reactive]{
-    background-color: transparent;
-    -webkit-tap-highlight-color:transparent;
-    &.is-hover, &.is-touched {
-      background-color:@cm-grey-new;
-      -webkit-tap-highlight-color:@cm-grey-new;
-    }
-    .is-clicked {
-      background-color:#A0A0A0;
-      -webkit-tap-highlight-color:#A0A0A0;
-    }
+    .createInnerReactive(transparent);//, @cm-grey-new
   }
 }
