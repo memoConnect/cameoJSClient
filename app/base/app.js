@@ -3,6 +3,7 @@
 angular.module('cameoClient', [
     'ngRoute',
     'ngCookies',
+    'ngTouch',
     'angular-loading-bar',
     // cameo dependencies
     'cmConfig',
