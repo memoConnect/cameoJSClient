@@ -34,9 +34,7 @@ xdescribe('mobile-inputs', function () {
         }))
     }
 
-    beforeEach(module(function($provide){
-        $provide.constant('cmConfig',{})
-    }))
+    beforeEach(module('cmConfig'))
     beforeEach(module('cmUi'))
 
     describe('check desktop input ignore drtv', function(){

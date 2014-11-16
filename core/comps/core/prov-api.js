@@ -7,13 +7,19 @@ angular.module('cmCore').provider('cmApi',[
 
     function($injector){
         var rest_api            = "",
+            without_api_url   = false,
             call_stack_disabled = true,
             call_stack_path     = "",
             commit_size         = 10,
             commit_interval     = 2000,
             events_disabled     = true,
             events_path         = "",
-            events_interval     = 5000
+            events_interval     = 5000;
+
+        this.setWithoutApiUrl = function(){
+            without_api_url = true;
+            return this
+        }
 
         this.restApiUrl = function(url){
             rest_api = url;
@@ -268,7 +274,7 @@ angular.module('cmCore').provider('cmApi',[
                         token = $injector.get('cmAuth').getToken();
                     }
 
-                    if(rest_api != ''){
+                    if(rest_api != '' || without_api_url){
                         prepareConfig(config, method, token, twoFactorToken);
 
                         $http(config).then(
