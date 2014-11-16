@@ -96,9 +96,9 @@
             "BTN_TEXT": "Und los..."
         },
         "DOWNLOAD": {
-            "HEADER": "@todo App Download",
-            "SUB_TEXT": "@todo Herzlich Willkommen bei cameoNet. Sie haben auf einem mobilen Browser registriert. Für Ihr Gerät gibt es eine App. Laden Sie sich diese herrunter und fahren Sie dort fort.",
-            "SKIP_TEXT": "@todo Keine App herrunterladen"
+            "HEADER": "App herunter laden",
+            "SUB_TEXT": "Willkommen im cameoNet!<br>. Für Ihr Gerät steht cameoNet auch als App zur Verfügung. Wir empfehlen Ihnen, diese herunterzuladen und dort fortzufahren.",
+            "SKIP_TEXT": "Nein danke, ich möchte im Browser fortfahren..."
         },
         "KEYINFO": {
             "SKIP_CHECKBOX_TEXT": "Diese Seite nicht mehr anzeigen",
@@ -791,11 +791,11 @@
         "CONVERSATION": {
             "ENCRYPTED": {
                 "NAME": "Dieser Talk ist verschlüsselt.",
-                "DESCRIPTION": "missing description @todo"
+                "DESCRIPTION": "Die Nachrichten dieses Talks werden verschlüsselt. Der dafür verwendete Schlüssel wird wiederum mit den cameoKeys der Empfänger verschlüsselt und mit dem Talk übertragen. Diese Verschlüsselung ist als sehr sicher anzusehen."
             },
             "NOT_ENCRYPTED": {
                 "NAME": "Dieser Talk ist nicht verschlüsselt.",
-                "DESCRIPTION": "missing description @todo",
+                "DESCRIPTION": "Die Nachrichten werden nicht verschlüsselt. Bei der Übertragung können die Nachrichten von Dritten abgefangen und gelesen werden.",
                 "TOGGLE": "Verschlüsselung aktivieren."
             },
             "KEY_TRANSMISSION_SYMMETRIC": {
@@ -815,8 +815,8 @@
                 "TOGGLE": "PassCaptcha deaktivieren."
             },
             "TRUSTING_ALL_RECIPIENTS": {
-                "NAME": "Du vertraust allen Empfängern.",
-                "DESCRIPTION": "missing description @todo"
+                "NAME": "Allen Empfängern wird vertraut.",
+                "DESCRIPTION": "Sie haben für jeden Empfänger dieses Talks sichergestellt, dass die Identität einer bestimmten Person gehört (Vertrauens-Prozess durchgeführt)."
             },
             "MISSING_DATA": "Sicherheitsaspekte fehlen!"
         }

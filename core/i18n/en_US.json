@@ -306,9 +306,9 @@
       "TEXT_5" : "We are happy when you post us any error or improvement on http://support.cameonet.de<br> Thank you! Your cameoNet-Team."
     },
     "DOWNLOAD": {
-      "HEADER": "@todo App Download",
-      "SUB_TEXT": "@todo Herzlich Willkommen bei cameoNet. Sie haben auf einem mobilen Browser registriert. Für Ihr Gerät gibt es eine App. Laden Sie sich diese herrunter und fahren Sie dort fort.",
-      "SKIP_TEXT": "@todo Keine App herrunterladen"
+      "HEADER": "App Download",
+      "SUB_TEXT": "Welcome to cameoNet! <br> There is also an App for your device. We recommend to download this App and go on there.",
+      "SKIP_TEXT": "No thanks, I want to go on in this browser."
     },
     "KEYINFO" : {
       "SKIP_TEXT" : "Skip",
@@ -805,10 +805,10 @@
     "FILE": {
         "UPLOAD": {
           "QUOTA": {
-            "EXCEEDED": "@todo FILE.UPLOAD.QUOTA.EXCEEDED <br> {{totalQuota | cmBytesHumanReadable}} <br> {{quotaLeft | cmBytesHumanReadable}} <br> {{fileSize | cmBytesHumanReadable}}"
+            "EXCEEDED": "Not enough space! <br> The file you want to upload has{{fileSize | cmBytesHumanReadable}}.<br>You have only {{quotaLeft | cmBytesHumanReadable}} left ( total: {{totalQuota | cmBytesHumanReadable}})."
           },
           "FILESIZE": {
-            "EXCEEDED": "@todo The maximum file size of <strong>{{maxFileSize | cmBytesHumanReadable}}</strong> has been exceeded. Your file has <strong>{{fileSize | cmBytesHumanReadable}}</strong> bytes."
+            "EXCEEDED": "The maximum file size has been exceeded.<br> Your file has <strong>{{fileSize | cmBytesHumanReadable}}</strong> bytes. Maximum file size is <strong>{{maxFileSize | cmBytesHumanReadable}}</strong>."
           }
         }
     }
