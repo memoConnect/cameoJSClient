@@ -15,11 +15,9 @@
     </cm-info-bubble>
 </article>
 
-<hr ng-if="(showNoLocalKeysOnThisDevice || showUntrustedPublickeysExists)  && (publicKeys.length > 0)" class="margin-small" />
-
-<ul class="no-border" ng-if="(publicKeys.length > 0)">
-    <li ng-repeat="key in publicKeys | orderBy:sortByPrivKeys" data-qa="key-list-item">
-        <div ng-click="goTo('settings/identity/key/edit/'+key.id)" class="item tal clearfix">
+<ul ng-if="(publicKeys.length > 0)">
+    <li class="key-list-item" ng-repeat="key in publicKeys | orderBy:sortByPrivKeys" data-qa="key-list-item">
+        <section ng-click="goTo('settings/identity/key/edit/'+key.id)" class="item tal clearfix" cm-reactive>
             <strong>{{key.name}}</strong>
             <span class="second-row">
                 {{privateKeys.find(key).getSize() || key.getSize() || key.size}}
@@ -42,27 +40,23 @@
                 </span>
                 {{key.created | date:'dd.MM.yy - HH:mm'}}
             </span>
-        </div>
-        <div class="short-links">
-            <i class="fa cm-handshake" ng-if="!isTrustedKey(key) && isHandshakePossible" ng-click="goTo('/authentication/'+key.id, id)" data-qa="btn-start-handshake"></i>
-            <i class="fa cm-export-key" ng-if="privateKeys.find(key)" ng-click="goTo('settings/identity/key/edit/'+key.id)"></i>
-            <!--
-                <i class="fa cm-export-key cm-lg-icon" ng-if="privateKeys.find(key)" ng-click="openModal('modalExportKeyPair',key)"></i>
-            -->
-            <i class="fa cm-cancel-key" ng-click="remove(key)" data-qa="btn-remove-modal"></i>
-        </div>
+        </section>
+        <section class="icon-list">
+            <i class="fa cm-handshake" ng-if="!isTrustedKey(key) && isHandshakePossible" ng-click="goTo('/authentication/'+key.id, id)" data-qa="btn-start-handshake" cm-reactive></i>
+            <i class="fa cm-cancel-key" ng-click="remove(key)" data-qa="btn-remove-modal" cm-reactive></i>
+        </section>
     </li>
-    <li ng-show="signing">
+    <li ng-if="signing">
         <cm-loader></cm-loader>
     </li>
 </ul>
 
 <cm-footer ng-if="canCreate" data-qa="canCreate">
-    <button class="cm-btn-grey dib w50" data-qa="btn-create-key" ng-click="goto('settings/identity/key/create')">
+    <button class="cm-btn-grey dib w50" data-qa="btn-create-key" ng-click="goto('settings/identity/key/create')" cm-reactive>
         {{'SETTINGS.PAGES.IDENTITY.KEYS.CREATE.BUTTON'|cmTranslate}}
         <i class="fa cm-create-key"></i>
     </button>
-    <button class="cm-btn-grey dib w50" data-qa="btn-import-key" ng-click="goto('settings/identity/key/import')">
+    <button class="cm-btn-grey dib w50" data-qa="btn-import-key" ng-click="goto('settings/identity/key/import')" cm-reactive>
         {{'SETTINGS.PAGES.IDENTITY.KEYS.IMPORT.BUTTON'|cmTranslate}}
         <i class="fa cm-import-key n"></i>
     </button>

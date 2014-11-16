@@ -268,12 +268,16 @@ angular.module('cmCore').provider('cmApi',[
                         token = $injector.get('cmAuth').getToken();
                     }
 
-                    prepareConfig(config, method, token, twoFactorToken);
+                    if(rest_api != ''){
+                        prepareConfig(config, method, token, twoFactorToken);
 
-                    $http(config).then(
-                        function(response){ handleSuccess(response, deferred) },
-                        function(response){ handleError(response, deferred) }
-                    );
+                        $http(config).then(
+                            function(response){ handleSuccess(response, deferred) },
+                            function(response){ handleError(response, deferred) }
+                        );
+                    } else {
+                        deferred.reject({apiUrlUndefined:true});
+                    }
 
                     return deferred.promise;
                 };

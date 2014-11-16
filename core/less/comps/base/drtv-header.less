@@ -11,7 +11,7 @@
 cm-header, .cm-header-block{
   .dbl;
   .pos-fxd;
-  padding:0.3rem 0;
+  //padding:0.3rem 0;
   top:0;
   z-index:11;
   width:@cm-app-width;
@@ -36,6 +36,7 @@ cm-header, .cm-header-block{
     width:@cm-unit;
     z-index:1;
     .back-wrap{
+      height:@cm-unit;
       text-overflow:ellipsis;
       overflow:hidden;
       .tac;
@@ -53,11 +54,11 @@ cm-header, .cm-header-block{
     .dib;
     .with-cursor;
     .pos-rel;
-    padding-left:@cm-horizontal-padding;
     a{
       .tal;
       .dbl;
       .single-line;
+      height:@cm-unit;
       color:@cm-white;
       font-size:@cm-large-font;
     }
@@ -90,7 +91,7 @@ cm-header, .cm-header-block{
       color:@cm-black;
       z-index:-1;
       height:@cm-unit;
-      width:24rem - @cm-horizontal-padding;
+      width:23.9rem;
       right:@cm-unit;
       top:0;
       padding:1rem 0.4rem;
@@ -126,7 +127,17 @@ cm-header, .cm-header-block{
   }
 }
 
+
+cm-header-list-search{
+  i{
+    height: @cm-unit;
+    width: @cm-unit;
+  }
+}
+
+
 cm-second-header{
+
   .dbl;
   height:@cm-unit;
   line-height:@cm-unit;

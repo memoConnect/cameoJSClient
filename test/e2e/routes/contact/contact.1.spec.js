@@ -67,9 +67,11 @@ describe('Route Contact: ', function () {
         it('open modal and click create new contact',function(){
             util.expectCurrentUrl('#/contact/list')
 
-            $("[data-qa='add-contact-btn']").click()
+            //$("[data-qa='add-contact-btn']").click()
+            util.waitAndClickQa('add-contact-btn');
 
-            $$('cm-modal.active .content a').last().click()
+            //$$('cm-modal.active .content a').last().click()
+            util.waitAndClickQa('btn-modal-contact-create');
 
             util.expectCurrentUrl('#/contact/create')
         })
@@ -136,6 +138,8 @@ describe('Route Contact: ', function () {
             util.setVal('input-email', extUserMail2)
 
             $('cm-footer button').click()
+
+            util.waitForQa('btn-pristineBack');
         })
 
         it('should be the same details in contact after updating', function(){

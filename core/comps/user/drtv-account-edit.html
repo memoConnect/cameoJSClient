@@ -40,10 +40,10 @@
 
     <ul class="border-top border-bottom mt5">
         <li class="no-border">
-            <span class="item" ng-click="togglePasswordChange()" data-qa="btn-passwordChange" >
+            <span class="item" ng-click="togglePasswordChange()" data-qa="btn-passwordChange" cm-reactive>
             {{'ACCOUNT.PLACEHOLDER.PASSWORD_CHANGE'|cmTranslate}}
             </span>
-            <div class="short-links" ng-click="togglePasswordChange()">
+            <div class="short-links without-bg" ng-click="togglePasswordChange()">
                 <i class="fa" ng-class="{'cm-down':!showPasswordChange,'cm-up':showPasswordChange}"></i>
             </div>
             <section ng-show="showPasswordChange">
@@ -77,7 +77,7 @@
 </form>
 
 <cm-footer>
-    <button class="cm-btn-grey" ng-click="saveAccount()" data-qa="btn-footer">
+    <button class="cm-btn-grey" ng-click="saveAccount()" data-qa="btn-footer" cm-reactive>
         <span ng-show="!showLoader && !isPristine" data-qa="btn-saveAccount">
             {{'ACCOUNT.FOOTER.SAVE'|cmTranslate}}
             <i class="fa cm-checker"></i>

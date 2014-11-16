@@ -56,6 +56,7 @@
     background:@cm-input-bg-color;
     padding:0 1rem;
     font-size:@cm-moep-font;
+    height:@cm-unit;
     line-height:@cm-unit;
     font-weight:bold;
     width: 100%;
@@ -64,6 +65,7 @@
     text-align:center;
     margin-bottom: 1rem;
     i{
+      height:@cm-unit;
       margin-right:0.6rem;
       font-size:2.5rem;
       vertical-align:middle;
@@ -171,12 +173,12 @@
 
   ul {
     .w100;
-    .no-pad;
     background-color:@cm-white;
     .border-top;
+    .border-bottom;
     li {
       .with-cursor;
-      .border-bottom;
+      .border-top;
       .pos-rel;
       min-height:@cm-unit;
       ul.cm-submenu{
@@ -187,9 +189,9 @@
         .dib;
         .pos-rel;
         color: @cm-grey;
-        padding: 1rem;
+        padding: 0.8rem;
         width: 100%;
-
+        height: @cm-unit;
         &.text{
           padding:1rem 2rem;
         }
@@ -222,6 +224,9 @@
       .short-links{
         .pos-tr;
         background:@cm-white;
+        &.without-bg{
+          background:transparent!important;
+        }
         max-height: 3.98rem;
         i {
           .tac;
@@ -237,6 +242,10 @@
         }
       }
     }
+  }
+
+  ul li:first-child{
+    border-top: none !important;
   }
 
   .authentication-status{
@@ -343,21 +352,6 @@
   }
 }
 
-//cm-welcome, cm-quick-start, cm-key-info, cm-about-us, div.system-check,
-//cm-widget-identity-list, cm-identity-list,
-//cm-widget-identity-key-list, cm-identity-key-list, cm-widget-identity-create, cm-identity-key-create {
-//  display: block;
-//  color: @cm-grey-font;
-//  article.welcome-beta-info {
-//    position: relative;
-//    i.cm-beta {
-//      position: absolute;
-//      top: -0.3rem;
-//      right: 1rem;
-//      color: @cm-ci-color;
-//    }
-//  }
-//}
 
 pre.error {
   white-space: pre;
@@ -383,7 +377,7 @@ section.default-pages{
       font-size: @cm-large-font;
       color:@cm-grey-new;
     }
-    &:hover,&.isActive{
+    &.isActive{
       .box-shadow-bottom-new-grey !important;
       text-decoration: none;
     }

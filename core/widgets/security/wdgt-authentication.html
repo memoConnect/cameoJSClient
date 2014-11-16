@@ -106,6 +106,7 @@
             ng-click    = "done()"
             class       = "cm-btn-grey dib w50"
             data-qa     = "btn-cancel-authentication"
+            cm-reactive
             >
         {{BASE+"START.CANCEL_BUTTON"|cmTranslate}}
         <i class="fa cm-checkbox-wrong"></i>
@@ -115,6 +116,7 @@
             ng-click    = "startAuthenticationRequest()"
             class       = "cm-btn-grey dib w50"
             data-qa     = "btn-start-authentication"
+            cm-reactive
             >
         <span ng-if = "!ERROR">
             {{BASE+"START.START_BUTTON"|cmTranslate}}
@@ -132,6 +134,7 @@
             ng-click    = "cancel()"
             class       = "cm-btn-grey"
             data-qa     = "btn-cancel-authentication"
+            cm-reactive
             >
         {{BASE+"WAIT.CANCEL_BUTTON"|cmTranslate}}
         <i class="fa cm-checkbox-wrong"></i>
@@ -143,6 +146,7 @@
             ng-click    = "done()"
             class       = "cm-btn-grey"
             data-qa     = "btn-start-authentication"
+            cm-reactive
             >
         {{BASE+"SUCCESSFUL.DONE_BUTTON"|cmTranslate}}
         <i class="fa cm-checkbox-wrong"></i>

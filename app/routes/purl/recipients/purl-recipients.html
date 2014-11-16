@@ -8,8 +8,9 @@
             cm-data         = "conversation"
             cm-leading-icon = "cm-lock"
             ng-click        = "gotoPurl(purlId,'security')"
+            cm-reactive
         ></cm-security-indicator>
     </cm-header>
 
-    <cm-widget-conversation-recipients cm-data="conversation"></cm-widget-conversation>
+    <cm-widget-conversation-recipients cm-data="conversation"></cm-widget-conversation-recipients>
 </section>

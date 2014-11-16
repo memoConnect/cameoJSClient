@@ -1,5 +1,5 @@
 <ul>
-    <li ng-click="goTo({},'talks')" ng-class="{'is-active':checkActive('talks,conversation','conversation/new')}">
+    <li ng-click="goTo({},'talks')" ng-class="{'is-active':checkActive('talks,conversation','conversation/new')}" cm-reactive>
         <span class="item clearfix">
             <span class="title">
                 <i class="fa cm-talk"></i>
@@ -8,7 +8,7 @@
         </span>
     </li>
 
-    <li ng-click="goTo({},'contacts')" ng-class="{'is-active':checkActive('contact','contact/request/list,contact/create')}">
+    <li ng-click="goTo({},'contacts')" ng-class="{'is-active':checkActive('contact','contact/request/list,contact/create')}" cm-reactive>
         <span class="item clearfix">
             <span class="title">
                 <i class="fa cm-person"></i>
@@ -21,7 +21,8 @@
         ng-repeat="btn in menuKeys"
         ng-click="goTo(menu[btn], btn)"
         data-qa="{{menu[btn]['data-qa']}}"
-        ng-class="{'is-active':checkActive(btn)}">
+        ng-class="{'is-active':checkActive(btn)}"
+        cm-reactive>
         <span class="item clearfix">
             <span class="title">
                 <i class="fa" ng-class="menu[btn].icon"></i>
@@ -34,7 +35,7 @@
         </span>
     </li>
 
-    <li ng-click="logout()" data-qa="logout-btn">
+    <li ng-click="logout()" data-qa="logout-btn" cm-reactive>
         <span class="item clearfix">
             <span class="title">
                 <i class="fa cm-logout"></i>

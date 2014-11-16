@@ -3,11 +3,11 @@ cm-avatar{
   .wrap{
     .dib;
     .pos-rel;
-    .no-pad;
     .mr15;
-    .vap;
-    width:@cm-unit;
+    .vam;
     height:@cm-unit;
+    width:@cm-unit;
+    padding: 0.3rem;
     font-size:@cm-unit - 1;
     background-size:cover;
     overflow:hidden;
@@ -37,5 +37,11 @@ cm-avatar{
       height: @cm-unit*2;
       font-size: (@cm-unit*2)-1;
     }
+  }
+}
+
+cm-contact-tag {
+  cm-avatar .wrap {
+    .vam;
   }
 }

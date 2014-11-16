@@ -5,7 +5,7 @@
     </header>
     <ng-transclude class="content"></ng-transclude>
     <footer>
-        <button class="cm-btn-grey" ng-click="close()" data-qa="cm-modal-close-btn">
+        <button class="cm-btn-grey" ng-click="close()" data-qa="cm-modal-close-btn" cm-reactive>
             {{(footerLabel||'MODAL.ALERT.OK')|cmTranslate}}
             <i ng-if="footerIcon" class="fa {{footerIcon}}"></i>
         </button>

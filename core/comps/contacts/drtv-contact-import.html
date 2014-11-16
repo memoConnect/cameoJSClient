@@ -86,7 +86,7 @@
 </form>
 
 <cm-footer>
-    <button data-qa="btn-create-contact" class="cm-btn-grey" id="registerUserButton" ng-click="importContact()">
+    <button data-qa="btn-create-contact" class="cm-btn-grey" id="registerUserButton" ng-click="importContact()" cm-reactive>
         <span ng-show="!showLoader">
             {{'CONTACT.FOOTER.SAVE'|cmTranslate}} <i class="fa cm-checkbox-right"></i>
         </span>

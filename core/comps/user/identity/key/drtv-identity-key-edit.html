@@ -50,7 +50,7 @@
 </article>
 
 <cm-footer cm-always-on-top ng-if="isTrusted && privKey && canAuthenticate">
-    <button ng-click="startAuthentication()" class="cm-btn-grey" data-qa="btn-start-authentication">
+    <button ng-click="startAuthentication()" class="cm-btn-grey" data-qa="btn-start-authentication" cm-reactive>
         {{'SETTINGS.PAGES.IDENTITY.HANDSHAKE.HANDSHAKE_START'|cmTranslate}}
         <i class="fa cm-checker"></i>
     </button>

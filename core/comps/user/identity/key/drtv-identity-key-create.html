@@ -8,22 +8,22 @@
 
     <ul class="border-top border-bottom">
         <li class="no-border">
-            <span class="item" ng-click="toggleKeySize()" data-qa="select-key-size" >
+            <span class="item" ng-click="toggleKeySize()" data-qa="select-key-size" cm-reactive>
             {{'IDENTITY.KEYS.GENERATE.START.KEY_LENGTH.BUTTON_LABEL'|cmTranslate}} <strong>2048 (default)</strong>
             </span>
-            <div class="short-links" ng-click="toggleKeySize()">
+            <div class="short-links without-bg" ng-click="toggleKeySize()">
                 <i class="fa" ng-class="{'cm-down':!showKeySize,'cm-up':showKeySize}"></i>
             </div>
             <ul class="cm-submenu" ng-show="showKeySize">
-                <li ng-click="chooseKeySize('2048')">
+                <li ng-click="chooseKeySize('2048')" cm-reactive>
                     <span class="item" data-qa="keysize-2048">2048</span>
-                    <div class="short-links">
+                    <div class="short-links without-bg">
                         <i class="fa" ng-class="{'cm-checkbox':keySize != 2048,'cm-checkbox-right':keySize == 2048}"></i>
                     </div>
                 </li>
-                <li ng-click="chooseKeySize('4096')">
+                <li ng-click="chooseKeySize('4096')" cm-reactive>
                     <span class="item" data-qa="keysize-4096">4096</span>
-                    <div class="short-links">
+                    <div class="short-links without-bg">
                         <i class="fa" ng-class="{'cm-checkbox':keySize != 4096,'cm-checkbox-right':keySize == 4096}"></i>
                     </div>
                 </li>
@@ -32,7 +32,7 @@
     </ul>
 
     <cm-footer>
-        <button ng-click="generate()" class="cm-btn-grey" data-qa="btn-generate-key">
+        <button ng-click="generate()" class="cm-btn-grey" data-qa="btn-generate-key" cm-reactive>
             {{'IDENTITY.KEYS.GENERATE.START.GENERATE_BUTTON'|cmTranslate}}
             <i class="fa cm-checker"></i>
         </button>
@@ -66,7 +66,7 @@
     </div>
 
     <cm-footer>
-        <button ng-click="cancel()" class="cm-btn-grey" data-qa="btn-cancel-key-generation">
+        <button ng-click="cancel()" class="cm-btn-grey" data-qa="btn-cancel-key-generation" cm-reactive>
             {{'IDENTITY.KEYS.GENERATE.GENERATING.STOP_BUTTON'|cmTranslate}}
             <i class="fa cm-checkbox-wrong"></i>
         </button>
@@ -111,7 +111,7 @@
         </article>
     </form>
     <cm-footer>
-        <button ng-click="store()" class="cm-btn-grey" data-qa="btn-save-key">
+        <button ng-click="store()" class="cm-btn-grey" data-qa="btn-save-key" cm-reactive>
             <span ng-show="!showLoader">
                 {{'IDENTITY.KEYS.GENERATE.SAVE.SAVE_BUTTON'|cmTranslate}}
                 <i class="fa cm-checker"></i>

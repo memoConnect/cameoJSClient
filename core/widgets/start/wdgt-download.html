@@ -10,7 +10,7 @@
 </article>
 
 <ul class="border-top border-bottom mt15">
-    <li ng-repeat="app in appLinks" ng-click="goToStore(app)">
+    <li ng-repeat="app in appLinks" ng-click="goToStore(app)" cm-reactive>
         <span class="item tac">
             <a href="{{app.href}}">
                 <img ng-src="{{app.icon}}" />
@@ -18,7 +18,7 @@
         </span>
     </li>
 
-    <li ng-click="goToWelcome()" data-qa="btn-skip-download">
+    <li ng-click="goToWelcome()" data-qa="btn-skip-download" cm-reactive>
         <span class="item">
             {{'START.DOWNLOAD.SKIP_TEXT' | cmTranslate}}
         </span>

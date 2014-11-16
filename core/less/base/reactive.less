@@ -1,0 +1,101 @@
+[cm-reactive]{
+  outline: none;
+  cursor:pointer;
+  -webkit-transition: background-color 0.15s ease-in-out; /* Firefox */
+  -moz-transition: background-color 0.15s ease-in-out; /* WebKit */
+  -o-transition: background-color 0.15s ease-in-out; /* Opera */
+  transition: background-color 0.15s ease-in-out; /* Standard */
+
+  .cm-reactive-default();
+}
+
+// lighten makes dark color lighter
+.createReactive(@normal-color) when(lightness(@normal-color) < 50%){
+  [cm-reactive] {
+    background-color:@normal-color;
+  }
+  [cm-reactive].is-hover {
+    background-color: lighten(hsl(hue(@normal-color), saturation(@normal-color), lightness(@normal-color)), 22%);
+  }
+  [cm-reactive].ng-click-active {
+    background-color: lighten(hsl(hue(@normal-color), saturation(@normal-color), lightness(@normal-color)), 33%);
+  }
+}
+.createInnerReactive(@normal-color) when(lightness(@normal-color) < 50%){
+  background-color:@normal-color;
+  &.is-hover {
+    background-color:lighten(hsl(hue(@normal-color), saturation(@normal-color), lightness(@normal-color)), 22%);
+  }
+  &.ng-click-active {
+    background-color:lighten(hsl(hue(@normal-color), saturation(@normal-color), lightness(@normal-color)), 33%);
+  }
+}
+// darken makes lighter color to darker
+.createReactive(@normal-color) when(lightness(@normal-color) >= 50%){
+  [cm-reactive] {
+    background-color:@normal-color;
+  }
+  [cm-reactive].is-hover {
+    background-color: darken(hsl(hue(@normal-color), saturation(@normal-color), lightness(@normal-color)), 3%);
+  }
+  [cm-reactive].ng-click-active {
+    background-color: darken(hsl(hue(@normal-color), saturation(@normal-color), lightness(@normal-color)), 7%);
+  }
+}
+.createInnerReactive(@normal-color) when(lightness(@normal-color) >= 50%){
+  background-color:@normal-color;
+  &.is-hover {
+    background-color:darken(hsl(hue(@normal-color), saturation(@normal-color), lightness(@normal-color)), 3%);
+  }
+  &.ng-click-active {
+    background-color:darken(hsl(hue(@normal-color), saturation(@normal-color), lightness(@normal-color)), 7%);
+  }
+}
+
+
+// white -> darken
+.cm-reactive-default(){
+  .createInnerReactive(@cm-white);//, @cm-light-grey
+}
+// header dark -> lighten
+cm-header, cm-second-header, .cm-demo-header {
+  .createReactive(@cm-black);//, @cm-grey-new
+}
+// menu white -> lighten
+.cm-menu-list [cm-reactive]{
+  .cm-reactive-default();
+}
+// sub header grey -> darken
+section.default-pages, .cm-demo-default-pages{
+  .createReactive(#ECECEC);//, #DBDBDB
+}
+// menu header grey -> darken
+.cm-menu-list li.cm-menu-header {
+  .createReactive(#ECECEC);//, #DBDBDB)
+  [cm-reactive] {
+    .border-radius-tl;
+  }
+  [cm-reactive].is-hover {
+    .border-radius-tl;
+  }
+  [cm-reactive].ng-click-active {
+    .border-radius-tl;
+  }
+}
+// footer
+button[cm-reactive] {
+  // grey -> darken
+  &.cm-btn-grey{
+    .createInnerReactive(@cm-grey-new);//, #8D8D8D
+  }
+  // black -> lighten
+  &.cm-btn-black {
+    .createInnerReactive(@cm-black);//, @cm-grey-new
+  }
+}
+// ??? -> lighten! transparent -> lighter??? ;)
+.theme-b {
+  article[cm-reactive]{
+    .createInnerReactive(transparent);//, @cm-grey-new
+  }
+}

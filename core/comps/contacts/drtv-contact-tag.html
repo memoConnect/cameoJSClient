@@ -2,7 +2,4 @@
 <section class="identityName" >
     <div class="displayName" data-qa="contact-display-name">{{contact.identity.getDisplayName()}}</div>
 </section>
-<section class="icon-list" ng-click="startConversation($event,contact)" data-qa="start-new-conversation-btn">
-    <cm-contact-type cm-data="contact"></cm-contact-type>
-    <i class="fa cm-new-talk" ng-hide="contact.contactType == 'pending'"></i>
-</section>
+<cm-contact-type cm-data="contact"></cm-contact-type>

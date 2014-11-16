@@ -3,6 +3,7 @@
 angular.module('cameoClient', [
     'ngRoute',
     'ngCookies',
+    'ngTouch',
     'angular-loading-bar',
     // cameo dependencies
     'cmConfig',
@@ -220,10 +221,6 @@ angular.module('cameoClient', [
         });
     }
 ])
-.run(function() {
-    // disabled the 3000 seconds delay on click when touch ;)
-    FastClick.attach(document.body);
-})
 .run(function(){
     // start entropy collection for random number generator
     sjcl.random.startCollectors();
