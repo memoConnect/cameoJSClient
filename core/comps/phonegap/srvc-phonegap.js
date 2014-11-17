@@ -2,9 +2,9 @@
 
 angular.module('cmPhonegap').service('cmPhonegap', [
     'cmLogger',
-    '$q', '$document', '$phonegapCameoConfig', '$navigator',
+    '$q', '$document', '$phonegapCameoConfig', '$navigator', '$rootScope',
     function (cmLogger,
-              $q, $document, $phonegapCameoConfig, $navigator) {
+              $q, $document, $phonegapCameoConfig, $navigator, $rootScope) {
 
         var isReady = $q.defer();
 
@@ -36,10 +36,16 @@ angular.module('cmPhonegap').service('cmPhonegap', [
                 return false;
             },
             initCloseApp: function(){
-                return false;
-
                 $document[0].addEventListener('backbutton', function(e) {
-                    $navigator.app.exitApp();
+                    if($rootScope.urlHistory.length == 0) {
+                        cmModal.confirm({
+                            title: 'MODAL.EXIT.HEADER',
+                            text: 'MODAL.EXIT.TEXT'
+                        })
+                        .then(function () {
+                            $navigator.app.exitApp();
+                        });
+                    }
                 });
             }
         };

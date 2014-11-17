@@ -9,15 +9,17 @@ angular.module('cmValidate').directive('cmValidatePhone',[
                 model: '=ngModel'
             },
             link: function(scope, element, attrs, ngModel){
-                var correctValue;
-                scope.$watch('model',function (newValue) {
+
+                function checkPhoneNumber(newValue){
                     if(newValue && newValue != "" && correctValue == undefined || // value isnt empty and first-check
                         newValue && newValue != "" && correctValue != undefined && newValue != correctValue // value isnt the correct value from BE
                     ){
-                        cmAuth.checkPhoneNumber(newValue).
+                        cmAuth.checkPhoneNumber(''+newValue).
                             then(
                             //success
                             function (phoneNumber){
+                                //if()
+
                                 correctValue = phoneNumber;
                                 ngModel.$setValidity('phone', true);
                                 ngModel.$setViewValue(phoneNumber);
@@ -33,6 +35,11 @@ angular.module('cmValidate').directive('cmValidatePhone',[
                         ngModel.$setValidity('phone', true);
                         ngModel.$setPristine();
                     }
+                }
+
+                var correctValue;
+                scope.$watch('model',function (newValue) {
+                    checkPhoneNumber(newValue);
                 });
             }
         }

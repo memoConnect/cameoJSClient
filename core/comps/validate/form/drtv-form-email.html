@@ -2,9 +2,10 @@
     <label>{{label|cmTranslate}}</label>
     <div class="cm-input-ctn with-chooser" ng-class="{'cm-input-disabled':disabled,'with-inside-icon':!disabled}">
         <input
+                type="email"
                 tabindex="{{tabIndex}}" data-qa="input-email"
                 name="email" ng-model="ngModel"
-                ng-disabled="disabled" cm-validate-email cm-adaptive-change />
+                ng-disabled="disabled" cm-validate-email cm-adaptive-change="3000" />
         <i class="fa cm-write" ng-show="!disabled"></i>
     </div>
     <cm-info-bubble class="cm-alert" ng-show="cmInnerForm.email.$dirty && cmInnerForm.email.$invalid">

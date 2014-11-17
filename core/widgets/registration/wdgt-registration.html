@@ -59,37 +59,12 @@
     <hr class="margin-small">
 
     <article class="content">
-        <label>{{'REGISTER.PLACEHOLDER.EMAIL'|cmTranslate}}</label>
-        <div class="cm-input-ctn with-inside-icon" ng-class="{'cm-input-error':registrationForm.email.$invalid}" data-qa="form-input" cm-input-watcher>
-            <input
-                    tabindex="5" data-qa="input-email"
-                    type="text" id="email" name="email"
-                    ng-model="formData.email" ng-class="{'cm-input-error':registrationForm.email.$invalid}"
-                    cm-validate-email cm-adaptive-change />
-            <i
-                    class="fa cm-write"
-                    ng-class="{
-                    'cm-write':registrationForm.email.$dirty && registrationForm.email.$invalid,
-                    'cm-checkbox-right':!(registrationForm.email.$dirty && registrationForm.email.$invalid)
-                }"
-                    data-qa="icon-email-correct"></i>
-        </div>
-        <cm-info-bubble class="cm-alert" ng-show="registrationForm.email.$dirty && registrationForm.email.$invalid" data-qa="register-info-invalid-mail">
-            <div ng-show="registrationForm.email.$invalid">
-                <i class="fa cm-info"></i>{{'REGISTER.INFO.INVALID_EMAIL'|cmTranslate}}
-            </div>
-        </cm-info-bubble>
-    </article>
-
-    <hr class="margin-small">
-
-    <article class="content">
         <label>{{'REGISTER.PLACEHOLDER.PHONENUMBER'|cmTranslate}}</label>
         <div class="cm-input-ctn with-inside-icon" ng-class="{'cm-input-error':registrationForm.phone.$invalid}" data-qa="form-input" cm-input-watcher>
             <input
                     tabindex="6" data-qa="input-phone"
-                    type="text" id="phone" name="phone"
-                    ng-model="formData.phone" cm-validate-phone cm-adaptive-change ng-minlength="6"
+                    type="tel" id="phone" name="phone"
+                    ng-model="formData.phone" cm-validate-phone cm-adaptive-change="3000" ng-minlength="6"
                     ng-class="{'cm-input-error':registrationForm.phone.$invalid}" />
             <i
                     class="fa"
@@ -102,6 +77,31 @@
         <cm-info-bubble class="cm-alert" ng-show="registrationForm.phone.$dirty && registrationForm.phone.$invalid" data-qa="register-info-invalid-phonenumber">
             <div ng-show="registrationForm.phone.$invalid">
                 <i class="fa cm-info"></i>{{'REGISTER.INFO.INVALID_PHONENUMBER'|cmTranslate}}
+            </div>
+        </cm-info-bubble>
+    </article>
+
+    <hr class="margin-small">
+
+    <article class="content">
+        <label>{{'REGISTER.PLACEHOLDER.EMAIL'|cmTranslate}}</label>
+        <div class="cm-input-ctn with-inside-icon" ng-class="{'cm-input-error':registrationForm.email.$invalid}" data-qa="form-input" cm-input-watcher>
+            <input
+                    tabindex="5" data-qa="input-email"
+                    type="email" id="email" name="email"
+                    ng-model="formData.email" ng-class="{'cm-input-error':registrationForm.email.$invalid}"
+                    cm-validate-email cm-adaptive-change="3000" />
+            <i
+                    class="fa cm-write"
+                    ng-class="{
+                    'cm-write':registrationForm.email.$dirty && registrationForm.email.$invalid,
+                    'cm-checkbox-right':!(registrationForm.email.$dirty && registrationForm.email.$invalid)
+                }"
+                    data-qa="icon-email-correct"></i>
+        </div>
+        <cm-info-bubble class="cm-alert" ng-show="registrationForm.email.$dirty && registrationForm.email.$invalid" data-qa="register-info-invalid-mail">
+            <div ng-show="registrationForm.email.$invalid">
+                <i class="fa cm-info"></i>{{'REGISTER.INFO.INVALID_EMAIL'|cmTranslate}}
             </div>
         </cm-info-bubble>
     </article>
