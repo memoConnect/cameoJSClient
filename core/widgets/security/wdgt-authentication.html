@@ -73,7 +73,7 @@
 <hr/>
 
 <article ng-if="step > 0 && step <3" class="content">
-    <div class="transaction-secret" ng-if="transactionSecret" data-qa="transaction-secret-value">
+    <div class="transaction-secret is-selectable" ng-if="transactionSecret" data-qa="transaction-secret-value">
         {{transactionSecret || '...'}}
     </div>
     <ng-loader ng-if = "!transactionSecret"></ng-loader>
