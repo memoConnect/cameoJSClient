@@ -41,7 +41,9 @@ angular.module('cmCore').service('cmRootService', [
         };
 
         $rootScope.createNewConversation = function(){
-            delete $rootScope.pendingConversation;
+            $rootScope.pendingConversation = null;
+            $rootScope.pendingRecipients = [];
+
             $rootScope.goTo('/conversation/new');
         };
 
@@ -50,7 +52,9 @@ angular.module('cmCore').service('cmRootService', [
             $event.preventDefault();
 
             if(contact.contactType != 'pending'){
-                delete $rootScope.pendingConversation;
+                $rootScope.pendingConversation = null;
+                $rootScope.pendingRecipients = [];
+
                 if (contact.identity) {
                     $rootScope.pendingRecipients = [contact.identity]
                 } else {
