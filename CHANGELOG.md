@@ -9,9 +9,15 @@
 ** everybody got a attention on our apps but it can be skipped
 * purl addations
 ** new subheader for in app opener about new cameonet:// app protocol
+* form validation
+** phonenumbers now have on mobile numberpad
+** email have emailpad
+** phone and email validation now accors after 3 secs. (before 1 secs.)
+* phonegap
+** new exit modal for leaving app
 * performance
 ** webworker for verify now cache the results
 ** now better handling in webworker factory
 ** through major framework update route changes raised up 50%
-** cm-rubber-space tighten was optimized
+** cm-rubber-space tighten was optimized (now only once per digest and drtv)
 ** 
