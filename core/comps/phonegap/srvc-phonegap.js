@@ -46,6 +46,8 @@ angular.module('cmPhonegap').service('cmPhonegap', [
                             .then(function() {
                                 $navigator.app.exitApp();
                             });
+                        } else {
+                            $rootScope.goBack();
                         }
                     });
                 }
