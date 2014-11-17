@@ -90,6 +90,10 @@ angular.module('cmCore').service('cmRootService', [
             window.location = cmConfig.appProtocol + '://?'+params;
         };
 
+        $rootScope.openExternalLink = function(url){
+            $window.open(url, '_system', 'location=yes');
+        };
+
         /**
          * modal for login
          */

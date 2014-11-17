@@ -10,11 +10,13 @@
 </article>
 
 <ul class="border-top border-bottom mt15">
-    <li ng-repeat="app in appLinks" ng-click="goToStore(app)" cm-reactive>
-        <span class="item tac">
-            <a href="{{app.href}}">
-                <img ng-src="{{app.icon}}" />
-            </a>
+    <li ng-repeat="app in appLinks">
+        <span class="item tac without-height" cm-reactive ng-click="openExternalLink(app.href)">
+            <img ng-src="{{app.icon}}" />
+        </span>
+        <hr class="margin-small">
+        <span class="item tac without-height" ng-if="app.direct && app.direct.href != ''" cm-reactive ng-click="openExternalLink(app.direct.href)">
+            <img ng-src="{{app.direct.icon}}" />
         </span>
     </li>
 
@@ -22,7 +24,7 @@
         <span class="item">
             {{'START.DOWNLOAD.SKIP_TEXT' | cmTranslate}}
         </span>
-        <div class="short-links">
+        <div class="short-links without-bg">
             <i class="fa cm-right"></i>
         </div>
     </li>

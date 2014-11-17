@@ -12,6 +12,7 @@ angular.module('cmCore')
         };
 
         $window.onerror = function(msg, url, line, col, error) {
+            return false;
             self.showOnPage({
                 jserror: msg,
                 location: $injector.get('$location').$$path,
@@ -46,6 +47,7 @@ angular.module('cmCore')
             cmLogger.error(JSON.stringify(error,null,2));
 
             if(typeof exception == 'object' && 'message' in exception && exception.message.indexOf('defined') >= 0){
+                return false;
                 $injector.get('cmError').showOnPage(error);
             }
 

@@ -14,7 +14,6 @@ angular.module('cmUi').directive('cmReactive',[
                             animation: function(){
                                 return $timeout(function () {
                                     // only do the animation bitsch
-                                    console.log('pabam go to route')
                                 }, 260)
                             }
                         });

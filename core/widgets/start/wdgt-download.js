@@ -15,7 +15,7 @@ angular.module('cmWidgets').directive('cmWidgetDownload',
 
                 // isDesktop or App or none apps are available for device
                 if(cmDevice.isDesktop('cmWidgetDownload') || cmDevice.isApp() || $scope.appLinks.length == 0){
-                    $scope.goToWelcome();
+                    //$scope.goToWelcome();
                 }
             }
         }
