@@ -36,17 +36,19 @@ angular.module('cmPhonegap').service('cmPhonegap', [
                 return false;
             },
             initCloseApp: function(){
-                $document[0].addEventListener('backbutton', function(e) {
-                    if($rootScope.urlHistory.length == 0) {
-                        cmModal.confirm({
-                            title: 'MODAL.EXIT.HEADER',
-                            text: 'MODAL.EXIT.TEXT'
-                        })
-                        .then(function () {
-                            $navigator.app.exitApp();
-                        });
-                    }
-                });
+                if($document.length > 0 && 'addEventListener' in $document[0]) {
+                    $document[0].addEventListener('backbutton', function (e) {
+                        if ($rootScope.urlHistory.length == 0) {
+                            cmModal.confirm({
+                                title: 'MODAL.EXIT.HEADER',
+                                text: 'MODAL.EXIT.TEXT'
+                            })
+                            .then(function() {
+                                $navigator.app.exitApp();
+                            });
+                        }
+                    });
+                }
             }
         };
 
