@@ -87,8 +87,6 @@ angular.module('cmCore').service('cmSystemCheck', [
                 )
             }
 
-            console.log()
-
             return deferred.promise;
         };
 
