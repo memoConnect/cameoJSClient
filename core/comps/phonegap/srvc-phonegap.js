@@ -35,7 +35,7 @@ angular.module('cmPhonegap').service('cmPhonegap', [
 
                 return false;
             },
-            initCloseApp: function(){
+            initDeviceButtons: function(){
                 if($document.length > 0 && 'addEventListener' in $document[0]) {
                     $document[0].addEventListener('backbutton', function (e) {
                         if ($rootScope.urlHistory.length == 0) {
@@ -50,12 +50,16 @@ angular.module('cmPhonegap').service('cmPhonegap', [
                             $rootScope.goBack();
                         }
                     });
+
+                    $document[0].addEventListener('menubutton', function (e) {
+                        $rootScope.$broadcast('cmMenu:toggle');
+                    });
                 }
             }
         };
 
         // on home close app
-        self.initCloseApp();
+        self.initDeviceButtons();
 
         return self;
     }]

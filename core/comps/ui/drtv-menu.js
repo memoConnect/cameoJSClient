@@ -2,9 +2,9 @@
 
 angular.module('cmUi').directive('cmMenu',[
     'cmUserModel', 'cmConfig', 'cmNotify', 'cmUtil',
-    '$location', '$window',
+    '$location', '$window', '$rootScope',
     function (cmUserModel, cmConfig, cmNotify, cmUtil,
-              $location, $window){
+              $location, $window, $rootScope){
         return {
             restrict: 'AE',
             scope: true,
@@ -67,6 +67,14 @@ angular.module('cmUi').directive('cmMenu',[
                 $scope.logout = function(){
                     cmUserModel.doLogout(true,'drtv-menu logout');
                 };
+
+                var destroyWatcher = $rootScope.$on('cmMenu:toggle',function(){
+                    $scope.handleMenu();
+                });
+
+                $scope.$on('$destroy', function(){
+                    destroyWatcher();
+                });
             }
         }
     }
