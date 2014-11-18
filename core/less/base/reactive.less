@@ -55,23 +55,23 @@
 
 // white -> darken
 .cm-reactive-default(){
-  .createInnerReactive(@cm-white);//, @cm-light-grey
+  .createInnerReactive(@cm-white);
 }
-// header dark -> lighten
-cm-header, cm-second-header, .cm-demo-header {
-  .createReactive(@cm-black);//, @cm-grey-new
+// dark -> lighten
+cm-header, cm-second-header, .cm-demo-header, cm-choose-source {
+  .createReactive(@cm-black);
 }
-// menu white -> lighten
+// white -> lighten
 .cm-menu-list [cm-reactive]{
   .cm-reactive-default();
 }
 // sub header grey -> darken
 section.default-pages, .cm-demo-default-pages{
-  .createReactive(#ECECEC);//, #DBDBDB
+  .createReactive(#ECECEC);
 }
 // menu header grey -> darken
 .cm-menu-list li.cm-menu-header {
-  .createReactive(#ECECEC);//, #DBDBDB)
+  .createReactive(#ECECEC);
   [cm-reactive] {
     .border-radius-tl;
   }
@@ -86,16 +86,16 @@ section.default-pages, .cm-demo-default-pages{
 button[cm-reactive] {
   // grey -> darken
   &.cm-btn-grey{
-    .createInnerReactive(@cm-grey-new);//, #8D8D8D
+    .createInnerReactive(@cm-grey-new);
   }
   // black -> lighten
   &.cm-btn-black {
-    .createInnerReactive(@cm-black);//, @cm-grey-new
+    .createInnerReactive(@cm-black);
   }
 }
-// ??? -> lighten! transparent -> lighter??? ;)
+// lighten! transparent -> lighter
 .theme-b {
   article[cm-reactive]{
-    .createInnerReactive(transparent);//, @cm-grey-new
+    .createInnerReactive(transparent);
   }
 }
