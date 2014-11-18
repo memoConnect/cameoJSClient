@@ -51,7 +51,7 @@ angular.module('cmCore')
             function(cmTranslate, cmNotify, cmLogger){
 
                 if(supported_languages.length == 0)
-                    cmLogger.error('No supported languages found. Try cmLanguageProvider.setSupportedLanguages().', {ttl:5000})
+                    cmLogger.warn('No supported languages found. Try cmLanguageProvider.setSupportedLanguages().')
 
                 return {
                     getSupportedLanguages: function(){

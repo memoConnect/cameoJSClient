@@ -1,5 +1,18 @@
 .content {
   padding: 0 2rem;
+
+  &.with-radiobutton{
+    position:relative;
+    padding-right:@cm-unit + 2;
+    i.cm-radio-0{
+      position:absolute;
+      right:@cm-unit / 2;
+      bottom:0;
+      font-size:@cm-mega-font;
+      .cm-unit-btn;
+      line-height:@cm-unit + 0.5;
+    }
+  }
 }
 
 .seperator {
@@ -34,4 +47,12 @@
   .content;
   .taj;
   .small-text;
+}
+
+cm-info-bubble {
+  pre {
+    overflow: visible;
+    word-wrap: break-word;
+    white-space: normal;
+  }
 }

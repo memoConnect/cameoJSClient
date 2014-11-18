@@ -24,6 +24,13 @@ module.exports = function(grunt, options) {
         'template:app-files'
     ]);
 
+    // used by watcher, protractor and karma
+    grunt.registerTask('app:to-dist', [
+        'app:deploy-without-template',
+        'cockpit:deploy-without-template',
+        'app:gen-all-templates'
+    ]);
+
     return {
         tasks: {
             clean: {
@@ -51,11 +58,18 @@ module.exports = function(grunt, options) {
                             flatten: true,
                             cwd: 'core/css/fonts/',
                             src: ['**'],
-                            dest: 'dist/app/css/fonts'
+                            dest: 'dist/app/css/fonts/'
                         },
                         {
                             src: 'core/favicon.ico',
                             dest: 'dist/app/favicon.ico'
+                        },
+                        {
+                            expand: true,
+                            flatten: false,
+                            cwd: 'resource/download/gfx/',
+                            src: ['**'],
+                            dest: 'dist/app/gfx/'
                         }
                     ]
                 }
@@ -71,7 +85,10 @@ module.exports = function(grunt, options) {
                             'enableDebug': options.globalCameoBuildConfig.config.enableDebug,
                             'performancePage': options.globalCameoBuildConfig.config.performancePage,
                             'phonegapFiles': options.globalCameoBuildConfig.debug.weinre ? '<script src="http://' + options.globalCameoBuildConfig.debug.weinreIp + ':8080/target/target-script-min.js#anonymous"></script>' : '',
-                            'phonegapOnload': ''
+                            'phonegapOnload': '',
+                            'appProtocol': options.globalCameoBuildConfig.static.appProtocol,
+                            'appLinks': JSON.stringify(options.globalCameoBuildConfig.static.appLinks),
+                            'errorOnTodoInI18n': options.globalCameoBuildConfig.config.errorOnTodoInI18n
                         }
                     },
                     'files': {

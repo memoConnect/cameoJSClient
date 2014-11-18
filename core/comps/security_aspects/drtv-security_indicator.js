@@ -34,15 +34,26 @@ angular.module('cmSecurityAspects').directive('cmSecurityIndicator',[
                       
                 }
 
+                var refresh_scheduled = false
+
                 function refresh_callback(){
-                    $scope.conversation.securityAspects.refresh();
+                    //prevent more than 1 refresh call per second
+                    if(!refresh_scheduled){
+                        refresh_scheduled = true
+                        $timeout(function(){
+                            $scope.conversation.securityAspects.refresh();
+                        }, 1000)
+                        .then(function(){
+                            refresh_scheduled = false
+                        })
+                    } 
                 }
 
                 if($scope.conversation){
                     $scope.conversation.securityAspects.on('refresh', refresh);
                     $scope.conversation.on('update:finished encryption:enabled encryption:disabled captcha:enabled captcha:disabled aspects:added', refresh_callback);
                     $scope.conversation.recipients.on('register update:finished deregister', refresh_callback);
-                    cmUserModel.on('key:stored key:removed', refresh_callback);
+                    cmUserModel.on('key:stored key:removed cache:updated', refresh_callback);
 
                     $scope.conversation.securityAspects.refresh();
 

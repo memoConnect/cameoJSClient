@@ -9,12 +9,12 @@
     </cm-info-bubble>
 </article>
 
-<ul class="border-top border-bottom mt15">
-    <li ng-click="toggleSkipKeyInfo()">
+<ul class="border-top mt15">
+    <li ng-click="toggleSkipKeyInfo()" cm-reactive>
         <span class="item disabled">
            {{'START.KEYINFO.SKIP_CHECKBOX_TEXT' | cmTranslate}}
         </span>
-        <div class="short-links">
+        <div class="short-links without-bg">
             <input
                 id="skipKeyInfoInput"
                 data-qa="checkbox-skip-key-info-input"
@@ -32,32 +32,32 @@
         </div>
     </li>
 
-    <li ng-click="goTo('/talks')" data-qa="btn-skip-keygen">
+    <li ng-click="goTo('/talks')" data-qa="btn-skip-keygen" cm-reactive>
         <span class="item">
             {{'START.KEYINFO.SKIP_TEXT' | cmTranslate}}
         </span>
-        <div class="short-links">
+        <div class="short-links without-bg">
             <i class="fa cm-right"></i>
         </div>
     </li>
 
-    <li class="no-border">
-        <span class="item" ng-click="toggleKeySize()">
+    <li>
+        <span class="item" ng-click="toggleKeySize()" cm-reactive>
         {{'IDENTITY.KEYS.GENERATE.START.KEY_LENGTH.BUTTON_LABEL'|cmTranslate}} <strong>2048 (default)</strong>
         </span>
-        <div class="short-links" ng-click="toggleKeySize()" data-qa="btn-toggle-keysize">
+        <div class="short-links without-bg" ng-click="toggleKeySize()" cm-reactive data-qa="btn-toggle-keysize">
             <i class="fa" ng-class="{'cm-down':!showKeySize,'cm-up':showKeySize}"></i>
         </div>
         <ul class="cm-submenu" ng-show="showKeySize">
-            <li ng-click="chooseKeySize('2048')" data-qa="checkbox-keysize-2048">
+            <li ng-click="chooseKeySize('2048')" data-qa="checkbox-keysize-2048" cm-reactive>
                 <span class="item">2048</span>
-                <div class="short-links">
+                <div class="short-links without-bg">
                     <i class="fa" ng-class="{'cm-checkbox':keySize != 2048,'cm-checkbox-right':keySize == 2048}"></i>
                 </div>
             </li>
-            <li ng-click="chooseKeySize('4096')" data-qa="checkbox-keysize-4096">
+            <li ng-click="chooseKeySize('4096')" data-qa="checkbox-keysize-4096" cm-reactive>
                 <span class="item">4096</span>
-                <div class="short-links">
+                <div class="short-links without-bg">
                     <i class="fa" ng-class="{'cm-checkbox':keySize != 4096,'cm-checkbox-right':keySize == 4096}"></i>
                 </div>
             </li>
@@ -66,7 +66,7 @@
 </ul>
 
 <cm-footer>
-    <button ng-click="generateKey()" class="cm-btn-grey" data-qa="btn-next-step">
+    <button ng-click="generateKey()" class="cm-btn-grey" data-qa="btn-next-step" cm-reactive>
         {{'SETTINGS.PAGES.IDENTITY.KEYS.CREATE.HEADER' | cmTranslate}}
         <i class="fa cm-right"></i>
     </button>

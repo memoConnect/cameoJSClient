@@ -11,7 +11,7 @@
 cm-header, .cm-header-block{
   .dbl;
   .pos-fxd;
-  padding:0.3rem 0;
+  //padding:0.3rem 0;
   top:0;
   z-index:11;
   width:@cm-app-width;
@@ -36,6 +36,7 @@ cm-header, .cm-header-block{
     width:@cm-unit;
     z-index:1;
     .back-wrap{
+      height:@cm-unit;
       text-overflow:ellipsis;
       overflow:hidden;
       .tac;
@@ -53,11 +54,11 @@ cm-header, .cm-header-block{
     .dib;
     .with-cursor;
     .pos-rel;
-    padding-left:@cm-horizontal-padding;
     a{
       .tal;
       .dbl;
       .single-line;
+      height:@cm-unit;
       color:@cm-white;
       font-size:@cm-large-font;
     }
@@ -90,7 +91,7 @@ cm-header, .cm-header-block{
       color:@cm-black;
       z-index:-1;
       height:@cm-unit;
-      width:24rem - @cm-horizontal-padding;
+      width:23.9rem;
       right:@cm-unit;
       top:0;
       padding:1rem 0.4rem;
@@ -125,69 +126,28 @@ cm-header, .cm-header-block{
     .dib;
   }
 }
-/*
-header.menu{
-  .dbl;
-  .pos-fxd;
-  top:0;
-  z-index:10;
-  padding:@cm-vertical-padding 0;
-  width:@cm-app-width;
-  color:@cm-white;
-  background:@cm-bg-color;
-  line-height:@cm-unit;
-  font-size:@cm-large-font;
-  white-space:nowrap;
 
-  > *{
-    vertical-align: middle;
-  }
 
-  cm-logo{
-    .dbl;
-    .tac;
-    .margin-hr-auto;
-    width:9rem;
-    color:@cm-ci-color;
-  }
-
-  cm-back{
-    .dib;
-    .tal;
-    .pos-abs;
-    .with-cursor;
-    width:1.1rem;
-    left:0;
-    top:@cm-vertical-padding;
-    z-index:1;
-    i {
-      margin-left:0.2rem;
-      margin-right:0.5rem;
-      vertical-align:text-bottom;
-    }
-  }
-
-  cm-identity{
-    .dib;
-    .tal;
-    .pos-rel;
-    .with-cursor;
-    width:10.5rem;
-    left:1.15rem;
-    top:@cm-vertical-padding;
-    color:@cm-white;
-    text-overflow:ellipsis;
-    overflow:hidden;
-    white-space:nowrap;
-    font-size:0.8rem;
-  }
-
-  cm-menu{
-    .dib;
-    .pos-abs;
-    width:3rem;
-    top:@cm-vertical-padding;
-    right:0.01rem;
+cm-header-list-search{
+  i{
+    height: @cm-unit;
+    width: @cm-unit;
   }
 }
-*/
+
+
+cm-second-header{
+
+  .dbl;
+  height:@cm-unit;
+  line-height:@cm-unit;
+  background:@cm-black;
+  border-top:@cm-light-dark solid @cm-border-width;
+
+  > * {
+    .tac;
+    color:@cm-ci-color;
+    font-size:@cm-large-font;
+  }
+
+}

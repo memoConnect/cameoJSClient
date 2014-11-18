@@ -440,6 +440,31 @@ angular.module('cmConversations')
                 return this;
             };
 
+            this.loadLatestMessages = function(){
+                //cmLogger.debug('cmConversationModel.loadLatestMessages');
+
+                if(typeof this.lastMessage.created == 'number'){
+                    cmConversationsAdapter.getConversationMessages(this.id, null, null, this.lastMessage.created).then(
+                        function(data){
+
+                            self.state.set('loadedMessages');
+
+                            /**
+                             * Message Handling
+                             */
+                            if(typeof clearMessages !== 'undefined' && clearMessages !== false){
+                                self.messages.reset();
+                            }
+
+                            self.importData(data);
+                        }
+                    )
+                } else {
+                    this.update();
+                }
+
+            };
+
             /**
              * @param limit
              * @param offset
@@ -539,12 +564,12 @@ angular.module('cmConversations')
 
                 function run(){
                     self.getPassphrase()
-                        .then(function (passphrase) {
-                            return $q.all(self.messages.map(function (message) {
-                                return message.decrypt(passphrase)
-                            }))
-                        })
-                        .then(
+                    .then(function (passphrase) {
+                        return $q.all(self.messages.map(function (message) {
+                            return message.decrypt(passphrase)
+                        }))
+                    })
+                    .then(
                         function () {
                             self.trigger('decrypt:success');
 
@@ -556,9 +581,9 @@ angular.module('cmConversations')
                             return $q.when()
 
                         },
-                        function () {
+                        function (reason) {
                             self.trigger('decrypt:failed');
-                            return $q.reject();
+                            return $q.reject(reason);
                         }
                     );
                 }

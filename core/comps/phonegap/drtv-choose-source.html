@@ -1,6 +1,6 @@
 <div class="wrapper {{options.tooltip}}" ng-show="showList">
     <i ng-if="options.tooltip == 'down'" class="fa cm-nose-up flip"></i>
-    <div class="source" ng-repeat="type in types" ng-click="choosedType(type)">
+    <div class="source" ng-repeat="type in types" ng-click="choosedType(type)" cm-reactive>
         <i class="fa {{type.icon}}"></i>{{'DRTV.CHOOSE_SOURCE.'+type.i18n|cmTranslate}}
     </div>
     <i ng-if="options.tooltip == 'up'" class="fa cm-nose-down flip"></i>

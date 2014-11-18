@@ -10,8 +10,7 @@ angular.module('cmWidgets').directive('cmWidgetSettingsList', [
             templateUrl: 'widgets/settings/wdgt-settings-list.html',
             controller: function ($scope) {
                 $scope.overview = cmConfig.routeSettings;
-
-                $scope.Object = Object;
+                $scope.overviewKeys = Object.keys($scope.overview);
 
                 $scope.logout = function(){
                     cmUserModel.doLogout(true,'settings overview logout');

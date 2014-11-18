@@ -1,14 +1,10 @@
 'use strict';
 
 angular.module('cmCore').service('cmRootService', [
-    '$rootScope',
-    '$window',
-    '$location',
-    'cmLogger',
-    'cmJob',
-    'cmModal',
-
-    function($rootScope, $window, $location, cmLogger, cmJob, cmModal){
+    '$rootScope', '$window', '$location',
+    'cmLogger', 'cmJob', 'cmModal', 'cmConfig',
+    function($rootScope, $window, $location,
+             cmLogger, cmJob, cmModal, cmConfig){
 
         $rootScope.goBack = function(){
             $window.history.back();
@@ -41,12 +37,31 @@ angular.module('cmCore').service('cmRootService', [
         $rootScope.goto = $rootScope.goTo;
 
         $rootScope.gotoRegistration = function(){
-            this.goTo('/registration')
+            this.goTo('/registration');
         };
 
         $rootScope.createNewConversation = function(){
-            delete $rootScope.pendingConversation;
+            $rootScope.pendingConversation = null;
+            $rootScope.pendingRecipients = [];
+
             $rootScope.goTo('/conversation/new');
+        };
+
+        $rootScope.startConversationWithContact = function($event, contact){
+            $event.stopPropagation();
+            $event.preventDefault();
+
+            if(contact.contactType != 'pending'){
+                $rootScope.pendingConversation = null;
+                $rootScope.pendingRecipients = [];
+
+                if (contact.identity) {
+                    $rootScope.pendingRecipients = [contact.identity]
+                } else {
+                    cmLogger.error('Unable to find identity on contact. ' + contact)
+                }
+                $rootScope.goTo('/conversation/new');
+            }
         };
 
         $rootScope.createNewIdentity = function(){
@@ -57,12 +72,26 @@ angular.module('cmCore').service('cmRootService', [
             $rootScope.goTo('/contact/list')
         };
 
+        $rootScope.gotoContact = function (contact) {
+            if(contact.contactType != 'pending') {
+                $rootScope.goTo('/contact/edit/' + contact.id);
+            }
+        };
+
         $rootScope.gotoPurl = function(purlId, subpath){
             $rootScope.goTo('/purl/'+purlId+'/'+subpath)
         };
 
         $rootScope.gotoConversation = function(conversationId, subpath){
             $rootScope.goTo('/conversation/'+(conversationId || 'new')+ (subpath ? '/'+subpath : ''))
+        };
+
+        $rootScope.goToApp = function(params){
+            window.location = cmConfig.appProtocol + '://?'+params;
+        };
+
+        $rootScope.openExternalLink = function(url){
+            $window.open(url, '_system', 'location=yes');
         };
 
         /**
@@ -78,6 +107,7 @@ angular.module('cmCore').service('cmRootService', [
             cmModal.open('login');
 
             $rootScope.$on('cmLogin:success', function(){
+                // TODO: schould that happen?
                 location.reload();
             });
         };

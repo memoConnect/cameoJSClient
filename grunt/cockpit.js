@@ -38,8 +38,8 @@ module.exports = function(grunt, options) {
                     'options': {
                         'data': {
                             'currentVersion': options.globalCameoBuildConfig.config.version,
-                            'basePath': options.globalCameoBuildConfig.cockpit.basePath,
-                            'appPath': options.globalCameoBuildConfig.cockpit.appPath
+                            'basePath': options.globalCameoBuildConfig.path.cockpit,
+                            'appPath': options.globalCameoBuildConfig.path.app
                         }
                     },
                     'files': {

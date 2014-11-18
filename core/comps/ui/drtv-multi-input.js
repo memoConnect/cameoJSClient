@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('cmUi').directive('cmMultiInput',[
-    '$rootScope',
-    function ($rootScope){
+    '$rootScope', '$compile',
+    function ($rootScope, $compile){
         return {
             restrict: 'AE',
             scope: true,
@@ -16,9 +16,17 @@ angular.module('cmUi').directive('cmMultiInput',[
             //                '<i class="fa cm-checkbox-add"></i>'+
             //            '</div>'+
             //          '</div>',
-            template: '<div ng-repeat="item in collection" class="cm-multi-input-wrap">' +
-                        '<div ng-transclude ng-keyup="showMultiplier()"></div>'+
-                      '</div>',
+
+            link: function(scope, element, attrs, ctrl, transclude) {
+                transclude(scope, function(clone) {
+                    var template = angular.element(
+                        '<div ng-repeat="item in collection" class="cm-multi-input-wrap"></div>'
+                    );
+                    template.append(clone);
+                    element.empty();
+                    element.append($compile(template)(scope));
+                });
+            },
 
             controller: function ($scope, $element, $attrs) {
                 $scope.collection = [];

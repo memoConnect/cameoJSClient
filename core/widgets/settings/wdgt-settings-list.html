@@ -4,10 +4,11 @@
 </h2>
 
 <ul>
-    <li ng-repeat="page in Object.keys(overview)"
+    <li ng-repeat="page in overviewKeys"
         ng-click="goToSettingsPage($event, page, overview[page].disabled, overview[page])"
         ng-class="{'is-disabled':overview[page].disabled,'is-active':checkActive(page)}"
-        data-qa="{{overview[page]['data-qa']}}">
+        data-qa="{{overview[page]['data-qa']}}"
+        cm-reactive>
         <span class="item clearfix">
             <span class="title">
                 <i class="fa" ng-class="overview[page].icon"></i>
@@ -19,7 +20,7 @@
             </section>
         </span>
     </li>
-    <li ng-click="logout()">
+    <li ng-click="logout()" cm-reactive>
         <span class="item clearfix">
             <i class="fa cm-logout icon-left"></i>
             <span>{{'MENU.LOGOUT'|cmTranslate}}</span>

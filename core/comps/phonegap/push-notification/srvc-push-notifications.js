@@ -21,7 +21,7 @@ angular.module('cmPhonegap')
             },
 
             registerAtService: function(plugin){
-                cmLogger.info('cmPushNotifications.registerAtService')
+                //cmLogger.info('cmPushNotifications.registerAtService')
 
                 this.plugin = plugin;
                 this.reset();
@@ -41,7 +41,6 @@ angular.module('cmPhonegap')
                         }
                     );
                 } else if(cmDevice.isiOS()){
-
                     this.unregisterAtService();
 
                     this.plugin.register(
@@ -92,7 +91,7 @@ angular.module('cmPhonegap')
             },
 
             setDeviceToken: function(token){
-                cmLogger.info('cmPushNotifications.setDeviceToken: '+token)
+                //cmLogger.info('cmPushNotifications.setDeviceToken: '+token)
                 this.deviceToken = token;
 
                 this.initPromise();
@@ -110,7 +109,7 @@ angular.module('cmPhonegap')
 
             handler: {
                 success: function(result){
-                    cmLogger.info('cmPushNotifications.handler.success: '+cmUtil.prettify(result))
+                    //cmLogger.info('cmPushNotifications.handler.success: '+cmUtil.prettify(result))
                 },
                 token: function(token){
                     self.setDeviceToken(token);

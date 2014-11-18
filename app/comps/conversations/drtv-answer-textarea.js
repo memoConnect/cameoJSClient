@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('cmAppConversations').directive('cmAnswerTextarea',[
-    'cmEnv',
-    function (cmEnv){
+    'cmDevice',
+    function (cmDevice){
         return {
             restrict: 'E',
             scope: {
@@ -10,7 +10,7 @@ angular.module('cmAppConversations').directive('cmAnswerTextarea',[
             },
             templateUrl: 'comps/conversations/drtv-answer-textarea.html',
             link: function (scope, element) {
-                if(cmEnv.isNotMobile)                    
+                if(cmDevice.isDesktop('cmAnswerTextarea'))
                     element.find('textarea')[0].focus();
             }
         }

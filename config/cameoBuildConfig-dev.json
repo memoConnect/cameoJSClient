@@ -5,11 +5,13 @@
         "loadingBar": true,
         "enableDebug": true,
         "logLevel": "DEBUG",
-        "performancePage": true
+        "performancePage": true,
+        "errorOnTodoInI18n": false
     },
-    "cockpit": {
-        "basePath": "/c/",
-        "appPath": "/m/"
+    "path": {
+        "cockpit": "/c/",
+        "app": "/m/",
+        "dl": "/dl/"
     },
     "debug":{
         "weinre": false,
@@ -19,6 +21,7 @@
         "baseName": "cameoNet-dev",
         "appId": "864855",
         "bundleId": "io.cameo.dev.cameo",
-        "extraName": ""
+        "extraName": "" ,
+        "androidDebuggable": true
     }
 }

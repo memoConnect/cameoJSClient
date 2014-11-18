@@ -114,7 +114,7 @@ angular.module('cmConversations')
                      * after success sendMessage
                      */
                     
-                    var deferred = $q.defer()
+                    var deferred = $q.defer();
                    
                     $rootScope.$broadcast('cmFilesCheckFiles', {
                         passphrase: passphrase,
@@ -124,24 +124,42 @@ angular.module('cmConversations')
                                 filesForMessage = files;
                             deferred.resolve()
                         },
-                        error: function(maxFileSize, header) {
+                        error: function(errorCode, error, header) {
                             $scope.isSending = false;
                             $scope.isSendingAbort = true;
-                            cmNotify.warn('CONVERSATION.WARN.FILESIZE_REACHED', {
-                                ttl: 0,
-                                i18n: {
-                                    maxFileSize: maxFileSize,
-                                    fileSize: header['X-File-Size'],
-                                    fileName: header['X-File-Name']
+
+                            if(!errorCode){
+                                deferred.reject('problem with prepare file upload');
+                            } else {
+                                deferred.reject('problem with prepare file upload');
+
+                                var i18n = {};
+                                if(errorCode == 'FILE.UPLOAD.QUOTA.EXCEEDED'){
+                                    i18n = {
+                                        totalQuota: error.totalQuota,
+                                        quotaLeft: error.quotaLeft,
+                                        fileSize: error.fileSize
+                                    }
+                                } else if(errorCode == 'FILE.UPLOAD.FILESIZE.EXCEEDED'){
+                                    i18n = {
+                                        fileSize: header['X-File-Size'],
+                                        fileName: header['X-File-Name'],
+                                        maxFileSize: error.maxFileSize
+                                    }
                                 }
-                            });
-                            deferred.reject('file too large.')
+
+                                cmNotify.warn(errorCode, {
+                                    ttl: 0,
+                                    i18n: i18n
+                                });
+
+                                deferred.reject(errorCode);
+                            }
                         }
                     });   
 
                     return deferred.promise
                 }
-
 
                 /**
                  * start sending process
@@ -163,12 +181,17 @@ angular.module('cmConversations')
 
 
                     var new_message =   $scope.conversation.messages
-                                        .create({conversation:$scope.conversation})
+                                        .create({conversation:$scope.conversation, id:'#new_message', fromIdentity:cmUserModel.data.identity})
                                         .setText($scope.newMessageText)
 
-                    new_message.state.set('sending')
-                    new_message.created = new Date().getTime()
-                    new_message.id      = '#new_message'
+                    new_message.state.set('sending');
+
+                    /**
+                     * important to set file view to dummy
+                     */
+                    if($scope.files.length > 0){
+                        new_message.state.set('waitForFiles')
+                    }
 
                     return  checkConversationSetup()
                             .then(function(){
@@ -187,11 +210,13 @@ angular.module('cmConversations')
                                                         return  $scope.conversation.isEncrypted()
 
                                                                 ?   new_message
+                                                                    .setText($scope.newMessageText)
                                                                     .addFiles(filesForMessage)
                                                                     .encrypt(passphrase)
                                                                     .save()
 
                                                                 :   new_message
+                                                                    .setText($scope.newMessageText)
                                                                     .addFiles(filesForMessage)
                                                                     .setPublicData(['text','fileIds'])
                                                                     .save()  
@@ -214,13 +239,13 @@ angular.module('cmConversations')
                                 }
                             )
                             .finally(function(){
-                                new_message.state.unset('sending')
+                                new_message.state.unset('sending');
+                                new_message.state.unset('waitForFiles');
                                 $scope.isSending = false;
                             })                                    
 
                   
                 };
-
 
                 $rootScope.$$listeners.sendOnReturn = [];
                 $rootScope.$on('sendOnReturn',$scope.send);
@@ -259,7 +284,6 @@ angular.module('cmConversations')
 
                     return false
                 };
-                
 
                 this.addPendingRecipients = function(){
                     if($scope.conversation.state.is('new')){
@@ -305,28 +329,9 @@ angular.module('cmConversations')
                     }
 
                     function callback_recipients_missing(){
-                        // switcher for purl and conversation, @Todo: vereinheitlichen
-                        // var settingsLinker = {type:'',typeId:''};
-                        // if('purlId' in $routeParams){
-                        //     settingsLinker.type = 'purl';
-                        //     settingsLinker.typeId = $routeParams.purlId;
-                        // } else {
-                        //     settingsLinker.type = 'conversation';
-                        //     settingsLinker.typeId = $routeParams.conversationId;
-                        // }
-                        // cmNotify.warn('CONVERSATION.WARN.RECIPIENTS_MISSING',
-                        //     {
-                        //         ttl:0, 
-                        //         i18n: settingsLinker,
-                        //         template: '<small>{{\'CONVERSATION.WARN.RECIPIENTS_MISSING_OKAY\'|cmTranslate}}</small>'+
-                        //                   '<i ng-click="conversation.solitary = !conversation.solitary" ng-class="{\'cm-checkbox\':!conversation.solitary, \'cm-checkbox-right\':conversation.solitary}" class="fa cm-ci-color ml15" data-qa="checkbox-dont-ask-me-again"></i>',
-                        //         templateScope: $scope
-                        //     }
-                        // );
-                        
                         cmModal.confirm({
                             title:  'CONVERSATION.WARN.RECIPIENTS_MISSING',
-                            text:   'CONVERSATION.CONFIRM.RECIPIENTS_MISSING',
+                            text:   'CONVERSATION.CONFIRM.RECIPIENTS_MISSING'
                         })
                         .then(function(){
                             $scope.conversation.solitary = true

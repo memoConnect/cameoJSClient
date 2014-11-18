@@ -8,7 +8,7 @@ angular.module('cmUi').directive('cmBack',[
             scope: {
                 pageTitle: '=pageTitle'
             },
-            template: '<div class="back-wrap" ng-click="goBack()">'+
+            template: '<div class="back-wrap" ng-click="goBack()" cm-reactive>'+
                         '<i class="fa with-response cm-left" ng-show="isVisible"></i>'+
                         '<span ng-if="pageTitle">{{pageTitle | cmTranslate}}</span>'+
                       '</div>',

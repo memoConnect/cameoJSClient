@@ -49,7 +49,7 @@
           "TIMEOUT" : "Time out - please try again.",
           "VERIFY" : "Linking failed - please try again."
         },
-        "EXPLANATION" : "To read your encrypted messages completed as {{identity}} on other devices, please link the local cameoKey to all other keys first.",
+        "EXPLANATION" : "TODO: To read your encrypted messages completed as {{identity}} on other devices, please link the local cameoKey to all other keys first.",
         "MODAL" : {
           "SUCCESS" : "You have successfully linked your cameoKeys.",
           "CANCELED" : "Linking was canceled."
@@ -271,6 +271,10 @@
       "NOTICE" : "To use this feature please register at cameoNet.",
       "REGISTRATION" : "Register now",
       "LATER" : "Later"
+    },
+    "EXIT": {
+      "HEADER": "Exit App",
+      "TEXT": "Do you really want to leave the app?"
     }
   },
   "NAVIGATION" : {
@@ -304,6 +308,11 @@
       "TEXT_2" : "Attention: This is the first beta version!",
       "TEXT_1" : "<span class='cm-ci-color'>cameoNet</span> is an open source messenger that makes  end-to-end encryption easy for safe, private and business communication.",
       "TEXT_5" : "We are happy when you post us any error or improvement on http://support.cameonet.de<br> Thank you! Your cameoNet-Team."
+    },
+    "DOWNLOAD": {
+      "HEADER": "App Download",
+      "SUB_TEXT": "Welcome to cameoNet! <br> There is also an App for your device. We recommend to download this App and go on there.",
+      "SKIP_TEXT": "No thanks, I want to go on in this browser."
     },
     "KEYINFO" : {
       "SKIP_TEXT" : "Skip",
@@ -491,7 +500,8 @@
       "CITY" : "City"
     },
     "FOOTER" : {
-      "SAVE" : "Save"
+      "SAVE" : "Save",
+      "BACK": "Done"
     },
     "INFO" : {
       "SELECT" : {
@@ -795,6 +805,17 @@
     }
   },
   "PURL" : {
-    "SIGN_IN" : "Register"
-  }
+    "SIGN_IN" : "Register",
+    "TO_APP": "Open App"
+  },
+    "FILE": {
+        "UPLOAD": {
+          "QUOTA": {
+            "EXCEEDED": "Not enough space! <br> The file you want to upload has{{fileSize | cmBytesHumanReadable}}.<br>You have only {{quotaLeft | cmBytesHumanReadable}} left ( total: {{totalQuota | cmBytesHumanReadable}})."
+          },
+          "FILESIZE": {
+            "EXCEEDED": "The maximum file size has been exceeded.<br> Your file has <strong>{{fileSize | cmBytesHumanReadable}}</strong> bytes. Maximum file size is <strong>{{maxFileSize | cmBytesHumanReadable}}</strong>."
+          }
+        }
+    }
 }

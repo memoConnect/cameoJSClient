@@ -2,13 +2,18 @@ module.exports = function(grunt, options){
 
     grunt.loadNpmTasks('grunt-contrib-watch');
 
+    //grunt.registerTask('app:watcher', [
+    //    'app:deploy-without-template',
+    //    'cockpit:deploy-without-template',
+    //
+    //    'app:gen-all-templates',
+    //
+    //    'concurrent:app'
+    //]);
+
     grunt.registerTask('app:watcher', [
-        'app:deploy-without-template',
-        'cockpit:deploy-without-template',
-
-        'app:gen-all-templates',
-
-        'concurrent:app'
+        'app:to-dist',
+        'watch:app'
     ]);
 
     return {
@@ -26,11 +31,25 @@ module.exports = function(grunt, options){
                 }
             },
             watch: {
-                'app-other':{
+                'app': {
                     files: [
                         'config/*.json',
                         'resource/templates/**/*',
-                        'app/**/*.html'
+                        'app/**/*',
+                        'core/**/*'
+                    ],
+                    tasks: [
+                        'app:to-dist'
+                    ]
+                },
+                'app-other':{
+                    files: [
+                        'config/*.json',
+                        'core/webworker/*',
+                        'resource/templates/**/*',
+                        'app/**/*.html',
+                        'core/webworker/*',
+                        'core/*.html'
                     ],
                     tasks: [
                         'app:gen-all-templates'
@@ -54,6 +73,7 @@ module.exports = function(grunt, options){
                         'app/routes/**/*',
                         'app/comps/**/*',
                         'app/widgets/**/*'
+
                     ],
                     tasks: [
                         'app:packages'

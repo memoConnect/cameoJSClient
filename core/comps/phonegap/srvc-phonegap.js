@@ -2,19 +2,19 @@
 
 angular.module('cmPhonegap').service('cmPhonegap', [
     'cmLogger',
-    '$q', '$document', '$phonegapCameoConfig', '$navigator',
+    '$q', '$document', '$phonegapCameoConfig', '$navigator', '$rootScope',
     function (cmLogger,
-              $q, $document, $phonegapCameoConfig, $navigator) {
+              $q, $document, $phonegapCameoConfig, $navigator, $rootScope) {
 
         var isReady = $q.defer();
 
         var self = {
             isReady: function(callback){
-                if(typeof $phonegapCameoConfig == 'undefined'){
+                if($phonegapCameoConfig == 'undefined'){
                     return false;
                 }
 
-                cmLogger.info('cmPhonegap.isReady? '+$phonegapCameoConfig.deviceReady)
+                //cmLogger.info('cmPhonegap.isReady? '+$phonegapCameoConfig.deviceReady)
 
                 // if config doesn't get device ready watch again
                 if(!$phonegapCameoConfig.deviceReady){
@@ -36,11 +36,21 @@ angular.module('cmPhonegap').service('cmPhonegap', [
                 return false;
             },
             initCloseApp: function(){
-                return false;
-
-                $document[0].addEventListener('backbutton', function(e) {
-                    $navigator.app.exitApp();
-                });
+                if($document.length > 0 && 'addEventListener' in $document[0]) {
+                    $document[0].addEventListener('backbutton', function (e) {
+                        if ($rootScope.urlHistory.length == 0) {
+                            cmModal.confirm({
+                                title: 'MODAL.EXIT.HEADER',
+                                text: 'MODAL.EXIT.TEXT'
+                            })
+                            .then(function() {
+                                $navigator.app.exitApp();
+                            });
+                        } else {
+                            $rootScope.goBack();
+                        }
+                    });
+                }
             }
         };
 
