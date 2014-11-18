@@ -8,6 +8,7 @@
 
     <link rel="stylesheet" href="style.<%= currentVersion %>.css">
     <script type="text/javascript" src="vendor.<%= currentVersion %>.js"></script>
+    <script type="text/javascript" src="cameo.<%= currentVersion %>.js"></script>
 
     <style>
         html{background:none !important;font-size:16px}
@@ -44,61 +45,24 @@
         }
 
         /* reactive */
-        .cm-re-header {background:#000;height:4rem;width:32rem;position:relative;color:#fff}
-        .cm-re-header .icon-list{position:absolute;right:0;top:0}
-        .cm-re-header .icon-list i{width:4rem;height:4rem;text-align:center;line-height:4rem;font-size:3rem}
-        .cm-re-header-sub{background:#EDEDED;height:4rem;width:32rem;position:relative;color:#4F4F4F}
-        .cm-re-header-sub div{display:inline-block;width:50%;text-align:center;line-height:4rem}
-        .cm-re-header-sub div.is-active{
+        .cm-demo-header {background:#000;height:4rem;width:32rem;position:relative;color:#fff}
+        .cm-demo-header .icon-list{position:absolute;right:0;top:0}
+        .cm-demo-header .icon-list i{width:4rem;height:4rem;text-align:center;line-height:4rem;font-size:3rem}
+        .cm-demo-default-pages{background:#EDEDED;height:4rem;width:32rem;position:relative;color:#4F4F4F}
+        .cm-demo-default-pages div{display:inline-block;width:50%;text-align:center;line-height:4rem}
+        .cm-demo-default-pages div.is-active{
             -webkit-box-shadow: inset 0px -10px 0px 0px #555555;
             -moz-box-shadow: inset 0px -10px 0px 0px #555555;
             box-shadow: inset 0px -10px 0px 0px #555555;
         }
-        .cm-re-body {width:32rem;color:#4F4F4F}
-        .cm-re-body cm-any-tag{display:block}
-        .cm-re-body cm-any-tag > *, .cm-re-body li .icon-list > *{vertical-align:top;}
-        .cm-re-body cm-avatar{display:inline-block;width:4rem;height:4rem;background:#000}
-        .cm-re-body span{display:inline-block;line-height:4rem;}
+        .cm-demo-theme {width:32rem;color:#4F4F4F}
+        .cm-demo-theme cm-any-tag{display:block}
+        .cm-demo-theme cm-any-tag > *, .cm-demo-theme li .icon-list > *{vertical-align:top;}
+        .cm-demo-theme cm-avatar{display:inline-block;width:4rem;height:4rem;background:#000}
+        .cm-demo-theme span{display:inline-block;line-height:4rem;}
 
-        .cm-re-footer {background:#555;height:4rem;width:32rem;color:#fff}
-        .cm-re-footer button{height:4rem;display:block;width:100%}
-        .cm-re-footer-dark {background:#000;height:4rem;width:32rem;color:#fff}
-        .cm-re-footer-dark button{height:4rem;display:block;width:100%}
-
-        [cm-reactive]{
-            cursor:pointer;
-            -webkit-transition: background 0.15s ease-in-out; /* Firefox */
-            -moz-transition: background 0.15s ease-in-out; /* WebKit */
-            -o-transition: background 0.15s ease-in-out; /* Opera */
-            transition: background 0.15s ease-in-out; /* Standard */
-        }
-        [cm-reactive='dark']
-            {background:#000}
-        [cm-reactive='dark'].is-hover,[cm-reactive='dark'].is-touched
-            {background:#555555}
-        [cm-reactive='dark'].is-clicked
-            {background:#8D8D8D}
-
-        [cm-reactive='light']
-            {background:#FFF}
-        [cm-reactive='light'].is-hover,[cm-reactive='light'].is-touched
-            {background:#EDEDED}
-        [cm-reactive='light'].is-clicked
-            {background:#DCDCDC}
-
-        [cm-reactive='light-grey']
-            {background:#ECECEC}
-        [cm-reactive='light-grey'].is-hover,[cm-reactive='light-grey'].is-touched
-            {background:#DBDBDB}
-        [cm-reactive='light-grey'].is-clicked
-            {background:#BFBFBF}
-
-        [cm-reactive='grey']
-            {background:#555555}
-        [cm-reactive='grey'].is-hover,[cm-reactive='grey'].is-touched
-            {background:#8D8D8D}
-        [cm-reactive='grey'].is-clicked
-            {background:#A0A0A0}
+        .cm-demo-footer {height:4rem;width:32rem;color:#fff}
+        .cm-demo-footer button{height:4rem;display:block;width:100%}
     </style>
 </head>
 <body ng-app="icons" ng-controller="ctrl">
@@ -170,9 +134,9 @@
 <section ng-if="active == 'emojis'">
     <h1><span class="anchor"></span>emojis</h1>
 
-    <div ng-repeat="(index,mainCat) in Object.keys(emojis)" class="maincat">
+    <div ng-repeat="(index,mainCat) in getKeys(emojis)" class="maincat">
         <h3 ng-if="mainCat">{{mainCat}}</h3>
-        <div ng-repeat="(index,subCat) in Object.keys(emojis[mainCat])" class="subcat">
+        <div ng-repeat="(index,subCat) in getKeys(emojis[mainCat])" class="subcat">
             <h3 ng-if="subCat">{{subCat}}</h3>
             <figure ng-repeat="icon in emojis[mainCat][subCat]" class="emoji-figure">
                 <i class="emoji emoji_{{icon | clearClassName}}"></i><figcaption ng-show="withFigcaption">{{icon | clearClassName}}</figcaption>
@@ -186,28 +150,28 @@
 
     <h2>header</h2>
 
-    <div class="cm-re-header">
+    <div class="cm-demo-header">
         <div class="icon-list">
-            <i class="fa cm-new-contact" cm-reactive="dark"></i><i class="fa cm-search" cm-reactive="dark"></i><i class="fa cm-menu" cm-reactive="dark"></i>
+            <i class="fa cm-new-contact" cm-reactive ng-click="testClick('new contact')"></i><i class="fa cm-search" cm-reactive ng-click="testClick('search')"></i><i class="fa cm-menu" cm-reactive ng-click="testClick('menu')"></i>
         </div>
     </div>
 
     <h2>default pages</h2>
-    <div class="cm-re-header-sub">
-        <div cm-reactive="light-grey"><i class="fa cm-talk"></i> Talks</div><div cm-reactive="light-grey" class="is-active"><i class="fa cm-person"></i> Kontakte</div>
+    <div class="cm-demo-default-pages">
+        <div cm-reactive ng-click="testClick('goTo Talks')"><i class="fa cm-talk"></i> Talks</div><div cm-reactive class="is-active" ng-click="testClick('goTo Contact')"><i class="fa cm-person"></i> Kontakte</div>
     </div>
 
     <h2>list items</h2>
 
-    <div class="cm-re-body theme-a">
+    <div class="cm-demo-theme theme-a">
         <ul>
             <li>
-                <cm-any-tag cm-reactive="light">
+                <cm-any-tag cm-reactive ng-click="testClick('open Item')">
                    <cm-avatar></cm-avatar>
                    <span>Text</span>
                 </cm-any-tag>
                 <div class="icon-list">
-                    <i class="fa cm-new-talk" cm-reactive="light"></i>
+                    <i class="fa cm-new-talk" cm-reactive ng-click="testClick('goTo new Talk')"></i>
                 </div>
             </li>
         </ul>
@@ -215,15 +179,12 @@
 
     <h2>footer</h2>
 
-    <div class="cm-re-footer">
-        <button cm-reactive="grey">
+    <div class="cm-demo-footer">
+        <button cm-reactive class="cm-btn-grey" ng-click="testClick('close grey')">
             Close
             <i class="fa cm-close"></i>
         </button>
-    </div>
-
-    <div class="cm-re-footer-dark">
-        <button cm-reactive="dark">
+        <button cm-reactive class="cm-btn-black" ng-click="testClick('close black')">
             Close
             <i class="fa cm-close"></i>
         </button>
@@ -262,12 +223,15 @@
     }
 
     angular
-    .module('icons',['emoji'])
+    .module('icons',['ngTouch','cmConfig','cmUi'])
 
     .controller('ctrl',function ($scope, emoji){
-        $scope.active = location.hash != '' ? location.hash.replace('#','') : 'cameofont';
+        $scope.active = location.hash != '' ? location.hash.replace('#/','') : 'cameofont';
+
         $scope.baselineIcon = 'cm-checkbox-wrong';
-        $scope.Object = Object;
+        $scope.getKeys = function(object){
+            return Object.keys(object);
+        };
 
         $scope.icons = [
             {title:'ci icons',css:'cm-logo cm-logo-c cm-logo-a cm-logo-m cm-logo-e cm-logo-o cm-logo-net cm-rhino-bubble-glyph cm-rhino-positive cm-beta cm-cameo-beta'},
@@ -298,6 +262,10 @@
         $scope.setActive = function(section){
             $scope.active = section;
             location.hash = section;
+        };
+
+        $scope.testClick = function(where){
+            console.log('ngClick',where);
         };
     })
 
@@ -373,73 +341,6 @@
                     }
                 }
             })
-
-    .directive('cmReactive',
-        function ($timeout){
-            return {
-                restrict: 'A',
-                controller: function($scope, $element){
-                    var isTouch = false;
-
-                    function isValidTouch(evt){
-
-                        function getOffsetSum(elem) {
-                            var top=0, left=0;
-                            while(elem) {
-                                top = top + parseInt(elem.offsetTop);
-                                left = left + parseInt(elem.offsetLeft);
-                                elem = elem.offsetParent;
-                            }
-                            return {top: top, left: left};
-                        }
-
-                        var offset = getOffsetSum($element[0]);
-
-                        if(evt.changedTouches[0].pageY <= (offset.top + $element[0].offsetHeight) && evt.changedTouches[0].pageY > offset.top
-                            && evt.changedTouches[0].pageX <= (offset.left + $element[0].offsetWidth) && evt.changedTouches[0].pageX > offset.left
-                        ){
-                            return true;
-                        }
-
-                        return false;
-                    }
-
-                    $element.on('mouseenter', function(){
-                        $element.addClass('is-hover');
-                    });
-
-                    $element.on('mouseleave', function(){
-                        $element.removeClass('is-hover');
-                    });
-
-                    $element.on('click',function(){
-                        if(!isTouch){
-                            $element.addClass('is-clicked');
-                            $timeout(function(){$element.removeClass('is-clicked')},250)
-                        }
-                    });
-
-                    $element.on('touchstart',function(){
-                        isTouch = true;
-                        $element.removeClass('is-hover');
-                    });
-
-                    $element.on('touchend',function(evt){
-                        evt.preventDefault();
-
-                        $element.removeClass('is-hover');
-
-                        if(isValidTouch(evt)){
-                            $element.addClass('is-touched');
-                            $timeout(function(){$element.removeClass('is-touched')},250)
-                        }
-
-                        isTouch = false;
-                    });
-                }
-            }
-        }
-    );
 </script>
 </body>
 </html>

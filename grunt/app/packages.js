@@ -105,7 +105,7 @@ module.exports = function(grunt, options){
                         'core/vendor/!(angular)/**/*.js',
                         'core/vendor/angular/base/angular.js',
                         'core/vendor/angular/base/angular-*.js',
-                        'core/vendor/angular/!(base)/*.js'
+                        'core/vendor/angular/!(base|deprecated_)/*.js'
                     ],
                     dest: 'dist/app/vendor.' + options.globalCameoBuildConfig.config.version + '.js'
                 },

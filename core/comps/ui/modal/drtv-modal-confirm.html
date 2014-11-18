@@ -14,6 +14,7 @@
                 class       = "cm-btn-grey cm-white-border-right dib w50"
                 data-qa     = "btn-cancel"
                 ng-click    = "cancel()"
+                cm-reactive
                 >
             {{ (labelCancel || 'MODAL.LABEL.CANCEL') | cmTranslate }}
             <i class="fa cm-checkbox-wrong"></i>
@@ -22,6 +23,7 @@
                 class       = "cm-btn-grey dib w50"
                 data-qa     = "btn-confirm"
                 ng-click    =   "confirm()"
+                cm-reactive
                 >
             {{ (labelOkay || 'MODAL.LABEL.OK') | cmTranslate }}
             <i class="fa cm-checker"></i>

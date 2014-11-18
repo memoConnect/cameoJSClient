@@ -18,8 +18,11 @@ angular.module('cmDesktopWidgets').directive('cmDesktopWidgetIdentityList', [
             templateUrl: 'widgets/identity/wdgt-desktop-identity-list.html',
             controller: function ($scope) {
                 $scope.showLoader = false;
-                $scope.identities = cmUserModel.data.identities;
 
+                $scope.identities = cmUserModel.data.identities || [];
+                cmUserModel.on('update:finished', function(){
+                    $scope.identities = cmUserModel.data.identities;
+                });
 
                 $scope.switchToIdentity = function(identity){
                     cmUserModel.switchToIdentity(identity);

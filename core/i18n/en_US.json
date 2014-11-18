@@ -271,6 +271,10 @@
       "NOTICE" : "To use this feature please register at cameoNet.",
       "REGISTRATION" : "Register now",
       "LATER" : "Later"
+    },
+    "EXIT": {
+      "HEADER": "Leave App",
+      "TEXT": "Do you really want to leave the app?"
     }
   },
   "NAVIGATION" : {
@@ -306,9 +310,9 @@
       "TEXT_5" : "We are happy when you post us any error or improvement on http://support.cameonet.de<br> Thank you! Your cameoNet-Team."
     },
     "DOWNLOAD": {
-      "HEADER": "@todo App Download",
-      "SUB_TEXT": "@todo Herzlich Willkommen bei cameoNet. Sie haben auf einem mobilen Browser registriert. Für Ihr Gerät gibt es eine App. Laden Sie sich diese herrunter und fahren Sie dort fort.",
-      "SKIP_TEXT": "@todo Keine App herrunterladen"
+      "HEADER": "App Download",
+      "SUB_TEXT": "Welcome to cameoNet! <br> There is an App for your device. You can download it below.",
+      "SKIP_TEXT": "No thanks, I want to go on in my browser."
     },
     "KEYINFO" : {
       "SKIP_TEXT" : "Skip",
@@ -495,7 +499,8 @@
       "CITY" : "City"
     },
     "FOOTER" : {
-      "SAVE" : "Save"
+      "SAVE" : "Save",
+      "BACK": "Done"
     },
     "INFO" : {
       "SELECT" : {
@@ -799,15 +804,16 @@
     }
   },
   "PURL" : {
-    "SIGN_IN" : "Register"
+    "SIGN_IN" : "Register",
+    "TO_APP": "Open in app"
   },
     "FILE": {
         "UPLOAD": {
           "QUOTA": {
-            "EXCEEDED": "@todo FILE.UPLOAD.QUOTA.EXCEEDED <br> {{totalQuota | cmBytesHumanReadable}} <br> {{quotaLeft | cmBytesHumanReadable}} <br> {{fileSize | cmBytesHumanReadable}}"
+            "EXCEEDED": "Account quota exceeded! <br> The file you want to upload has{{fileSize | cmBytesHumanReadable}}.<br>You have only {{quotaLeft | cmBytesHumanReadable}} left ( total: {{totalQuota | cmBytesHumanReadable}})."
           },
           "FILESIZE": {
-            "EXCEEDED": "@todo The maximum file size of <strong>{{maxFileSize | cmBytesHumanReadable}}</strong> has been exceeded. Your file has <strong>{{fileSize | cmBytesHumanReadable}}</strong> bytes."
+            "EXCEEDED": "The file is tool large.<br> Your file has <strong>{{fileSize | cmBytesHumanReadable}}</strong> bytes. The maximum file size is <strong>{{maxFileSize | cmBytesHumanReadable}}</strong>."
           }
         }
     }

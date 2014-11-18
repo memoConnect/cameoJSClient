@@ -68,23 +68,21 @@ angular.module('cmCore').service('cmSystemCheck', [
          */
         this.checkClientVersion = function(forceRedirect){
             //cmLogger.debug('cmSystemCheck.checkClientVersion');
-
             var deferred = $q.defer();
-
             if('clientVersionCheck' in $rootScope){
                 if($rootScope.clientVersionCheck == false){
                     this.trigger('check:failed', {forceRedirect:forceRedirect});
-                    return deferred.reject();
+                    deferred.reject();
                 } else {
-                    return deferred.resolve();
+                    deferred.resolve();
                 }
             } else {
                 this.getBrowserInfo().then(
                     function(){
-                        return self.checkClientVersion(forceRedirect);
+                        self.checkClientVersion(forceRedirect);
                     },
                     function(){
-                        return deferred.resolve();
+                        deferred.resolve();
                     }
                 )
             }

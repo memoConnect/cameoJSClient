@@ -247,7 +247,7 @@ angular.module('cmCore')
                     try{
                         binary+= cmFilesAdapter.base64ToBinary(chunk.raw);
                     } catch(e){
-                        cmLogger.debug(e);
+                        cmLogger.debug('FileModel Chunk Error',e);
                     }
                 });
 

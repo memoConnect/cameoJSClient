@@ -22,50 +22,28 @@
 
     <hr class="margin-small" />
 
-    <label class="content">{{'ACCOUNT.PLACEHOLDER.PHONENUMBER'|cmTranslate}}</label>
-    <cm-multi-input cm-collection="account.phoneNumbers" class="content">
-        <ng-form name="formPhone">
-            <div class="cm-input-ctn with-chooser with-inside-icon">
-                <input
-                    tabindex="2" data-qa="input-phoneNumber"
-                    type="text" name="phoneNumber" ng-model="item.value" cm-validate-phone cm-adaptive-change />
-                <i class="fa cm-write"></i>
-            </div>
-            <!--<div cm-type-chooser cm-choose-value-to="item"></div>-->
-            <cm-info-bubble class="cm-alert" ng-show="formPhone.phoneNumber.$dirty && formPhone.phoneNumber.$invalid">
-                <div ng-show="formPhone.phoneNumber.$invalid" data-qa="form-error-phoneNumber-invalid">
-                    <i class="fa cm-info"></i> {{'ACCOUNT.INFO.INVALID.PHONENUMBER'|cmTranslate}}
-                </div>
-            </cm-info-bubble>
-        </ng-form>
-    </cm-multi-input>
+    <cm-form-phonenumber
+        ng-model="formData.phoneNumber"
+        cm-tabindex="2"
+        cm-label="ACCOUNT.PLACEHOLDER.PHONENUMBER"
+        cm-info="ACCOUNT.INFO.INVALID.PHONENUMBER"
+    ></cm-form-phonenumber>
 
     <hr class="margin-small" />
 
-    <label class="content">{{'ACCOUNT.PLACEHOLDER.EMAIL'|cmTranslate}}</label>
-    <cm-multi-input cm-collection="account.emails" class="content">
-        <ng-form name="formEmail">
-            <div class="cm-input-ctn with-chooser with-inside-icon">
-                <input
-                    tabindex="3" data-qa="input-email"
-                    name="email" ng-model="item.value" cm-validate-email cm-adaptive-change />
-                <i class="fa cm-write"></i>
-            </div>
-            <!--<div cm-type-chooser cm-choose-value-to="item"></div>-->
-            <cm-info-bubble class="cm-alert" ng-show="formEmail.email.$dirty && formEmail.email.$invalid">
-                <div ng-show="formEmail.email.$invalid" data-qa="form-error-email-invalid">
-                    <i class="fa cm-info"></i> {{'ACCOUNT.INFO.INVALID.EMAIL'|cmTranslate}}
-                </div>
-            </cm-info-bubble>
-        </ng-form>
-    </cm-multi-input>
+    <cm-form-email
+        ng-model="formData.email"
+        cm-tabindex="3"
+        cm-label="ACCOUNT.PLACEHOLDER.EMAIL"
+        cm-info="ACCOUNT.INFO.INVALID.EMAIL"
+    ></cm-form-email>
 
     <ul class="border-top border-bottom mt5">
         <li class="no-border">
-            <span class="item" ng-click="togglePasswordChange()" data-qa="btn-passwordChange" >
+            <span class="item" ng-click="togglePasswordChange()" data-qa="btn-passwordChange" cm-reactive>
             {{'ACCOUNT.PLACEHOLDER.PASSWORD_CHANGE'|cmTranslate}}
             </span>
-            <div class="short-links" ng-click="togglePasswordChange()">
+            <div class="short-links without-bg" ng-click="togglePasswordChange()">
                 <i class="fa" ng-class="{'cm-down':!showPasswordChange,'cm-up':showPasswordChange}"></i>
             </div>
             <section ng-show="showPasswordChange">
@@ -76,7 +54,7 @@
                     <div class="cm-input-ctn with-inside-icon">
                         <input
                                 tabindex="4" data-qa="input-oldPassword"
-                                type="password" name="oldPassword" ng-model="account.oldPassword" />
+                                type="password" name="oldPassword" ng-model="formData.oldPassword" />
                         <i class="fa cm-write"></i>
                     </div>
                     <cm-info-bubble class="cm-alert"
@@ -92,14 +70,14 @@
 
                 <hr class="margin-small" />
 
-                <cm-password ng-model="account.password" cm-with-stars="false" cm-tabindex="5"></cm-password>
+                <cm-password ng-model="formData.password" cm-with-stars="false" cm-tabindex="5"></cm-password>
             </section>
         </li>
     </ul>
 </form>
 
 <cm-footer>
-    <button class="cm-btn-grey" ng-click="saveAccount()" data-qa="btn-footer">
+    <button class="cm-btn-grey" ng-click="saveAccount()" data-qa="btn-footer" cm-reactive>
         <span ng-show="!showLoader && !isPristine" data-qa="btn-saveAccount">
             {{'ACCOUNT.FOOTER.SAVE'|cmTranslate}}
             <i class="fa cm-checker"></i>

@@ -53,8 +53,7 @@ angular.module('cmUi')
             },
 
             link: function(scope, element, attrs, controller, transclude){
-
-                scope.closeBtn = attrs.cmCloseBtn || true;
+                scope.closeBtn = attrs.cmCloseBtn ? scope.$eval(attrs.cmCloseBtn) : true;
                 scope.footerLabel = attrs.cmFooterLabel || undefined;
                 scope.footerIcon = attrs.cmFooterIcon || undefined;
 

@@ -2,16 +2,28 @@
   "appProtocol": "cameonet",
   "appLinks":{
     "android": {
-      "href": "https://market.android.com/details?id=de.cameonet",
-      "icon": "gfx/stores/172x60_android_store.png"
+      "href": "https://play.google.com/store/apps/details?id=de.cameonet",
+      "icon": "gfx/app_icons/300x98_android_store.png",
+      "direct": {
+        "href": "<%= dlPath %>#apk",
+        "icon": "gfx/app_icons/300x98_android_apk_download.png"
+      }
     },
     "ios": {
-      "href": "",
-      "icon": "gfx/stores/172x60_apple_store.png"
+      "href": "https://itunes.apple.com/us/app/cameonet/id923287434",
+      "icon": "gfx/app_icons/300x98_apple_store.png",
+      "direct": {
+        "href": "",
+        "icon": "gfx/app_icons/300x98_apple_ipa_download.png"
+      }
     },
     "winphone": {
       "href": "",
-      "icon": "gfx/stores/172x60_windows_store.png"
+      "icon": "gfx/app_icons/300x98_windows_store.png",
+      "direct": {
+        "href": "",
+        "icon": "gfx/app_icons/300x98_windows_xpa_download.png"
+      }
     }
   }
 }

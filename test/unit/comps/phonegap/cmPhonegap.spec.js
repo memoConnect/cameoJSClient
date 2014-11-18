@@ -6,7 +6,7 @@ describe('cmPhonegap default none app', function() {
     beforeEach(function () {
         module('cmPhonegap', function ($provide) {
             $provide.factory('$phonegapCameoConfig', function () {
-                return undefined
+                return 'undefined'
             })
         })
     })

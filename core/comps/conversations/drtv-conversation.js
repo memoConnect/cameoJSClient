@@ -114,7 +114,7 @@ angular.module('cmConversations')
                      * after success sendMessage
                      */
                     
-                    var deferred = $q.defer()
+                    var deferred = $q.defer();
                    
                     $rootScope.$broadcast('cmFilesCheckFiles', {
                         passphrase: passphrase,

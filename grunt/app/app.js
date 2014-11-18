@@ -58,11 +58,18 @@ module.exports = function(grunt, options) {
                             flatten: true,
                             cwd: 'core/css/fonts/',
                             src: ['**'],
-                            dest: 'dist/app/css/fonts'
+                            dest: 'dist/app/css/fonts/'
                         },
                         {
                             src: 'core/favicon.ico',
                             dest: 'dist/app/favicon.ico'
+                        },
+                        {
+                            expand: true,
+                            flatten: false,
+                            cwd: 'resource/download/gfx/',
+                            src: ['**'],
+                            dest: 'dist/app/gfx/'
                         }
                     ]
                 }

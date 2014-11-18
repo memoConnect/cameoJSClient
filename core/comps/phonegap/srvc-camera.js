@@ -127,12 +127,12 @@ angular.module('cmPhonegap')
             plugin: null,
 
             init: function () {
-                if (typeof $phonegapCameoConfig == 'undefined'){
+                if ($phonegapCameoConfig == 'undefined'){
                     return false;
                 }
 
                 cmPhonegap.isReady(function () {
-                    if(typeof $navigator == 'undefined'
+                    if($navigator == 'undefined'
                     || !('camera' in $navigator)) {
                         //cmLogger.info('CAMERA PLUGIN IS MISSING');
                         return false;

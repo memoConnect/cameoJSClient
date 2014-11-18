@@ -3,7 +3,7 @@
 angular.module('cameoClient', [
     'ngRoute',
     'ngCookies',
-    'swipe',
+    'ngTouch',
     'angular-loading-bar',
     // cameo dependencies
     'cmConfig',
@@ -221,10 +221,6 @@ angular.module('cameoClient', [
         });
     }
 ])
-.run(function() {
-    // disabled the 3000 seconds delay on click when touch ;)
-    FastClick.attach(document.body);
-})
 .run(function(){
     // start entropy collection for random number generator
     sjcl.random.startCollectors();
@@ -239,7 +235,7 @@ angular.module('cameoClient', [
     'cmUserModel',
     function($rootScope, $location,
              cmUserModel){
-        $rootScope.$on('$routeChangeStart', function(){
+        $rootScope.$on('$routeChangeSuccess', function(){
 
             // expections
             var path_regex = /^(\/login|\/registration|\/systemcheck|\/terms|\/disclaimer|\/404|\/version|\/purl\/[a-zA-Z0-9]{1,})$/;
@@ -247,11 +243,11 @@ angular.module('cameoClient', [
             // exists none token then otherwise to login
             if (cmUserModel.isAuth() === false){
                 if (!path_regex.test(path)) {
-                    $location.path('/login');
+                    $rootScope.goTo('/login',true);
                 }
             // when token exists
             } else if ((path == '/login' || path == '/registration') && cmUserModel.isGuest() !== true) {
-                $location.path('/talks');
+                $rootScope.goTo('/talks',true);
             // logout route
             } else if (path == '/logout'){
                 cmUserModel.doLogout(true,'app.js logout-route');

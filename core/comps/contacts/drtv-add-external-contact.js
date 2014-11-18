@@ -5,9 +5,9 @@ angular.module('cmContacts').directive('cmAddExternalContact',[
     'cmContactsModel',
     'cmLogger',
     'cmNotify',
-    '$location',
+    '$rootScope',
     
-    function (cmContactsModel, cmLogger, cmNotify, $location){
+    function (cmContactsModel, cmLogger, cmNotify, $rootScope){
 
         function fulltrim(string){
             return String(string||'').replace(/(?:(?:^|\n)\s+|\s+(?:$|\n))/g,'').replace(/\s+/g,'');
@@ -158,7 +158,7 @@ angular.module('cmContacts').directive('cmAddExternalContact',[
                         .addContact(data)
                         .then(
                         function(){
-                            $location.path('/contacts/all');
+                            $rootScope.goTo('/contacts/all');
                         },
                         function(){
                             cmNotify.error('DRTV.EXTERN_CONTACT.INFO.SAVE_FAIL', {ttl: 5000});

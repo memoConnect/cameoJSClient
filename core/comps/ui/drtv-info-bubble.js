@@ -11,8 +11,6 @@ angular.module('cmUi').directive('cmInfoBubble',[
                       '<i class="fa {{nose_icon}}"></i>',
 
             link: function(scope, element, attrs){
-
-
                 scope.nose_icon = 'cm-nose-up';
 
                 if(attrs.nosePos == 'bottom')

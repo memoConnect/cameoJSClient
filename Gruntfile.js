@@ -79,8 +79,17 @@ module.exports = function (grunt) {
                 break;
         }
 
-        // load static data
-        buildConfig.static = grunt.file.readJSON('./config/cameoBuildConfig-static.json');
+        // load static data and compile vars
+        buildConfig.static = JSON.parse(
+            grunt.template.process(
+                grunt.file.read('config/cameoBuildConfig-static.json'),
+                {
+                    data: {
+                        'dlPath': buildConfig.path.dl
+                    }
+                }
+            )
+        );
 
         //check whether apiUrl should be overwritten
         var apiUrl = grunt.option('apiUrl');

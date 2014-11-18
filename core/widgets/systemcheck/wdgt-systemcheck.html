@@ -1,17 +1,26 @@
 <h2>{{'SYSTEMCHECK.HEADLINE'|cmTranslate}}</h2>
 
-<h3 class="content" ng-class="{'cm-green':clientVersionCheck,'cm-orange':!clientVersionCheck}">{{'SYSTEMCHECK.CLIENTVERSION.HEADLINE'|cmTranslate}} <i class="fa" ng-class="{'cm-checker':clientVersionCheck,'cm-checkbox-wrong':!clientVersionCheck}"></i></h3>
+<h3 class="content" ng-class="{'cm-green':isClientUpToDate,'cm-orange':!isClientUpToDate}">{{'SYSTEMCHECK.CLIENTVERSION.HEADLINE'|cmTranslate}} <i class="fa" ng-class="{'cm-checker':isClientUpToDate,'cm-checkbox-wrong':!isClientUpToDate}"></i></h3>
 
 <article class="content">
     <cm-info-bubble nose-x="15%">
-        <section ng-if="!clientVersionCheck" ng-bind-html="'SYSTEMCHECK.CLIENTVERSION.TEXT_ERROR'| cmParse:{'translate':true} | cmTranslate:{'version':version} "></section>
-        <section ng-if="clientVersionCheck" ng-bind-html="'SYSTEMCHECK.CLIENTVERSION.TEXT_OK'| cmParse:{'translate':true} | cmTranslate:{'version':version}"></section>
+        <section ng-if="!isClientUpToDate" ng-bind-html="'SYSTEMCHECK.CLIENTVERSION.TEXT_ERROR'|cmParse:{data:{'version':version}} "></section>
+        <section ng-if="isClientUpToDate" ng-bind-html="'SYSTEMCHECK.CLIENTVERSION.TEXT_OK'|cmParse:{data:{'version':version}}"></section>
 
-        <section class="tac mt15" ng-if="(!clientVersionCheck && $scope.isApp && $scope.storeLink != '')">
-            <a href="{{storeLink}}"><img class="storeIcon" ng-src="{{icon}}" /></a>
-        </section>
     </cm-info-bubble>
 </article>
+
+<ul class="border-top mt15 no-border-bottom" ng-if="(!isClientUpToDate && isApp)">
+    <li ng-repeat="app in appLinks">
+        <span class="item tac without-height" cm-reactive ng-click="openExternalLink(app.href)">
+            <img ng-src="{{app.icon}}" />
+        </span>
+            <hr class="margin-small">
+        <span class="item tac without-height" ng-if="app.direct && app.direct.href != ''" cm-reactive ng-click="openExternalLink(app.direct.href)">
+            <img ng-src="{{app.direct.icon}}" />
+        </span>
+    </li>
+</ul>
 
 <hr />
 
