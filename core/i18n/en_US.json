@@ -273,8 +273,8 @@
       "LATER" : "Later"
     },
     "EXIT": {
-      "HEADER": "@todo Exit",
-      "TEXT": "@todo Do you really want to leave the app?"
+      "HEADER": "Exit App",
+      "TEXT": "Do you really want to leave the app?"
     }
   },
   "NAVIGATION" : {
@@ -805,7 +805,7 @@
   },
   "PURL" : {
     "SIGN_IN" : "Register",
-    "TO_APP": "@todo open in App"
+    "TO_APP": "Open App"
   },
     "FILE": {
         "UPLOAD": {

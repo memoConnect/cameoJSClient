@@ -212,7 +212,7 @@
 
     "PURL": {
         "SIGN_IN": "Registrieren",
-        "TO_APP": "@todo In App öffnen"
+        "TO_APP": "App öffnen"
     },
 
     "RECIPIENTS": {
@@ -781,8 +781,8 @@
             "FOOTER": "Neu verbinden"
         },
         "EXIT": {
-            "HEADER": "@todo App schließen",
-            "TEXT": "@todo Wollen Sie wirklich die App verlassen?"
+            "HEADER": "App schließen",
+            "TEXT": "Wollen Sie die App wirklich verlassen?"
         }
     },
 
