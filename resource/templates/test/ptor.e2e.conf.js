@@ -1,5 +1,6 @@
 exports.config = {
-    seleniumServerJar: '../test/lib/ptor/selenium-server-standalone-2.42.2.jar',
+    /* Chrome */
+    seleniumServerJar: '../test/lib/ptor/selenium-server-standalone-2.44.0.jar',
     seleniumPort: null,
     chromeDriver: '<%= chromeDriverPath %>',
     allScriptsTimeout: 30000,
@@ -11,6 +12,17 @@ exports.config = {
             'prefs': { 'intl.accept_languages': 'en' }
         }
     },
+
+    /* local IE */
+    //seleniumServerJar: '../test/lib/ptor/selenium-server-standalone-2.44.0.jar',
+    //allScriptsTimeout: 30000,
+    //chromeOnly: false,
+    //
+    //capabilities: {
+    //    'browserName': 'internet explorer',
+    //    'platform': 'ANY',
+    //    'version': '11'
+    //},
 
     onPrepare: function () {
         require('jasmine-reporters');
