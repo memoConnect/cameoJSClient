@@ -440,6 +440,31 @@ angular.module('cmConversations')
                 return this;
             };
 
+            this.loadLatestMessages = function(){
+                //cmLogger.debug('cmConversationModel.loadLatestMessages');
+
+                if(typeof this.lastMessage.created == 'number'){
+                    cmConversationsAdapter.getConversationMessages(this.id, null, null, this.lastMessage.created).then(
+                        function(data){
+
+                            self.state.set('loadedMessages');
+
+                            /**
+                             * Message Handling
+                             */
+                            if(typeof clearMessages !== 'undefined' && clearMessages !== false){
+                                self.messages.reset();
+                            }
+
+                            self.importData(data);
+                        }
+                    )
+                } else {
+                    this.update();
+                }
+
+            };
+
             /**
              * @param limit
              * @param offset
