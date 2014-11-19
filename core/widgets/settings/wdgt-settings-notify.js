@@ -51,7 +51,7 @@ angular.module('cmWidgets')
                 $scope.handleBrowserNotifications = function() {
                     var key = 'browserNotifications';
 
-                    if($scope.isApp() || $scope.changeBrowserNotifications)
+                    if($scope.isApp() || $scope.changeBrowserNotifications || !cmBrowserNotifications.checkBrowser())
                         return false;
 
                     $scope.changeBrowserNotifications = true;
@@ -72,7 +72,7 @@ angular.module('cmWidgets')
 
 
                 $scope.sendNotification = function(){
-                    cmBrowserNotifications.send($scope.notificationTitle);
+                    cmBrowserNotifications.show($scope.notificationTitle);
                 }
             }
         }

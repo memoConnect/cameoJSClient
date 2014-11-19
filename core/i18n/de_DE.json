@@ -836,6 +836,16 @@
         "ERROR": {
             "EMPTY_INPUT": "Eingabe ist leer!",
             "WRONG_INPUT": "Bitte überprüfen Sie Ihre Eingabe!"
+        },
+        "EVENTS": {
+            "NEW_MESSAGE": {
+                "TITLE": "Neue Nachricht",
+                "MSG": "Nachricht von {{sender}}"
+            },
+            "FRIEND_REQUEST": {
+                "TITLE": "neue Freundschaftsanfrage",
+                "MSG": "Freundschaftsanfrage von {{sender}}"
+            }
         }
     },
 

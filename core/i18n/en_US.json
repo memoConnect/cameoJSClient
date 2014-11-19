@@ -711,7 +711,17 @@
     "WELCOME" : {
       "SUBJECT" : "Welcome to cameoNet!",
       "MESSAGE" : "Hello, I am the cameoNet support. \n\nIf you have any questions or problems do not hesitate to reply on this message. You can also use our help system at http://support.cameonet.de,\n\nthe cameoNet team."
-    }
+    },
+      "EVENTS": {
+          "NEW_MESSAGE": {
+              "TITLE": "New Message",
+              "MSG": "Message from {{sender}}"
+          },
+          "FRIEND_REQUEST": {
+              "TITLE": "New Friend Request",
+              "MSG": "Friend request from {{sender}}"
+          }
+      }
   },
   "TALKS" : {
     "HEADING" : "Talks",

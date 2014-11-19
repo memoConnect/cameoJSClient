@@ -12,9 +12,10 @@ angular.module('cmContacts').service('cmContactsModel',[
     'cmObject',
     'cmLogger',
     'cmNotify',
+    'cmBrowserNotifications',
     '$q',
     '$rootScope',
-    function (cmFactory, cmUserModel, cmContactModel, cmContactsAdapter, cmIdentityFactory, cmFriendRequestModel, cmStateManagement, cmUtil, cmObject, cmLogger, cmNotify, $q, $rootScope){
+    function (cmFactory, cmUserModel, cmContactModel, cmContactsAdapter, cmIdentityFactory, cmFriendRequestModel, cmStateManagement, cmUtil, cmObject, cmLogger, cmNotify, cmBrowserNotifications, $q, $rootScope){
         var self = this,
             events = {};
 
@@ -279,8 +280,11 @@ angular.module('cmContacts').service('cmContactsModel',[
         });
 
         cmContactsAdapter.on('friendRequest:new', function(event, data){
-            if(data.to == cmUserModel.data.identity.id)
-                self.requests.create(data.friendRequest);
+            if(data.to == cmUserModel.data.identity.id){
+                var request = self.requests.create(data.friendRequest);
+
+                cmBrowserNotifications.showFriendRequest(request.identity);
+            }
         });
 
         cmContactsAdapter.on('friendRequest:accepted', function(event, data){
