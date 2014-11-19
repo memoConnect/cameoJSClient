@@ -77,8 +77,8 @@ angular.module('cmUi').directive('cmResizeTextarea',[
 
                     shadow = angular.element('<div class="textarea-shadow"></div>').css({
                         position: 'fixed',
-                        top: 0,//-10000+unit,
-                        left: 0,//-10000+unit,
+                        top: -10000+unit,
+                        left: -10000+unit,
 //                        top: 0,
 //                        left: 0,
                         width: width - parseInt(paddingLeft || 0) - parseInt(paddingRight || 0)+unit,
@@ -105,14 +105,15 @@ angular.module('cmUi').directive('cmResizeTextarea',[
                         for (var i = 0, r = ''; i < number; i++) r += string;
                         return r;
                     };
-
                     // set textarea value to shadow
                     var val = element.val().replace(/</g, '&lt;')
                         .replace(/>/g, '&gt;')
                         .replace(/&/g, '&amp;')
                         .replace(/\n$/, '<br/>&nbsp;')
                         .replace(/\n/g, '<br/>')
-                        .replace(/\s{2,}/g, function(space) { return times('&nbsp;', space.length - 1) + ' ' });
+                        .replace(/\s{2,}/g, function(space) {
+                            return times('&nbsp;', space.length - 1) + ' '
+                        });
                     shadow.html(val);
 
                     // on init get one row height
@@ -126,6 +127,7 @@ angular.module('cmUi').directive('cmResizeTextarea',[
                         shadowRowHeight = shadowHeight;
                         diffRowHeight = textAreaRowHeight-shadowHeight;
                     }
+
                     // handle textarea height
                     if(shadowRowHeight > 0) {
                         // one line
@@ -183,9 +185,6 @@ angular.module('cmUi').directive('cmResizeTextarea',[
                     textAreaRowHeight = element[0].offsetHeight;
 
                 // event binding
-                scope.$watch('text', function(newText){
-                    update(newText);
-                });
                 element.on('keyup', update);
                 element.on('redo', update);
                 element.on('undo', update);
@@ -221,6 +220,13 @@ angular.module('cmUi').directive('cmResizeTextarea',[
                         },50);
                     }
                 });
+
+                // init first row hack
+                element.val('&nbsp;');
+                update();
+                // clear because one row calced
+                element.val('');
+                update();
             }
         }
     }
