@@ -55,27 +55,30 @@ angular.module('cmUi').directive('cmResizeTextarea',[
             },
             link: function (scope, element, attrs) {
                 // vars
-                var paddingLeft = element.css('paddingLeft'),
-                    paddingRight = element.css('paddingRight'),
+                var paddingLeft, paddingRight,
                     maxRows = attrs.cmMaxRows || 2,
                     shadowRowHeight = 0,
                     textAreaRowHeight = 0,
                     diffRowHeight = 0,
                     unit = 'px',
-                    $shadow;
+                    shadow = null;
 
                 /**
                  * create shadow of textarea for calcing the rows
                  */
                 function createShadow(){
-                    var width = element[0].offsetWidth;
-                        if(width == 0)
-                            width = parseInt(element.css('width'));
 
-                    $shadow = angular.element('<div class="textarea-shadow"></div>').css({
+                    var paddginLef = element.css('paddingLeft'),
+                        paddingRight = element.css('paddingRight'),
+                        width = element[0].offsetWidth;
+
+                    if(width == 0)
+                        width = parseInt(element.css('width'));
+
+                    shadow = angular.element('<div class="textarea-shadow"></div>').css({
                         position: 'fixed',
-                        top: -10000+unit,
-                        left: -10000+unit,
+                        top: 0,//-10000+unit,
+                        left: 0,//-10000+unit,
 //                        top: 0,
 //                        left: 0,
                         width: width - parseInt(paddingLeft || 0) - parseInt(paddingRight || 0)+unit,
@@ -84,13 +87,19 @@ angular.module('cmUi').directive('cmResizeTextarea',[
                         'line-height': element.css('lineHeight'),
                         'word-wrap': 'break-word'
                     });
-                    element.after($shadow);
+                    element.after(shadow);
                 }
 
                 /**
                  * update for textarea input
                  */
                 function update(){
+
+                    if(shadow === null)
+                        createShadow();
+                    if (shadow === null)
+                        return;
+
                     // replace function for white spaces
                     var times = function(string, number){
                         for (var i = 0, r = ''; i < number; i++) r += string;
@@ -104,10 +113,10 @@ angular.module('cmUi').directive('cmResizeTextarea',[
                         .replace(/\n$/, '<br/>&nbsp;')
                         .replace(/\n/g, '<br/>')
                         .replace(/\s{2,}/g, function(space) { return times('&nbsp;', space.length - 1) + ' ' });
-                    $shadow.html(val);
+                    shadow.html(val);
 
                     // on init get one row height
-                    var shadowHeight = $shadow[0].offsetHeight,
+                    var shadowHeight = shadow[0].offsetHeight,
                         hasNewLines = scope.text ? scope.text.split(/\r\n|\r|\n/g) : [];
 
                     // on init get one row height
@@ -212,10 +221,6 @@ angular.module('cmUi').directive('cmResizeTextarea',[
                         },50);
                     }
                 });
-
-                // init
-                createShadow();
-                update();
             }
         }
     }

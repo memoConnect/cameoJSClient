@@ -230,7 +230,7 @@ angular.module('cmConfig',[])
                 }
             },
 
-            autologin: {
+            autoLoginData: {
                 'Dumpuser local': {
                     user: '2VqTftqh',
                     pass: 'password'

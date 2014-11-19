@@ -240,7 +240,6 @@ angular.module('cmConfig',[])
             appLinks: JSON.parse('<%= appLinks %>'),
             appProtocol: '<%= appProtocol %>',
 
-
             autoLoginData: {
                 'Dumpuser local': {
                     user: '2VqTftqh',
