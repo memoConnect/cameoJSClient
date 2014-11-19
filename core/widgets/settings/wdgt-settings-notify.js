@@ -64,6 +64,7 @@ angular.module('cmWidgets')
                         //    $scope.changeBrowserNotifications = false;
                         //});
                     } else {
+                        cmBrowserNotifications.check();
                         //cmPushNotificationAdapter.registerDevice();
                         //cmPushNotificationAdapter.one('device:registrated',function(){
                         //    $scope.changeBrowserNotifications = false;
