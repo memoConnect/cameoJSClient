@@ -444,7 +444,7 @@ var cmDevice,
                     })
 
                     $provide.factory('$device', function () {
-                        return {get:function(){return undefined}}
+                        return {get:function(){return 'undefined'}}
                     })
                 })
             })

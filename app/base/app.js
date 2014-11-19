@@ -267,30 +267,14 @@ angular.module('cameoClient', [
  * @TODO cmContactsModel anders initialisieren
  */
 .run([
-    '$rootScope',
-    '$location',
-    '$window',
-    '$document',
-    '$route',
-    '$timeout',
-    'cmUserModel',
-    'cmConversationFactory',
-    'cmContactsModel',
-    'cmRootService',
-    'cmSettings',
-    'cmLanguage',
-    'cmLogger',
-    'cfpLoadingBar',
-    'cmEnv',
-    'cmVersion',
-    'cmApi',
-    'cmAuthenticationRequest',
-    'cmSystemCheck',
-    'cmError',
+    '$rootScope', '$location', '$window', '$document', '$route', '$timeout',
+    'cmUserModel', 'cmConversationFactory', 'cmContactsModel', 'cmRootService',
+    'cmSettings','cmLanguage', 'cmLogger', 'cfpLoadingBar', 'cmEnv', 'cmVersion',
+    'cmApi', 'cmAuthenticationRequest', 'cmSystemCheck', 'cmError', 'cmVisibility',
     function ($rootScope, $location, $window, $document, $route, $timeout,
-              cmUserModel, cmConversationFactory, cmContactsModel, cmRootService, cmSettings,
-              cmLanguage, cmLogger, cfpLoadingBar, cmEnv, cmVersion,
-              cmApi, cmAuthenticationRequest, cmSystemCheck, cmError) {
+              cmUserModel, cmConversationFactory, cmContactsModel, cmRootService,
+              cmSettings, cmLanguage, cmLogger, cfpLoadingBar, cmEnv, cmVersion,
+              cmApi, cmAuthenticationRequest, cmSystemCheck, cmError, cmVisibility) {
 
         //prep $rootScope with useful tools
         $rootScope.console  =   window.console;
@@ -411,6 +395,5 @@ angular.module('cameoClient', [
 
         // Systemcheck
         cmSystemCheck.run(true);
-
     }
 ]);
