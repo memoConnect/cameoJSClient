@@ -12,22 +12,22 @@ angular.module('cmCore')
             limit                   = default_global_limit
 
         this.setGlobalDefaultLimit = function(l){
-            default_global_limit = l
+            default_global_limit = l || default_global_limit
             return this
         }
 
         this.setMobileDefaultLimit = function(l){
-            default_mobile_limit = l
+            default_mobile_limit = l || default_mobile_limit
             return this
         }
 
         this.setDesktopDefaultLimit = function(l){
-            default_desktop_limit = l
+            default_desktop_limit = l || default_desktop_limit
             return this
         }
 
         this.setAppDefaultLimit = function(l){
-            default_desktop_limit = l
+            default_desktop_limit = l || default_desktop_limit;
             return this
         }
 
@@ -131,7 +131,6 @@ angular.module('cmCore')
 
 
                 self.get = function(data){
-
                     if(!window.Worker)
                         return $q.reject('Browser does not support webWorkers.')
 
@@ -145,11 +144,13 @@ angular.module('cmCore')
 
                     //console.warn('new WebWorker "'+data.jobName+'" Number of queued webworkers: '+ self.length)
 
+
                     worker.on('done', function(event){
                         self.trigger('worker:done', worker)
                     })
 
                     worker.on('run', function(event, worker){
+
                     })
 
                     self.advance()

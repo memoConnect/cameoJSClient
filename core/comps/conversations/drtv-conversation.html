@@ -92,7 +92,7 @@
 <div class="answer clearfix" id="files-droparea">
     <div class="wrap">
         <div class="btns-left">
-            <cm-files ng-model="files" data-qa="attachments-btn">
+            <cm-files ng-model="files" data-qa="attachments-btn" cm-reactive>
                 <i class="fa cm-attachment"></i>
                 <div cm-user-rights>
                     <cm-file-choose cm-droparea="files-droparea"></cm-file-choose>
@@ -103,7 +103,6 @@
                     data-qa="btn-fast-registration"
                     class="webreader-uploading"
                     cm-user-rights="showForGuest"
-                    cm-reactive
                     ng-click="openFastRegister()"></div>
             </cm-files>
         </div>

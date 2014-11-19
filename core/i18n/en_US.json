@@ -273,7 +273,7 @@
       "LATER" : "Later"
     },
     "EXIT": {
-      "HEADER": "Exit App",
+      "HEADER": "Leave App",
       "TEXT": "Do you really want to leave the app?"
     }
   },
@@ -311,8 +311,8 @@
     },
     "DOWNLOAD": {
       "HEADER": "App Download",
-      "SUB_TEXT": "Welcome to cameoNet! <br> There is also an App for your device. We recommend to download this App and go on there.",
-      "SKIP_TEXT": "No thanks, I want to go on in this browser."
+      "SUB_TEXT": "Welcome to cameoNet! <br> There is an App for your device. You can download it below.",
+      "SKIP_TEXT": "No thanks, I want to go on in my browser."
     },
     "KEYINFO" : {
       "SKIP_TEXT" : "Skip",
@@ -806,15 +806,15 @@
   },
   "PURL" : {
     "SIGN_IN" : "Register",
-    "TO_APP": "Open App"
+    "TO_APP": "Open in app"
   },
     "FILE": {
         "UPLOAD": {
           "QUOTA": {
-            "EXCEEDED": "Not enough space! <br> The file you want to upload has{{fileSize | cmBytesHumanReadable}}.<br>You have only {{quotaLeft | cmBytesHumanReadable}} left ( total: {{totalQuota | cmBytesHumanReadable}})."
+            "EXCEEDED": "Account quota exceeded! <br> The file you want to upload has{{fileSize | cmBytesHumanReadable}}.<br>You have only {{quotaLeft | cmBytesHumanReadable}} left ( total: {{totalQuota | cmBytesHumanReadable}})."
           },
           "FILESIZE": {
-            "EXCEEDED": "The maximum file size has been exceeded.<br> Your file has <strong>{{fileSize | cmBytesHumanReadable}}</strong> bytes. Maximum file size is <strong>{{maxFileSize | cmBytesHumanReadable}}</strong>."
+            "EXCEEDED": "The file is tool large.<br> Your file has <strong>{{fileSize | cmBytesHumanReadable}}</strong> bytes. The maximum file size is <strong>{{maxFileSize | cmBytesHumanReadable}}</strong>."
           }
         }
     }

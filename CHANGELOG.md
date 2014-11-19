@@ -15,6 +15,7 @@
 ** phone and email validation now accors after 3 secs. (before 1 secs.)
 * phonegap
 ** new exit modal for leaving app on back button
+** device menubutton toggle the menu in app
 * performance
 ** webworker for verify now cache the results
 ** through major framework update route changes raised up 50%
