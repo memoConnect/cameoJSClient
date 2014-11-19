@@ -317,8 +317,9 @@
         },
         "IMPORT" :{
             "NOTIFICATION" :{
-                "CONFIRMATION" :"Sie haben Kontaktdaten einer dritten Person auf unseren Servern gespeichert. Informieren Sie sie bitte darüber.",
-                "MESSAGE" : "Hallo {{to}}, ich habe Deine Adressdaten in mein Cameo-Adressbuch übernommen. Ciao {{from}}"
+                "HEADER": "@todo Kontakt informieren",
+                "TEXT": "@todo Sie haben Kontaktdaten einer dritten Person auf den cameoNet Servern gespeichert.\nInformieren Sie diesen Kontakt bitte darüber.",
+                "MESSAGE_TEMPLATE": "@todo Hallo {{to}},\nich habe dich in cameoNet hinzugefügt.\nKomm doch auch ins cameoNet!\nCiao {{from}}"
             }
         },
         "TRUST":{

@@ -531,10 +531,11 @@
       "START" : "contact can be trusted"
     },
     "IMPORT" :{
-        "NOTIFICATION" : {
-          "MESSAGE" : "Dear {{to}}, I have included your personal data to my address book on cameoNet. I hope hearing from you soon. Yours {{from}}",
-          "CONFIRMATION" : "Personal data of a third person have been stored on our server. Please inform her or him."
-        }
+      "NOTIFICATION" :{
+        "HEADER": "@todo Contact import",
+        "TEXT": "@todo Personal data of a third person have been stored on cameoNet server.\n Please inform her or him.",
+        "MESSAGE_TEMPLATE": "@todo Dear {{to}},\nI have included your personal data to my address book on cameoNet. I hope hearing from you soon in cameoNet.\nYours {{from}}"
+      }
     },
     "WIDGET" : "Talks",
     "HEADLINE" : "Contact"

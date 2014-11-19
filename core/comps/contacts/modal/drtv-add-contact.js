@@ -7,7 +7,7 @@ angular.module('cmContacts')
     function (cmLocalContacts, $rootScope){
         return {
             restrict: 'E',
-            templateUrl: 'comps/contacts/drtv-modal-add-contact.html',
+            templateUrl: 'comps/contacts/modal/drtv-add-contact.html',
             scope: {
                 modalId: "@id",
                 nosePosition: "@nosePosition"
