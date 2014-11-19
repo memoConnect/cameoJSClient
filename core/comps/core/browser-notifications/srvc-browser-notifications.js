@@ -81,6 +81,7 @@ angular.module('cmCore').service('cmBrowserNotifications', [
             },
             showFriendRequest: function(identity){
                 //cmLogger.debug('cmBrowserNotifications.show');
+
                 if(identity instanceof cmIdentityModel && cmUserModel.data.identity.id != identity.id){
                     this.show({
                         title: $filter('cmTranslate')('SYSTEM.EVENTS.FRIEND_REQUEST.TITLE'),
@@ -90,6 +91,7 @@ angular.module('cmCore').service('cmBrowserNotifications', [
             },
             showNewMessage: function(identity){
                 //cmLogger.debug('cmBrowserNotifications.show');
+
                 if(identity instanceof cmIdentityModel && cmUserModel.data.identity.id != identity.id){
                         this.show({
                         title: $filter('cmTranslate')('SYSTEM.EVENTS.NEW_MESSAGE.TITLE'),
