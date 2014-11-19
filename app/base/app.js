@@ -225,10 +225,18 @@ angular.module('cameoClient', [
     // start entropy collection for random number generator
     sjcl.random.startCollectors();
 })
-.run(['cmError', 'cmBrowserNotifications', function(cmError, cmBrowserNotifications){
+.run(['cmError', function(cmError){
     // only an inject is nessarary
 }])
+.run(['cmUserModel', 'cmBrowserNotifications', '$rootScope', function(cmUserModel, cmBrowserNotifications, $rootScope){
+    if(cmUserModel.isAuth()){
+        cmBrowserNotifications.askPermission();
+    }
 
+    $rootScope.$on('login', function(){
+        cmBrowserNotifications.askPermission();
+    })
+}])
 // router passing wrong route calls
 .run([
     '$rootScope', '$location',

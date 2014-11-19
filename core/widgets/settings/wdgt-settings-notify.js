@@ -58,23 +58,22 @@ angular.module('cmWidgets')
 
                     var newValue = $scope.settings[key] ? false : true;
 
-                    if(!newValue){//unregister checked to unchecked
-                        //cmPushNotificationAdapter.deleteDevice();
-                        //cmPushNotificationAdapter.one('device:unregistrated',function(){
-                        //    $scope.changeBrowserNotifications = false;
-                        //});
+                    if(!newValue){
+                        $scope.changeBrowserNotifications = false;
                     } else {
-                        cmBrowserNotifications.check();
-                        //cmPushNotificationAdapter.registerDevice();
-                        //cmPushNotificationAdapter.one('device:registrated',function(){
-                        //    $scope.changeBrowserNotifications = false;
-                        //});
+                        cmBrowserNotifications.askPermission();
+                        $scope.changeBrowserNotifications = false;
                     }
 
                     if(cmSettings.set(key, newValue)){
                         $scope.settings[key] = newValue;
                     }
                 };
+
+
+                $scope.sendNotification = function(){
+                    cmBrowserNotifications.send($scope.notificationTitle);
+                }
             }
         }
     }

@@ -230,6 +230,8 @@ angular.module('cmConfig',[])
                 }
             },
 
+            appIcon: '<%= appIcon %>',
+
             autologin: {
                 'Dumpuser local': {
                     user: '2VqTftqh',
