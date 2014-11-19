@@ -220,7 +220,7 @@ angular.module('cmCore')
                     return false;
                 }
 
-                var self = this
+                var self = this;
 
                 async.promise = $q.defer();
                 // start keygen over plugin crypto helper
@@ -235,11 +235,9 @@ angular.module('cmCore')
                         });
                 // start keygen over webworker
                 } else { 
-
                     cmWebworker.get({
                         jobName :   'rsa_keygen',
                         params  :   { keySize: keySize }
-
                     })
                     .then(
                         function(worker){
