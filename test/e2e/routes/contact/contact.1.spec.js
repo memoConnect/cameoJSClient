@@ -92,6 +92,9 @@ describe('Route Contact: ', function () {
             util.setVal('input-email', extUserMail1)
 
             $('cm-footer button').click()
+            // close notify extern modal
+            util.waitForModalOpen()
+            util.click('btn-cancel')
         })
 
         it('search and click to detail',function(){

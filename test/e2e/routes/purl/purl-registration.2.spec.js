@@ -34,6 +34,10 @@ describe('Purl Registration: ', function () {
 
         $('cm-footer button').click()
 
+        // close notify extern modal
+        util.waitForModalOpen()
+        util.click('btn-cancel')
+
         util.waitForPageLoad('/contact/list')
     })
 
