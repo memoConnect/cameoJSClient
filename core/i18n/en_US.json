@@ -797,6 +797,7 @@
     "LABEL_PW" : "Password"
   },
   "CAMEO" : {
+    "NAME": "CameoNet",
     "MOEP" : "moep",
     "VERSION" : "version",
     "SLOGAN" : "Safer Communication - Made in Germany!",

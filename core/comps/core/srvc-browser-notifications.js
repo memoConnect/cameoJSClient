@@ -35,12 +35,15 @@ angular.module('cmCore').service('cmBrowserNotifications', [
 
         /**
          * Callback for Notification Clicks
-         * @param notification {object}
          */
-        function callbackOnClick(notification){
-            cmLogger.debug('cmBrowserNotifications.callbackOnClick');
+        function callbackOnClick(){
+            //cmLogger.debug('cmBrowserNotifications.callbackOnClick');
 
-            //close(notification);
+            try {
+                window.focus(); // doesn't work in chrome
+            } catch(e){
+                // doesn't matter
+            }
         }
 
         /**
@@ -48,7 +51,7 @@ angular.module('cmCore').service('cmBrowserNotifications', [
          * @param notification {object}
          */
         function close(notification){
-            cmLogger.debug('cmBrowserNotifications.close');
+            //cmLogger.debug('cmBrowserNotifications.close');
 
             notification.close();
         }
@@ -109,13 +112,22 @@ angular.module('cmCore').service('cmBrowserNotifications', [
 
             if(this.checkBrowser() && this.checkPermission() && cmSettings.get('browserNotifications') && typeof notify == 'object'){
 
+                var title = $filter('cmTranslate')('CAMEO.NAME') + ' - ' + notify.title;
+
                 var options = {
                     body: notify.body,
                     icon: window.location.origin + window.location.pathname + cmConfig.appIcon
                 };
 
-                var notification = new Notification(notify.title, options);
-                notification.onclick = callbackOnClick(notification);
+                if(typeof notify.callbackOnClick == 'function'){
+                    options.onclick = notify.callbackOnClick();
+                    //notification.addEventListener('click', notify.callbackOnClick(notification));
+                } else {
+                    options.onclick = callbackOnClick();
+                    //notification.addEventListener('click', callbackOnClick(notification));
+                }
+
+                var notification = new Notification(title, options);
 
                 /**
                  * @TODO
@@ -133,21 +145,36 @@ angular.module('cmCore').service('cmBrowserNotifications', [
 
         /**
          * Adapter Function for Friend Request Notifications
+         * show Notification only if Tab/Browser are inactive
+         *
          * @param identity {object} cmIdentityModel
          */
         this.showFriendRequest = function(identity){
             //cmLogger.debug('cmBrowserNotifications.showFriendRequest');
 
             if(identity instanceof cmIdentityModel && cmUserModel.data.identity.id != identity.id){
-                this.show({
-                    title: $filter('cmTranslate')('SYSTEM.EVENTS.FRIEND_REQUEST.TITLE'),
-                    body: $filter('cmTranslate')('SYSTEM.EVENTS.FRIEND_REQUEST.MSG', {sender: identity.getDisplayName()})
-                });
+
+                if(!tabVisibility){
+                    this.show({
+                        title: $filter('cmTranslate')('SYSTEM.EVENTS.FRIEND_REQUEST.TITLE'),
+                        body: $filter('cmTranslate')('SYSTEM.EVENTS.FRIEND_REQUEST.MSG', {sender: identity.getDisplayName()}),
+                        callbackOnClick: function(){
+                            try{
+                                window.focus(); // doesn't work in chrome
+                                $rootScope.goTo('/contact/request/list');
+                            } catch(e){
+                                // doesn't matter
+                            }
+                        }
+                    });
+                }
             }
         };
 
         /**
          * Adapter Function for new Message Notifications
+         * show Notification only if Tab/Browser is active and Route is not current Conversation or if Tab/Browser is inactive
+         *
          * @param identity {object} cmIdentityModel
          * @param conversationId {string}
          */
@@ -159,7 +186,17 @@ angular.module('cmCore').service('cmBrowserNotifications', [
                 if(typeof conversationId == 'string' && !$rootScope.checkConversationRoute(conversationId) || !tabVisibility){
                     this.show({
                         title: $filter('cmTranslate')('SYSTEM.EVENTS.NEW_MESSAGE.TITLE'),
-                        body: $filter('cmTranslate')('SYSTEM.EVENTS.NEW_MESSAGE.MSG',{sender: identity.getDisplayName()})
+                        body: $filter('cmTranslate')('SYSTEM.EVENTS.NEW_MESSAGE.MSG',{sender: identity.getDisplayName()}),
+                        callbackOnClick: function(){
+                            try{
+                                window.focus(); // doesn't work in chrome
+                                if(!$rootScope.checkConversationRoute(conversationId)){
+                                    $rootScope.goTo('/conversation/' + conversationId);
+                                }
+                            } catch(e){
+                                // doesn't matter
+                            }
+                        }
                     });
                 }
             }
