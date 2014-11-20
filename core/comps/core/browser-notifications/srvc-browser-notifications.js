@@ -128,7 +128,7 @@ angular.module('cmCore').service('cmBrowserNotifications', [
 
             if(identity instanceof cmIdentityModel && cmUserModel.data.identity.id != identity.id){
 
-                if(!$rootScope.checkConversationRoute(conversationId) || !tabVisibility){
+                if(typeof conversationId == 'string' && !$rootScope.checkConversationRoute(conversationId) || !tabVisibility){
                     this.show({
                         title: $filter('cmTranslate')('SYSTEM.EVENTS.NEW_MESSAGE.TITLE'),
                         body: $filter('cmTranslate')('SYSTEM.EVENTS.NEW_MESSAGE.MSG',{sender: identity.getDisplayName()})

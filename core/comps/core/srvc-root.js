@@ -140,7 +140,7 @@ angular.module('cmCore').service('cmRootService', [
          * return {boolean}
          */
         $rootScope.checkConversationRoute = function(conversationId){
-            if(conversationId && $location.$$path.indexOf('conversation/' + conversationId) != -1){
+            if(typeof conversationId == 'string' && $location.$$path.indexOf('conversation/' + conversationId) != -1){
                 return true;
             }
 
