@@ -24,47 +24,27 @@ cm-answer{
     .dbl;
     width:@cm-unit;
     height:@cm-unit;
-
-    cm-file-choose{
-      height:100%;
-      overflow:hidden;
-      position:absolute;
-      right:0;
-      top:0;
-      bottom:0;
-      left:0;
-      width:100%;
-      z-index: 1;
-      input{
-        .with-cursor;
-        bottom:0;
-        font-size:1000px !important;
-        height:300px;
-        margin:0;
-        opacity:0;
-        padding:0;
-        position:absolute;
-        right:0;
-      }
-    }
   }
 
   cm-files-preview{
-    display:block;
-    position:absolute;
+    .dbl;
+    .pos-abs;
     bottom:@cm-footer-height;
     width:@cm-app-width;
     background:@cm-white;
 
     .file-wrap{
-      position: relative;
-      text-align:center;
+      .pos-rel;
+      .tac;
       padding:@cm-vertical-padding;
       i.cm-close{
-        position: absolute;
-        right: 1em;
-        top: 35%;
+        .pos-abs;
         .with-cursor;
+        .cm-unit-btn;
+        right:1rem;
+        top:50%;
+        margin-top:-2rem;
+        z-index:1;
       }
       .file{
         font-size:@cm-unit*1.5;

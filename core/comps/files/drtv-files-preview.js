@@ -17,9 +17,19 @@ angular.module('cmFiles').directive('cmFilesPreview',[
                     cmAnswerFiles.remove(file);
                 };
 
-                $rootScope.$on('textArea:resize', function(event){
+                function callback_files_resetted(){
+                    $scope.files = cmAnswerFiles.files;
+                }
+
+                cmAnswerFiles.on('files:resetted', callback_files_resetted)
+                var watch = $rootScope.$on('textArea:resize', function(){
                     var answerMessage = $document[0].querySelector('cm-answer .message');
                     $element.css('bottom',answerMessage.offsetHeight+'px');
+                });
+
+                $scope.$on('$destroy', function(){
+                    cmAnswerFiles.off('files:resetted', callback_files_resetted);
+                    watch();
                 });
             }
         }

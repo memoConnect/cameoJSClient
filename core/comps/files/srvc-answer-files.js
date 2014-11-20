@@ -16,17 +16,8 @@ angular.module('cmFiles').service('cmAnswerFiles', [
                     return false;
 
                 var found = this.files.some(function (file) {
-                    console.log(
-                        file.name,
-                        blob.name,
-                        file.size,
-                        blob.size,
-                        (file.name == blob.name && file.size == blob.size)
-                    )
                     return (file.name == blob.name && file.size == blob.size);
                 });
-
-                console.log(found)
 
                 if (found) {
                     return false;
@@ -50,6 +41,7 @@ angular.module('cmFiles').service('cmAnswerFiles', [
                 return false;
             },
             reset: function () {
+                console.log('reset files')
                 this.files = [];
                 this.trigger('files:resetted');
             },
@@ -67,19 +59,20 @@ angular.module('cmFiles').service('cmAnswerFiles', [
                     )
                 });
 
-                return $q.all(promises)
-                    .then(
+                var deferred = $q.defer();
+
+                $q.all(promises)
+                .then(
                     function () {
-                        return $q.resolve(self.files);
+                        deferred.resolve(self.files);
+                        self.reset();
                     },
                     function (result) {
-                        return $q.reject(result.data.errorCode, result.data.error, result.config.headers);
+                        deferred.reject(result.data.errorCode, result.data.error, result.config.headers);
                     }
-                ).finally(
-                    function () {
-                        self.reset();
-                    }
-                )
+                );
+
+                return deferred.promise;
             }
         };
 

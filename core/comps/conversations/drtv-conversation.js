@@ -194,7 +194,7 @@ angular.module('cmConversations')
                                         .catch(function(){
                                                 return  $scope.conversation.isEncrypted()
                                                         ?   $q.reject('access denied')
-                                                        :   $q.when(null)
+                                                        :   $q.when(null);
                                         //Todo: null for 'not encrypted' old convention
                                         })
                                         .then(function(passphrase){

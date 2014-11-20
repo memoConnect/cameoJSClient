@@ -24,7 +24,7 @@ angular.module('cmFiles').directive('cmChooseSource', [
 
             link: function (scope, element) {
                 // only for phonegap
-                if (!cmDevice.isAndroid()) {
+                if (!cmDevice.isApp() && !cmDevice.isAndroid()) {
                     return false;
                 }
 

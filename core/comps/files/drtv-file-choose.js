@@ -30,7 +30,7 @@ angular.module('cmFiles').directive('cmFileChoose', [
                 }
 
                 // phonegap
-                if (cmDevice.isAndroid()){
+                if (cmDevice.isApp() && cmDevice.isAndroid()){
                     element.on('click', function (evt) {
                         evt.preventDefault();
                         evt.stopPropagation();
