@@ -2,13 +2,9 @@
 
 describe('cmConversations', function(){
 
-    beforeEach(function(){
-        module(function($provide){
-            $provide.constant('cmEnv',{});
-        })
-    })
     beforeEach(module('cmPhonegap'))
     beforeEach(module('cmConversations'))
+    beforeEach(module('cmConfig'))
 
     it('should provide a service "cmConversationsAdapter"', inject(function(cmConversationsAdapter){
         expect(cmConversationsAdapter).toBeDefined()

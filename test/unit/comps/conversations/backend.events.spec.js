@@ -31,13 +31,9 @@ describe('Event chain for Conversations', function(){
                                     "created":1392983860949
                                 } 
 
-    beforeEach(function(){
-        module(function($provide){
-            $provide.constant('cmEnv',{});
-        })
-    })
     beforeEach(module('cmPhonegap'))
     beforeEach(module('cmConversations'))
+    beforeEach(module('cmConfig'))
 
     beforeEach(inject(function(_cmApi_, _cmConversationsAdapter_, _cmConversationFactory_, _$rootScope_, _$httpBackend_){
         cmApi                   = _cmApi_
@@ -67,6 +63,10 @@ describe('Event chain for Conversations', function(){
     })
 
     describe('backend event conversation:new-message', function(){
+
+        beforeEach(function(){
+            $rootScope.checkConversationRoute = function(){}
+        })
 
         it('should add a new message', function(){
 
