@@ -9,9 +9,10 @@ angular.module('cmCore').service('cmBrowserNotifications', [
     'cmLogger',
     'cmUserModel',
     'cmIdentityModel',
+    '$rootScope',
     '$filter',
     '$timeout',
-    function(cmConfig, cmSettings, cmApi, cmDevice, cmVisibility, cmLogger, cmUserModel, cmIdentityModel, $filter, $timeout){
+    function(cmConfig, cmSettings, cmApi, cmDevice, cmVisibility, cmLogger, cmUserModel, cmIdentityModel, $rootScope, $filter, $timeout){
         var self = this,
             tabVisibility = true;
 
@@ -99,7 +100,7 @@ angular.module('cmCore').service('cmBrowserNotifications', [
 
                 /**
                  * @TODO
-                 * TTL in settings setzen
+                 * TTL in settings
                  */
                 $timeout(function(){
                     close(notification);
@@ -122,14 +123,17 @@ angular.module('cmCore').service('cmBrowserNotifications', [
             }
         };
 
-        this.showNewMessage = function(identity){
+        this.showNewMessage = function(identity, conversationId){
             //cmLogger.debug('cmBrowserNotifications.show');
 
             if(identity instanceof cmIdentityModel && cmUserModel.data.identity.id != identity.id){
+
+                if(!$rootScope.checkConversationRoute(conversationId) || !tabVisibility){
                     this.show({
-                    title: $filter('cmTranslate')('SYSTEM.EVENTS.NEW_MESSAGE.TITLE'),
-                    body: $filter('cmTranslate')('SYSTEM.EVENTS.NEW_MESSAGE.MSG',{sender: identity.getDisplayName()})
-                });
+                        title: $filter('cmTranslate')('SYSTEM.EVENTS.NEW_MESSAGE.TITLE'),
+                        body: $filter('cmTranslate')('SYSTEM.EVENTS.NEW_MESSAGE.MSG',{sender: identity.getDisplayName()})
+                    });
+                }
             }
         };
 

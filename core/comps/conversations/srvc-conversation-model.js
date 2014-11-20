@@ -1013,7 +1013,7 @@ angular.module('cmConversations')
                     self.decrypt();
                     self.setLastMessage();
 
-                    cmBrowserNotifications.showNewMessage(message.from);
+                    cmBrowserNotifications.showNewMessage(message.from, self.id);
 
                     self.trigger('message:reInitFiles');
                 }

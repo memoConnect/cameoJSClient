@@ -134,5 +134,17 @@ angular.module('cmCore').service('cmRootService', [
             );
             cmModal.open('fast-registration')
         };
+
+        /**
+         * checks if a conversation route is open
+         * return {boolean}
+         */
+        $rootScope.checkConversationRoute = function(conversationId){
+            if(conversationId && $location.$$path.indexOf('conversation/' + conversationId) != -1){
+                return true;
+            }
+
+            return false;
+        }
     }
 ]);
