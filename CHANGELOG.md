@@ -1,3 +1,8 @@
+# BS 20.11.2014
+* add BrowserNotificationService
+* fix invite service after importing a local contact
+* fix pending contacts in contacts-list CAM-1378
+
 #0.4.2
 * framework major update
 ** angularjs 1.2.15 upgraded to 1.3.2
@@ -20,5 +25,3 @@
 ** webworker for verify now cache the results
 ** through major framework update route changes raised up 50%
 ** cm-rubber-space tighten was optimized (now only once per digest and drtv)
-* fix invite service after importing a local contact
-* fix pending contacts in contacts-list CAM-1378
