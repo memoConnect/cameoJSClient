@@ -104,12 +104,7 @@ angular.module('cmContacts').service('cmContactsModel',[
          */
 
         function _add(contact, forceImport){
-            var c = self.contacts.create(contact, forceImport);
-            if(contact.contactType == 'pending'){
-                console.log('pC', c);
-            }
-            //return self.contacts.create(contact, forceImport)
-            return c
+            return self.contacts.create(contact, forceImport)
         }
 
         this._clearContacts = function(){
