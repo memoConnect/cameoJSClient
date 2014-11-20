@@ -38,7 +38,7 @@ angular.module('cmContacts').service('cmModalContactImport', [
                             .messages
                             .create({
                                 conversation:conversation,
-                                text:modal_scope.data.message
+                                text:modal_scope.data.messageTemplate
                             })
                             .setPublicData(['text'])
                             .save()
