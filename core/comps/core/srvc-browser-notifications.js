@@ -10,9 +10,10 @@ angular.module('cmCore').service('cmBrowserNotifications', [
     'cmUserModel',
     'cmIdentityModel',
     '$rootScope',
+    '$window',
     '$filter',
     '$timeout',
-    function(cmConfig, cmSettings, cmApi, cmDevice, cmVisibility, cmLogger, cmUserModel, cmIdentityModel, $rootScope, $filter, $timeout){
+    function(cmConfig, cmSettings, cmApi, cmDevice, cmVisibility, cmLogger, cmUserModel, cmIdentityModel, $rootScope, $window, $filter, $timeout){
         var self = this,
             tabVisibility = true;
 
@@ -40,7 +41,7 @@ angular.module('cmCore').service('cmBrowserNotifications', [
             //cmLogger.debug('cmBrowserNotifications.callbackOnClick');
 
             try {
-                window.focus(); // doesn't work in chrome
+                $window.focus(); // doesn't work in chrome
             } catch(e){
                 // doesn't matter
             }
@@ -63,7 +64,7 @@ angular.module('cmCore').service('cmBrowserNotifications', [
         this.checkBrowser = function(){
             //cmLogger.debug('cmBrowserNotifications.checkBrowser');
 
-            if(!cmDevice.isApp() && "Notification" in window) {
+            if(!cmDevice.isApp() && "Notification" in $window) {
                 return true;
             }
 
@@ -116,7 +117,7 @@ angular.module('cmCore').service('cmBrowserNotifications', [
 
                 var options = {
                     body: notify.body,
-                    icon: window.location.origin + window.location.pathname + cmConfig.appIcon
+                    icon: $window.location.origin + $window.location.pathname + cmConfig.appIcon
                 };
 
                 if(typeof notify.callbackOnClick == 'function'){
@@ -151,16 +152,14 @@ angular.module('cmCore').service('cmBrowserNotifications', [
          */
         this.showFriendRequest = function(identity){
             //cmLogger.debug('cmBrowserNotifications.showFriendRequest');
-
             if(identity instanceof cmIdentityModel && cmUserModel.data.identity.id != identity.id){
-
                 if(!tabVisibility){
                     this.show({
                         title: $filter('cmTranslate')('SYSTEM.EVENTS.FRIEND_REQUEST.TITLE'),
                         body: $filter('cmTranslate')('SYSTEM.EVENTS.FRIEND_REQUEST.MSG', {sender: identity.getDisplayName()}),
                         callbackOnClick: function(){
                             try{
-                                window.focus(); // doesn't work in chrome
+                                $window.focus(); // doesn't work in chrome
                                 $rootScope.goTo('/contact/request/list');
                             } catch(e){
                                 // doesn't matter
@@ -183,14 +182,14 @@ angular.module('cmCore').service('cmBrowserNotifications', [
 
             if(identity instanceof cmIdentityModel && cmUserModel.data.identity.id != identity.id){
 
-                if(typeof conversationId == 'string' && !$rootScope.checkConversationRoute(conversationId) || !tabVisibility){
+                if(typeof conversationId == 'string' && (!$rootScope.checkConversationRoute(conversationId) || !tabVisibility)){
                     this.show({
                         title: $filter('cmTranslate')('SYSTEM.EVENTS.NEW_MESSAGE.TITLE'),
                         body: $filter('cmTranslate')('SYSTEM.EVENTS.NEW_MESSAGE.MSG',{sender: identity.getDisplayName()}),
                         callbackOnClick: function(){
                             try{
-                                window.focus(); // doesn't work in chrome
-                                if(!$rootScope.checkConversationRoute(conversationId)){
+                                $window.focus(); // doesn't work in chrome
+                                if(!$rootScope.checkConversationRoute(conversationId) && !$rootScope.checkPurlRoute){
                                     $rootScope.goTo('/conversation/' + conversationId);
                                 }
                             } catch(e){
