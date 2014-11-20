@@ -70,7 +70,6 @@ angular.module('cmWidgets')
                     }
                 };
 
-
                 $scope.sendNotification = function(){
                     cmBrowserNotifications.show($scope.notificationTitle);
                 }
