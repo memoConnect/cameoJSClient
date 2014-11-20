@@ -228,16 +228,35 @@ describe('Conversation encryption -', function () {
                                 return text.indexOf("moep") != -1
                             })
                         })
-                    }).then(function(){
-                        $$('cm-message').then(function (elements) {
+                    })
+                    .then(function(){
+                        return $$('cm-message').then(function (elements) {
                             expect(elements.length).toBe(messages.length)
                             for (var j = 1; j < messages.length; j++) {
                                 expect(elements[j].getText()).toContain(messages[j].text)
                                 if (messages[j].author != recipient) {
+                                    //check author
                                     expect(elements[j].$("[data-qa='message-author']").getText()).toBe(messages[j].author)
                                 }
                             }
                         })
+                    })
+                    //check signatures:
+                    .then(function(){
+                        return  $$('cm-message').then(function (elements) {
+                                    elements.forEach(function(element, i){
+                                        if(messages[i].author.hasKey){
+                                            browser.wait(function() {
+                                                return element.$("[data-qa = 'valid signature']").isPresent()
+                                            }, 3000)
+                                        }
+                                        // else{
+                                        //     browser.wait(function() {
+                                        //         return element.$("[data-qa = 'no signature']").isPresent()
+                                        //     }, 3000)
+                                        // }
+                                    })
+                                })
                     })
                 })
 
@@ -254,6 +273,7 @@ describe('Conversation encryption -', function () {
 
                 checkSecurityAspects()
             })
+
         }
 
         // login as all other recipients and send a message
@@ -266,6 +286,7 @@ describe('Conversation encryption -', function () {
         describe("sender should be able to read all messages -", function () {
             checkMessages(recipients[0], 0)
         })
+
     }
 
     /*

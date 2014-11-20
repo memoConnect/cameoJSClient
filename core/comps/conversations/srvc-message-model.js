@@ -56,7 +56,7 @@ angular.module('cmConversations')
             this.files = [];
             this.fileIds = [];
 
-            this.state = new cmStateManagement(['new','decrypted','loading', 'incomplete', 'sending', 'waitForFiles', 'authentic']);
+            this.state = new cmStateManagement(['new','decrypted','loading', 'incomplete', 'sending', 'waitForFiles', 'authentic', 'bogus', 'signed']);
 
             this.authenticity = {
                                     publicData : null,
@@ -70,7 +70,6 @@ angular.module('cmConversations')
 
                                     setSecretData : function(data){
                                         this.secretData = data
-                                        console.log(data)
                                         return this
                                     },
                                     setSignatures : function(signatures){
@@ -90,8 +89,6 @@ angular.module('cmConversations')
                                                         'public': self.publicData || {},
                                                         'secret': self.secretData || {}
                                                     }
-
-                                        console.dir(data)
 
                                         return  $q.when(cmCrypt.hashObject(data))
                                     },
@@ -125,7 +122,7 @@ angular.module('cmConversations')
                                                                     return self.signatures.reduce(function(last_try_signature, signature){
                                                                         return  signature.keyId == key.id
                                                                                 ?   key.verify(token, signature.content, true)
-                                                                                :   reject('keys dont match.')
+                                                                                :   $q.reject('keys dont match.')
                                                                     }, $q.reject('missing signatures.'))
                                                                 })
                                                             }, $q.reject('missing keys.'))
@@ -177,34 +174,30 @@ angular.module('cmConversations')
                     this.from       = cmIdentityFactory.create(data.fromIdentity);
                 }
 
-                if('plain' in data){
-                    this.authenticity.setPublicData(data.plain)
-                }
+                if('signatures' in data){
 
-                if('plainSignatures' in data){
-                    this.authenticity.setSignatures(data.plainSignatures)
-                }
+                    this.state.set('signed')
 
-                this.verifySignatures()
-                .then(function(){
-                    self.state.set('authentic')
-                })
+                    if('plain' in data.signatures)
+                        this.authenticity.setSignatures(data.signatures.plain)
+                }
 
                 this.created    = data.created || this.created;
 
-                this.plainData  = data.plain || this.plainData;
+                this.plainData      = data.plain        || this.plainData       || {}
+                this.encryptedData  = data.encrypted    || this.encryptedData
 
                 // compare plain to this
                 for(var key in this.plainData){
                     this[key] = this.plainData[key] || this[key];
                 }
 
+                this.authenticity.setPublicData(this.plainData)
+
                 this.text       = data.text     || this.text;
                 this.fileIds    = data.fileIds  || this.fileIds;
 
-                this.encryptedData          = data.encrypted            || this.encryptedData
-                this.encryptedSignatures    = data.encryptedSignatures  || this.encryptedSignatures 
-                this.plainSignatures        = data.plainSignatures      || this.plainSignatures 
+                this.signatures = data.signatures || this.signatures
 
 
                 this.state.set('incomplete')
@@ -284,6 +277,11 @@ angular.module('cmConversations')
                         .setPublicData(self.getPublicData())
                         .setSecretData(self.getSecretData())
                         .newSignatures()
+                        .then(function(signatures){
+                            self.signatures = self.signatures || {}
+                            self.signatures.plain = signatures
+                            return $q.when(self.signatures.plain)
+                        })
             }
 
             this.verifySignatures = function(){
@@ -294,10 +292,11 @@ angular.module('cmConversations')
             this.encrypt = function (passphrase) {
                 return  $q.when()
                         .then(function(){
-                            if(self.plainSignatures)
-                                self.encryptedSignatures = cmCrypt.encrypt(passphrase, JSON.stringify(self.signatures))
+                            
+                            if(self.signatures && self.signatures.plain)
+                                self.signatures.encrypted = cmCrypt.encrypt(passphrase, JSON.stringify(self.signatures.plain))
 
-                            return  $q.when(self.encryptedSignatures)
+                            return  $q.when(self.signatures.encrypted)
                         })
                         .then(function(){                            
                             var secret_data     = self.getSecretData()
@@ -320,8 +319,8 @@ angular.module('cmConversations')
                             this.encryptedData = cmCrypt.base64Decode(this.encryptedData);
                         }
 
-                        if(this.encryptedSignatures){
-                            var signatures = JSON.parse(cmCrypt.decrypt(passphrase,this.encryptedSignatures))
+                        if(this.signatures && this.signatures.encrypted){
+                            var signatures = JSON.parse(cmCrypt.decrypt(passphrase,this.signatures.encrypted))
                             this.authenticity.setSignatures(signatures) 
                         }
 
@@ -332,9 +331,14 @@ angular.module('cmConversations')
                             this.authenticity.setSecretData(decrypted_data)
 
                             this.verifySignatures()
-                            .then(function(){
-                                self.state.set('authentic')
-                            })
+                            .then(
+                                function(){
+                                    self.state.set('authentic')
+                                },
+                                function(reason){
+                                    self.state.set('bogus')
+                                }
+                            )
 
                             this.importData(decrypted_data);
 
@@ -381,16 +385,20 @@ angular.module('cmConversations')
                     
                     //everything is alright:
 
-                    return  !self.revealSignatures
+                    return  self.reveal_signatures !== true
                             ?   $q.when({
-                                    plain:                  publicData,
-                                    encrypted:              encryptedData,
-                                    encryptedSignatures:    self.encryptedSignatures
+                                    plain:      publicData,
+                                    encrypted:  encryptedData,
+                                    signatures: {
+                                                    encrypted:  self.signatures.encrypted
+                                                }
                                 })
                             :   $q.when({
-                                    plain:              publicData,
-                                    encrypted:          encryptedData,
-                                    plainSignatures:    self.plainSignatures
+                                    plain:      publicData,
+                                    encrypted:  encryptedData,
+                                    signatures: {
+                                                    plain:      self.signatures.plain
+                                                }
                                 })
                 })
                 .then(function(data){

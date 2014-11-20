@@ -2,5 +2,9 @@
     <!-- <cm-loader ng-show = "message.state.is('sending')" cm-color = "ci-color" type = "balls"></cm-loader> -->
     <span class="date"><cm-time-converter  cm-timestamp="message.created" cm-date-format="settings.get('timeFormat')"></cm-time-converter></span>
     <span class="envelope"><i class="fa" ng-class = "{'cm-send' : message.state.is('sending'), 'cm-envelope-closed' : !message.state.is('sending')}"></i></span>
-    <span>{{message.state.is('authentic') ? 'valid signature' : 'x'}}</span>
+    <span ng-if = "message.state.is('authentic')"> authentic</span>
+    <span ng-if = "message.state.is('signed')"> signed</span>
+    <span ng-if = "message.state.is('bogus')"> bogus</span>
+    <span ng-if = "message.state.is('verifying signature')"> verifying signature</span>
+    <span ng-if = "message.state.is('unsigned')"> unsigned</span>
 </div>
