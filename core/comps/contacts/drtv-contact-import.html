@@ -11,9 +11,9 @@
         <label>{{'CONTACT.PLACEHOLDER.DISPLAYNAME'|cmTranslate}}</label>
         <div class="cm-input-ctn with-inside-icon cm-icon-grey">
             <input
-                tabindex="1" data-qa="input-displayname"
-                type="text" name="displayName" ng-model="formData.displayName"
-                required />
+                    tabindex="1" data-qa="input-displayname"
+                    type="text" name="displayName" ng-model="formData.displayName"
+                    required />
             <i class="fa cm-write"></i>
         </div>
         <cm-info-bubble class="cm-alert" ng-show="error.displayName">
@@ -32,10 +32,10 @@
         </label>
         <div class="cm-input-ctn with-inside-icon cm-icon-grey">
             <input
-                tabindex="2" data-qa="input-phonenumber"
-                type="text" name="phoneNumber" ng-model="item.value"
-                cm-validate-phone cm-adaptive-change
-                 />
+                    tabindex="2" data-qa="input-phonenumber"
+                    type="text" name="phoneNumber" ng-model="item.value"
+                    cm-validate-phone cm-adaptive-change
+                    />
             <i class="fa cm-write"></i>
         </div>
         <cm-info-bubble class="cm-alert" ng-show="cmForm.phoneNumber.$dirty && cmForm.phoneNumber.$invalid">
@@ -63,9 +63,9 @@
         </label>
         <div class="cm-input-ctn with-inside-icon cm-icon-grey">
             <input
-                tabindex="3" data-qa="input-email"
-                name="email" ng-model="item.value"
-                cm-validate-email />
+                    tabindex="3" data-qa="input-email"
+                    name="email" ng-model="item.value"
+                    cm-validate-email />
             <i class="fa cm-write"></i>
         </div>
         <cm-info-bubble class="cm-alert" ng-show="cmForm.email.$dirty && cmForm.email.$invalid">
@@ -93,4 +93,3 @@
         <cm-loader ng-show="showLoader" cm-color="ci-color"></cm-loader>
     </button>
 </cm-footer>
-

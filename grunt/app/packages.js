@@ -129,7 +129,7 @@ module.exports = function(grunt, options){
                         'app_widgets': 'app/widgets',
                         'app_ui': 'app/comps/ui',
                         'app_user': 'app/comps/user',
-                        'app_conversations': 'app/comps/conversations',
+                        'app_conversations': 'app/comps/conversations'
                     })
                 },
                 'app-cameo': {
