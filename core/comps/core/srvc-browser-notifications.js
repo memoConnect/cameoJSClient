@@ -189,7 +189,7 @@ angular.module('cmCore').service('cmBrowserNotifications', [
                         callbackOnClick: function(){
                             try{
                                 $window.focus(); // doesn't work in chrome
-                                if(!$rootScope.checkConversationRoute(conversationId) && !$rootScope.checkPurlRoute){
+                                if(!$rootScope.checkConversationRoute(conversationId) && !$rootScope.checkPurlRoute()){
                                     $rootScope.goTo('/conversation/' + conversationId);
                                 }
                             } catch(e){
