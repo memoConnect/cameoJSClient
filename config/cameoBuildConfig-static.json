@@ -25,5 +25,6 @@
         "icon": "gfx/app_icons/300x98_windows_xpa_download.png"
       }
     }
-  }
+  },
+  "appIcon": "gfx/icon_128x128.png"
 }

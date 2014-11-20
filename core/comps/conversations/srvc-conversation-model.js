@@ -35,6 +35,7 @@ angular.module('cmConversations')
     'cmUserModel',
     'cmFactory',
     'cmStateManagement',
+    'cmBrowserNotifications',
     'cmNotify',
     'cmObject',
     'cmLogger',
@@ -47,7 +48,7 @@ angular.module('cmConversations')
     '$rootScope',
     
     function (cmBoot, cmConversationsAdapter, cmMessageModel, cmIdentityFactory, cmIdentityModel, cmFileFactory,
-              cmCrypt, cmUserModel, cmFactory, cmStateManagement, cmNotify, cmObject, cmLogger, cmPassphraseVault,
+              cmCrypt, cmUserModel, cmFactory, cmStateManagement, cmBrowserNotifications, cmNotify, cmObject, cmLogger, cmPassphraseVault,
               cmSecurityAspectsConversation, cmUtil, cmFilesAdapter, cmKeyStorageService,
               $q, $rootScope){
 
@@ -1004,13 +1005,15 @@ angular.module('cmConversations')
                     if(message == null){
                         message_data.conversation = self;
                         self.numberOfMessages++;
-                        self.messages.create(message_data);
+                        message = self.messages.create(message_data);
                     } else {
                         message.importData(message_data);
                     }
 
                     self.decrypt();
                     self.setLastMessage();
+
+                    cmBrowserNotifications.showNewMessage(message.from, self.id);
 
                     self.trigger('message:reInitFiles');
                 }

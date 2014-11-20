@@ -134,5 +134,33 @@ angular.module('cmCore').service('cmRootService', [
             );
             cmModal.open('fast-registration')
         };
+
+        /**
+         * checks if a conversation route is open
+         * return {boolean}
+         */
+        $rootScope.checkConversationRoute = function(conversationId){
+            if(typeof conversationId == 'string' && $location.$$path.indexOf('conversation/' + conversationId) != -1){
+                return true;
+            } else if(typeof conversationId == 'undefined' && $location.$$path.indexOf('conversation') != -1){
+                return true;
+            }
+
+            return false;
+        };
+
+        /**
+         * checks if a purl route is open
+         * return {boolean}
+         */
+        $rootScope.checkPurlRoute = function(purlId){
+            if(typeof purlId == 'string' && $location.$$path.indexOf('purl/' + purlId) != -1){
+                return true;
+            } else if(typeof purlId == 'undefined' && $location.$$path.indexOf('purl') != -1){
+                return true;
+            }
+
+            return false;
+        }
     }
 ]);

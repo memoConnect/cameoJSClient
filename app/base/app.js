@@ -225,10 +225,18 @@ angular.module('cameoClient', [
     // start entropy collection for random number generator
     sjcl.random.startCollectors();
 })
-.run(['cmError',function(cmError){
+.run(['cmError', function(cmError){
     // only an inject is nessarary
 }])
+.run(['cmUserModel', 'cmBrowserNotifications', '$rootScope', function(cmUserModel, cmBrowserNotifications, $rootScope){
+    if(cmUserModel.isAuth()){
+        cmBrowserNotifications.askPermission();
+    }
 
+    $rootScope.$on('login', function(){
+        cmBrowserNotifications.askPermission();
+    })
+}])
 // router passing wrong route calls
 .run([
     '$rootScope', '$location',
@@ -259,30 +267,14 @@ angular.module('cameoClient', [
  * @TODO cmContactsModel anders initialisieren
  */
 .run([
-    '$rootScope',
-    '$location',
-    '$window',
-    '$document',
-    '$route',
-    '$timeout',
-    'cmUserModel',
-    'cmConversationFactory',
-    'cmContactsModel',
-    'cmRootService',
-    'cmSettings',
-    'cmLanguage',
-    'cmLogger',
-    'cfpLoadingBar',
-    'cmEnv',
-    'cmVersion',
-    'cmApi',
-    'cmAuthenticationRequest',
-    'cmSystemCheck',
-    'cmError',
+    '$rootScope', '$location', '$window', '$document', '$route', '$timeout',
+    'cmUserModel', 'cmConversationFactory', 'cmContactsModel', 'cmRootService',
+    'cmSettings','cmLanguage', 'cmLogger', 'cfpLoadingBar', 'cmEnv', 'cmVersion',
+    'cmApi', 'cmAuthenticationRequest', 'cmSystemCheck', 'cmError', 'cmVisibility',
     function ($rootScope, $location, $window, $document, $route, $timeout,
-              cmUserModel, cmConversationFactory, cmContactsModel, cmRootService, cmSettings,
-              cmLanguage, cmLogger, cfpLoadingBar, cmEnv, cmVersion,
-              cmApi, cmAuthenticationRequest, cmSystemCheck, cmError) {
+              cmUserModel, cmConversationFactory, cmContactsModel, cmRootService,
+              cmSettings, cmLanguage, cmLogger, cfpLoadingBar, cmEnv, cmVersion,
+              cmApi, cmAuthenticationRequest, cmSystemCheck, cmError, cmVisibility) {
 
         //prep $rootScope with useful tools
         $rootScope.console  =   window.console;
@@ -403,6 +395,5 @@ angular.module('cameoClient', [
 
         // Systemcheck
         cmSystemCheck.run(true);
-
     }
 ]);
