@@ -317,9 +317,9 @@
         },
         "IMPORT" :{
             "NOTIFICATION" :{
-                "HEADER": "@todo Kontakt informieren",
-                "TEXT": "@todo Sie haben Kontaktdaten einer dritten Person auf den cameoNet Servern gespeichert.\nInformieren Sie diesen Kontakt bitte darüber.",
-                "MESSAGE_TEMPLATE": "@todo Hallo {{to}},\nich habe dich in cameoNet hinzugefügt.\nKomm doch auch ins cameoNet!\nCiao {{from}}"
+                "HEADER": "Kontakt informieren",
+                "TEXT": "Sie haben Kontaktdaten einer dritten Person auf den cameoNet Servern gespeichert.\nSie können diesen Kontakt darüber informieren und ihn gleich zu cameoNet einladen.",
+                "MESSAGE_TEMPLATE": "Hallo {{to}},\nich habe Ihre Kontaktdaten soeben in mein cameoNet-Adressbuch übernommen.\nRegistrieren Sie sich doch auch im cameoNet! Dann können wir ganz einfach verschlüsselt kommunizieren.\nViele Grüße {{from}}"
             }
         },
         "TRUST":{
@@ -783,7 +783,7 @@
         },
         "EXIT": {
             "HEADER": "App schließen",
-            "TEXT": "Wollen Sie die App wirklich verlassen?"
+            "TEXT": "Wollen Sie die Anwendung wirklich verlassen?"
         }
     },
 
