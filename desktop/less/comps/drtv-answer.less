@@ -1,7 +1,25 @@
-div.answer{
+cm-answer{
+  .dbl;
+  .box-shadow-top;
+  .pos-fxd;
+  .vam;
+  .margin-hr-auto;
+  width:@cm-app-width;
+  min-height:@cm-footer-height;
+  bottom:0;
+  z-index:2;
+  background-color:@cm-white;
+  left:0;
+  right:0;
+  font-size:@cm-unit - 1;
 
-  textarea{
-    resize:none;
+  .message{
+    textarea, .textarea-shadow{
+      font-size:@cm-large-font;
+    }
+    textarea{
+      resize:none;
+    }
   }
 
   .no-mar;
@@ -10,6 +28,7 @@ div.answer{
   .message{
     width:75%;
   }
+
   cm-files-preview {
     width:auto;
     .file-wrap{

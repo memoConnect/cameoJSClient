@@ -89,38 +89,4 @@
 
 <div id="conversation-bottom" cm-scroll-to="{anchor:'#conversation-bottom',force:'bottom',onEvent:true}"></div>
 
-<div class="answer clearfix" id="files-droparea">
-    <div class="wrap">
-        <div class="btns-left">
-            <cm-files ng-model="files" data-qa="attachments-btn" cm-reactive>
-                <i class="fa cm-attachment"></i>
-                <div cm-user-rights>
-                    <cm-file-choose cm-droparea="files-droparea"></cm-file-choose>
-                    <cm-files-preview></cm-files-preview>
-                    <cm-choose-source cm-options="{tooltip:'up'}"></cm-choose-source>
-                </div>
-                <div
-                    data-qa="btn-fast-registration"
-                    class="webreader-uploading"
-                    cm-user-rights="showForGuest"
-                    ng-click="openFastRegister()"></div>
-            </cm-files>
-        </div>
-
-        <cm-answer-textarea cm-data ="newMessageText"></cm-answer-textarea>
-
-        <div class="btns-right">
-            <cm-emoji-handler></cm-emoji-handler>
-
-            <div class="post-wrap" data-qa="btn-send-answer" ng-click="send()" cm-reactive>
-                <i
-                        class="fa cm-post with-cursor {{conversation.lockStatus.class}}-wrap"
-                        ng-class="{
-                    'cm-post-idle':isSending,
-                    'cm-post-attention':isSendingAbort
-                }"></i>
-            </div>
-        </div>
-    </div>
-    <cm-emoji-list ng-model="newMessageText" cm-textarea="emoji-textarea"></cm-emoji-list>
-</div>
+<cm-answer cm-data="conversation"></cm-answer>

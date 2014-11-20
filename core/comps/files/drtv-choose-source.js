@@ -2,16 +2,15 @@
 
 // https://github.com/apache/cordova-plugin-camera/blob/b76b5ae670bdff4dd4c716e889ab12e049f9c733/doc/index.mdhttps://github.com/apache/cordova-plugin-camera/blob/b76b5ae670bdff4dd4c716e889ab12e049f9c733/doc/index.md
 
-angular.module('cmPhonegap').directive('cmChooseSource', [
-    'cmDevice', 'cmCamera',
+angular.module('cmFiles').directive('cmChooseSource', [
+    'cmDevice', 'cmCamera', 'cmAnswerFiles',
     '$rootScope', '$document',
-    function (cmDevice, cmCamera,
+    function (cmDevice, cmCamera, cmAnswerFiles,
               $rootScope, $document) {
 
         return {
             restrict: 'E',
-            require: '^cmFiles',
-            templateUrl: 'comps/phonegap/drtv-choose-source.html',
+            templateUrl: 'comps/files/drtv-choose-source.html',
             scope: {
                 cmOptions: '=cmOptions'
             },
@@ -23,7 +22,7 @@ angular.module('cmPhonegap').directive('cmChooseSource', [
                 }, $scope.cmOptions || {});
             },
 
-            link: function (scope, element, attrs, cmFilesCtrl) {
+            link: function (scope, element) {
                 // only for phonegap
                 if (!cmDevice.isAndroid()) {
                     return false;
@@ -36,7 +35,7 @@ angular.module('cmPhonegap').directive('cmChooseSource', [
                 ];
 
                 // watch for extern handler
-                $rootScope.$on('cmChooseSource:open', function(){
+                var kill_listener = $rootScope.$on('cmChooseSource:open', function(){
                     scope.toggleList('show',true);
                 });
 
@@ -46,13 +45,13 @@ angular.module('cmPhonegap').directive('cmChooseSource', [
                     switch(type.i18n.toLowerCase()){
                         case "camera":
                             cmCamera.takePhoto(function(blob){
-                                cmFilesCtrl.setFile(blob);
+                                cmAnswerFiles.set(blob);
                             },scope.options.useFrontCamera);
                         break;
                         case "file":
                             cmCamera.chooseFile(function(blob){
                                 blob.useLocalUri = true;
-                                cmFilesCtrl.setFile(blob);
+                                cmAnswerFiles.set(blob);
                             });
                         break;
                     }
@@ -98,6 +97,12 @@ angular.module('cmPhonegap').directive('cmChooseSource', [
                 };
 
                 scope.toggleList('close');
+
+                scope.$on('$destroy',function(){
+                    kill_listener();
+                    body.off('click',clickOutside);
+                    body.off('touchstart',clickOutside);
+                });
             }
         }
     }]

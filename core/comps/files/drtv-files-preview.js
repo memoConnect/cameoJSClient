@@ -1,21 +1,25 @@
 'use strict';
 
 angular.module('cmFiles').directive('cmFilesPreview',[
+    'cmAnswerFiles',
     '$rootScope', '$document',
-    function($rootScope, $document) {
+    function(cmAnswerFiles,
+             $rootScope, $document) {
         return {
             restrict: 'E',
+            scope: true,
             templateUrl: 'comps/files/drtv-files-preview.html',
-            require: '^cmFiles',
 
-            link: function (scope, element, attrs, cmFilesCtrl) {
-                scope.removeFile = function(file){
-                    cmFilesCtrl.removeFile(file);
+            controller: function ($scope, $element) {
+                $scope.files = cmAnswerFiles.files;
+
+                $scope.removeFile = function(file){
+                    cmAnswerFiles.remove(file);
                 };
 
                 $rootScope.$on('textArea:resize', function(event){
-                    var answerMessage = $document[0].querySelector('div.answer .message');
-                    element.css('bottom',answerMessage.offsetHeight+'px');
+                    var answerMessage = $document[0].querySelector('cm-answer .message');
+                    $element.css('bottom',answerMessage.offsetHeight+'px');
                 });
             }
         }
