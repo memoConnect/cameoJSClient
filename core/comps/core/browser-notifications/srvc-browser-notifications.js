@@ -16,22 +16,37 @@ angular.module('cmCore').service('cmBrowserNotifications', [
         var self = this,
             tabVisibility = true;
 
+        /**
+         * Service initialize
+         */
         function init(){
             //cmLogger.debug('cmBrowserNotifications.init');
             cmVisibility.add('cmBrowserNotifications', checkBrowserVisibility)
         }
 
+        /**
+         * Callback for cmVisibility Server
+         * @param isHidden {boolean}
+         */
         function checkBrowserVisibility(isHidden){
             //cmLogger.debug('cmBrowserNotifications.checkBrowserVisibility');
             tabVisibility = !isHidden;
         }
 
+        /**
+         * Callback for Notification Clicks
+         * @param notification {object}
+         */
         function callbackOnClick(notification){
             cmLogger.debug('cmBrowserNotifications.callbackOnClick');
 
             //close(notification);
         }
 
+        /**
+         * Close Notification
+         * @param notification {object}
+         */
         function close(notification){
             cmLogger.debug('cmBrowserNotifications.close');
 
@@ -85,6 +100,10 @@ angular.module('cmCore').service('cmBrowserNotifications', [
             }
         };
 
+        /**
+         * initialize a new notification
+         * @param notify {object}
+         */
         this.show = function(notify){
             //cmLogger.debug('cmBrowserNotifications.show');
 
@@ -112,8 +131,12 @@ angular.module('cmCore').service('cmBrowserNotifications', [
             }
         };
 
+        /**
+         * Adapter Function for Friend Request Notifications
+         * @param identity {object} cmIdentityModel
+         */
         this.showFriendRequest = function(identity){
-            //cmLogger.debug('cmBrowserNotifications.show');
+            //cmLogger.debug('cmBrowserNotifications.showFriendRequest');
 
             if(identity instanceof cmIdentityModel && cmUserModel.data.identity.id != identity.id){
                 this.show({
@@ -123,8 +146,13 @@ angular.module('cmCore').service('cmBrowserNotifications', [
             }
         };
 
+        /**
+         * Adapter Function for new Message Notifications
+         * @param identity {object} cmIdentityModel
+         * @param conversationId {string}
+         */
         this.showNewMessage = function(identity, conversationId){
-            //cmLogger.debug('cmBrowserNotifications.show');
+            //cmLogger.debug('cmBrowserNotifications.showNewMessage');
 
             if(identity instanceof cmIdentityModel && cmUserModel.data.identity.id != identity.id){
 
