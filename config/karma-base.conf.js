@@ -16,8 +16,8 @@ module.exports = function(config) {
             // all specs
             'test/unit/**/*.spec.js',
 
-            //'dist/app/i18n/*.json',
-            //'build/i18n/language-keys.json'
+            'dist/app/i18n/*.json',
+            'build/i18n/language-keys.json'
         ],
 
         preprocessors: {
