@@ -1,9 +1,5 @@
 <div class="wrap" id="files-droparea">
 
-    <div ng-if="files.length > 0">
-        <cm-files-preview></cm-files-preview>
-    </div>
-
     <div class="message" data-qa="answer-ctn">
         <textarea
                 id="emoji-textarea"
@@ -13,33 +9,45 @@
                 cm-max-rows="8"
                 input
                 ></textarea>
-        <div class="inputter"></div>
+        <div ng-if="files.length > 0">
+            <cm-files-preview></cm-files-preview>
+        </div>
     </div>
 
     <div class="btns-right">
 
-        <div data-qa="attachments-btn" cm-reactive>
-            <i class="fa cm-attachment"></i>
-            <div cm-user-rights>
-                <cm-file-choose cm-droparea="files-droparea"></cm-file-choose>
-            </div>
-            <div
-                    data-qa="btn-fast-registration"
-                    class="webreader-uploading"
-                    cm-user-rights="showForGuest"
-                    ng-click="openFastRegister()"></div>
-        </div>
-
-        <cm-emoji-handler></cm-emoji-handler>
-
-        <div class="post-wrap" data-qa="btn-send-answer" ng-click="send()" cm-reactive>
-            <i
-                    class="fa cm-post with-cursor {{conversation.lockStatus.class}}-wrap"
-                    ng-class="{
-                'cm-post-idle':isSending,
-                'cm-post-attention':isSendingAbort
-            }"></i>
-        </div>
+        <ul>
+            <li>
+                <div class="btn-post" data-qa="btn-send-answer" ng-click="send()" cm-reactive>
+                    <i class="fa cm-post with-cursor {{conversation.lockStatus.class}}-wrap"
+                       ng-class="{
+                        'cm-post-idle':isSending,
+                        'cm-post-attention':isSendingAbort
+                    }"></i>
+                </div>
+            </li>
+            <li>
+                <cm-emoji-handler></cm-emoji-handler>
+            </li>
+            <li>
+                <div class="btn-attachments" data-qa="attachments-btn" cm-reactive>
+                    <i class="fa cm-attachment"></i>
+                    <div cm-user-rights>
+                        <cm-file-choose cm-droparea="files-droparea"></cm-file-choose>
+                    </div>
+                    <div
+                            data-qa="btn-fast-registration"
+                            class="webreader-uploading"
+                            cm-user-rights="showForGuest"
+                            ng-click="openFastRegister()"></div>
+                </div>
+            </li>
+            <li>
+                <div class="btn-fullscreen" data-qa="btn-fullscreen" cm-reactive>
+                    <i class="fa cm-fullscreen"></i>
+                </div>
+            </li>
+        </ul>
     </div>
 </div>
 <cm-emoji-list ng-model="newMessageText" cm-textarea="emoji-textarea"></cm-emoji-list>

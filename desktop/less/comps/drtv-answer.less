@@ -2,18 +2,19 @@ cm-answer{
   .dbl;
   .box-shadow-top;
   .pos-fxd;
-  .vam;
-  .margin-hr-auto;
-  width:@cm-app-width;
-  min-height:@cm-footer-height;
   bottom:0;
+  left:@cm-column-third-size;
+  width:@cm-column-third-size;
   z-index:2;
-  background-color:@cm-white;
-  left:0;
-  right:0;
+  background-color:@cm-light-grey;
   font-size:@cm-unit - 1;
+  height:@cm-unit*4;
 
   .message{
+    background:@cm-white;
+    margin-left:0.5rem;
+    margin-top:0.5rem;
+    margin-right:0.5 + @cm-unit;
     textarea, .textarea-shadow{
       font-size:@cm-large-font;
     }
@@ -22,17 +23,26 @@ cm-answer{
     }
   }
 
-  .no-mar;
-  left:@cm-column-third-size;
-  width:@cm-column-third-size;
-  .message{
-    width:75%;
-  }
+  .btns-right {
+    .pos-tr;
+    width:@cm-unit;
 
-  cm-files-preview {
-    width:auto;
-    .file-wrap{
-      padding-right:@cm-unit * 2;
+    .btn-post, .btn-attachments, .btn-fullscreen{
+      .pos-rel;
+      .cm-unit-btn;
+    }
+
+    cm-emoji-handler{
+      .cm-unit-btn;
+      i{
+        .cm-unit-btn;
+      }
+    }
+
+    &:last-child{
+      [cm-reactive]{
+        .no-border;
+      }
     }
   }
 }
