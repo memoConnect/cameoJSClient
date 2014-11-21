@@ -1,4 +1,7 @@
-#0.4.2
+# BS 21.11.2014
+* fix edit icon in contact edit view, disable if contact is cameo member
+
+0.4.2.
 * framework major update
 ** angularjs 1.2.15 upgraded to 1.3.2
 ** removed fastclick (ngTouch handle the 300ms click delay)
