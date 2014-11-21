@@ -122,6 +122,12 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
                         })
             },
 
+            sendReadStatus: function(idConversation, idMessage){
+                return	cmApi.post({
+                    path:	"/conversation/" + idConversation + "/message/" + idMessage + "/read"
+                })
+            },
+
             updateEncryptedPassphraseList: function(id, aePassphraseList){
                 return  cmApi.post({
                             path:    "/conversation/%1/aePassphrases".replace(/%1/, id),

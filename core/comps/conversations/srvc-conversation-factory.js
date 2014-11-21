@@ -114,7 +114,7 @@ angular.module('cmConversations').service('cmConversationFactory', [
         cmConversationsAdapter.on('message:new', function(event,data){
             self
                 .create(data.conversationId)
-                .trigger('message:new', data.message)
+                .trigger('message:new', data)
         });
 
         cmConversationsAdapter.on('conversation:new', function(event,data){

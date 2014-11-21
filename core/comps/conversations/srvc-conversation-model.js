@@ -75,12 +75,13 @@ angular.module('cmConversations')
             this.state              = new cmStateManagement(['new','loading']);
             this.keyTransmission    = '';
 
-            this.lastMessage        = this.messages.new() //fallback
+            this.lastMessage        = this.messages.new(); //fallback
 
             this.missingAePassphrases = {};
 
             //rethink, mabye backend should deliver array of message ids
             this.numberOfMessages   = 0;
+            this.unreadMessages     = 0;
 
             this.options            = {
                 'hasCaptcha'    : false,
@@ -232,6 +233,7 @@ angular.module('cmConversations')
                 this.timeOfLastUpdate       = data.lastUpdated          || this.timeOfLastUpdate;
                 this.subject                = data.subject              || this.subject;
                 this.numberOfMessages       = data.numberOfMessages     || this.numberOfMessages;
+                this.unreadMessages         = data.unreadMessages       || this.unreadMessages;
                 this.missingAePassphrases   = data.missingAePassphrases || this.missingAePassphrases;
                 this.keyTransmission        = data.keyTransmission      || this.keyTransmission;
 
@@ -994,28 +996,34 @@ angular.module('cmConversations')
             });
 
             //Todo: fire event on factory and delegate to conversation or something
-            this.on('message:new', function(event, message_data){
-                if(typeof message_data == 'object'){
-                    //console.log(self.timeOfLastUpdate,message_data.created)
-                    if('created' in message_data){
-                        self.timeOfLastUpdate = message_data.created;
+            this.on('message:new', function(event, data){
+                if(typeof data == 'object'){
+                    if('message' in data) {
+                        //console.log(self.timeOfLastUpdate,message_data.created)
+                        if ('created' in data.message) {
+                            self.timeOfLastUpdate = data.message.created;
+                        }
+
+                        var message = self.messages.find(data.message);
+                        if (message == null) {
+                            data.message.conversation = self;
+                            self.numberOfMessages++;
+                            message = self.messages.create(data.message);
+                        } else {
+                            message.importData(data.message);
+                        }
+
+                        self.decrypt();
+                        self.setLastMessage();
+
+                        cmBrowserNotifications.showNewMessage(message.from, self.id);
+
+                        self.trigger('message:reInitFiles');
                     }
 
-                    var message = self.messages.find(message_data);
-                    if(message == null){
-                        message_data.conversation = self;
-                        self.numberOfMessages++;
-                        message = self.messages.create(message_data);
-                    } else {
-                        message.importData(message_data);
+                    if('unreadMessages' in data){
+                        self.unreadMessages = data.unreadMessages;
                     }
-
-                    self.decrypt();
-                    self.setLastMessage();
-
-                    cmBrowserNotifications.showNewMessage(message.from, self.id);
-
-                    self.trigger('message:reInitFiles');
                 }
             });
 
@@ -1040,6 +1048,13 @@ angular.module('cmConversations')
                 self.state.set('decrypted');
                 self.setLastMessage();
                 //self.handleMissingAePassphrases();
+            });
+
+            this.messages.on('last-message:read', function(event, message){
+                if(message.from.id != cmUserModel.data.identity.id && self.unreadMessages > 0){
+                    self.unreadMessages = 0;
+                    cmConversationsAdapter.sendReadStatus(self.id, message.id)
+                }
             });
 
             cmUserModel.on('key:stored key:removed', function(){
