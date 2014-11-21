@@ -225,7 +225,7 @@ angular.module('cameoClient', [
     // start entropy collection for random number generator
     sjcl.random.startCollectors();
 })
-.run(['cmError', function(cmError){
+.run(['cmError', 'cmHistory',function(cmError, cmHistory){
     // only an inject is nessarary
 }])
 .run(['cmUserModel', 'cmBrowserNotifications', '$rootScope', function(cmUserModel, cmBrowserNotifications, $rootScope){
@@ -267,14 +267,29 @@ angular.module('cameoClient', [
  * @TODO cmContactsModel anders initialisieren
  */
 .run([
-    '$rootScope', '$location', '$window', '$document', '$route', '$timeout',
-    'cmUserModel', 'cmConversationFactory', 'cmContactsModel', 'cmRootService',
-    'cmSettings','cmLanguage', 'cmLogger', 'cfpLoadingBar', 'cmEnv', 'cmVersion',
-    'cmApi', 'cmAuthenticationRequest', 'cmSystemCheck', 'cmError', 'cmVisibility',
+    '$rootScope',
+    '$location',
+    '$window',
+    '$document',
+    '$route',
+    '$timeout',
+    'cmUserModel',
+    'cmConversationFactory',
+    'cmContactsModel',
+    'cmRootService',
+    'cmSettings',
+    'cmLanguage',
+    'cmLogger',
+    'cfpLoadingBar',
+    'cmEnv',
+    'cmVersion',
+    'cmApi',
+    'cmAuthenticationRequest',
+    'cmSystemCheck',
     function ($rootScope, $location, $window, $document, $route, $timeout,
-              cmUserModel, cmConversationFactory, cmContactsModel, cmRootService,
-              cmSettings, cmLanguage, cmLogger, cfpLoadingBar, cmEnv, cmVersion,
-              cmApi, cmAuthenticationRequest, cmSystemCheck, cmError, cmVisibility) {
+              cmUserModel, cmConversationFactory, cmContactsModel, cmRootService, cmSettings,
+              cmLanguage, cmLogger, cfpLoadingBar, cmEnv, cmVersion,
+              cmApi, cmAuthenticationRequest, cmSystemCheck) {
 
         //prep $rootScope with useful tools
         $rootScope.console  =   window.console;
@@ -284,38 +299,9 @@ angular.module('cameoClient', [
         $rootScope.showOverlay = function(id){ $rootScope.$broadcast('cmOverlay:show', id) };
         $rootScope.hideOverlay = function(id){ $rootScope.$broadcast('cmOverlay:hide', id) };
 
-        // url hashing for backbutton
-        $rootScope.urlHistory = [];
-        // detect back button event
-        window.onpopstate = function(){
-            $rootScope.urlHistory.pop();
-        };
-
-        $rootScope.$on('$routeChangeSuccess', function(){
-            // momentjs
-            //$window.moment.lang(cmLanguage.getCurrentLanguage());
-
+        $rootScope.$on('$routeChangeSuccess', function() {
             // important for HTML Manipulation to switch classes etc.
             $rootScope.cmIsGuest = cmUserModel.isGuest();
-
-            // handle url history for backbutton handling
-            $rootScope.urlHistory = $rootScope.urlHistory || [];
-
-            var currentRoute = $location.$$path,
-                prevRoute = $rootScope.urlHistory.length > 0
-                          ? $rootScope.urlHistory[$rootScope.urlHistory.length - 1]
-                          : '';
-
-            // clear history in some cases
-            if(
-                currentRoute.indexOf('/login') != -1 // when login route
-             //|| currentRoute == prevRoute // current is the same then is startPage
-            ) {
-                $rootScope.urlHistory = [];
-            // push new route
-            } else if(currentRoute !== prevRoute) {
-                $rootScope.urlHistory.push($location.$$path);
-            }
         });
 
         // Make it easy for e2e-tests to monitor route changes:

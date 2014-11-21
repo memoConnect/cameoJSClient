@@ -15,7 +15,7 @@ angular.module('cmCore').service('cmRootService', [
          * @param replace {boolean}
          */
         $rootScope.goTo = function(path, replace){
-            //cmLogger.debug('cmRootService.goTo ' + path);
+            cmLogger.debug('cmRootService.goTo ' + path, replace);
 
             path = path[0] == '/' ? path : '/'+path;
             if(cmJob.isActive() !== false){
