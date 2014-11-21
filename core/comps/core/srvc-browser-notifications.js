@@ -41,8 +41,8 @@ angular.module('cmCore').service('cmBrowserNotifications', [
             //cmLogger.debug('cmBrowserNotifications.callbackOnClick');
 
             try {
-                $window.focus(); // doesn't work in chrome
-            } catch(e){
+                $window.focus();
+            } catch (e) {
                 // doesn't matter
             }
         }
@@ -120,15 +120,13 @@ angular.module('cmCore').service('cmBrowserNotifications', [
                     icon: $window.location.origin + $window.location.pathname + cmConfig.appIcon
                 };
 
-                if(typeof notify.callbackOnClick == 'function'){
-                    options.onclick = notify.callbackOnClick();
-                    //notification.addEventListener('click', notify.callbackOnClick(notification));
-                } else {
-                    options.onclick = callbackOnClick();
-                    //notification.addEventListener('click', callbackOnClick(notification));
-                }
-
                 var notification = new Notification(title, options);
+
+                if(typeof notify.callbackOnClick == 'function'){
+                    notification.onclick = notify.callbackOnClick;
+                } else {
+                    notification.onclick = callbackOnClick;
+                }
 
                 /**
                  * @TODO
@@ -158,10 +156,11 @@ angular.module('cmCore').service('cmBrowserNotifications', [
                         title: $filter('cmTranslate')('SYSTEM.EVENTS.FRIEND_REQUEST.TITLE'),
                         body: $filter('cmTranslate')('SYSTEM.EVENTS.FRIEND_REQUEST.MSG', {sender: identity.getDisplayName()}),
                         callbackOnClick: function(){
-                            try{
-                                $window.focus(); // doesn't work in chrome
+                            try {
                                 $rootScope.goTo('/contact/request/list');
-                            } catch(e){
+
+                                $window.focus();
+                            } catch (e) {
                                 // doesn't matter
                             }
                         }
@@ -188,10 +187,11 @@ angular.module('cmCore').service('cmBrowserNotifications', [
                         body: $filter('cmTranslate')('SYSTEM.EVENTS.NEW_MESSAGE.MSG',{sender: identity.getDisplayName()}),
                         callbackOnClick: function(){
                             try{
-                                $window.focus(); // doesn't work in chrome
                                 if(!$rootScope.checkConversationRoute(conversationId) && !$rootScope.checkPurlRoute()){
                                     $rootScope.goTo('/conversation/' + conversationId);
                                 }
+
+                                $window.focus();
                             } catch(e){
                                 // doesn't matter
                             }
