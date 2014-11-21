@@ -1,5 +1,6 @@
 # BS 21.11.2014
 * fix edit icon in contact edit view, disable if contact is cameo member
+* fix edit own identity CAM-1340
 
 0.4.2.
 * framework major update
