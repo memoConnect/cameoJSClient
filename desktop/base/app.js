@@ -237,25 +237,10 @@ angular.module('cameoClient', [
  * @TODO cmContactsModel anders initialisieren
  */
 .run([
-    '$rootScope',
-    '$location',
-    '$window',
-    '$document',
-    '$route',
-    '$timeout',
-    'cmUserModel',
-    'cmConversationFactory',
-    'cmContactsModel',
-    'cmRootService',
-    'cmSettings',
-    'cmLanguage',
-    'cmLogger',
-    'cfpLoadingBar',
-    'cmEnv',
-    'cmVersion',
-    'cmApi',
-    'cmAuthenticationRequest',
-    'cmSystemCheck',
+    '$rootScope', '$location', '$window', '$document', '$route', '$timeout',
+    'cmUserModel', 'cmConversationFactory', 'cmContactsModel', 'cmRootService',
+    'cmSettings', 'cmLanguage', 'cmLogger', 'cfpLoadingBar', 'cmEnv', 'cmVersion',
+    'cmApi', 'cmAuthenticationRequest', 'cmSystemCheck',
     function ($rootScope, $location, $window, $document, $route, $timeout,
               cmUserModel, cmConversationFactory, cmContactsModel, cmRootService, cmSettings,
               cmLanguage, cmLogger, cfpLoadingBar, cmEnv, cmVersion,
@@ -265,16 +250,12 @@ angular.module('cameoClient', [
         $rootScope.console  =   window.console;
         $rootScope.alert    =   window.alert;
 
-        // $rootScope.$watch(function(){
-        //     cmLogger.debug('$digest!')
-        // })
-
         //add Overlay handles:
         $rootScope.showOverlay = function(id){ $rootScope.$broadcast('cmOverlay:show', id) };
         $rootScope.hideOverlay = function(id){ $rootScope.$broadcast('cmOverlay:hide', id) };
 
         // passing wrong route calls
-        $rootScope.$on('$routeChangeSuccess', function(){
+        $rootScope.$on('$routeChangeStart', function(){
             // expections
             var path_regex = /^(\/login|\/registration|\/systemcheck|\/terms|\/disclaimer|\/404|\/version|\/purl\/[a-zA-Z0-9]{1,})$/;
             var path = $location.$$path;
@@ -288,11 +269,6 @@ angular.module('cameoClient', [
             } else if (path == '/logout'){
                 cmUserModel.doLogout(true,'app.js logout-route');
             }
-        });
-
-        $rootScope.$on('$routeChangeSuccess', function() {
-            // important for HTML Manipulation to switch classes etc.
-            $rootScope.cmIsGuest = cmUserModel.isGuest();
         });
 
         // Make it easy for e2e-tests to monitor route changes:
