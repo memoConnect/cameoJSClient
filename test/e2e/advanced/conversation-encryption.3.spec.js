@@ -245,16 +245,22 @@ describe('Conversation encryption -', function () {
                     .then(function(){
                         return  $$('cm-message').then(function (elements) {
                                     elements.forEach(function(element, i){
-                                        if(messages[i].author.hasKey){
-                                            browser.wait(function() {
-                                                return element.$("[data-qa = 'valid signature']").isPresent()
-                                            }, 3000)
+                                        var author = recipients.filter(function(recipient){
+                                                        return messages[i].author == recipient.login
+                                                    })[0]
+                                        if(author.hasKey){
+                                            ptor.wait(function() {
+                                                return element.$("[data-qa = 'signed']").isPresent()
+                                            }, 3000, 'Message signature indicator did not show up.')
                                         }
-                                        // else{
-                                        //     browser.wait(function() {
-                                        //         return element.$("[data-qa = 'no signature']").isPresent()
-                                        //     }, 3000)
-                                        // }
+                                        else{
+
+                                            ptor.debugger()
+
+                                            ptor.wait(function() {
+                                                return element.$("[data-qa = 'unsigned']").isPresent()
+                                            }, 3000, 'Missing message signature indicator did not show up.')
+                                        }
                                     })
                                 })
                     })

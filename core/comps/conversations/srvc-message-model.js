@@ -72,10 +72,12 @@ angular.module('cmConversations')
                                         this.secretData = data
                                         return this
                                     },
+
                                     setSignatures : function(signatures){
                                         this.signatures = signatures
                                         return this
                                     },
+
                                     getToken : function(){
 
                                         if(this.publicData == null)
@@ -111,6 +113,9 @@ angular.module('cmConversations')
 
                                     verify : function(identity){
                                         var self = this
+
+                                        if(!identity)
+                                            return $q.reject('no identity given.')
 
                                         if(this.signatures == null)
                                             return $q.reject('signatures missing.')
@@ -174,13 +179,6 @@ angular.module('cmConversations')
                     this.from       = cmIdentityFactory.create(data.fromIdentity);
                 }
 
-                if('signatures' in data){
-
-                    this.state.set('signed')
-
-                    if('plain' in data.signatures)
-                        this.authenticity.setSignatures(data.signatures.plain)
-                }
 
                 this.created    = data.created || this.created;
 
@@ -202,6 +200,46 @@ angular.module('cmConversations')
 
                 this.state.set('incomplete')
                 this.initFiles();
+
+
+                if(this.signatures && (this.signatures.plain || this.signatures.encrypted)){
+                    this.state.set('signed')
+
+                    if(!this.encryptedData && !this.signatures.encrypted){
+                        self.authenticity
+                        .setPublicData(self.plainData)
+                        .setSecretData({})
+                        .setSignatures(self.signatures.plain)
+                        .verify(self.from)
+                        .then(
+                            function(){
+                                self.state.unset('bogus')
+                                self.state.set('authentic')
+                            },
+                            function(reason){
+                                console.log(reason)
+                                self.state.unset('authentic')
+                                self.state.set('bogus')
+                            }
+                        )
+                    }else{
+                        self.when('decrypt:success')
+                        .then(function(){
+                            return self.authenticity.verify(self.from)
+                        })    
+                        .then(
+                            function(){
+                                self.state.unset('bogus')
+                                self.state.set('authentic')
+                            },
+                            function(){
+                                self.state.unset('authentic')
+                                self.state.set('bogus')
+                            }
+                         )
+                    }
+                }
+
                 this.trigger('update:finished');
 
                 this.state.unset('new');
@@ -293,7 +331,7 @@ angular.module('cmConversations')
                 return  $q.when()
                         .then(function(){
                             
-                            if(self.signatures && self.signatures.plain)
+                            if(self.signatures && self.signatures.plain && self.signatures.plain.length != 0)
                                 self.signatures.encrypted = cmCrypt.encrypt(passphrase, JSON.stringify(self.signatures.plain))
 
                             return  $q.when(self.signatures.encrypted)
@@ -329,16 +367,6 @@ angular.module('cmConversations')
 
                         if(decrypted_data){
                             this.authenticity.setSecretData(decrypted_data)
-
-                            this.verifySignatures()
-                            .then(
-                                function(){
-                                    self.state.set('authentic')
-                                },
-                                function(reason){
-                                    self.state.set('bogus')
-                                }
-                            )
 
                             this.importData(decrypted_data);
 
