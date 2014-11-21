@@ -1,3 +1,7 @@
+# WW 21.11.2014
+* fix menu button CAM-1384
+* update back button, show modal if leaving app, fix CAM-1383
+
 # BS 21.11.2014
 * fix edit icon in contact edit view, disable if contact is cameo member
 * fix edit own identity CAM-1340
