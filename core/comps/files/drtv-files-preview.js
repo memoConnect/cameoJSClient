@@ -21,7 +21,7 @@ angular.module('cmFiles').directive('cmFilesPreview',[
                     $scope.files = cmAnswerFiles.files;
                 }
 
-                cmAnswerFiles.on('files:resetted', callback_files_resetted)
+                cmAnswerFiles.on('files:resetted', callback_files_resetted);
                 var watch = $rootScope.$on('textArea:resize', function(){
                     var answerMessage = $document[0].querySelector('cm-answer .message');
                     $element.css('bottom',answerMessage.offsetHeight+'px');

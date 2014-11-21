@@ -1,22 +1,18 @@
 <div class="wrap" id="files-droparea">
 
     <div class="message" data-qa="answer-ctn">
+        <i class="fa cm-grip" cm-drag-resize="#answer-textarea"></i>
         <textarea
-                id="emoji-textarea"
-                data-qa="input-answer"
-                ng-model="newMessageText"
-                cm-resize-textarea
-                cm-max-rows="8"
-                input
-                ></textarea>
-        <div ng-if="files.length > 0">
-            <cm-files-preview></cm-files-preview>
-        </div>
+            id="answer-textarea"
+            data-qa="input-answer"
+            ng-model="newMessageText"
+            ng-class="{'with-files':files.length > 0}"
+        ></textarea>
+        <cm-files-preview ng-show="files.length > 0"></cm-files-preview>
     </div>
 
     <div class="btns-right">
-
-        <ul>
+        <ul class="no-border-top">
             <li>
                 <div class="btn-post" data-qa="btn-send-answer" ng-click="send()" cm-reactive>
                     <i class="fa cm-post with-cursor {{conversation.lockStatus.class}}-wrap"
@@ -36,10 +32,10 @@
                         <cm-file-choose cm-droparea="files-droparea"></cm-file-choose>
                     </div>
                     <div
-                            data-qa="btn-fast-registration"
-                            class="webreader-uploading"
-                            cm-user-rights="showForGuest"
-                            ng-click="openFastRegister()"></div>
+                        data-qa="btn-fast-registration"
+                        class="webreader-uploading"
+                        cm-user-rights="showForGuest"
+                        ng-click="openFastRegister()"></div>
                 </div>
             </li>
             <li>
@@ -50,4 +46,4 @@
         </ul>
     </div>
 </div>
-<cm-emoji-list ng-model="newMessageText" cm-textarea="emoji-textarea"></cm-emoji-list>
+<cm-emoji-list ng-model="newMessageText" cm-textarea="answer-textarea"></cm-emoji-list>
