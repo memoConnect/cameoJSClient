@@ -35,18 +35,20 @@ angular.module('cmUi').directive('cmInfoBubble',[
                     return {top: top, left: left};
                 }
 
-                scope.$watch(attrs.ngShow, function(bool) {
-                    if (bool && bool != false) {
+                // scroll bubble into view, when ng-show truns true:
 
-                        var offset = getOffsetSum(element[0])
+                // scope.$watch(attrs.ngShow, function(bool) {
+                //     if (bool && bool != false) {
 
-                        var bodyAndHtml = angular.element($document[0].querySelectorAll('body,html')),
-                            cmHeader = angular.element($document[0].querySelector('cm-header'))
-                        angular.forEach(bodyAndHtml, function (tag) {
-                            tag.scrollTop = offset.top - cmHeader[0].offsetHeight;
-                        });
-                    }
-                });
+                //         var offset = getOffsetSum(element[0])
+
+                //         var bodyAndHtml = angular.element($document[0].querySelectorAll('body,html')),
+                //             cmHeader = angular.element($document[0].querySelector('cm-header'))
+                //         angular.forEach(bodyAndHtml, function (tag) {
+                //             tag.scrollTop = offset.top - cmHeader[0].offsetHeight;
+                //         });
+                //     }
+                // });
             }
         }
     }
