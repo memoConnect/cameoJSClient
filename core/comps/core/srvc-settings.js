@@ -15,7 +15,7 @@ angular.module('cmCore').service('cmSettings', [
         var self = this,
             localStorageKey = 'appSettings',
             defaultProperties = {
-                convertEmoji: true,
+                convertSmileysToEmojis: true,
                 sendOnReturn: false,
                 skipKeyInfo: false,
                 dateFormat: 'dd.MM.yyyy',
@@ -77,6 +77,7 @@ angular.module('cmCore').service('cmSettings', [
             this.properties[key] = value;
 
             if(cmUserModel.storageSave(localStorageKey, this.properties)){
+                cmUserModel.saveAppSettings();
                 return true;
             }
 
