@@ -55,26 +55,7 @@ angular.module('cmWidgets').directive('cmWidgetRegistration', [
                 };
 
 
-                $scope.scrollToInputError = function() {
 
-                    function getOffsetSum(elem) {
-                        var top=0, left=0;
-                        while(elem) {
-                            top = top + parseInt(elem.offsetTop);
-                            left = left + parseInt(elem.offsetLeft);
-                            elem = elem.offsetParent;
-                        }
-                        return {top: top, left: left};
-                    }
-
-                    var offset = getOffsetSum(document.getElementsByClassName("cm-input-error")[0]),
-                        bodyAndHtml = angular.element($document[0].querySelectorAll('body,html')),
-                        cmHeader = angular.element($document[0].querySelector('cm-header'))
-
-                    angular.forEach(bodyAndHtml, function (tag) {
-                        tag.scrollTop = offset.top - cmHeader[0].offsetHeight - 10; //-10 for the looks
-                    })
-                }
 
                 /**
                  * validate Registration Form
@@ -209,7 +190,7 @@ angular.module('cmWidgets').directive('cmWidgetRegistration', [
                         },
                         function () {
                             loader.stop()
-                            $scope.scrollToInputError()
+                            cmUtil.scrollToInputError()
                         }
                     );
                 };

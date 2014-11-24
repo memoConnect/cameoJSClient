@@ -12,7 +12,7 @@
 angular.module('cmContacts')
 .directive('cmContactEdit', [
     'cmIdentityFactory', 'cmUtil', 'cmNotify', 'cmUserModel',
-    'cmContactsModel', 'cmLogger', 'cmLoader',
+    'cmContactsModel', 'cmLogger', 'cmLoader', 
     '$rootScope', '$q',
     function(cmIdentityFactory, cmUtil, cmNotify, cmUserModel,
              cmContactsModel, cmLogger, cmLoader,
@@ -168,6 +168,7 @@ angular.module('cmContacts')
                         },
                         function () {
                             loader.stop();
+                            cmUtil.scrollToInputError()
                         }
                     )
                 };
