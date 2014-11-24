@@ -72,7 +72,7 @@ angular.module('cmWidgets').directive('cmWidgetRegistration', [
                         cmHeader = angular.element($document[0].querySelector('cm-header'))
 
                     angular.forEach(bodyAndHtml, function (tag) {
-                        tag.scrollTop = offset.top - cmHeader[0].offsetHeight;
+                        tag.scrollTop = offset.top - cmHeader[0].offsetHeight - 10; //-10 for the looks
                     })
                 }
 
