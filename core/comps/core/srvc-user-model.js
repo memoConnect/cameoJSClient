@@ -852,9 +852,10 @@ angular.module('cmCore')
          */
         this.setAppSettings = function(data){
             //cmLogger.debug('cmUserModel.setAppSettings');
+            var settings = this.storageGet('appSettings') || {};
 
             if('userSettings' in data){
-                this.storageSave('appSettings', data.userSettings);
+                this.storageSave('appSettings', angular.extend({}, settings, data.userSettings));
             }
         };
 
