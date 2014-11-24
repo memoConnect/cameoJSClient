@@ -21,6 +21,8 @@ angular.module('cmConversations').directive('cmConversationTag',[
             },
             controller: function($scope){
 
+                $scope.settings = cmSettings;
+
                 function update(){
                     /**
                      * set Avatar Identity
@@ -47,7 +49,7 @@ angular.module('cmConversations').directive('cmConversationTag',[
                 update();
 
                 $scope.$on('$destroy', function () {
-                    $scope.contact.identity.off('update:finished message:new', update);
+                    $scope.conversation.off('update:finished message:new', update);
                 });
             }
         }
