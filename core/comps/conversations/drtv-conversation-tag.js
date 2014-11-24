@@ -2,9 +2,9 @@
 
 angular.module('cmConversations').directive('cmConversationTag',[
     'cmUserModel',
+    'cmSettings',
     '$routeParams',
-    function (cmUserModel,
-              $routeParams){
+    function (cmUserModel, cmSettings, $routeParams){
         return {
             restrict: 'AE',
             scope: {
@@ -42,11 +42,13 @@ angular.module('cmConversations').directive('cmConversationTag',[
                     $scope.timeOfLastUpdate = $scope.conversation.timeOfLastUpdate;
                 }
 
-                $scope.conversation.on('update:finished message:new',function(){
-                    update();
-                });
+                $scope.conversation.on('update:finished message:new',update);
 
                 update();
+
+                $scope.$on('$destroy', function () {
+                    $scope.contact.identity.off('update:finished message:new', update);
+                });
             }
         }
     }
