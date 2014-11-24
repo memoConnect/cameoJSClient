@@ -10,13 +10,33 @@ cm-answer{
   font-size:@cm-unit - 1;
   //height:@cm-unit * 4;
 
+  @answer-padding: (@cm-horizontal-padding*2);
+  @default-btns-height: (@cm-unit*4) + @answer-padding;
+  @default-textarea-height: @default-btns-height - @answer-padding;
+
+  &.in-fullscreen{
+    top: @cm-header-height;
+    left:0;
+    width:100%;
+    .wrap{
+      height:100%;
+      .message {
+        height:100%;
+        textarea {
+          width:100%!important;
+          height:99%!important;
+        }
+      }
+    }
+  }
+
   .message{
     .pos-rel;
     .border-radius-top;
     background:@cm-white;
-    margin-left:@cm-horizontal-padding*2;
-    margin-top:@cm-horizontal-padding*2;
-    margin-right:(@cm-horizontal-padding*2) + @cm-unit;
+    margin-left:@answer-padding;
+    margin-top:@answer-padding;
+    margin-right:@answer-padding + @cm-unit;
 
     [cm-drag-resize]{
       color:@cm-border-grey;
@@ -29,9 +49,8 @@ cm-answer{
       font-size:@cm-large-font;
     }
 
-    @default-textarea-height: (@cm-unit*4) - (@cm-horizontal-padding*2);
-
     textarea{
+      width:98%!important;
       height:@default-textarea-height;
       resize:none;
       .dbl!important;
@@ -60,7 +79,7 @@ cm-answer{
           .dib;
           img{
             .dbl;
-            height:@cm-unit - (@cm-horizontal-padding*2);
+            height:@cm-unit - @answer-padding;
           }
         }
       }
@@ -68,7 +87,8 @@ cm-answer{
   }
 
   .btns-right {
-    .pos-tr;
+    .pos-br;
+    z-index:2;
     width:@cm-unit;
 
     .btn-post, .btn-attachments, .btn-fullscreen{
@@ -87,6 +107,19 @@ cm-answer{
       [cm-reactive]{
         .no-border;
       }
+    }
+  }
+
+  cm-emoji-list {
+    &.is-visible{
+      .pos-br;
+      .border-radius-top;
+      max-height:none;
+      z-index: 1;
+      background: #fff;
+      right: @answer-padding + @cm-unit;
+      left: @answer-padding;
+      top: @answer-padding;
     }
   }
 }

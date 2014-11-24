@@ -62,7 +62,7 @@ angular.module('cmConversations')
                 /**
                  * handle Recipient View
                  */
-                $scope.showGrid = cmSettings.get('defaultShowRecipientAvatar'); // degault grid off, wenn recipient.legnth > 2
+                $scope.showGrid = cmSettings.get('defaultShowRecipientAvatar'); // degault grid off, wenn recipient.length > 2
                 if(!$scope.conversation.state.is('new')){
                     $scope.showGrid = storageService.get($scope.conversation.id)
                 }
@@ -168,7 +168,7 @@ angular.module('cmConversations')
                     }      
 
                     if($scope.isSending)
-                        return $q.reject('message upload already in progress.')
+                        return $q.reject('message upload already in progress.');
 
 
                     var new_message = $scope.conversation.messages
@@ -226,9 +226,10 @@ angular.module('cmConversations')
                                     clearTransferScopeData();
                                     $scope.newMessageText = '';
                                     filesForMessage = [];
+                                    $rootScope.$broadcast('cmAnswer:reset');
                                     
                                     //Todo: This is not the right place to count messages:
-                                    $scope.conversation.numberOfMessages ++
+                                    $scope.conversation.numberOfMessages ++;
                                 },
                                 function(){
                                     $scope.conversation.messages.deregister(new_message)
