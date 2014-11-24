@@ -418,7 +418,8 @@
         "SEND_ON_RETURN" : "Send on Return",
         "EMOJI_CONVERT" : "Convert Smileys to Emojis",
         "TIME_FORMAT" : "Time format",
-        "SKIP_KEY_INFO" : "Skip cameoKey information"
+        "SKIP_KEY_INFO" : "Skip cameoKey information",
+        "ENABLE_UNREAD_MESSAGES": "enable unread messages"
       },
       "PERFORMANCE" : {
         "TITLE" : "Performance"

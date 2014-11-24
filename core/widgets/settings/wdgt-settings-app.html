@@ -70,4 +70,15 @@
             </section>
         </span>
     </li>
+    <li ng-click="handleBooleans('enableUnreadMessages')" cm-reactive>
+        <span class="item clearfix">
+            <span class="title">
+                <span>{{'SETTINGS.PAGES.APP.ENABLE_UNREAD_MESSAGES' | cmTranslate}}</span>
+            </span>
+
+            <section class="icon-list">
+                <i class="fa" ng-class="{'cm-radio-0':!settings.enableUnreadMessages, 'cm-radio-1':settings.enableUnreadMessages}" data-qa="checkbox-enable-unread-messages"></i>
+            </section>
+        </span>
+    </li>
 </ul>

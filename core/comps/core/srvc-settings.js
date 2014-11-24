@@ -21,7 +21,8 @@ angular.module('cmCore').service('cmSettings', [
                 dateFormat: 'dd.MM.yyyy',
                 timeFormat: 'HH:mm',
                 pushNotifications: true,
-                browserNotifications: true
+                browserNotifications: true,
+                enableUnreadMessages: true
             };
 
         cmObject.addEventHandlingTo(this);

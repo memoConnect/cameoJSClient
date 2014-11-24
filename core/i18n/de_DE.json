@@ -512,7 +512,8 @@
                 "SEND_ON_RETURN": "Senden bei Enter-Eingabe",
                 "SKIP_KEY_INFO": "cameoKey Information überspringen",
                 "DATE_FORMAT": "Datumsformat",
-                "TIME_FORMAT": "Zeitformat"
+                "TIME_FORMAT": "Zeitformat",
+                "ENABLE_UNREAD_MESSAGES": "ungelesene Nachrichten anzeigen"
             },
             "IDENTITY": {
                 "CREATE": {
