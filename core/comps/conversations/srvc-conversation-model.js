@@ -43,13 +43,14 @@ angular.module('cmConversations')
     'cmSecurityAspectsConversation',
     'cmUtil',
     'cmFilesAdapter',
+    'cmSettings',
     'cmKeyStorageService',
     '$q',
     '$rootScope',
     
     function (cmBoot, cmConversationsAdapter, cmMessageModel, cmIdentityFactory, cmIdentityModel, cmFileFactory,
               cmCrypt, cmUserModel, cmFactory, cmStateManagement, cmBrowserNotifications, cmNotify, cmObject, cmLogger, cmPassphraseVault,
-              cmSecurityAspectsConversation, cmUtil, cmFilesAdapter, cmKeyStorageService,
+              cmSecurityAspectsConversation, cmUtil, cmFilesAdapter, cmSettings, cmKeyStorageService,
               $q, $rootScope){
 
         function ConversationModel(data){
@@ -98,7 +99,7 @@ angular.module('cmConversations')
                 'class': 'safer'
             };
 
-            /*maybe REFACTOR TODO*/
+            /* maybe REFACTOR TODO */
             this.passCaptcha = undefined;
             this.tmpPassCaptcha = '';
 
@@ -1055,7 +1056,7 @@ angular.module('cmConversations')
             });
 
             this.messages.on('last-message:read', function(event, message){
-                if(message.from.id != cmUserModel.data.identity.id && self.unreadMessages > 0){
+                if(message.from.id != cmUserModel.data.identity.id && self.unreadMessages > 0 && cmSettings.get('enableUnreadMessages')){
                     self.unreadMessages = 0;
                     cmConversationsAdapter.sendReadStatus(self.id, message.id)
                 }
