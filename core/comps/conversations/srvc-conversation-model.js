@@ -221,7 +221,8 @@ angular.module('cmConversations')
              * @param {Object} data The conversation data as recieved from the backend.
              */
             this.importData = function(data){
-//                cmLogger.debug('cmConversationModel:importData');
+                //cmLogger.debug('cmConversationModel:importData');
+
                 if(typeof data !== 'object'){
                     cmLogger.debug('cmConversationModel:import:failed - no data!');
                     return this;
@@ -234,9 +235,12 @@ angular.module('cmConversations')
                 this.subject                = data.subject              || this.subject;
                 this.numberOfMessages       = data.numberOfMessages     || this.numberOfMessages;
                 this.unreadMessages         = data.unreadMessages       || this.unreadMessages;
+                // special if unreadMessages == 0
+                if('unreadMessages' in data && typeof data.unreadMessages == 'number' && data.unreadMessages == 0){
+                    this.unreadMessages = 0;
+                }
                 this.missingAePassphrases   = data.missingAePassphrases || this.missingAePassphrases;
                 this.keyTransmission        = data.keyTransmission      || this.keyTransmission;
-
 
                 //Create passphraseVault:
                 if(data.sePassphrase || data.aePassphraseList){

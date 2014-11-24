@@ -121,6 +121,12 @@ angular.module('cmConversations').service('cmConversationFactory', [
             self.create(data)
         });
 
+        cmConversationsAdapter.on('conversation:update', function(event, data){
+            //cmLogger.debug('cmConversationFactory.on:conversation:update');
+            self.create(data, true)
+        });
+
+
         /**
          * @TODO CallbackQueue? Fingerprint check! Performance!
          */
