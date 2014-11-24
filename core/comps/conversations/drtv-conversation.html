@@ -79,14 +79,8 @@
 
 <div id="conversation-top"></div>
 
-<div
-    ng-repeat="message in (filteredData = (conversation.messages | orderBy:'created':false))"
-    cm-scroll-to="{anchor:'#conversation-bottom',force:'bottom'}"
-    cm-last-message>
-    <cm-date-seperator cm-timestamp="message.created" cm-timestamp-prev="filteredData[$index - 1].created"></cm-date-seperator>
-    <cm-message cm-data="message" cm-data-conversation="conversation"></cm-message>
-</div>
+<cm-messages-timeline></cm-messages-timeline>
 
 <div id="conversation-bottom" cm-scroll-to="{anchor:'#conversation-bottom',force:'bottom',onEvent:true}"></div>
 
-<cm-answer cm-data="conversation"></cm-answer>
+<cm-answer></cm-answer>

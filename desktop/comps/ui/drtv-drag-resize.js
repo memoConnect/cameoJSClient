@@ -52,7 +52,8 @@ angular.module('cmDesktopUi')
                 var startY = 0;
 
                 // just toogle
-                var watcher1 = element.on('dblclick', function(){
+
+                function callback_dblclick(){
                     if(lastHeight == maxHeight){
                         updateElement(minHeight);
                         lastHeight = target.offsetHeight;
@@ -60,14 +61,15 @@ angular.module('cmDesktopUi')
                         updateElement(maxHeight);
                         lastHeight = target.offsetHeight;
                     }
-                });
-                // dragging
-                var watcher2 = element.on('mousedown', function(evt){
+                }
+
+                function callback_mousedown(evt){
                     offset = getOffsetSum(target);
                     startY = evt.y;
                     dragged = true;
-                });
-                var watcher3 = $document.on('mousemove', function(evt){
+                }
+
+                function callback_mousemove(evt){
                     if(dragged) {
                         var difference = (startY - evt.y);
                         var possibleHeight = lastHeight + difference;
@@ -80,23 +82,30 @@ angular.module('cmDesktopUi')
 
                         updateElement(possibleHeight);
                     }
-                });
-                // set for next drag
-                var watcher4 = $document.on('mouseup', function(){
+                }
+
+                function callback_mouseup(){
                     dragged = false;
                     lastHeight = target.offsetHeight;
-                });
+                }
 
-                var watcher5 = $rootScope.$on('cmAnswer:reset',function(){
+                element.on('dblclick', callback_dblclick);
+                // dragging
+                element.on('mousedown',callback_mousedown);
+                $document.on('mousemove',callback_mousemove);
+                // set for next drag
+                $document.on('mouseup', callback_mouseup);
+
+                var watcher = $rootScope.$on('cmAnswer:reset',function(){
                     updateElement(minHeight);
                 });
 
                 scope.$on('$destroy', function(){
-                    watcher1();
-                    watcher2();
-                    watcher3();
-                    watcher4();
-                    watcher5();
+                    element.off('dblclick', callback_dblclick);
+                    element.off('mousedown',callback_mousedown);
+                    $document.off('mousemove',callback_mousemove);
+                    $document.off('mouseup', callback_mouseup);
+                    watcher();
                 });
             }
         }
