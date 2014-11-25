@@ -105,7 +105,7 @@ describe('Route conversation:', function () {
     })
 
     it('should have an answer bar', function () {
-        expect($('.answer').isPresent()).toBe(true)
+        expect($('cm-answer').isPresent()).toBe(true)
     })
 
     it('send message', function () {

@@ -1,0 +1,50 @@
+<div class="wrap" id="files-droparea">
+
+    <div class="message" data-qa="answer-ctn">
+        <i ng-show="!isFullscreen" class="fa cm-expand-top-right" cm-drag-resize="{target:'#answer-textarea',parentForMaxHeight:'cm-column'}"></i>
+        <textarea
+            id="answer-textarea"
+            data-qa="input-answer"
+            cm-send-on-return
+            ng-model="newMessageText"
+            ng-class="{'with-files':files.length > 0}"
+        ></textarea>
+        <cm-files-preview ng-show="files.length > 0"></cm-files-preview>
+    </div>
+
+    <div class="btns-right">
+        <ul class="no-border-top">
+            <li>
+                <div class="btn-post" data-qa="btn-send-answer" ng-click="send()" cm-reactive>
+                    <i class="fa cm-post with-cursor {{conversation.lockStatus.class}}-wrap"
+                       ng-class="{
+                        'cm-post-idle':isSending,
+                        'cm-post-attention':isSendingAbort
+                    }"></i>
+                </div>
+            </li>
+            <li>
+                <cm-emoji-handler></cm-emoji-handler>
+            </li>
+            <li>
+                <div class="btn-attachments" data-qa="attachments-btn" cm-reactive>
+                    <i class="fa cm-attachment"></i>
+                    <div cm-user-rights>
+                        <cm-file-choose cm-droparea="files-droparea"></cm-file-choose>
+                    </div>
+                    <div
+                        data-qa="btn-fast-registration"
+                        class="webreader-uploading"
+                        cm-user-rights="showForGuest"
+                        ng-click="openFastRegister()"></div>
+                </div>
+            </li>
+            <li>
+                <div class="btn-fullscreen" data-qa="btn-fullscreen" cm-reactive ng-click="toogleFullscreen()">
+                    <i class="fa" ng-class="{'cm-fullscreen':!isFullscreen,'cm-fullscreen-off':isFullscreen}"></i>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+<cm-emoji-list ng-model="newMessageText" cm-textarea="answer-textarea"></cm-emoji-list>
