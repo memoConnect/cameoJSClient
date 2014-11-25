@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('cmPhonegap').service('cmPhonegap', [
-    'cmLogger',
+    'cmLogger', 'cmHistory', 'cmModal',
     '$q', '$document', '$phonegapCameoConfig', '$navigator', '$rootScope',
-    function (cmLogger,
+    function (cmLogger, cmHistory, cmModal,
               $q, $document, $phonegapCameoConfig, $navigator, $rootScope) {
 
         var isReady = $q.defer();
@@ -37,22 +37,27 @@ angular.module('cmPhonegap').service('cmPhonegap', [
             },
             initDeviceButtons: function(){
                 if($document.length > 0 && 'addEventListener' in $document[0]) {
-                    $document[0].addEventListener('backbutton', function (e) {
-                        if ($rootScope.urlHistory.length == 0) {
+                    // handle history back and exit app
+                    $document[0].addEventListener('backbutton', function () {
+                        if (cmHistory.isEmpty()) {
                             cmModal.confirm({
                                 title: 'MODAL.EXIT.HEADER',
                                 text: 'MODAL.EXIT.TEXT'
                             })
                             .then(function() {
-                                $navigator.app.exitApp();
+                                if('app' in $navigator && 'exitApp' in $navigator.app){
+                                    $navigator.app.exitApp();
+                                }
                             });
                         } else {
                             $rootScope.goBack();
                         }
+                        $rootScope.$apply();
                     });
-
+                    // handle menu
                     $document[0].addEventListener('menubutton', function (e) {
                         $rootScope.$broadcast('cmMenu:toggle');
+                        $rootScope.$apply();
                     });
                 }
             }

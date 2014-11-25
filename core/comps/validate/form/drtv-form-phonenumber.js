@@ -9,7 +9,8 @@ angular.module('cmValidate')
                 ngModel: '=ngModel',
                 tabIndex: '@cmTabindex',
                 label: '@cmLabel',
-                info: '@cmInfo'
+                info: '@cmInfo',
+                disabled: '=cmDisable'
             },
             templateUrl: 'comps/validate/form/drtv-form-phonenumber.html'
         }

@@ -85,7 +85,8 @@ module.exports = function (grunt) {
                 grunt.file.read('config/cameoBuildConfig-static.json'),
                 {
                     data: {
-                        'dlPath': buildConfig.path.dl
+                        'dlPath': buildConfig.path.dl,
+                        'appPath': buildConfig.path.app
                     }
                 }
             )

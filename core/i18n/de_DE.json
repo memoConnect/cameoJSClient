@@ -3,6 +3,7 @@
     "NO":   "Nein",
 
     "CAMEO": {
+        "NAME": "CameoNet",
         "SLOGAN": "Safer Communication - Made in Germany!",
         "DESCRIBE": "Registrieren Sie sich kostenlos und unverbindlich für cameoNet.\nWirklich sicher kommunizieren. Mobil und Desktop. Mit allen Kontakten. Und tollen Zusatzfunktionen.\nSichern Sie sich Ihren Benutzernamen noch heute und testen Sie uns!",
         "MOEP": "moep",
@@ -511,7 +512,8 @@
                 "SEND_ON_RETURN": "Senden bei Enter-Eingabe",
                 "SKIP_KEY_INFO": "cameoKey Information überspringen",
                 "DATE_FORMAT": "Datumsformat",
-                "TIME_FORMAT": "Zeitformat"
+                "TIME_FORMAT": "Zeitformat",
+                "ENABLE_UNREAD_MESSAGES": "ungelesene Nachrichten anzeigen"
             },
             "IDENTITY": {
                 "CREATE": {
@@ -596,7 +598,8 @@
             },
 
             "NOTIFY": {
-                "PUSH_NOTIFICATIONS": "Push Notifications"
+                "PUSH_NOTIFICATIONS": "Push Notifications",
+                "BROWSER_NOTIFICATIONS": "Browser Notifications"
             }
         }
     },
@@ -836,6 +839,16 @@
         "ERROR": {
             "EMPTY_INPUT": "Eingabe ist leer!",
             "WRONG_INPUT": "Bitte überprüfen Sie Ihre Eingabe!"
+        },
+        "EVENTS": {
+            "NEW_MESSAGE": {
+                "TITLE": "Neue Nachricht",
+                "MSG": "Nachricht von {{sender}}"
+            },
+            "FRIEND_REQUEST": {
+                "TITLE": "neue Freundschaftsanfrage",
+                "MSG": "Freundschaftsanfrage von {{sender}}"
+            }
         }
     },
 

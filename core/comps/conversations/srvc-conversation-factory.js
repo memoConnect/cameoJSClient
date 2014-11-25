@@ -114,12 +114,18 @@ angular.module('cmConversations').service('cmConversationFactory', [
         cmConversationsAdapter.on('message:new', function(event,data){
             self
                 .create(data.conversationId)
-                .trigger('message:new', data.message)
+                .trigger('message:new', data)
         });
 
         cmConversationsAdapter.on('conversation:new', function(event,data){
             self.create(data)
         });
+
+        cmConversationsAdapter.on('conversation:update', function(event, data){
+            //cmLogger.debug('cmConversationFactory.on:conversation:update');
+            self.create(data, true)
+        });
+
 
         /**
          * @TODO CallbackQueue? Fingerprint check! Performance!

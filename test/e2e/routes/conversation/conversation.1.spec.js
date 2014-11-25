@@ -47,7 +47,7 @@ describe('Route conversation:', function () {
     })
 
     it('add recipient', function () {
-        $(".cm-add-button").click()
+        util.waitAndClickQa('btn-add-recipients');
         util.waitForPageLoad("/conversation/new/recipients")
     })
 

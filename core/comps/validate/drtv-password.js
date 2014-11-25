@@ -12,13 +12,29 @@ angular.module('cmValidate').directive('cmPassword', [
                 tabindex: '@cmTabindex',
                 withStars: '@cmWithStars'
             },
+
+            link: function(scope, attrs, element, ngModel){
+
+                // scope.$watch('showPasswordLengthError', function(error){
+                //     ngModel.$setValidity('password', !error);
+                // })
+
+                // scope.$watch('showPasswordEmptyError', function(error){
+                //     ngModel.$setValidity('password', !error);
+                // })
+
+                // scope.$watch('showConfirmPWStatus', function(cstatus){
+                //     ngModel.$setValidity('password', cstatus);
+                // })
+            },
+
             controller: function($scope){
 
                 $scope.withStars = $scope.withStars || true;
 
                 $scope.nextTabIndex = parseInt($scope.tabindex) + 1;
 
-                $scope.showConfirmPWStatus = false;
+                $scope.showConfirmPWStatus = true;
                 $scope.passwordType = 'password';
                 $scope.showPassword = false;
                 $scope.showPasswordLengthError = false;
@@ -57,7 +73,7 @@ angular.module('cmValidate').directive('cmPassword', [
 
                     $scope.showPasswordEmptyError = false;
 
-                    if(pw != undefined && pw != ''){
+                    if(pw && pw.length >= 6){
                         $scope.checkPasswordLength(pw);
 
                         $scope.showStrengthMeter= true;
@@ -81,6 +97,10 @@ angular.module('cmValidate').directive('cmPassword', [
                     } else {
                         $scope.percent = '0%';
                         $scope.bgColor = 'very-weak';
+
+                        pw && pw.length > 0
+                        ?   $scope.showPasswordLengthError  = true
+                        :   $scope.showPasswordEmptyError   = true
                     }
                 };
 
@@ -88,8 +108,10 @@ angular.module('cmValidate').directive('cmPassword', [
                  * validates both password inputs
                  */
                 $scope.confirmPW = function(){
-                    if(!$scope.pw || !$scope.pwConfirm)
+                    if(!$scope.pw || !$scope.pwConfirm){
+                        $scope.showConfirmPWStatus = false
                         return false;
+                    }
 
                     if($scope.pw == $scope.pwConfirm){
                         $scope.showConfirmPWStatus = true;

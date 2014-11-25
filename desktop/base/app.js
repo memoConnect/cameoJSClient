@@ -221,52 +221,41 @@ angular.module('cameoClient', [
     // start entropy collection for random number generator
     sjcl.random.startCollectors();
 })
-.run(['cmError',function(cmError){
+.run(['cmError', 'cmHistory',function(cmError, cmHistory){
     // only an inject is nessarary
+}])
+.run(['cmUserModel', 'cmBrowserNotifications', '$rootScope', function(cmUserModel, cmBrowserNotifications, $rootScope){
+    if(cmUserModel.isAuth()){
+        cmBrowserNotifications.askPermission();
+    }
+
+    $rootScope.$on('login', function(){
+        cmBrowserNotifications.askPermission();
+    })
 }])
 /**
  * @TODO cmContactsModel anders initialisieren
  */
 .run([
-    '$rootScope',
-    '$location',
-    '$window',
-    '$document',
-    '$route',
-    '$timeout',
-    'cmUserModel',
-    'cmConversationFactory',
-    'cmContactsModel',
-    'cmRootService',
-    'cmSettings',
-    'cmLanguage',
-    'cmLogger',
-    'cfpLoadingBar',
-    'cmEnv',
-    'cmVersion',
-    'cmApi',
-    'cmAuthenticationRequest',
-    'cmSystemCheck',
-    'cmError',
+    '$rootScope', '$location', '$window', '$document', '$route', '$timeout',
+    'cmUserModel', 'cmConversationFactory', 'cmContactsModel', 'cmRootService',
+    'cmSettings', 'cmLanguage', 'cmLogger', 'cfpLoadingBar', 'cmEnv', 'cmVersion',
+    'cmApi', 'cmAuthenticationRequest', 'cmSystemCheck',
     function ($rootScope, $location, $window, $document, $route, $timeout,
               cmUserModel, cmConversationFactory, cmContactsModel, cmRootService, cmSettings,
               cmLanguage, cmLogger, cfpLoadingBar, cmEnv, cmVersion,
-              cmApi, cmAuthenticationRequest, cmSystemCheck, cmError) {
+              cmApi, cmAuthenticationRequest, cmSystemCheck) {
 
         //prep $rootScope with useful tools
         $rootScope.console  =   window.console;
         $rootScope.alert    =   window.alert;
-
-        // $rootScope.$watch(function(){
-        //     cmLogger.debug('$digest!')
-        // })
 
         //add Overlay handles:
         $rootScope.showOverlay = function(id){ $rootScope.$broadcast('cmOverlay:show', id) };
         $rootScope.hideOverlay = function(id){ $rootScope.$broadcast('cmOverlay:hide', id) };
 
         // passing wrong route calls
-        $rootScope.$on('$routeChangeSuccess', function(){
+        $rootScope.$on('$routeChangeStart', function(){
             // expections
             var path_regex = /^(\/login|\/registration|\/systemcheck|\/terms|\/disclaimer|\/404|\/version|\/purl\/[a-zA-Z0-9]{1,})$/;
             var path = $location.$$path;
@@ -279,40 +268,6 @@ angular.module('cameoClient', [
                 $location.path('/talks');
             } else if (path == '/logout'){
                 cmUserModel.doLogout(true,'app.js logout-route');
-            }
-        });
-
-        // url hashing for backbutton
-        $rootScope.urlHistory = [];
-        // detect back button event
-        window.onpopstate = function(){
-            $rootScope.urlHistory.pop();
-        };
-
-        $rootScope.$on('$routeChangeSuccess', function(){
-            // momentjs
-            //$window.moment.lang(cmLanguage.getCurrentLanguage());
-
-            // important for HTML Manipulation to switch classes etc.
-            $rootScope.cmIsGuest = cmUserModel.isGuest();
-
-            // handle url history for backbutton handling
-            $rootScope.urlHistory = $rootScope.urlHistory || [];
-
-            var currentRoute = $location.$$path,
-                prevRoute = $rootScope.urlHistory.length > 0
-                          ? $rootScope.urlHistory[$rootScope.urlHistory.length - 1]
-                          : '';
-
-            // clear history in some cases
-            if(
-                currentRoute.indexOf('/login') != -1 // when login route
-             //|| currentRoute == prevRoute // current is the same then is startPage
-            ) {
-                $rootScope.urlHistory = [];
-            // push new route
-            } else if(currentRoute !== prevRoute) {
-                $rootScope.urlHistory.push($location.$$path);
             }
         });
 
