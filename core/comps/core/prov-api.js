@@ -294,7 +294,14 @@ angular.module('cmCore').provider('cmApi',[
                  * @param {Boolean}         force direct api call not using the callstack
                  */
 
-                api.get		= function(config, force){ return (force || call_stack_disabled) ? api('GET',	 config) : api.stack('GET',    config) }
+                api.get = function(config, force){
+                    var no_cache = new Date().getTime();
+                    // disable the ie cache
+                    config.path +=(config.path.indexOf('?') == -1 ? '?' : '&')+'ts='+no_cache;
+                    return (force || call_stack_disabled)
+                        ? api('GET', config)
+                        : api.stack('GET', config)
+                };
                 api.post	= function(config, force){ return (force || call_stack_disabled) ? api('POST',   config) : api.stack('POST',   config) }
                 api.delete	= function(config, force){ return (force || call_stack_disabled) ? api('DELETE', config) : api.stack('DELETE', config) }
                 api.head	= function(config, force){ return (force || call_stack_disabled) ? api('HEAD',   config) : api.stack('HEAD',   config) }
