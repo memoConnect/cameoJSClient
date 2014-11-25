@@ -3,10 +3,10 @@
 angular.module('cmWidgets').directive('cmWidgetRegistration', [
     'cmAuth', 'cmUserModel', 'cmUtil', 'cmLogger', 'cmTransferScopeData',
     'cmNotify', 'cmSystemCheck', 'cmLoader', 'cmDevice',
-    '$rootScope', '$location', '$q',
+    '$rootScope', '$location', '$q', '$document', 
     function (cmAuth, cmUserModel, cmUtil, cmLogger, cmTransferScopeData,
               cmNotify, cmSystemCheck, cmLoader, cmDevice,
-              $rootScope, $location, $q) {
+              $rootScope, $location, $q, $document) {
         return {
             restrict: 'AE',
             scope: true,
@@ -53,6 +53,9 @@ angular.module('cmWidgets').directive('cmWidgetRegistration', [
                 $scope.acceptTerms = function () {
                     $scope.formData.agb = !$scope.formData.agb ? true : false;
                 };
+
+
+
 
                 /**
                  * validate Registration Form
@@ -186,7 +189,8 @@ angular.module('cmWidgets').directive('cmWidgetRegistration', [
                             sendCreateUserRequest(data);
                         },
                         function () {
-                            loader.stop();
+                            loader.stop()
+                            cmUtil.scrollToInputError()
                         }
                     );
                 };

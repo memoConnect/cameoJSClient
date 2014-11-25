@@ -1,21 +1,11 @@
 'use strict';
 
 angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
-    'cmUserModel',
-    'cmCrypt',
-    'cmUtil',
-    'cmLogger',
-    'cmNotify',
-    'cmKey',
-    'cmJob',
-    'cmApi',
-    'cmDevice',
-    'cmLoader',
-    '$window',
-    '$rootScope',
-    '$timeout',
-    function(cmUserModel, cmCrypt, cmUtil, cmLogger,
-             cmNotify, cmKey, cmJob, cmApi, cmDevice, cmLoader,
+    'cmUserModel', 'cmCrypt', 'cmUtil', 'cmLogger', 'cmNotify',
+    'cmKey', 'cmJob', 'cmApi', 'cmDevice', 'cmLoader', 'cmHistory',
+    '$window', '$rootScope',  '$timeout',
+    function(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify,
+             cmKey, cmJob, cmApi, cmDevice, cmLoader, cmHistory,
              $window, $rootScope, $timeout){
         return {
             restrict: 'E',
@@ -27,7 +17,7 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
 
                 // only one privKey!!!
                 if(cmUserModel.hasPrivateKey()){
-                    if($rootScope.urlHistory.length > 1 && $rootScope.urlHistory[$rootScope.urlHistory.length - 2] == '/authentication'){
+                    if(cmHistory.comesFrom('/authentication')){
                         $scope.goTo('/talks', true);
                     } else {
                         $scope.goTo('/settings/identity/key/list', true);

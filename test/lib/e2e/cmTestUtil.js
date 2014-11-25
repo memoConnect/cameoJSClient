@@ -571,6 +571,11 @@ this.addExternalContact = function (displayName) {
     $("[data-qa='input-displayname']").sendKeys(displayName)
     $("[data-qa='input-phoneNumber']").sendKeys("1233")
     $("[data-qa='btn-create-contact']").click()
+
+    // close notify extern modal
+    self.waitForModalOpen()
+    self.click('btn-cancel')
+
     self.waitForPageLoad("/contact/list")
 }
 

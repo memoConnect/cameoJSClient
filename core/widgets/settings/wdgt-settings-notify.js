@@ -2,8 +2,8 @@
 
 angular.module('cmWidgets')
 .directive('cmWidgetSettingsNotify', [
-    'cmSettings', 'cmPushNotificationAdapter', 'cmDevice',
-    function(cmSettings, cmPushNotificationAdapter, cmDevice){
+    'cmSettings', 'cmPushNotificationAdapter', 'cmBrowserNotifications', 'cmDevice',
+    function(cmSettings, cmPushNotificationAdapter, cmBrowserNotifications, cmDevice){
         return {
             restrict: 'E',
             templateUrl: 'widgets/settings/wdgt-settings-notify.html',
@@ -19,6 +19,7 @@ angular.module('cmWidgets')
                 };
 
                 $scope.changePushNotifications = false;
+                $scope.changeBrowserNotifications = false;
 
                 $scope.handlePushNotifications = function() {
                     var key = 'pushNotifications';
@@ -46,6 +47,32 @@ angular.module('cmWidgets')
                         $scope.settings[key] = newValue;
                     }
                 };
+
+                $scope.handleBrowserNotifications = function() {
+                    var key = 'browserNotifications';
+
+                    if($scope.isApp() || $scope.changeBrowserNotifications || !cmBrowserNotifications.checkBrowser())
+                        return false;
+
+                    $scope.changeBrowserNotifications = true;
+
+                    var newValue = $scope.settings[key] ? false : true;
+
+                    if(!newValue){
+                        $scope.changeBrowserNotifications = false;
+                    } else {
+                        cmBrowserNotifications.askPermission();
+                        $scope.changeBrowserNotifications = false;
+                    }
+
+                    if(cmSettings.set(key, newValue)){
+                        $scope.settings[key] = newValue;
+                    }
+                };
+
+                $scope.sendNotification = function(){
+                    cmBrowserNotifications.show($scope.notificationTitle);
+                }
             }
         }
     }

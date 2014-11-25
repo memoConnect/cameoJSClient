@@ -12,9 +12,10 @@ angular.module('cmContacts').service('cmContactsModel',[
     'cmObject',
     'cmLogger',
     'cmNotify',
+    'cmBrowserNotifications',
     '$q',
     '$rootScope',
-    function (cmFactory, cmUserModel, cmContactModel, cmContactsAdapter, cmIdentityFactory, cmFriendRequestModel, cmStateManagement, cmUtil, cmObject, cmLogger, cmNotify, $q, $rootScope){
+    function (cmFactory, cmUserModel, cmContactModel, cmContactsAdapter, cmIdentityFactory, cmFriendRequestModel, cmStateManagement, cmUtil, cmObject, cmLogger, cmNotify, cmBrowserNotifications, $q, $rootScope){
         var self = this,
             events = {};
 
@@ -22,7 +23,7 @@ angular.module('cmContacts').service('cmContactsModel',[
 
         this.contacts       =   new cmFactory(cmContactModel,
                                     function sameByData(instance, data){
-                                        return data &&
+                                        return data && data.id != '' &&
                                               (data.id == instance.id ||
                                                data.identity &&
                                                data.identity.id &&
@@ -30,6 +31,15 @@ angular.module('cmContacts').service('cmContactsModel',[
                                                instance.identity &&
                                                instance.identity.id &&
                                                data.identity.id == instance.identity.id)
+                                    },
+                                    function sameByInstance(instance_1, instance_2){
+                                        return      instance_1
+                                        &&  instance_1.identity
+                                        &&  instance_1.identity.id
+                                        &&  instance_2
+                                        &&  instance_2.identity
+                                        &&  instance_2.identity.id
+                                        &&  instance_1.identity.id == instance_2.identity.id
                                     });
 
         // TODO: groups must be in factory style with models
@@ -279,8 +289,11 @@ angular.module('cmContacts').service('cmContactsModel',[
         });
 
         cmContactsAdapter.on('friendRequest:new', function(event, data){
-            if(data.to == cmUserModel.data.identity.id)
-                self.requests.create(data.friendRequest);
+            if(data.to == cmUserModel.data.identity.id){
+                var request = self.requests.create(data.friendRequest);
+
+                cmBrowserNotifications.showFriendRequest(request.identity);
+            }
         });
 
         cmContactsAdapter.on('friendRequest:accepted', function(event, data){

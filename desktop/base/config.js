@@ -13,6 +13,11 @@ angular.module('cmConfig',[])
             eventsPath: '/eventSubscription',
             eventsInterval: '5000',
 
+            webworkerDefaultGlobalLimit : 2,
+            WebworkerDefaultLimitMobile: 2,
+            WebworkerDefaultLimitApp: 2,
+            WebworkerDefaultLimitDesktop: 2,
+
             token: null,
             supportedLanguages: ['de_DE', 'en_US'],
             pathToLanguages: 'i18n',
@@ -224,6 +229,8 @@ angular.module('cmConfig',[])
                     guests: true
                 }
             },
+
+            appIcon: '<%= appIcon %>',
 
             autologin: {
                 'Dumpuser local': {
