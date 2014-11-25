@@ -10,7 +10,7 @@ angular.module('cmFiles').service('cmAnswerFiles', [
             files: [],
             set: function (blob) {
 //             TODO: Android name=content fix file plugin!!!
-                console.log(blob)
+//                console.log(blob)
 
                 if (!blob)
                     return false;
@@ -24,6 +24,7 @@ angular.module('cmFiles').service('cmAnswerFiles', [
                 }
 
                 var file = cmFileFactory.create(blob, true);
+
                 this.files.push(file);
 
                 this.trigger('file:setted');
