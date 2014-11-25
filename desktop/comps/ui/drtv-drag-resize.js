@@ -51,6 +51,9 @@ angular.module('cmDesktopUi')
                 var dragged = false;
                 var startY = 0;
 
+
+                console.log(target,minHeight,maxHeight)
+
                 // just toogle
 
                 function callback_dblclick(){
@@ -65,13 +68,13 @@ angular.module('cmDesktopUi')
 
                 function callback_mousedown(evt){
                     offset = getOffsetSum(target);
-                    startY = evt.y;
+                    startY = evt.clientY;
                     dragged = true;
                 }
 
                 function callback_mousemove(evt){
                     if(dragged) {
-                        var difference = (startY - evt.y);
+                        var difference = (startY - evt.clientY);
                         var possibleHeight = lastHeight + difference;
 
                         if(possibleHeight < minHeight){
@@ -85,8 +88,10 @@ angular.module('cmDesktopUi')
                 }
 
                 function callback_mouseup(){
-                    dragged = false;
-                    lastHeight = target.offsetHeight;
+                    if(dragged) {
+                        dragged = false;
+                        lastHeight = target.offsetHeight;
+                    }
                 }
 
                 element.on('dblclick', callback_dblclick);

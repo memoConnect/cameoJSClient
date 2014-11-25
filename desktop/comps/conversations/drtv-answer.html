@@ -1,7 +1,7 @@
 <div class="wrap" id="files-droparea">
 
     <div class="message" data-qa="answer-ctn">
-        <i ng-show="!isFullscreen" class="fa cm-grip" cm-drag-resize="{target:'#answer-textarea',parentForMaxHeight:'cm-column'}"></i>
+        <i ng-show="!isFullscreen" class="fa cm-expand-top-right" cm-drag-resize="{target:'#answer-textarea',parentForMaxHeight:'cm-column'}"></i>
         <textarea
             id="answer-textarea"
             data-qa="input-answer"
@@ -41,9 +41,7 @@
             </li>
             <li>
                 <div class="btn-fullscreen" data-qa="btn-fullscreen" cm-reactive ng-click="toogleFullscreen()">
-                    <i class="fa cm-fullscreen"></i>
-                    <span ng-show="!isFullscreen">F</span>
-                    <span ng-show="isFullscreen">S</span>
+                    <i class="fa" ng-class="{'cm-fullscreen':!isFullscreen,'cm-fullscreen-off':isFullscreen}"></i>
                 </div>
             </li>
         </ul>
