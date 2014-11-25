@@ -1,3 +1,9 @@
+# BS 25.11.2014
+* finish Story unread Messages CAM-1321
+** add button to settings to show or not the quantity of unread messages
+** if it is off, the client will not post the last message, the user reads, to the server, or show the quantity in talks view
+** somme settings will now synced with server
+
 # WW 21.11.2014
 * fix menu button CAM-1384
 * update back button, show modal if leaving app, fix CAM-1383
