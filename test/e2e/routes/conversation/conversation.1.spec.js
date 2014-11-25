@@ -52,7 +52,7 @@ describe('Route conversation:', function () {
     })
 
     it('should filter contacts', function () {
-        util.searchInList(config.contactUser1DisplayName)
+        util.headerSearchInList(config.contactUser1DisplayName)
         util.waitForElement("[data-qa='contact-display-name']")
     })
 
@@ -64,14 +64,6 @@ describe('Route conversation:', function () {
         util.waitForQa('input-on-the-fly-displayname')
         util.setVal('input-on-the-fly-displayname', 'On-the-fly Contact')
 
-        /*
-        util.waitForQa('input-on-the-fly-mixed')
-        util.setVal('input-on-the-fly-mixed', 'bababa @ 123')
-
-        util.waitAndClick('btn-submit-on-the-fly-contact')
-
-        expect()
-        */
         util.waitForQa('input-on-the-fly-mixed')
         util.clearInput('input-on-the-fly-mixed')
         util.setVal('input-on-the-fly-mixed', 'test@mail.com')
