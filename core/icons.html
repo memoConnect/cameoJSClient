@@ -226,7 +226,8 @@
     .module('icons',['ngTouch','cmConfig','cmUi'])
 
     .controller('ctrl',function ($scope, emoji){
-        $scope.active = location.hash != '' ? location.hash.replace('#/','') : 'cameofont';
+        var clearHash = location.hash.replace('#/','');
+        $scope.active = clearHash != '' ? clearHash : 'cameofont';
 
         $scope.baselineIcon = 'cm-checkbox-wrong';
         $scope.getKeys = function(object){
