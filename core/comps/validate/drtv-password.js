@@ -13,13 +13,28 @@ angular.module('cmValidate').directive('cmPassword', [
                 withStars: '@cmWithStars'
             },
 
+            link: function(scope, attrs, element, ngModel){
+
+                scope.$watch('showPasswordLengthError', function(error){
+                    ngModel.$setValidity('password', !error);
+                })
+
+                scope.$watch('showPasswordEmptyError', function(error){
+                    ngModel.$setValidity('password', !error);
+                })
+
+                scope.$watch('showConfirmPWStatus', function(cstatus){
+                    ngModel.$setValidity('password', cstatus);
+                })
+            },
+
             controller: function($scope){
 
                 $scope.withStars = $scope.withStars || true;
 
                 $scope.nextTabIndex = parseInt($scope.tabindex) + 1;
 
-                $scope.showConfirmPWStatus = false;
+                $scope.showConfirmPWStatus = true;
                 $scope.passwordType = 'password';
                 $scope.showPassword = false;
                 $scope.showPasswordLengthError = false;
