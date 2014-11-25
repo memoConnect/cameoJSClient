@@ -12,6 +12,7 @@ angular.module('cmValidate').directive('cmPassword', [
                 tabindex: '@cmTabindex',
                 withStars: '@cmWithStars'
             },
+
             controller: function($scope){
 
                 $scope.withStars = $scope.withStars || true;
