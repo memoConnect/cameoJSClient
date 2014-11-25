@@ -2,7 +2,7 @@
 
 angular.module('cmCore')
 .service('cmUtil',
-    function(cmLogger, $window, $injector){
+    function(cmLogger, $window, $injector, $document){
         /**
          * Checks if Key exists in an Object or Array
          * @param object
@@ -254,5 +254,29 @@ angular.module('cmCore')
             var matches = id ? String(id).match(alphNumericRegExp) : null;
             return matches != null;
         };
+
+        this.scrollToInputError = function() {
+
+            function getOffsetSum(elem) {
+                var top=0, left=0;
+                while(elem) {
+                    top = top + parseInt(elem.offsetTop);
+                    left = left + parseInt(elem.offsetLeft);
+                    elem = elem.offsetParent;
+                }
+                return {top: top, left: left};
+            }
+
+            var el          = document.querySelector(".cm-input-error") || document.querySelector("form .ng-invalid"),
+                offset      = getOffsetSum(el),
+                bodyAndHtml = angular.element($document[0].querySelectorAll('body,html')),
+                cmHeader    = angular.element($document[0].querySelector('cm-header'))
+
+            console.log(el)
+
+            angular.forEach(bodyAndHtml, function (tag) {
+                tag.scrollTop = offset.top - cmHeader[0].offsetHeight - 10; //-10 for the looks
+            })
+        }
     }
 );
