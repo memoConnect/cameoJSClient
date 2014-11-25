@@ -267,7 +267,7 @@ angular.module('cmCore')
                 return {top: top, left: left};
             }
 
-            var el          = document.querySelector("cm-input-error") || document.querySelector("form .ng-invalid"),
+            var el          = document.querySelector(".cm-input-error") || document.querySelector("form .ng-invalid"),
                 offset      = getOffsetSum(el),
                 bodyAndHtml = angular.element($document[0].querySelectorAll('body,html')),
                 cmHeader    = angular.element($document[0].querySelector('cm-header'))
