@@ -63,19 +63,12 @@ angular.module('cmCore').provider('cmApi',[
 
 
         this.$get = [
-
-            'cmLogger',
-            'cmObject',
-            'cmStateManagement',
-            '$http',
-            '$httpBackend',
-            '$injector',
-            '$q',
-            '$interval',
-            '$cacheFactory',
-            '$rootScope',
-
-            function(cmLogger, cmObject, cmStateManagement, $http, $httpBackend, $injector, $q, $interval, $cacheFactory, $rootScope){
+            'cmLogger', 'cmObject', 'cmStateManagement', 'cmDevice',
+            '$http', '$httpBackend', '$injector', '$q',
+            '$interval', '$cacheFactory', '$rootScope',
+            function(cmLogger, cmObject, cmStateManagement, cmDevice,
+                     $http, $httpBackend, $injector, $q,
+                     $interval, $cacheFactory, $rootScope){
                 /***
                  All api calls require a config object:
 
@@ -93,9 +86,7 @@ angular.module('cmCore').provider('cmApi',[
                  exp_ko: key you expect in response body if your request was granted(see below)
                  exp_ok: key you expect in response body if your request was denied (see below)
 
-
                  Authentication and error handling is dealt with automatically.
-
 
                  example: (!!check tests in cmApi.spec.js!!)
 
@@ -296,8 +287,13 @@ angular.module('cmCore').provider('cmApi',[
 
                 api.get = function(config, force){
                     var no_cache = new Date().getTime();
-                    // disable the ie cache
-                    config.path +=(config.path.indexOf('?') == -1 ? '?' : '&')+'ts='+no_cache;
+
+                    // add timestamp to path to disable the caching in ie
+                    if(cmDevice.isWinPhone() || cmDevice.isWinPhone8()) {
+                        var leadingSymbol = (config.path.indexOf('?') == -1 ? '?' : '&');
+                        config.path += leadingSymbol + 'ts=' + no_cache;
+                    }
+
                     return (force || call_stack_disabled)
                         ? api('GET', config)
                         : api.stack('GET', config)
