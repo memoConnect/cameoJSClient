@@ -44,13 +44,15 @@ angular.module('cmCore')
             this.isImage = function(){
                 return this.type == undefined
                      ? false
-                     : this.type.search('^image/') != -1;
+                     : this.type.search('^image/') != -1
+                       && this.type.search('tiff') == -1;
             };
 
             this.isEmbed = function(specificMime){
                 return this.type == undefined
                      ? false
-                     : this.type.search('^('+(specificMime||'image|video|audio')+')') != -1;
+                     : this.type.search('^('+(specificMime||'image|video|audio')+')') != -1
+                       && this.type.search('tiff') == -1;
             };
 
             // message id for backend event message:new

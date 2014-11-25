@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('cmCore')
 .service('cmError', [
     '$rootScope',
