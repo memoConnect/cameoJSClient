@@ -202,7 +202,7 @@ angular.module('cmConversations')
                 this.initFiles();
 
 
-                if(this.signatures && (this.signatures.plain || this.signatures.encrypted)){
+                if(this.signatures && ((this.signatures.plain && this.signatures.plain.length > 0) || this.signatures.encrypted)){
                     this.state.set('signed')
 
                     if(!this.encryptedData && !this.signatures.encrypted){

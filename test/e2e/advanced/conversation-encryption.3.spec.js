@@ -175,12 +175,14 @@ describe('Conversation encryption -', function () {
                         util.login(recipient.login, "password")
                         conversationRoute = "/conversation/" + conversationId
                     }
+
                     util.get(conversationRoute)
-                    util.waitForElement("cm-message")
+                    util.waitForElement("cm-conversation")
                 })
 
 
                 it("enter password (if required)", function () {
+                    console.log(recipient)
                     if (recipient.hasKey || recipient.storedPassword) {
                         $$("cm-modal.active").then(function (modals) {
                             expect(modals.length).toBe(0)
@@ -189,6 +191,10 @@ describe('Conversation encryption -', function () {
                         if(['password', 'passCaptcha'].indexOf(encryptionType) != -1){
 
                             // expect password prompt
+                            // console.log(index)
+                            // if(index == 2)
+                            //     ptor.debugger()
+
                             util.waitForModalOpen()
                             util.get(conversationRoute + "/security")
 
@@ -248,6 +254,10 @@ describe('Conversation encryption -', function () {
                                         var author = recipients.filter(function(recipient){
                                                         return messages[i].author == recipient.login
                                                     })[0]
+
+                                        console.log(author)
+
+
                                         if(author.hasKey){
                                             ptor.wait(function() {
                                                 return element.$("[data-qa = 'signed']").isPresent()
@@ -256,7 +266,6 @@ describe('Conversation encryption -', function () {
                                         else{
 
                                             ptor.debugger()
-
                                             ptor.wait(function() {
                                                 return element.$("[data-qa = 'unsigned']").isPresent()
                                             }, 3000, 'Missing message signature indicator did not show up.')
@@ -379,7 +388,7 @@ describe('Conversation encryption -', function () {
             checkConversation(recipients, 0, 2, "asym")
         })
 
-       describe("password transmission -", function () {
+        describe("password transmission -", function () {
             var recipients = [
                 {login: testUser1, hasKey: true},
                 {login: testUser2, hasKey: true},
