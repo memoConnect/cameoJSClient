@@ -80,7 +80,6 @@ angular.module('cmCore')
             self.trigger('init');// deprecated
             self.trigger('init:finish');
 
-
             self.one('update:finished', function(){
                 if(self.data.identity.keys){
                     self.signOwnKeys();
@@ -92,6 +91,7 @@ angular.module('cmCore')
         }
 
         this.importData = function(activeIdentity, data_identities){
+            //console.log('activeIdentity', activeIdentity)
 
             this.data.identity = activeIdentity;
             this.data.identity.isAppOwner = true;
@@ -150,6 +150,7 @@ angular.module('cmCore')
 
                     self.importData(identity, accountData.identities);
                     self.importAccount(accountData);
+                    self.setAppSettings(accountData)
 
                     // check device for pushing
                     cmPushNotificationAdapter.checkRegisteredDevice();
@@ -282,6 +283,8 @@ angular.module('cmCore')
         };
 
         this.updateAccount = function(newAccountData){
+            //cmLogger.debug('cmUserModel.updateAccount');
+
             return cmAuth.putAccount(newAccountData)
             .then(
                 function(){
@@ -814,7 +817,11 @@ angular.module('cmCore')
         this.storageSave = function(key, value){
             if(isAuth !== false && this.data.storage !== null){
                 this.data.storage.save(key, value);
+
+                return true;
             }
+
+            return false;
         };
 
         /**
@@ -836,6 +843,28 @@ angular.module('cmCore')
         this.storageRemove = function(key){
             if(isAuth !== false && this.data.storage !== null){
                 this.data.storage.remove(key);
+            }
+        };
+
+        /**
+         * setLocalStorageSettings
+         * Server Overwrite Local Changes
+         */
+        this.setAppSettings = function(data){
+            //cmLogger.debug('cmUserModel.setAppSettings');
+            var settings = this.storageGet('appSettings') || {};
+
+            if('userSettings' in data){
+                this.storageSave('appSettings', angular.extend({}, settings, data.userSettings));
+            }
+        };
+
+        this.saveAppSettings = function(){
+            //cmLogger.debug('cmUserModel.saveAppSettings');
+            var settings = this.storageGet('appSettings') || {};
+
+            if(cmUtil.objLen(settings) > 0){
+                this.updateAccount({'userSettings': settings})
             }
         };
 
