@@ -6,7 +6,9 @@
  * @description
  */
 angular.module('cmCore').service('LocalStorageAdapter', [
-function(){
+'$window',
+'cmLogger',
+function($window){
     return {
         /**
          * check usability in browser
@@ -14,8 +16,9 @@ function(){
          */
         check: function(){
             try {
-                return 'localStorage' in window && window['localStorage'] !== null;
+                return 'localStorage' in $window && $window['localStorage'] !== null;
             } catch(e){
+                cmLogger.warn('LocalStorage Check - ' + e)
                 return false;
             }
         },
@@ -26,8 +29,9 @@ function(){
          */
         get: function (key) {
             try {
-                return localStorage.getItem(key);
+                return $window.localStorage.getItem(key);
             } catch (e){
+                cmLogger.warn('LocalStorage get - ' + e)
                 return "";
             }
         },
@@ -38,8 +42,9 @@ function(){
          */
         getAllKeys: function(){
             try {
-                return Object.keys(localStorage);
+                return Object.keys($window.localStorage);
             } catch (e) {
+                cmLogger.warn('LocalStorage getAllKeys - ' + e)
                 return false;
             }
         },
@@ -51,9 +56,10 @@ function(){
          */
         save: function (key, data) {
             try {
-                localStorage.setItem(key, data);
+                $window.localStorage.setItem(key, data);
                 return true;
             } catch (e){
+                cmLogger.warn('LocalStorage save - ' + e)
                 return false;
             }
         },
@@ -64,9 +70,10 @@ function(){
          */
         remove: function (key) {
             try {
-                localStorage.removeItem(key);
+                $window.localStorage.removeItem(key);
                 return true;
             } catch (e){
+                cmLogger.warn('LocalStorage remove - ' + e)
                 return false;
             }
         },
@@ -76,9 +83,10 @@ function(){
          */
         clearAll : function () {
             try {
-                localStorage.clear();
+                $window.localStorage.clear();
                 return true;
             } catch (e){
+                cmLogger.warn('LocalStorage clearAll - ' + e)
                 return false;
             }
         }
@@ -93,7 +101,7 @@ function(){
  * @requires cmCrypt
  * @requires $rootScope
  */
-factory('LocalStorageService',['LocalStorageAdapter', 'cmCrypt','$rootScope', function(LocalStorageAdapter, cmCrypt, $rootScope){
+factory('LocalStorageService',['LocalStorageAdapter', 'cmCrypt', 'cmLogger', '$rootScope', function(LocalStorageAdapter, cmCrypt, cmLogger, $rootScope){
     var LocalStorageService = function(){
         var self = this,
             useable = false,
@@ -130,9 +138,9 @@ factory('LocalStorageService',['LocalStorageAdapter', 'cmCrypt','$rootScope', fu
             if(this.check()){
                 cryptKey = cmCrypt.hash(data.id + data.key);
                 storageKey = cmCrypt.hash(data.id);
-
-                this.instanceId = data.id;
-                this.instanceKey = data.key;
+                //
+                //this.instanceId = data.id;
+                //this.instanceKey = data.key;
             }
         };
         /**
@@ -233,17 +241,12 @@ factory('LocalStorageService',['LocalStorageAdapter', 'cmCrypt','$rootScope', fu
             return false;
         };
 
-        function reset(){
-            self.instanceId = "";
-            self.instanceKey = "";
+        this.reset = function(){
+            cmLogger.debug('LocalStorageService.reset');
+
             self.storageValue = {};
             self.cryptKey = "";
         }
-
-        $rootScope.$on('logout', function(){ reset(); });
-
-        $rootScope.$on('identity:switched', function(){ reset() });
-
     };
 
     return LocalStorageService;
@@ -256,17 +259,27 @@ factory('LocalStorageService',['LocalStorageAdapter', 'cmCrypt','$rootScope', fu
  * @requires LocalStorageService
  * @requires $rootScope
  */
-factory('cmLocalStorage',['LocalStorageService','$rootScope', function(LocalStorageService, $rootScope){
+factory('cmLocalStorage',['LocalStorageService','cmLogger','$rootScope', function(LocalStorageService, cmLogger, $rootScope){
     var instanceMock = [{id:'',instance:{}}];
     var instances = [];
 
-    $rootScope.$on('logout', function(){
-        instances = [];
-    });
+    function resetInstances(){
+        cmLogger.debug('cmLocalStorage resetInstances');
+        var i = 0;
+        while(i < instances.length){
+            instances[i].instance.reset();
+            instances[i] = null;
 
-    $rootScope.$on('identity:switched', function(){
+            i++;
+        }
+
+        instances = null;
         instances = [];
-    });
+    }
+
+    $rootScope.$on('logout', resetInstances);
+
+    $rootScope.$on('identity:switched', resetInstances);
 
     return {
         /**
