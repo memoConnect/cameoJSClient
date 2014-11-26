@@ -981,22 +981,18 @@ angular.module('cmConversations')
 //                cmLogger.debug('cmConversationModel:on:update:finished');
                 self.setLastMessage();
                 self.decrypt();
-                //self.securityAspects.refresh();
                 self.updateLockStatus();
-                //self.handleMissingAePassphrases();
             });
 
             this.on('encryption:enabled', function(){
 //                cmLogger.debug('cmConversationModel:on:encryption:enabled');
                 self.checkPreferences();
-                //self.securityAspects.refresh();
                 self.updateLockStatus();
             });
 
             this.on('encryption:disabled', function(){
 //                cmLogger.debug('cmConversationModel:on:encryption:disabled');
                 self.checkPreferences();
-                //self.securityAspects.refresh();
                 self.updateLockStatus();
             });
 
@@ -1034,25 +1030,21 @@ angular.module('cmConversations')
 
             this.recipients.on(['register', 'update:finished', 'deregister'], function(){
                 //cmLogger.debug('cmConversationModel:recipients.on');
-                //self.securityAspects.refresh();
                 self.updateLockStatus();
             });
 
             this.on('captcha:enabled captcha:disabled', function(){
 //                cmLogger.debug('cmConversationModel:on:captcha:enabled');
-//                self.securityAspects.refresh();
                 self.updateLockStatus();
             });
 
             this.messages.on('message:saved', function(){
                 self.setLastMessage();
-                //self.handleMissingAePassphrases();
             });
 
             this.messages.on('decrypt:success', function(){
                 self.state.set('decrypted');
                 self.setLastMessage();
-                //self.handleMissingAePassphrases();
             });
 
             this.messages.on('last-message:read', function(event, message){
@@ -1064,7 +1056,6 @@ angular.module('cmConversations')
 
             cmUserModel.on('key:stored key:removed', function(){
                 self.checkPreferences();
-                //self.securityAspects.refresh();
                 self.updateLockStatus();
             });
 

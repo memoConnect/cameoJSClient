@@ -350,7 +350,7 @@ angular.module('cmCore')
             };
 
             this.downloadChunks = function(){
-//                cmLogger.debug('cmFileModel:downloadChunks');
+                //cmLogger.debug('cmFileModel:downloadChunks '+this.id);
                 // only crashed when fileId is missing
                 if(!this.id && this.state.is('onlyFileId')){
 //                    cmLogger.debug('cmFile.downloadChunks();')
