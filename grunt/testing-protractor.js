@@ -88,7 +88,6 @@ module.exports = function (grunt, options) {
                 },
                 "tier2": {
                     options: {
-
                         "args": {
                             "specs": [
                                 "test/e2e/**/*.2.spec.js"
