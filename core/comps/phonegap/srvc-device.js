@@ -126,15 +126,17 @@ angular.module('cmPhonegap')
                 if(this.emulateDevice && this.emulateDeviceType.indexOf('winphone') >= 0){
                     return true;
                 }
-                return this.isApp()
-                    && this.getPlatform().indexOf('win') >= 0;
+                return (this.isApp()
+                    && this.getPlatform().indexOf('win') >= 0)
+                    || this.getUserAgent().indexOf('win') >= 0;
             },
             isWinPhone8: function(){
                 if(this.emulateDevice && this.emulateDeviceType.indexOf('winphone8') >= 0){
                     return true;
                 }
-                return this.isApp()
-                    && this.getPlatform().indexOf('win32nt') >= 0;
+                return (this.isApp()
+                    && this.getPlatform().indexOf('win32nt') >= 0)
+                    || this.getUserAgent().indexOf('win32nt') >= 0;
             },
             isBlackBerry: function(){
                 return this.isApp()
