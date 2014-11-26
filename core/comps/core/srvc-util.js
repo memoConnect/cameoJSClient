@@ -267,12 +267,11 @@ angular.module('cmCore')
                 return {top: top, left: left};
             }
 
-            var el          = document.querySelector(".cm-input-error") || document.querySelector("form .ng-invalid"),
+            var el          = document.querySelector(".cm-input-error:not(.ng-hide)") || document.querySelector("form .ng-invalid:not(.ng-hide)") || document.querySelector(".cm-alert:not(.ng-hide)"),
                 offset      = getOffsetSum(el),
                 bodyAndHtml = angular.element($document[0].querySelectorAll('body,html')),
                 cmHeader    = angular.element($document[0].querySelector('cm-header'))
 
-            console.log(el)
 
             angular.forEach(bodyAndHtml, function (tag) {
                 tag.scrollTop = offset.top - cmHeader[0].offsetHeight - 10; //-10 for the looks
