@@ -2,9 +2,9 @@
 
 angular.module('cmRoutes')
 .controller('PurlCtrl',[
-    'cmModal', 'cmPurlModel', 'cmConversationFactory', 'cmDevice',
+    'cmUserModel', 'cmModal', 'cmPurlModel', 'cmConversationFactory', 'cmDevice',
     '$scope', '$rootScope', '$routeParams', 'resolveData',
-    function(cmModal, cmPurlModel, cmConversationFactory, cmDevice,
+    function(cmUserModel, cmModal, cmPurlModel, cmConversationFactory, cmDevice,
              $scope, $rootScope, $routeParams, resolveData){
 
         $rootScope.pendingPurl      = null;

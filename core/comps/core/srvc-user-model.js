@@ -780,7 +780,6 @@ angular.module('cmCore')
 
             var token = cmAuth.getToken();
 
-
             if(token !== undefined && token !== 'undefined' && token !== null && token.length > 0){
                 return token;
             }
@@ -883,13 +882,18 @@ angular.module('cmCore')
         $rootScope.$on('logout', function(event, data){
             //cmLogger.debug('cmUserModel - $rootScope.logout');
 
-            self.resetUser();
+            self.reset();
             isAuth = false;
 
             if(typeof data == 'object' && 'where' in data){
                 self.removeToken(data.where);
             } else {
                 self.removeToken();
+            }
+
+            if(self.getToken() !== false){
+                cmLogger.error('Token was not removed at logout!');
+                throw new Error('Failure at Logout Process!')
             }
 
             if(typeof data == 'object' && 'goToLogin' in data && typeof data.goToLogin === 'undefined' || data.goToLogin !== false){
