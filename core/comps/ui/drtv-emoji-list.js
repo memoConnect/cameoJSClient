@@ -66,10 +66,12 @@ angular.module('cmUi').directive('cmEmojiList',[
                     scope.showList = action != undefined && action == 'close' || action == undefined && scope.showList ? false : true;
 
                     if(scope.showList){
+                        console.log('addClass is-visible')
                         element.addClass('is-visible');
                         body.on('click',clickOutside);
                         body.on('touchstart',clickOutside);
                     } else {
+                        console.log('removeClass is-visible')
                         element.removeClass('is-visible');
                         body.off('click',clickOutside);
                         body.off('touchstart',clickOutside);
