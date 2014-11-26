@@ -1,8 +1,8 @@
 exports.config = {
     /* Chrome */
+    chromeDriver: '<%= chromeDriverPath %>',
     seleniumServerJar: '../test/lib/ptor/selenium-server-standalone-2.44.0.jar',
     seleniumPort: null,
-    chromeDriver: '<%= chromeDriverPath %>',
     allScriptsTimeout: 30000,
     chromeOnly: true,
 
