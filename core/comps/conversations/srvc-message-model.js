@@ -56,7 +56,7 @@ angular.module('cmConversations')
             this.files = [];
             this.fileIds = [];
 
-            this.state = new cmStateManagement(['new','decrypted','loading', 'incomplete', 'sending', 'waitForFiles', 'authentic', 'bogus', 'signed']);
+            this.state = new cmStateManagement(['new','decrypted','loading', 'incomplete', 'sending', 'waitForFiles', 'authentic', 'valid', 'signed', 'unverifiable']);
 
             this.authenticity = {
                                     publicData : null,
@@ -115,22 +115,55 @@ angular.module('cmConversations')
                                         var self = this
 
                                         if(!identity)
-                                            return $q.reject('no identity given.')
+                                            return $q.reject({type: 0, msg:'identity missing'})     //cannot verify
 
-                                        if(this.signatures == null)
-                                            return $q.reject('signatures missing.')
+                                        if(this.signatures == null || !this.signatures.length)
+                                            return $q.reject({type: 0, msg:'signatures missing'})   //cannot verify
+
+                                        if(identity.keys.length ==0)
+                                            return $q.reject({type: 0, msg:'keys missing'})         //cannot verify
                                         
                                         return  this.getToken()
                                                 .then(function(token){
-                                                    return  identity.keys.reduce(function(last_try_key, key){
-                                                                return last_try_key.catch(function(reason){
-                                                                    return self.signatures.reduce(function(last_try_signature, signature){
-                                                                        return  signature.keyId == key.id
-                                                                                ?   key.verify(token, signature.content, true)
-                                                                                :   $q.reject('keys dont match.')
-                                                                    }, $q.reject('missing signatures.'))
-                                                                })
-                                                            }, $q.reject('missing keys.'))
+
+                                                    var promises                = [],
+                                                        valid_signatures         = [],
+                                                        bad_signatures          = []
+
+                                                    self.signatures.forEach(function(signature){
+                                                        var key         = identity.keys.find(signature.keyId),
+                                                            deferred    = $q.defer()
+
+                                                        if(key){
+                                                            promises.push(deferred.promise)
+
+                                                            key.verify(token, signature.content, true)
+                                                            .then(
+                                                                function(){
+                                                                    valid_signatures.push(signature)
+                                                                },
+                                                                function(){
+                                                                    bad_signatures.push(signature)
+                                                                }
+                                                            )
+                                                            .finally(function(){
+                                                                deferred.resolve()
+                                                            })
+                                                        }
+                                                    })
+                                                    
+                                                    return $q.all(promises)
+                                                            .then(function(){
+                                                                return  valid_signatures.length > 0
+                                                                        ?   $q.when(valid_signatures)
+                                                                        :   $q.reject(
+                                                                                bad_signatures.length > 0 
+                                                                                ?   {type:1, msg:'verification failed.', bad_signatures: bad_signatures}
+                                                                                :   {type:0, msg:'no matching keys found for signatures.'}
+                                                                            )
+                                                            })
+
+                                                   
                                                 })
                                     }
                                 }
@@ -176,7 +209,14 @@ angular.module('cmConversations')
                 this.id         = data.id || this.id;
 
                 if('fromIdentity' in data){
+                    var old_from    = this.from 
                     this.from       = cmIdentityFactory.create(data.fromIdentity);
+
+                    if(old_from != this.from)
+                        this.from.on('update:finished', function(){
+                            self.authenticity.verify(self.from)
+                            .then(this.handleVerificationSuccess,this.handleVerificationFail)
+                        })
                 }
 
 
@@ -211,32 +251,13 @@ angular.module('cmConversations')
                         .setSecretData({})
                         .setSignatures(self.signatures.plain)
                         .verify(self.from)
-                        .then(
-                            function(){
-                                self.state.unset('bogus')
-                                self.state.set('authentic')
-                            },
-                            function(reason){
-                                console.log(reason)
-                                self.state.unset('authentic')
-                                self.state.set('bogus')
-                            }
-                        )
+                        .then(this.handleVerificationSuccess,this.handleVerificationFail)
                     }else{
                         self.when('decrypt:success')
                         .then(function(){
                             return self.authenticity.verify(self.from)
                         })    
-                        .then(
-                            function(){
-                                self.state.unset('bogus')
-                                self.state.set('authentic')
-                            },
-                            function(){
-                                self.state.unset('authentic')
-                                self.state.set('bogus')
-                            }
-                         )
+                        .then(this.handleVerificationSuccess,this.handleVerificationFail)
                     }
                 }
 
@@ -272,6 +293,41 @@ angular.module('cmConversations')
 
                 return this;
             };
+
+            this.handleVerificationSuccess = function(valid_signatures){
+                self.state
+                .unset('unverifiable')
+                .unset('valid')
+                .unset('authentic')
+                .unset('defective')
+
+                cmUserModel.verifyIdentityKeys(self.from, false, true)
+                .then(function(ttrusted_keys){
+                    var authentic_signatures    =   valid_signatures.filter(function(signature){
+                                                        return ttrusted_keys.some(function(key){
+                                                           return key.id == signature.keyId 
+                                                        })
+                                                    })
+
+                    authentic_signatures.length > 0
+                    ?   self.state.set('authentic')
+                    :   self.state.set('valid')
+
+                })
+
+            }
+
+            this.handleVerificationFail = function(reason){
+                self.state
+                .unset('unverifiable')
+                .unset('valid')
+                .unset('authentic')
+                .unset('defective')
+
+                reason.type == 0
+                ?   self.state.set('unverifiable')
+                :   self.state.set('defective')
+            }
 
             this.revealSignatures = function(){
                 this.reveal_signatures = true
@@ -615,6 +671,12 @@ angular.module('cmConversations')
             this.on('message:saved', function(){
                 self.uploadFiles();
             });
+
+
+            cmUserModel.data.identity.on('update:finished', function(){
+                self.authenticity.verify(self.from)
+                .then(this.handleVerificationSuccess,this.handleVerificationFail)
+            })
 
             init(data);
 

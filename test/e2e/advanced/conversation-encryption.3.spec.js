@@ -148,6 +148,7 @@ describe('Conversation encryption -', function () {
                     return conversationId != "new"
                 })
             }, 5000, 'unable to get conversation id')
+
         })
 
         it("get purl for external user (if needed)", function () {
@@ -180,20 +181,14 @@ describe('Conversation encryption -', function () {
                     util.waitForElement("cm-conversation")
                 })
 
-
                 it("enter password (if required)", function () {
-                    console.log(recipient)
+
                     if (recipient.hasKey || recipient.storedPassword) {
                         $$("cm-modal.active").then(function (modals) {
                             expect(modals.length).toBe(0)
                         })
                     } else {
                         if(['password', 'passCaptcha'].indexOf(encryptionType) != -1){
-
-                            // expect password prompt
-                            // console.log(index)
-                            // if(index == 2)
-                            //     ptor.debugger()
 
                             util.waitForModalOpen()
                             util.get(conversationRoute + "/security")
@@ -255,17 +250,24 @@ describe('Conversation encryption -', function () {
                                                         return messages[i].author == recipient.login
                                                     })[0]
 
-                                        console.log(author)
-
-
                                         if(author.hasKey){
+                                            console.log(author)
                                             ptor.wait(function() {
                                                 return element.$("[data-qa = 'signed']").isPresent()
                                             }, 3000, 'Message signature indicator did not show up.')
+
+                                            if(author == recipients[0] && deleteKeysAfterInitialMessage){
+                                                console.log('bogus')
+                                                ptor.wait(function() {
+                                                    return element.$("[data-qa = 'bogus']").isPresent()
+                                                }, 3000, 'Message signature failure indicator did not show up.')
+                                            }
+
                                         }
                                         else{
+                                            //console.log(author)
+                                            //ptor.debugger()
 
-                                            ptor.debugger()
                                             ptor.wait(function() {
                                                 return element.$("[data-qa = 'unsigned']").isPresent()
                                             }, 3000, 'Missing message signature indicator did not show up.')
@@ -350,7 +352,7 @@ describe('Conversation encryption -', function () {
         })
     })
 
-    describe("no keys -", function () {
+    xdescribe("no keys -", function () {
 
         describe("conversation with user that has a key -", function () {
             var recipients = [
@@ -388,6 +390,16 @@ describe('Conversation encryption -', function () {
             checkConversation(recipients, 0, 2, "asym")
         })
 
+        describe("asym key transmission but key gets deleted after initial message-", function () {
+
+            var recipients = [
+                {login: testUser1, hasKey: true},
+                {login: testUser2, hasKey: true}
+            ]
+
+            checkConversation(recipients, 0, 2, "asym", null, true)
+        })
+
         describe("password transmission -", function () {
             var recipients = [
                 {login: testUser1, hasKey: true},
@@ -398,7 +410,7 @@ describe('Conversation encryption -', function () {
             checkConversation(recipients, 1, 1, "password", password1)
         })
 
-        describe("passCaptcha transmission -", function () {
+        xdescribe("passCaptcha transmission -", function () {
             var recipients = [
                 {login: testUser1, hasKey: true},
                 {login: testUser2, hasKey: true},
@@ -408,7 +420,7 @@ describe('Conversation encryption -', function () {
             checkConversation(recipients, 2, 1, "passCaptcha", password2)
         })
 
-        describe("no encryption -", function () {
+        xdescribe("no encryption -", function () {
             var recipients = [
                 {login: testUser1, hasKey: true},
                 {login: testUser2, hasKey: true},
@@ -420,7 +432,7 @@ describe('Conversation encryption -', function () {
 
     })
 
-    describe("no local private key -", function () {
+    xdescribe("no local private key -", function () {
 
         it("delete key and create local key for user2", function () {
             util.logout()
@@ -507,10 +519,13 @@ describe('Conversation encryption -', function () {
         describe("conversation with user that has key -", function () {
             var recipients = [
                 {login: testUser1, hasKey: false, storedPassword: true},
-                {login: testUser2, hasKey: true}
+                {login: testUser2, hasKey: true},
+                {login: testUser3, hasKey: true}
             ]
             checkConversation(recipients, 1, 1, "password", Math.floor(Math.random() * 1000000))
         })
+
+
 
         describe("conversation with users without keys -", function () {
             var recipients = [
@@ -521,7 +536,6 @@ describe('Conversation encryption -', function () {
             ]
             checkConversation(recipients, 1, 1, "password", Math.floor(Math.random() * 1000000))
         })
-
     })
 
 
