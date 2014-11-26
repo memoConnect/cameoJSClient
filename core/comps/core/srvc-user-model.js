@@ -352,30 +352,9 @@ angular.module('cmCore')
 
             $rootScope.$broadcast('logout', {
                 token:this.getToken(),
+                goToLogin: goToLogin,
                 where: where
             });
-
-            this.reset();
-            isAuth = false;
-
-            if(typeof where == 'string'){
-                this.removeToken(where);
-            } else {
-                this.removeToken();
-            }
-
-            if(goToLogin !== false){
-                $rootScope.goTo('/login');
-            }
-
-            window.setTimeout(function(){
-                if(self.getToken() !== false){
-                    cmLogger.error('Token was not removed at logout!');
-                    throw new Error('Failure at Logout Process!')
-                } else {
-                    cmLogger.debug('Logout succeed!')
-                }
-            }, 300);
         };
 
         this.switchToIdentity = function(identity, identityToken){
@@ -896,6 +875,31 @@ angular.module('cmCore')
         };
 
         init();
+
+        /**
+         * Event Handling
+         */
+        $rootScope.$on('logout', function(event, data){
+            //cmLogger.debug('cmUserModel - $rootScope.logout');
+
+            self.reset();
+            isAuth = false;
+
+            if(typeof data == 'object' && 'where' in data){
+                self.removeToken(data.where);
+            } else {
+                self.removeToken();
+            }
+
+            if(self.getToken() !== false){
+                cmLogger.error('Token was not removed at logout!');
+                throw new Error('Failure at Logout Process!')
+            }
+
+            if(typeof data == 'object' && 'goToLogin' in data && typeof data.goToLogin === 'undefined' || data.goToLogin !== false){
+                $rootScope.goTo('/login');
+            }
+        });
 
         $rootScope.$on('identity:switched', function(){
             self.resetUser();
