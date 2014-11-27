@@ -66,7 +66,6 @@ describe('Route: Start - ', function () {
 
         it("should be in /talks after canceling key generation", function () {
             util.waitAndClickQa("btn-cancel-key-generation")
-//            util.waitAndClick("cm-modal.active [data-qa='btn-confirm']")
             util.waitForPageLoad('/talks')
         })
     })

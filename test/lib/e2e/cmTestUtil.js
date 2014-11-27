@@ -588,9 +588,10 @@ this.waitForQa = function(dataQa){
     self.waitForElement("[data-qa='" + dataQa + "']")
 }
 
-this.waitAndClickQa = function (dataQa) {
-    self.waitForElement("[data-qa='" + dataQa + "']")
-    $("[data-qa='" + dataQa + "']").click()
+this.waitAndClickQa = function (dataQa, preSelector) {
+    var preSelector = preSelector ? preSelector+' ' : '';
+    self.waitForElement(preSelector+"[data-qa='" + dataQa + "']")
+    $(preSelector+"[data-qa='" + dataQa + "']").click()
 }
 
 this.waitAndClick = function (selector) {

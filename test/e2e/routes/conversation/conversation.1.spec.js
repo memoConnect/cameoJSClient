@@ -43,7 +43,7 @@ describe('Route conversation:', function () {
 
     it('display warning when there is no recipient', function(){
         $("[data-qa='btn-send-answer']").click()
-        util.waitAndClickQa('btn-cancel')
+        util.waitAndClickQa('btn-cancel','cm-modal.active')
     })
 
     it('add recipient', function () {

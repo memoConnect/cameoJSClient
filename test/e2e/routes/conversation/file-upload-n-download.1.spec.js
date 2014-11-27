@@ -19,8 +19,6 @@ var config = require("../../config-e2e-tests.js"),
 function testFile(file, extension, index) {
     var selector = '.file'
 
-
-
     chooseFileAndUpload(file, selector, index);
 
     it(getFilename(file) + ' in message displayed', function () {
@@ -61,7 +59,10 @@ function testHTML5(file, extension, index) {
 }
 
 function chooseFileAndUpload(file, selector, index) {
-    it(getFilename(file) + ' choose and check preview', function () {
+    it(getFilename(file) + ' choose and check preview', function() {
+
+        console.log('chooseFileAndUpload '+file)
+
         $("[data-qa='btn-file-choose']").sendKeys(file)
 
         util.waitForElements('cm-files-preview ' + selector)
@@ -87,7 +88,7 @@ function getFilename(file) {
     return file.replace(/^.*(\\|\/|\:)/, '');
 }
 
-describe('FileUpload create TestUser', function(){
+xdescribe('FileUpload create TestUser', function(){
     var ptor = util.getPtorInstance(),
         testUser
 
@@ -113,7 +114,7 @@ describe('FileUpload create TestUser', function(){
         })
 
         it('check checkbox and close modal', function () {
-            util.waitAndClickQa('btn-confirm')
+            util.waitAndClickQa('btn-confirm','cm-modal.active')
         })
 
         // testFile or testImage called for every entry

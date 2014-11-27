@@ -75,7 +75,7 @@ describe('transfer scope data conversation', function () {
     it('send message & create conversation', function () {
         util.waitForElement("[data-qa='btn-send-answer']")
         $("[data-qa='btn-send-answer']").click()
-        util.waitAndClickQa('btn-confirm')
+        util.waitAndClickQa('btn-confirm','cm-modal.active')
 
         util.waitForElements('cm-message', 1)
 

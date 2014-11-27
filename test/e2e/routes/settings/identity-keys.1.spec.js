@@ -55,8 +55,9 @@ describe('Identity key settings: ', function () {
     })
 
     describe('with increased timeout', function () {
+        var expectedTimeout = 90000
         beforeEach(function () {
-            jasmine.getEnv().defaultTimeoutInterval = 30000
+            jasmine.getEnv().defaultTimeoutInterval = expectedTimeout
         })
 
         afterEach(function () {
@@ -64,18 +65,13 @@ describe('Identity key settings: ', function () {
         })
 
         it('wait for key generation and display key', function () {
-            util.waitForElementVisible("[data-qa='page-save-key']",30000)
+            util.waitForElementVisible("[data-qa='page-save-key']",expectedTimeout)
             expect($("[data-qa='input-key-name']").getAttribute('value')).toBeTruthy()
             util.clearInput("input-key-name")
             $("[data-qa='input-key-name']").sendKeys(keyName)
 
-            /**
-             * test
-             */
             $("body").click();
-
             util.waitAndClickQa("btn-save-key")
-
         })
     })
 
@@ -119,7 +115,7 @@ describe('Identity key settings: ', function () {
     it('delete key and confirm that it is deleted after logout/login', function () {
 
         util.waitAndClickQa('btn-remove-modal')
-        util.waitAndClickQa('btn-confirm')
+        util.waitAndClickQa('btn-confirm','cm-modal.active')
 
         util.logout()
 

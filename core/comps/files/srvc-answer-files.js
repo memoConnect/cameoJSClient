@@ -42,7 +42,6 @@ angular.module('cmFiles').service('cmAnswerFiles', [
                 return false;
             },
             reset: function () {
-                console.log('reset files')
                 this.files = [];
                 this.trigger('files:resetted');
             },

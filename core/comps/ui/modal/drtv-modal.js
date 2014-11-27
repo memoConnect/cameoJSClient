@@ -100,12 +100,12 @@ angular.module('cmUi')
 
                 scope.isActive = function(){
                     return element.hasClass('active')
-                }
+                };
 
                 // open modal
                 scope.open = function(ttl){
                     scope.toggle(true);
-                    return scope
+                    return scope;
                 };
                 // close modal
                 scope.close = function(fromBackdrop){

@@ -36,7 +36,7 @@ describe('Purl Registration: ', function () {
 
         // close notify extern modal
         util.waitForModalOpen()
-        util.click('btn-cancel')
+        util.waitAndClickQa('btn-cancel','cm-modal.active')
 
         util.waitForPageLoad('/contact/list')
     })
