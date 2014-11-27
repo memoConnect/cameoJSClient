@@ -163,7 +163,6 @@ angular.module('cmCore').service('cmRootService', [
             return false;
         };
 
-
         $rootScope.$on('logout',function(){
             $rootScope.pendingConversation = null;
             $rootScope.pendingRecipients = [];
