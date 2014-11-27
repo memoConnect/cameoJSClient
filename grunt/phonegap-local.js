@@ -50,6 +50,7 @@ module.exports = function(grunt, options){
                     platforms: [
                         'android'
 //                        'ios'
+//                        'wp8'
                     ],
 
                     maxBuffer: 1000, // You may need to raise this for iOS.
