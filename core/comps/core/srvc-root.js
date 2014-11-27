@@ -161,6 +161,16 @@ angular.module('cmCore').service('cmRootService', [
             }
 
             return false;
-        }
+        };
+
+        $rootScope.$on('logout',function(){
+            $rootScope.pendingConversation = null;
+            $rootScope.pendingRecipients = [];
+        });
+
+        $rootScope.$on('identity:switched',function(){
+            $rootScope.pendingConversation = null;
+            $rootScope.pendingRecipients = [];
+        });
     }
 ]);

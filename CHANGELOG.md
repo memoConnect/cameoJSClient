@@ -1,3 +1,7 @@
+# BS 27.11.2014
+* fix new Talk with -1 recipients CAM-1412
+* add route controller to start/keyinfo to check skipKeyInfo and redirect to talks, if skip is activated in settings
+
 # BS 25.11.2014
 * finish Story unread Messages CAM-1321
 ** add button to settings to show or not the quantity of unread messages
