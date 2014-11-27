@@ -8,7 +8,7 @@ angular.module('cmConversations').directive('cmRecipientsCommaSeperated', [
             scope: {
                 conversation: '=cmData'
             },
-            template: '<span>{{entries}}</span>',
+            template: '<span class="is-selectable">{{entries}}</span>',
             controller: function($scope){
                 $scope.entries = '';
 

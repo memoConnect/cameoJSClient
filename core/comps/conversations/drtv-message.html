@@ -6,15 +6,15 @@
         <span class="nose {{ is_my_own_message ? 'right' : 'left'}}"><i class="fa {{ is_my_own_message ? 'cm-nose-right' : 'cm-nose-left'}}"></i></span>
 
         <div class="author" ng-if="!is_my_own_message" data-qa="message-author">
-            <span class="from">{{ message.from.getDisplayName() }}</span>
+            <span class="from is-selectable">{{ message.from.getDisplayName() }}</span>
         </div>
 
         <div 
-            class       = "text" 
+            class       = "text"
             ng-class    = "{'own-message':is_my_own_message}"
         >
-            <span ng-if="!displayEncrypted() && message.text != ''" ng-bind-html="message.text|cmParse" cm-html-compile></span>
-            <span ng-if="displayEncrypted()">{{'CONVERSATION.TEXT.ENCRYPTED'|cmTranslate}}</span>
+            <span ng-if="!displayEncrypted() && message.text != ''" ng-bind-html="message.text|cmParse" cm-html-compile class="is-selectable"></span>
+            <span ng-if="displayEncrypted()" class="is-selectable">{{'CONVERSATION.TEXT.ENCRYPTED'|cmTranslate}}</span>
         </div>
 
         <div>
@@ -26,8 +26,8 @@
 </article>
 
 <span ng-if="textOnly && messageProper()">
-    <span ng-if="isType('text') && !displayEncrypted()" ng-bind-html="message.text|cmParse:{autolink:true}"></span>
-    <span ng-if="isType('text') && displayEncrypted()">{{'CONVERSATION.TEXT.ENCRYPTED'|cmTranslate}}</span>
-    <span ng-if="isType('image')">{{'CONVERSATION.TAG.IMAGE'|cmTranslate}}</span>
-    <span ng-if="isType('file')">{{'CONVERSATION.TAG.FILE'|cmTranslate}}</span>
+    <span class="is-selectable" ng-if="isType('text') && !displayEncrypted()" ng-bind-html="message.text|cmParse:{autolink:true}"></span>
+    <span class="is-selectable" ng-if="isType('text') && displayEncrypted()">{{'CONVERSATION.TEXT.ENCRYPTED'|cmTranslate}}</span>
+    <span class="is-selectable" ng-if="isType('image')">{{'CONVERSATION.TAG.IMAGE'|cmTranslate}}</span>
+    <span class="is-selectable" ng-if="isType('file')">{{'CONVERSATION.TAG.FILE'|cmTranslate}}</span>
 </span>

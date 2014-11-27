@@ -11,7 +11,7 @@ angular.module('cmUi').directive('cmTimeConverter',[
                 dateFormat: '=cmDateFormat',
                 specialType: '@cmSpecialType'
             },
-            template: '<span ng-if="time > 0">{{time | date: format}}</span>',
+            template: '<span ng-if="time > 0" class="is-selectable">{{time | date: format}}</span>',
             controller: function($scope){
 
                 function update(){
