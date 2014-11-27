@@ -14,7 +14,7 @@ angular.module('cmUi')
             },
             template: '<i class="fa with-response cm-search"' +
                         ' ng-click="toggleInput($event)"' +
-                        ' data-qa="btn-header-list-search"></i>' +
+                        ' data-qa="btn-header-list-search" cm-reactive></i>' +
                       '<cm-search-input' +
                         ' ng-model="ngModel"' +
                         ' cm-options="{withoutSearchIcon:true,hideElements:\'cm-footer\',scrollTo:options.scrollTo}"' +

@@ -1,7 +1,7 @@
 <article class="cm-modal-plain">
     <header>
         <button ng-click="close()" class="close" ng-show="closeBtn" data-qa="cm-modal-close-btn"><i class="fa cm-close"></i></button>
-        <h2 class="{{severity}}">{{title|cmTranslate}}</h2>
+        <h2 class="{{severity}}" ng-if="title">{{title|cmTranslate}}</h2>
     </header>
     <ng-transclude class="content"></ng-transclude>
 </article>

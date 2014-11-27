@@ -45,7 +45,7 @@ describe('Multi Identity: ', function () {
         })
 
         util.setVal('input-displayname',newIdentity.displayName)
-        util.setVal('input-phonenumber',newIdentity.phoneNumber)
+        util.setVal('input-phoneNumber',newIdentity.phoneNumber)
         util.setVal('input-email',newIdentity.email)
 
         util.click('btn-identity-create')
@@ -72,7 +72,7 @@ describe('Multi Identity: ', function () {
 
         expect(util.getVal('input-cameoId')).toBe(newIdentity.cameoId+'@cameonet.de')
         expect(util.getVal('input-displayname')).toBe(newIdentity.displayName)
-        expect(util.getVal('input-phonenumber')).toBe('+49'+newIdentity.phoneNumber)
+        expect(util.getVal('input-phoneNumber')).toBe('+49'+newIdentity.phoneNumber)
         expect(util.getVal('input-email')).toBe(newIdentity.email)
     })
 

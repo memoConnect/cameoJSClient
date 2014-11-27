@@ -150,6 +150,13 @@ angular.module('cmConversations').service('cmConversationFactory', [
             //);
         });
 
+        cmConversationsAdapter.on('subscriptionId:changed', function(){
+            self.forEach(function (conversation) {
+                //conversation.update();
+                conversation.loadLatestMessages();
+            });
+        });
+
         return self;
     }
 ]);

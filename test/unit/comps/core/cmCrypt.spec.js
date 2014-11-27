@@ -167,7 +167,7 @@ describe('cmCrypt', function () {
     })
 
     describe('encrypt a string with a short key', function () {
-        it('encrypt and decrypt a String', function () {
+        it('should encrypt and decrypt a String', function () {
             var testString = 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec qu'
             var secretKey = 'abcdefghi'
             var encryptedShit = cmCrypt.encryptWithShortKey(secretKey, testString)
@@ -239,6 +239,7 @@ describe('cmCrypt', function () {
                             privateKey = key.getPrivateKey()
                         }
                     )
+                    $rootScope.$apply()
                 })
             })
 

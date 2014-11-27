@@ -36,14 +36,25 @@ angular.module('cmFiles').directive('cmUploadAvatar',[
                                 });
                             }
                         },
-                        error: function(maxFileSize, header) {
-                            cmNotify.warn('CONVERSATION.WARN.FILESIZE_REACHED', {
-                                ttl: 0,
-                                i18n: {
-                                    maxFileSize: maxFileSize,
-                                    fileSize: header['X-File-Size'],
-                                    fileName: header['X-File-Name']
+                        error: function(errorCode, error, header) {
+                            var i18n = {};
+                            if(errorCode == 'FILE.UPLOAD.QUOTA.EXCEEDED'){
+                                i18n = {
+                                    totalQuota: error.totalQuota,
+                                    quotaLeft: error.quotaLeft,
+                                    fileSize: error.fileSize
                                 }
+                            } else if(errorCode == 'FILE.UPLOAD.FILESIZE.EXCEEDED'){
+                                i18n = {
+                                    fileSize: header['X-File-Size'],
+                                    fileName: header['X-File-Name'],
+                                    maxFileSize: error.maxFileSize
+                                }
+                            }
+
+                            cmNotify.warn(errorCode, {
+                                ttl: 0,
+                                i18n: i18n
                             });
                         }
                     });

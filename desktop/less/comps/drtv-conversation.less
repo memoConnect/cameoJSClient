@@ -1,4 +1,45 @@
-cm-conversation {
-  display: block;
-  margin-bottom: 4rem;
+cm-conversation{
+    position:absolute;
+    top:0;
+    width:100%;
+    bottom:6*@cm-unit;
+    overflow: auto;
+    padding-bottom:0;
+    .answer {
+        min-height: 6*@cm-unit;
+        .btns-left{
+            position:absolute;
+            height: @cm-unit;
+            bottom: 0;
+            left:0;
+        }
+
+        .btns-right{
+            position:absolute;
+            height: @cm-unit;
+            bottom: 0;
+            right:0;
+        }
+
+
+        .wrap {
+            padding-bottom: @cm-unit !important;
+            .message {
+                height: 5*@cm-unit;
+                margin:auto!important;
+                width:90%;
+                left:auto;
+                right:auto;
+            }
+
+            cm-files-preview {
+                bottom:6*@cm-unit;
+            }
+        }
+
+
+        textarea{
+            height:4.8*@cm-unit;
+        }
+    }
 }

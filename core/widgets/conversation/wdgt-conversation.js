@@ -11,12 +11,18 @@
 
 angular.module('cmWidgets')
 .directive('cmWidgetConversation', [
-    function (){
+
+    'cmWidget',
+
+    function (cmWidget){
         return {
             restrict: 'AE',
             templateUrl: 'widgets/conversation/wdgt-conversation.html',
             scope: {
                conversation: '=cmData'
+            },
+            link: function(scope, element, attrs){
+                cmWidget.setup(scope, element, attrs)
             },
             controller: function ($scope) {
 

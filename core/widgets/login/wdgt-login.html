@@ -15,9 +15,9 @@
         <hr class="margin-small mt1">
         <cm-login></cm-login>
 
-        <hr class="margin-small">
+        <hr class="no-margin-top no-margin-bottom">
 
-        <article class="item tac" ng-click="goTo('/registration')" data-qa="register-btn">
+        <article class="item tac" ng-click="goTo('/registration')" data-qa="register-btn" cm-reactive>
             <span class="body">
                 {{'REGISTER.LINK'|cmTranslate}}
             </span>
@@ -26,12 +26,12 @@
             </span>
         </article>
 
-        <hr class="margin-small">
+        <hr class="no-margin-top no-margin-bottom">
 
-        <article class="cm-login-text">
+        <article class="cm-login-text mt15 is-selectable">
             {{'CAMEO.DESCRIBE'|cmTranslate}}
         </article>
-        <article class="version">
+        <article class="version is-selectable">
             {{'CAMEO.VERSION'|cmTranslate}}: {{cmVersion.version}}
         </article>
     </div>

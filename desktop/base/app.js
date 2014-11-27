@@ -3,9 +3,9 @@
 angular.module('cameoClient', [
     'ngRoute',
     'ngCookies',
-    'swipe',
     'angular-loading-bar',
     // cameo dependencies
+    'cmConfig',
     'cmRoutes',
     'cmWidgets',
     'cmDesktopWidgets',
@@ -21,35 +21,36 @@ angular.module('cameoClient', [
     'cmValidate'
 ])
 
-.constant('cmEnv',cameo_config.env)
-.constant('cmVersion',{version:cameo_config.version, last_build:'-'})
-.constant('cmConfig',cameo_config)
-
 // cameo configuration for our providers
 .config([
-    'cmLanguageProvider',
-    'cmLoggerProvider',
-    'cmApiProvider',
-    'cmCallbackQueueProvider',
+    'cmLanguageProvider', 'cmLoggerProvider', 'cmApiProvider', 'cmCallbackQueueProvider',
+    'cmConfigProvider', 'cmEnvProvider', 'cmWebworkerFactoryProvider',
+    function (cmLanguageProvider, cmLoggerProvider, cmApiProvider, cmCallbackQueueProvider,
+              cmConfigProvider, cmEnvProvider, cmWebworkerFactoryProvider){
 
-    function (cmLanguageProvider, cmLoggerProvider, cmApiProvider, cmCallbackQueueProvider){
         cmLoggerProvider
-            .debugEnabled(cameo_config.env.enableDebug)
+            .debugEnabled( cmEnvProvider.get('enableDebug') )
+
+        cmWebworkerFactoryProvider
+            .setGlobalDefaultLimit( cmConfigProvider.get('webworkerDefaultGlobalLimit') )
+            .setMobileDefaultLimit( cmConfigProvider.get('WebworkerDefaultLimitMobile') )
+            .setAppDefaultLimit( cmConfigProvider.get('WebworkerDefaultLimitApp') )
+            .setDesktopDefaultLimit( cmConfigProvider.get('WebworkerDefaultLimitDesktop') )
 
         cmApiProvider
-            .restApiUrl( cameo_config.restApi )
-            .callStackPath( cameo_config.callStackPath )
-            .useCallStack( cameo_config.useCallStack )
-            .commitSize( cameo_config.commitSize )
-            .commitInterval( cameo_config.commitInterval )
-            .useEvents( cameo_config.useEvents )
-            .eventsPath( cameo_config.eventsPath )
-            .eventsInterval( cameo_config.eventsInterval )
+            .restApiUrl( cmConfigProvider.get('restApi') )
+            .callStackPath( cmConfigProvider.get('callStackPath') )
+            .useCallStack( cmConfigProvider.get('useCallStack') )
+            .commitSize( cmConfigProvider.get('commitSize') )
+            .commitInterval( cmConfigProvider.get('commitInterval') )
+            .useEvents( cmConfigProvider.get('useEvents') )
+            .eventsPath( cmConfigProvider.get('eventsPath') )
+            .eventsInterval( cmConfigProvider.get('eventsInterval') )
 
         cmLanguageProvider
-            .cacheLangFiles(cameo_config.cache_lang_files)
-            .supportedLanguages( cameo_config.supported_languages)
-            .pathToLanguages( cameo_config.path_to_languages)
+            .cacheLangFiles( cmConfigProvider.get('cacheLangFiles') )
+            .supportedLanguages( cmConfigProvider.get('supportedLanguages') )
+            .pathToLanguages( cmConfigProvider.get('pathToLanguages') )
             .preferredLanguage('en_US')   //for now
             .useLocalStorage()
 
@@ -59,9 +60,8 @@ angular.module('cameoClient', [
 ])
 // app route config
 .config([
-    '$routeProvider',
-    '$locationProvider',
-    function ($routeProvider, $locationProvider) {
+    '$routeProvider', '$locationProvider', 'cmConfigProvider',
+    function ($routeProvider, $locationProvider, cmConfigProvider) {
         /**
          * this option makes location use without #-tag
          * @param settings
@@ -204,7 +204,7 @@ angular.module('cameoClient', [
         }
 
         // start creation of routes
-        createRoutes(cameo_config.routes);
+        createRoutes(cmConfigProvider.get('routes'));
     }
 ])
 // app run handling
@@ -217,108 +217,59 @@ angular.module('cameoClient', [
             cmPushNotificationAdapter.init();
         });
 }])
-.run(function() {
-    // disabled the 3000 seconds delay on click when touch ;)
-    FastClick.attach(document.body);
-})
 .run(function(){
     // start entropy collection for random number generator
     sjcl.random.startCollectors();
 })
-.run(['cmError',function(cmError){
+.run(['cmError', 'cmHistory',function(cmError, cmHistory){
     // only an inject is nessarary
 }])
-/**
- * @TODO cmContactsModel anders initialisieren
- */
+// router passing wrong route calls
 .run([
-    '$rootScope',
-    '$location',
-    '$window',
-    '$document',
-    '$route',
-    '$timeout',
+    '$rootScope', '$location',
     'cmUserModel',
-    'cmConversationFactory',
-    'cmContactsModel',
-    'cmRootService',
-    'cmSettings',
-    'cmLanguage',
-    'cmLogger',
-    'cfpLoadingBar',
-    'cmEnv',
-    'cmVersion',
-    'cmApi',
-    'cmAuthenticationRequest',
-    'cmSystemCheck',
-    'cmError',
-    function ($rootScope, $location, $window, $document, $route, $timeout,
-              cmUserModel, cmConversationFactory, cmContactsModel, cmRootService, cmSettings,
-              cmLanguage, cmLogger, cfpLoadingBar, cmEnv, cmVersion,
-              cmApi, cmAuthenticationRequest, cmSystemCheck, cmError) {
+    function($rootScope, $location,
+             cmUserModel){
+        $rootScope.$on('$routeChangeSuccess', function(){
 
-        //prep $rootScope with useful tools
-        $rootScope.console  =   window.console;
-        $rootScope.alert    =   window.alert;
-
-        // $rootScope.$watch(function(){
-        //     cmLogger.debug('$digest!')
-        // })
-
-        //add Overlay handles:
-        $rootScope.showOverlay = function(id){ $rootScope.$broadcast('cmOverlay:show', id) };
-        $rootScope.hideOverlay = function(id){ $rootScope.$broadcast('cmOverlay:hide', id) };
-
-        // passing wrong route calls
-        $rootScope.$on('$routeChangeStart', function(){
             // expections
             var path_regex = /^(\/login|\/registration|\/systemcheck|\/terms|\/disclaimer|\/404|\/version|\/purl\/[a-zA-Z0-9]{1,})$/;
             var path = $location.$$path;
             // exists none token then otherwise to login
             if (cmUserModel.isAuth() === false){
                 if (!path_regex.test(path)) {
-                    $location.path('/login');
+                    $rootScope.goTo('/login',true);
                 }
+                // when token exists
             } else if ((path == '/login' || path == '/registration') && cmUserModel.isGuest() !== true) {
-                $location.path('/talks');
+                $rootScope.goTo('/talks',true);
+                // logout route
             } else if (path == '/logout'){
                 cmUserModel.doLogout(true,'app.js logout-route');
             }
         });
+    }
+])
+/**
+ * @TODO cmContactsModel anders initialisieren
+ */
+.run([
+    '$rootScope', '$location', '$window', '$document', '$route', '$timeout',
+    'cmUserModel', 'cmConversationFactory', 'cmContactsModel', 'cmRootService',
+    'cmSettings', 'cmLanguage', 'cmLogger', 'cfpLoadingBar', 'cmEnv', 'cmVersion',
+    'cmApi', 'cmAuthenticationRequest', 'cmSystemCheck',
+    function ($rootScope, $location, $window, $document, $route, $timeout,
+              cmUserModel, cmConversationFactory, cmContactsModel, cmRootService, cmSettings,
+              cmLanguage, cmLogger, cfpLoadingBar, cmEnv, cmVersion,
+              cmApi, cmAuthenticationRequest, cmSystemCheck) {
 
-        // url hashing for backbutton
-        $rootScope.urlHistory = [];
-        // detect back button event
-        window.onpopstate = function(){
-            $rootScope.urlHistory.pop();
-        };
+        //prep $rootScope with useful tools
+        $rootScope.console  =   window.console;
+        $rootScope.alert    =   window.alert;
 
-        $rootScope.$on('$routeChangeSuccess', function(){
-            // momentjs
-            //$window.moment.lang(cmLanguage.getCurrentLanguage());
-
-            // important for HTML Manipulation to switch classes etc.
-            $rootScope.cmIsGuest = cmUserModel.isGuest();
-
-            // handle url history for backbutton handling
-            $rootScope.urlHistory = $rootScope.urlHistory || [];
-
-            var currentRoute = $location.$$path,
-                prevRoute = $rootScope.urlHistory.length > 0
-                          ? $rootScope.urlHistory[$rootScope.urlHistory.length - 1]
-                          : '';
-
-            // clear history in some cases
-            if(
-                currentRoute.indexOf('/login') != -1 // when login route
-             //|| currentRoute == prevRoute // current is the same then is startPage
-            ) {
-                $rootScope.urlHistory = [];
-            // push new route
-            } else if(currentRoute !== prevRoute) {
-                $rootScope.urlHistory.push($location.$$path);
-            }
-        });
+        //add Overlay handles:
+        $rootScope.showOverlay = function(id){ $rootScope.$broadcast('cmOverlay:show', id) };
+        $rootScope.hideOverlay = function(id){ $rootScope.$broadcast('cmOverlay:hide', id) };
 
         // Make it easy for e2e-tests to monitor route changes:
         window._route = {};

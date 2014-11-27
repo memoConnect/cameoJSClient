@@ -1,44 +1,44 @@
-<h2 class="border-bottom">
+<h2 class="border-bottom is-selectable">
     <i class="fa cm-rhino-positive"></i>
     {{'START.QUICKSTART.HEADLINE'|cmTranslate}}
 </h2>
 
-<article ng-bind-html="'START.QUICKSTART.SUB_TEXT' | cmParse" class="cm-bold content"></article>
+<article ng-bind-html="'START.QUICKSTART.SUB_TEXT' | cmParse" class="cm-bold content is-selectable"></article>
 
 <hr />
 
-<h4 class="content">
+<h4 class="content is-selectable">
     <i class='fa cm-key'></i>&nbsp;
     {{'START.QUICKSTART.HEADLINE_1'|cmTranslate}}
 </h4>
 
-<article ng-bind-html="'START.QUICKSTART.TEXT_1' | cmParse" class="content"></article>
+<article ng-bind-html="'START.QUICKSTART.TEXT_1' | cmParse" class="content is-selectable"></article>
 
 <hr />
 
-<h4 class="content">
+<h4 class="content is-selectable">
     <i class='fa cm-new-contact'></i>&nbsp;
     {{'START.QUICKSTART.HEADLINE_2'|cmTranslate}}
 </h4>
 
-<article ng-bind-html="'START.QUICKSTART.TEXT_2' | cmParse" class="content"></article>
+<article ng-bind-html="'START.QUICKSTART.TEXT_2' | cmParse" class="content is-selectable"></article>
 
 <hr />
 
-<h4 class="content">
+<h4 class="content is-selectable">
     <i class='fa cm-new-talk'></i>&nbsp;
     {{'START.QUICKSTART.HEADLINE_3'|cmTranslate}}
 </h4>
 
-<article ng-bind-html="'START.QUICKSTART.TEXT_3' | cmParse" class="content"></article>
+<article ng-bind-html="'START.QUICKSTART.TEXT_3' | cmParse" class="content is-selectable"></article>
 
 <hr />
 
-<h3 ng-bind-html="'START.WELCOME.TEXT_4' | cmParse" class="content"></h3>
-<article ng-bind-html="'START.WELCOME.TEXT_5' | cmParse" class="content"></article>
+<h3 ng-bind-html="'START.WELCOME.TEXT_4' | cmParse" class="content is-selectable"></h3>
+<article ng-bind-html="'START.WELCOME.TEXT_5' | cmParse" class="content is-selectable"></article>
 
 <cm-footer ng-if="startRoute">
-    <button ng-click="generateKey()" class="cm-btn-grey" data-qa="btn-next-step">
+    <button ng-click="generateKey()" class="cm-btn-grey" data-qa="btn-next-step is-selectable" cm-reactive>
         {{'START.BTNS.NEXT' | cmTranslate}}
         <i class="fa cm-right"></i>
     </button>

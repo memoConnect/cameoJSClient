@@ -38,9 +38,9 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
                 })
             },
 
-            getConversation: function(id, limit, offset){
+            getConversation: function(id, limit, offset, timeLimit){
                 //cmLogger.debug('getConversation');
-                var queryString = cmUtil.handleLimitOffset(limit,offset);
+                var queryString = cmUtil.handleLimitOffset(limit,offset, timeLimit);
 
                 if(queryString == ''){
                     queryString += '?' + cmUserModel.getLocalKeyIdsForRequest();
@@ -61,8 +61,8 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
                 })
             },
 
-            getConversationMessages: function(id, limit, offset) {
-                var queryString = cmUtil.handleLimitOffset(limit,offset);
+            getConversationMessages: function(id, limit, offset, timeLimit) {
+                var queryString = cmUtil.handleLimitOffset(limit,offset,timeLimit);
 
                 if(queryString == ''){
                     queryString += '?' + cmUserModel.getLocalKeyIdsForRequest();
@@ -143,6 +143,11 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
         cmApi.on('rekeying:finished', function(event, data){
             cmLogger.debug('cmConversationsAdapter.on rekeying:finished');
             adapter.trigger('passphrases:updated', data);
+        });
+
+        cmApi.on('subscriptionId:changed', function(){
+            //cmLogger.debug('cmConversationsAdapter.on subscriptionId:changed');
+            adapter.trigger('subscriptionId:changed');
         });
 
         return adapter

@@ -1,11 +1,7 @@
 'use strict';
 
 angular.module('cmCore')
-.service('cmUtil', [
-
-    'cmLogger',
-    '$window',
-    '$injector',
+.service('cmUtil',
     function(cmLogger, $window, $injector){
         /**
          * Checks if Key exists in an Object or Array
@@ -31,17 +27,21 @@ angular.module('cmCore')
          * @param offset
          * @returns {string}
          */
-        this.handleLimitOffset = function(limit,offset){
+        this.handleLimitOffset = function(limit,offset,timeLimit){
             var s = '';
 
-            if(angular.isDefined(limit) && this.validateInt(limit) !== false){
-                s = '?limit=' + parseInt(limit);
+            if(angular.isDefined(timeLimit) && this.validateInt(timeLimit) !== false){
+                s = '?timeLimit=' + parseInt(timeLimit);
             } else {
-                //default limit
-            }
+                if(angular.isDefined(limit) && this.validateInt(limit) !== false){
+                    s = '?limit=' + parseInt(limit);
+                } else {
+                    //default limit
+                }
 
-            if(s != '' && angular.isDefined(offset) && this.validateInt(offset) !== false){
-                s += '&offset=' + parseInt(offset);
+                if(s != '' && angular.isDefined(offset) && this.validateInt(offset) !== false){
+                    s += '&offset=' + parseInt(offset);
+                }
             }
 
             return s;
@@ -255,4 +255,4 @@ angular.module('cmCore')
             return matches != null;
         };
     }
-]);
+);

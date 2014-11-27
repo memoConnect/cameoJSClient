@@ -11,13 +11,13 @@ self.addEventListener('message', function(event) {
     switch (data.cmd) {
         case 'start':
             try {
-                crypt.setKey(data.privKey)
+                crypt.setKey(data.params.privKey)
 
-                var signature = crypt.sign(data.data)
+                var signature = crypt.sign(data.params.data)
 
                 self.postMessage({
                     msg:        signature ? 'finished' : 'failed',
-                    signature:  signature
+                    result:     signature
                 })
 
             } catch(e){

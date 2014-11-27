@@ -1,14 +1,14 @@
 <!--<cm-loader ng-show="conversations.state.is('initial-loading')" class="fullscreen"></cm-loader>-->
 
 <ul>
-    <li ng-show="!conversations.length && !conversations.state.is('loading')" class="empty-list">
+    <li ng-if="!conversations.length && !conversations.state.is('loading')" class="empty-list">
         <i class="fa cm-info"></i>  {{'TALKS.LIST_EMPTY'|cmTranslate}}
     </li>
-    <li ng-repeat="conversation in conversations | orderBy:'timeOfLastUpdate':true | cmSearch:'talks':search" ng-click="goto('/conversation/'+conversation.id)" data-qa="conversation-list-element">
+    <li ng-repeat="conversation in conversations | orderBy:'timeOfLastUpdate':true | cmSearch:'talks':search" ng-click="goto('/conversation/'+conversation.id)" cm-reactive data-qa="conversation-list-element">
         <cm-conversation-tag cm-data="conversation" cm-rubber-space></cm-conversation-tag>
     </li>
-    <li  ng-if="moreTalksAvailable()">
-        <button class="cm-btn-grey" ng-click="loadMoreTalks()" data-qa="load-more-btn">
+    <li ng-if="moreTalksAvailable()">
+        <button class="cm-btn-grey" ng-click="loadMoreTalks()" data-qa="load-more-btn" cm-reactive>
             {{'TALKS.MORE'|cmTranslate}}
         </button>
     </li>

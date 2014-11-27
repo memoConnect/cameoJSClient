@@ -1,14 +1,14 @@
 <article class="content" ng-show="isLoading">
     <cm-loader></cm-loader>
 </article>
-<article class="content"ng-show="!requests.length && !isLoading">
+<article class="content mb15"ng-show="!requests.length && !isLoading">
     <cm-info-bubble nose-x="45%" class="cm-alert">
         <i class="fa cm-info"></i> {{'CONTACTS.INFO.NO_REQUESTS'|cmTranslate}}
     </cm-info-bubble>
 </article>
 
-<section class="mt15" ng-if="(requests.length > 0)">
-    <ul class="no-border">
+<section ng-if="(requests.length > 0)">
+    <ul class="no-border-top">
         <li ng-repeat="request in requests" class="contact-request-item" data-qa="contact-list-element">
             <div>
                 <cm-avatar cm-data="request.identity"></cm-avatar>
@@ -24,14 +24,14 @@
             </article>
 
             <div class="cm-request-bar">
-                <button ng-click="acceptRequest(request)" data-qa="btn-acceptRequest">
+                <button ng-click="acceptRequest(request)" data-qa="btn-acceptRequest" cm-reactive>
                     <i class="fa cm-checkbox-right"></i>{{'CONTACTS.REQUESTS.ACCEPT'|cmTranslate}}
                 </button>
-                <button ng-click="rejectRequest(request)" data-qa="btn-rejectRequest">
+                <button ng-click="rejectRequest(request)" data-qa="btn-rejectRequest" cm-reactive>
                     <i class="fa cm-reject"></i>
                     {{'CONTACTS.REQUESTS.REJECT'|cmTranslate}}
                 </button>
-                <!--<button ng-click="ignoreRequest(request)" ng-if="false">
+                <!--<button ng-click="ignoreRequest(request)" ng-if="false" cm-reactive>
                     <i class="fa cm-ignore"></i>
                     {{'CONTACTS.REQUESTS.IGNORE'|cmTranslate}}
                 </button>-->

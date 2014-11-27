@@ -5,20 +5,23 @@
         "loadingBar": false,
         "enableDebug": true,
         "logLevel": "DEBUG",
-        "performancePage": true
+        "performancePage": true,
+        "errorOnTodoInI18n": false
     },
-    "cockpit": {
-        "basePath": "/c/",
-        "appPath": "/m/"
+    "path": {
+        "cockpit": "/c/",
+        "app": "/m/",
+        "dl": "/dl/"
     },
     "debug":{
         "weinre": false,
         "weinreIp": ""
     },
     "phonegap": {
-        "baseName": "cameoNet-test" ,
-        "appId": "io.cameo.cameonet.client.web.mobile.app.test",
-        "bundleId": "de.cameonet.app.test.test",
-        "extraName" : ""
+        "baseName": "cameoNet-local",
+        "appId": "1085010",
+        "bundleId": "io.cameo.local.cameo",
+        "extraName" : "" ,
+        "androidDebuggable": true
     }
 }

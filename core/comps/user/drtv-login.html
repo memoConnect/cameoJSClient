@@ -7,7 +7,7 @@
         </select>
     </article>
 
-    <hr class="margin-small" ng-if="cmEnv.autoLogin">
+    <hr class="margin-small no-margin-bottom" ng-if="cmEnv.autoLogin">
 
     <article class="content">
         <div class="cm-input-ctn" ng-class="{'cm-input-error':alertState!=''}" cm-input-watcher>
@@ -30,17 +30,17 @@
         </div>
     </article>
 
-    <article class="content" ng-hide="alertState==''" data-qa="login-info">
+    <article class="content mb15" ng-hide="alertState==''" data-qa="login-info">
         <cm-info-bubble class="cm-alert">
             <div><i class="fa cm-info"></i><span ng-bind-html="'LOGIN.INFO.'+alertState|cmParse"></span></div>
         </cm-info-bubble>
     </article>
 
-    <hr class="margin-small">
+    <hr class="no-margin-top no-margin-bottom">
 
     <button class="btn-submit" type="submit"></button>
 
-    <article class="item" data-qa="login-submit-btn" ng-click="doLogin()">
+    <article class="item" data-qa="login-submit-btn" ng-click="doLogin()" cm-reactive>
         <span class="body tac" ng-show="!showLoader">
             <span class="with-icon">{{'LOGIN.LABEL.SUBMIT'|cmTranslate}}<i class="fa cm-key"></i></span>
         </span>

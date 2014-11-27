@@ -114,7 +114,7 @@ angular.module('cmConversations')
                      * after success sendMessage
                      */
                     
-                    var deferred = $q.defer()
+                    var deferred = $q.defer();
                    
                     $rootScope.$broadcast('cmFilesCheckFiles', {
                         passphrase: passphrase,
@@ -124,18 +124,37 @@ angular.module('cmConversations')
                                 filesForMessage = files;
                             deferred.resolve()
                         },
-                        error: function(maxFileSize, header) {
+                        error: function(errorCode, error, header) {
                             $scope.isSending = false;
                             $scope.isSendingAbort = true;
-                            cmNotify.warn('CONVERSATION.WARN.FILESIZE_REACHED', {
-                                ttl: 0,
-                                i18n: {
-                                    maxFileSize: maxFileSize,
-                                    fileSize: header['X-File-Size'],
-                                    fileName: header['X-File-Name']
+
+                            if(!errorCode){
+                                deferred.reject('problem with prepare file upload');
+                            } else {
+                                deferred.reject('problem with prepare file upload');
+
+                                var i18n = {};
+                                if(errorCode == 'FILE.UPLOAD.QUOTA.EXCEEDED'){
+                                    i18n = {
+                                        totalQuota: error.totalQuota,
+                                        quotaLeft: error.quotaLeft,
+                                        fileSize: error.fileSize
+                                    }
+                                } else if(errorCode == 'FILE.UPLOAD.FILESIZE.EXCEEDED'){
+                                    i18n = {
+                                        fileSize: header['X-File-Size'],
+                                        fileName: header['X-File-Name'],
+                                        maxFileSize: error.maxFileSize
+                                    }
                                 }
-                            });
-                            deferred.reject('file too large.')
+
+                                cmNotify.warn(errorCode, {
+                                    ttl: 0,
+                                    i18n: i18n
+                                });
+
+                                deferred.reject(errorCode);
+                            }
                         }
                     });   
 
@@ -191,11 +210,13 @@ angular.module('cmConversations')
                                                         return  $scope.conversation.isEncrypted()
 
                                                                 ?   new_message
+                                                                    .setText($scope.newMessageText)
                                                                     .addFiles(filesForMessage)
                                                                     .encrypt(passphrase)
                                                                     .save()
 
                                                                 :   new_message
+                                                                    .setText($scope.newMessageText)
                                                                     .addFiles(filesForMessage)
                                                                     .setPublicData(['text','fileIds'])
                                                                     .save()  
@@ -310,7 +331,7 @@ angular.module('cmConversations')
                     function callback_recipients_missing(){
                         cmModal.confirm({
                             title:  'CONVERSATION.WARN.RECIPIENTS_MISSING',
-                            text:   'CONVERSATION.CONFIRM.RECIPIENTS_MISSING',
+                            text:   'CONVERSATION.CONFIRM.RECIPIENTS_MISSING'
                         })
                         .then(function(){
                             $scope.conversation.solitary = true

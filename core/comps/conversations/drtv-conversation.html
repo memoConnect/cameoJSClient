@@ -3,15 +3,15 @@
     neuer Talk
 </h2>
 <h2 ng-if="!conversation.state.is('new') && conversation.subject" class="border-bottom no-margin">
-    <i class="fa cm-talk"></i>
-    <span ng-bind-html="conversation.subject|cmParse" data-qa="text-subject"></span>
+    <i class="fa cm-talk is-selectable"></i>
+    <span ng-bind-html="conversation.subject|cmParse" data-qa="text-subject" class="is-selectable"></span>
 </h2>
 <section class="body-group recipients" ng-if="conversation.state.is('new') || !conversation.state.is('new') && conversation.recipients.length > 1">
-    <h3 ng-click="toggleRecipientView()">
+    <h3 ng-click="toggleRecipientView()" cm-reactive>
         <i class="fa" ng-class="{'cm-grid':!showGrid,'cm-menu-weight':showGrid}"></i>
         {{'CONVERSATION.PLACEHOLDER.RECIPIENTS'|cmTranslate}}
-        <span class="recipients-counter">({{conversation.recipients.length-1}})</span>
-        <span class="recipient-name" ng-show="showGrid">{{recipientName}}</span>
+        <span class="recipients-counter is-selectable">({{conversation.recipients.length-1}})</span>
+        <span class="recipient-name is-selectable" ng-show="showGrid">{{recipientName}}</span>
     </h3>
     <div class="recipients-list">
         <div
@@ -23,25 +23,27 @@
             <div
                 class="add-new-recipients"
                 ng-click="goto('conversation/'+(conversation.id||'new')+'/recipients')"
+                cm-reactive
                 ng-if="conversation.recipients.length == 1 && conversation.state.is('new')">
                 <cm-avatar cm-view="unknown"></cm-avatar>
                 <span>{{'CONVERSATION.PLACEHOLDER.ADD_RECIPIENTS'|cmTranslate}}</span>
             </div>
-                <cm-avatar
-                    cm-data="recipient"
-                    ng-click="showName(recipient)"
-                    ng-class="{
-                        'name-shown': recipientName == recipient.getDisplayName()
-                    }"
-                    ng-repeat="recipient in conversation.recipients|cmHideAppOwner|orderBy:'getDisplayName()':false"
-                    cm-first-of-repeat="showName(recipient)"
-                    ng-show="showGrid">
-                </cm-avatar>
+            <cm-avatar
+                cm-data="recipient"
+                ng-click="showName(recipient)"
+                ng-class="{
+                    'name-shown': recipientName == recipient.getDisplayName()
+                }"
+                ng-repeat="recipient in conversation.recipients|cmHideAppOwner|orderBy:'getDisplayName()':false"
+                cm-first-of-repeat="showName(recipient)"
+                ng-show="showGrid">
+            </cm-avatar>
             <cm-recipients-comma-seperated cm-data="conversation" ng-show="!showGrid"></cm-recipients-comma-seperated>
         </div>
         <div
             class="cm-add-button"
             ng-click="goto('conversation/'+(conversation.id||'new')+'/recipients')"
+            cm-reactive
             cm-user-rights>
             <i
                 class="fa"
@@ -90,7 +92,7 @@
 <div class="answer clearfix" id="files-droparea">
     <div class="wrap">
         <div class="btns-left">
-            <cm-files ng-model="files" data-qa="attachments-btn">
+            <cm-files ng-model="files" data-qa="attachments-btn" cm-reactive>
                 <i class="fa cm-attachment"></i>
                 <div cm-user-rights>
                     <cm-file-choose cm-droparea="files-droparea"></cm-file-choose>
@@ -110,7 +112,7 @@
         <div class="btns-right">
             <cm-emoji-handler></cm-emoji-handler>
 
-            <div class="post-wrap" data-qa="btn-send-answer" ng-click="send()">
+            <div class="post-wrap" data-qa="btn-send-answer" ng-click="send()" cm-reactive>
                 <i
                         class="fa cm-post with-cursor {{conversation.lockStatus.class}}-wrap"
                         ng-class="{

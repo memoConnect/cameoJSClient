@@ -65,7 +65,7 @@
         "TITLE": {
             "HEAD_LOGIN": "Login Informationen",
             "HEAD_IDENTITY": "Benutzer Informationen",
-            "MANDATORY_INFO": "Mit * gekennzeichnete Felder, müssen ausgefüllt werden."
+            "MANDATORY_INFO": "Nur mit * gekennzeichnete Felder, müssen ausgefüllt werden."
         },
         "WARN": {
             "REGISTRATION_FAILED": "Bei der Registrierung ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut."
@@ -94,6 +94,11 @@
             "TEXT_3": "An verknüpfte Kontakte können Sie direkt aus der Kontakt-Übersicht über das Brief-Symbol Nachrichten senden. Es öffnet sich ein neuer Talk (=Unterhaltung). Geben Sie eine Nachricht ein und drücken Sie auf den Senden-Button.<br><br>Herzlichen Glückwunsch! Sie haben Ihren ersten verschlüsselten Talk geführt!",
             "TEXT_4": "Wenn Sie Fragen oder Verbesserungsvorschläge zu cameoNet haben, nutzen Sie unsere Support- und Hilfeseiten unter http://support.cameonet.de.",
             "BTN_TEXT": "Und los..."
+        },
+        "DOWNLOAD": {
+            "HEADER": "App herunter laden",
+            "SUB_TEXT": "Willkommen im cameoNet!<br>. Für Ihr Gerät steht cameoNet auch als App zur Verfügung. Wir empfehlen Ihnen, diese herunterzuladen und dort fortzufahren.",
+            "SKIP_TEXT": "Nein danke, ich möchte im Browser fortfahren..."
         },
         "KEYINFO": {
             "SKIP_CHECKBOX_TEXT": "Diese Seite nicht mehr anzeigen",
@@ -206,7 +211,8 @@
     },
 
     "PURL": {
-        "SIGN_IN": "Registrieren"
+        "SIGN_IN": "Registrieren",
+        "TO_APP": "App öffnen"
     },
 
     "RECIPIENTS": {
@@ -306,12 +312,14 @@
             }
         },
         "FOOTER": {
-            "SAVE": "Speichern"
+            "SAVE": "Speichern",
+            "BACK": "Zurück"
         },
         "IMPORT" :{
             "NOTIFICATION" :{
-                "CONFIRMATION" :"Sie haben Kontaktdaten einer dritten Person auf unseren Servern gespeichert. Informieren Sie sie bitte darüber.",
-                "MESSAGE" : "Hallo {{to}}, ich habe Deine Adressdaten in mein Cameo-Adressbuch übernommen. Ciao {{from}}"
+                "HEADER": "Kontakt informieren",
+                "TEXT": "Sie haben Kontaktdaten einer dritten Person auf den cameoNet Servern gespeichert.\nSie können diesen Kontakt darüber informieren und ihn gleich zu cameoNet einladen.",
+                "MESSAGE_TEMPLATE": "Hallo {{to}},\nich habe Ihre Kontaktdaten soeben in mein cameoNet-Adressbuch übernommen.\nRegistrieren Sie sich doch auch im cameoNet! Dann können wir ganz einfach verschlüsselt kommunizieren.\nViele Grüße {{from}}"
             }
         },
         "TRUST":{
@@ -492,7 +500,7 @@
         "LABEL": "Einstellungen",
         "ACCOUNT": "Account Einstellungen",
         "IDENTITY": "Identität Einstellungen",
-        "NOTIFY": "Benachrichtungen",
+        "NOTIFY": "Benachrichtigungen",
         "CONTACTS": "Kontakte Einstellungen",
         "APP": "App Einstellungen",
         "CONTRACTS": "Verträge",
@@ -772,6 +780,10 @@
         "OFFLINE_HANDLER": {
             "MESSAGE": "Es konnte keine Verbindung zu cameoNet hergestellt werden.<br>Bitte versuchen Sie es später noch einmal oder überprüfen Sie ihre Internet Verbindung und drücken 'Neu verbinden'",
             "FOOTER": "Neu verbinden"
+        },
+        "EXIT": {
+            "HEADER": "App schließen",
+            "TEXT": "Wollen Sie die App wirklich verlassen?"
         }
     },
 
@@ -785,11 +797,11 @@
         "CONVERSATION": {
             "ENCRYPTED": {
                 "NAME": "Dieser Talk ist verschlüsselt.",
-                "DESCRIPTION": "missing description @todo"
+                "DESCRIPTION": "Die Nachrichten dieses Talks werden verschlüsselt. Der dafür verwendete Schlüssel wird wiederum mit den cameoKeys der Empfänger verschlüsselt und mit dem Talk übertragen. Diese Verschlüsselung ist als sehr sicher anzusehen."
             },
             "NOT_ENCRYPTED": {
                 "NAME": "Dieser Talk ist nicht verschlüsselt.",
-                "DESCRIPTION": "missing description @todo",
+                "DESCRIPTION": "Die Nachrichten werden nicht verschlüsselt. Bei der Übertragung können die Nachrichten von Dritten abgefangen und gelesen werden.",
                 "TOGGLE": "Verschlüsselung aktivieren."
             },
             "KEY_TRANSMISSION_SYMMETRIC": {
@@ -809,8 +821,8 @@
                 "TOGGLE": "PassCaptcha deaktivieren."
             },
             "TRUSTING_ALL_RECIPIENTS": {
-                "NAME": "Du vertraust allen Empfängern.",
-                "DESCRIPTION": "missing description @todo"
+                "NAME": "Allen Empfängern wird vertraut.",
+                "DESCRIPTION": "Sie haben für jeden Empfänger dieses Talks sichergestellt, dass die Identität einer bestimmten Person gehört (Vertrauens-Prozess durchgeführt)."
             },
             "MISSING_DATA": "Sicherheitsaspekte fehlen!"
         }
@@ -824,6 +836,17 @@
         "ERROR": {
             "EMPTY_INPUT": "Eingabe ist leer!",
             "WRONG_INPUT": "Bitte überprüfen Sie Ihre Eingabe!"
+        }
+    },
+
+    "FILE": {
+        "UPLOAD": {
+            "QUOTA": {
+                "EXCEEDED": "Sie haben nicht mehr genug Speicherplatz! <br> Die Datei die Sie hochladen möchten hat {{fileSize | cmBytesHumanReadable}}.<br>Sie haben nur noch {{quotaLeft | cmBytesHumanReadable}} freien Speicherplatz (von {{totalQuota | cmBytesHumanReadable}})."
+            },
+            "FILESIZE": {
+                "EXCEEDED": "Die maximale Dateigröße wurde überschritten. <br>Die Datei die Sie hochladen möchten ist {{fileSize | cmBytesHumanReadable}} groß. <br>Die maximale Dateigröße beträgt <strong>{{maxFileSize | cmBytesHumanReadable}}</strong>."
+            }
         }
     }
 }

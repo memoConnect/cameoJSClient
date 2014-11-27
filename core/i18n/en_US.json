@@ -49,7 +49,7 @@
           "TIMEOUT" : "Time out - please try again.",
           "VERIFY" : "Linking failed - please try again."
         },
-        "EXPLANATION" : "To read your encrypted messages completed as {{identity}} on other devices, please link the local cameoKey to all other keys first.",
+        "EXPLANATION" : "TODO: To read your encrypted messages completed as {{identity}} on other devices, please link the local cameoKey to all other keys first.",
         "MODAL" : {
           "SUCCESS" : "You have successfully linked your cameoKeys.",
           "CANCELED" : "Linking was canceled."
@@ -271,6 +271,10 @@
       "NOTICE" : "To use this feature please register at cameoNet.",
       "REGISTRATION" : "Register now",
       "LATER" : "Later"
+    },
+    "EXIT": {
+      "HEADER": "Leave App",
+      "TEXT": "Do you really want to leave the app?"
     }
   },
   "NAVIGATION" : {
@@ -304,6 +308,11 @@
       "TEXT_2" : "Attention: This is the first beta version!",
       "TEXT_1" : "<span class='cm-ci-color'>cameoNet</span> is an open source messenger that makes  end-to-end encryption easy for safe, private and business communication.",
       "TEXT_5" : "We are happy when you post us any error or improvement on http://support.cameonet.de<br> Thank you! Your cameoNet-Team."
+    },
+    "DOWNLOAD": {
+      "HEADER": "App Download",
+      "SUB_TEXT": "Welcome to cameoNet! <br> There is an App for your device. You can download it below.",
+      "SKIP_TEXT": "No thanks, I want to go on in my browser."
     },
     "KEYINFO" : {
       "SKIP_TEXT" : "Skip",
@@ -490,7 +499,8 @@
       "CITY" : "City"
     },
     "FOOTER" : {
-      "SAVE" : "Save"
+      "SAVE" : "Save",
+      "BACK": "Done"
     },
     "INFO" : {
       "SELECT" : {
@@ -521,9 +531,10 @@
       "START" : "contact can be trusted"
     },
     "IMPORT" :{
-        "NOTIFICATION" : {
-          "MESSAGE" : "Dear {{to}}, I have included your personal data to my address book on cameoNet. I hope hearing from you soon. Yours {{from}}",
-          "CONFIRMATION" : "Personal data of a third person have been stored on our server. Please inform her or him."
+        "NOTIFICATION" :{
+            "HEADER": "Import contact",
+            "TEXT": "You have imported personal data of a contact. You can inform him and invite him to cameoNet.",
+            "MESSAGE_TEMPLATE": "Dear {{to}},\nI have added your contact information to my address book at cameoNet. Register there as well so we can have easy private and encrypted conversations. I hope hearing from you soon in cameoNet.\nYours {{from}}"
         }
     },
     "WIDGET" : "Talks",
@@ -794,6 +805,17 @@
     }
   },
   "PURL" : {
-    "SIGN_IN" : "Register"
-  }
+    "SIGN_IN" : "Register",
+    "TO_APP": "Open in app"
+  },
+    "FILE": {
+        "UPLOAD": {
+          "QUOTA": {
+            "EXCEEDED": "Account quota exceeded! <br> The file you want to upload has{{fileSize | cmBytesHumanReadable}}.<br>You have only {{quotaLeft | cmBytesHumanReadable}} left ( total: {{totalQuota | cmBytesHumanReadable}})."
+          },
+          "FILESIZE": {
+            "EXCEEDED": "The file is tool large.<br> Your file has <strong>{{fileSize | cmBytesHumanReadable}}</strong> bytes. The maximum file size is <strong>{{maxFileSize | cmBytesHumanReadable}}</strong>."
+          }
+        }
+    }
 }

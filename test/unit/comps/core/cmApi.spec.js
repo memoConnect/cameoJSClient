@@ -226,12 +226,6 @@ describe('base config', function(){
             expect(cmApi.call_stack).toBeDefined()
         })
 
-
-
-
-
-
-
         describe('call stack', function(){
 
             it('should be empty at first.', function(){
@@ -403,9 +397,44 @@ describe('base config', function(){
                 $httpBackend.flush()
             })
 
+            it('should change the subscription id, when backend returns a "KO" at a getEvent call and return a new id', function(){
+                cmApi.subscriptionId = 'my_id'
+
+                $httpBackend
+                    .expect('GET', 'my_rest_api/events/my_id')
+                    .respond(232,{
+                        res : "KO",
+                        data : {
+                            "subscriptionId": "my_id_new"
+                        }
+                    })
+
+                cmApi.getEvents(true)
+
+                $httpBackend.flush()
+
+                expect(cmApi.subscriptionId).toBe('my_id_new')
+            })
+
+            it('should not change the subscription id, when backend returns a "KO" at a getEvent call and return no id', function(){
+                cmApi.subscriptionId = 'my_id'
+
+                $httpBackend
+                    .expect('GET', 'my_rest_api/events/my_id')
+                    .respond(232,{
+                        res : "KO",
+                        data : {
+                            "subscription": "my_id_new"
+                        }
+                    })
+
+                cmApi.getEvents(true)
+
+                $httpBackend.flush()
+
+                expect(cmApi.subscriptionId).toBe('my_id')
+            })
         })
-
-
     })
 })
 
@@ -464,8 +493,13 @@ describe('cmApi with short intervals', function(){
 
 
 describe('cmApi with cmAuth present', function(){
-    beforeEach(module('cmCore'))
-
+    beforeEach(module('cmCore',[
+        'cmApiProvider',
+        function(cmApiProvider){
+            cmApiProvider
+                .setWithoutApiUrl()
+        }
+    ]))
     beforeEach(module(function ($provide) {
         $provide.value('cmAuth', {
             getToken: function(){ return "my_token"},

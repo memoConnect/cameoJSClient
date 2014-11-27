@@ -3,7 +3,7 @@ module.exports = function (grunt, options) {
     grunt.loadNpmTasks('grunt-karma');
 
     grunt.registerTask('tests-unit', [
-        'app:gen-all-templates',
+        'app:to-dist',
         'search:language-keys',
         'karma:jenkins'
     ]);

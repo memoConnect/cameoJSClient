@@ -1,4 +1,4 @@
-<article class="content mb15">
+<article class="content mb15 is-selectable-all">
     <h3 data-qa="header-key-name">{{keyName}}</h3>
 
     <cm-info-bubble ng-if="privKey" nose-x="30%">
@@ -6,8 +6,8 @@
     </cm-info-bubble>
 </article>
 
-<article class="content">
-    <h4 ng-if="privKey" class="is-local">{{'SETTINGS.PAGES.IDENTITY.KEYS.IS_LOCAL_ON_THIS_DEVICE'|cmTranslate}}</h4>
+<article class="content is-selectable-all">
+    <h4 ng-if="privKey" class="is-local is-selectable">{{'SETTINGS.PAGES.IDENTITY.KEYS.IS_LOCAL_ON_THIS_DEVICE'|cmTranslate}}</h4>
 
     <h4>
         <strong>{{'SETTINGS.PAGES.IDENTITY.KEYS.TRUSTING'|cmTranslate}}:</strong>
@@ -25,8 +25,8 @@
     </h4>
 </article>
 
-<article class="content">
-    <h4>
+<article class="content is-selectable-all">
+    <h4 class="is-selectable">
         <strong>{{'SETTINGS.PAGES.IDENTITY.KEYS.FINGERPRINT'|cmTranslate}}:</strong>
     </h4>
     <cm-info-bubble nose-x="15%">
@@ -34,7 +34,7 @@
     </cm-info-bubble>
 </article>
 
-<article class="content">
+<article class="content is-selectable-all">
     <div ng-if="privKey">
         <h3>{{'SETTINGS.PAGES.IDENTITY.KEYS.PRIVATE_KEY'|cmTranslate}}</h3>
         <cm-info-bubble nose-x="15%">
@@ -50,7 +50,7 @@
 </article>
 
 <cm-footer cm-always-on-top ng-if="isTrusted && privKey && canAuthenticate">
-    <button ng-click="startAuthentication()" class="cm-btn-grey" data-qa="btn-start-authentication">
+    <button ng-click="startAuthentication()" class="cm-btn-grey is-selectable" data-qa="btn-start-authentication" cm-reactive>
         {{'SETTINGS.PAGES.IDENTITY.HANDSHAKE.HANDSHAKE_START'|cmTranslate}}
         <i class="fa cm-checker"></i>
     </button>
