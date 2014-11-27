@@ -227,6 +227,9 @@ angular.module('cmCore')
                             cmKeyCache.storeVerificationResult(self, data, signature, true)
                             return $q.when(result)
                         })
+                        .catch(function(reason){
+                            cmLogger.warn('cmKey: verification failed: '+reason)
+                        })
             }
 
             this.encrypt = function(secret){

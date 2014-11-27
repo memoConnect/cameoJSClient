@@ -121,7 +121,9 @@ angular.module('cmPhonegap')
                 if(this.isAvailable()){
                     this.plugin.encrypt(
                         function (result) {
-                            deferred.resolve(result);
+                            result == 'true'
+                            ?   deferred.resolve(result)
+                            :   deferred.reject(result)
                         }, 
                         function (reason) {
                             deferred.reject(reason);
