@@ -49,7 +49,7 @@ describe('Purl Registration: ', function () {
         // add recipient
         $(".cm-add-button").click()
         util.waitForPageLoad("/conversation/new/recipients")
-        util.searchInList(externalLogin)
+        util.headerSearchInList(externalLogin)
 
         util.waitForElement("[data-qa='contact-display-name']")
         $("[data-qa='btn-select-contact']").click()

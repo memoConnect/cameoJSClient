@@ -55,7 +55,7 @@ describe('Identity key settings: ', function () {
     })
 
     describe('with increased timeout', function () {
-        var expectedTimeout = 90000
+        var expectedTimeout = 180000
         beforeEach(function () {
             jasmine.getEnv().defaultTimeoutInterval = expectedTimeout
         })

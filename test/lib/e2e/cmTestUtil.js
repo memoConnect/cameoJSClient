@@ -446,10 +446,6 @@ this.getFileExtension = function (file) {
 
 this.headerSearchInList = function (searchString) {
     self.waitAndClickQa("btn-header-list-search")
-    this.searchInList(searchString)
-}
-
-this.searchInList = function (searchString) {
     $("[data-qa='inp-list-search']").sendKeys(searchString)
 }
 
