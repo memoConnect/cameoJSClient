@@ -1,3 +1,7 @@
+# BS 27.11.2014
+* fix new Talk with -1 recipients CAM-1412
+* add route controller to start/keyinfo to check skipKeyInfo and redirect to talks, if skip is activated in settings
+
 # BS 21.11.2014
 * fix edit icon in contact edit view, disable if contact is cameo member
 * fix edit own identity CAM-1340
