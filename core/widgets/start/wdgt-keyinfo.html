@@ -1,4 +1,4 @@
-<h2 class="border-bottom">
+<h2 class="border-bottom is-selectable">
     <i class="fa cm-key"></i>
     {{'IDENTITY.LABEL.KEYMANAGEMENT'|cmTranslate}}
 </h2>
@@ -11,7 +11,7 @@
 
 <ul class="border-top mt15">
     <li ng-click="toggleSkipKeyInfo()" cm-reactive>
-        <span class="item disabled">
+        <span class="item disabled is-selectable">
            {{'START.KEYINFO.SKIP_CHECKBOX_TEXT' | cmTranslate}}
         </span>
         <div class="short-links without-bg">
@@ -42,7 +42,7 @@
     </li>
 
     <li>
-        <span class="item" ng-click="toggleKeySize()" cm-reactive>
+        <span class="item is-selectable" ng-click="toggleKeySize()" cm-reactive>
         {{'IDENTITY.KEYS.GENERATE.START.KEY_LENGTH.BUTTON_LABEL'|cmTranslate}} <strong>2048 (default)</strong>
         </span>
         <div class="short-links without-bg" ng-click="toggleKeySize()" cm-reactive data-qa="btn-toggle-keysize">
