@@ -3,7 +3,7 @@
     <span class="date"><cm-time-converter  cm-timestamp="message.created" cm-date-format="settings.get('timeFormat')"></cm-time-converter></span>
     <span class="envelope"><i class="fa" ng-class = "{'cm-send' : message.state.is('sending'), 'cm-envelope-closed' : !message.state.is('sending')}"></i></span>
     <span ng-if = "message.state.is('signed')"          data-qa = "signed">         signed          </span>
-    <span ng-if = "message.state.is('valid')"           data-qa = "authentic">      valid           </span>
+    <span ng-if = "message.state.is('valid')"           data-qa = "valid">          valid           </span>
     <span ng-if = "!message.state.is('signed')"         data-qa = "unsigned">       unsigned        </span>
     <span ng-if = "message.state.is('defective')"       data-qa = "defective">      defective       </span>
     <span ng-if = "message.state.is('authentic')"       data-qa = "authentic">      authentic       </span>

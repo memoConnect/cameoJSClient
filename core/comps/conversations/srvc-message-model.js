@@ -56,7 +56,7 @@ angular.module('cmConversations')
             this.files = [];
             this.fileIds = [];
 
-            this.state = new cmStateManagement(['new','decrypted','loading', 'incomplete', 'sending', 'waitForFiles', 'authentic', 'valid', 'signed', 'unverifiable']);
+            this.state = new cmStateManagement(['new','decrypted','loading', 'incomplete', 'sending', 'waitForFiles', 'authentic', 'valid', 'signed', 'unverifiable', 'defective']);
 
             this.authenticity = {
                                     publicData : null,

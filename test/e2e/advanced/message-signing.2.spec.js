@@ -109,6 +109,16 @@ describe('Message signing -', function () {
                     ptor.wait(function(){
                         return message.$("[data-qa = 'signed']").isPresent()
                     }, null, 'message not signed.')
+                    .then(function(){
+                        return ptor.wait(function(){
+                            return message.$("[data-qa = 'valid']").isPresent()
+                        }, null, 'signature is not valid.')
+                    })
+                    .then(function(){
+                        expect(message.$("[data-qa = 'authentic']").isPresent()).toBe(false)
+                        expect(message.$("[data-qa = 'unverifiable']").isPresent()).toBe(false)
+                        expect(message.$("[data-qa = 'defective']").isPresent()).toBe(false)
+                    })
                 })
             })
         })
@@ -147,6 +157,11 @@ describe('Message signing -', function () {
                     ptor.wait(function(){
                         return message.$("[data-qa = 'unverifiable']").isPresent()
                     }, null, 'message signature not marked as unverifiable.')
+                    .then(function(){
+                        expect(message.$("[data-qa = 'authentic']").isPresent()).toBe(false)
+                        expect(message.$("[data-qa = 'valid']").isPresent()).toBe(false)
+                        expect(message.$("[data-qa = 'defective']").isPresent()).toBe(false)
+                    })
                 })
             })
 
