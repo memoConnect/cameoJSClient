@@ -134,5 +134,15 @@ angular.module('cmCore').service('cmRootService', [
             );
             cmModal.open('fast-registration')
         };
+
+        $rootScope.$on('logout',function(){
+            $rootScope.pendingConversation = null;
+            $rootScope.pendingRecipients = [];
+        });
+
+        $rootScope.$on('identity:switched',function(){
+            $rootScope.pendingConversation = null;
+            $rootScope.pendingRecipients = [];
+        });
     }
 ]);
