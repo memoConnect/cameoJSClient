@@ -1,11 +1,11 @@
 <form name="registrationForm" class="form-horizontal" role="form" autocomplete="off" novalidate>
-    <article class="content small-text mt5 tac">
+    <article class="content small-text mt5 tac is-selectable">
         {{'REGISTER.TITLE.MANDATORY_INFO' | cmTranslate}}
     </article>
 
     <hr class="margin-small">
 
-    <h2 ng-click="toogleLoginInfo()">
+    <h2 ng-click="toogleLoginInfo()" class="is-selectable">
         <i class="fa cm-key"></i>
         {{'REGISTER.TITLE.HEAD_LOGIN' | cmTranslate}}
         <i class="fa cm-info"></i>
@@ -109,7 +109,7 @@
     <hr class="margin-small">
 
     <article class="content">
-        <div class="cm-clear-bg terms-link" data-qa="form-input">
+        <div class="cm-clear-bg terms-link is-selectable" data-qa="form-input">
             {{'REGISTER.LABEL.TERMS_ACCEPT'|cmTranslate}}&nbsp;
             <a href="#/terms" data-qa="link-terms" class="classic-link">{{'REGISTER.LABEL.TERMS'|cmTranslate}}</a>&nbsp;*
             <input
