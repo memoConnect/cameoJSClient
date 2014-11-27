@@ -46,6 +46,7 @@ angular.module('cmConfig',[])
                 },
                 'start-keyinfo': {
                     guests: false,
+                    hasCtrl: true,
                     routes: ['/start/keyinfo'],
                     resolveUserModel: true
                 },
