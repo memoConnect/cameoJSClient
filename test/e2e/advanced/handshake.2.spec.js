@@ -701,12 +701,20 @@ describe('Authentication requests -', function () {
 
 
     /*** check if message signatures are authentic now: ***/
-    xdescribe('Message Signing with trusted keys: ', function(){
+    describe('Message Signing with trusted keys: ', function(){
+
+        describe("user 2 gets key 4", function(){
+            it("login and import key4", function(){
+                util.login(testUser2, "password")
+                util.generateKey(4, keyName4)
+            })
+        })
 
         describe("user 1 sends signed messages:", function(){
 
             it("create new conversation", function () {
                 util.login(testUser1, "password")
+                util.setLocalStorage(localStorage1.key, localStorage1.value)
                 util.get("/conversation/new")
             })
 
@@ -739,7 +747,6 @@ describe('Authentication requests -', function () {
                     return util.getConversation(subject)                    
                 })
 
-                ptor.debugger()
 
                 // get conversation Id
                 ptor.wait(function () {
@@ -753,16 +760,16 @@ describe('Authentication requests -', function () {
         })
 
         describe("user 2 reads signed message:", function(){
+
             it("open conversation", function(){
                 util.login(testUser2, "password")
                 util.get(/conversation/+conversationId)
+                ptor.debugger()
             })
 
             it("read message from user 1", function(){
                 
                 var message 
-
-                ptor.debugger()
 
                 ptor.wait(function(){
 
@@ -778,16 +785,17 @@ describe('Authentication requests -', function () {
                                 return author == testUser1
                             })
                 }).then(function(){
+                    ptor.debugger()
                     ptor.wait(function(){
                         return message.$("[data-qa = 'signed']").isPresent()
                     }, null, 'message not signed.')
                     .then(function(){
                         return ptor.wait(function(){
-                            return message.$("[data-qa = 'valid']").isPresent()
-                        }, null, 'signature is not valid.')
+                            return message.$("[data-qa = 'authentic']").isPresent()
+                        }, null, 'signature is not authenic.')
                     })
                     .then(function(){
-                        expect(message.$("[data-qa = 'authentic']").isPresent()).toBe(false)
+                        expect(message.$("[data-qa = 'valid']").isPresent()).toBe(false)
                         expect(message.$("[data-qa = 'unverifiable']").isPresent()).toBe(false)
                         expect(message.$("[data-qa = 'defective']").isPresent()).toBe(false)
                     })
@@ -795,49 +803,6 @@ describe('Authentication requests -', function () {
             })
         })
 
-        describe("user1 breaks signatures:", function(){
-            it('delete keys', function(){
-                util.login(testUser1, "password")
-                util.deleteKeys()
-            })
-        })
-    
-        describe("user2 tries to read message with broken signature", function(){
-            it("open conversation", function(){
-                util.login(testUser2, "password")
-                util.get(/conversation/+conversationId)
-            })
-
-            it("read message from user 1", function(){
-                
-                var message 
-
-                ptor.wait(function(){
-
-                    return  $('cm-message')
-                            .then(function(el){
-                                message = el
-                                return  el.$("[data-qa='message-author']")
-                            })
-                            .then(function(child){
-                                return child.getText()
-                            })
-                            .then(function(author){
-                                return author == testUser1
-                            })
-                }).then(function(){
-                    ptor.wait(function(){
-                        return message.$("[data-qa = 'unverifiable']").isPresent()
-                    }, null, 'message signature not marked as unverifiable.')
-                    .then(function(){
-                        expect(message.$("[data-qa = 'authentic']").isPresent()).toBe(false)
-                        expect(message.$("[data-qa = 'valid']").isPresent()).toBe(false)
-                        expect(message.$("[data-qa = 'defective']").isPresent()).toBe(false)
-                    })
-                })
-            })
-
-        })
     })
 
 
