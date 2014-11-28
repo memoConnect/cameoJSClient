@@ -3,15 +3,15 @@
     neuer Talk
 </h2>
 <h2 ng-if="!conversation.state.is('new') && conversation.subject" class="border-bottom no-margin">
-    <i class="fa cm-talk"></i>
-    <span ng-bind-html="conversation.subject|cmParse" data-qa="text-subject"></span>
+    <i class="fa cm-talk is-selectable"></i>
+    <span ng-bind-html="conversation.subject|cmParse" data-qa="text-subject" class="is-selectable"></span>
 </h2>
 <section class="body-group recipients" ng-if="conversation.state.is('new') || !conversation.state.is('new') && conversation.recipients.length > 1">
     <h3 ng-click="toggleRecipientView()" cm-reactive>
         <i class="fa" ng-class="{'cm-grid':!showGrid,'cm-menu-weight':showGrid}"></i>
         {{'CONVERSATION.PLACEHOLDER.RECIPIENTS'|cmTranslate}}
-        <span class="recipients-counter">({{conversation.recipients.length-1}})</span>
-        <span class="recipient-name" ng-show="showGrid">{{recipientName}}</span>
+        <span class="recipients-counter is-selectable">({{conversation.recipients.length-1}})</span>
+        <span class="recipient-name is-selectable" ng-show="showGrid">{{recipientName}}</span>
     </h3>
     <div class="recipients-list">
         <div
@@ -44,7 +44,8 @@
             class="cm-add-button"
             ng-click="goto('conversation/'+(conversation.id||'new')+'/recipients')"
             cm-reactive
-            cm-user-rights>
+            cm-user-rights
+            data-qa="btn-add-recipients">
             <i
                 class="fa"
                 ng-class="{
@@ -79,48 +80,8 @@
 
 <div id="conversation-top"></div>
 
-<div
-    ng-repeat="message in (filteredData = (conversation.messages | orderBy:'created':false))"
-    cm-scroll-to="{anchor:'#conversation-bottom',force:'bottom'}"
-    cm-last-message>
-    <cm-date-seperator cm-timestamp="message.created" cm-timestamp-prev="filteredData[$index - 1].created"></cm-date-seperator>
-    <cm-message cm-data="message" cm-data-conversation="conversation"></cm-message>
-</div>
+<cm-messages-timeline></cm-messages-timeline>
 
 <div id="conversation-bottom" cm-scroll-to="{anchor:'#conversation-bottom',force:'bottom',onEvent:true}"></div>
 
-<div class="answer clearfix" id="files-droparea">
-    <div class="wrap">
-        <div class="btns-left">
-            <cm-files ng-model="files" data-qa="attachments-btn" cm-reactive>
-                <i class="fa cm-attachment"></i>
-                <div cm-user-rights>
-                    <cm-file-choose cm-droparea="files-droparea"></cm-file-choose>
-                    <cm-files-preview></cm-files-preview>
-                    <cm-choose-source cm-options="{tooltip:'up'}"></cm-choose-source>
-                </div>
-                <div
-                    data-qa="btn-fast-registration"
-                    class="webreader-uploading"
-                    cm-user-rights="showForGuest"
-                    ng-click="openFastRegister()"></div>
-            </cm-files>
-        </div>
-
-        <cm-answer-textarea cm-data ="newMessageText"></cm-answer-textarea>
-
-        <div class="btns-right">
-            <cm-emoji-handler></cm-emoji-handler>
-
-            <div class="post-wrap" data-qa="btn-send-answer" ng-click="send()" cm-reactive>
-                <i
-                        class="fa cm-post with-cursor {{conversation.lockStatus.class}}-wrap"
-                        ng-class="{
-                    'cm-post-idle':isSending,
-                    'cm-post-attention':isSendingAbort
-                }"></i>
-            </div>
-        </div>
-    </div>
-    <cm-emoji-list ng-model="newMessageText" cm-textarea="emoji-textarea"></cm-emoji-list>
-</div>
+<cm-answer></cm-answer>

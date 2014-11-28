@@ -33,6 +33,7 @@ angular.module('cmConversations').directive('cmMessage', [
 
                     if (!scope.textOnly && scope.message.files.length > 0) {
                         setFileView();
+
                         scope.conversation.getPassphrase()
                         .then(
                             function(passphrase){
@@ -40,7 +41,7 @@ angular.module('cmConversations').directive('cmMessage', [
                             },
 
                             function(passphrase){
-                                if(!scope.conversation.isEncrypted())
+                                if(!scope.message.isEncrypted())
                                     scope.message.decryptFiles(null)
                             }
                         )

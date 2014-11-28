@@ -2,10 +2,9 @@
 
 angular.module('cmUi').directive('cmScrollTo',[
     'cmLogger',
-    '$timeout',
-    '$rootScope',
-    '$document',
-    function (cmLogger, $timeout, $rootScope, $document){
+    '$timeout', '$rootScope', '$document',
+    function (cmLogger,
+              $timeout, $rootScope, $document){
         return {
             restrict: 'A',
             scope: true,
@@ -13,6 +12,7 @@ angular.module('cmUi').directive('cmScrollTo',[
                 $scope.options = angular.extend({},{
                     anchor: undefined, // #id of element
                     force: undefined, // force to top or bottom
+                    target: undefined, // other target then html and body where to scroll
                     onEvent: false,// only initalize the rootScope event
                     timeout: 250,
                     addElementsHeight: undefined
@@ -27,6 +27,7 @@ angular.module('cmUi').directive('cmScrollTo',[
                 function initTimeout(where){
                     var anchor = angular.element($document[0].querySelector(scope.options.anchor)),
                         bodyAndHtml = angular.element($document[0].querySelectorAll('body,html')),
+                        otherTarget = angular.element($document[0].querySelector(scope.options.target)),
                         extraOffset = 0;
 
                     // anchor isn't exists yet because of routeChange
@@ -54,9 +55,13 @@ angular.module('cmUi').directive('cmScrollTo',[
                             break;
                         }
 
-                        angular.forEach(bodyAndHtml, function (tag) {
-                            tag.scrollTop = position - extraOffset;
-                        });
+                        if(otherTarget.length == 0) {
+                            angular.forEach(bodyAndHtml, function (tag) {
+                                tag.scrollTop = position - extraOffset;
+                            });
+                        } else {
+                            otherTarget[0].scrollTop = position - extraOffset;
+                        }
                     },scope.options.timeout);
                 }
 

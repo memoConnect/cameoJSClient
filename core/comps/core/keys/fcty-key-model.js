@@ -26,11 +26,12 @@ angular.module('cmCore')
     'cmLogger',
     'cmObject',
     'cmWebworkerFactory',
+    'cmCryptoHelper',
     'cmKeyCache',
     '$rootScope',
     '$q',
 
-    function(cmLogger, cmObject, cmWebworkerFactory, cmKeyCache, $rootScope, $q){
+    function(cmLogger, cmObject, cmWebworkerFactory, cmCryptoHelper, cmKeyCache, $rootScope, $q){
         /**
          * @TODO TEsts!!!!!
          * @param args
@@ -151,27 +152,30 @@ angular.module('cmCore')
             };
 
             this.sign = function(data){
-
-                return  cmWebworkerFactory.get({
-                            jobName:    'rsa_sign',
-                            params:     {
-                                            privKey:    self.getPrivateKey(),
-                                            data:       data
+                var promise =   cmCryptoHelper.isAvailable()
+                                ?   cmCryptoHelper.sign(self.getPrivateKey(), data)
+                                :   cmWebworkerFactory.get({
+                                        jobName:    'rsa_sign',
+                                        params:     {
+                                                        privKey:    self.getPrivateKey(),
+                                                        data:       data
+                                                    }
+                                    })
+                                    .then(
+                                        function(worker){
+                                            return  worker.run()
+                                        },
+                                        function(reason){
+                                            return  $q.when(crypt && crypt.sign(data))
+                                                    .then(function(signature){
+                                                        return  signature
+                                                                ?   $q.when(signature)
+                                                                :   $q.reject()
+                                                    })
                                         }
-                        })
-                        .then(
-                            function(worker){
-                                return  worker.run()
-                            },
-                            function(reason){
-                                return  $q.when(crypt && crypt.sign(data))
-                                        .then(function(signature){
-                                            return  signature
-                                                    ?   $q.when(signature)
-                                                    :   $q.reject()
-                                        })
-                            }
-                        )
+                                    )
+
+                return  promise                                  
                         .then(function(signature){
                             cmKeyCache.storeVerificationResult(self, data, signature, true)
                             return $q.when(signature)
@@ -179,7 +183,6 @@ angular.module('cmCore')
             };
 
             this.verify = function(data, signature, use_cache){
-                console.warn('verify') 
                 if( 
                         use_cache
                     &&  cmKeyCache.getVerificationResult(self, data, signature) != null
@@ -191,38 +194,50 @@ angular.module('cmCore')
                             :   $q.reject(false)
                 }
 
-                return  cmWebworkerFactory.get({
-                            jobName :   'rsa_verify',
-                            params  :   {
-                                            pubKey:     self.getPublicKey(),
-                                            signature:  signature,
-                                            data:       data
+                var promise =   cmCryptoHelper.isAvailable()
+                                ?   cmCryptoHelper.verify(self.getPublicKey(), data, signature)
+                                :   cmWebworkerFactory.get({
+                                        jobName :   'rsa_verify',
+                                        params  :   {
+                                                        pubKey:     self.getPublicKey(),
+                                                        signature:  signature,
+                                                        data:       data
+                                                    }
+                                    })
+                                    .then(
+                                        function(worker){
+                                            return  worker.run()
+                                        },
+                                        function(reason){
+                                            return  $q.when(crypt && crypt.verify(data, signature, function(x){ return x }))
+                                                    .then(function(result){
+                                                        return  result
+                                                                ?   $q.when(result)
+                                                                :   $q.reject('webWorker substitute failed.')
+                                                    })
                                         }
-                        })
-                        .then(
-                            function(worker){
-                                return  worker.run()
-                            },
-                            function(reason){
-                                return  $q.when(crypt && crypt.verify(data, signature, function(x){ return x }))
-                                        .then(function(result){
-                                            return  result
-                                                    ?   $q.when(result)
-                                                    :   $q.reject('webWorker substitute failed.')
-                                        })
-                            }
-                        )
-                        .catch(function(reason){
-                            cmKeyCache.storeVerificationResult(self, data, signature, false)
-                            return $q.reject(reason)
-                        })
+                                    )
+                                    .catch(function(reason){
+                                        cmKeyCache.storeVerificationResult(self, data, signature, false)
+                                        return $q.reject(reason)
+                                    })
+
+                return  promise
                         .then(function(result){
                             cmKeyCache.storeVerificationResult(self, data, signature, true)
                             return $q.when(result)
                         })
+                        .catch(function(reason){
+                            cmLogger.warn('cmKey: verification failed: '+reason)
+                        })
             }
 
             this.encrypt = function(secret){
+
+                if(cmCryptoHelper.isAvailable())
+                    return cmCryptoHelper.encrypt(self.getPublicKey(), secret)
+
+
                 return  cmWebworkerFactory.get({
                             jobName :   'rsa_encrypt',
                             params  :   {
@@ -244,12 +259,17 @@ angular.module('cmCore')
                             }
                         )
                         .catch(function(reason){
-                            cmLogger.warn('keyModel.encrypt() failed.')
+                            cmLogger.warn('keyModel.encrypt() failed:'+ reason)
                             return $q.reject(reason)
                         })
             };
 
             this.decrypt = function(encrypted_secret){
+
+                if(cmCryptoHelper.isAvailable())
+                    return cmCryptoHelper.decrypt(self.getPrivateKey(), encrypted_secret)
+
+
                 return  cmWebworkerFactory.get({
                             jobName :   'rsa_decrypt',
                             params  :   {
@@ -271,7 +291,7 @@ angular.module('cmCore')
                             }
                         )
                         .catch(function(reason){
-                            cmLogger.warn('keyModel.decrypt() failed.')
+                            cmLogger.warn('keyModel.decrypt() failed:' +reason)
                             return $q.reject(reason)
                         })
 

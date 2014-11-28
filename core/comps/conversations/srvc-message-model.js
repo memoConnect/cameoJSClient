@@ -634,7 +634,6 @@ angular.module('cmConversations')
             };
 
             this.decryptFiles = function(passphrase){
-
                 angular.forEach(this.files, function(file, index){
                     if(file.state.is('onlyFileId')) {
                         file
@@ -685,7 +684,7 @@ angular.module('cmConversations')
             if(conversation != undefined && ('on' in conversation)) {
                 conversation.on('message:reInitFiles', function () {
                     if (self.state.is('incomplete')) {
-                        self.incompleteFiles.forEach(function (file) {
+                        self.incompleteFiles.forEach(function(file) {
                             file.importFile();
                         });
                     }

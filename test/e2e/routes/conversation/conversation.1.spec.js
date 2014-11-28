@@ -47,7 +47,7 @@ describe('Route conversation:', function () {
     })
 
     it('add recipient', function () {
-        $(".cm-add-button").click()
+        util.waitAndClickQa('btn-add-recipients');
         util.waitForPageLoad("/conversation/new/recipients")
     })
 
@@ -74,7 +74,7 @@ describe('Route conversation:', function () {
         */
         util.waitForQa('input-on-the-fly-mixed')
         util.clearInput('input-on-the-fly-mixed')
-        util.setVal('input-on-the-fly-mixed', 'test@mail.com')
+        util.setVal('input-on-the-fly-mixed', 'devnull@cameo.io')
 
         ptor.sleep(2000)
         util.blurQa('input-on-the-fly-mixed')
@@ -105,7 +105,7 @@ describe('Route conversation:', function () {
     })
 
     it('should have an answer bar', function () {
-        expect($('.answer').isPresent()).toBe(true)
+        expect($('cm-answer').isPresent()).toBe(true)
     })
 
     it('send message', function () {

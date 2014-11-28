@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('cmCore')
 .service('cmError', [
     '$rootScope',
@@ -33,22 +35,28 @@ angular.module('cmCore')
               $injector) {
         return function (exception, cause) {
 
-            var stack = (exception.stack+'');
+            var stack = undefined
 
-            var error = {
-                location:   $injector.get('$location').$$path,
-                exception:  exception,
-                msg:        exception.message,
-                stack:      stack.replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, ' \n'),
-                cause:      cause
-            };
+            try{
+                stack = (exception.stack+'')
 
-            cmLogger.error(JSON.stringify(error,null,2));
+                var error = {
+                    location:   $injector.get('$location').$$path,
+                    exception:  exception,
+                    msg:        exception.message,
+                    stack:      stack.replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, ' \n'),
+                    cause:      cause
+                };
 
-            if(typeof exception == 'object' && 'message' in exception && exception.message.indexOf('defined') >= 0){
-                $injector.get('cmError').showOnPage(error);
+                cmLogger.error(JSON.stringify(error,null,2));
+
+                if(typeof exception == 'object' && 'message' in exception && exception.message.indexOf('defined') >= 0){
+                    $injector.get('cmError').showOnPage(error);
+                }
+
+            } catch(e){
+                cmLogger.error('stack permission denied:' +e)
             }
-
             //throw exception;
         };
     }

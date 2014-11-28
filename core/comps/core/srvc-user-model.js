@@ -80,7 +80,6 @@ angular.module('cmCore')
             self.trigger('init');// deprecated
             self.trigger('init:finish');
 
-
             self.one('update:finished', function(){
                 if(self.data.identity.keys){
                     self.signOwnKeys();
@@ -92,6 +91,7 @@ angular.module('cmCore')
         }
 
         this.importData = function(activeIdentity, data_identities){
+            //console.log('activeIdentity', activeIdentity)
 
             this.data.identity = activeIdentity;
             this.data.identity.isAppOwner = true;
@@ -150,6 +150,7 @@ angular.module('cmCore')
 
                     self.importData(identity, accountData.identities);
                     self.importAccount(accountData);
+                    self.setAppSettings(accountData)
 
                     // check device for pushing
                     cmPushNotificationAdapter.checkRegisteredDevice();
@@ -282,6 +283,8 @@ angular.module('cmCore')
         };
 
         this.updateAccount = function(newAccountData){
+            //cmLogger.debug('cmUserModel.updateAccount');
+
             return cmAuth.putAccount(newAccountData)
             .then(
                 function(){
@@ -791,7 +794,6 @@ angular.module('cmCore')
 
             var token = cmAuth.getToken();
 
-
             if(token !== undefined && token !== 'undefined' && token !== null && token.length > 0){
                 return token;
             }
@@ -828,7 +830,11 @@ angular.module('cmCore')
         this.storageSave = function(key, value){
             if(isAuth !== false && this.data.storage !== null){
                 this.data.storage.save(key, value);
+
+                return true;
             }
+
+            return false;
         };
 
         /**
@@ -854,6 +860,28 @@ angular.module('cmCore')
         };
 
         /**
+         * setLocalStorageSettings
+         * Server Overwrite Local Changes
+         */
+        this.setAppSettings = function(data){
+            //cmLogger.debug('cmUserModel.setAppSettings');
+            var settings = this.storageGet('appSettings') || {};
+
+            if('userSettings' in data){
+                this.storageSave('appSettings', angular.extend({}, settings, data.userSettings));
+            }
+        };
+
+        this.saveAppSettings = function(){
+            //cmLogger.debug('cmUserModel.saveAppSettings');
+            var settings = this.storageGet('appSettings') || {};
+
+            if(cmUtil.objLen(settings) > 0){
+                this.updateAccount({'userSettings': settings})
+            }
+        };
+
+        /**
          * clear identity storage
          */
         this.resetUser = function(){
@@ -868,13 +896,18 @@ angular.module('cmCore')
         $rootScope.$on('logout', function(event, data){
             //cmLogger.debug('cmUserModel - $rootScope.logout');
 
-            self.resetUser();
+            self.reset();
             isAuth = false;
 
             if(typeof data == 'object' && 'where' in data){
                 self.removeToken(data.where);
             } else {
                 self.removeToken();
+            }
+
+            if(self.getToken() !== false){
+                cmLogger.error('Token was not removed at logout!');
+                throw new Error('Failure at Logout Process!')
             }
 
             if(typeof data == 'object' && 'goToLogin' in data && typeof data.goToLogin === 'undefined' || data.goToLogin !== false){

@@ -42,19 +42,19 @@ angular.module('cmCore').service('cmAuth', [
              *
              * @name removeToken
              * @description
-             * Delete token from localstorage
+             * Remove token from LocalStorage
+             * Reset validate Token
              *
              * @returns {Boolean} for removing succeed
              */
             removeToken: function(where){
-                //cmLogger.debug('cmAuth.removeToken');
+                cmLogger.debug('cmAuth.removeToken');
 
+                /* reset validate Token */
                 _TOKEN_ = undefined;
-                try {
-                    return LocalStorageAdapter.remove('token');
-                } catch (e){
-                    cmLogger.warn('cmAuth.removeToken - Local Storage Error')
-                }
+
+                /* remove Token from LocalStorage */
+                LocalStorageAdapter.remove('token');
             },
             /**
              * @ngdoc method
@@ -78,15 +78,15 @@ angular.module('cmCore').service('cmAuth', [
                     if(_TOKEN_ == undefined || _TOKEN_ == token){
                         _TOKEN_ = token;
 
-                        var moep;
+                        var bool;
                         try {
-                            moep = LocalStorageAdapter.save('token', token);
+                            bool = LocalStorageAdapter.save('token', token);
                         } catch(e){
                             cmLogger.warn('cmAuth.storeToken - Local Storage Error')
                         }
 
                         //return localStorage.setItem('token', token)/
-                        return moep;
+                        return bool;
                     } else if(_TOKEN_ != token) {
                         cmLogger.debug('cmAuth.storeToken - Error - validateToken is different')
                     }
@@ -445,24 +445,21 @@ angular.module('cmCore').service('cmAuth', [
              */
             getTwoFactorToken: function(){
                 return localStorage.getItem('twoFactorToken');
-            },
-
-
+            }
         };
 
         cmObject.addEventHandlingTo(auth);
 
         cmApi.on('identity:update', function (event, data){
-//            console.log('cmAuth.on:identity:update')
+//            cmLogger.debug('cmAuth.on:identity:update')
             auth.trigger('identity:updated', data)
         });
 
 
         cmApi.on('conversation:new-aePassphrase', function(event, data){
-           //console.log('conversation:new-aePassphrase');
+           //cmLogger.debug('conversation:new-aePassphrase');
             auth.trigger('conversation:update', data)
         });
-
 
         return auth;
     }

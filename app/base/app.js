@@ -282,23 +282,6 @@ angular.module('cameoClient', [
         $rootScope.showOverlay = function(id){ $rootScope.$broadcast('cmOverlay:show', id) };
         $rootScope.hideOverlay = function(id){ $rootScope.$broadcast('cmOverlay:hide', id) };
 
-        // passing wrong route calls
-        $rootScope.$on('$routeChangeStart', function(){
-            // expections
-            var path_regex = /^(\/login|\/registration|\/systemcheck|\/terms|\/disclaimer|\/404|\/version|\/purl\/[a-zA-Z0-9]{1,})$/;
-            var path = $location.$$path;
-            // exists none token then otherwise to login
-            if (cmUserModel.isAuth() === false){
-                if (!path_regex.test(path)) {
-                    $location.path('/login');
-                }
-            } else if ((path == '/login' || path == '/registration') && cmUserModel.isGuest() !== true) {
-                $location.path('/talks');
-            } else if (path == '/logout'){
-                cmUserModel.doLogout(true,'app.js logout-route');
-            }
-        });
-
         // Make it easy for e2e-tests to monitor route changes:
         window._route = {};
 

@@ -2,18 +2,18 @@
 
 angular.module('cmCore')
 .factory('cmChunk', [
-    'cmFilesAdapter',
-    'cmLogger',
-    'cmCrypt',
-    'cmObject',
+    'cmFilesAdapter', 'cmLogger', 'cmCrypt', 'cmObject', 'cmUtil',
     '$q',
-    function (cmFilesAdapter, cmLogger, cmCrypt, cmObject, $q){
+    function (cmFilesAdapter, cmLogger, cmCrypt, cmObject, cmUtil,
+              $q){
 
         function str2ab_blobreader(str, callback) {
 
             var blob;
             var BlobBuilder = window.MozBlobBuilder || window.WebKitBlobBuilder || window.BlobBuilder;
-            if (typeof(BlobBuilder) !== 'undefined') {
+            if(typeof str == 'object'){
+                blob = str;
+            } else if (typeof BlobBuilder !== 'undefined') {
                 var bb = cmFilesAdapter.blobBuilderWrap();
                 bb.append(str);
                 blob = bb.getBlob();

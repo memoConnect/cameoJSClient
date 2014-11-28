@@ -1,7 +1,7 @@
 <cm-avatar cm-data="avatarIdentity"></cm-avatar>
 
 <div class="details" cm-weight="3">
-    <div class="subject" data-qa="conversation-subject" ng-bind-html="(conversation.subject || 'CONVERSATION.NO_SUBJECT' )| cmParse"></div>
+    <div class="subject is-selectable" data-qa="conversation-subject" ng-bind-html="(conversation.subject || 'CONVERSATION.NO_SUBJECT' )| cmParse"></div>
     <cm-message 
         class       = "message" 
         cm-data     = "conversation.lastMessage" 
@@ -21,6 +21,7 @@
     </div>
     <div class="bottom">
         <cm-recipient-counter ng-if="conversation.recipients.length > 2">{{conversation.recipients.length||0}}</cm-recipient-counter>
-        <span class="message-count" ng-class="{'cm-unread' : conversation.messages.length > 0}"> ({{conversation.numberOfMessages || 0}}) </span>
+        <span class="message-count is-selectable" ng-class="{'cm-orange' : conversation.unreadMessages > 0, 'cm-light-grey': conversation.unreadMessages == 0}" ng-if="settings.get('enableUnreadMessages') && (conversation.unreadMessages > -1)" data-qa="ctn-unread-messages"> ({{conversation.unreadMessages || 0}}) </span>
+        <span class="message-count is-selectable"> {{conversation.numberOfMessages || 0}} </span>
     </div>
 </div>
