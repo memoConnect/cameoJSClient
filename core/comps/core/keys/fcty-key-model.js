@@ -235,7 +235,7 @@ angular.module('cmCore')
             this.encrypt = function(secret){
 
                 if(cmCryptoHelper.isAvailable())
-                    return cmCryptoHelperrsaEencrypt(self.getPublicKey(), secret)
+                    return cmCryptoHelper.rsaEncrypt(self.getPublicKey(), secret)
 
 
                 return  cmWebworkerFactory.get({
