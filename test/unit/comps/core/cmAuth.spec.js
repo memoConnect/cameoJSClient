@@ -3,8 +3,13 @@
 describe('cmAuth', function () {
     var cmAuth, cmApi, $httpBackend
 
-    beforeEach(module('cmCore'))
-
+    beforeEach(module('cmCore',[
+        'cmApiProvider',
+        function(cmApiProvider){
+            cmApiProvider
+                .setWithoutApiUrl()
+        }
+    ]))
     beforeEach(inject(function (_cmAuth_, _cmApi_, _$httpBackend_) {
         cmAuth  = _cmAuth_
         cmApi   = _cmApi_ 

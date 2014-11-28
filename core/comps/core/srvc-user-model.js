@@ -24,14 +24,16 @@ angular.module('cmCore')
     'cmBoot', 'cmAuth', 'cmLocalStorage', 'cmIdentityFactory', 'cmIdentityModel', 'cmFactory',
     'cmCrypt', 'cmKeyFactory', 'cmKey', 'cmStateManagement', 'cmObject', 'cmUtil',
     'cmNotify', 'cmLogger', 'cmCallbackQueue', 'cmPushNotificationAdapter', 'cmApi',
-    '$rootScope', '$q', '$location',
+    '$rootScope', '$q', '$location', '$timeout',
     function(cmBoot, cmAuth, cmLocalStorage, cmIdentityFactory, cmIdentityModel, cmFactory,
              cmCrypt, cmKeyFactory, cmKey, cmStateManagement, cmObject, cmUtil,
              cmNotify, cmLogger, cmCallbackQueue, cmPushNotificationAdapter, cmApi,
-             $rootScope, $q, $location){
+             $rootScope, $q, $location, $timeout){
+
         var self = this,
             isAuth = false,
             initialize = ''; // empty, run, done ! important for isAuth check
+
 
         cmObject.addEventHandlingTo(this);
 
@@ -89,6 +91,7 @@ angular.module('cmCore')
         }
 
         this.importData = function(activeIdentity, data_identities){
+            //console.log('activeIdentity', activeIdentity)
 
             this.data.identity = activeIdentity;
             this.data.identity.isAppOwner = true;
@@ -147,6 +150,7 @@ angular.module('cmCore')
 
                     self.importData(identity, accountData.identities);
                     self.importAccount(accountData);
+                    self.setAppSettings(accountData)
 
                     // check device for pushing
                     cmPushNotificationAdapter.checkRegisteredDevice();
@@ -279,6 +283,8 @@ angular.module('cmCore')
         };
 
         this.updateAccount = function(newAccountData){
+            //cmLogger.debug('cmUserModel.updateAccount');
+
             return cmAuth.putAccount(newAccountData)
             .then(
                 function(){
@@ -342,7 +348,7 @@ angular.module('cmCore')
         };
 
         this.doLogout = function(goToLogin, where){
-            //cmLogger.debug('cmUserModel:doLogout');
+            //cmLogger.debug('cmUserModel:doLogout',where);
 
             $rootScope.$broadcast('logout', {
                 token:this.getToken(),
@@ -530,14 +536,14 @@ angular.module('cmCore')
                         //Keys should not sign themselves
                         if(signingKey.id == keyToSign.id && (signingKey.getFingerprint() == keyToSign.getFingerprint())){
                             self.trigger('signatures:cancel');
-                            cmLogger.debug('cmUserModel.signPublicKey() failed; key tried to sign itself.')
+                            //cmLogger.debug('cmUserModel.signPublicKey() failed; key tried to sign itself.')
                             return $q.when(false);
                         }
 
                         //Dont sign twice:
                         if(keyToSign.signatures.some(function(signature){ return signature.keyId == signingKey.id })){
                             self.trigger('signatures:cancel');
-                            cmLogger.debug('cmUserModel.signPublicKey() failed; dublicate signature.')
+                            //cmLogger.debug('cmUserModel.signPublicKey() failed; dublicate signature.')
                             return $q.when(false); 
                         }
 
@@ -574,17 +580,24 @@ angular.module('cmCore')
         };
 
         this.signOwnKeys = function(){
-            //cmLogger.debug('cmUserModel.signOwnKeys');
+            cmLogger.debug('cmUserModel.signOwnKeys');
             return this.verifyIdentityKeys(this.data.identity, true)
         }
 
         /**
-         * [verifyIdentityKeys Checks for keys that are either signed by a local key or keys that are signed by a key of the former kind and have the same owner]
+         * [verifyIdentityKeys Checks for keys that are either signed by a local key or keys that are signed by a key of the former kind and have the same owner as the signing key]
          * @param  {cmIdentitymodel} identity [description]
          * @return {cmKeyFactory}   cmKeyFactory returning all transitively trusted keys of identity. Users local keys are assumed to be trusted.
          */
-        this.verifyIdentityKeys = function(identity, sign){
+        this.verifyIdentityKeys = function(identity, sign, use_cache){
             //cmLogger.debug('cmUserModel.verifyIdentityKeys');
+
+            identity = identity || self.data.identity
+
+            if(sign && use_cache){
+                cmLogger.error('Tried to sign keys relying on cache.')
+                throw('Tried to sign keys relying on cache.')
+            }
 
             if(!identity.keys)
                 return $q.when([]);
@@ -594,15 +607,16 @@ angular.module('cmCore')
             return  $q.when()
                     .then(function(){
                         return  self.data.identity.keys.getTransitivelyTrustedKeys(local_keys, function trust(trusted_key, key){
-                                    return trusted_key.verifyKey(key, self.getTrustToken(key, self.data.identity.cameoId))
+                                    return trusted_key.verifyKey(key, self.getTrustToken(key, self.data.identity.cameoId), use_cache)
                                 })
                     })
                     .then(function(own_ttrusted_keys){
                         return  identity.keys.getTransitivelyTrustedKeys(own_ttrusted_keys, function trust(trusted_key, key){
-                                    return trusted_key.verifyKey(key, self.getTrustToken(key, identity.cameoId))
+                                    return trusted_key.verifyKey(key, self.getTrustToken(key, identity.cameoId), use_cache)
                                 });
                     })
                     .then(function(ttrusted_keys){
+
                         //looks for keys that are transitively trusted but not yet signed by all local keys:
                         var unsigned_ttrusted_keys  =   ttrusted_keys.filter(function(ttrusted_key){
                                                             return  local_keys.some(function(local_key){
@@ -619,7 +633,7 @@ angular.module('cmCore')
 
                         $q.all(
                             unsigned_ttrusted_keys.map(function(ttrusted_key){
-                                cmLogger.debug('signing: '+ttrusted_key.name)
+                                //console.info('signing: '+ttrusted_key.name)
                                 return self.signPublicKey(ttrusted_key, ttrusted_key.getFingerprint(), identity)
                             })
                         )
@@ -631,9 +645,9 @@ angular.module('cmCore')
                     })
         };
 
-        this.verifyTrust = function(identity){
+        this.verifyTrust = function(identity, use_cache){
             return  identity.keys.length != 0
-                    ?   this.verifyIdentityKeys(identity, true)
+                    ?   this.verifyIdentityKeys(identity, null, use_cache)
                         .then(function(trusted_keys){
                             return  identity.keys.length == trusted_keys.length
                                     ?   $q.when()
@@ -766,7 +780,6 @@ angular.module('cmCore')
 
             var token = cmAuth.getToken();
 
-
             if(token !== undefined && token !== 'undefined' && token !== null && token.length > 0){
                 return token;
             }
@@ -803,7 +816,11 @@ angular.module('cmCore')
         this.storageSave = function(key, value){
             if(isAuth !== false && this.data.storage !== null){
                 this.data.storage.save(key, value);
+
+                return true;
             }
+
+            return false;
         };
 
         /**
@@ -829,6 +846,28 @@ angular.module('cmCore')
         };
 
         /**
+         * setLocalStorageSettings
+         * Server Overwrite Local Changes
+         */
+        this.setAppSettings = function(data){
+            //cmLogger.debug('cmUserModel.setAppSettings');
+            var settings = this.storageGet('appSettings') || {};
+
+            if('userSettings' in data){
+                this.storageSave('appSettings', angular.extend({}, settings, data.userSettings));
+            }
+        };
+
+        this.saveAppSettings = function(){
+            //cmLogger.debug('cmUserModel.saveAppSettings');
+            var settings = this.storageGet('appSettings') || {};
+
+            if(cmUtil.objLen(settings) > 0){
+                this.updateAccount({'userSettings': settings})
+            }
+        };
+
+        /**
          * clear identity storage
          */
         this.resetUser = function(){
@@ -843,13 +882,18 @@ angular.module('cmCore')
         $rootScope.$on('logout', function(event, data){
             //cmLogger.debug('cmUserModel - $rootScope.logout');
 
-            self.resetUser();
+            self.reset();
             isAuth = false;
 
             if(typeof data == 'object' && 'where' in data){
                 self.removeToken(data.where);
             } else {
                 self.removeToken();
+            }
+
+            if(self.getToken() !== false){
+                cmLogger.error('Token was not removed at logout!');
+                throw new Error('Failure at Logout Process!')
             }
 
             if(typeof data == 'object' && 'goToLogin' in data && typeof data.goToLogin === 'undefined' || data.goToLogin !== false){
@@ -873,11 +917,21 @@ angular.module('cmCore')
             cmBoot.ready.userModel();
         });
 
-        cmAuth.on('identity:updated signatures:updated', function(event, data){
+        var signOwnKeys_scheduled = false
+
+        cmAuth.on('identity:updated', function(event, data){
             if(typeof data.id != 'undefined' && data.id == self.data.identity.id) {
                 self.data.identity.importData(data);
-                self.syncLocalKeys();
-                self.signOwnKeys()
+                self.syncLocalKeys()
+
+                //Todo: find a more general solution: AP
+                if(signOwnKeys_scheduled === false){
+                    signOwnKeys_scheduled = true         
+                    $timeout(function(){
+                        signOwnKeys_scheduled = false
+                        self.signOwnKeys()
+                    }, 20000, false)
+                }
             }
         });
 

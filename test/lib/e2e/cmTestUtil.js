@@ -569,8 +569,13 @@ this.acceptFriendRequests = function () {
 this.addExternalContact = function (displayName) {
     self.get("/contact/create")
     $("[data-qa='input-displayname']").sendKeys(displayName)
-    $("[data-qa='input-phonenumber']").sendKeys("1233")
+    $("[data-qa='input-phoneNumber']").sendKeys("1233")
     $("[data-qa='btn-create-contact']").click()
+
+    // close notify extern modal
+    self.waitForModalOpen()
+    self.click('btn-cancel')
+
     self.waitForPageLoad("/contact/list")
 }
 

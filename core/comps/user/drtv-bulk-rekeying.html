@@ -2,10 +2,10 @@
     <span ng-bind-html="'DRTV.BULK_REKEYING.CONTENT'|cmTranslate"></span>
 </div>
 
-<button ng-if = "!working" class="cm-btn-grey" ng-click = "startrekeying()" data-qa="btn-start-rekeying">
+<button ng-if = "!working" class="cm-btn-grey" ng-click = "startrekeying()" data-qa="btn-start-rekeying" cm-reactive>
     Start
 </button>
 
-<button ng-if = "working" class="cm-btn-grey">
+<button ng-if="working" class="cm-btn-grey" cm-reactive>
     <cm-loader cm-color="ci-color"></cm-loader>
 </button>

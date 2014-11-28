@@ -8,7 +8,7 @@ describe('cmCamera default none app', function() {
     beforeEach(function () {
         module('cmPhonegap', function ($provide) {
             $provide.factory('$navigator', function () {
-                return undefined
+                return 'undefined'
             })
         })
     })

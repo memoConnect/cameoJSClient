@@ -27,8 +27,13 @@ angular.module('cmConversations').directive('cmMessage', [
                 }
 
                 function handleFiles(){
+                    if(scope.message.id == '#new_message' && scope.message.state.is('waitForFiles')){
+                        setFileView();
+                    }
+
                     if (!scope.textOnly && scope.message.files.length > 0) {
                         setFileView();
+
                         scope.conversation.getPassphrase()
                         .then(
                             function(passphrase){
@@ -36,7 +41,7 @@ angular.module('cmConversations').directive('cmMessage', [
                             },
 
                             function(passphrase){
-                                if(!scope.conversation.isEncrypted())
+                                if(!scope.message.isEncrypted())
                                     scope.message.decryptFiles(null)
                             }
                         )

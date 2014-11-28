@@ -2,11 +2,11 @@
 
 angular.module('cmWidgets').directive('cmWidgetRegistration', [
     'cmAuth', 'cmUserModel', 'cmUtil', 'cmLogger', 'cmTransferScopeData',
-    'cmNotify', 'cmSystemCheck', 'cmLoader',
-    '$rootScope', '$location', '$q',
+    'cmNotify', 'cmSystemCheck', 'cmLoader', 'cmDevice',
+    '$rootScope', '$location', '$q', '$document', 
     function (cmAuth, cmUserModel, cmUtil, cmLogger, cmTransferScopeData,
-              cmNotify, cmSystemCheck, cmLoader,
-              $rootScope, $location, $q) {
+              cmNotify, cmSystemCheck, cmLoader, cmDevice,
+              $rootScope, $location, $q, $document) {
         return {
             restrict: 'AE',
             scope: true,
@@ -53,6 +53,9 @@ angular.module('cmWidgets').directive('cmWidgetRegistration', [
                 $scope.acceptTerms = function () {
                     $scope.formData.agb = !$scope.formData.agb ? true : false;
                 };
+
+
+
 
                 /**
                  * validate Registration Form
@@ -152,16 +155,13 @@ angular.module('cmWidgets').directive('cmWidgetRegistration', [
                             function (accountData) {
 
                                 cmUserModel.doLogin($scope.formData.cameoId, $scope.formData.password, accountData).then(
-                                    function () {
-                                        if ($scope.handleGuest !== false) {
-                                            //$location.path('/purl/'+$rootScope.pendingPurl);
-                                            $rootScope.goto('/start/welcome');
-                                        } else {
-                                            //cmUserModel.comesFromRegistration = true;
+                                    function() {
+                                        if(cmDevice.isDesktop('cmWidgetRegistration') || cmDevice.isApp())
                                             $rootScope.goto("/start/welcome");
-                                        }
+                                        else
+                                            $rootScope.goto("/start/download");
                                     },
-                                    function () {
+                                    function() {
                                         $scope.spinner('stop');
                                     }
                                 );
@@ -189,7 +189,8 @@ angular.module('cmWidgets').directive('cmWidgetRegistration', [
                             sendCreateUserRequest(data);
                         },
                         function () {
-                            loader.stop();
+                            loader.stop()
+                            cmUtil.scrollToInputError()
                         }
                     );
                 };

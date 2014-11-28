@@ -6,14 +6,20 @@ angular.module('cmCore').provider('cmApi',[
 //Service to handle all api calls
 
     function($injector){
-        var rest_api    = "",
+        var rest_api            = "",
+            without_api_url   = false,
             call_stack_disabled = true,
-            call_stack_path = "",
-            commit_size = 10,
-            commit_interval = 2000,
-            events_disabled = true,
-            events_path = "",
-            events_interval = 5000
+            call_stack_path     = "",
+            commit_size         = 10,
+            commit_interval     = 2000,
+            events_disabled     = true,
+            events_path         = "",
+            events_interval     = 5000;
+
+        this.setWithoutApiUrl = function(){
+            without_api_url = true;
+            return this
+        }
 
         this.restApiUrl = function(url){
             rest_api = url;
@@ -268,12 +274,16 @@ angular.module('cmCore').provider('cmApi',[
                         token = $injector.get('cmAuth').getToken();
                     }
 
-                    prepareConfig(config, method, token, twoFactorToken);
+                    if(rest_api != '' || without_api_url){
+                        prepareConfig(config, method, token, twoFactorToken);
 
-                    $http(config).then(
-                        function(response){ handleSuccess(response, deferred) },
-                        function(response){ handleError(response, deferred) }
-                    );
+                        $http(config).then(
+                            function(response){ handleSuccess(response, deferred) },
+                            function(response){ handleError(response, deferred) }
+                        );
+                    } else {
+                        deferred.reject({apiUrlUndefined:true});
+                    }
 
                     return deferred.promise;
                 };
@@ -497,9 +507,9 @@ angular.module('cmCore').provider('cmApi',[
                 }
 
                 api.listenToEvents = function(){
-                    //Dont listen to Events twice: 
+                    // Dont listen to Events twice:
                     api.stopListeningToEvents()
-                    //Start listening:
+                    // Start listening:
                     if(!events_disabled && events_interval) {
 //                        api.getEvents(false)
                         api._events_promise = $interval(function () {
@@ -511,7 +521,6 @@ angular.module('cmCore').provider('cmApi',[
                 api.stopListeningToEvents = function(){
                     if(api._events_promise) $interval.cancel(api._events_promise)
                 }
-
 
                 if(!events_disabled && events_interval){
                     $rootScope.$on('login', function(){

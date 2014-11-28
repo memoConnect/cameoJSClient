@@ -9,15 +9,17 @@ describe('cmConversationFactory', function(){
         tmpInstance_1 = {id:'moep_1',data:{}},
         tmpInstance_2 = {id:'moep_2',data:{}};
 
-    beforeEach(function(){
-        module(function($provide){
-            $provide.constant('cmEnv',{})
-        })
-    })
+    beforeEach(module('cmConfig'))
     beforeEach(module('cmPhonegap'))
     beforeEach(module('cmConversations'))
+    beforeEach(module('cmCore',[
+        'cmApiProvider',
+        function(cmApiProvider){
+            cmApiProvider
+                .setWithoutApiUrl()
+        }
+    ]))
     beforeEach(inject(function(_cmConversationFactory_, _$q_, _$httpBackend_, _$rootScope_, _$timeout_){
-
         cmConversationFactory   = _cmConversationFactory_
         $q                      = _$q_
         $httpBackend            = _$httpBackend_
@@ -46,7 +48,6 @@ describe('cmConversationFactory', function(){
             res: 'OK',
             data: { numberOfConversations: result.length, conversations:result }
         })
-
 
         cmConversationFactory.getList(7, 0)
         expect(cmConversationFactory.state.is('loading')).toBe(true)

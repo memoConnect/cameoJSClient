@@ -35,6 +35,7 @@ angular.module('cmConversations')
     'cmUserModel',
     'cmFactory',
     'cmStateManagement',
+    'cmBrowserNotifications',
     'cmNotify',
     'cmObject',
     'cmLogger',
@@ -42,13 +43,14 @@ angular.module('cmConversations')
     'cmSecurityAspectsConversation',
     'cmUtil',
     'cmFilesAdapter',
+    'cmSettings',
     'cmKeyStorageService',
     '$q',
     '$rootScope',
     
     function (cmBoot, cmConversationsAdapter, cmMessageModel, cmIdentityFactory, cmIdentityModel, cmFileFactory,
-              cmCrypt, cmUserModel, cmFactory, cmStateManagement, cmNotify, cmObject, cmLogger, cmPassphraseVault,
-              cmSecurityAspectsConversation, cmUtil, cmFilesAdapter, cmKeyStorageService,
+              cmCrypt, cmUserModel, cmFactory, cmStateManagement, cmBrowserNotifications, cmNotify, cmObject, cmLogger, cmPassphraseVault,
+              cmSecurityAspectsConversation, cmUtil, cmFilesAdapter, cmSettings, cmKeyStorageService,
               $q, $rootScope){
 
         function ConversationModel(data){
@@ -74,12 +76,13 @@ angular.module('cmConversations')
             this.state              = new cmStateManagement(['new','loading']);
             this.keyTransmission    = '';
 
-            this.lastMessage        = this.messages.new() //fallback
+            this.lastMessage        = this.messages.new(); //fallback
 
             this.missingAePassphrases = {};
 
             //rethink, mabye backend should deliver array of message ids
             this.numberOfMessages   = 0;
+            this.unreadMessages     = 0;
 
             this.options            = {
                 'hasCaptcha'    : false,
@@ -96,7 +99,7 @@ angular.module('cmConversations')
                 'class': 'safer'
             };
 
-            /*maybe REFACTOR TODO*/
+            /* maybe REFACTOR TODO */
             this.passCaptcha = undefined;
             this.tmpPassCaptcha = '';
 
@@ -219,7 +222,8 @@ angular.module('cmConversations')
              * @param {Object} data The conversation data as recieved from the backend.
              */
             this.importData = function(data){
-//                cmLogger.debug('cmConversationModel:importData');
+                //cmLogger.debug('cmConversationModel:importData');
+
                 if(typeof data !== 'object'){
                     cmLogger.debug('cmConversationModel:import:failed - no data!');
                     return this;
@@ -231,9 +235,13 @@ angular.module('cmConversations')
                 this.timeOfLastUpdate       = data.lastUpdated          || this.timeOfLastUpdate;
                 this.subject                = data.subject              || this.subject;
                 this.numberOfMessages       = data.numberOfMessages     || this.numberOfMessages;
+                this.unreadMessages         = data.unreadMessages       || this.unreadMessages;
+                // special if unreadMessages == 0
+                if('unreadMessages' in data && typeof data.unreadMessages == 'number' && data.unreadMessages == 0){
+                    this.unreadMessages = 0;
+                }
                 this.missingAePassphrases   = data.missingAePassphrases || this.missingAePassphrases;
                 this.keyTransmission        = data.keyTransmission      || this.keyTransmission;
-
 
                 //Create passphraseVault:
                 if(data.sePassphrase || data.aePassphraseList){
@@ -440,6 +448,31 @@ angular.module('cmConversations')
                 return this;
             };
 
+            this.loadLatestMessages = function(){
+                //cmLogger.debug('cmConversationModel.loadLatestMessages');
+
+                if(typeof this.lastMessage.created == 'number'){
+                    cmConversationsAdapter.getConversationMessages(this.id, null, null, this.lastMessage.created).then(
+                        function(data){
+
+                            self.state.set('loadedMessages');
+
+                            /**
+                             * Message Handling
+                             */
+                            if(typeof clearMessages !== 'undefined' && clearMessages !== false){
+                                self.messages.reset();
+                            }
+
+                            self.importData(data);
+                        }
+                    )
+                } else {
+                    this.update();
+                }
+
+            };
+
             /**
              * @param limit
              * @param offset
@@ -539,12 +572,12 @@ angular.module('cmConversations')
 
                 function run(){
                     self.getPassphrase()
-                        .then(function (passphrase) {
-                            return $q.all(self.messages.map(function (message) {
-                                return message.decrypt(passphrase)
-                            }))
-                        })
-                        .then(
+                    .then(function (passphrase) {
+                        return $q.all(self.messages.map(function (message) {
+                            return message.decrypt(passphrase)
+                        }))
+                    })
+                    .then(
                         function () {
                             self.trigger('decrypt:success');
 
@@ -556,9 +589,9 @@ angular.module('cmConversations')
                             return $q.when()
 
                         },
-                        function () {
+                        function (reason) {
                             self.trigger('decrypt:failed');
-                            return $q.reject();
+                            return $q.reject(reason);
                         }
                     );
                 }
@@ -948,75 +981,81 @@ angular.module('cmConversations')
 //                cmLogger.debug('cmConversationModel:on:update:finished');
                 self.setLastMessage();
                 self.decrypt();
-                //self.securityAspects.refresh();
                 self.updateLockStatus();
-                //self.handleMissingAePassphrases();
             });
 
             this.on('encryption:enabled', function(){
 //                cmLogger.debug('cmConversationModel:on:encryption:enabled');
                 self.checkPreferences();
-                //self.securityAspects.refresh();
                 self.updateLockStatus();
             });
 
             this.on('encryption:disabled', function(){
 //                cmLogger.debug('cmConversationModel:on:encryption:disabled');
                 self.checkPreferences();
-                //self.securityAspects.refresh();
                 self.updateLockStatus();
             });
 
             //Todo: fire event on factory and delegate to conversation or something
-            this.on('message:new', function(event, message_data){
-                if(typeof message_data == 'object'){
-                    //console.log(self.timeOfLastUpdate,message_data.created)
-                    if('created' in message_data){
-                        self.timeOfLastUpdate = message_data.created;
+            this.on('message:new', function(event, data){
+                if(typeof data == 'object'){
+                    if('message' in data) {
+                        //console.log(self.timeOfLastUpdate,message_data.created)
+                        if ('created' in data.message) {
+                            self.timeOfLastUpdate = data.message.created;
+                        }
+
+                        var message = self.messages.find(data.message);
+                        if (message == null) {
+                            data.message.conversation = self;
+                            self.numberOfMessages++;
+                            message = self.messages.create(data.message);
+                        } else {
+                            message.importData(data.message);
+                        }
+
+                        self.decrypt();
+                        self.setLastMessage();
+
+                        cmBrowserNotifications.showNewMessage(message.from, self.id);
+
+                        self.trigger('message:reInitFiles');
                     }
 
-                    var message = self.messages.find(message_data);
-                    if(message == null){
-                        message_data.conversation = self;
-                        self.numberOfMessages++;
-                        self.messages.create(message_data);
-                    } else {
-                        message.importData(message_data);
+                    if('unreadMessages' in data){
+                        self.unreadMessages = data.unreadMessages;
                     }
-
-                    self.decrypt();
-                    self.setLastMessage();
-
-                    self.trigger('message:reInitFiles');
                 }
             });
 
             this.recipients.on(['register', 'update:finished', 'deregister'], function(){
                 //cmLogger.debug('cmConversationModel:recipients.on');
-                //self.securityAspects.refresh();
                 self.updateLockStatus();
             });
 
             this.on('captcha:enabled captcha:disabled', function(){
 //                cmLogger.debug('cmConversationModel:on:captcha:enabled');
-//                self.securityAspects.refresh();
                 self.updateLockStatus();
             });
 
             this.messages.on('message:saved', function(){
                 self.setLastMessage();
-                //self.handleMissingAePassphrases();
             });
 
             this.messages.on('decrypt:success', function(){
                 self.state.set('decrypted');
                 self.setLastMessage();
-                //self.handleMissingAePassphrases();
+            });
+
+            this.messages.on('last-message:read', function(event, message){
+                if(message.from.id != cmUserModel.data.identity.id && self.unreadMessages > 0 && cmSettings.get('enableUnreadMessages')){
+                    self.unreadMessages = 0;
+                    cmConversationsAdapter.sendReadStatus(self.id, message.id)
+                }
             });
 
             cmUserModel.on('key:stored key:removed', function(){
                 self.checkPreferences();
-                //self.securityAspects.refresh();
                 self.updateLockStatus();
             });
 

@@ -1,14 +1,10 @@
 'use strict';
 
 angular.module('cmCore').service('cmRootService', [
-    '$rootScope',
-    '$window',
-    '$location',
-    'cmLogger',
-    'cmJob',
-    'cmModal',
-
-    function($rootScope, $window, $location, cmLogger, cmJob, cmModal){
+    '$rootScope', '$window', '$location',
+    'cmLogger', 'cmJob', 'cmModal', 'cmConfig',
+    function($rootScope, $window, $location,
+             cmLogger, cmJob, cmModal, cmConfig){
 
         $rootScope.goBack = function(){
             $window.history.back();
@@ -19,7 +15,7 @@ angular.module('cmCore').service('cmRootService', [
          * @param replace {boolean}
          */
         $rootScope.goTo = function(path, replace){
-            //cmLogger.debug('cmRootService.goTo ' + path);
+            cmLogger.debug('cmRootService.goTo ' + path, replace);
 
             path = path[0] == '/' ? path : '/'+path;
             if(cmJob.isActive() !== false){
@@ -41,12 +37,31 @@ angular.module('cmCore').service('cmRootService', [
         $rootScope.goto = $rootScope.goTo;
 
         $rootScope.gotoRegistration = function(){
-            this.goTo('/registration')
+            this.goTo('/registration');
         };
 
         $rootScope.createNewConversation = function(){
-            delete $rootScope.pendingConversation;
+            $rootScope.pendingConversation = null;
+            $rootScope.pendingRecipients = [];
+
             $rootScope.goTo('/conversation/new');
+        };
+
+        $rootScope.startConversationWithContact = function($event, contact){
+            $event.stopPropagation();
+            $event.preventDefault();
+
+            if(contact.contactType != 'pending'){
+                $rootScope.pendingConversation = null;
+                $rootScope.pendingRecipients = [];
+
+                if (contact.identity) {
+                    $rootScope.pendingRecipients = [contact.identity]
+                } else {
+                    cmLogger.error('Unable to find identity on contact. ' + contact)
+                }
+                $rootScope.goTo('/conversation/new');
+            }
         };
 
         $rootScope.createNewIdentity = function(){
@@ -57,12 +72,26 @@ angular.module('cmCore').service('cmRootService', [
             $rootScope.goTo('/contact/list')
         };
 
+        $rootScope.gotoContact = function (contact) {
+            if(contact.contactType != 'pending') {
+                $rootScope.goTo('/contact/edit/' + contact.id);
+            }
+        };
+
         $rootScope.gotoPurl = function(purlId, subpath){
             $rootScope.goTo('/purl/'+purlId+'/'+subpath)
         };
 
         $rootScope.gotoConversation = function(conversationId, subpath){
             $rootScope.goTo('/conversation/'+(conversationId || 'new')+ (subpath ? '/'+subpath : ''))
+        };
+
+        $rootScope.goToApp = function(params){
+            window.location = cmConfig.appProtocol + '://?'+params;
+        };
+
+        $rootScope.openExternalLink = function(url){
+            $window.open(url, '_system', 'location=yes');
         };
 
         /**
@@ -78,6 +107,7 @@ angular.module('cmCore').service('cmRootService', [
             cmModal.open('login');
 
             $rootScope.$on('cmLogin:success', function(){
+                // TODO: schould that happen?
                 location.reload();
             });
         };
@@ -104,5 +134,43 @@ angular.module('cmCore').service('cmRootService', [
             );
             cmModal.open('fast-registration')
         };
+
+        /**
+         * checks if a conversation route is open
+         * return {boolean}
+         */
+        $rootScope.checkConversationRoute = function(conversationId){
+            if(typeof conversationId == 'string' && $location.$$path.indexOf('conversation/' + conversationId) != -1){
+                return true;
+            } else if(typeof conversationId == 'undefined' && $location.$$path.indexOf('conversation') != -1){
+                return true;
+            }
+
+            return false;
+        };
+
+        /**
+         * checks if a purl route is open
+         * return {boolean}
+         */
+        $rootScope.checkPurlRoute = function(purlId){
+            if(typeof purlId == 'string' && $location.$$path.indexOf('purl/' + purlId) != -1){
+                return true;
+            } else if(typeof purlId == 'undefined' && $location.$$path.indexOf('purl') != -1){
+                return true;
+            }
+
+            return false;
+        };
+
+        $rootScope.$on('logout',function(){
+            $rootScope.pendingConversation = null;
+            $rootScope.pendingRecipients = [];
+        });
+
+        $rootScope.$on('identity:switched',function(){
+            $rootScope.pendingConversation = null;
+            $rootScope.pendingRecipients = [];
+        });
     }
 ]);

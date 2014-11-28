@@ -13,7 +13,7 @@
 cm-column{
   .pos-rel;
   .dib;
-  .vap;
+  .vat;
   //min-width:@cm-app-width;
   overflow-x:hidden;
   overflow-y:auto;
@@ -45,6 +45,7 @@ cm-column{
   // normal desktop columns 25 25 50 %
   cm-column{
     width:@cm-column-first-size;
+    z-index:1;
 
     cm-footer {
       width:@cm-column-first-size;
@@ -56,6 +57,7 @@ cm-column{
   cm-column + cm-column{
     width:@cm-column-second-size;
     left:@cm-column-first-size;
+    z-index:2;
 
     cm-footer {
       width:@cm-column-second-size;
@@ -69,6 +71,7 @@ cm-column{
   cm-column + cm-column + cm-column{
     width:@cm-column-third-size;
     left:@cm-column-first-size + @cm-column-second-size;
+    z-index:3;
 
     cm-footer {
       width:@cm-column-third-size;

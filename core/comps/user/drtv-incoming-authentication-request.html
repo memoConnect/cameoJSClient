@@ -27,6 +27,7 @@
         data-qa     = "btn-cancel"
         cm-weight   = "1"
         ng-click    = "close()"
+        cm-reactive
     >
         {{ (labelCancel || 'MODAL.LABEL.CANCEL') | cmTranslate }}
         <i class="fa cm-checkbox-wrong cm-lg-icon"></i>
@@ -36,6 +37,7 @@
         data-qa     = "btn-acceptRequest"
         ng-click    = "verify(transactSecret)"
         cm-weight   = "1"
+        cm-reactive
     >
         <span>
             {{

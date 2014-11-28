@@ -27,14 +27,39 @@ module.exports = function (grunt) {
 
     // cameo build config
     var globalCameoBuildConfig = (function () {
-        var buildConfig;
 
-        var buildConfigUser = './config/cameoBuildConfig-local.json';
-        if (grunt.file.exists(buildConfigUser)) {
-            buildConfig = grunt.file.readJSON(buildConfigUser);
-        }
-        else {
-            buildConfig = grunt.file.readJSON('./config/cameoBuildConfig.json');
+        function extend() {
+            var destination = {},
+                sources = [].slice.call( arguments, 0 );
+            sources.forEach(function( source ) {
+                var prop;
+                for ( prop in source ) {
+                    if ( prop in destination && Array.isArray( destination[ prop ] ) ) {
+
+                        // Concat Arrays
+                        destination[ prop ] = destination[ prop ].concat( source[ prop ] );
+
+                    } else if ( prop in destination && typeof destination[ prop ] === "object" ) {
+
+                        // Merge Objects
+                        destination[ prop ] = extend( destination[ prop ], source[ prop ] );
+
+                    } else {
+
+                        // Set new values
+                        destination[ prop ] = source[ prop ];
+
+                    }
+                }
+            });
+            return destination;
+        };
+
+        var buildConfig = grunt.file.readJSON('./config/cameoBuildConfig.json');
+
+        var buildConfigLocal = './config/cameoBuildConfig-local.json';
+        if (grunt.file.exists(buildConfigLocal)) {
+            buildConfig = extend(buildConfig,grunt.file.readJSON(buildConfigLocal));
         }
 
         switch (currentTarget) {
@@ -53,6 +78,19 @@ module.exports = function (grunt) {
             default:
                 break;
         }
+
+        // load static data and compile vars
+        buildConfig.static = JSON.parse(
+            grunt.template.process(
+                grunt.file.read('config/cameoBuildConfig-static.json'),
+                {
+                    data: {
+                        'dlPath': buildConfig.path.dl,
+                        'appPath': buildConfig.path.app
+                    }
+                }
+            )
+        );
 
         //check whether apiUrl should be overwritten
         var apiUrl = grunt.option('apiUrl');

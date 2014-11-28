@@ -6,7 +6,7 @@ describe('cmLocalContacts default none app', function() {
     beforeEach(function () {
         module('cmPhonegap', function ($provide) {
             $provide.factory('$navigator', function () {
-                return {}
+                return 'undefined'
             })
         })
     })
@@ -28,13 +28,13 @@ describe('cmLocalContacts default none app', function() {
         })
     })
 
-    describe('var debug',function(){
+    describe('var emulateDevice',function(){
         it('should be defined',function(){
-            expect(cmDevice.debug).toBeDefined()
+            expect(cmDevice.emulateDevice).toBeDefined()
         })
 
         it('should be false on default',function(){
-            expect(cmDevice.debug).toBeFalsy()
+            expect(cmDevice.emulateDevice).toBeFalsy()
         })
     })
 

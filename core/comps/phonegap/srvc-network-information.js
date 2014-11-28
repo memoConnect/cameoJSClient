@@ -12,7 +12,7 @@ angular.module('cmPhonegap')
             state: '',
 
             init: function(){
-                if(typeof $phonegapCameoConfig == 'undefined') {
+                if($phonegapCameoConfig == 'undefined') {
                     return false;
                 }
 

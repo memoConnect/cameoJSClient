@@ -2,22 +2,23 @@
 
 angular.module('cmUi').directive('cmMenu',[
     'cmUserModel', 'cmConfig', 'cmNotify', 'cmUtil',
-    '$location', '$window',
+    '$location', '$window', '$rootScope',
     function (cmUserModel, cmConfig, cmNotify, cmUtil,
-              $location, $window){
+              $location, $window, $rootScope){
         return {
             restrict: 'AE',
             scope: true,
             templateUrl: 'comps/ui/drtv-menu.html',
             controller: function($scope){
-
-                $scope.Object = Object;
                 $scope.menu = cmConfig.menu;
+                $scope.menuKeys = Object.keys($scope.menu);
+
                 $scope.version = cmConfig.version;
                 $scope.menuVisible = false;
 
                 $scope.handleMenu = function(){
                     $scope.menuVisible = $scope.menuVisible ? false : true;
+
                     if($scope.menuVisible)
                         cmNotify.trigger('bell:unring');
                 };
@@ -66,6 +67,14 @@ angular.module('cmUi').directive('cmMenu',[
                 $scope.logout = function(){
                     cmUserModel.doLogout(true,'drtv-menu logout');
                 };
+
+                var destroyWatcher = $rootScope.$on('cmMenu:toggle',function(){
+                    $scope.handleMenu();
+                });
+
+                $scope.$on('$destroy', function(){
+                    destroyWatcher();
+                });
             }
         }
     }

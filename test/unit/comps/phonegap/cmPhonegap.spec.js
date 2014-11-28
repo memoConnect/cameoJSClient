@@ -6,7 +6,7 @@ describe('cmPhonegap default none app', function() {
     beforeEach(function () {
         module('cmPhonegap', function ($provide) {
             $provide.factory('$phonegapCameoConfig', function () {
-                return undefined
+                return 'undefined'
             })
         })
     })
@@ -28,13 +28,13 @@ describe('cmPhonegap default none app', function() {
         })
     })
 
-    describe('method initCloseApp', function () {
+    describe('method initDeviceButtons', function () {
         it('should be defined', function () {
-            expect(cmPhonegap.initCloseApp).toBeDefined()
+            expect(cmPhonegap.initDeviceButtons).toBeDefined()
         })
 
         it('should return false', function () {
-            expect(cmPhonegap.initCloseApp()).toBeFalsy()
+            expect(cmPhonegap.initDeviceButtons()).toBeFalsy()
         })
     })
 })
@@ -99,9 +99,9 @@ describe('cmPhonegap is app', function() {
 
     })
 
-    xdescribe('method initCloseApp', function () {
+    xdescribe('method initDeviceButtons', function () {
         it('after dom:event backbutton exit app called', function () {
-            expect(cmPhonegap.initCloseApp()).toBeFalsy()
+            expect(cmPhonegap.initDeviceButtons()).toBeFalsy()
         })
     })
 })

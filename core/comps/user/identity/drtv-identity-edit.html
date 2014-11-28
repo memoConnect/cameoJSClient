@@ -5,20 +5,20 @@
     </div>
     <div class="cm-fl w72">
         <ul class="no-border">
-            <li ng-click="goTo('/settings/identity/key/list')" data-qa="btn-identity-keys">
-                 <span class="item clearfix">
-                     <i class="fa cm-key fa-2x"></i>
-                    {{'IDENTITY.LABEL.KEYMANAGEMENT'|cmTranslate}}
-                 </span>
+            <li class="cm-disabled" data-qa="btn-identity-trust">
+                <span class="item clearfix">
+                    <i class="fa cm-qr-code fa-2x"></i>
+                    {{'IDENTITY.LABEL.TRUST'|cmTranslate}}
+                </span>
                 <section class="icon-list">
                     <i class="fa cm-right position-exception"></i>
                 </section>
             </li>
-            <li class="no-border cm-disabled" data-qa="btn-identity-trust">
-                <span class="item clearfix">
-                    <i class="fa cm-checker fa-2x"></i>
-                    {{'IDENTITY.LABEL.TRUST'|cmTranslate}}
-                </span>
+            <li ng-click="goTo('/settings/identity/key/list')" data-qa="btn-identity-keys" cm-reactive>
+                 <span class="item clearfix">
+                     <i class="fa cm-key fa-2x"></i>
+                    {{'IDENTITY.LABEL.KEYMANAGEMENT'|cmTranslate}}
+                 </span>
                 <section class="icon-list">
                     <i class="fa cm-right position-exception"></i>
                 </section>
@@ -35,7 +35,7 @@
         <div class="cm-input-ctn cm-input-readonly">
             <i class="fa cm-rhino-positive"></i>
             <input
-                tabindex="1" data-qa="input-cameoId" required disabled
+                tabindex="1" data-qa="input-cameoId" disabled
                 type="text" name="cameoId" ng-model="identity.cameoId" />
         </div>
     </article>
@@ -46,8 +46,8 @@
         <label>{{'CONTACT.PLACEHOLDER.DISPLAYNAME'|cmTranslate}}</label>
         <div class="cm-input-ctn with-inside-icon">
             <input
-                tabindex="2" data-qa="input-displayname" required
-                type="text" name="displayName" ng-model="identity.displayName" ng-keyup="validateDisplayName();" />
+                tabindex="2" data-qa="input-displayname"
+                type="text" name="displayName" ng-model="formData.displayName" ng-keyup="validateDisplayName();" />
             <i class="fa cm-write"></i>
         </div>
         <cm-info-bubble class="cm-alert" ng-show="cmForm.displayName.$dirty && cmForm.displayName.$invalid && cmForm.displayName.length > 0">
@@ -59,62 +59,33 @@
 
     <hr class="margin-small" />
 
-    <label class="content">{{'CONTACT.PLACEHOLDER.PHONENUMBER'|cmTranslate}}</label>
-    <cm-multi-input cm-collection="identity.phoneNumbers" class="content">
-        <ng-form name="formPhone">
-            <div class="cm-input-ctn with-chooser with-inside-icon">
-                <input
-                    tabindex="3" data-qa="input-phonenumber"
-                    type="text" name="phoneNumber" ng-model="item.value" cm-validate-phone cm-adaptive-change />
-                <i class="fa cm-write"></i>
-            </div>
-            <!--<div cm-type-chooser cm-choose-value-to="item"></div>-->
-            <cm-info-bubble class="cm-alert" data-qa="form-error-phoneNumber-invalid" ng-show="formPhone.phoneNumber.$dirty && formPhone.phoneNumber.$invalid">
-                <div ng-show="formPhone.phoneNumber.$invalid">
-                    <i class="fa cm-info"></i> {{'CONTACT.INFO.INVALID.PHONENUMBER'|cmTranslate}}
-                </div>
-            </cm-info-bubble>
-        </ng-form>
-    </cm-multi-input>
+    <cm-form-phonenumber
+        ng-model="formData.phoneNumber"
+        cm-tabindex="3"
+        cm-label="CONTACT.PLACEHOLDER.PHONENUMBER"
+        cm-info="CONTACT.INFO.INVALID.PHONENUMBER"
+    ></cm-form-phonenumber>
 
     <hr class="margin-small" />
 
-    <label class="content">{{'CONTACT.PLACEHOLDER.EMAIL'|cmTranslate}}</label>
-    <cm-multi-input cm-collection="identity.emails" class="content">
-        <ng-form name="formEmail">
-            <div class="cm-input-ctn with-chooser with-inside-icon">
-                <input
-                    tabindex="4" data-qa="input-email"
-                    name="email" ng-model="item.value" cm-validate-email cm-adaptive-change />
-                <i class="fa cm-write"></i>
-            </div>
-            <!--<div cm-type-chooser cm-choose-value-to="item"></div>-->
-            <cm-info-bubble class="cm-alert" ng-show="formEmail.email.$dirty && formEmail.email.$invalid">
-                <div ng-show="formEmail.email.$invalid" data-qa="form-error-email-invalid">
-                    <i class="fa cm-info"></i> {{'CONTACT.INFO.INVALID.EMAIL'|cmTranslate}}
-                </div>
-            </cm-info-bubble>
-        </ng-form>
-    </cm-multi-input>
-
-    <!--address class="cm-address">
-        <div class="cm-input-ctn">
-            <input type="text" class="street" name="street" ng-model="identity.address.street" placeholder="{{'CONTACT.PLACEHOLDER.STREET'|cmTranslate}}" required tabindex="5" data-qa="input-address-street" />
-            <input type="text" class="streetnr" name="streetnr" ng-model="identity.address.streetnr" placeholder="{{'CONTACT.PLACEHOLDER.STREETNR'|cmTranslate}}" required tabindex="6" data-qa="input-address-streetnr" />
-        </div>
-
-        <div class="cm-input-ctn">
-            <input type="text" class="zip" name="zip" ng-model="identity.address.zip" placeholder="{{'CONTACT.PLACEHOLDER.ZIP'|cmTranslate}}" required tabindex="7" data-qa="input-address-zip" maxlength="5"/>
-            <input type="text" class="city" name="city" ng-model="identity.address.city" placeholder="{{'CONTACT.PLACEHOLDER.CITY'|cmTranslate}}" required tabindex="8" data-qa="input-address-city" />
-        </div>
-    </address-->
+    <cm-form-email
+        ng-model="formData.email"
+        cm-tabindex="4"
+        cm-label="CONTACT.PLACEHOLDER.EMAIL"
+        cm-info="CONTACT.INFO.INVALID.EMAIL"
+    ></cm-form-email>
 
 </form>
 
-<cm-footer cm-always-on-top>
-    <button class="cm-btn-grey" ng-click="saveIdentity()" data-qa="btn-saveIdentity">
-        <span ng-show="!showLoader">
-            {{'CONTACT.FOOTER.SAVE'|cmTranslate}} <i class="fa cm-checker"></i>
+<cm-footer>
+    <button class="cm-btn-grey" ng-click="saveIdentity()" data-qa="btn-saveIdentity" cm-reactive>
+        <span ng-show="!showLoader && !isPristine">
+            {{'CONTACT.FOOTER.SAVE'|cmTranslate}}
+            <i class="fa cm-checker"></i>
+        </span>
+        <span ng-show="isPristine" data-qa="btn-pristineBack">
+            {{'ACCOUNT.FOOTER.BACK'|cmTranslate}}
+            <i class="fa cm-out"></i>
         </span>
         <cm-loader ng-show="showLoader" cm-color="ci-color"></cm-loader>
     </button>

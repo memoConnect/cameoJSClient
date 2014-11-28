@@ -2,5 +2,5 @@
 
 angular.module('cmPhonegap')
 .factory('$navigator', function(){
-    return typeof navigator != 'undefined' ? navigator : undefined;
+    return typeof navigator != 'undefined' ? navigator : 'undefined';
 });

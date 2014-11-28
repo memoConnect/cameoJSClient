@@ -11,7 +11,7 @@ module.exports = function(grunt, options){
                     options: {
                         stdout: false
                     },
-                    command: 'cd test/e2e/keys && rm -f *.key && ssh-keygen -N "" -f 1.key && ssh-keygen -N "" -f 2.key && ssh-keygen -N "" -f 3.key && ssh-keygen -N "" -f 4.key && ssh-keygen -N "" -f 5.key&& rm *.key.pub'
+                    command: 'cd test/e2e/keys && rm -f *.key && ssh-keygen -N "" -f 1.key && ssh-keygen -N "" -f 2.key && ssh-keygen -N "" -f 3.key && ssh-keygen -N "" -f 4.key && ssh-keygen -N "" -f 5.key&& ssh-keygen -N "" -f 6.key&& ssh-keygen -N "" -f 7.key&& ssh-keygen -N "" -f 8.key&& rm *.key.pub'
                 }
             }
         }

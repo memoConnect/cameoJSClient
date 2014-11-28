@@ -2,15 +2,18 @@
 
 angular.module('cmRoutes')
 .controller('PurlCtrl',[
-    'cmModal', 'cmPurlModel', 'cmConversationFactory',
+    'cmUserModel', 'cmModal', 'cmPurlModel', 'cmConversationFactory', 'cmDevice',
     '$scope', '$rootScope', '$routeParams', 'resolveData',
-    function(cmModal, cmPurlModel, cmConversationFactory,
+    function(cmUserModel, cmModal, cmPurlModel, cmConversationFactory, cmDevice,
              $scope, $rootScope, $routeParams, resolveData){
 
         $rootScope.pendingPurl      = null;
         $scope.showSignIn           = false;
         $scope.purlId               = $routeParams.purlId || '';
         $scope.headerGuest          = true;
+
+        $scope.appParams = 'purlId=' + $routeParams.purlId;
+        $scope.isMobile = cmDevice.isMobile() && !cmDevice.isApp();
 
         if(typeof resolveData == 'object'){
             if(typeof resolveData.identity == 'object' && typeof resolveData.conversation == 'object'){
@@ -33,6 +36,7 @@ angular.module('cmRoutes')
             } else if(typeof resolveData.status == 'number' && resolveData.status == 401){
                 $rootScope.$broadcast('logout', {goToLogin: false, where: 'purl-ctrl getPurl reject'})
                 $rootScope.showLogin();
+                $scope.showSignIn = true;
             } else {
                 $rootScope.goTo('/404');
             }

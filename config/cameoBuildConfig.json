@@ -5,16 +5,23 @@
         "loadingBar": true,
         "enableDebug": true,
         "logLevel": "DEBUG",
-        "performancePage": true
+        "performancePage": true,
+        "errorOnTodoInI18n": false
+    },
+    "path": {
+        "cockpit": "/c/",
+        "app": "/m/",
+        "dl": "/dl/"
     },
     "debug":{
         "weinre": false,
         "weinreIp": ""
     },
     "phonegap": {
-        "baseName" : "cameoNet-default",
-        "appId" : "864855",
-        "bundleId" : "io.cameo.dev.cameo",
-        "extraName" : ""
+        "baseName": "cameoNet-dev",
+        "appId": "864855",
+        "bundleId": "io.cameo.dev.cameo",
+        "extraName": "",
+        "androidDebuggable": true
     }
 }

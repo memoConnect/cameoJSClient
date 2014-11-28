@@ -85,7 +85,7 @@ angular.module('cmContacts')
             };
 
             this.save = function(objectChange){
-                cmLogger.debug('cmContactModel.save');
+                //cmLogger.debug('cmContactModel.save');
 
                 var defer = $q.defer();
 

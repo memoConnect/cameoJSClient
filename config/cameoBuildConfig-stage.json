@@ -5,11 +5,13 @@
         "loadingBar": true,
         "enableDebug": true,
         "logLevel": "WARN",
-        "performancePage": false
+        "performancePage": false,
+        "errorOnTodoInI18n": true
     },
-    "cockpit": {
-        "basePath": "/c/",
-        "appPath": "/m/"
+    "path": {
+        "cockpit": "/c/",
+        "app": "/m/",
+        "dl": "/dl/"
     },
     "debug":{
         "weinre": false,
@@ -19,6 +21,7 @@
         "baseName": "cameoNet-stage",
         "appId": "1028315",
         "bundleId": "de.cameonet.app.test.stage",
-        "extraName": ""
+        "extraName": "" ,
+        "androidDebuggable": false
     }
 }

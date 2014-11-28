@@ -44,13 +44,15 @@ angular.module('cmCore')
             this.isImage = function(){
                 return this.type == undefined
                      ? false
-                     : this.type.search('^image/') != -1;
+                     : this.type.search('^image/') != -1
+                       && this.type.search('tiff') == -1;
             };
 
             this.isEmbed = function(specificMime){
                 return this.type == undefined
                      ? false
-                     : this.type.search('^('+(specificMime||'image|video|audio')+')') != -1;
+                     : this.type.search('^('+(specificMime||'image|video|audio')+')') != -1
+                       && this.type.search('tiff') == -1;
             };
 
             // message id for backend event message:new
@@ -109,8 +111,10 @@ angular.module('cmCore')
 
                         // is file complete of chunks?
                         if(details.isCompleted) {
+                            self.state.unset('incomplete');
                             self.trigger('importFile:finish',self);
                         } else {
+                            self.state.set('incomplete');
                             self.trigger('importFile:incomplete',self);
                         }
                     },
@@ -245,7 +249,7 @@ angular.module('cmCore')
                     try{
                         binary+= cmFilesAdapter.base64ToBinary(chunk.raw);
                     } catch(e){
-                        cmLogger.debug(e);
+                        cmLogger.debug('FileModel Chunk Error',e);
                     }
                 });
 
@@ -346,7 +350,7 @@ angular.module('cmCore')
             };
 
             this.downloadChunks = function(){
-//                cmLogger.debug('cmFileModel:downloadChunks');
+                //cmLogger.debug('cmFileModel:downloadChunks '+this.id);
                 // only crashed when fileId is missing
                 if(!this.id && this.state.is('onlyFileId')){
 //                    cmLogger.debug('cmFile.downloadChunks();')
@@ -388,8 +392,6 @@ angular.module('cmCore')
             };
 
             this.promptSaveAs = function(){
-                //console.log('promptSaveAs')
-
                 try {
                     var isFileSaverSupported = !!new Blob;
                 } catch (e) {
@@ -409,11 +411,9 @@ angular.module('cmCore')
                 } else {
                     // phonegap download
                     if(cmDeviceDownload.isSupported()) {
-                        //console.log('cmDeviceDownload called')
                         cmDeviceDownload.saveAs(this);
                     // browser download
                     } else if(this.blob){
-                        //console.log('saveAs called')
                         saveAs(this.blob, this.name != false ? this.name : 'download');
                     } else {
                         cmLogger.debug('Unable to prompt saveAs; cmFile.blob is missing, try cmFile.importByFile().');

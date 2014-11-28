@@ -2,68 +2,77 @@
 
 describe("cmLanguage", function() {
 
+    var cmConfig,
+        language_tables = {};
+
+    function ucfirst(str) {
+        //  discuss at: http://phpjs.org/functions/ucfirst/
+        // original by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+        // bugfixed by: Onno Marsman
+        // improved by: Brett Zamir (http://brett-zamir.me)
+        //   example 1: ucfirst('kevin van zonneveld');
+        //   returns 1: 'Kevin van zonneveld'
+
+        str += '';
+        var f = str.charAt(0)
+            .toUpperCase();
+        return f + str.substr(1);
+    }
+
+    //Helper function to serialize all message ids
+    function extendList(list, str, obj) {
+        if (typeof obj == 'string') {
+            list.push(str)
+        } else {
+            $.each(obj, function (key, value) {
+                extendList(list, str + (str ? '.' : '') + key, value)
+            })
+        }
+    }
+
     describe("setup", function(){
 
+        beforeEach(module('cmConfig'))
+
+        beforeEach(inject(function(_cmConfig_){
+            cmConfig = _cmConfig_
+        }))
+
         it('should find an array of correctly formatted keys for supported languages at cameo.supported_languages', function() {
-            expect(Object.prototype.toString.call( cameo_config.supported_languages )).toEqual('[object Array]')
-            cameo_config.supported_languages.forEach(function(lang_key){
+            expect(Object.prototype.toString.call( cmConfig.supportedLanguages )).toEqual('[object Array]')
+            cmConfig.supportedLanguages.forEach(function(lang_key){
                 expect(lang_key.match(/^[a-z]{2}_[A-Z]{2}$/)).not.toEqual(null) // e.g. de_DE
             })
         })
 
         it('should find string with path to languages files at cameo.path_to_language files.', function(){
-            expect(typeof cameo_config.path_to_languages).toEqual('string')
+            expect(typeof cmConfig.pathToLanguages).toEqual('string')
         })
 
         xit('should find and load correctly named and json formatted files for all supported languages within 5 second.', function() {
-            var count = cameo_config.supported_languages.length
+            var count = cmConfig.supportedLanguages.length
 
-            cameo_config.supported_languages.forEach(function(lang_key){
-                var file = 'dist/app/'+cameo_config.path_to_languages+'/'+lang_key+'.json';
+            cmConfig.supportedLanguages.forEach(function(lang_key){
+                var file = 'dist/app/'+cmConfig.pathToLanguages+'/'+lang_key+'.json';
                 language_tables[lang_key] = eval(window.__html__[file])
                 console.log(typeof language_tables[lang_key])
             })
 
-            expect(Object.keys(language_tables).length).toEqual(cameo_config.supported_languages.length)
+            expect(Object.keys(language_tables).length).toEqual(cmConfig.supportedLanguages.length)
         })
 
-        var language_tables = {};
-
-        function ucfirst(str) {
-            //  discuss at: http://phpjs.org/functions/ucfirst/
-            // original by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
-            // bugfixed by: Onno Marsman 
-            // improved by: Brett Zamir (http://brett-zamir.me)
-            //   example 1: ucfirst('kevin van zonneveld');
-            //   returns 1: 'Kevin van zonneveld'
-
-            str += '';
-            var f = str.charAt(0)
-                .toUpperCase();
-            return f + str.substr(1);
-        }
-
         describe('validate files', function(){
-            cameo_config.supported_languages.forEach(function (lang_key) {
-                beforeEach(function(){
-                    module('i18n/' + lang_key + '.json')
-                    module('i18n/language-keys.json')
+            it('inject files', function(){
+                cmConfig.supportedLanguages.forEach(function (lang_key) {
+                    beforeEach(function(){
+                        module('i18n/' + lang_key + '.json')
+                        module('i18n/language-keys.json')
+                    })
                 })
             })
 
-            //Helper function to serialize all message ids
-            function extendList(list, str, obj) {
-                if (typeof obj == 'string') {
-                    list.push(str)
-                } else {
-                    $.each(obj, function (key, value) {
-                        extendList(list, str + (str ? '.' : '') + key, value)
-                    })
-                }
-            }
-
-            it('should find a translation for each message_id for all supported languages.', function () {
-                cameo_config.supported_languages.forEach(function (lang_key) {
+            it('should find a translation for each message_id for all supported languages.', function() {
+                cmConfig.supportedLanguages.forEach(function (lang_key) {
                     inject(['i18n'+ucfirst(lang_key), function (jsonData){
                         language_tables[lang_key] = jsonData
                     }])
@@ -73,7 +82,6 @@ describe("cmLanguage", function() {
                     missing_ids = {}
 
                 inject(['i18nLanguageKeys', function(data){ used_ids = data }])
-
 
                 $.each(language_tables, function(lang_key, language_data){
                     used_ids.forEach(function(message_id){
@@ -95,9 +103,9 @@ describe("cmLanguage", function() {
                 })
             })
 
-            it('should find the same language keys in all supported language file.', function () {
-                cameo_config.supported_languages.forEach(function (lang_key) {
-                    inject(['i18n'+ucfirst(lang_key), function (jsonData){
+            it('should find the same language keys in all supported language file.', function() {
+                cmConfig.supportedLanguages.forEach(function(lang_key) {
+                    inject(['i18n'+ucfirst(lang_key), function(jsonData){
                         language_tables[lang_key] = jsonData
                     }])
                 })
@@ -140,17 +148,44 @@ describe("cmLanguage", function() {
                     }
                 })
             })
+
+            it('should have none @todo inside', function(){
+                var needle = '@todo',
+                    countTodos = []
+                function scan(obj, key){
+                    var k;
+                    if (obj instanceof Object) {
+                        for (k in obj){
+                            if (obj.hasOwnProperty(k)){
+                                //recursive call to scan property
+                                scan( obj[k], key ? key+'.'+k : k)
+                            }
+                        }
+                    } else {
+                        //not an Object so obj[k] here is a value
+                        if(obj.indexOf(needle) >= 0)
+                            countTodos.push(key)
+                    };
+                };
+
+                scan(language_tables);
+
+                if(cmConfig.errorOnTodoInI18n)
+                    expect(countTodos.length).toEqual(0)
+
+                if(countTodos.length > 0){
+                    console.log(needle + '\'s found at: ' + JSON.stringify(countTodos, null, 2) + '\n')
+                }
+            })
         })
     })
 
-    describe("module", function() {
+    xdescribe("module", function() {
 
         var ctrl, scope, cmLanguage, cmTranslate, $compile, $httpBackend
 
         beforeEach(module('cmCore', [
-
             'cmLanguageProvider',
-
             function(cmLanguageProvider){
                 cmLanguageProvider
                 .preferredLanguage( 'en_US' )
@@ -162,7 +197,6 @@ describe("cmLanguage", function() {
                 })
             }
         ]))
-
 
         beforeEach(inject(function(_$rootScope_, _$compile_, _cmLanguage_, _cmTranslate_, _$httpBackend_){
             scope        = _$rootScope_.$new()

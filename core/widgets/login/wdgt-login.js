@@ -10,8 +10,6 @@ angular.module('cmWidgets').directive('cmWidgetLogin',[
             templateUrl: 'widgets/login/wdgt-login.html',
 
             controller: function ($scope) {
-                cmSystemCheck.run(true);
-
                 $scope.cmVersion = cmVersion;
 
                 var app = angular.element(document.querySelector('#cm-app')),

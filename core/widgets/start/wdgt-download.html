@@ -1,0 +1,31 @@
+<h2 class="border-bottom is-selectable">
+    <i class="fa cm-download-blanc"></i>
+    {{'START.DOWNLOAD.HEADER'|cmTranslate}}
+</h2>
+
+<article class="content">
+    <cm-info-bubble nose-x="50%">
+        <span ng-bind-html="'START.DOWNLOAD.SUB_TEXT' | cmParse"></span>
+    </cm-info-bubble>
+</article>
+
+<ul class="border-top border-bottom mt15">
+    <li ng-repeat="app in appLinks">
+        <span class="item tac without-height" cm-reactive ng-click="openExternalLink(app.href)">
+            <img ng-src="{{app.icon}}" />
+        </span>
+        <hr class="margin-small">
+        <span class="item tac without-height" ng-if="app.direct && app.direct.href != ''" cm-reactive ng-click="openExternalLink(app.direct.href)">
+            <img ng-src="{{app.direct.icon}}" />
+        </span>
+    </li>
+
+    <li ng-click="goToWelcome()" data-qa="btn-skip-download" cm-reactive>
+        <span class="item is-selectable">
+            {{'START.DOWNLOAD.SKIP_TEXT' | cmTranslate}}
+        </span>
+        <div class="short-links without-bg">
+            <i class="fa cm-right"></i>
+        </div>
+    </li>
+</ul>

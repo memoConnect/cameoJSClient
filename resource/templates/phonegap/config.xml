@@ -9,7 +9,6 @@
     <author href="www.cameonet.de" email="support@cameonet.de">cameoNet</author>
 
     <access origin="*" subdomains="true"  />
-    <!-- <access origin="http://puship.cloudapp.net" /> -->
     <content src="index.html" />
 
     <log level="<%= logLevel %>"/>
@@ -22,6 +21,9 @@
 
     <!-- <preference name="permissions" value="all-permissions" /> -->
     <preference name="permissions" value="none" />
+
+    <!-- plugins cameo -->
+    <gap:plugin name="de.cameonet.cordova.contacts.readonly" version="0.2.13" />
 
     <!-- plugins origin from adobe -->
     <gap:plugin name="org.apache.cordova.device" version="0.2.12" />
@@ -37,9 +39,11 @@
         <param name="LAUNCHMODE" value="singleTop" />
     </gap:plugin>-->
     <gap:plugin name="com.phonegap.plugins.pushplugin" version="2.1.1" />
-    <gap:plugin name="de.cameonet.cordova.contacts.readonly" version="0.2.13" />
+    <gap:plugin name="nl.x-services.plugins.launchmyapp">
+        <param name="URL_SCHEME" value="<%= appProtocol %>" />
+    </gap:plugin>
     <!-- utils & debug -->
-    <gap:plugin name="com.verso.cordova.clipboard" version="0.1.0" />
+    <!--<gap:plugin name="com.verso.cordova.clipboard" version="0.1.0" />-->
     <gap:plugin name="de.appplant.cordova.plugin.hidden-statusbar-overlay" version="1.2.0" />
     <gap:plugin name="com.jamiestarke.webviewdebug" version="1.0.8" />
 
@@ -56,8 +60,8 @@
     <preference name="AndroidPersistentFileLocation" value="Internal" />
     <!-- build -->
     <!-- http://de.wikipedia.org/wiki/Liste_von_Android-Versionen -->
-    <preference name="android-minSdkVersion" value="7" />
-    <preference name="android-maxSdkVersion" value="19" />
+    <preference name="android-minSdkVersion" value="15" />
+    <preference name="android-maxSdkVersion" value="21" />
     <preference name="android-targetSdkVersion" value="15" />
     <preference name="android-installLocation" value="internalOnly" />
     <preference name="android-windowSoftInputMode" value="adjustResize" />
@@ -92,8 +96,13 @@
     <preference name="disable-cursor" value="true" />
     <preference name="SplashScreen" value="screen"/>
 
-    <!-- Icons / Splash -->
+    <!-- platform config files -->
+    <gap:config-file platform="android" parent="/manifest">
+        <application android:debuggable="<%= androidDebuggable %>" />
+    </gap:config-file>
 
+
+    <!-- Icons / Splash -->
     <platform name="android">
         <icon src="www/res/icons/android/icon-36-ldpi.png" density="port-ldpi"/>
         <icon src="www/res/icons/android/icon-48-mdpi.png" density="port-mdpi"/>
@@ -107,6 +116,8 @@
         <splash src="www/res/screens/android/drawable-xhdpi/screen.9.png" density="port-xhdpi"/>
         <splash src="www/res/screens/android/drawable-xxhdpi/screen.9.png" density="port-xxhdpi"/>
     </platform>
+
+
 
     <platform name="ios">
         <!-- iPhone / iPod Touch  -->

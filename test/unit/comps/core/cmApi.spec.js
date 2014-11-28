@@ -226,12 +226,6 @@ describe('base config', function(){
             expect(cmApi.call_stack).toBeDefined()
         })
 
-
-
-
-
-
-
         describe('call stack', function(){
 
             it('should be empty at first.', function(){
@@ -499,8 +493,13 @@ describe('cmApi with short intervals', function(){
 
 
 describe('cmApi with cmAuth present', function(){
-    beforeEach(module('cmCore'))
-
+    beforeEach(module('cmCore',[
+        'cmApiProvider',
+        function(cmApiProvider){
+            cmApiProvider
+                .setWithoutApiUrl()
+        }
+    ]))
     beforeEach(module(function ($provide) {
         $provide.value('cmAuth', {
             getToken: function(){ return "my_token"},

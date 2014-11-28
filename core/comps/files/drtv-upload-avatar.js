@@ -1,30 +1,30 @@
 'use strict';
 
 angular.module('cmFiles').directive('cmUploadAvatar',[
-    'cmNotify', 'cmUserModel',
+    'cmNotify', 'cmUserModel', 'cmAnswerFiles', 'cmErrorCodes',
     '$rootScope', '$timeout',
-    function(cmNotify, cmUserModel,
+    function(cmNotify, cmUserModel, cmAnswerFiles, cmErrorCodes,
              $rootScope, $timeout) {
         return {
             restrict: 'E',
             templateUrl: 'comps/files/drtv-upload-avatar.html',
 
             link: function (scope) {
-                scope.imageUpload = false;
-                // after add a image
-                var watcher = $rootScope.$on('cmFilesFileSetted', function(){
-                    $rootScope.$broadcast('cmFilesCheckFiles', {
-                        passphrase: undefined,
-                        success: function(files) {
+
+                var callback_file_setted = function(){
+                    cmAnswerFiles.validateChoosenFiles({
+                        passphrase: undefined
+                    }).then(
+                        function(files){
                             if (files.length > 0) {
                                 scope.imageUpload = true;
                                 files[0].uploadChunks();
                                 files[0].one('upload:finish',function(){
                                     cmUserModel
-                                    .data.identity
-                                    .update({
-                                        avatar: files[0].id
-                                    });
+                                        .data.identity
+                                        .update({
+                                            avatar: files[0].id
+                                        });
 
                                     cmUserModel.data.identity.one('update:finished', function(){
                                         $timeout(function(){
@@ -36,20 +36,24 @@ angular.module('cmFiles').directive('cmUploadAvatar',[
                                 });
                             }
                         },
-                        error: function(maxFileSize, header) {
-                            cmNotify.warn('CONVERSATION.WARN.FILESIZE_REACHED', {
+                        function(errorCode, error, header) {
+                            cmNotify.warn(errorCode, {
                                 ttl: 0,
-                                i18n: {
-                                    maxFileSize: maxFileSize,
-                                    fileSize: header['X-File-Size'],
-                                    fileName: header['X-File-Name']
-                                }
+                                i18n: cmErrorCodes.toI18n(errorCode, {
+                                    error: error,
+                                    header: header
+                                })
                             });
                         }
-                    });
-                });
+                    )
+                };
+
+                scope.imageUpload = false;
+
+                cmAnswerFiles.on('file:setted', callback_file_setted);
+
                 scope.$on('$destroy',function(){
-                    watcher();
+                    cmAnswerFiles.off('save:aborted', callback_file_setted);
                 });
             }
         }

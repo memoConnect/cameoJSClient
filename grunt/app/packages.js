@@ -105,7 +105,7 @@ module.exports = function(grunt, options){
                         'core/vendor/!(angular)/**/*.js',
                         'core/vendor/angular/base/angular.js',
                         'core/vendor/angular/base/angular-*.js',
-                        'core/vendor/angular/!(base)/*.js'
+                        'core/vendor/angular/!(base|deprecated_)/*.js'
                     ],
                     dest: 'dist/app/vendor.' + options.globalCameoBuildConfig.config.version + '.js'
                 },
@@ -129,7 +129,7 @@ module.exports = function(grunt, options){
                         'app_widgets': 'app/widgets',
                         'app_ui': 'app/comps/ui',
                         'app_user': 'app/comps/user',
-                        'app_conversations': 'app/comps/conversations',
+                        'app_conversations': 'app/comps/conversations'
                     })
                 },
                 'app-cameo': {
@@ -140,8 +140,8 @@ module.exports = function(grunt, options){
                         }
                     },
                     src: [
-                        'build/app/base/config.js',
                         'app/base/app.js',
+                        'build/app/base/config.js',
                         'build/app/packages/*.js'
                     ],
                     dest: 'dist/app/cameo.' + options.globalCameoBuildConfig.config.version + '.js'

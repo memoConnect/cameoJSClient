@@ -1,20 +1,22 @@
 'use strict';
 
 angular.module('cmUi').directive('cmBack',[
+    'cmHistory',
     '$rootScope',
-    function ($rootScope){
+    function (cmHistory,
+              $rootScope){
         return {
             restrict: 'AE',
             scope: {
                 pageTitle: '=pageTitle'
             },
-            template: '<div class="back-wrap" ng-click="goBack()">'+
+            template: '<div class="back-wrap" ng-click="goBack()" cm-reactive>'+
                         '<i class="fa with-response cm-left" ng-show="isVisible"></i>'+
                         '<span ng-if="pageTitle">{{pageTitle | cmTranslate}}</span>'+
                       '</div>',
             controller: function($scope, $element, $attrs){
                 // vars
-                $scope.isVisible = $rootScope.urlHistory.length > 1 ? true : false;
+                $scope.isVisible = !cmHistory.isEmpty() ? true : false;
                 //$scope.pageTitle = $attrs.pageTitle;
                 $scope.fakeBack = '';
                 // check default back-to attribute
@@ -25,7 +27,7 @@ angular.module('cmUi').directive('cmBack',[
 
                 $scope.goBack = function(){
                     // if history has more then one index
-                    if($rootScope.urlHistory.length > 0 && ('plainBack' in $attrs) == false){
+                    if(!cmHistory.isEmpty() && ('plainBack' in $attrs) == false){
                         $rootScope.goBack();
                         // if is set an default path in route
                         return false;

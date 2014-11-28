@@ -18,7 +18,7 @@ angular.module('cmUi').directive('cmEmojiList',[
         return{
             restrict: 'E',
             template: '<div ng-show="showList">' +
-                        '<div ng-repeat="emoji in emojis" class="emoji-wrapper" ng-click="insertEmoji(emoji)">' +
+                        '<div ng-repeat="emoji in emojis" class="emoji-wrapper" ng-click="insertEmoji(emoji)" cm-reactive>' +
                             '<i class="emoji emoji_{{emoji}}" title=":{{emoji}}:">{{emoji}}</i>' +
                         '</div>' +
                       '<div>',
@@ -66,9 +66,11 @@ angular.module('cmUi').directive('cmEmojiList',[
                     scope.showList = action != undefined && action == 'close' || action == undefined && scope.showList ? false : true;
 
                     if(scope.showList){
+                        element.addClass('is-visible');
                         body.on('click',clickOutside);
                         body.on('touchstart',clickOutside);
                     } else {
+                        element.removeClass('is-visible');
                         body.off('click',clickOutside);
                         body.off('touchstart',clickOutside);
                     }
@@ -136,7 +138,7 @@ angular.module('cmUi').directive('cmEmojiList',[
    function($rootScope){
        return{
            restrict: 'E',
-           template: '<i class="fa cm-smile-negative with-cursor" ng-click="toggleList()"></i>',
+           template: '<i class="fa cm-smile-negative with-cursor" ng-click="toggleList()" cm-reactive></i>',
            scope: true,
            controller: function($scope){
                $scope.toggleList = function(){

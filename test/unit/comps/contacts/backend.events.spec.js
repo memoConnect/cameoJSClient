@@ -15,13 +15,9 @@ describe('Event chain for Contacts', function(){
             "created":1404313824779
         }
 
-    beforeEach(function(){
-        module(function($provide){
-            $provide.constant('cmEnv',{});
-        })
-    })
 
     beforeEach(module('cmContacts'))
+    beforeEach(module('cmConfig'))
 
     beforeEach(inject(function(_cmApi_, _cmContactsAdapter_,_cmContactsModel_, _cmUserModel_, _$rootScope_, _$httpBackend_){
         cmApi               = _cmApi_

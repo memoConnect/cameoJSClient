@@ -23,24 +23,6 @@ angular.module('cmContacts').directive('cmContactTag',[
                     return      contact.identity
                             &&  cmUserModel.verifyTrust(contact.identity)
                 };
-
-                /**
-                 * handle every single contact via model
-                 */
-                $scope.startConversation = function ($event,contact) {
-                    $event.stopPropagation();
-                    $event.preventDefault();
-
-                    if(contact.contactType != 'pending'){
-                        delete $rootScope.pendingConversation
-                        if (contact.identity) {
-                            $rootScope.pendingRecipients = [contact.identity]
-                        } else {
-                            cmLogger.error('Unable to find identity on contact. ' + contact)
-                        }
-                        $rootScope.goTo('/conversation/new');
-                    }
-                };
                 /**
                  * edit contact
                  * @param id

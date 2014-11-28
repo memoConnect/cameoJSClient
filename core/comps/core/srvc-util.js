@@ -1,12 +1,8 @@
 'use strict';
 
 angular.module('cmCore')
-.service('cmUtil', [
-
-    'cmLogger',
-    '$window',
-    '$injector',
-    function(cmLogger, $window, $injector){
+.service('cmUtil',
+    function(cmLogger, $window, $injector, $document){
         /**
          * Checks if Key exists in an Object or Array
          * @param object
@@ -31,17 +27,21 @@ angular.module('cmCore')
          * @param offset
          * @returns {string}
          */
-        this.handleLimitOffset = function(limit,offset){
+        this.handleLimitOffset = function(limit,offset,timeLimit){
             var s = '';
 
-            if(angular.isDefined(limit) && this.validateInt(limit) !== false){
-                s = '?limit=' + parseInt(limit);
+            if(angular.isDefined(timeLimit) && this.validateInt(timeLimit) !== false){
+                s = '?timeLimit=' + parseInt(timeLimit);
             } else {
-                //default limit
-            }
+                if(angular.isDefined(limit) && this.validateInt(limit) !== false){
+                    s = '?limit=' + parseInt(limit);
+                } else {
+                    //default limit
+                }
 
-            if(s != '' && angular.isDefined(offset) && this.validateInt(offset) !== false){
-                s += '&offset=' + parseInt(offset);
+                if(s != '' && angular.isDefined(offset) && this.validateInt(offset) !== false){
+                    s += '&offset=' + parseInt(offset);
+                }
             }
 
             return s;
@@ -254,5 +254,28 @@ angular.module('cmCore')
             var matches = id ? String(id).match(alphNumericRegExp) : null;
             return matches != null;
         };
+
+        this.scrollToInputError = function() {
+
+            function getOffsetSum(elem) {
+                var top=0, left=0;
+                while(elem) {
+                    top = top + parseInt(elem.offsetTop);
+                    left = left + parseInt(elem.offsetLeft);
+                    elem = elem.offsetParent;
+                }
+                return {top: top, left: left};
+            }
+
+            var el          = document.querySelector(".cm-input-error:not(.ng-hide)") || document.querySelector("form .ng-invalid:not(.ng-hide)") || document.querySelector(".cm-alert:not(.ng-hide)"),
+                offset      = getOffsetSum(el),
+                bodyAndHtml = angular.element($document[0].querySelectorAll('body,html')),
+                cmHeader    = angular.element($document[0].querySelector('cm-header'))
+
+
+            angular.forEach(bodyAndHtml, function (tag) {
+                tag.scrollTop = offset.top - cmHeader[0].offsetHeight - 10; //-10 for the looks
+            })
+        }
     }
-]);
+);
