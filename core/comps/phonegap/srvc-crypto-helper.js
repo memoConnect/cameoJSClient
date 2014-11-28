@@ -35,22 +35,110 @@ angular.module('cmPhonegap')
             },
 
             getPrivateKey: function(length){
-                var deffered = $q.defer();
+                var deferred = $q.defer();
 
                 if(this.isAvailable()){
                     this.plugin.getPrivateKey(function (privKey) {
-                            deffered.resolve(privKey);
+                            deferred.resolve(privKey);
                         }, function () {
-                            deffered.reject();
+                            deferred.reject();
                         },
                             length | self.keySize
                     );
                 } else {
-                    deffered.reject('NO PLUGIN EXISTS');
+                    deferred.reject('NO PLUGIN EXISTS');
                 }
 
-                return deffered.promise;
+                return deferred.promise;
+            },
+
+            rsaEncrypt: function(publicKey, plainText){
+                var deferred = $q.defer();
+
+                if(this.isAvailable()){
+                    this.plugin.encrypt(
+                        function (result) {
+                            deferred.resolve(result);
+                        }, 
+                        function (reason) {
+                            deferred.reject(reason);
+                        },
+                        publicKey, 
+                        plainText
+                    )
+                } else {
+                    deferred.reject('NO PLUGIN EXISTS');
+                }
+
+                return deferred.promise;
+            },
+
+            rsaDecrypt: function(privateKey, encryptedText){
+                var deferred = $q.defer();
+
+                if(this.isAvailable()){
+                    this.plugin.encrypt(
+                        function (result) {
+                            deferred.resolve(result);
+                        }, 
+                        function (reason) {
+                            deferred.reject(reason);
+                        },
+                        privateKey, 
+                        encryptedText
+                    )
+                } else {
+                    deferred.reject('NO PLUGIN EXISTS');
+                }
+
+                return deferred.promise;
+            },
+
+            rsaSign: function(privateKey, text){
+                var deferred = $q.defer();
+
+                if(this.isAvailable()){
+                    this.plugin.encrypt(
+                        function (result) {
+                            deferred.resolve(result);
+                        }, 
+                        function (reason) {
+                            deferred.reject(reason);
+                        },
+                        privateKey, 
+                        text
+                    )
+                } else {
+                    deferred.reject('NO PLUGIN EXISTS');
+                }
+
+                return deferred.promise;
+            },
+
+            rsaVerify: function(publicKey, text, signature){
+                var deferred = $q.defer();
+
+                if(this.isAvailable()){
+                    this.plugin.encrypt(
+                        function (result) {
+                            result == 'true'
+                            ?   deferred.resolve(result)
+                            :   deferred.reject(result)
+                        }, 
+                        function (reason) {
+                            deferred.reject(reason);
+                        },
+                        publicKey, 
+                        text,
+                        signature
+                    )
+                } else {
+                    deferred.reject('NO PLUGIN EXISTS');
+                }
+
+                return deferred.promise;
             }
+
         };
 
         self.init();
