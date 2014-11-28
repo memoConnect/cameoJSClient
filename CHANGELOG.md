@@ -1,3 +1,9 @@
+0.4.3.
+# BS 28.11.2014
+* add Authentication Route to Desktop Modus, CAM-1374
+
+
+0.4.3.
 # BS 27.11.2014
 * fix new Talk with -1 recipients CAM-1412
 * add route controller to start/keyinfo to check skipKeyInfo and redirect to talks, if skip is activated in settings
