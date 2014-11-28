@@ -17,7 +17,6 @@ describe('Authentication requests -', function () {
     var keyName2 = "moeps key 2"
     var keyName3 = "moeps key 3"
     var keyName4 = "moeps key 4"
-    var user2key = "user 2 key"
 
     var subject1 = "subject1"
     var subject2 = "subject2"
@@ -32,7 +31,6 @@ describe('Authentication requests -', function () {
     var localStorage1
     var localStorage2
     var localStorage3
-    var localStorage4
 
     var eventSubscription
     var eventSubscription2
@@ -314,6 +312,9 @@ describe('Authentication requests -', function () {
             checkKeyTrust(keyName1, false)
             checkKeyTrust(keyName2, true)
             checkKeyTrust(keyName3, false)
+            util.getLocalStorage().then(function (lsexport) {
+                localStorage2 = lsexport
+            })
             util.waitForEventSubscription()
         })
 
@@ -511,9 +512,6 @@ describe('Authentication requests -', function () {
             it("create testuser2 and generate key", function () {
                 util.createTestUser(testUser2Id)
                 util.generateKey(4, keyName4)
-                util.getLocalStorage().then(function (lsexport) {
-                    localStorage4 = lsexport
-                })
             })
 
             it("send friendrequest to testuser1", function () {
@@ -702,13 +700,8 @@ describe('Authentication requests -', function () {
 
 
 
-
-
     /*** check if message signatures are authentic now: ***/
-
-
-
-    describe('Message Signing with trusted keys: ', function(){
+    xdescribe('Message Signing with trusted keys: ', function(){
 
         describe("user 1 sends signed messages:", function(){
 
@@ -763,7 +756,6 @@ describe('Authentication requests -', function () {
             it("open conversation", function(){
                 util.login(testUser2, "password")
                 util.get(/conversation/+conversationId)
-                util.setLocalStorage(localStorage4.key, localStorage4.value)
             })
 
             it("read message from user 1", function(){
