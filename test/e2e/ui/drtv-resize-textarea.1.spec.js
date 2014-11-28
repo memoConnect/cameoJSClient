@@ -57,11 +57,7 @@ describe('Textarea Resize', function () {
         expect(textarea.getAttribute('rows')).toBe('1')
     })
 
-    /**
-     * @todo
-     */
-    console.log('test removed.')
-    xit('check input without newlines', function(){
+    it('check input without newlines', function(){
         var textarea = $("[data-qa='input-answer']"),
             longText = 'mmmmmmmmeeeeeeeeooooooooooppppppppppppppppppppppppppppppppppppppp'
 

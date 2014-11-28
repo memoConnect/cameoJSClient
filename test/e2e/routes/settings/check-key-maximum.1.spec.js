@@ -26,15 +26,7 @@ describe('Check key maximum: ',function(){
 
 
     describe('with increased timeout', function () {
-        var expectedTimeout = 180000
-        beforeEach(function () {
-            jasmine.getEnv().defaultTimeoutInterval = expectedTimeout
-        })
-
-        afterEach(function () {
-            jasmine.getEnv().defaultTimeoutInterval = 30000
-        })
-
+        var expectedTimeout = util.setKeygenerationTimeout(jasmine);
         it('wait for key generation and display key', function () {
             util.waitForElementVisible("[data-qa='page-save-key']",expectedTimeout)
             expect($("[data-qa='input-key-name']").getAttribute('value')).toBeTruthy()

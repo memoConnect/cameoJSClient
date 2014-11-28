@@ -656,3 +656,15 @@ this.scrollToTop = function(){
 this.scrollToBottom = function(){
     $("body").sendKeys(protractor.Key.END)
 }
+
+this.setKeygenerationTimeout = function(jasmine){
+    var expectedTimeout = 180000;
+    beforeEach(function () {
+        jasmine.getEnv().defaultTimeoutInterval = expectedTimeout
+    })
+
+    afterEach(function () {
+        jasmine.getEnv().defaultTimeoutInterval = 30000
+    })
+    return expectedTimeout;
+}
