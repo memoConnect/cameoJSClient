@@ -1,5 +1,5 @@
 # BS 28.11.2014
-* add Authentication Route to Desktop Modus
+* add Authentication Route to Desktop Modus, CAM-1374
 
 
 # BS 27.11.2014
