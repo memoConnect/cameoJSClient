@@ -14,7 +14,7 @@ describe('Avatar Upload: ', function () {
         util.isInternetExplorer().then(function(bool) {
             isIE = bool;
             if(isIE)
-                console.log('it\'s get return false because of sendFile on input=file')
+                console.log('browser is ie, it blocks get return false because of sendFile on input=file doesnt work')
         })
     })
 
