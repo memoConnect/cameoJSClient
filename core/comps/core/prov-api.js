@@ -427,25 +427,23 @@ angular.module('cmCore').provider('cmApi',[
 
                 //API EVENTS:
 
-                cmObject.addEventHandlingTo(api)
+                cmObject.addEventHandlingTo(api);
                 api.state = new cmStateManagement(['event_call_running']);
-                api.subscriptionId = undefined
+                api.subscriptionId = undefined;
 
                 api.resetSubscriptionId = function(){
                     //cmLogger.debug('api.resetSubscriptionId');
-
-                    api.subscriptionId = undefined
-                    window._eventSubscriptionId = undefined
-                }
+                    api.subscriptionId = undefined;
+                    window._eventSubscriptionId = undefined;
+                };
 
                 api.setSubscriptionId = function(id){
-                    api.subscriptionId = id
-                    window._eventSubscriptionId = id
-                }
+                    api.subscriptionId = id;
+                    window._eventSubscriptionId = id;
+                };
 
                 api.subscribeToEventStream = function(){
                     //cmLogger.debug('api.subscribeToEventStream');
-
                     if(!api.state.is('event_call_running')){
                         api.state.set('event_call_running');
 
@@ -465,19 +463,16 @@ angular.module('cmCore').provider('cmApi',[
                     } else {
                         return $q.reject('event_call_running');
                     }
-
-                }
+                };
 
                 api.getEvents = function(force){
                     //cmLogger.debug('api.getEvents');
-
                     if(!api.state.is('event_call_running')) {
                         if (!api.subscriptionId) {
-
                             //if no subscriptionId is present, get one and try again later:
                             api.subscribeToEventStream()
                                 .then(function () {
-                                    api.getEvents()
+                                    api.getEvents();
                                 })
 
                         } else {
@@ -490,16 +485,15 @@ angular.module('cmCore').provider('cmApi',[
                             .then(
                                 function (events) {
                                     events.forEach(function (event) {
-                                        cmLogger.debug('Backend event: ' + event.name)
-                                        api.trigger(event.name, event.data, event)
+                                        cmLogger.debug('Backend event: ' + event.name);
+                                        api.trigger(event.name, event.data, event);
                                     })
                                 },
                                 function (response) {
                                     if(typeof response == 'object' && 'subscriptionId' in response){
                                         //cmLogger.debug('cmApi.getEvents() reset invalid subscriptionId.')
-
                                         api.setSubscriptionId(response.subscriptionId);
-                                        api.trigger('subscriptionId:changed')
+                                        api.trigger('subscriptionId:changed');
                                     }
                                 }
                             ).finally(function(){
@@ -507,39 +501,39 @@ angular.module('cmCore').provider('cmApi',[
                             })
                         }
                     }
-                }
+                };
 
                 api.listenToEvents = function(){
                     // Dont listen to Events twice:
-                    api.stopListeningToEvents()
+                    api.stopListeningToEvents();
                     // Start listening:
                     if(!events_disabled && events_interval) {
 //                        api.getEvents(false)
                         api._events_promise = $interval(function () {
-                            api.getEvents(false)
-                        }, events_interval, 0, false)
+                            api.getEvents(false);
+                        }, events_interval, 0, false);
                     }
-                }
+                };
 
                 api.stopListeningToEvents = function(){
-                    if(api._events_promise) $interval.cancel(api._events_promise)
-                }
+                    if(api._events_promise)
+                        $interval.cancel(api._events_promise);
+                };
 
                 if(!events_disabled && events_interval){
                     $rootScope.$on('login', function(){
-                        api.resetSubscriptionId()
-                        api.listenToEvents()
+                        api.resetSubscriptionId();
+                        api.listenToEvents();
                     });
                     $rootScope.$on('identity:switched', function(){
-                        api.resetSubscriptionId()
-                        api.listenToEvents()
-
+                        api.resetSubscriptionId();
+                        api.listenToEvents();
                     });
                     $rootScope.$on('logout', function(){
-                        api.stopListeningToEvents()
-                        api.resetSubscriptionId()
+                        api.stopListeningToEvents();
+                        api.resetSubscriptionId();
                     });
-                }
+                };
 
                 /**
                  * @ngdoc method
@@ -557,9 +551,9 @@ angular.module('cmCore').provider('cmApi',[
                         path: '/event/broadcast' + (identityId ? '/identity/' + identityId : ''),
                         data: data
                     });
-                }
+                };
 
-                return api
+                return api;
             }
         ]
     }

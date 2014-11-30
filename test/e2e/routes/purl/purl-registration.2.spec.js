@@ -137,10 +137,16 @@ describe('Purl Registration: ', function () {
         util.waitForPageLoad('/settings/identity/key/create')
     })
 
-    it("should be in /talks after saving the key", function () {
-        util.waitForElementVisible("[data-qa='page-save-key']", 30000)
-        util.waitAndClickQa("btn-save-key")
-        util.waitForPageLoad('/talks')
+    describe('with increased timeout', function () {
+        var expectedTimeout = util.setKeygenerationTimeout(jasmine);
+        it('wait for key generation and display key', function () {
+            util.waitForElementVisible("[data-qa='page-save-key']",expectedTimeout)
+
+            $("body").click();
+            util.waitAndClickQa("btn-save-key")
+
+            util.waitForPageLoad('/talks')
+        })
     })
 
     it("initial conversation should be present, along with user conversation", function(){

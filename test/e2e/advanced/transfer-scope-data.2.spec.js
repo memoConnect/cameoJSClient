@@ -50,9 +50,18 @@ describe('transfer scope data registration', function () {
 describe('transfer scope data conversation', function () {
     var ptor = util.getPtorInstance()
 
-    var msg = 'oida wird dit hier mitjenommen?',
+    var isIE = false,
+        msg = 'oida wird dit hier mitjenommen?',
         msg2 = 'juhu buhu',
         smallImageJPG = path.resolve(__dirname, '../data/file-upload-image-24KB.jpg')
+
+    it('check if is ie', function(){
+        util.isInternetExplorer().then(function(bool) {
+            isIE = bool;
+            if(isIE)
+                console.log('it\'s get return false because of sendFile on input=file')
+        })
+    })
 
     it('login', function () {
         util.login()
@@ -61,15 +70,18 @@ describe('transfer scope data conversation', function () {
     it('open new conversation and fill out', function () {
         util.get('/conversation/new')
         util.setVal('input-answer', msg)
-        $("[data-qa='btn-file-choose']").sendKeys(smallImageJPG)
+        if(!isIE)
+            $("[data-qa='btn-file-choose']").sendKeys(smallImageJPG)
     })
 
     it('disabled encryption (do the transfer) and check if transfer succeed', function () {
         util.disableEncryption();
         expect(util.getVal('input-answer')).toBe(msg)
-        $$("cm-files-preview .file-image").then(function(elements){
-            expect(elements.length).toEqual(1)
-        })
+        if(!isIE){
+            $$("cm-files-preview .file-image").then(function (elements) {
+                expect(elements.length).toEqual(1)
+            })
+        }
     })
 
     it('send message & create conversation', function () {

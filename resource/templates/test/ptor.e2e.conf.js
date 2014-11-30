@@ -1,28 +1,40 @@
-exports.config = {
-    /* Chrome */
-    //seleniumServerJar: '../test/lib/ptor/selenium-server-standalone-2.44.0.jar',
-    //seleniumPort: null,
-    //chromeDriver: '<%= chromeDriverPath %>',
-    //allScriptsTimeout: 30000,
-    //chromeOnly: true,
-    //
-    //capabilities:{
-    //    'browserName':'chrome',
-    //    'chromeOptions': {
-    //        'prefs': { 'intl.accept_languages': 'en' }
-    //    }
-    //},
+var extend = function(destination,source) {
+    for (var property in source)
+        destination[property] = source[property];
+    return destination;
+}
 
-    /* local IE */
+var useChrome = false,
+    browserConfig = {};
+
+/* Chrome */
+if(useChrome){
+    browserConfig = {
+        seleniumPort: null,
+        chromeDriver: '<%= chromeDriverPath %>',
+        chromeOnly: true,
+        capabilities:{
+            'browserName':'chrome',
+            'chromeOptions': {
+                'prefs': {'intl.accept_languages': 'en'}
+            }
+        }
+    };
+/* Internet Explorer */
+} else {
+    browserConfig = {
+        chromeOnly: false,
+        capabilities: {
+            'browserName': 'internet explorer',
+            'platform': 'ANY',
+            'version': '11'
+        }
+    };
+}
+
+exports.config = extend(browserConfig, {
     seleniumServerJar: '../test/lib/ptor/selenium-server-standalone-2.44.0.jar',
     allScriptsTimeout: 30000,
-    chromeOnly: false,
-
-    capabilities: {
-        'browserName': 'internet explorer',
-        'platform': 'ANY',
-        'version': '11'
-    },
 
     onPrepare: function () {
         require('jasmine-reporters');
@@ -42,4 +54,5 @@ exports.config = {
         realtimeFailure: true,
         silent:true
     }
-};
+});
+

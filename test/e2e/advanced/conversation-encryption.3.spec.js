@@ -307,7 +307,7 @@ describe('Conversation encryption -', function () {
             util.sendFriendRequest(testUser1)
         })
 
-        it(" user 1 accept friend request", function () {
+        it("user 1 accept friend request", function () {
             util.login(testUser1, "password")
             util.acceptFriendRequests()
             util.addExternalContact(externalUser)

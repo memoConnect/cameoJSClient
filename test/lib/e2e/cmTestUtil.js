@@ -7,6 +7,21 @@ var fs = require('fs'),
     self = this,
     ptor
 
+this.getBrowserName = function(){
+    return browser.getCapabilities().then(function(cap) {
+        return cap.caps_.browserName;
+    });
+}
+
+this.isInternetExplorer = function(){
+    return this.getBrowserName().then(function(browserName) {
+        if(browserName.indexOf('explorer') == -1) {
+            return false
+        }
+        return true
+    });
+}
+
 this.setPtorInstance = function (newPtor) {
     ptor = newPtor
     return this
@@ -199,7 +214,7 @@ this.getTestUserNotifications = function (loginName) {
         var callback = arguments[arguments.length - 1]
 
         var xhr = new XMLHttpRequest()
-        xhr.open("GET", apiUrl + "/testUser/" + testUserId, true)
+        xhr.open("GET", apiUrl + "/testUser/" + testUserId+'?ts='+(new Date()).getTime(), true)
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4) {
                 callback(JSON.parse(xhr.responseText))
@@ -234,7 +249,7 @@ this.getEvents = function (token, subscriptionId) {
         var callback = arguments[arguments.length - 1];
 
         var xhr = new XMLHttpRequest();
-        xhr.open("GET", apiUrl + "/eventSubscription/" + subscriptionId, true);
+        xhr.open("GET", apiUrl + "/eventSubscription/" + subscriptionId+'?ts='+(new Date()).getTime(), true);
         xhr.setRequestHeader("Authorization", token);
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4) {
@@ -299,13 +314,14 @@ this.waitForPageLoad = function (expectedRoute) {
 }
 
 this.waitForEventSubscription = function () {
-    ptor.wait(function () {
-        return ptor.executeScript('return window != undefined && window._eventSubscriptionId').then(function (subscriptionId) {
-            if (subscriptionId) {
-                return true
-            }
-        })
-    }, config.routeTimeout, 'waitForEventSubscription timeout reached')
+    ptor.wait(function(){
+        return ptor.executeScript('return window != undefined && window._eventSubscriptionId')
+            .then(function (subscriptionId) {
+                if (subscriptionId) {
+                    return true
+                }
+            })
+    }, config.waitForTimeout, 'waitForEventSubscription timeout reached')
     return this
 }
 
@@ -472,9 +488,19 @@ this.getLocalStorage = function () {
 }
 
 this.setLocalStorage = function (key, value) {
-    ptor.executeScript(function (key, value) {
-        localStorage.setItem(key, value)
+    ptor.executeScript(function(_key_, _value_){
+        localStorage.setItem(_key_, _value_)
     }, key, value)
+
+    ptor.wait(function(){
+        return ptor.executeScript('return localStorage.getItem("'+key+'")')
+            .then(function (_value_) {
+                if (_value_ != undefined) {
+                    return true
+                }
+            })
+    }, config.waitForTimeout, 'setLocalStorage can\'t get out of storage')
+
     return this
 }
 
@@ -549,13 +575,17 @@ this.acceptFriendRequests = function () {
         $$("[data-qa='btn-acceptRequest']").then(function (buttons) {
             var length = buttons.length
             if (length > 0) {
+
                 buttons[0].click()
+
                 ptor.wait(function () {
-                    return $$("[data-qa='btn-acceptRequest']").then(function (buttons2) {
-                        return buttons2.length == length - 1
+                    return $$("[data-qa='btn-acceptRequest']").then(function (_buttons_) {
+                        return _buttons_.length == length - 1
                     })
                 })
-                clickAccept()
+                if (length > 1) {
+                    clickAccept()
+                }
             }
         })
     }
@@ -579,7 +609,6 @@ this.click = function (dataQa) {
     $("[data-qa='" + dataQa + "']").click()
 }
 
-
 this.waitForQa = function(dataQa){
     self.waitForElement("[data-qa='" + dataQa + "']")
 }
@@ -595,11 +624,9 @@ this.waitAndClick = function (selector) {
     $(selector).click()
 }
 
-
 this.setVal = function (dataQa, text) {
     $("[data-qa='" + dataQa + "']").sendKeys(text)
 }
-
 
 this.blurQa = function (dataQa) {
     $("[data-qa='" + dataQa + "']").sendKeys(protractor.Key.TAB)
@@ -620,7 +647,7 @@ this.createEncryptedConversation = function (subject, message) {
     self.setVal("input-subject", subject)
     self.setVal("input-answer", message)
     self.waitAndClickQa("btn-send-answer")
-    self.waitAndClickQa("btn-confirm")
+    self.waitAndClickQa("btn-confirm","cm-modal.active")
     self.waitForPageLoad("/conversation/*")
     self.waitForElements("cm-message", 1)
 }

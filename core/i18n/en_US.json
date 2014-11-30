@@ -49,7 +49,7 @@
           "TIMEOUT" : "Time out - please try again.",
           "VERIFY" : "Linking failed - please try again."
         },
-        "EXPLANATION" : "TODO: To read your encrypted messages completed as {{identity}} on other devices, please link the local cameoKey to all other keys first.",
+        "EXPLANATION" : "@todo: To read your encrypted messages completed as {{identity}} on other devices, please link the local cameoKey to all other keys first.",
         "MODAL" : {
           "SUCCESS" : "You have successfully linked your cameoKeys.",
           "CANCELED" : "Linking was canceled."

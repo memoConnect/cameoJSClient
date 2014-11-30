@@ -47,40 +47,36 @@ describe('Authentication requests -', function () {
     }
 
     var checkKeyTrust = function (keyName, isTrusted) {
-
         ptor.getCurrentUrl().then(function(url){
             if(!url.match("/settings/identity/key/list"))
                 util.get("/settings/identity/key/list")
         })
 
-
         ptor.wait(function(){
-           return   $$("[data-qa='key-list-item']")
-                    .map(function(key){
-                        return  key.getText()
-                                .then(function(text){
-                                    return text
-                                })
-                    })
-                    .then(function(result){      
-                        return  result.some(function(text){
-                                    var result =        (new RegExp(keyName)).test(text)
-                                                    &&  (new RegExp(isTrusted ? "\\btrusted\\b" : "\\buntrusted\\b")).test(text)
-
-                                    return result
-                                })  
-                    })
-        }, 10000, 'for Key "'+keyName+'" to be ' + (isTrusted ? 'trusted' : 'untrusted') + ' .')
+           return $$("[data-qa='key-list-item']")
+            .map(function(key){
+                return key.getText()
+                .then(function(text){
+                    return text
+                })
+            })
+            .then(function(result){
+                return result.some(function(text){
+                    var result = (new RegExp(keyName)).test(text)
+                              && (new RegExp(isTrusted ? "\\btrusted\\b" : "\\buntrusted\\b")).test(text)
+                    return result
+                })
+            })
+        }, config.waitForTimeout, 'for Key "'+keyName+'" to be ' + (isTrusted ? 'trusted' : 'untrusted') + ' .')
 
     }
 
-    var getAuthEvent = function (token, eventSubscription, index, skip) {   
+    var getAuthEvent = function (token, eventSubscription, index, skip) {
         var s = skip || 0
         var events = []
 
         function get(){
             util.getEvents(token, eventSubscription).then(function (res) {
-
                 var e = res.data.events.filter(function (event) {
                     return event.name == "authenticationRequest:start"
                 })
@@ -101,6 +97,10 @@ describe('Authentication requests -', function () {
     }
 
     describe("key1 -", function () {
+        // reset!!
+        it('before all test starting clear Localstorage', function(){
+            util.clearLocalStorage()
+        })
 
         it("create test user, generate key and export localStorage", function () {
             util.createTestUser(testUser1Id)
@@ -121,7 +121,7 @@ describe('Authentication requests -', function () {
             })
         })
 
-        it("get event asubscription", function () {
+        it("get event subscription", function () {
             util.getEventSubscription(token).then(function (res) {
                 eventSubscription = res
             })
@@ -129,12 +129,16 @@ describe('Authentication requests -', function () {
 
         it("delete localstorage", function () {
             util.logout()
-            util.clearLocalStorage()
         })
 
     })
 
     describe("key3 -", function () {
+
+        // reset!!
+        it('before all test starting clear Localstorage', function(){
+            util.clearLocalStorage()
+        })
 
         it("generate key3", function () {
             util.login(testUser1, "password")
@@ -224,7 +228,7 @@ describe('Authentication requests -', function () {
 
         it("enter transaction secret and submit", function () {
             util.setVal("inp-transactSecret", transactionSecret)
-            util.waitAndClick("cm-modal.active [data-qa='btn-acceptRequest']")
+            util.waitAndClick("cm-modal.active [data-qa='btn-acceptIncomingRequest']")
             util.waitForElementDisappear("cm-modal.active [data-qa='inp-transactSecret']")
             ptor.sleep(5000)
         })
@@ -276,7 +280,7 @@ describe('Authentication requests -', function () {
 
         it("enter transaction secret and submit", function () {
             util.setVal("inp-transactSecret", transactionSecret)
-            util.waitAndClickQa('btn-acceptRequest')
+            util.waitAndClick("cm-modal.active [data-qa='btn-acceptIncomingRequest']")
             util.waitForElementDisappear("cm-modal.active [data-qa='inp-transactSecret']")
         })
 
@@ -350,7 +354,7 @@ describe('Authentication requests -', function () {
 
         it("enter transaction secret and submit", function () {
             util.setVal("inp-transactSecret", transactionSecret)
-            util.waitAndClickQa('btn-acceptRequest')
+            util.waitAndClick("cm-modal.active [data-qa='btn-acceptIncomingRequest']")
             util.waitForElementDisappear("cm-modal.active [data-qa='inp-transactSecret']")
         })
 
@@ -412,7 +416,7 @@ describe('Authentication requests -', function () {
 
         it("enter transaction secret and submit", function () {
             util.setVal("inp-transactSecret", transactionSecret)
-            util.waitAndClickQa('btn-acceptRequest')
+            util.waitAndClick("cm-modal.active [data-qa='btn-acceptIncomingRequest']")
             util.waitForElementDisappear("cm-modal.active [data-qa='inp-transactSecret']")
         })
 
@@ -531,8 +535,6 @@ describe('Authentication requests -', function () {
         })
 
         describe("testuser 1 -", function () {
-
-
             it("login as testuser1 and accept friendRequest", function () {
                 util.login(testUser1, "password")
                 util.acceptFriendRequests()
@@ -602,7 +604,7 @@ describe('Authentication requests -', function () {
 
             it("enter transaction secret and submit", function () {
                 util.setVal("inp-transactSecret", transactionSecret2)
-                util.waitAndClick("cm-modal.active [data-qa='btn-acceptRequest']")
+                util.waitAndClick("cm-modal.active [data-qa='btn-acceptIncomingRequest']")
                 util.waitForElementDisappear("cm-modal.active [data-qa='inp-transactSecret']")
             })
 
@@ -615,14 +617,14 @@ describe('Authentication requests -', function () {
                     return $$("[data-qa='trust-confirmed']").then(function(items){
                         return items.length > 0 
                     })
-                }, 2000, '[data-qa="trust-confirmed"]')
+                }, config.waitForTimeout, '[data-qa="trust-confirmed"]')
             })
 
             it("get authentication:start event send to testUser2", function () {
                 getAuthEvent(token2, eventSubscription2, 5, 0)
                 ptor.wait(function () {
                     return authEvents[5] != undefined
-                })
+                }, config.waitForTimeout, 'authentication:start isnt fired')
             })
         })
 
@@ -643,7 +645,7 @@ describe('Authentication requests -', function () {
 
             it("enter transaction secret and submit", function () {
                 util.setVal("inp-transactSecret", transactionSecret2)
-                util.waitAndClick("cm-modal.active [data-qa='btn-acceptRequest']")
+                util.waitAndClick("cm-modal.active [data-qa='btn-acceptIncomingRequest']")
                 util.waitForElementDisappear("cm-modal.active [data-qa='inp-transactSecret']")
             })
 
@@ -657,7 +659,7 @@ describe('Authentication requests -', function () {
                     return $$("[data-qa='trust-confirmed']").then(function(items){
                         return items.length > 0 
                     })
-                }, 2000, '[data-qa="trust-confirmed"]')
+                }, config.waitForTimeout, '[data-qa="trust-confirmed"]')
             })
         })
 
@@ -688,7 +690,7 @@ describe('Authentication requests -', function () {
                     return $$("[data-qa='trust-confirmed']").then(function(items){
                         return items.length > 0 
                     })
-                }, 2000, '[data-qa="trust-confirmed"]')
+                }, config.waitForTimeout, '[data-qa="trust-confirmed"]')
             })
         })
     })
