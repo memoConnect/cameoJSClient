@@ -117,9 +117,15 @@ angular.module('cmContacts').service('cmContactsAdapter',[
         });
 
         cmApi.on('friendRequest:rejected', function(event, data){
-            cmLogger.debug('cmContactsAdapter cmApi.on:friendRequest:rejected');
+            //cmLogger.debug('cmContactsAdapter cmApi.on:friendRequest:rejected');
             adapter.trigger('friendRequest:rejected', data)
         });
+
+        cmApi.on('contact:update', function(event, data){
+            //cmLogger.debug('cmContactsAdapter cmApi.on:contact:update');
+            adapter.trigger('contact:update', data)
+        });
+
 
         cmApi.on('subscriptionId:changed', function(){
             //cmLogger.debug('cmContactsAdapter.on subscriptionId:changed');
