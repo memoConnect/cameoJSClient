@@ -12,7 +12,7 @@ module.exports = function (grunt, options) {
         tasks: {
             karma: {
                 options: {
-                    configFile: 'config/karma-base.conf.js'
+                    configFile: 'test/unit/config/karma.js'
                 },
                 jenkins: {
                     reporters: ['progress', 'junit'],

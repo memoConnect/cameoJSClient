@@ -2,7 +2,7 @@
  * Created by reimerei on 15.04.14.
  */
 var fs = require('fs'),
-    config = require("../../e2e/config-e2e-tests.js"),
+    config = require("../../e2e/config/specs.js"),
     clc = require('cli-color'),
     self = this,
     ptor
@@ -124,7 +124,6 @@ this.logout = function () {
             $("cm-menu .cm-handler").click()
             self.waitForElement(".cm-menu-list")
             $("[data-qa='logout-btn']").click()
-        } else {
         }
     })
     return this
@@ -208,7 +207,6 @@ this.deleteTestUser = function (loginName) {
 this.getTestUserNotifications = function (loginName) {
 
     var testUserId = loginName.split("_")[1]
-
     return ptor.executeAsyncScript(function (testUserId, apiUrl) {
 
         var callback = arguments[arguments.length - 1]
@@ -221,6 +219,7 @@ this.getTestUserNotifications = function (loginName) {
             }
         }
         xhr.send('')
+
     }, testUserId, config.apiUrl)
 }
 
@@ -596,6 +595,13 @@ this.addExternalContact = function (displayName) {
     self.get("/contact/create")
     $("[data-qa='input-displayname']").sendKeys(displayName)
     $("[data-qa='input-phoneNumber']").sendKeys("1233")
+
+    ptor.wait(function(){
+        return self.getVal('input-phoneNumber').then(function(value){
+            return value == '+491233'
+        })
+    })
+
     $("[data-qa='btn-create-contact']").click()
 
     // close notify extern modal
@@ -657,9 +663,9 @@ this.getConversation = function(subject){
     self.waitForPageLoad("/talks")
     self.headerSearchInList(subject)
     ptor.wait(function(){
-            return $$('cm-conversation-tag').then(function(tags){
-                return tags.length == 1
-            })
+        return $$('cm-conversation-tag').then(function(tags){
+            return tags.length == 1
+        })
     })
     .then(function(){
         self.waitAndClick("cm-conversation-tag")

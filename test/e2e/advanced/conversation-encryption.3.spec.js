@@ -15,7 +15,7 @@ describe('Conversation encryption -', function () {
         var messages = []
         var sender = recipients[0]
         var getPurl = false
-        var purl
+        var purlId
         var subject = undefined
 
         // use first recipient to create conversation
@@ -66,7 +66,6 @@ describe('Conversation encryption -', function () {
         })
 
         it("show modal when security settings need to be adjusted", function () {
-
             if (encryptionType == "password" || encryptionType == "passCaptcha" || encryptionType == "none") {
                 $("[data-qa='btn-send-answer']").click()
                 util.waitAndCloseNotify()
@@ -82,7 +81,7 @@ describe('Conversation encryption -', function () {
                     expect($("[data-qa='btn-encryption']").isElementPresent(by.css(".cm-checkbox-right"))).toBe(true)
                     expect(ptor.isElementPresent(by.css("[data-qa='btn-toggle-captcha']"))).toBe(false)
                     expect(ptor.isElementPresent(by.css("cm-captcha"))).toBe(false)
-                    break;
+                break;
 
                 case "password" :
                     expect($("[data-qa='btn-encryption']").isElementPresent(by.css(".cm-checkbox-right"))).toBe(true)
@@ -92,7 +91,7 @@ describe('Conversation encryption -', function () {
                     expect($("[data-qa='input-password']").getAttribute('value')).toBe("")
                     $("[data-qa='input-password']").sendKeys(password)
                     $("[data-qa='input-password']").sendKeys(protractor.Key.TAB)
-                    break;
+                break;
 
                 case "passCaptcha" :
                     expect($("[data-qa='btn-encryption']").isElementPresent(by.css(".cm-checkbox-right"))).toBe(true)
@@ -103,14 +102,14 @@ describe('Conversation encryption -', function () {
                     util.clearInput('input-password')
                     $("[data-qa='input-password']").sendKeys(password)
                     $("[data-qa='input-password']").sendKeys(protractor.Key.TAB)
-                    break;
+                break;
 
                 case "none" :
                     expect($("[data-qa='btn-encryption']").isElementPresent(by.css(".cm-checkbox-right"))).toBe(true)
                     $("[data-qa='btn-encryption']").click()
                     expect(ptor.isElementPresent(by.css("[data-qa='btn-toggle-captcha']"))).toBe(false)
                     expect(ptor.isElementPresent(by.css("cm-captcha"))).toBe(false)
-                    break;
+                break;
 
             }
             $("[data-qa='btn-security-done']").click()
@@ -154,10 +153,14 @@ describe('Conversation encryption -', function () {
             if (getPurl) {
                 ptor.wait(function () {
                     return util.getTestUserNotifications(recipients[0].login).then(function (response) {
-                        purl = response['data'][0]['content'].split("/p/")[1]
-                        return purl != undefined
+                        //console.log('getPurl',response['data'])
+                        if(response['data'].length > 0 && 'content' in response['data'][0])
+                            purlId = response['data'][0]['content'].split("/p/")[1]
+                        return purlId != undefined
                     })
-                }, 5000, 'unable to get conversation id')
+                }, 5000, 'unable to get purlId because of empty testuser notifications. existing eventSubscription?')
+            } else {
+                expect(typeof purlId).toBe('undefined')
             }
         })
 
@@ -170,8 +173,13 @@ describe('Conversation encryption -', function () {
                 it("login recipient", function () {
                     if (recipient.external) {
                         util.logout()
-                        conversationRoute = "/purl/" + purl
+
+                        expect(typeof purlId).not.toBe('undefined')
+
+                        conversationRoute = "/purl/" + purlId
                     } else {
+                        expect(typeof conversationId).not.toBe('undefined')
+
                         util.login(recipient.login, "password")
                         conversationRoute = "/conversation/" + conversationId
                     }
@@ -343,16 +351,14 @@ describe('Conversation encryption -', function () {
         })
 
         describe("asym key transmission -", function () {
-
             var recipients = [
                 {login: testUser1, hasKey: true},
                 {login: testUser2, hasKey: true}
             ]
-
             checkConversation(recipients, 0, 2, "asym")
         })
 
-       describe("password transmission -", function () {
+        describe("password transmission -", function () {
             var recipients = [
                 {login: testUser1, hasKey: true},
                 {login: testUser2, hasKey: true},
@@ -487,7 +493,6 @@ describe('Conversation encryption -', function () {
         })
 
     })
-
 
     describe("delete test users -", function () {
         it("delete test users", function () {

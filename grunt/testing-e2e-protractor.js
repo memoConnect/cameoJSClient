@@ -51,7 +51,7 @@ module.exports = function (grunt, options) {
         tasks: {
             protractor: {
                 options: {
-                    configFile: "config/ptor.e2e.conf.js", // Default config file
+                    configFile: "test/e2e/config/protractor.js", // Default config file
                     keepAlive: false, // If false, the grunt process stops when the test fails.
                     noColor: false, // If true, protractor will not use colors in its output.
                     args: {
@@ -114,7 +114,7 @@ module.exports = function (grunt, options) {
                         }
                     },
                     'files': {
-                        'config/ptor.e2e.conf.js': ['resource/templates/test/ptor.e2e.conf.js']
+                        'test/e2e/config/protractor.js': ['test/e2e/config/tmpl-protractor.js']
                     }
                 },
                 'config-protractor-multi': {
@@ -125,7 +125,7 @@ module.exports = function (grunt, options) {
                         }
                     },
                     'files': {
-                        'config/ptor.e2e.conf.js': ['resource/templates/test/ptor.e2e.conf.js']
+                        'test/e2e/config/protractor.js': ['test/e2e/config/tmpl-protractor.js']
                     }
                 },
                 'config-tests': {
@@ -139,7 +139,7 @@ module.exports = function (grunt, options) {
                         }
                     },
                     'files': {
-                        'test/e2e/config-e2e-tests.js': ['resource/templates/test/config-e2e.js']
+                        'test/e2e/config/specs.js': ['test/e2e/config/tmpl-specs.js']
                     }
                 }
             }

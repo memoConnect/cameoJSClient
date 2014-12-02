@@ -4,16 +4,16 @@ var cmDevice,
     unknown = 'unknown'
 
     describe('cmDevice default none app', function(){
-        beforeEach(function () {
+        beforeEach(function (){
             module('cmPhonegap', function ($provide) {
                 $provide.factory('$device', function () {
                     return 'undefined'
                 })
             })
+            inject(function (_cmDevice_) {
+                cmDevice = _cmDevice_
+            })
         })
-        beforeEach(inject(function (_cmDevice_) {
-            cmDevice = _cmDevice_
-        }))
 
         it('should be defined', function(){
             expect(cmDevice).toBeDefined()
@@ -115,10 +115,6 @@ var cmDevice,
         describe('method isWinPhone',function(){
             it('should be defined',function(){
                 expect(cmDevice.isWinPhone).toBeDefined()
-            })
-
-            it('should return false on default',function(){
-                expect(cmDevice.isWinPhone()).toBeFalsy()
             })
         })
 

@@ -33,7 +33,7 @@ if(useChrome){
 }
 
 exports.config = extend(browserConfig, {
-    seleniumServerJar: '../test/lib/ptor/selenium-server-standalone-2.44.0.jar',
+    seleniumServerJar: '../../../test/lib/ptor/selenium-server-standalone-2.44.0.jar',
     allScriptsTimeout: 30000,
 
     onPrepare: function () {
