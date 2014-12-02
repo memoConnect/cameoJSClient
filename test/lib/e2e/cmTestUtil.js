@@ -594,13 +594,7 @@ this.acceptFriendRequests = function () {
 this.addExternalContact = function (displayName) {
     self.get("/contact/create")
     $("[data-qa='input-displayname']").sendKeys(displayName)
-    $("[data-qa='input-phoneNumber']").sendKeys("1233")
-
-    ptor.wait(function(){
-        return self.getVal('input-phoneNumber').then(function(value){
-            return value == '+491233'
-        })
-    })
+    $("[data-qa='input-phoneNumber']").sendKeys("+491233")
 
     $("[data-qa='btn-create-contact']").click()
 
