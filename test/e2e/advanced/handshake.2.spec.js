@@ -760,7 +760,7 @@ describe('Authentication requests -', function () {
                         conversationId = url.split("/").pop()
                         return conversationId != "new"
                     })
-                }, 5000, 'unable to get conversation id')
+                }, config.waitForTimeout, 'unable to get conversation id')
             })
 
         })
@@ -770,7 +770,6 @@ describe('Authentication requests -', function () {
             it("open conversation", function(){
                 util.login(testUser2, "password")
                 util.get(/conversation/+conversationId)
-                ptor.debugger()
             })
 
             it("read message from user 1", function(){
@@ -790,15 +789,15 @@ describe('Authentication requests -', function () {
                             .then(function(author){
                                 return author == testUser1
                             })
-                }).then(function(){
-                    ptor.debugger()
+                }, config.waitForTimeout)
+                .then(function(){
                     ptor.wait(function(){
                         return message.$("[data-qa = 'signed']").isPresent()
-                    }, null, 'message not signed.')
+                    }, config.waitForTimeout, 'message not signed.')
                     .then(function(){
                         return ptor.wait(function(){
                             return message.$("[data-qa = 'authentic']").isPresent()
-                        }, null, 'signature is not authenic.')
+                        }, config.waitForTimeout, 'signature is not authenic.')
                     })
                     .then(function(){
                         expect(message.$("[data-qa = 'valid']").isPresent()).toBe(false)
