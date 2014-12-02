@@ -2,10 +2,10 @@
     <!-- <cm-loader ng-show = "message.state.is('sending')" cm-color = "ci-color" type = "balls"></cm-loader> -->
     <span class="date"><cm-time-converter  cm-timestamp="message.created" cm-date-format="settings.get('timeFormat')"></cm-time-converter></span>
     <span class="envelope"><i class="fa" ng-class = "{'cm-send' : message.state.is('sending'), 'cm-envelope-closed' : !message.state.is('sending')}"></i></span>
-    <span ng-if = "message.state.is('signed')"          data-qa = "signed">         signed          </span>
-    <span ng-if = "message.state.is('valid')"           data-qa = "valid">          valid           </span>
-    <span ng-if = "!message.state.is('signed')"         data-qa = "unsigned">       unsigned        </span>
-    <span ng-if = "message.state.is('defective')"       data-qa = "defective">      defective       </span>
-    <span ng-if = "message.state.is('authentic')"       data-qa = "authentic">      authentic       </span>
-    <span ng-if = "message.state.is('unverifiable')"    data-qa = "unverifiable">   unverifiable    </span>
+    <span ng-if = "message.state.is('signed')"          data-qa = "signed">                                                                 </span>
+    <span ng-if = "message.state.is('valid')"           data-qa = "valid">                          <i class = "fa cm-write"></i>           </span>
+    <span ng-if = "!message.state.is('signed')"         data-qa = "unsigned">                                                               </span>
+    <span ng-if = "message.state.is('defective')"       data-qa = "defective" class ="cm-alert">    <i class = "fa cm-attention"></i>       </span>
+    <span ng-if = "message.state.is('authentic')"       data-qa = "authentic">                      <i class = "fa cm-contract"></i>        </span>
+    <span ng-if = "message.state.is('unverifiable')"    data-qa = "unverifiable">                                                           </span>
 </div>
