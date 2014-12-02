@@ -153,7 +153,7 @@ angular.module('cmCore')
 
             this.sign = function(data){
                 var promise =   cmCryptoHelper.isAvailable()
-                                ?   cmCryptoHelper.sign(self.getPrivateKey(), data)
+                                ?   cmCryptoHelper.rsaSign(self.getPrivateKey(), data)
                                 :   cmWebworkerFactory.get({
                                         jobName:    'rsa_sign',
                                         params:     {
@@ -195,7 +195,7 @@ angular.module('cmCore')
                 }
 
                 var promise =   cmCryptoHelper.isAvailable()
-                                ?   cmCryptoHelper.verify(self.getPublicKey(), data, signature)
+                                ?   cmCryptoHelper.rsaVerify(self.getPublicKey(), data, signature)
                                 :   cmWebworkerFactory.get({
                                         jobName :   'rsa_verify',
                                         params  :   {
@@ -235,7 +235,7 @@ angular.module('cmCore')
             this.encrypt = function(secret){
 
                 if(cmCryptoHelper.isAvailable())
-                    return cmCryptoHelper.encrypt(self.getPublicKey(), secret)
+                    return cmCryptoHelper.rsaEncrypt(self.getPublicKey(), secret)
 
 
                 return  cmWebworkerFactory.get({
@@ -267,7 +267,7 @@ angular.module('cmCore')
             this.decrypt = function(encrypted_secret){
 
                 if(cmCryptoHelper.isAvailable())
-                    return cmCryptoHelper.decrypt(self.getPrivateKey(), encrypted_secret)
+                    return cmCryptoHelper.rsaDecrypt(self.getPrivateKey(), encrypted_secret)
 
 
                 return  cmWebworkerFactory.get({
