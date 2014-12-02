@@ -228,7 +228,8 @@ angular.module('cmCore')
                             return $q.when(result)
                         })
                         .catch(function(reason){
-                            cmLogger.warn('cmKey: verification failed: '+reason)
+                            cmLogger.warn('cmKey: verification failed: '+reason);
+                            return $q.reject(reason)
                         })
             }
 
