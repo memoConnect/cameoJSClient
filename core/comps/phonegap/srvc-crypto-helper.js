@@ -77,7 +77,7 @@ angular.module('cmPhonegap')
                 var deferred = $q.defer();
 
                 if(this.isAvailable()){
-                    this.plugin.encrypt(
+                    this.plugin.decrypt(
                         function (result) {
                             deferred.resolve(result);
                         }, 
@@ -98,7 +98,7 @@ angular.module('cmPhonegap')
                 var deferred = $q.defer();
 
                 if(this.isAvailable()){
-                    this.plugin.encrypt(
+                    this.plugin.sign(
                         function (result) {
                             deferred.resolve(result);
                         }, 
@@ -119,7 +119,7 @@ angular.module('cmPhonegap')
                 var deferred = $q.defer();
 
                 if(this.isAvailable()){
-                    this.plugin.encrypt(
+                    this.plugin.verify(
                         function (result) {
                             result == 'true'
                             ?   deferred.resolve(result)

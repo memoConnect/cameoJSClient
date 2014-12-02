@@ -103,6 +103,10 @@ describe('Authentication requests -', function () {
 
     describe("key1 -", function () {
 
+        it('should clear Local Storage', function(){
+            util.clearLocalStorage();
+        })
+
         it("create test user, generate key and export localStorage", function () {
             util.createTestUser(testUser1Id)
             util.generateKey(1, keyName1)
