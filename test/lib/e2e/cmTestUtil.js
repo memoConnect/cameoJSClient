@@ -204,6 +204,33 @@ this.deleteTestUser = function (loginName) {
     }, testUserId, config.apiUrl)
 }
 
+this.deleteKeys = function(){
+    this.get("/settings/identity/key/list")
+    ptor.sleep(1000)
+    .then(function(){
+        return  ptor.wait(function(){      
+                    return  $('[data-qa="btn-remove-modal"]').isPresent()
+                            .then(function(bool){
+                                return  bool
+                                        ?   $('[data-qa="btn-remove-modal"]').click()
+                                            .then(function(){
+                                                return self.confirmModal()
+                                            })
+                                            .then(function(){
+                                                return $('[data-qa="btn-remove-modal"]').isPresent()                                             
+                                            })
+                                            .then(function(present){
+                                                return !present
+                                            })
+                                        :   true
+                            })
+                }, 4000)
+    })
+
+
+
+}
+
 this.getTestUserNotifications = function (loginName) {
 
     var testUserId = loginName.split("_")[1]
@@ -382,12 +409,30 @@ this.waitForElementDisappear = function (selector, timeout) {
 
 this.waitForModalOpen = function () {
     this.waitForElement("cm-modal.active")
+    return this
 }
 
 this.waitForModalClose = function () {
     this.waitForElementDisappear("cm-modal.active")
 
     return this
+}
+
+
+this.confirmModal = function(){
+    return  $$('[data-qa="btn-confirm"]')
+            .then(function(buttons){
+                return buttons[0].click()
+            })
+}
+
+this.closeModal = function(){
+    return  ptor.wait(function(){
+                return $("cm-modal.active [data-qa='cm-modal-close-btn']")
+            })
+            .then(function(button){
+                return button.click()
+            })
 }
 
 this.waitForLoader = function (count, parentSelector) {
@@ -444,6 +489,8 @@ this.clearInput = function (qaValue) {
     return this
 }
 
+
+//this is not returning the promise, it maybe better to use this.closeModal(see below)
 this.waitAndCloseNotify = function (check) {
     self.waitForElement("cm-modal.active [data-qa='cm-modal-close-btn']")
 

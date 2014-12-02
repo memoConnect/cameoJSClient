@@ -522,6 +522,20 @@ angular.module('cmCore')
             return  cmCrypt.hashObject(dataObject)
         };
 
+
+        this.signData = function(data){
+
+            return  $q.all(this.loadLocalKeys().map(function(signingKey){                
+                        return  signingKey.sign(data)
+                                .then(function(signature){
+                                    return  $q.when({
+                                                keyId   : signingKey.id,
+                                                content : signature 
+                                            })
+                                })
+                    }))
+        }
+
         this.signPublicKey = function(keyToSign, keyToSignFingerprint, identity){
             // cmLogger.debug('cmUserModel.signPublicKey');
 
