@@ -293,7 +293,12 @@ describe('Conversation encryption -', function () {
     var testUser3 = "testUser23_" + testUserId3
 //    console.log("user3: " + testUser3)
     // external User
-    var externalUser = "external_moep"
+    var externalUser1 = "external_moep1",
+        externalUser2 = "external_moep2",
+        externalUser3 = "external_moep3",
+        externalUser4 = "external_moep4",
+        externalUser5 = "external_moep5";
+
     // password
     var password1 = "1_" + Math.floor(Math.random() * 1000000)
     var password2 = "2_" + Math.floor(Math.random() * 1000000)
@@ -318,7 +323,11 @@ describe('Conversation encryption -', function () {
         it("user 1 accept friend request", function () {
             util.login(testUser1, "password")
             util.acceptFriendRequests()
-            util.addExternalContact(externalUser)
+            util.addExternalContact(externalUser1)
+            util.addExternalContact(externalUser2)
+            util.addExternalContact(externalUser3)
+            util.addExternalContact(externalUser4)
+            util.addExternalContact(externalUser5)
         })
     })
 
@@ -337,7 +346,7 @@ describe('Conversation encryption -', function () {
                 {login: testUser1, hasKey: false, storedPassword: true},
                 {login: testUser2, hasKey: true},
                 {login: testUser3, hasKey: false},
-                {login: externalUser, external: true, hasKey: false}
+                {login: externalUser1, external: true, hasKey: false}
             ]
             checkConversation(recipients, 1, 1, "password", Math.floor(Math.random() * 1000000))
         })
@@ -363,7 +372,7 @@ describe('Conversation encryption -', function () {
                 {login: testUser1, hasKey: true},
                 {login: testUser2, hasKey: true},
                 {login: testUser3, hasKey: false},
-                {login: externalUser, external: true, hasKey: false}
+                {login: externalUser2, external: true, hasKey: false}
             ]
             checkConversation(recipients, 1, 1, "password", password1)
         })
@@ -373,7 +382,7 @@ describe('Conversation encryption -', function () {
                 {login: testUser1, hasKey: true},
                 {login: testUser2, hasKey: true},
                 {login: testUser3, hasKey: false},
-                {login: externalUser, external: true, hasKey: false}
+                {login: externalUser3, external: true, hasKey: false}
             ]
             checkConversation(recipients, 2, 1, "passCaptcha", password2)
         })
@@ -383,7 +392,7 @@ describe('Conversation encryption -', function () {
                 {login: testUser1, hasKey: true},
                 {login: testUser2, hasKey: true},
                 {login: testUser3, hasKey: false},
-                {login: externalUser, external: true, hasKey: false}
+                {login: externalUser4, external: true, hasKey: false}
             ]
             checkConversation(recipients, 3, 0, "none")
         })
@@ -487,7 +496,7 @@ describe('Conversation encryption -', function () {
                 {login: testUser1, hasKey: false, storedPassword: true},
                 {login: testUser2, hasKey: true},
                 {login: testUser3, hasKey: false},
-                {login: externalUser, external: true, hasKey: false}
+                {login: externalUser5, external: true, hasKey: false}
             ]
             checkConversation(recipients, 1, 1, "password", Math.floor(Math.random() * 1000000))
         })

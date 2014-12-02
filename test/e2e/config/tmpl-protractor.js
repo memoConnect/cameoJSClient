@@ -4,7 +4,7 @@ var extend = function(destination,source) {
     return destination;
 }
 
-var useChrome = false,
+var useChrome = true,
     browserConfig = {};
 
 /* Chrome */

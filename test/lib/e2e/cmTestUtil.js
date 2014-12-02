@@ -606,7 +606,7 @@ this.addExternalContact = function (displayName) {
 
     // close notify extern modal
     self.waitForModalOpen()
-    self.click('btn-cancel')
+    self.waitAndClickQa('btn-cancel','cm-modal.active')
 
     self.waitForPageLoad("/contact/list")
 }
