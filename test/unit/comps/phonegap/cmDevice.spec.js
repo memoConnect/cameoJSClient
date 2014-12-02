@@ -198,7 +198,7 @@ var cmDevice,
     describe('cmDevice is app',function(){
 
         var deviceMock = {
-            platform: 'android iphone win win32nt blackberry amazon-fireos msie',
+            platform: 'android iphone blackberry amazon-fireos msie iemobile',
             uuid: '12345',
             name: 'moep',
             version: '1.2.3'
