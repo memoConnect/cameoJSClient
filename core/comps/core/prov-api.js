@@ -220,7 +220,7 @@ angular.module('cmCore').provider('cmApi',[
                          }
 
                          */
-                            body.res =='OK'
+                        body.res =='OK'
                         ? deferred.resolve( config.exp_ok ? body.data[config.exp_ok] : body.data || response)
                         : deferred.reject(  config.exp_ko ? body.data[config.exp_ko] : body.data || response)
 
@@ -237,7 +237,6 @@ angular.module('cmCore').provider('cmApi',[
                 }
 
                 function prepareConfig(config, method, token, twoFactorToken){
-
                     config.url      =   config.url ||
                         (
                             rest_api +      // base url API
@@ -269,8 +268,12 @@ angular.module('cmCore').provider('cmApi',[
                         prepareConfig(config, method, token, twoFactorToken);
 
                         $http(config).then(
-                            function(response){ handleSuccess(response, deferred) },
-                            function(response){ handleError(response, deferred) }
+                            function(response){
+                                handleSuccess(response, deferred)
+                            },
+                            function(response){
+                                handleError(response, deferred)
+                            }
                         );
                     } else {
                         deferred.reject({apiUrlUndefined:true});
@@ -289,7 +292,7 @@ angular.module('cmCore').provider('cmApi',[
                     var no_cache = new Date().getTime();
 
                     // add timestamp to path to disable the caching in ie
-                    if(cmDevice.isWinPhone() || cmDevice.isWinPhone8()) {
+                    if(cmDevice.isIE()) {
                         var leadingSymbol = (config.path.indexOf('?') == -1 ? '?' : '&');
                         config.path += leadingSymbol + 'ts=' + no_cache;
                     }

@@ -118,13 +118,9 @@ var cmDevice,
             })
         })
 
-        describe('method isWinPhone8',function(){
+        describe('method isIE',function(){
             it('should be defined',function(){
-                expect(cmDevice.isWinPhone8).toBeDefined()
-            })
-
-            it('should return false on default',function(){
-                expect(cmDevice.isWinPhone8()).toBeFalsy()
+                expect(cmDevice.isIE).toBeDefined()
             })
         })
 
@@ -202,7 +198,7 @@ var cmDevice,
     describe('cmDevice is app',function(){
 
         var deviceMock = {
-            platform: 'android iphone win win32nt blackberry amazon-fireos',
+            platform: 'android iphone win win32nt blackberry amazon-fireos msie',
             uuid: '12345',
             name: 'moep',
             version: '1.2.3'
@@ -270,9 +266,9 @@ var cmDevice,
             })
         })
 
-        describe('method isWinPhone8',function(){
+        describe('method isIE',function(){
             it('should return true',function(){
-                expect(cmDevice.isWinPhone8()).toBeTruthy()
+                expect(cmDevice.isIE()).toBeTruthy()
             })
         })
 

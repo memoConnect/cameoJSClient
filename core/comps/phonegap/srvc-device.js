@@ -127,16 +127,19 @@ angular.module('cmPhonegap')
                     return true;
                 }
                 return (this.isApp()
-                    && this.getPlatform().indexOf('win') >= 0)
-                    || this.getUserAgent().indexOf('win') >= 0;
+                    && this.getPlatform().indexOf('iemobile') >= 0)
+                    || this.getUserAgent().indexOf('iemobile') >= 0;
             },
-            isWinPhone8: function(){
-                if(this.emulateDevice && this.emulateDeviceType.indexOf('winphone8') >= 0){
-                    return true;
-                }
-                return (this.isApp()
-                    && this.getPlatform().indexOf('win32nt') >= 0)
-                    || this.getUserAgent().indexOf('win32nt') >= 0;
+
+            isIE: function(_version_){
+                // < 10
+                var msie = this.getUserAgent().indexOf('msie '),
+                    ie11 = this.getUserAgent().match(/trident.*rv\:11\./),
+                    version = parseInt(this.getUserAgent().substring(msie + 5, this.getUserAgent().indexOf(".", msie)))
+
+                return (
+                    msie > 0 || !!ie11
+                )
             },
             isBlackBerry: function(){
                 return this.isApp()
