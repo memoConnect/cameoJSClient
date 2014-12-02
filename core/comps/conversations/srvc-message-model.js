@@ -672,7 +672,7 @@ angular.module('cmConversations')
             });
 
 
-            cmUserModel.data.identity.on('update:finished', function(){
+            cmUserModel.on('update:finished', function(){
                 self.authenticity.verify(self.from)
                 .then(this.handleVerificationSuccess,this.handleVerificationFail)
             })
