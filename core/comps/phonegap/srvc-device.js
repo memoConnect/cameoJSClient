@@ -132,14 +132,15 @@ angular.module('cmPhonegap')
             },
 
             isIE: function(_version_){
-                // < 10
-                var msie = this.getUserAgent().indexOf('msie '),
-                    ie11 = this.getUserAgent().match(/trident.*rv\:11\./),
-                    version = parseInt(this.getUserAgent().substring(msie + 5, this.getUserAgent().indexOf(".", msie)))
+                var msie = 'msie '
+                //var version = parseInt(this.getUserAgent().substring(msieIndex + 5, this.getUserAgent().indexOf(".", msieIndex)));
 
                 return (
-                    msie > 0 || !!ie11
-                )
+                    this.isApp() && this.getPlatform().indexOf(msie) >= 0
+                 || this.isApp() && !!this.getPlatform().match(/trident.*rv\:11\./)
+                 || this.getUserAgent().indexOf(msie) >= 0
+                 || !!this.getUserAgent().match(/trident.*rv\:11\./)
+                );
             },
             isBlackBerry: function(){
                 return this.isApp()
