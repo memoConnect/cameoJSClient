@@ -311,6 +311,25 @@ angular.module('cmContacts').service('cmContactsModel',[
             }
         });
 
+        cmContactsAdapter.on('friendRequest:rejected', function(event, data){
+            console.log('friendRequest:rejected', data)
+            console.log('data.to == local identity', data.to == cmUserModel.data.identity.id)
+            console.log('data.from == local identity', data.from == cmUserModel.data.identity.id)
+
+            // Friend request sent by the current user was accepted:
+            //if(data.from == cmUserModel.data.identity.id){
+            //    self.contacts.create(data.contact, true);
+            //}
+
+            // Friend request accepted by the current user (on a different device):
+            //if(data.to == cmUserModel.data.identity.id){
+            //    self.requests.forEach(function(request){
+            //        if(request.identity.id == data.from)
+            //            self.requests.deregister(request)
+            //    });
+            //}
+        });
+
         this.requests.on('register', function(){
             cmNotify.create({label: 'NOTIFICATIONS.TYPES.FRIEND_REQUEST', bell:true});
         });
