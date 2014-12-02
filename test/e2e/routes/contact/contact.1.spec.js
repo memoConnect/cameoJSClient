@@ -94,7 +94,7 @@ describe('Route Contact: ', function () {
             $('cm-footer button').click()
             // close notify extern modal
             util.waitForModalOpen()
-            util.click('btn-cancel')
+            util.waitAndClickQa('btn-cancel','cm-modal.active')
         })
 
         it('search and click to detail',function(){

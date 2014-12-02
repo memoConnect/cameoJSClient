@@ -126,15 +126,21 @@ angular.module('cmPhonegap')
                 if(this.emulateDevice && this.emulateDeviceType.indexOf('winphone') >= 0){
                     return true;
                 }
-                return this.isApp()
-                    && this.getPlatform().indexOf('win') >= 0;
+                return (this.isApp()
+                    && this.getPlatform().indexOf('iemobile') >= 0)
+                    || this.getUserAgent().indexOf('iemobile') >= 0;
             },
-            isWinPhone8: function(){
-                if(this.emulateDevice && this.emulateDeviceType.indexOf('winphone8') >= 0){
-                    return true;
-                }
-                return this.isApp()
-                    && this.getPlatform().indexOf('win32nt') >= 0;
+
+            isIE: function(_version_){
+                var msie = 'msie '
+                //var version = parseInt(this.getUserAgent().substring(msieIndex + 5, this.getUserAgent().indexOf(".", msieIndex)));
+
+                return (
+                    this.isApp() && this.getPlatform().indexOf(msie) >= 0
+                 || this.isApp() && !!this.getPlatform().match(/trident.*rv\:11\./)
+                 || this.getUserAgent().indexOf(msie) >= 0
+                 || !!this.getUserAgent().match(/trident.*rv\:11\./)
+                );
             },
             isBlackBerry: function(){
                 return this.isApp()

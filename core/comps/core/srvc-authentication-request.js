@@ -452,7 +452,7 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
                     cmModal.create({
                         id:             'authentication-request-canceled',
                         type:           'alert',
-                        'cm-close-btn': false,
+                        'cm-close-btn': false
                     },  is3rdParty
                         ?   '{{"IDENTITY.KEYS.TRUST.MODAL.CANCELED"|cmTranslate}}'
                         :   '{{"IDENTITY.KEYS.AUTHENTICATION.MODAL.CANCELED"|cmTranslate}}')

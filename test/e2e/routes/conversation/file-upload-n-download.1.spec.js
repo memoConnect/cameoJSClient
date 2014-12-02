@@ -13,17 +13,19 @@ var config = require("../../config-e2e-tests.js"),
         //{image: largeImageJPG},
         {file: smallFilePDF}
     ],
-    testFilesNum = files.length
+    testFilesNum = files.length,
+    isIE = false
 
 // expect functions
 function testFile(file, extension, index) {
     var selector = '.file'
 
-
-
     chooseFileAndUpload(file, selector, index);
 
     it(getFilename(file) + ' in message displayed', function () {
+        if(isIE)
+            return false
+
         util.waitForProgressbar(10000)
 
         var elements = $$('cm-message cm-message-file')
@@ -38,6 +40,9 @@ function testImage(file, extension, index) {
     chooseFileAndUpload(file, selector, index);
 
     it(getFilename(file) + ' in message displayed', function () {
+        if(isIE)
+            return false
+
         util.waitForProgressbar(10000)
 
         var elements = $$('cm-message cm-message-file')
@@ -52,6 +57,9 @@ function testHTML5(file, extension, index) {
     chooseFileAndUpload(file, selector, index);
 
     it(getFilename(file) + ' in message displayed', function () {
+        if(isIE)
+            return false
+
         util.waitForProgressbar(20000)
 
         var elements = $$('cm-message cm-message-file')
@@ -61,7 +69,10 @@ function testHTML5(file, extension, index) {
 }
 
 function chooseFileAndUpload(file, selector, index) {
-    it(getFilename(file) + ' choose and check preview', function () {
+    it(getFilename(file) + ' choose and check preview', function() {
+        if(isIE)
+            return false
+
         $("[data-qa='btn-file-choose']").sendKeys(file)
 
         util.waitForElements('cm-files-preview ' + selector)
@@ -72,6 +83,9 @@ function chooseFileAndUpload(file, selector, index) {
     })
 
     it(getFilename(file) + ' fill message and send check preview', function () {
+        if(isIE)
+            return false
+
         $("[data-qa='btn-send-answer']").click()
 
         util.waitForElements('cm-message', index+1)
@@ -91,6 +105,14 @@ describe('FileUpload create TestUser', function(){
     var ptor = util.getPtorInstance(),
         testUser
 
+    it('check if is ie', function(){
+        util.isInternetExplorer().then(function(bool) {
+            isIE = bool;
+            if(isIE)
+                console.log('browser is ie, it blocks get return false because of sendFile on input=file doesnt work')
+        })
+    })
+
     it('should create a test user', function(){
         testUser = util.createTestUser(undefined,'file upload')
     })
@@ -99,6 +121,9 @@ describe('FileUpload create TestUser', function(){
     describe('FileUpload unsafe upload: ', function () {
 
         it('login create & new conversation', function () {
+            if(isIE)
+                return false
+
             util.get('/conversation/new')
             util.waitForPageLoad('/conversation/new')
 
@@ -109,11 +134,17 @@ describe('FileUpload create TestUser', function(){
         })
 
         it('click on send message for open modal', function () {
+            if(isIE)
+                return false
+
             $("[data-qa='btn-send-answer']").click()
         })
 
         it('check checkbox and close modal', function () {
-            util.waitAndClickQa('btn-confirm')
+            if(isIE)
+                return false
+
+            util.waitAndClickQa('btn-confirm','cm-modal.active')
         })
 
         // testFile or testImage called for every entry
@@ -139,6 +170,9 @@ describe('FileUpload create TestUser', function(){
     describe('FileDownload: ',function(){
 
         it('login goto conversation where files were uploaded', function () {
+            if(isIE)
+                return false
+
             util.login(testUser, 'password')
             util.waitForPageLoad('/start/keyinfo')
 
@@ -155,6 +189,9 @@ describe('FileUpload create TestUser', function(){
         })
 
         it('see all files ready for download', function(){
+            if(isIE)
+                return false
+
             util.waitForElements('cm-message cm-message-file .file-download',testFilesNum)
             $$('cm-message cm-message-file .file-download').then(function(elements){
                 expect(elements.length).toEqual(testFilesNum)
@@ -162,6 +199,9 @@ describe('FileUpload create TestUser', function(){
         })
 
         it('test download of first file should be an mp3', function(){
+            if(isIE)
+                return false
+
             util.waitForElements('cm-message cm-message-file .file-download',testFilesNum)
             $$('cm-message cm-message-file .file-download').then(function(elements){
                 elements[0].click()
