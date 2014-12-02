@@ -1,4 +1,4 @@
-var config = require("../../config-e2e-tests.js")
+var config = require("../../config/specs.js")
 var util = require("../../../lib/e2e/cmTestUtil.js")
 
 describe('Purl Registration: ', function () {
@@ -36,7 +36,7 @@ describe('Purl Registration: ', function () {
 
         // close notify extern modal
         util.waitForModalOpen()
-        util.click('btn-cancel')
+        util.waitAndClickQa('btn-cancel','cm-modal.active')
 
         util.waitForPageLoad('/contact/list')
     })
@@ -49,7 +49,7 @@ describe('Purl Registration: ', function () {
         // add recipient
         $(".cm-add-button").click()
         util.waitForPageLoad("/conversation/new/recipients")
-        util.searchInList(externalLogin)
+        util.headerSearchInList(externalLogin)
 
         util.waitForElement("[data-qa='contact-display-name']")
         $("[data-qa='btn-select-contact']").click()
@@ -137,10 +137,16 @@ describe('Purl Registration: ', function () {
         util.waitForPageLoad('/settings/identity/key/create')
     })
 
-    it("should be in /talks after saving the key", function () {
-        util.waitForElementVisible("[data-qa='page-save-key']", 30000)
-        util.waitAndClickQa("btn-save-key")
-        util.waitForPageLoad('/talks')
+    describe('with increased timeout', function () {
+        var expectedTimeout = util.setKeygenerationTimeout(jasmine);
+        it('wait for key generation and display key', function () {
+            util.waitForElementVisible("[data-qa='page-save-key']",expectedTimeout)
+
+            $("body").click();
+            util.waitAndClickQa("btn-save-key")
+
+            util.waitForPageLoad('/talks')
+        })
     })
 
     it("initial conversation should be present, along with user conversation", function(){

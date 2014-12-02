@@ -2,10 +2,25 @@
  * Created by reimerei on 15.04.14.
  */
 var fs = require('fs'),
-    config = require("../../e2e/config-e2e-tests.js"),
+    config = require("../../e2e/config/specs.js"),
     clc = require('cli-color'),
     self = this,
     ptor
+
+this.getBrowserName = function(){
+    return browser.getCapabilities().then(function(cap) {
+        return cap.caps_.browserName;
+    });
+}
+
+this.isInternetExplorer = function(){
+    return this.getBrowserName().then(function(browserName) {
+        if(browserName.indexOf('explorer') == -1) {
+            return false
+        }
+        return true
+    });
+}
 
 this.setPtorInstance = function (newPtor) {
     ptor = newPtor
@@ -109,7 +124,6 @@ this.logout = function () {
             $("cm-menu .cm-handler").click()
             self.waitForElement(".cm-menu-list")
             $("[data-qa='logout-btn']").click()
-        } else {
         }
     })
     return this
@@ -220,19 +234,19 @@ this.deleteKeys = function(){
 this.getTestUserNotifications = function (loginName) {
 
     var testUserId = loginName.split("_")[1]
-
     return ptor.executeAsyncScript(function (testUserId, apiUrl) {
 
         var callback = arguments[arguments.length - 1]
 
         var xhr = new XMLHttpRequest()
-        xhr.open("GET", apiUrl + "/testUser/" + testUserId, true)
+        xhr.open("GET", apiUrl + "/testUser/" + testUserId+'?ts='+(new Date()).getTime(), true)
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4) {
                 callback(JSON.parse(xhr.responseText))
             }
         }
         xhr.send('')
+
     }, testUserId, config.apiUrl)
 }
 
@@ -261,7 +275,7 @@ this.getEvents = function (token, subscriptionId) {
         var callback = arguments[arguments.length - 1];
 
         var xhr = new XMLHttpRequest();
-        xhr.open("GET", apiUrl + "/eventSubscription/" + subscriptionId, true);
+        xhr.open("GET", apiUrl + "/eventSubscription/" + subscriptionId+'?ts='+(new Date()).getTime(), true);
         xhr.setRequestHeader("Authorization", token);
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4) {
@@ -326,13 +340,14 @@ this.waitForPageLoad = function (expectedRoute) {
 }
 
 this.waitForEventSubscription = function () {
-    ptor.wait(function () {
-        return ptor.executeScript('return window != undefined && window._eventSubscriptionId').then(function (subscriptionId) {
-            if (subscriptionId) {
-                return true
-            }
-        })
-    }, config.routeTimeout, 'waitForEventSubscription timeout reached')
+    ptor.wait(function(){
+        return ptor.executeScript('return window != undefined && window._eventSubscriptionId')
+            .then(function (subscriptionId) {
+                if (subscriptionId) {
+                    return true
+                }
+            })
+    }, config.waitForTimeout, 'waitForEventSubscription timeout reached')
     return this
 }
 
@@ -493,10 +508,6 @@ this.getFileExtension = function (file) {
 
 this.headerSearchInList = function (searchString) {
     self.waitAndClickQa("btn-header-list-search")
-    this.searchInList(searchString)
-}
-
-this.searchInList = function (searchString) {
     $("[data-qa='inp-list-search']").sendKeys(searchString)
 }
 
@@ -523,9 +534,19 @@ this.getLocalStorage = function () {
 }
 
 this.setLocalStorage = function (key, value) {
-    ptor.executeScript(function (key, value) {
-        localStorage.setItem(key, value)
+    ptor.executeScript(function(_key_, _value_){
+        localStorage.setItem(_key_, _value_)
     }, key, value)
+
+    ptor.wait(function(){
+        return ptor.executeScript('return localStorage.getItem("'+key+'")')
+            .then(function (_value_) {
+                if (_value_ != undefined) {
+                    return true
+                }
+            })
+    }, config.waitForTimeout, 'setLocalStorage can\'t get out of storage')
+
     return this
 }
 
@@ -600,13 +621,17 @@ this.acceptFriendRequests = function () {
         $$("[data-qa='btn-acceptRequest']").then(function (buttons) {
             var length = buttons.length
             if (length > 0) {
+
                 buttons[0].click()
+
                 ptor.wait(function () {
-                    return $$("[data-qa='btn-acceptRequest']").then(function (buttons2) {
-                        return buttons2.length == length - 1
+                    return $$("[data-qa='btn-acceptRequest']").then(function (_buttons_) {
+                        return _buttons_.length == length - 1
                     })
                 })
-                clickAccept()
+                if (length > 1) {
+                    clickAccept()
+                }
             }
         })
     }
@@ -616,12 +641,13 @@ this.acceptFriendRequests = function () {
 this.addExternalContact = function (displayName) {
     self.get("/contact/create")
     $("[data-qa='input-displayname']").sendKeys(displayName)
-    $("[data-qa='input-phoneNumber']").sendKeys("1233")
+    $("[data-qa='input-phoneNumber']").sendKeys("+491233")
+
     $("[data-qa='btn-create-contact']").click()
 
     // close notify extern modal
     self.waitForModalOpen()
-    self.click('btn-cancel')
+    self.waitAndClickQa('btn-cancel','cm-modal.active')
 
     self.waitForPageLoad("/contact/list")
 }
@@ -630,14 +656,14 @@ this.click = function (dataQa) {
     $("[data-qa='" + dataQa + "']").click()
 }
 
-
 this.waitForQa = function(dataQa){
     self.waitForElement("[data-qa='" + dataQa + "']")
 }
 
-this.waitAndClickQa = function (dataQa) {
-    self.waitForElement("[data-qa='" + dataQa + "']")
-    $("[data-qa='" + dataQa + "']").click()
+this.waitAndClickQa = function (dataQa, preSelector) {
+    var preSelector = preSelector ? preSelector+' ' : '';
+    self.waitForElement(preSelector+"[data-qa='" + dataQa + "']")
+    $(preSelector+"[data-qa='" + dataQa + "']").click()
 }
 
 this.waitAndClick = function (selector) {
@@ -645,11 +671,9 @@ this.waitAndClick = function (selector) {
     $(selector).click()
 }
 
-
 this.setVal = function (dataQa, text) {
     $("[data-qa='" + dataQa + "']").sendKeys(text)
 }
-
 
 this.blurQa = function (dataQa) {
     $("[data-qa='" + dataQa + "']").sendKeys(protractor.Key.TAB)
@@ -670,7 +694,7 @@ this.createEncryptedConversation = function (subject, message) {
     self.setVal("input-subject", subject)
     self.setVal("input-answer", message)
     self.waitAndClickQa("btn-send-answer")
-    self.waitAndClickQa("btn-confirm")
+    self.waitAndClickQa("btn-confirm","cm-modal.active")
     self.waitForPageLoad("/conversation/*")
     self.waitForElements("cm-message", 1)
 }
@@ -680,9 +704,9 @@ this.getConversation = function(subject){
     self.waitForPageLoad("/talks")
     self.headerSearchInList(subject)
     ptor.wait(function(){
-            return $$('cm-conversation-tag').then(function(tags){
-                return tags.length == 1
-            })
+        return $$('cm-conversation-tag').then(function(tags){
+            return tags.length == 1
+        })
     })
     .then(function(){
         self.waitAndClick("cm-conversation-tag")
@@ -705,4 +729,16 @@ this.scrollToTop = function(){
 
 this.scrollToBottom = function(){
     $("body").sendKeys(protractor.Key.END)
+}
+
+this.setKeygenerationTimeout = function(jasmine){
+    var expectedTimeout = 180000;
+    beforeEach(function () {
+        jasmine.getEnv().defaultTimeoutInterval = expectedTimeout
+    })
+
+    afterEach(function () {
+        jasmine.getEnv().defaultTimeoutInterval = 30000
+    })
+    return expectedTimeout;
 }

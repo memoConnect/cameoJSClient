@@ -63,19 +63,12 @@ angular.module('cmCore').provider('cmApi',[
 
 
         this.$get = [
-
-            'cmLogger',
-            'cmObject',
-            'cmStateManagement',
-            '$http',
-            '$httpBackend',
-            '$injector',
-            '$q',
-            '$interval',
-            '$cacheFactory',
-            '$rootScope',
-
-            function(cmLogger, cmObject, cmStateManagement, $http, $httpBackend, $injector, $q, $interval, $cacheFactory, $rootScope){
+            'cmLogger', 'cmObject', 'cmStateManagement', 'cmDevice',
+            '$http', '$httpBackend', '$injector', '$q',
+            '$interval', '$cacheFactory', '$rootScope',
+            function(cmLogger, cmObject, cmStateManagement, cmDevice,
+                     $http, $httpBackend, $injector, $q,
+                     $interval, $cacheFactory, $rootScope){
                 /***
                  All api calls require a config object:
 
@@ -93,9 +86,7 @@ angular.module('cmCore').provider('cmApi',[
                  exp_ko: key you expect in response body if your request was granted(see below)
                  exp_ok: key you expect in response body if your request was denied (see below)
 
-
                  Authentication and error handling is dealt with automatically.
-
 
                  example: (!!check tests in cmApi.spec.js!!)
 
@@ -229,7 +220,7 @@ angular.module('cmCore').provider('cmApi',[
                          }
 
                          */
-                            body.res =='OK'
+                        body.res =='OK'
                         ? deferred.resolve( config.exp_ok ? body.data[config.exp_ok] : body.data || response)
                         : deferred.reject(  config.exp_ko ? body.data[config.exp_ko] : body.data || response)
 
@@ -246,7 +237,6 @@ angular.module('cmCore').provider('cmApi',[
                 }
 
                 function prepareConfig(config, method, token, twoFactorToken){
-
                     config.url      =   config.url ||
                         (
                             rest_api +      // base url API
@@ -278,8 +268,12 @@ angular.module('cmCore').provider('cmApi',[
                         prepareConfig(config, method, token, twoFactorToken);
 
                         $http(config).then(
-                            function(response){ handleSuccess(response, deferred) },
-                            function(response){ handleError(response, deferred) }
+                            function(response){
+                                handleSuccess(response, deferred)
+                            },
+                            function(response){
+                                handleError(response, deferred)
+                            }
                         );
                     } else {
                         deferred.reject({apiUrlUndefined:true});
@@ -294,7 +288,19 @@ angular.module('cmCore').provider('cmApi',[
                  * @param {Boolean}         force direct api call not using the callstack
                  */
 
-                api.get		= function(config, force){ return (force || call_stack_disabled) ? api('GET',	 config) : api.stack('GET',    config) }
+                api.get = function(config, force){
+                    var no_cache = new Date().getTime();
+
+                    // add timestamp to path to disable the caching in ie
+                    if(cmDevice.isIE()) {
+                        var leadingSymbol = (config.path.indexOf('?') == -1 ? '?' : '&');
+                        config.path += leadingSymbol + 'ts=' + no_cache;
+                    }
+
+                    return (force || call_stack_disabled)
+                        ? api('GET', config)
+                        : api.stack('GET', config)
+                };
                 api.post	= function(config, force){ return (force || call_stack_disabled) ? api('POST',   config) : api.stack('POST',   config) }
                 api.delete	= function(config, force){ return (force || call_stack_disabled) ? api('DELETE', config) : api.stack('DELETE', config) }
                 api.head	= function(config, force){ return (force || call_stack_disabled) ? api('HEAD',   config) : api.stack('HEAD',   config) }
@@ -424,25 +430,23 @@ angular.module('cmCore').provider('cmApi',[
 
                 //API EVENTS:
 
-                cmObject.addEventHandlingTo(api)
+                cmObject.addEventHandlingTo(api);
                 api.state = new cmStateManagement(['event_call_running']);
-                api.subscriptionId = undefined
+                api.subscriptionId = undefined;
 
                 api.resetSubscriptionId = function(){
                     //cmLogger.debug('api.resetSubscriptionId');
-
-                    api.subscriptionId = undefined
-                    window._eventSubscriptionId = undefined
-                }
+                    api.subscriptionId = undefined;
+                    window._eventSubscriptionId = undefined;
+                };
 
                 api.setSubscriptionId = function(id){
-                    api.subscriptionId = id
-                    window._eventSubscriptionId = id
-                }
+                    api.subscriptionId = id;
+                    window._eventSubscriptionId = id;
+                };
 
                 api.subscribeToEventStream = function(){
                     //cmLogger.debug('api.subscribeToEventStream');
-
                     if(!api.state.is('event_call_running')){
                         api.state.set('event_call_running');
 
@@ -462,19 +466,16 @@ angular.module('cmCore').provider('cmApi',[
                     } else {
                         return $q.reject('event_call_running');
                     }
-
-                }
+                };
 
                 api.getEvents = function(force){
                     //cmLogger.debug('api.getEvents');
-
                     if(!api.state.is('event_call_running')) {
                         if (!api.subscriptionId) {
-
                             //if no subscriptionId is present, get one and try again later:
                             api.subscribeToEventStream()
                                 .then(function () {
-                                    api.getEvents()
+                                    api.getEvents();
                                 })
 
                         } else {
@@ -487,16 +488,15 @@ angular.module('cmCore').provider('cmApi',[
                             .then(
                                 function (events) {
                                     events.forEach(function (event) {
-                                        cmLogger.debug('Backend event: ' + event.name)
-                                        api.trigger(event.name, event.data, event)
+                                        cmLogger.debug('Backend event: ' + event.name);
+                                        api.trigger(event.name, event.data, event);
                                     })
                                 },
                                 function (response) {
                                     if(typeof response == 'object' && 'subscriptionId' in response){
                                         //cmLogger.debug('cmApi.getEvents() reset invalid subscriptionId.')
-
                                         api.setSubscriptionId(response.subscriptionId);
-                                        api.trigger('subscriptionId:changed')
+                                        api.trigger('subscriptionId:changed');
                                     }
                                 }
                             ).finally(function(){
@@ -504,39 +504,39 @@ angular.module('cmCore').provider('cmApi',[
                             })
                         }
                     }
-                }
+                };
 
                 api.listenToEvents = function(){
                     // Dont listen to Events twice:
-                    api.stopListeningToEvents()
+                    api.stopListeningToEvents();
                     // Start listening:
                     if(!events_disabled && events_interval) {
 //                        api.getEvents(false)
                         api._events_promise = $interval(function () {
-                            api.getEvents(false)
-                        }, events_interval, 0, false)
+                            api.getEvents(false);
+                        }, events_interval, 0, false);
                     }
-                }
+                };
 
                 api.stopListeningToEvents = function(){
-                    if(api._events_promise) $interval.cancel(api._events_promise)
-                }
+                    if(api._events_promise)
+                        $interval.cancel(api._events_promise);
+                };
 
                 if(!events_disabled && events_interval){
                     $rootScope.$on('login', function(){
-                        api.resetSubscriptionId()
-                        api.listenToEvents()
+                        api.resetSubscriptionId();
+                        api.listenToEvents();
                     });
                     $rootScope.$on('identity:switched', function(){
-                        api.resetSubscriptionId()
-                        api.listenToEvents()
-
+                        api.resetSubscriptionId();
+                        api.listenToEvents();
                     });
                     $rootScope.$on('logout', function(){
-                        api.stopListeningToEvents()
-                        api.resetSubscriptionId()
+                        api.stopListeningToEvents();
+                        api.resetSubscriptionId();
                     });
-                }
+                };
 
                 /**
                  * @ngdoc method
@@ -554,9 +554,9 @@ angular.module('cmCore').provider('cmApi',[
                         path: '/event/broadcast' + (identityId ? '/identity/' + identityId : ''),
                         data: data
                     });
-                }
+                };
 
-                return api
+                return api;
             }
         ]
     }

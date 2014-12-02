@@ -1,5 +1,18 @@
-cm-emoji-list{display:block;max-height:@cm-unit * 4;overflow-y:auto;font-size:@cm-large-font}
-cm-emoji-list .emoji-wrapper{cursor:pointer;display:inline-block}
+cm-emoji-list{
+  display:block;
+  overflow-y:auto;
+  font-size:@cm-large-font;
+  height:0;
+
+  &.is-visible{
+    height:@cm-unit * 4;
+  }
+
+  .emoji-wrapper{
+    cursor:pointer;
+    display:inline-block;
+  }
+}
 #cm-app {
   .emoji {
     font-size: 2em !important

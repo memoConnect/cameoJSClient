@@ -58,7 +58,7 @@ angular.module('cmPhonegap')
                             ecb: 'window.PushNotificationsCB.onNotification.iOS'
                         }
                     );
-                } else if(cmDevice.isWinPhone8()) {
+                } else if(cmDevice.isWinPhone()) {
                     this.plugin.register(
                         function(result) {
                             self.handler.channel(result);
