@@ -1,24 +1,37 @@
+var testAllSpecs = true,
+    specs = '';
+
+if(testAllSpecs){
+    // all specs
+    specs = 'test/unit/**/*.spec.js';
+} else {
+    specs = 'test/unit/**/cm *.spec.js';
+}
+
 module.exports = function(config) {
+
+    var files = [
+        'test/lib/jquery/*.js',
+        'dist/app/vendor*.js',
+        'test/lib/angular/angular-mocks.js',
+        'dist/app/cameo*.js',
+
+        'dist/app/i18n/*.json',
+        'build/i18n/language-keys.json'
+    ];
+
+    files.push(specs);
+
     config.set({
+
+        // list of files / patterns to load in the browser
+        files: files,
+
         // base path, that will be used to resolve files and exclude
         basePath: '../../../',
 
         // frameworks to use
         frameworks: ['jasmine'],
-
-        // list of files / patterns to load in the browser
-        files: [
-            'test/lib/jquery/*.js',
-            'dist/app/vendor*.js',
-            'test/lib/angular/angular-mocks.js',
-            'dist/app/cameo*.js',
-
-            // all specs
-            'test/unit/**/*.spec.js',
-
-            'dist/app/i18n/*.json',
-            'build/i18n/language-keys.json'
-        ],
 
         preprocessors: {
             'dist/app/i18n/*.json': ['json2js'],
@@ -42,10 +55,10 @@ module.exports = function(config) {
             suite: ''
         },
 
-//        coverageReporter: {
-//            type : 'html',
-//            dir : 'coverage/'
-//        },
+    //        coverageReporter: {
+    //            type : 'html',
+    //            dir : 'coverage/'
+    //        },
 
         // enable / disable colors in the output (reporters and logs)
         colors: true,
@@ -65,5 +78,5 @@ module.exports = function(config) {
         singleRun: true,
 
         browsers: ['Firefox']
-    });
+    })
 };
