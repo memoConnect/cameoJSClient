@@ -1,4 +1,4 @@
-var testAllSpecs = false,
+var testAllSpecs = true,
     specs = '';
 
 if(testAllSpecs){
