@@ -21,7 +21,7 @@
             <li class="{{menu[btn].css}}"
                 ng-repeat="btn in menuKeys"
                 ng-click="goTo(menu[btn], btn)"
-                data-qa="{{menu[btn]['data-qa']}}"
+                data-qa="{{menu[btn]['dataQa']}}"
                 cm-reactive>
                 <i class="fa icon-left" ng-if="menu[btn].icon != undefined" ng-class="menu[btn].icon"></i>
                 <span>
