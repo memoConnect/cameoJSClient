@@ -31,6 +31,12 @@ angular.module('cmUi').directive('cmMenu',[
                 };
 
                 $scope.goTo = function(parentBtn, url, isSub){
+
+                    if(typeof parentBtn.rootScopeCallback == 'string' && typeof $rootScope[parentBtn.rootScopeCallback] == 'function'){
+                        $rootScope[parentBtn.rootScopeCallback]();
+                        return false;
+                    }
+
                     // for extern and performance
                     if('link' in parentBtn){
                         // file:///android_asset/www/index.html#/login
