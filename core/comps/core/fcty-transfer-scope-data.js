@@ -93,6 +93,12 @@ angular.module('cmCore')
                     clearEvent();
                     _reset(options);
                 }
+            },
+            clear: function(data){
+                console.log('cmTransferScopeData.clear', data)
+                if(typeof data == 'object' && typeof data.id != 'undefined' && data.id != ''){
+                    _reset(data)
+                }
             }
         }
     }]

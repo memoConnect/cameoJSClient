@@ -2,9 +2,9 @@
 
 angular.module('cmCore').service('cmRootService', [
     '$rootScope', '$window', '$location',
-    'cmLogger', 'cmJob', 'cmModal', 'cmConfig',
+    'cmLogger', 'cmJob', 'cmModal', 'cmConfig', 'cmTransferScopeData',
     function($rootScope, $window, $location,
-             cmLogger, cmJob, cmModal, cmConfig){
+             cmLogger, cmJob, cmModal, cmConfig, cmTransferScopeData){
 
         $rootScope.goBack = function(){
             $window.history.back();
@@ -43,6 +43,8 @@ angular.module('cmCore').service('cmRootService', [
         $rootScope.createNewConversation = function(){
             $rootScope.pendingConversation = null;
             $rootScope.pendingRecipients = [];
+
+            cmTransferScopeData.clear({id:'conversation-new'});
 
             $rootScope.goTo('/conversation/new');
         };
