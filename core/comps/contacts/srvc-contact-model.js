@@ -8,14 +8,17 @@ angular.module('cmContacts')
     'cmStateManagement',
     'cmUtil',
     'cmLogger',
+    'cmSecurityAspectsContact',
     '$q',
-    function(cmContactsAdapter, cmIdentityFactory, cmObject, cmStateManagement, cmUtil, cmLogger, $q){
+    function(cmContactsAdapter, cmIdentityFactory, cmObject, cmStateManagement, cmUtil, cmLogger, cmSecurityAspectsContact,$q){
         function ContactModel(data){
             var self = this;
 
             cmObject.addEventHandlingTo(this);
 
-            this.state  = new cmStateManagement(['loading']);
+            this.state              = new cmStateManagement(['loading']);
+            this.securityAspects    = new cmSecurityAspectsContact(this);
+
 
             this.id            = undefined;
             this.contactType   = undefined;

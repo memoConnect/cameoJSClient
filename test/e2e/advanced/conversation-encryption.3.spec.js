@@ -1,3 +1,4 @@
+var config = require("../config/specs.js")
 var util = require("../../lib/e2e/cmTestUtil.js")
 
 
@@ -119,16 +120,22 @@ describe('Conversation encryption -', function () {
             it("check security aspects", function () {
                 util.waitForElement('cm-header:not(.ng-hide)')
 
-                $('cm-header:not(.ng-hide)').$('cm-icons.positive').$$("i").then(function (icons) {
-                    if (trust) {
-                        expect(icons.length).toBe(positiveAspects + 1)
-                    } else {
-                        expect(icons.length).toBe(positiveAspects)
-                    }
-                })
-                $('cm-header:not(.ng-hide)').$('cm-icons.negative').$$("i").then(function (icons) {
-                    expect(icons.length).toBe(negativeAspects)
-                })
+                ptor.wait(function(){
+                    var p,n
+                    $('cm-header:not(.ng-hide)').$('cm-icons.positive').$$("i").then(function (icons) {
+                        if (trust) {
+                            p = icons.length == positiveAspects + 1
+                        } else {
+                            p = icons.length == positiveAspects
+                        }
+                    })
+                    $('cm-header:not(.ng-hide)').$('cm-icons.negative').$$("i").then(function (icons) {
+                       n = icons.length == negativeAspects
+                    })
+
+                    return p && n
+                    
+                }, config.waitForTimeout)
             })
         }
 //        checkSecurityAspects(encryptionType == "asym" && sender.hasKey)

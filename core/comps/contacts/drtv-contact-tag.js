@@ -2,9 +2,9 @@
 
 angular.module('cmContacts').directive('cmContactTag',[
     'cmUserModel',
-    '$rootScope', '$routeParams',
+    '$rootScope', '$routeParams', '$timeout',
     function (cmUserModel,
-              $rootScope, $routeParams){
+              $rootScope, $routeParams, $timeout){
         return {
             restrict: 'AE',
             scope: {
@@ -19,26 +19,49 @@ angular.module('cmContacts').directive('cmContactTag',[
                 }
             },
             controller: function($scope){
-                $scope.isTrusted = function(contact){
-                    return      contact.identity
-                            &&  cmUserModel.verifyTrust(contact.identity)
-                };
-                /**
-                 * edit contact
-                 * @param id
-                 */
-                $scope.editContact = function (contact) {
-                    if(contact.contactType != 'pending') {
-                        $rootScope.goTo('/contact/' + contact.id);
+
+                $scope.editContact = function () {
+                    if($scope.contact.contactType != 'pending') {
+                        $rootScope.goTo('/contact/' + $scope.contact.id);
                     }
                 };
-                /**
-                 * delete contact via model
-                 * @param id
-                 */
-                $scope.deleteContact = function (contact) {
-                    cmLogger.debug('deleteContact ' + contact.id);
-                };
+   
+                function refreshScope(){
+                    $scope.contact.securityAspects
+                    .get()
+                    .then(function(){
+                        $scope.noKey                = $scope.contact.securityAspects.applies('NO_KEY')
+                        $scope.hasKey               = $scope.contact.securityAspects.applies('AT_LEAST_ONE_KEY')
+                        $scope.hasAuthenticatedKey  = $scope.contact.securityAspects.applies('AT_LEAST_ONE_AUTHENTICATED_KEY')
+                    })
+                }
+
+                var refresh_scheduled = false
+
+                function scheduleRefresh(){
+                    //prevent more than 1 refresh call per second
+                    if(!refresh_scheduled){
+                        refresh_scheduled = true
+                        $timeout(function(){
+                            $scope.contact.securityAspects.refresh();
+                        }, 1000)
+                        .then(function(){
+                            refresh_scheduled = false
+                        })
+                    } 
+                }
+
+                refreshScope()
+
+                $scope.contact.securityAspects.on('refresh', refreshScope)
+                $scope.contact.identity.on('update:finished', scheduleRefresh)
+                cmUserModel.on('update:finished', scheduleRefresh)
+
+                $scope.$on('$destroy',function(){
+                    $scope.contact.securityAspects.on('refresh', refreshScope)
+                    $scope.contact.identity.off('update:finished', scheduleRefresh)
+                    cmUserModel.off('update:finished', scheduleRefresh)
+                })
             }
         }
     }
