@@ -22,8 +22,8 @@ module.exports = function(grunt, options){
     grunt.registerTask('phonegap:to-build-server', [
         'phonegap:app-prepare',
         'phonegap-build:app-upload-zip',
-        'testflight:iOS',
-        'app:create-download-page'
+        'testflight:ios',
+        'download-page:create'
     ]);
 
     grunt.registerTask('phonegap:create-only-zip', [
@@ -99,8 +99,8 @@ module.exports = function(grunt, options){
                         }
                     },
                     'files': {
-                        'build/phonegap/www/config.xml': ['resource/templates/phonegap/config.xml'],
-                        'build/phonegap/www/config.js': ['resource/templates/phonegap/config.js']
+                        'build/phonegap/www/config.xml': ['resource/phonegap/config.xml'],
+                        'build/phonegap/www/config.js': ['resource/phonegap/config.js']
                     }
                 }
             },

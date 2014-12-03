@@ -17,13 +17,13 @@ module.exports = function(grunt, options){
                     }
                 },
 
-                iOS: {
+                'ios': {
                     options: {
                         file: 'dist/dl/' + options.globalCameoBuildConfig.phonegap.phonegapBaseFilename + '.ipa'
                     }
                 },
 
-                android: {
+                'android': {
                     options: {
                         file: 'dist/dl/' + options.globalCameoBuildConfig.phonegap.phonegapBaseFilename + '.apk'
                     }
