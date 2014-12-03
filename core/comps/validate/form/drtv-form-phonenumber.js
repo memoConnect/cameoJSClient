@@ -2,7 +2,8 @@
 
 angular.module('cmValidate')
 .directive('cmFormPhonenumber', [
-    function () {
+    'cmVerify',
+    function (cmVerify) {
         return {
             restrict: 'E',
             scope: {
@@ -18,7 +19,7 @@ angular.module('cmValidate')
                 $scope.icon = '<i class="fa cm-checkbox-wrong"></i>';
 
                 $scope.doVerification = function(){
-
+                    cmVerify.send('sms');
                 };
             }
         }
