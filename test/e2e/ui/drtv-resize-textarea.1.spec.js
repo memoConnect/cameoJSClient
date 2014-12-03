@@ -59,13 +59,13 @@ describe('Textarea Resize', function () {
 
     it('check input without newlines', function(){
         var textarea = $("[data-qa='input-answer']"),
-            longText = 'mmmmmmmmeeeeeeeeooooooooooppppppppppppppppppppppppppppppppppppppp'
+            longText = 'mmmmmmmmooooooooooeeeeeeeeeepppppppppppppppppppppppppppppppppp'
 
         textarea.sendKeys(longText)
         expect(textarea.getAttribute('value')).toBe(longText)
-        expect(textarea.getAttribute('rows')).then(function(rows){
+        textarea.getAttribute('rows').then(function(rows){
             var r = parseInt(rows)
-            expect(r>= 3 || r <= 4).toBeTruthy()
+            expect(r >= 3 || r <= 4).toBeTruthy()
         })
     })
 })
