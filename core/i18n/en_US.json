@@ -438,9 +438,10 @@
     "LABEL" : {
       "REMEMBER_ME" : "Remember.",
       "SUBMIT" : "Log in",
-      "AUTO" : "Choose auto login"
+      "PASSWORD_RESET": "@todo Password missing?"
     },
     "PLACEHOLDER" : {
+      "AUTOLOGIN" : "Choose auto login",
       "PASSWORD" : "Password",
       "USERNAME" : "Username"
     },
@@ -452,6 +453,18 @@
       "404" : "Login is impossible right now.",
       "PW" : "@:LOGIN.INFO.401",
       "X" : "Something went wrong.<br>Please try again."
+    }
+  },
+  "PASSWORD_RESET": {
+    "HEADING": "@todo Passwortrücksetzung",
+    "INFO": {
+      "TITLE_TEXT": "@todo Hier können Sie anhand von loginName, cameoId, verifizierte Mail oder Telefonnummer Ihr Passwort zurücksetzen lassen. Nach eingabe der Indentifikation wird Ihnen eine Nachricht übermittelt in dem Sie einen Link finden."
+    },
+    "PLACEHOLDER": {
+      "MIXED": "@todo loginName, cameoId, E-Mail oder Telefon"
+    },
+    "LABEL": {
+      "SUBMIT": "@todo Passwort zurücksetzen"
     }
   },
   "SECURITY_ASPECT" : {

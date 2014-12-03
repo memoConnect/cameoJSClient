@@ -239,18 +239,16 @@ angular.module('cameoClient', [
 }])
 // router passing wrong route calls
 .run([
-    '$rootScope', '$location',
+    '$rootScope', '$location', '$route',
     'cmUserModel',
-    function($rootScope, $location,
+    function($rootScope, $location, $route,
              cmUserModel){
         $rootScope.$on('$routeChangeSuccess', function(){
-
-            // expections
-            var path_regex = /^(\/login|\/registration|\/systemcheck|\/terms|\/disclaimer|\/404|\/version|\/purl\/[a-zA-Z0-9]{1,})$/;
-            var path = $location.$$path;
+            var guestVisibility = $route.current.$$route.guests,
+                path = $location.$$path;
             // exists none token then otherwise to login
             if (cmUserModel.isAuth() === false){
-                if (!path_regex.test(path)) {
+                if (!guestVisibility) {
                     $rootScope.goTo('/login',true);
                 }
             // when token exists

@@ -165,6 +165,13 @@ angular.module('cmConfig',[])
                     guests: true,
                     resolvePurl: true
                 },
+                'password-reset': {
+                    templateUrl: 'routes/password-reset/password-reset.html',
+                    routes:[
+                        '/password-reset'
+                    ],
+                    guests: true
+                },
                 'registration': {
                     guests: true
                 },

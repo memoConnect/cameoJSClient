@@ -21,10 +21,11 @@
         "LABEL": {
             "SUBMIT": "Einloggen",
             "REMEMBER_ME": "Merken.",
-            "AUTO": "Automatisches Login auswählen"
+            "PASSWORD_RESET": "@todo Passwort vergessen?"
         },
         "LINK": "Login",
         "PLACEHOLDER": {
+            "AUTOLOGIN": "Automatisches Login auswählen",
             "USERNAME": "Benutzername",
             "PASSWORD": "Passwort"
         },
@@ -34,6 +35,19 @@
             "500": "Server Error. 500",
             "X": "Es ist ein Problem aufgetreten.<br>Versuchen Sie es bitte erneut",
             "PW": "@:LOGIN.INFO.401"
+        }
+    },
+
+    "PASSWORD_RESET": {
+        "HEADING": "@todo Passwortrücksetzung",
+        "INFO": {
+            "TITLE_TEXT": "@todo Hier können Sie anhand von loginName, cameoId, verifizierte Mail oder Telefonnummer Ihr Passwort zurücksetzen lassen. Nach eingabe der Indentifikation wird Ihnen eine Nachricht übermittelt in dem Sie einen Link finden."
+        },
+        "PLACEHOLDER": {
+            "MIXED": "@todo loginName, cameoId, E-Mail oder Telefon"
+        },
+        "LABEL": {
+            "SUBMIT": "@todo Passwort zurücksetzen"
         }
     },
 

@@ -10,7 +10,8 @@
  * @requires localStorage TODO: implement ServiceLocalStorage
  */
 
-angular.module('cmCore').service('cmAuth', [
+angular.module('cmCore')
+    .service('cmAuth', [
     'cmApi','LocalStorageAdapter', 'cmObject', 'cmUtil', 'cmLogger', 'cmCrypt' ,'$rootScope',
     function(cmApi, LocalStorageAdapter, cmObject, cmUtil, cmLogger, cmCrypt, $rootScope){
         var _TOKEN_ = undefined;
@@ -445,6 +446,13 @@ angular.module('cmCore').service('cmAuth', [
              */
             getTwoFactorToken: function(){
                 return localStorage.getItem('twoFactorToken');
+            },
+
+            sendPasswordReset: function(data){
+                return cmApi.post({
+                    path: '/passwordReset',
+                    data: data
+                });
             }
         };
 
@@ -454,7 +462,6 @@ angular.module('cmCore').service('cmAuth', [
 //            cmLogger.debug('cmAuth.on:identity:update')
             auth.trigger('identity:updated', data)
         });
-
 
         cmApi.on('conversation:new-aePassphrase', function(event, data){
            //cmLogger.debug('conversation:new-aePassphrase');

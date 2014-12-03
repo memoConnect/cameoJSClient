@@ -82,6 +82,9 @@ section.default-pages, .cm-demo-default-pages{
     .border-radius-tl;
   }
 }
+.cm-input-ctn{
+  .createReactive(@cm-dark-white);
+}
 // footer
 button[cm-reactive] {
   // grey -> darken
@@ -95,7 +98,7 @@ button[cm-reactive] {
 }
 // lighten! transparent -> lighter
 .theme-b {
-  article[cm-reactive]{
+  article[cm-reactive], h2[cm-reactive]{
     .createInnerReactive(transparent);
   }
 }

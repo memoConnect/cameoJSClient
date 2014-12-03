@@ -5,7 +5,7 @@
 
     <hr class="margin-small">
 
-    <h2 ng-click="toogleLoginInfo()" class="is-selectable">
+    <h2 ng-click="toogleLoginInfo()" cm-reactive>
         <i class="fa cm-key"></i>
         {{'REGISTER.TITLE.HEAD_LOGIN' | cmTranslate}}
         <i class="fa cm-info"></i>
@@ -21,8 +21,8 @@
 
     <article class="content">
         <cm-cameo-id
-                ng-model="formData.cameoId" form-name="registrationForm" cm-tabindex="1"
-                placeholder="REGISTER.PLACEHOLDER.USERNAME">
+            ng-model="formData.cameoId" form-name="registrationForm" cm-tabindex="1"
+            placeholder="REGISTER.PLACEHOLDER.USERNAME">
         </cm-cameo-id>
     </article>
 
@@ -32,7 +32,7 @@
 
     <hr class="margin-small">
 
-    <h2 ng-click="toogleUserInfo()">
+    <h2 ng-click="toogleUserInfo()" cm-reactive>
         <i class="fa cm-person"></i>
         {{'REGISTER.TITLE.HEAD_IDENTITY'|cmTranslate}}
         <i class="fa cm-info"></i>
