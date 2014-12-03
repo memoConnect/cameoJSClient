@@ -30,17 +30,19 @@ angular.module('cmContacts')
                     scope.setColor();
                 };
 
-                cmContactsModel.requests.on('register', function(){
+                function refresh(){
                     scope.show();
-                });
-                cmContactsModel.on('friendRequests:loaded', function(){
-                    scope.show();
-                });
-                cmContactsModel.on('friendRequests:updated', function(){
-                    scope.show();
-                });
+                }
 
-                scope.show();
+                cmContactsModel.requests.on('register deregister', refresh);
+                cmContactsModel.on('friendRequests:loaded', refresh);
+                cmContactsModel.on('friendRequests:updated', refresh);
+
+                scope.$on('$destroy', function(){
+                    cmContactsModel.requests.off('register deregister', refresh);
+                    cmContactsModel.off('friendRequests:loaded', refresh);
+                    cmContactsModel.off('friendRequests:updated', refresh);
+                })
             }
         }
     }

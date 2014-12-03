@@ -1,3 +1,10 @@
+Dev
+# BS 03.12.2014
+* update Event Handling CAM-1422 
+** add "contact:update" in FE
+** add "friendRequest:rejected" in FE
+** add "identity:new" in FE
+
 0.4.4.
 # BS 28.11.2014
 * add Authentication Route to Desktop Modus, CAM-1374
