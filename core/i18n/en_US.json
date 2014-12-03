@@ -170,7 +170,8 @@
     "VALIDATE_PHONE" : {
       "INFO" : {
         "INVALID_PHONE_NUMBER" : "The entered value does not seem to be a vaild mobile number.",
-        "EMPTY" : "You have not entered a valid mobile number"
+        "EMPTY" : "You have not entered a valid mobile number",
+        "ISNT_VERIFIED":  "@todo Diese Telefonnummer ist noch nicht verifiziert. Klicken Sie auf das {{icon}}-Icon um einen neue Verifizierung auszulösen. Sie bekommen nach auslösen der Verifizierung eine SMS mit einem Link."
       },
       "PLACEHOLDER" : "Mobile number",
       "LABEL" : "Mobile number"
@@ -194,7 +195,8 @@
     "VALIDATE_EMAIL" : {
       "INFO" : {
         "INVALID" : "Please enter a correct e-mail.",
-        "EMPTY" : "You have not entered an e-mail."
+        "EMPTY" : "You have not entered an e-mail.",
+        "ISNT_VERIFIED": "@todo Diese E-Mail ist noch nicht verifiziert. Klicken Sie auf das {{icon}}-Icon um einen neue Verifizierung auszulösen. Sie bekommen nach auslösen der Verifizierung eine E-Mail mit einem Link."
       },
       "PLACEHOLDER" : "e-mail",
       "LABEL" : "e-mail"

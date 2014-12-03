@@ -1,16 +1,28 @@
 <article class="content" ng-form="cmInnerForm">
     <label>{{label|cmTranslate}}</label>
-    <div class="cm-input-ctn with-chooser" ng-class="{'cm-input-disabled':disabled,'with-inside-icon':!disabled}">
+    <div class="cm-input-ctn" ng-class="{
+        'cm-input-disabled':disabled,
+        'with-inside-icon':!disabled && !withVerification,
+        'with-inside-icons':!disabled && withVerification
+    }">
         <input
-                type="tel"
-                tabindex="{{tabIndex}}" data-qa="input-phoneNumber"
-                name="phoneNumber" ng-model="ngModel"
-                ng-disabled="disabled" cm-validate-phone cm-adaptive-change="3000" />
+            type="tel"
+            tabindex="{{tabIndex}}" data-qa="input-phoneNumber"
+            name="phoneNumber" ng-model="ngModel"
+            ng-disabled="disabled" cm-validate-phone cm-adaptive-change="3000" />
+        <i class="fa cm-checkbox-{{withVerification.isVerified?'right':'wrong'}}"
+           ng-show="!disabled && withVerification"
+           ng-click="doVerification()" cm-reactive></i>
         <i class="fa cm-write" ng-show="!disabled"></i>
     </div>
     <cm-info-bubble class="cm-alert" ng-show="cmInnerForm.phoneNumber.$dirty && cmInnerForm.phoneNumber.$invalid" data-qa="form-error-phoneNumber-invalid">
         <div ng-show="cmInnerForm.phoneNumber.$invalid">
             <i class="fa cm-info"></i> {{info|cmTranslate}}
         </div>
+    </cm-info-bubble>
+
+    <cm-info-bubble nose-x="85%" ng-show="withVerification && !withVerification.isVerified">
+        <i class="fa cm-attention cm-orange"></i>
+        <span ng-bind-html="'DRTV.VALIDATE_PHONE.INFO.ISNT_VERIFIED'|cmTranslate:{ 'icon':icon}"></span>
     </cm-info-bubble>
 </article>
