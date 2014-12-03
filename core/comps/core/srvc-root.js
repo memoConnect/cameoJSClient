@@ -41,7 +41,7 @@ angular.module('cmCore').service('cmRootService', [
         };
 
         $rootScope.createNewConversation = function(){
-            cmLogger.debug('cmRootService.createNewConversation');
+            //cmLogger.debug('cmRootService.createNewConversation');
 
             $rootScope.pendingConversation = null;
             $rootScope.pendingRecipients = [];
