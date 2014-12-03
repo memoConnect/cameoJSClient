@@ -6,7 +6,7 @@ Dev
 ** add "identity:new" in FE
 
 0.4.4.
-# BS
+# BS 03.12.2014
 * fix CAM-1478, last-message:read will only send, if message is decrypted
 # BS 28.11.2014
 * add Authentication Route to Desktop Modus, CAM-1374
