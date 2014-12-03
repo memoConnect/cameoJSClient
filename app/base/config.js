@@ -254,7 +254,7 @@ angular.module('cmConfig',[])
             },
 
             menu: {
-                'conversation/new': {i18n:'MENU.NEW_TALK', icon:'cm-new-talk', rootScopeCallback:'createNewConversation', dataQa:'menu-btn-new-conversation'},
+                'conversation/new': {i18n:'MENU.NEW_TALK', icon:'cm-new-talk', rootScopeCallback:'createNewConversation', 'data-qa':'menu-btn-new-conversation'},
                 'contact/create': {i18n:'MENU.NEW_CONTACT', icon:'cm-new-contact'},
                 'settings/identity/key/list': {i18n:'MENU.OWN_KEYS', icon:'cm-key'},
                 'contact/request/list': {'data-qa':'btn-menu-contact-requests', i18n:'MENU.REQUESTS', icon:'cm-new-contact-query', css:'cm-menu-notify qa-btn-request-notify', drtv:'cm-friend-request-counter'},
