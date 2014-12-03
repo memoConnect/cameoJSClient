@@ -2,6 +2,8 @@
 
 describe('cmKeyModel', function() {
 
+    window.Worker = undefined;
+
     var cmKey,
         cmCrypt,
         $rootScope,
@@ -252,21 +254,18 @@ describe('cmKeyModel', function() {
             expect(key.verifyKey).toBeDefined()
         })
 
-
-
         it('should provide functions to sign data and verify signatures', function(){
-
             var data =  {
-                            key_1 : 'my value',
-                            key_2 : 'my_second_value'
-                        },
-                pub_key = new cmKey(),
-                signature,
-                failed,
-                success
+                key_1 : 'my value',
+                key_2 : 'my_second_value'
+            },
+            pub_key = new cmKey(),
+            signature,
+            failed,
+            success
 
-                key.setKey(privateKey)
-                pub_key.setKey(publicKey)
+            key.setKey(privateKey)
+            pub_key.setKey(publicKey)
 
             //sign hashed Object
 
@@ -282,7 +281,6 @@ describe('cmKeyModel', function() {
             })
 
             waitsFor(function(){
-
                 return typeof signature != 'undefined'
             }, 'signing to be done.', 2000)
 
@@ -298,7 +296,6 @@ describe('cmKeyModel', function() {
             waitsFor(function(){
                 return failed
             }, 'verification to fail.')
-
 
             runs(function(){
                 success = undefined

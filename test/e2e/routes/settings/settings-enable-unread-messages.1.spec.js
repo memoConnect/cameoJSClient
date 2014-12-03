@@ -1,4 +1,4 @@
-var config = require("../../config-e2e-tests.js")
+var config = require("../../config/specs.js")
 var util = require("../../../lib/e2e/cmTestUtil.js")
 
 describe('Test Settings enableUnreadMessages: ', function(){
@@ -128,7 +128,7 @@ describe('Test Settings enableUnreadMessages: ', function(){
             util.waitAndClickQa('btn-add-recipients')
             util.waitForPageLoad("/conversation/new/recipients")
 
-            util.searchInList(user2)
+            util.headerSearchInList(user2)
             util.waitForElement("[data-qa='contact-display-name']")
 
             util.waitAndClickQa('btn-select-contact')

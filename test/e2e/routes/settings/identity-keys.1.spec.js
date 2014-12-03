@@ -1,4 +1,4 @@
-var config = require("../../config-e2e-tests.js")
+var config = require("../../config/specs.js")
 var util = require("../../../lib/e2e/cmTestUtil.js")
 
 describe('Identity key settings: ', function () {
@@ -55,27 +55,15 @@ describe('Identity key settings: ', function () {
     })
 
     describe('with increased timeout', function () {
-        beforeEach(function () {
-            jasmine.getEnv().defaultTimeoutInterval = 30000
-        })
-
-        afterEach(function () {
-            jasmine.getEnv().defaultTimeoutInterval = 30000
-        })
-
+        var expectedTimeout = util.setKeygenerationTimeout(jasmine);
         it('wait for key generation and display key', function () {
-            util.waitForElementVisible("[data-qa='page-save-key']",30000)
+            util.waitForElementVisible("[data-qa='page-save-key']",expectedTimeout)
             expect($("[data-qa='input-key-name']").getAttribute('value')).toBeTruthy()
             util.clearInput("input-key-name")
             $("[data-qa='input-key-name']").sendKeys(keyName)
 
-            /**
-             * test
-             */
             $("body").click();
-
             util.waitAndClickQa("btn-save-key")
-
         })
     })
 
@@ -119,7 +107,7 @@ describe('Identity key settings: ', function () {
     it('delete key and confirm that it is deleted after logout/login', function () {
 
         util.waitAndClickQa('btn-remove-modal')
-        util.waitAndClickQa('btn-confirm')
+        util.waitAndClickQa('btn-confirm','cm-modal.active')
 
         util.logout()
 

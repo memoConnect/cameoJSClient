@@ -1,4 +1,4 @@
-var config = require("../../config-e2e-tests.js")
+var config = require("../../config/specs.js")
 var util = require("../../../lib/e2e/cmTestUtil.js")
 
 describe('Route Contact: ', function () {
@@ -94,7 +94,7 @@ describe('Route Contact: ', function () {
             $('cm-footer button').click()
             // close notify extern modal
             util.waitForModalOpen()
-            util.click('btn-cancel')
+            util.waitAndClickQa('btn-cancel','cm-modal.active')
         })
 
         it('search and click to detail',function(){

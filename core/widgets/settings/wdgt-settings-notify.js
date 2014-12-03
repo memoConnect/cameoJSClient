@@ -48,6 +48,8 @@ angular.module('cmWidgets')
                     }
                 };
 
+                $scope.enabledBrowserNotification = cmBrowserNotifications.checkBrowser();
+
                 $scope.handleBrowserNotifications = function() {
                     var key = 'browserNotifications';
 

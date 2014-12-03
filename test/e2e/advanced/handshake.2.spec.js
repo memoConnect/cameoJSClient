@@ -1,8 +1,9 @@
-var config = require("../config-e2e-tests.js")
+var config = require("../config/specs.js")
 var util = require("../../lib/e2e/cmTestUtil.js")
 
 describe('Authentication requests -', function () {
-    var ptor = util.getPtorInstance()
+    var ptor = util.getPtorInstance(),
+        date = Date().now
 
     var testUser1Id = Math.random().toString(36).substring(2, 9)
     var testUser1 = "testUser23_" + testUser1Id
@@ -47,40 +48,36 @@ describe('Authentication requests -', function () {
     }
 
     var checkKeyTrust = function (keyName, isTrusted) {
-
         ptor.getCurrentUrl().then(function(url){
             if(!url.match("/settings/identity/key/list"))
                 util.get("/settings/identity/key/list")
         })
 
-
         ptor.wait(function(){
-           return   $$("[data-qa='key-list-item']")
-                    .map(function(key){
-                        return  key.getText()
-                                .then(function(text){
-                                    return text
-                                })
-                    })
-                    .then(function(result){      
-                        return  result.some(function(text){
-                                    var result =        (new RegExp(keyName)).test(text)
-                                                    &&  (new RegExp(isTrusted ? "\\btrusted\\b" : "\\buntrusted\\b")).test(text)
-
-                                    return result
-                                })  
-                    })
-        }, 10000, 'for Key "'+keyName+'" to be ' + (isTrusted ? 'trusted' : 'untrusted') + ' .')
+           return $$("[data-qa='key-list-item']")
+            .map(function(key){
+                return key.getText()
+                .then(function(text){
+                    return text
+                })
+            })
+            .then(function(result){
+                return result.some(function(text){
+                    var result = (new RegExp(keyName)).test(text)
+                              && (new RegExp(isTrusted ? "\\btrusted\\b" : "\\buntrusted\\b")).test(text)
+                    return result
+                })
+            })
+        }, config.waitForTimeout, 'for Key "'+keyName+'" to be ' + (isTrusted ? 'trusted' : 'untrusted') + ' .')
 
     }
 
-    var getAuthEvent = function (token, eventSubscription, index, skip) {   
+    var getAuthEvent = function (token, eventSubscription, index, skip) {
         var s = skip || 0
         var events = []
 
         function get(){
             util.getEvents(token, eventSubscription).then(function (res) {
-
                 var e = res.data.events.filter(function (event) {
                     return event.name == "authenticationRequest:start"
                 })
@@ -101,6 +98,10 @@ describe('Authentication requests -', function () {
     }
 
     describe("key1 -", function () {
+        // reset!!
+        it('before all test starting clear Localstorage', function(){
+            util.clearLocalStorage()
+        })
 
         it('should clear Local Storage', function(){
             util.clearLocalStorage();
@@ -125,7 +126,7 @@ describe('Authentication requests -', function () {
             })
         })
 
-        it("get event asubscription", function () {
+        it("get event subscription", function () {
             util.getEventSubscription(token).then(function (res) {
                 eventSubscription = res
             })
@@ -133,12 +134,16 @@ describe('Authentication requests -', function () {
 
         it("delete localstorage", function () {
             util.logout()
-            util.clearLocalStorage()
         })
 
     })
 
     describe("key3 -", function () {
+
+        // reset!!
+        it('before all test starting clear Localstorage', function(){
+            util.clearLocalStorage()
+        })
 
         it("generate key3", function () {
             util.login(testUser1, "password")
@@ -228,7 +233,7 @@ describe('Authentication requests -', function () {
 
         it("enter transaction secret and submit", function () {
             util.setVal("inp-transactSecret", transactionSecret)
-            util.waitAndClick("cm-modal.active [data-qa='btn-acceptRequest']")
+            util.waitAndClick("cm-modal.active [data-qa='btn-acceptIncomingRequest']")
             util.waitForElementDisappear("cm-modal.active [data-qa='inp-transactSecret']")
             ptor.sleep(5000)
         })
@@ -280,7 +285,7 @@ describe('Authentication requests -', function () {
 
         it("enter transaction secret and submit", function () {
             util.setVal("inp-transactSecret", transactionSecret)
-            util.waitAndClickQa('btn-acceptRequest')
+            util.waitAndClick("cm-modal.active [data-qa='btn-acceptIncomingRequest']")
             util.waitForElementDisappear("cm-modal.active [data-qa='inp-transactSecret']")
         })
 
@@ -354,7 +359,7 @@ describe('Authentication requests -', function () {
 
         it("enter transaction secret and submit", function () {
             util.setVal("inp-transactSecret", transactionSecret)
-            util.waitAndClickQa('btn-acceptRequest')
+            util.waitAndClick("cm-modal.active [data-qa='btn-acceptIncomingRequest']")
             util.waitForElementDisappear("cm-modal.active [data-qa='inp-transactSecret']")
         })
 
@@ -416,7 +421,7 @@ describe('Authentication requests -', function () {
 
         it("enter transaction secret and submit", function () {
             util.setVal("inp-transactSecret", transactionSecret)
-            util.waitAndClickQa('btn-acceptRequest')
+            util.waitAndClick("cm-modal.active [data-qa='btn-acceptIncomingRequest']")
             util.waitForElementDisappear("cm-modal.active [data-qa='inp-transactSecret']")
         })
 
@@ -535,8 +540,6 @@ describe('Authentication requests -', function () {
         })
 
         describe("testuser 1 -", function () {
-
-
             it("login as testuser1 and accept friendRequest", function () {
                 util.login(testUser1, "password")
                 util.acceptFriendRequests()
@@ -606,7 +609,7 @@ describe('Authentication requests -', function () {
 
             it("enter transaction secret and submit", function () {
                 util.setVal("inp-transactSecret", transactionSecret2)
-                util.waitAndClick("cm-modal.active [data-qa='btn-acceptRequest']")
+                util.waitAndClick("cm-modal.active [data-qa='btn-acceptIncomingRequest']")
                 util.waitForElementDisappear("cm-modal.active [data-qa='inp-transactSecret']")
             })
 
@@ -619,14 +622,14 @@ describe('Authentication requests -', function () {
                     return $$("[data-qa='trust-confirmed']").then(function(items){
                         return items.length > 0 
                     })
-                }, 2000, '[data-qa="trust-confirmed"]')
+                }, config.waitForTimeout, '[data-qa="trust-confirmed"]')
             })
 
             it("get authentication:start event send to testUser2", function () {
                 getAuthEvent(token2, eventSubscription2, 5, 0)
                 ptor.wait(function () {
                     return authEvents[5] != undefined
-                })
+                }, config.waitForTimeout, 'authentication:start isnt fired')
             })
         })
 
@@ -647,7 +650,7 @@ describe('Authentication requests -', function () {
 
             it("enter transaction secret and submit", function () {
                 util.setVal("inp-transactSecret", transactionSecret2)
-                util.waitAndClick("cm-modal.active [data-qa='btn-acceptRequest']")
+                util.waitAndClick("cm-modal.active [data-qa='btn-acceptIncomingRequest']")
                 util.waitForElementDisappear("cm-modal.active [data-qa='inp-transactSecret']")
             })
 
@@ -661,7 +664,7 @@ describe('Authentication requests -', function () {
                     return $$("[data-qa='trust-confirmed']").then(function(items){
                         return items.length > 0 
                     })
-                }, 2000, '[data-qa="trust-confirmed"]')
+                }, config.waitForTimeout, '[data-qa="trust-confirmed"]')
             })
         })
 
@@ -692,10 +695,121 @@ describe('Authentication requests -', function () {
                     return $$("[data-qa='trust-confirmed']").then(function(items){
                         return items.length > 0 
                     })
-                }, 2000, '[data-qa="trust-confirmed"]')
+                }, config.waitForTimeout, '[data-qa="trust-confirmed"]')
             })
         })
     })
+
+
+
+
+
+
+
+    /*** check if message signatures are authentic now: ***/
+    describe('Message Signing with trusted keys: ', function(){
+
+        describe("user 2 gets key 4", function(){
+            it("login and import key4", function(){
+                util.login(testUser2, "password")
+                util.generateKey(4, keyName4)
+            })
+        })
+
+        describe("user 1 sends signed messages:", function(){
+
+            it("create new conversation", function () {
+                util.login(testUser1, "password")
+                util.setLocalStorage(localStorage1.key, localStorage1.value)
+                util.get("/conversation/new")
+            })
+
+            it("add subject", function () {
+                subject = "Signatures_" + date + Math.random()
+                $("[data-qa='input-subject']").sendKeys(subject)
+            })
+
+            it("add recipients to conversation", function () {
+
+                util.get("/conversation/new/recipients")
+
+                $("[data-qa='btn-header-list-search']").click()
+
+                $("[data-qa='inp-list-search']").sendKeys(testUser2)
+                util.waitForElement(".contact-list [data-qa='btn-select-contact']")
+                $(".contact-list [data-qa='btn-select-contact']").click()
+                $("[data-qa='btn-list-search-clear']").click()
+
+                $("[data-qa='btn-done']").click()
+                util.expectCurrentUrl('/conversation/new')
+            })
+
+            it("submit message", function () {
+                var text = "moep_message_" + Math.floor(Math.random() * 1000000);
+                $("[data-qa='input-answer']").sendKeys(text)
+
+                $("[data-qa='btn-send-answer']").click()
+                .then(function(){
+                    return util.getConversation(subject)                    
+                })
+
+
+                // get conversation Id
+                ptor.wait(function () {
+                    return ptor.getCurrentUrl().then(function (url) {
+                        conversationId = url.split("/").pop()
+                        return conversationId != "new"
+                    })
+                }, config.waitForTimeout, 'unable to get conversation id')
+            })
+
+        })
+
+        describe("user 2 reads signed message:", function(){
+
+            it("open conversation", function(){
+                util.login(testUser2, "password")
+                util.get(/conversation/+conversationId)
+            })
+
+            it("read message from user 1", function(){
+                
+                var message 
+
+                ptor.wait(function(){
+
+                    return  $('cm-message')
+                            .then(function(el){
+                                message = el
+                                return  el.$("[data-qa='message-author']")
+                            })
+                            .then(function(child){
+                                return child.getText()
+                            })
+                            .then(function(author){
+                                return author == testUser1
+                            })
+                }, config.waitForTimeout)
+                .then(function(){
+                    ptor.wait(function(){
+                        return message.$("[data-qa = 'signed']").isPresent()
+                    }, config.waitForTimeout, 'message not signed.')
+                    .then(function(){
+                        return ptor.wait(function(){
+                            return message.$("[data-qa = 'authentic']").isPresent()
+                        }, config.waitForTimeout, 'signature is not authenic.')
+                    })
+                    .then(function(){
+                        expect(message.$("[data-qa = 'valid']").isPresent()).toBe(false)
+                        expect(message.$("[data-qa = 'unverifiable']").isPresent()).toBe(false)
+                        expect(message.$("[data-qa = 'defective']").isPresent()).toBe(false)
+                    })
+                })
+            })
+        })
+
+    })
+
 
     it("delete test users", function(){
         util.deleteTestUser(testUser1)

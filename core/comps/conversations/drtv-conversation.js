@@ -208,14 +208,23 @@ angular.module('cmConversations')
                                                                 ?   new_message
                                                                     .setText($scope.newMessageText)
                                                                     .addFiles(filesForMessage)
-                                                                    .encrypt(passphrase)
-                                                                    .save()
+                                                                    .getSignatures()
+                                                                    .then(function(){
+                                                                        return new_message.encrypt(passphrase)
+                                                                    })
+                                                                    .then(function(){
+                                                                        return new_message.save()
+                                                                    })
 
                                                                 :   new_message
                                                                     .setText($scope.newMessageText)
                                                                     .addFiles(filesForMessage)
                                                                     .setPublicData(['text','fileIds'])
-                                                                    .save()  
+                                                                    .revealSignatures()
+                                                                    .getSignatures()
+                                                                    .then(function(){
+                                                                        return new_message.save()
+                                                                    })
                                                     })
 
                                         })
