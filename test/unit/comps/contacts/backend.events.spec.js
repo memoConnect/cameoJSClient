@@ -243,4 +243,57 @@ describe('Event chain for Contacts', function(){
             expect(adapter_triggered).toBe(1)
         })
     })
+
+    describe('backend event contact:update', function(){
+        it('should update contact and contact-identity', function(){
+            var mockContact = {
+                id: 'mockContactId',
+                groups: [],
+                contactType: 'pending',
+                identity: {
+                    id: 'mockIdentityId',
+                    displayName: "Moep"
+                }
+            }
+
+            var mockContactUpdatRequest = {
+                id: 'mockContactId',
+                groups: [],
+                contactType: 'internal',
+                identity: {
+                    id: 'mockIdentityId',
+                    displayName: "Tuffi"
+                }
+            }
+
+            cmContactsModel.contacts.create(mockContact)
+
+            expect(cmContactsModel.contacts.length).toBe(1)
+
+            expect(
+                cmContactsModel.contacts.some(function(contact){
+                    return contact.id == mockContact.id
+                })
+            ).toBe(true)
+
+            $httpBackend.expectGET('/account').respond(200, {})
+            // :(
+            $httpBackend.expectGET('/contacts').respond(200, {})
+            $httpBackend.expectGET('/contact-groups').respond(200, {})
+            $httpBackend.expectGET('/friendRequests').respond(200, {})
+
+
+            cmApi.trigger('contact:update', mockContactUpdatRequest)
+
+            $rootScope.$apply()
+
+            expect(cmContactsModel.contacts.length).toBe(1)
+            var testContact = cmContactsModel.contacts.filter(function(contact){
+                return contact.id == mockContact.id
+            })[0]
+
+            expect(testContact.contactType).toBe('internal');
+            expect(testContact.identity.displayName).toBe('Tuffi');
+        })
+    })
 })
