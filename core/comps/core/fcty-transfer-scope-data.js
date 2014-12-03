@@ -23,7 +23,7 @@ angular.module('cmCore')
             if(options.isDone)
                 return false;
 
-            _reset(options);
+            _clear(options);
 
             options.onSet();
 
@@ -58,17 +58,19 @@ angular.module('cmCore')
         }
 
         // reset persist data
-        function _reset(options){
+        function _clear(options){
             delete scopeData[options.id];
             scopeData[options.id] = null;
             delete noneScopeData[options.id];
             noneScopeData[options.id] = null;
         }
 
-        $rootScope.$on('logout', function(){
+        function _reset(){
             scopeData = {};
             noneScopeData = {};
-        });
+        }
+
+        $rootScope.$on('logout', _reset);
 
         return {
             create: function ($scope, _options_) {
@@ -91,14 +93,16 @@ angular.module('cmCore')
                 return function(){
                     options.isDone = true;
                     clearEvent();
-                    _reset(options);
+                    _clear(options);
                 }
             },
             clear: function(data){
-                console.log('cmTransferScopeData.clear', data)
                 if(typeof data == 'object' && typeof data.id != 'undefined' && data.id != ''){
-                    _reset(data)
+                    _clear(data);
                 }
+            },
+            reset: function(){
+                _reset();
             }
         }
     }]
