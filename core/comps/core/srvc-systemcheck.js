@@ -38,7 +38,7 @@ angular.module('cmCore').service('cmSystemCheck', [
                     // without token
                     if(!cmUserModel.isAuth()){
                         var language = data.languageCode.substr(0,2),
-                            lc       = language == 'de' ? 'de_DE' : 'en_US';
+                            lc       = language == 'de' ? 'de' : 'en';
                         cmLanguage.switchLanguage(lc);
                     }
                     // flag handling
