@@ -1048,7 +1048,7 @@ angular.module('cmConversations')
             });
 
             this.messages.on('last-message:read', function(event, message){
-                if(message.from.id != cmUserModel.data.identity.id && self.unreadMessages > 0 && cmSettings.get('enableUnreadMessages')){
+                if(message.from.id != cmUserModel.data.identity.id && (!message.isEncrypted() || message.state.is('decrypted')) && self.unreadMessages > 0 && cmSettings.get('enableUnreadMessages')){
                     self.unreadMessages = 0;
                     cmConversationsAdapter.sendReadStatus(self.id, message.id)
                 }

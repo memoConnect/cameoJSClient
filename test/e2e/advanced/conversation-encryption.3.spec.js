@@ -259,23 +259,11 @@ describe('Conversation encryption -', function () {
                                                     })[0]
 
                                         if(author.hasKey){
-                                            console.log(author)
                                             ptor.wait(function() {
                                                 return element.$("[data-qa = 'signed']").isPresent()
                                             }, 3000, 'Message signature indicator did not show up.')
-
-                                            if(author == recipients[0] && deleteKeysAfterInitialMessage){
-                                                console.log('bogus')
-                                                ptor.wait(function() {
-                                                    return element.$("[data-qa = 'bogus']").isPresent()
-                                                }, 3000, 'Message signature failure indicator did not show up.')
-                                            }
-
                                         }
                                         else{
-                                            //console.log(author)
-                                            //ptor.debugger()
-
                                             ptor.wait(function() {
                                                 return element.$("[data-qa = 'unsigned']").isPresent()
                                             }, 3000, 'Missing message signature indicator did not show up.')

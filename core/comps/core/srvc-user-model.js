@@ -931,7 +931,7 @@ angular.module('cmCore')
             cmBoot.ready.userModel();
         });
 
-        var signOwnKeys_scheduled = false
+        var signOwnKeys_scheduled = false;
 
         cmAuth.on('identity:updated', function(event, data){
             if(typeof data.id != 'undefined' && data.id == self.data.identity.id) {
@@ -946,6 +946,13 @@ angular.module('cmCore')
                         self.signOwnKeys()
                     }, 20000, false)
                 }
+            }
+        });
+
+        cmAuth.on('identity:new', function(event, data){
+            if(typeof data.id != 'undefined' && data.id != self.data.identity.id) {
+                var tmpIdentity = cmIdentityFactory.clear(data).create(data);
+                self.data.identities.push(tmpIdentity);
             }
         });
 
