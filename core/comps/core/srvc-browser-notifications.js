@@ -128,13 +128,9 @@ angular.module('cmCore').service('cmBrowserNotifications', [
                     notification.onclick = callbackOnClick;
                 }
 
-                /**
-                 * @TODO
-                 * TTL in settings
-                 */
                 $timeout(function(){
                     close(notification);
-                }, 3000)
+                }, cmConfig.browserNotificationTimeout)
 
            } else if(cmSettings.get('browserNotifications')) {
                 this.askPermission(notify);

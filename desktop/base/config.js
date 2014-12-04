@@ -18,8 +18,10 @@ angular.module('cmConfig',[])
             WebworkerDefaultLimitApp: 2,
             WebworkerDefaultLimitDesktop: 2,
 
+            browserNotificationTimeout: 5000,
+
             token: null,
-            supportedLanguages: ['de_DE', 'en_US'],
+            supportedLanguages: ['de', 'en'],
             pathToLanguages: 'i18n',
             cacheLangFiles: false,
             errorOnTodoInI18n: ('<%= errorOnTodoInI18n %>' == 'true'),

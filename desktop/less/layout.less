@@ -10,6 +10,12 @@
   box-shadow: 0px 0px 0.5rem 0px @cm-black;
 }
 
+cm-footer {
+  position: absolute !important;
+  bottom:0;
+  .w100;
+}
+
 cm-column{
   .pos-rel;
   .dib;
@@ -32,13 +38,10 @@ cm-column{
     .pos-fxd;
     left:0;
     top:@cm-header-height;
-    bottom:@cm-footer-height;
+    bottom:0;
 
     &.without-header{
       top:0;
-    }
-    &.without-footer{
-      bottom:0;
     }
   }
 
@@ -47,9 +50,6 @@ cm-column{
     width:@cm-column-first-size;
     z-index:1;
 
-    cm-footer {
-      width:@cm-column-first-size;
-    }
     cm-loader.spinner.fullscreen{
       width:@cm-column-first-size;
     }
@@ -59,10 +59,6 @@ cm-column{
     left:@cm-column-first-size;
     z-index:2;
 
-    cm-footer {
-      width:@cm-column-second-size;
-      left:@cm-column-first-size;
-    }
     cm-loader.spinner.fullscreen{
       width:@cm-column-second-size;
       left:@cm-column-first-size;
@@ -73,10 +69,6 @@ cm-column{
     left:@cm-column-first-size + @cm-column-second-size;
     z-index:3;
 
-    cm-footer {
-      width:@cm-column-third-size;
-      left:@cm-column-first-size + @cm-column-second-size;
-    }
     cm-loader.spinner.fullscreen{
       width:@cm-column-second-size;
       left:@cm-column-first-size + @cm-column-second-size;
@@ -84,30 +76,18 @@ cm-column{
   }
   // all same columns 33 33 34 %
   &.equal-cols {
-    cm-footer{
-      width:@cm-column-equal-size;
-    }
     cm-loader.spinner.fullscreen{
       width:@cm-column-equal-size;
     }
     cm-column{
       width:@cm-column-equal-size;
-      cm-footer {
-        left: 0;
-      }
     }
     cm-column + cm-column{
       left: @cm-column-equal-size;
-      cm-footer {
-        left: @cm-column-equal-size;
-      }
     }
     cm-column + cm-column + cm-column{
       left: @cm-column-equal-size * 2;
       width: @cm-column-equal-size + 1;
-      cm-footer {
-        left: @cm-column-equal-size * 2;
-      }
     }
   }
 }
