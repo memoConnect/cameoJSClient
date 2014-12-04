@@ -26,5 +26,9 @@
       }
     }
   },
-  "appIcon": "gfx/icon_128x128.png"
+  "appIcon": "gfx/icon_128x128.png",
+  "certificates": {
+    "*.cameo.io": "97:93:A7:DB:BE:1E:34:F6:CB:0D:CA:62:5E:DF:D8:92:87:95:5E:AD",
+    "www.cameonet.de": "41:53:8F:D8:23:98:5B:48:F7:0D:C3:DD:89:DD:CE:8C:00:9D:85:D5"
+  }
 }

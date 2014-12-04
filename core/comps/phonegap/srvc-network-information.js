@@ -9,6 +9,7 @@ angular.module('cmPhonegap')
     function (cmPhonegap, cmUtil, cmLogger,
               $navigator, $document, $phonegapCameoConfig) {
         var self = {
+            plugin: null,
             state: '',
 
             init: function(){
@@ -23,12 +24,14 @@ angular.module('cmPhonegap')
                         return false;
                     }
 
+                    self.plugin = $navigator.connection;
+
                     self.checkConnection();
                 })
             },
 
             checkConnection: function(){
-                var networkState = $navigator.connection.type;
+                var networkState = this.plugin.type;
 
                 var states = {};
                 states[Connection.UNKNOWN] = 'Unknown connection';
