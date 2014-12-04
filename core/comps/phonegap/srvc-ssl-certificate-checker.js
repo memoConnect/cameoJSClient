@@ -4,13 +4,17 @@
 
 angular.module('cmPhonegap')
 .service('cmSslCertificateChecker', [
+    'cmPhonegap', 'cmConfig',
     '$rootScope', '$window',
-    function ($rootScope, $window) {
+    function (cmPhonegap, cmConfig,
+              $rootScope, $window) {
 
         var self = {
             plugin: null,
 
             init: function(){
+
+                console.log(cmConfig.static)
 
                 cmPhonegap.isReady(function(){
                     if(!('plugins' in $window)
@@ -26,9 +30,6 @@ angular.module('cmPhonegap')
             },
 
             control: function(){
-
-                var server = "https://build.phonegap.com";
-                var fingerprint = "29 96 0F D5 FE 78 AA EF F4 36 CC 51 79 E4 8C 3C C7 B0 B7 8E"; // valid until sep 2014
 
                 self.plugin.check(
                     self.handler.success,

@@ -230,7 +230,7 @@ angular.module('cmConfig',[])
                 }
             },
 
-            appIcon: '<%= appIcon %>',
+            static: JSON.parse('<%= static %>'),
 
             autoLoginData: {
                 'Dumpuser local': {

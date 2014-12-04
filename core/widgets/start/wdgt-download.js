@@ -7,7 +7,7 @@ angular.module('cmWidgets').directive('cmWidgetDownload',
             restrict: 'E',
             templateUrl: 'widgets/start/wdgt-download.html',
             controller: function ($scope) {
-                $scope.appLinks = $filter('appStoreLink')(cmConfig.appLinks);
+                $scope.appLinks = $filter('appStoreLink')(cmConfig.static.appLinks);
 
                 $scope.goToWelcome = function(){
                     $scope.goTo('/start/welcome');

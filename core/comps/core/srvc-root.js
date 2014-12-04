@@ -87,7 +87,7 @@ angular.module('cmCore').service('cmRootService', [
         };
 
         $rootScope.goToApp = function(params){
-            window.location = cmConfig.appProtocol + '://?'+params;
+            window.location = cmConfig.static.appProtocol + '://?'+params;
         };
 
         $rootScope.openExternalLink = function(url){

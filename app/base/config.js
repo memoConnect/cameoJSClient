@@ -238,9 +238,7 @@ angular.module('cmConfig',[])
                 }
             },
 
-            appLinks: JSON.parse('<%= appLinks %>'),
-            appProtocol: '<%= appProtocol %>',
-            appIcon: '<%= appIcon %>',
+            static: JSON.parse('<%= static %>'),
 
             autoLoginData: {
                 'Dumpuser local': {

@@ -117,7 +117,7 @@ angular.module('cmCore').service('cmBrowserNotifications', [
 
                 var options = {
                     body: notify.body,
-                    icon: $window.location.origin + $window.location.pathname + cmConfig.appIcon
+                    icon: $window.location.origin + $window.location.pathname + cmConfig.static.appIcon
                 };
 
                 var notification = new Notification(title, options);
