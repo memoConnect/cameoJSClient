@@ -3,23 +3,21 @@
 angular.module('cmWidgets').directive('cmWidgetRegistration', [
     'cmAuth', 'cmUserModel', 'cmUtil', 'cmLogger', 'cmTransferScopeData',
     'cmNotify', 'cmSystemCheck', 'cmLoader', 'cmDevice',
-    '$rootScope', '$location', '$q', '$document', 
+    '$rootScope', '$location', '$q',
     function (cmAuth, cmUserModel, cmUtil, cmLogger, cmTransferScopeData,
               cmNotify, cmSystemCheck, cmLoader, cmDevice,
-              $rootScope, $location, $q, $document) {
+              $rootScope, $location, $q) {
         return {
             restrict: 'AE',
             scope: true,
             templateUrl: 'widgets/registration/wdgt-registration.html',
 
             controller: function ($scope) {
-
                 cmSystemCheck.run(true);
 
                 var loader = new cmLoader($scope);
 
                 $scope.showLoginInfo = false;
-                $scope.showUserInfo = false;
 
                 $scope.toogleLoginInfo = function(){
                     if($scope.showLoginInfo){
@@ -29,20 +27,9 @@ angular.module('cmWidgets').directive('cmWidgetRegistration', [
                     }
                 };
 
-                $scope.toogleUserInfo = function(){
-                    if($scope.showUserInfo){
-                        $scope.showUserInfo = false;
-                    } else {
-                        $scope.showUserInfo = true;
-                    }
-                };
-
                 $scope.formData = {
                     cameoId: '',
-                    password: '',
-                    email: '',
-                    phone: '',
-                    displayName: ''
+                    password: ''
                 };
 
                 $scope.handleGuest = false;
@@ -53,9 +40,6 @@ angular.module('cmWidgets').directive('cmWidgetRegistration', [
                 $scope.acceptTerms = function () {
                     $scope.formData.agb = !$scope.formData.agb ? true : false;
                 };
-
-
-
 
                 /**
                  * validate Registration Form
@@ -68,9 +52,6 @@ angular.module('cmWidgets').directive('cmWidgetRegistration', [
                     var data = {
                         loginName: null,
                         password: null,
-                        email: null,
-                        phone: null,
-                        displayName: null,
                         reservationSecret: null
                     };
 
@@ -94,31 +75,8 @@ angular.module('cmWidgets').directive('cmWidgetRegistration', [
                         data.password = $scope.formData.password;
                     }
 
-                    // check email
-                    if ($scope.registrationForm.email.$valid == false) {
-                    } else {
-                        if ($scope.registrationForm.email.$viewValue != '') {
-                            data.email = $scope.registrationForm.email.$viewValue;
-                        }
-                    }
-
-                    // check phone
-                    if ($scope.registrationForm.phone.$valid == false) {
-                    } else {
-                        if ($scope.registrationForm.phone.$viewValue != '') {
-                            // 'phoneNumber' is for BE call
-                            data.phoneNumber = $scope.registrationForm.phone.$viewValue;
-                        }
-                    }
-
-                    // check name
-                    if ($scope.registrationForm.displayName.$viewValue != '') {
-                        data.displayName = $scope.registrationForm.displayName.$viewValue;
-                    }
-
                     // check agb
                     if ($scope.registrationForm.agb.$valid == false) {
-                        $scope.registrationForm.phone.dirty = true;
                         $scope.registrationForm.agb.$invalid = true;
                     }
 
@@ -157,7 +115,7 @@ angular.module('cmWidgets').directive('cmWidgetRegistration', [
                                 cmUserModel.doLogin($scope.formData.cameoId, $scope.formData.password, accountData).then(
                                     function() {
                                         if(cmDevice.isDesktop('cmWidgetRegistration') || cmDevice.isApp())
-                                            $rootScope.goto("/start/welcome");
+                                            $rootScope.goto("/setup/account");
                                         else
                                             $rootScope.goto("/start/download");
                                     },
