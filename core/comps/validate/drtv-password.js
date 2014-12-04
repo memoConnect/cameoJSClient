@@ -27,10 +27,7 @@ angular.module('cmValidate').directive('cmPassword', [
             },
 
             controller: function($scope, $element, $attrs){
-
                 $scope.required = ('cmDisableRequired' in $attrs) ? false : true;
-
-                $scope.withStars = ('cmWithoutStars' in $attrs) ? false : true;
 
                 $scope.nextTabIndex = parseInt($scope.tabindex) + 1;
 

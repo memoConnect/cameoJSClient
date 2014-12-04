@@ -21,6 +21,11 @@ angular.module('cmValidate').service('cmVerify',[
                     path: '/verify',
                     data: data
                 });
+            },
+            confirm: function(secret){
+                return cmApi.get({
+                    path: '/verify/'+secret
+                });
             }
         };
 
