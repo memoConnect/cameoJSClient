@@ -158,8 +158,8 @@ angular.module('cmSecurityAspects')
                                     return  $q.when(aspect.check(self.target))
                                             .then(function(result){
                                                 result === true
-                                                    ?   additional_aspects.push(aspect)
-                                                    :   failed_aspects.push(aspect)
+                                                ?   additional_aspects.push(aspect)
+                                                :   failed_aspects.push(aspect)
                                             })
                                             .finally(function(){
                                                 return $q.when()

@@ -25,33 +25,34 @@ angular.module('cmSecurityAspects').directive('cmSecurityIndicator',[
                         $scope.conversation.securityAspects
                         .get()
                         .then(function(){
-                            $scope.positive = $scope.conversation.securityAspects.getPositiveAspects().reduce(function(sum, aspect){ return sum+aspect.value } ,0);
-                            $scope.negative = $scope.conversation.securityAspects.getNegativeAspects().reduce(function(sum, aspect){ return sum-aspect.value } ,0);
-                            $scope.missing_aspects = false;
-                            $scope.checking = false;
+                            $scope.positive         = $scope.conversation.securityAspects.getPositiveAspects().reduce(function(sum, aspect){ return sum+aspect.value } ,0);
+                            $scope.negative         = $scope.conversation.securityAspects.getNegativeAspects().reduce(function(sum, aspect){ return sum-aspect.value } ,0);
+                            $scope.missing_aspects  = false;
+                            $scope.checking         = false;
+                            $scope.leading_icon     = ($scope.positive >= $scope.negative) ? 'cm-lock' : 'cm-unlock';
                         })
                     } else {
-                        $scope.missing_aspects = true;
-                        $scope.checking = false;
+                        $scope.missing_aspects  = true;
+                        $scope.checking         = false;
                     }
 
                     //console.log('$scope.conversation.recipients', $scope.conversation.recipients.length)
                     //console.log('aspects.length', $scope.conversation.securityAspects.aspects.length)
                     //console.log('aspects', $scope.positive, $scope.negative)
 
-                    $scope.leading_icon = ($scope.positive >= $scope.negative)?'cm-lock':'cm-unlock';
-                      
                 }
 
                 var refresh_scheduled = false
 
                 function schedule_refresh(){
+                    $scope.checking = true
+
                     //prevent more than 1 refresh call per second
                     if(!refresh_scheduled){
                         refresh_scheduled = true
                         $timeout(function(){
                             $scope.conversation.securityAspects.refresh();
-                        }, 1000)
+                        }, 400)
                         .then(function(){
                             refresh_scheduled = false
                         })
@@ -59,7 +60,7 @@ angular.module('cmSecurityAspects').directive('cmSecurityIndicator',[
                 }
 
                 if($scope.conversation){
-                    refreshScope() //refreshScope()?
+                    refreshScope() //refreshScope()
 
 
                     $scope.conversation.securityAspects.on('refresh', refreshScope);

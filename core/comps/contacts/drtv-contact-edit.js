@@ -13,10 +13,10 @@ angular.module('cmContacts')
 .directive('cmContactEdit', [
     'cmIdentityFactory', 'cmUtil', 'cmNotify', 'cmUserModel',
     'cmContactsModel', 'cmLogger', 'cmLoader', 
-    '$rootScope', '$q',
+    '$rootScope', '$q', '$timeout',
     function(cmIdentityFactory, cmUtil, cmNotify, cmUserModel,
              cmContactsModel, cmLogger, cmLoader,
-             $rootScope, $q){
+             $rootScope, $q, $timeout){
 
         return {
             restrict: 'E',
@@ -76,6 +76,60 @@ angular.module('cmContacts')
                 });
 
                 reset();
+
+
+
+                //security aspects for contacts (maybe this would fit into its own directive):
+                
+
+                $scope.noKey                        = undefined
+                $scope.hasKey                       = undefined
+                $scope.hasAuthenticatedKey          = undefined
+                
+
+                function refreshScope(){
+                    $scope.contact.securityAspects
+                    .get()
+                    .then(function(){
+                        $scope.noKey                = $scope.contact.securityAspects.applies('NO_KEY')
+                        $scope.hasKey               = $scope.contact.securityAspects.applies('AT_LEAST_ONE_KEY')
+                        $scope.hasAuthenticatedKey  = $scope.contact.securityAspects.applies('AT_LEAST_ONE_AUTHENTICATED_KEY')
+                    })
+                }
+
+                var refresh_scheduled = false
+
+                function scheduleRefresh(){
+                    //prevent more than 1 refresh call per second
+                    if(!refresh_scheduled){
+                        refresh_scheduled = true
+                        $timeout(function(){
+                            $scope.contact.securityAspects.refresh();
+                        }, 1000)
+                        .then(function(){
+                            refresh_scheduled = false
+                        })
+                    } 
+                }
+
+                refreshScope()
+
+                $scope.contact.securityAspects.on('refresh', refreshScope)
+                $scope.contact.identity.on('update:finished', scheduleRefresh)
+                cmUserModel.on('update:finished', scheduleRefresh)
+
+                $scope.$on('$destroy',function(){
+                    $scope.contact.securityAspects.on('refresh', refreshScope)
+                    $scope.contact.identity.off('update:finished', scheduleRefresh)
+                    cmUserModel.off('update:finished', scheduleRefresh)
+                })
+
+                //end security aspects
+
+
+
+
+
 
                 /**
                  * handle every single contact via model

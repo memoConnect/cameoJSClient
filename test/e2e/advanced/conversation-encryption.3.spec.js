@@ -120,22 +120,28 @@ describe('Conversation encryption -', function () {
             it("check security aspects", function () {
                 util.waitForElement('cm-header:not(.ng-hide)')
 
+                ptor.debugger()
+
+                var p,n 
+
                 ptor.wait(function(){
-                    var p,n
-                    $('cm-header:not(.ng-hide)').$('cm-icons.positive').$$("i").then(function (icons) {
+
+                    $$('cm-header:not(.ng-hide) cm-icons.positive i').then(function (icons) {
                         if (trust) {
-                            p = icons.length == positiveAspects + 1
+                            p = (icons.length == positiveAspects + 1)
                         } else {
-                            p = icons.length == positiveAspects
+                            p = (icons.length == positiveAspects)
                         }
                     })
-                    $('cm-header:not(.ng-hide)').$('cm-icons.negative').$$("i").then(function (icons) {
-                       n = icons.length == negativeAspects
+
+                    $$('cm-header:not(.ng-hide) cm-icons.negative i').then(function (icons) {
+                        n = (icons.length == negativeAspects)
                     })
+
 
                     return p && n
                     
-                }, config.waitForTimeout)
+                }, config.waitForTimeout, "expected "+positiveAspects+" positive aspect(s) and "+negativeAspects+" negative aspect(s), found "+p+"/"+n+" instead.")
             })
         }
 //        checkSecurityAspects(encryptionType == "asym" && sender.hasKey)
@@ -397,6 +403,7 @@ describe('Conversation encryption -', function () {
                 {login: testUser1, hasKey: true},
                 {login: testUser2, hasKey: true}
             ]
+
             checkConversation(recipients, 0, 2, "asym")
         })
 
@@ -432,7 +439,7 @@ describe('Conversation encryption -', function () {
 
     })
 
-    describe("no local private key -", function () {
+   describe("no local private key -", function () {
 
         it("delete key and create local key for user2", function () {
             util.logout()

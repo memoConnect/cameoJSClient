@@ -45,6 +45,11 @@
                     <i class="fa cm-right"></i>
                 </section>
             </li>
+            <li>
+                <div ng-if = "noKey">contact has no keys</div>
+                <div ng-if = "hasKey">contact has at least one key</div>
+                <div ng-if = "hasAuthenticatedKey">contact has at least one authenticated key</div>
+            </li>
         </ul>
     </div>
 </article>

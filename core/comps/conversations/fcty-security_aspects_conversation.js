@@ -34,6 +34,7 @@ angular.module('cmConversations')
                     id: 'ENCRYPTED',
                     value: 1,
                     check: function(conversation){
+                        console.log(conversation.isEncrypted())
                         return conversation.isEncrypted();
                     }
                 })    
@@ -102,10 +103,13 @@ angular.module('cmConversations')
                                     return  so_far
                                             .then(function(){
                                                 return  cmUserModel.verifyIdentityKeys(recipient, true)
-                                                        .then(function(ttrusted_keys){
-                                                            return ttrusted_keys.length > 0
-                                                        })
                                             })
+                                            .then(function(ttrusted_keys){
+                                                return  ttrusted_keys.length == recipient.keys.length
+                                                        ?   $q.when(true)
+                                                        :   $q.reject()
+                                            })
+
                                 }, $q.when())
                                 .then(
                                     function(){ return true },
