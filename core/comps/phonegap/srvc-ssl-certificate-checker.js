@@ -13,9 +13,6 @@ angular.module('cmPhonegap')
             plugin: null,
 
             init: function(){
-
-                console.log(cmConfig.static)
-
                 cmPhonegap.isReady(function(){
                     if(!('plugins' in $window)
                         || !('sslCertificateChecker' in $window.plugins)) {
@@ -30,31 +27,54 @@ angular.module('cmPhonegap')
             },
 
             control: function(){
+                var target = (function(){
+                    if(cmConfig.target == 'test' || cmConfig.target == 'default')
+                        return 'stage';
+                    return cmConfig.target;
+                })(),
+                    certificate = ('certificates' in cmConfig.static && target in cmConfig.static.certificates)
+                                   ? cmConfig.static.certificates[target]
+                                   : null,
+                    server = certificate != null ? certificate.server : '',
+                    fingerprint = certificate != null ? certificate.fingerprint.replace(/:/g,' ') : '';
 
-                self.plugin.check(
-                    self.handler.success,
-                    self.handler.error,
-                    server,
-                    fingerprint
-                );
+                console.log(target,server,'"'+fingerprint+'"')
+
+                if(server != '' && fingerprint != '') {
+                    self.plugin.check(
+                        self.handler.success,
+                        self.handler.error,
+                        server,
+                        fingerprint
+                    );
+                } else {
+                    this.handler.error('NO_CREDENTIALS');
+                }
             },
 
             handler: {
                 success: function(message){
-                    console.log(message);
+                    console.log('success',message);
                     // Message is always: CONNECTION_SECURE.
                     // Now do something with the trusted server.
                 },
                 error: function(message){
-                    console.log(message);
-                    if (message == "CONNECTION_NOT_SECURE") {
+                    console.log('error',message);
+                    switch(true){
                         // There is likely a man in the middle attack going on, be careful!
-                    } else if (message == "CONNECTION_FAILED") {
-                        // There was no connection (yet). Internet may be down. Try again (a few times) after a little timeout.
+                        case message == 'CONNECTION_NOT_SECURE':
+                            // todo modal ssl certifcate isnt right block all app actions
+                        break;
+                        // There was no connection (yet). Internet may be down.
+                        case message.indexOf('CONNECTION_FAILED') >= 0:
+                            // todo offline online check!!!
+                        break;
+                        case message == 'NO_CREDENTIALS':
+                            // default none app way
+                        break;
                     }
                 }
             }
-
         };
 
         return self;

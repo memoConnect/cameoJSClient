@@ -78,6 +78,7 @@ module.exports = function(grunt, options) {
                 'app-files': {
                     'options': {
                         'data': {
+                            'currentTarget': options.globalCameoBuildConfig.target,
                             'currentVersion': options.globalCameoBuildConfig.config.version,
                             'currentApiUrl': options.globalCameoBuildConfig.config.apiUrl,
                             'autoLogin': options.globalCameoBuildConfig.config.autoLogin,
