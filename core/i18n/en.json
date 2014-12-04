@@ -731,16 +731,16 @@
     "LIST_EMPTY": "No talks yet!"
   },
   "LANG": {
-    "EN_US": "English",
+    "EN": "English",
     "SWITCH": {
       "LABEL": {
-        "DE_DE": "@:LANG.DE_DE",
-        "EN_US": "@:LANG.EN_US"
+        "DE": "@:LANG.DE",
+        "EN": "@:LANG.EN"
       },
       "ERROR": "Unable to switch language to {{lang}}.",
       "SUCCESS": "Language switched to {{lang}}."
     },
-    "DE_DE": "German"
+    "DE": "German"
   },
   "NOTIFICATIONS": {
     "TYPES": {

@@ -137,8 +137,8 @@ angular.module('pascalprecht.translate').provider('$translate', ['$STORAGE_KEY',
      * key as first parameter.
      *
      * <pre>
-     *  // register translation table for language: 'de_DE'
-     *  $translateProvider.translations('de_DE', {
+     *  // register translation table for language: 'de'
+     *  $translateProvider.translations('de', {
    *    'GREETING': 'Hallo Welt!'
    *  });
      *

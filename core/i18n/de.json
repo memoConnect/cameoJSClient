@@ -122,14 +122,14 @@
     },
 
     "LANG": {
-        "DE_DE": "Deutsch",
-        "EN_US": "Englisch",
+        "DE": "Deutsch",
+        "EN": "Englisch",
         "SWITCH": {
             "SUCCESS": "Sprache auf {{lang}} gestellt.",
             "ERROR": "Konnte Sprache nicht auf {{lang}} stellen.",
             "LABEL": {
-                "DE_DE": "@:LANG.DE_DE",
-                "EN_US": "@:LANG.EN_US"
+                "DE": "@:LANG.DE",
+                "EN": "@:LANG.EN"
             }
         }
     },
