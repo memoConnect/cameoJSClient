@@ -234,7 +234,7 @@ angular.module('cmConfig',[])
 
             appIcon: '<%= appIcon %>',
 
-            autologin: {
+            autoLoginData: {
                 'Dumpuser local': {
                     user: '2VqTftqh',
                     pass: 'password'
