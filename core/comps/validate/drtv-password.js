@@ -12,22 +12,6 @@ angular.module('cmValidate').directive('cmPassword', [
                 tabindex: '@cmTabindex',
                 withStars: '@cmWithStars'
             },
-
-            link: function(scope, attrs, element, ngModel){
-
-                // scope.$watch('showPasswordLengthError', function(error){
-                //     ngModel.$setValidity('password', !error);
-                // })
-
-                // scope.$watch('showPasswordEmptyError', function(error){
-                //     ngModel.$setValidity('password', !error);
-                // })
-
-                // scope.$watch('showConfirmPWStatus', function(cstatus){
-                //     ngModel.$setValidity('password', cstatus);
-                // })
-            },
-
             controller: function($scope){
 
                 $scope.withStars = $scope.withStars || true;
@@ -65,6 +49,7 @@ angular.module('cmValidate').directive('cmPassword', [
                     } else {
                         $scope.showPassword = true;
                         $scope.passwordType = 'text';
+                        $scope.copyPW();
                     }
                 };
 
@@ -120,6 +105,12 @@ angular.module('cmValidate').directive('cmPassword', [
                     } else {
                         $scope.showConfirmPWStatus = false;
                         setPassword('none');
+                    }
+                };
+
+                $scope.copyPW = function(){
+                    if($scope.showPassword){
+                        $scope.pwConfirm = $scope.pw;
                     }
                 };
 
