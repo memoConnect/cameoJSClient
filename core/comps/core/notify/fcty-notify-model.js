@@ -28,8 +28,8 @@ angular.module('cmCore')
             this.bell = false;
             this.ttl = -1;
             this.i18n = {};
-            this.template = undefined
-            this.templateScope = undefined
+            this.template = undefined;
+            this.templateScope = undefined;
 
             /**
              * {
@@ -71,9 +71,9 @@ angular.module('cmCore')
 
                     this.i18n = data.i18n || this.i18n;
 
-                    this.template = data.template || this.template
+                    this.template = data.template || this.template;
 
-                    this.templateScope  = data.templateScope || this.templateScope
+                    this.templateScope  = data.templateScope || this.templateScope;
                 } else {
                     this.state.set('error');
                 }
@@ -136,6 +136,7 @@ angular.module('cmCore')
                     if(self.ttlTimeout){
                         $timeout.cancel(self.ttlTimeout);
                     }
+
                     self.trigger('notify:remove', this);
                 });
             };
