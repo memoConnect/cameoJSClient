@@ -7,20 +7,36 @@ angular.module('cmUi').directive('cmReactive',[
               $rootScope, $timeout){
         return {
             restrict: 'A',
-            link: function(scope, element){
+            link: function(scope, element, attrs){
+
+                // is disabled
+                if('cmReactive' in attrs && attrs.cmReactive != '') {
+                    attrs.$observe(
+                        'cmReactive',
+                        function(value) {
+                            var isDisabled = scope.$eval(value);
+                            if(isDisabled) {
+                                element.addClass('cm-reactive-disabled');
+                            } else {
+                                element.removeClass('cm-reactive-disabled');
+                            }
+                        }
+                    );
+                }
+
                 if(cmDevice.isMobile()){
-                    var huhu = $rootScope.$on('$routeChangeStart',function(e, next){
+                    var killWatcher = $rootScope.$on('$routeChangeStart',function(e, next){
                         next.resolve = angular.extend( next.resolve || {}, {
                             animation: function(){
                                 return $timeout(function () {
-                                    // only do the animation bitsch
+                                    // only do the animation
                                 }, 260)
                             }
                         });
                     });
 
                     scope.$on('$destroy', function(){
-                        huhu();
+                        killWatcher();
                     });
 
                     return false;

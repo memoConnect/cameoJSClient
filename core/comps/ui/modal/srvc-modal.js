@@ -108,7 +108,7 @@ angular.module('cmUi')
                             title:  config.title    || 'DRTV.CONFIRM.HEADER',
                             html:   config.html     || '',
                             data:   config.data
-                        }
+                        };
 
             var deferred    = $q.defer(),
                 scope       = $rootScope.$new(),

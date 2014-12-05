@@ -19,7 +19,8 @@ angular.module('cmValidate')
                 $scope.icon = '<i class="fa cm-checkbox-wrong"></i>';
 
                 $scope.doVerification = function(){
-                    cmVerify.send('email');
+                    if(!$scope.withVerification.isVerified)
+                        cmVerify.send('email');
                 };
             }
         }

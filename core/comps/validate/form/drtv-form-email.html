@@ -1,18 +1,23 @@
 <article class="content" ng-form="cmInnerForm">
     <label>{{label|cmTranslate}}</label>
     <div class="cm-input-ctn" ng-class="{
-        'cm-input-disabled':disabled,
-        'with-inside-icon':!disabled && !withVerification,
-        'with-inside-icons':!disabled && withVerification
+        'cm-input-disabled': disabled,
+        'with-inside-icon': !disabled && !withVerification,
+        'with-inside-icons': !disabled && withVerification
     }">
         <input
             type="text"
             tabindex="{{tabIndex}}" data-qa="input-email"
             name="email" ng-model="ngModel"
             ng-disabled="disabled" cm-validate-email cm-adaptive-change="3000" />
-        <i class="fa cm-checkbox-{{withVerification.isVerified?'right':'wrong'}}"
-           ng-show="!disabled && withVerification"
-           ng-click="doVerification()" cm-reactive></i>
+        <i class="fa"
+            ng-show="!disabled && withVerification"
+            ng-click="doVerification()"
+            cm-reactive="{{withVerification.isVerified}}"
+            ng-class="{
+                'cm-checkbox-right': withVerification.isVerified,
+                'cm-checkbox-wrong': !withVerification.isVerified
+            }"></i>
         <i class="fa cm-write" ng-show="!disabled"></i>
     </div>
     <cm-info-bubble class="cm-alert" ng-show="cmInnerForm.email.$dirty && cmInnerForm.email.$invalid">

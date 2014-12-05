@@ -1,6 +1,6 @@
 [cm-reactive]{
+  .with-cursor;
   outline: none;
-  cursor:pointer;
   -webkit-transition: background-color 0.15s ease-in-out; /* Firefox */
   -moz-transition: background-color 0.15s ease-in-out; /* WebKit */
   -o-transition: background-color 0.15s ease-in-out; /* Opera */
@@ -49,6 +49,17 @@
   }
   &.ng-click-active {
     background-color:darken(hsl(hue(@normal-color), saturation(@normal-color), lightness(@normal-color)), 7%);
+  }
+}
+
+.cm-reactive-disabled{
+  &[cm-reactive]{
+    .without-cursor;
+    -webkit-transition: none;
+    -moz-transition: none;
+    -o-transition: none;
+    transition: none;
+    background-color: transparent!important;
   }
 }
 

@@ -956,5 +956,9 @@ angular.module('cmCore')
             }
         });
 
+        cmAuth.on('account:update', function(event, data){
+            self.importAccount(data);
+        });
+
     }
 ]);

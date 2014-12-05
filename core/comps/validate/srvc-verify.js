@@ -1,29 +1,51 @@
 'use strict';
 
 angular.module('cmValidate').service('cmVerify',[
-    'cmApi',
-    function (cmApi){
+    'cmApi', 'cmModal',
+    function (cmApi, cmModal){
+
+        function confirmModal(type){
+            var modalId = 'confirm-verification';
+
+            cmModal.create({
+                id: modalId,
+                type: 'plain',
+                'class': 'no-padding',
+                'cm-title': 'DRTV.MODAL_VERIFICATION.HEADER'
+            },'<cm-confirm-verification></cm-confirm-verification>');
+
+            cmModal.open(modalId,{
+                type: type
+            });
+        }
 
         var self = {
             send: function(type){
                 var data = {};
 
-                switch(true){
-                    case type == 'sms':
+                switch(type){
+                    case 'phoneNumber':
                         data.verifyPhoneNumber = true;
                     break;
-                    case type == 'email':
-                        data.verifyEmail = true;
+                    case 'email':
+                        data.verifyMail = true;
                     break;
                 }
 
-                return cmApi.post({
+                cmApi.post({
                     path: '/verify',
                     data: data
-                });
+                }).then(
+                    function(){
+                        confirmModal(type);
+                    },
+                    function(){
+
+                    }
+                );
             },
             confirm: function(secret){
-                return cmApi.get({
+                return cmApi.post({
                     path: '/verify/'+secret
                 });
             }
