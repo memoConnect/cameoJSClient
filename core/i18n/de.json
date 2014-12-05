@@ -889,6 +889,17 @@
                 "EXPIRED": "Verifikationscode ist abgelaufen",
                 "ERROR": "Es ist ein Fehler aufgetreten"
             }
+        },
+        "RESET_PASSWORD": {
+            "SMS": {
+                "SENDER": "cameoNet",
+                "MESSAGE": "Der Code zum Passwortreset lautet \"{{code}}\". Sie können auch auf folgenden Link klicken: {{link}}"
+            },
+            "MAIL": {
+                "SENDER": "cameoNet",
+                "MESSAGE": "Willkommen bei cameoNet,\nder Code zum Passwortreset lautet \"{{code}}\". Alternativ können Sie auch auf folgenden Link klicken:\n{{link}}",
+                "SUBJECT": "Passwortreset bei cameoNet"
+            }
         }
     }
 }

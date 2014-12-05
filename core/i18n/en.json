@@ -857,6 +857,17 @@
         "EXPIRED": "This verification code has expired",
         "ERROR": "An error has occurred"
       }
+    },
+    "RESET_PASSWORD": {
+      "SMS": {
+        "SENDER": "cameoNet",
+        "MESSAGE": "The reset code is \"{{code}}\". You can also click on the following link: {{link}}"
+      },
+      "MAIL": {
+        "SENDER": "cameoNet",
+        "MESSAGE": "Welcome to cameoNet,\nthe reset code is \"{{code}}\". You can also click on the following link:\n{{link}}",
+        "SUBJECT": "Reset your password at cameoNet"
+      }
     }
   }
 }
