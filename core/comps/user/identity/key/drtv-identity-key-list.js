@@ -94,7 +94,9 @@ angular.module('cmUser').directive('cmIdentityKeyList', [
                 cmUserModel.state.on('change', schedule_refresh);
                 cmUserModel.on('key:stored key:removed signatures:saved identity:updated update:finished cache:updated', schedule_refresh);
 
-                cmUserModel.off('key:stored key:removed signatures:saved identity:updated update:finished cache:updated', schedule_refresh);
+                $scope.$on('$destroy',function(){
+                    cmUserModel.off('key:stored key:removed signatures:saved identity:updated update:finished cache:updated', schedule_refresh);
+                });
 
                 refresh();
             }

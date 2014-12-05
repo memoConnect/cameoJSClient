@@ -501,27 +501,19 @@ angular.module('cmCore')
             .removePublicKey(keyToRemove.id)
             .then(function(){
                 self.removeLocalKey(keyToRemove);
-                //// renew ls
-                //if(local_keys.deregister(keyToRemove)){
-                //    self.storageSave('rsa', local_keys.exportDataArray());
-                //}
-                //// clear identity
-                //self.data.identity.keys.deregister(keyToRemove);
-                //
-                //self.trigger('key:removed');
             });
         };
 
         this.removeLocalKey = function(keyToRemove){
-            var local_keys = self.loadLocalKeys();
+            var local_keys = this.loadLocalKeys();
             // renew ls
             if(local_keys.deregister(keyToRemove)){
-                self.storageSave('rsa', local_keys.exportDataArray());
+                this.storageSave('rsa', local_keys.exportDataArray());
             }
             // clear identity
-            self.data.identity.keys.deregister(keyToRemove);
+            this.data.identity.keys.deregister(keyToRemove);
 
-            self.trigger('key:removed');
+            this.trigger('key:removed');
         };
 
         /**
