@@ -62,6 +62,8 @@ module.exports = function (grunt) {
             buildConfig = extend(buildConfig,grunt.file.readJSON(buildConfigLocal));
         }
 
+        buildConfig.target = currentTarget;
+
         switch (currentTarget) {
             case "test" :
                 buildConfig = grunt.file.readJSON('./config/cameoBuildConfig-test.json');

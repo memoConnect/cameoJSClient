@@ -1,4 +1,11 @@
 Dev
+# WW 05.12.2014
+* ssl certificat checker
+** plugin for ios and android
+** checks on dev/stage against *.cameo.io certificate
+** checks on prod against cameonet.de certificate
+** if fingerprint doesn't match the cmConnectionHandler shows a modal and blocked the app
+
 # BS 03.12.2014
 * update Event Handling CAM-1422 
 ** add "contact:update" in FE

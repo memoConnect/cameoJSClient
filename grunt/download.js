@@ -4,10 +4,10 @@ module.exports = function(grunt, options){
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-clean');
 
-    grunt.registerTask('app:create-download-page', [
+    grunt.registerTask('download-page:create', [
         'clean:app-dl',
-        'template:app-index-dl',
-        'copy:app-resources-dl'
+        'copy:app-resources-dl',
+        'template:app-index-dl'
     ]);
 
     return {
@@ -43,7 +43,7 @@ module.exports = function(grunt, options){
                         }
                     },
                     'files': {
-                        'dist/dl/index.html': ['resource/templates/dl/index.html']
+                        'dist/dl/index.html': ['dist/dl/index.html']
                     }
                 }
             }

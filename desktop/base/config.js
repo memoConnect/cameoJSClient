@@ -2,6 +2,7 @@ angular.module('cmConfig',[])
 .provider('cmConfig', [
     function(){
         var self = {
+            target: '<%= currentTarget %>',
             restApi: '<%= currentApiUrl %>',
             version: '<%= currentVersion %>',
 
@@ -232,7 +233,7 @@ angular.module('cmConfig',[])
                 }
             },
 
-            appIcon: '<%= appIcon %>',
+            static: JSON.parse('<%= static %>'),
 
             autoLoginData: {
                 'Dumpuser local': {
