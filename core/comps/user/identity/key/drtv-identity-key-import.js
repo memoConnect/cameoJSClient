@@ -9,8 +9,9 @@ angular.module('cmRouteSettings')
     'cmModal',
     'cmDevice',
     '$window',
+    '$timeout',
     function(cmNotify, cmKey, cmUtil, cmUserModel, cmModal, cmDevice,
-             $window){
+             $window, $timeout){
         return {
             restrict: 'E',
             templateUrl: 'comps/user/identity/key/drtv-identity-key-import.html',
@@ -81,7 +82,15 @@ angular.module('cmRouteSettings')
                                         $scope.goTo('/talks');
                                     }
                                 }
-                            )
+                            );
+
+                        cmUserModel
+                            .when('key:removed', null, 5000)
+                            .then(
+                                function(){
+                                    cmNotify.warn('SETTINGS.PAGES.IDENTITY.KEYS.WARN.CHECK_PRIVKEY',{ttl:0,onCloseGoTo:'settings/identity/key/list'});
+                                }
+                            );
                     }
                 };
             }
