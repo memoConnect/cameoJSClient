@@ -30,8 +30,6 @@ angular.module('cmCore')
             this.i18n = {};
             this.template = undefined;
             this.templateScope = undefined;
-            this.onCloseGoTo = undefined;
-
 
             /**
              * {
@@ -76,8 +74,6 @@ angular.module('cmCore')
                     this.template = data.template || this.template;
 
                     this.templateScope  = data.templateScope || this.templateScope;
-
-                    this.onCloseGoTo = data.onCloseGoTo || this.onCloseGoTo;
                 } else {
                     this.state.set('error');
                 }
@@ -139,10 +135,6 @@ angular.module('cmCore')
                 cmModal.on('modal:closed', function(){
                     if(self.ttlTimeout){
                         $timeout.cancel(self.ttlTimeout);
-                    }
-
-                    if(self.onCloseGoTo){
-                        $rootScope.goTo(self.onCloseGoTo);
                     }
 
                     self.trigger('notify:remove', this);
