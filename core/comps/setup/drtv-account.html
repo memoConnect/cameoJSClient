@@ -1,0 +1,42 @@
+<article class="content">
+    <cm-info-bubble class="cm-alert">
+        <i class="fa cm-info cm-ci-color"></i> {{'ACCOUNT.INFO.NOTE_ABOUT_THIS_DATA'|cmTranslate}}
+    </cm-info-bubble>
+</article>
+
+<hr class="margin-small" />
+
+<form name="cmForm" novalidate autocomplete="off">
+
+    <cm-form-phonenumber
+        ng-model="formData.phoneNumber"
+        cm-tabindex="2"
+        cm-label="ACCOUNT.PLACEHOLDER.PHONENUMBER"
+        cm-info="ACCOUNT.INFO.INVALID.PHONENUMBER"
+    ></cm-form-phonenumber>
+
+    <hr class="margin-small" />
+
+    <cm-form-email
+        ng-model="formData.email"
+        cm-tabindex="3"
+        cm-label="ACCOUNT.PLACEHOLDER.EMAIL"
+        cm-info="ACCOUNT.INFO.INVALID.EMAIL"
+    ></cm-form-email>
+
+    <hr class="margin-small" />
+</form>
+
+<cm-footer>
+    <button class="cm-btn-grey" ng-click="saveAccount()" data-qa="btn-footer" cm-reactive>
+        <span ng-show="!showLoader && !isPristine" data-qa="btn-saveAccount">
+            {{'ACCOUNT.FOOTER.SAVE'|cmTranslate}}
+            <i class="fa cm-checker"></i>
+        </span>
+        <span ng-show="isPristine" data-qa="btn-pristineBack">
+            {{'ACCOUNT.FOOTER.SKIP'|cmTranslate}}
+            <i class="fa cm-out"></i>
+        </span>
+        <cm-loader ng-show="showLoader" cm-color="ci-color"></cm-loader>
+    </button>
+</cm-footer>

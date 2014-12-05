@@ -238,7 +238,7 @@ angular.module('cmConfig',[])
                     templateUrl: 'routes/error/error.html',
                     guests: true
                 },
-                'setup/account':{
+                'setup-account':{
                     routes: ['/setup/account'],
                     guests: false
                 }

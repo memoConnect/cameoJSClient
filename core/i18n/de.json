@@ -627,7 +627,8 @@
         },
         "FOOTER": {
             "BACK": "Fertig",
-            "SAVE": "Speichern"
+            "SAVE": "Speichern",
+            "SKIP": "Überspringen"
         }
     },
 

@@ -4,7 +4,7 @@
  * @ngdoc directive
  * @name cmWidgets.directive:cmWidgetSettingsAccount
  * @description
- * account settings
+ * account setup
  *
  * @restrict E
  * @example

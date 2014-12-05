@@ -12,6 +12,7 @@ angular.module('cameoClient', [
     'cmCore',
     'cmPhonegap',
     'cmUi',
+    'cmSetup',
     'cmUser',
     'cmAppUser',
     'cmAppConversations',
