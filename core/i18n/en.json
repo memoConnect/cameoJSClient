@@ -394,7 +394,8 @@
             "EMAIL": "@:CONTACT.PLACEHOLDER.EMAIL",
             "DISPLAYNAME": "@:CONTACT.PLACEHOLDER.DISPLAYNAME",
             "CAMEOID": "@:CONTACT.PLACEHOLDER.CAMEOID",
-            "PHONENUMBER": "@:CONTACT.PLACEHOLDER.PHONENUMBER"
+            "PHONENUMBER": "@:CONTACT.PLACEHOLDER.PHONENUMBER",
+            "AVATAR": "@:CONTACT.PLACEHOLDER.AVATAR"
           },
           "INFO": {
             "INVALID": {
@@ -491,6 +492,7 @@
   },
   "CONTACT": {
     "PLACEHOLDER": {
+      "AVATAR": "Avatar",
       "STREETNR": "No.",
       "DISPLAYNAME": "@:CONTACTS.LABEL.DISPLAYNAME",
       "EMAIL": "e-mail",

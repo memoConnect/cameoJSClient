@@ -281,6 +281,7 @@
         "HEADLINE": "Kontakt",
         "WIDGET": "Talks",
         "PLACEHOLDER": {
+            "AVATAR": "Profilbild",
             "CAMEOID": "CameoID",
             "DISPLAYNAME": "@:CONTACTS.LABEL.DISPLAYNAME",
             "PHONENUMBER": "Telefonnummer",
@@ -522,7 +523,8 @@
                         "CAMEOID": "@:CONTACT.PLACEHOLDER.CAMEOID",
                         "DISPLAYNAME": "@:CONTACT.PLACEHOLDER.DISPLAYNAME",
                         "EMAIL": "@:CONTACT.PLACEHOLDER.EMAIL",
-                        "PHONENUMBER": "@:CONTACT.PLACEHOLDER.PHONENUMBER"
+                        "PHONENUMBER": "@:CONTACT.PLACEHOLDER.PHONENUMBER",
+                        "AVATAR": "@:CONTACT.PLACEHOLDER.AVATAR"
                     },
                     "INFO": {
                         "EMPTY": {

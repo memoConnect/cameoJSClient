@@ -229,6 +229,14 @@ angular.module('cmConfig',[])
                     hasCtrl: true,
                     templateUrl: 'routes/error/error.html',
                     guests: true
+                },
+                'setup-account':{
+                    routes: ['/setup/account'],
+                    guests: false
+                },
+                'setup-identity':{
+                    routes: ['/setup/identity'],
+                    guests: false
                 }
             },
 

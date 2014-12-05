@@ -241,6 +241,10 @@ angular.module('cmConfig',[])
                 'setup-account':{
                     routes: ['/setup/account'],
                     guests: false
+                },
+                'setup-identity':{
+                    routes: ['/setup/identity'],
+                    guests: false
                 }
             },
 

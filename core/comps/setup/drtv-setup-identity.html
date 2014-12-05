@@ -1,0 +1,69 @@
+<form name="cmForm" novalidate autocomplete="off">
+
+    <article class="content">
+        <label>{{'SETTINGS.PAGES.IDENTITY.CREATE.PLACEHOLDER.AVATAR'|cmTranslate}}</label>
+
+        <cm-upload-avatar class="border-complete"></cm-upload-avatar>
+        <cm-avatar cm-view="unknown" class="big"></cm-avatar>
+    </article>
+
+    <hr class="margin-small" />
+
+    <article class="content">
+        <cm-cameo-id
+            ng-model="formData.cameoId" form-name="cmForm" cm-tabindex="1"
+            placeholder="SETTINGS.PAGES.IDENTITY.CREATE.PLACEHOLDER.CAMEOID"
+        ></cm-cameo-id>
+    </article>
+
+    <hr class="margin-small" />
+
+    <article class="content">
+        <label>{{'SETTINGS.PAGES.IDENTITY.CREATE.PLACEHOLDER.DISPLAYNAME'|cmTranslate}}</label>
+        <div class="cm-input-ctn with-inside-icon">
+            <input
+                tabindex="2" data-qa="input-displayname"
+                type="text" name="displayName" ng-model="formData.displayName" ng-keyup="validateDisplayName()" />
+            <i class="fa cm-write"></i>
+        </div>
+        <cm-info-bubble
+                class="cm-alert"
+                ng-show="
+                cmForm.displayName.$dirty &&
+                cmForm.displayName.$invalid &&
+                cmForm.displayName.length > 0
+            ">
+            <div ng-show="cmForm.displayName.$error.required">
+                <i class="fa cm-info"></i>
+                {{'SETTINGS.PAGES.IDENTITY.CREATE.INFO.EMPTY.DISPLAYNAME'|cmTranslate}}
+            </div>
+        </cm-info-bubble>
+    </article>
+
+    <hr class="margin-small" />
+
+    <cm-form-phonenumber
+            ng-model="formData.phoneNumber"
+            cm-tabindex="3"
+            cm-label="SETTINGS.PAGES.IDENTITY.CREATE.PLACEHOLDER.PHONENUMBER"
+            cm-info="SETTINGS.PAGES.IDENTITY.CREATE.INFO.INVALID.PHONENUMBER"
+            ></cm-form-phonenumber>
+
+    <hr class="margin-small" />
+
+    <cm-form-email
+            ng-model="formData.email"
+            cm-tabindex="4"
+            cm-label="SETTINGS.PAGES.IDENTITY.CREATE.PLACEHOLDER.EMAIL"
+            cm-info="SETTINGS.PAGES.IDENTITY.CREATE.INFO.INVALID.EMAIL"
+            ></cm-form-email>
+</form>
+
+<cm-footer>
+    <button class="cm-btn-grey" ng-click="addIdentity()" data-qa="btn-identity-create" cm-reactive>
+        <span ng-show="!showLoader">
+            {{'SETTINGS.PAGES.IDENTITY.CREATE.FOOTER'|cmTranslate}} <i class="fa cm-checker"></i>
+        </span>
+        <cm-loader ng-show="showLoader" cm-color="ci-color"></cm-loader>
+    </button>
+</cm-footer>
