@@ -10,6 +10,11 @@ angular.module('cmSetup')
                 controller: function($scope) {
                     var loader = new cmLoader($scope);
 
+                    $rootScope.generateAutomatic = {
+                        generate:true,
+                        keySize: 2048
+                    };
+
                     $scope.formData = {
                         cameoId: '',
                         email: '',
@@ -85,7 +90,7 @@ angular.module('cmSetup')
                         return deferred.promise;
                     };
 
-                    $scope.addIdentity = function () {
+                    $scope.createIdentity = function () {
                         if (loader.isIdle())
                             return false;
 
@@ -96,7 +101,12 @@ angular.module('cmSetup')
                                 cmAuth.addIdentity(objectChange).then(
                                     function (res) {
                                         loader.stop();
-                                        cmUserModel.switchToIdentity(res.identity, res.token.token);
+                                        /**
+                                         * @TODO set Identity - Token Handling??!
+                                         */
+                                        cmUserModel.setIdentity(res.identity, res.token.token);
+
+                                        $rootScope.goTo('/settings/identity/key/create');
                                     },
                                     function () {
                                         loader.stop();
