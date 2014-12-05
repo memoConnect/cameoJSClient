@@ -51,7 +51,7 @@
                     ng-click="acceptTerms()"></i>
         </div>
 
-        <cm-info-bubble class="cm-alert" nose-x="55%" ng-show="registrationForm.phone.dirty && registrationForm.agb.$invalid" data-qa="register-info-terms">
+        <cm-info-bubble class="cm-alert" nose-x="55%" ng-show="formValidation && registrationForm.agb.$invalid" data-qa="register-info-terms">
             <div ng-show="registrationForm.agb.$invalid">
                 <i class="fa cm-info"></i>{{'REGISTER.INFO.TERMS'|cmTranslate}}
             </div>

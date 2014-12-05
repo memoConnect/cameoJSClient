@@ -19,6 +19,8 @@ angular.module('cmWidgets').directive('cmWidgetRegistration', [
 
                 $scope.showLoginInfo = false;
 
+                $scope.formValidation = false;
+
                 $scope.toogleLoginInfo = function(){
                     if($scope.showLoginInfo){
                         $scope.showLoginInfo = false;
@@ -48,6 +50,8 @@ angular.module('cmWidgets').directive('cmWidgetRegistration', [
                 $scope.validateForm = function () {
                     var deferred = $q.defer(),
                         reservationCheck = false;
+
+                    $scope.formValidation = true;
 
                     var data = {
                         loginName: null,

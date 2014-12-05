@@ -14,7 +14,7 @@ describe('Registration: ', function () {
         util.waitForPageLoad('/registration')
 
         $$("input").then(function (elements) {
-            expect(elements.length).toBe(7)
+            expect(elements.length).toBe(4)
         })
     })
 
@@ -89,7 +89,10 @@ describe('Registration: ', function () {
         util.waitForPageLoad("/terms")
     })
 
-    it('should create account with valid credentials and have a support talk', function() {
+    /**
+     * @TODO!
+     */
+    xit('should create account with valid credentials and have a support talk', function() {
         var loginName = util.createTestUser()
         util.waitForPageLoad('/start/welcome')
 
