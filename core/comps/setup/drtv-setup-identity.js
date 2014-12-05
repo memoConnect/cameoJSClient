@@ -16,7 +16,7 @@ angular.module('cmSetup')
                     };
 
                     $scope.formData = {
-                        cameoId: '',
+                        cameoId: cmUserModel.data.account.loginName || '',
                         email: '',
                         phoneNumber: '',
                         displayName: ''
