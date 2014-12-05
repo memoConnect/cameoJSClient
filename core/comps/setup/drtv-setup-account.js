@@ -6,7 +6,7 @@ angular.module('cmSetup')
         function(cmUserModel, cmUtil, cmLoader, cmLogger, $rootScope, $q){
             return {
                 restrict: 'E',
-                templateUrl: 'comps/setup/drtv-account.html',
+                templateUrl: 'comps/setup/drtv-setup-account.html',
                 controller: function($scope){
                     var loader = new cmLoader($scope);
 
@@ -53,7 +53,7 @@ angular.module('cmSetup')
                         return deferred.promise;
                     };
 
-                    $scope.save = function(){
+                    $scope.saveAccount = function(){
                         if($scope.isPristine)
                             $scope.goToNextStep();
 
