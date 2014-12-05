@@ -780,9 +780,15 @@
             "CANCEL": "Abbrechen",
             "START": "Start"
         },
-        "OFFLINE_HANDLER": {
-            "MESSAGE": "Es konnte keine Verbindung zu cameoNet hergestellt werden.<br>Bitte versuchen Sie es später noch einmal oder überprüfen Sie ihre Internet Verbindung und drücken 'Neu verbinden'",
-            "FOOTER": "Neu verbinden"
+        "CONNECTION_HANDLER": {
+            "FAILED": {
+                "TEXT": "Es konnte keine Verbindung zu cameoNet hergestellt werden.<br>Bitte versuchen Sie es später noch einmal oder überprüfen Sie ihre Internet Verbindung und drücken 'Neu verbinden'",
+                "FOOTER": "Neu verbinden"
+            },
+            "NOTSECURE": {
+                "TEXT": "@todo Es konnte keine sichere Verbindung zu unseren Servern aufgebaut werden. Das erwartete Zertifkat stimmt nicht mit dem überein was der Server zurück liefert. Dies könnte einen \"Man in the middle\" Attacke sein.",
+                "FOOTER": "@todo neu überprüfen"
+            }
         },
         "EXIT": {
             "HEADER": "App schließen",

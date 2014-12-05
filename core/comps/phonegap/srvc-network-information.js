@@ -26,6 +26,16 @@ angular.module('cmPhonegap')
 
                     self.plugin = $navigator.connection;
 
+                    $document.on('online', function(){
+                        self.checkConnection();
+                        self.goesOnline();
+                    });
+
+                    $document.on('offline', function(){
+                        self.checkConnection();
+                        self.goesOffline();
+                    });
+
                     self.checkConnection();
                 })
             },
@@ -53,9 +63,6 @@ angular.module('cmPhonegap')
 
             }
         };
-
-        $document[0].addEventListener('offline', self.goesOffline, false);
-        $document[0].addEventListener('online', self.goesOnline, false);
 
         return self;
     }

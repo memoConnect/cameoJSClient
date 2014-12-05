@@ -256,9 +256,15 @@
     "ALERT": {
       "OK": "OK"
     },
-    "OFFLINE_HANDLER": {
-      "FOOTER": "Reconnect",
-      "MESSAGE": "Could not connect to cameoNet.<br> Please try again later or check your internet connection and press 'Reconnect'."
+    "CONNECTION_HANDLER": {
+      "FAILED": {
+        "TEXT": "Could not connect to cameoNet.<br> Please try again later or check your internet connection and press 'Reconnect'.",
+        "FOOTER": "Reconnect"
+      },
+      "NOTSECURE": {
+        "TEXT": "@todo We can't connect our servers safely. The certificates didn't match the expected. It could be a \"man in the middle\" attack.",
+        "FOOTER": "@todo Try again"
+      }
     },
     "LABEL": {
       "OK": "@:MODAL.ALERT.OK",

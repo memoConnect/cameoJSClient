@@ -225,7 +225,7 @@ angular.module('cmCore')
                                     switch(response.status){
                                         case 0:
                                             cmLogger.debug('cmUserModel:init:failed:0');
-                                            $rootScope.$broadcast('connection:failed', function(){
+                                            $rootScope.$broadcast('cmConnectionHandler:failed', function(){
                                                 self.loadIdentity(accountData);
                                             });
                                             return false;
