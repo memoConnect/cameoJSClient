@@ -18,23 +18,18 @@ angular.module('cmSecurityAspects').directive('cmSecurityIndicator',[
 
                 function refreshScope(){
                     //cmLogger.debug('cmSecurityIndicator.refresh');
-
+                    
                     $scope.checking = true
 
-                    if($scope.conversation.securityAspects){
-                        $scope.conversation.securityAspects
-                        .get()
-                        .then(function(){
-                            $scope.positive         = $scope.conversation.securityAspects.getPositiveAspects().reduce(function(sum, aspect){ return sum+aspect.value } ,0);
-                            $scope.negative         = $scope.conversation.securityAspects.getNegativeAspects().reduce(function(sum, aspect){ return sum-aspect.value } ,0);
-                            $scope.missing_aspects  = false;
-                            $scope.checking         = false;
-                            $scope.leading_icon     = ($scope.positive >= $scope.negative) ? 'cm-lock' : 'cm-unlock';
-                        })
-                    } else {
-                        $scope.missing_aspects  = true;
+                    $scope.conversation.securityAspects
+                    .get()
+                    .then(function(){
+                        $scope.positive         = $scope.conversation.securityAspects.getPositiveAspects().reduce(function(sum, aspect){ return sum+aspect.value } ,0);
+                        $scope.negative         = $scope.conversation.securityAspects.getNegativeAspects().reduce(function(sum, aspect){ return sum-aspect.value } ,0);
+                        $scope.missing_aspects  = false;
                         $scope.checking         = false;
-                    }
+                        $scope.leading_icon     = ($scope.positive >= $scope.negative) ? 'cm-lock' : 'cm-unlock';
+                    })
 
                     //console.log('$scope.conversation.recipients', $scope.conversation.recipients.length)
                     //console.log('aspects.length', $scope.conversation.securityAspects.aspects.length)
@@ -42,37 +37,17 @@ angular.module('cmSecurityAspects').directive('cmSecurityIndicator',[
 
                 }
 
-                var refresh_scheduled = false
-
-                function schedule_refresh(){
-                    $scope.checking = true
-
-                    //prevent more than 1 refresh call per second
-                    if(!refresh_scheduled){
-                        refresh_scheduled = true
-                        $timeout(function(){
-                            $scope.conversation.securityAspects.refresh();
-                        }, 400)
-                        .then(function(){
-                            refresh_scheduled = false
-                        })
-                    } 
-                }
+                function check(){ $scope.checking = true }
 
                 if($scope.conversation){
-                    refreshScope() //refreshScope()
-
-
+                    refreshScope()
+                    $scope.conversation.securityAspects.on('schedule', check);
                     $scope.conversation.securityAspects.on('refresh', refreshScope);
-                    $scope.conversation.on('update:finished encryption:enabled encryption:disabled captcha:enabled captcha:disabled aspects:added', schedule_refresh);
-                    $scope.conversation.recipients.on('register update:finished deregister', schedule_refresh);
-                    cmUserModel.on('key:stored key:removed cache:updated', schedule_refresh);
+                    
 
                     $scope.$on('$destroy', function(){
-                        $scope.conversation.securityAspects.off('refresh', refreshScope);
-                        $scope.conversation.off('update:finished encryption:enabled encryption:disabled captcha:enabled captcha:disabled aspects:added', schedule_refresh);
-                        $scope.conversation.recipients.off('register update:finished deregister', schedule_refresh);
-                        cmUserModel.off('key:stored key:removed', schedule_refresh);
+                        $scope.conversation.securityAspects.off('schedule', check);
+                        $scope.conversation.securityAspects.off('refresh', refreshScope)
                     })
 
                 } else {

@@ -97,34 +97,16 @@ angular.module('cmContacts')
                     })
                 }
 
-                var refresh_scheduled = false
-
-                function scheduleRefresh(){
-                    //prevent more than 1 refresh call per second
-                    if(!refresh_scheduled){
-                        refresh_scheduled = true
-                        $timeout(function(){
-                            $scope.contact.securityAspects.refresh();
-                        }, 1000)
-                        .then(function(){
-                            refresh_scheduled = false
-                        })
-                    } 
-                }
 
                 refreshScope()
 
                 $scope.contact.securityAspects.on('refresh', refreshScope)
-                $scope.contact.identity.on('update:finished', scheduleRefresh)
-                cmUserModel.on('update:finished', scheduleRefresh)
+               
 
                 $scope.$on('$destroy',function(){
                     $scope.contact.securityAspects.on('refresh', refreshScope)
-                    $scope.contact.identity.off('update:finished', scheduleRefresh)
-                    cmUserModel.off('update:finished', scheduleRefresh)
                 })
 
-                //end security aspects
 
 
 

@@ -33,6 +33,7 @@ describe('Route conversation:', function () {
     })
 
     it('display warning when encryption settings are not ok', function(){
+        ptor.debugger()
         $("[data-qa='btn-send-answer']").click()
         util.waitAndCloseNotify()
     })

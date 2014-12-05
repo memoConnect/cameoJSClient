@@ -1,5 +1,16 @@
-<cm-security-aspect ng-repeat="aspect in conversation.securityAspects.getPositiveAspects()" cm-data="aspect" cm-show-toggle-options="{{conversation.state.is('new')}}"></cm-security-aspect>
-<cm-security-aspect ng-repeat="aspect in conversation.securityAspects.getNegativeAspects()" cm-data="aspect" cm-show-toggle-options="{{conversation.state.is('new')}}"></cm-security-aspect>
+<div ng-if = "conversation.securityAspects.getApplyingAspects()">    
+    <cm-security-aspect 
+        ng-repeat               = "aspect in conversation.securityAspects.getPositiveAspects()" 
+        cm-data                 = "aspect" 
+        cm-show-toggle-options  = "{{conversation.state.is('new')}}"
+    ></cm-security-aspect>
+
+    <cm-security-aspect 
+        ng-repeat               = "aspect in conversation.securityAspects.getNegativeAspects()" 
+        cm-data                 = "aspect" 
+        cm-show-toggle-options  = "{{conversation.state.is('new')}}"
+    ></cm-security-aspect>
+</div>
 
 <article class="item">
     <span class="body security-headline">

@@ -34,7 +34,6 @@ angular.module('cmConversations')
                     id: 'ENCRYPTED',
                     value: 1,
                     check: function(conversation){
-                        console.log(conversation.isEncrypted())
                         return conversation.isEncrypted();
                     }
                 })    
@@ -118,6 +117,13 @@ angular.module('cmConversations')
                             :   $q.when(false)
                     }
                 });
+
+            
+
+            conversation.on('update:finished encryption:enabled encryption:disabled captcha:enabled captcha:disabled aspects:added', self.scheduleRefresh);
+            conversation.recipients.on('register update:finished deregister', self.scheduleRefresh);
+            cmUserModel.on('key:stored key:removed cache:updated', self.scheduleRefresh);
+
 
             return self;
         }

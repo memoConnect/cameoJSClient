@@ -5,7 +5,8 @@ angular.module('cmSecurityAspects')
     'cmObject',
     'cmLogger',
     '$q',
-    function (cmObject, cmLogger, $q){
+    '$timeout',
+    function (cmObject, cmLogger, $q, $timeout){
         /**
          * Generic security aspect
          * @param {Object} [config] contains id, dependencies, value and a function check() that checks if the security aspect applies, returning its value. 
@@ -181,6 +182,28 @@ angular.module('cmSecurityAspects')
                             $q.when(applying_aspects)
                         })
 
+            }
+
+
+
+            var refresh_scheduled = false
+
+            this.scheduleRefresh = function(){
+
+                //prevent more than 1 refresh call per second
+                if(!refresh_scheduled){
+                    self.reset()
+
+                    $timeout(function(){
+                        self.refresh();
+                    }, 400)
+                    .then(function(){
+                        refresh_scheduled = false
+                    })
+
+                    refresh_scheduled = true
+                    self.trigger('schedule')
+                } 
             }
 
             /**

@@ -17,13 +17,13 @@ angular.module('cmContacts')
             cmObject.addEventHandlingTo(this);
 
             this.state              = new cmStateManagement(['loading']);
-            this.securityAspects    = new cmSecurityAspectsContact(this);
-
 
             this.id            = undefined;
             this.contactType   = undefined;
             this.group         = [];
             this.identity      = cmIdentityFactory.new();
+
+            this.securityAspects    = new cmSecurityAspectsContact(this);
 
             function init(data){
                 //cmLogger.debug('cmContactModel:init');
