@@ -168,6 +168,7 @@ angular.module('cmConversations')
                                     }
                                 }
 
+            this.state = new cmStateManagement(['new','decrypted','loading', 'incomplete', 'sending', 'waitForFiles','notified']);
 
             /**
              * Initialize Message Object

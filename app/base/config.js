@@ -2,6 +2,7 @@ angular.module('cmConfig',[])
 .provider('cmConfig', [
     function(){
         var self = {
+            target: '<%= currentTarget %>',
             restApi: '<%= currentApiUrl %>',
             version: '<%= currentVersion %>',
 
@@ -17,6 +18,8 @@ angular.module('cmConfig',[])
     		WebworkerDefaultLimitMobile: 2,
     		WebworkerDefaultLimitApp: 2,
     		WebworkerDefaultLimitDesktop: 2,
+
+            browserNotificationTimeout: 5000,
             
             token: null,
             supportedLanguages: ['de', 'en'],
@@ -239,9 +242,7 @@ angular.module('cmConfig',[])
                 }
             },
 
-            appLinks: JSON.parse('<%= appLinks %>'),
-            appProtocol: '<%= appProtocol %>',
-            appIcon: '<%= appIcon %>',
+            static: JSON.parse('<%= static %>'),
 
             autoLoginData: {
                 'Dumpuser local': {
@@ -304,7 +305,7 @@ angular.module('cmConfig',[])
             autoLogin: ('<%= autoLogin %>' == 'true'),
             loadingBar: ('<%= loadingBar %>' == 'true'),
             enableDebug: ('<%= enableDebug %>' == 'true')
-        }
+        };
 
         this.get = function(key){
             return self[key];
@@ -312,7 +313,7 @@ angular.module('cmConfig',[])
 
         this.$get = function () {
             return self;
-        }
+        };
     }
 ])
 

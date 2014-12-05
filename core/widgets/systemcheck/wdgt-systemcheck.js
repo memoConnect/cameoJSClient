@@ -13,7 +13,7 @@ angular.module('cmWidgets').directive('cmWidgetSystemcheck',[
 
                 $scope.version = cmVersion.version;
                 $scope.isApp = cmDevice.isApp();
-                $scope.appLinks = $filter('appStoreLink')(cmConfig.appLinks);
+                $scope.appLinks = $filter('appStoreLink')(cmConfig.static.appLinks);
 
                 $scope.localStorage = cmSystemCheck.checkLocalStorage();
 

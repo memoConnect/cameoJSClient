@@ -2,8 +2,9 @@
 
 angular.module('cmWidgets').directive('cmWidgetLogin',[
     'cmVersion',
-    'cmSystemCheck',
-    function(cmVersion, cmSystemCheck) {
+    '$rootScope',
+    function(cmVersion,
+             $rootScope) {
         return {
             restrict: 'AE',
             scope: true,

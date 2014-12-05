@@ -2,6 +2,7 @@ angular.module('cmConfig',[])
 .provider('cmConfig', [
     function(){
         var self = {
+            target: '<%= currentTarget %>',
             restApi: '<%= currentApiUrl %>',
             version: '<%= currentVersion %>',
 
@@ -17,6 +18,8 @@ angular.module('cmConfig',[])
             WebworkerDefaultLimitMobile: 2,
             WebworkerDefaultLimitApp: 2,
             WebworkerDefaultLimitDesktop: 2,
+
+            browserNotificationTimeout: 5000,
 
             token: null,
             supportedLanguages: ['de', 'en'],
@@ -230,7 +233,7 @@ angular.module('cmConfig',[])
                 }
             },
 
-            appIcon: '<%= appIcon %>',
+            static: JSON.parse('<%= static %>'),
 
             autoLoginData: {
                 'Dumpuser local': {

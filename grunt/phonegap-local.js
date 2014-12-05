@@ -5,14 +5,13 @@ module.exports = function(grunt, options){
     grunt.registerTask('phonegap:build-only', [
         'phonegap:app-prepare',
         'phonegap:build'
-    ])
+    ]);
 
     grunt.registerTask('phonegap:build-n-run', [
         'phonegap:app-prepare',
         'phonegap:build',
         'phonegap:run'
     ]);
-
 
     return {
         tasks:{
