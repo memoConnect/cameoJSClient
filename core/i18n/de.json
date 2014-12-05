@@ -783,9 +783,15 @@
             "CANCEL": "Abbrechen",
             "START": "Start"
         },
-        "OFFLINE_HANDLER": {
-            "MESSAGE": "Es konnte keine Verbindung zu cameoNet hergestellt werden.<br>Bitte versuchen Sie es später noch einmal oder überprüfen Sie ihre Internet Verbindung und drücken 'Neu verbinden'",
-            "FOOTER": "Neu verbinden"
+        "CONNECTION_HANDLER": {
+            "FAILED": {
+                "TEXT": "Es konnte keine Verbindung zu cameoNet hergestellt werden.<br>Bitte versuchen Sie es später noch einmal oder überprüfen Sie ihre Internet Verbindung und drücken 'Neu verbinden'",
+                "FOOTER": "Neu verbinden"
+            },
+            "NOTSECURE": {
+                "TEXT": "@todo Es konnte keine sichere Verbindung zu unseren Servern aufgebaut werden. Das erwartete Zertifkat stimmt nicht mit dem überein was der Server zurück liefert. Dies könnte einen \"Man in the middle\" Attacke sein.",
+                "FOOTER": "@todo neu überprüfen"
+            }
         },
         "EXIT": {
             "HEADER": "App schließen",
@@ -891,6 +897,17 @@
                 "SUCCESS": "Verifikation erfolgreich",
                 "EXPIRED": "Verifikationscode ist abgelaufen",
                 "ERROR": "Es ist ein Fehler aufgetreten"
+            }
+        },
+        "RESET_PASSWORD": {
+            "SMS": {
+                "SENDER": "cameoNet",
+                "MESSAGE": "Der Code zum Passwortreset lautet \"{{code}}\". Sie können auch auf folgenden Link klicken: {{link}}"
+            },
+            "MAIL": {
+                "SENDER": "cameoNet",
+                "MESSAGE": "Willkommen bei cameoNet,\nder Code zum Passwortreset lautet \"{{code}}\". Alternativ können Sie auch auf folgenden Link klicken:\n{{link}}",
+                "SUBJECT": "Passwortreset bei cameoNet"
             }
         }
     }

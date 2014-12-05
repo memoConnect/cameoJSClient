@@ -9,6 +9,7 @@ angular.module('cmPhonegap')
     function (cmPhonegap, cmUtil, cmLogger,
               $navigator, $document, $phonegapCameoConfig) {
         var self = {
+            plugin: null,
             state: '',
 
             init: function(){
@@ -23,12 +24,24 @@ angular.module('cmPhonegap')
                         return false;
                     }
 
+                    self.plugin = $navigator.connection;
+
+                    $document.on('online', function(){
+                        self.checkConnection();
+                        self.goesOnline();
+                    });
+
+                    $document.on('offline', function(){
+                        self.checkConnection();
+                        self.goesOffline();
+                    });
+
                     self.checkConnection();
                 })
             },
 
             checkConnection: function(){
-                var networkState = $navigator.connection.type;
+                var networkState = this.plugin.type;
 
                 var states = {};
                 states[Connection.UNKNOWN] = 'Unknown connection';
@@ -50,9 +63,6 @@ angular.module('cmPhonegap')
 
             }
         };
-
-        $document[0].addEventListener('offline', self.goesOffline, false);
-        $document[0].addEventListener('online', self.goesOnline, false);
 
         return self;
     }

@@ -697,6 +697,12 @@ this.createEncryptedConversation = function (subject, message) {
     self.waitAndClickQa("btn-confirm","cm-modal.active")
     self.waitForPageLoad("/conversation/*")
     self.waitForElements("cm-message", 1)
+
+    ptor.wait(function(){
+        return self.getVal("input-answer").then(function(answer){
+            return answer == ''
+        })
+    })
 }
 
 this.getConversation = function(subject){
