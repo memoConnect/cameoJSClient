@@ -14,6 +14,8 @@ describe('Route Settings Account Verification: ', function(){
     function getVerificationSecret() {
         verifySecret = undefined
 
+        console.log('getTestUserNotifications',testUser)
+
         ptor.wait(function () {
             return util.getTestUserNotifications(testUser).then(function (response) {
                 console.log('getVerificationSecret',response['data'])
@@ -65,13 +67,15 @@ describe('Route Settings Account Verification: ', function(){
         it('submit email and check if info bubble appear', function(){
 
             util.checkWarning('info-emailNotVerified',true)
+            util.checkWarning('info-phoneNumberNotVerified',true)
 
-            util.setVal('input-email',email)
+            util.setVal('input-phoneNumber',phoneNumber)
 
             util.click('btn-saveAccount')
             util.waitForLoader()
+
             // info bubble appear
-            util.checkWarning('info-emailNotVerified')
+            util.checkWarning('info-phoneNumberNotVerified')
 
             getVerificationSecret()
 
