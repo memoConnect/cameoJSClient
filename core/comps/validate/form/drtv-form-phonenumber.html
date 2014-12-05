@@ -25,7 +25,7 @@
         </div>
     </cm-info-bubble>
 
-    <cm-info-bubble nose-x="85%" ng-show="withVerification && !withVerification.isVerified">
+    <cm-info-bubble nose-x="85%" ng-show="withVerification && !withVerification.isVerified" data-qa="info-phoneNumberNotVerified">
         <i class="fa cm-attention cm-orange"></i>
         <span ng-bind-html="'DRTV.VALIDATE_PHONE.INFO.ISNT_VERIFIED'|cmTranslate:{ 'icon':icon}"></span>
     </cm-info-bubble>

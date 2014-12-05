@@ -270,13 +270,13 @@ angular.module('cmCore')
             if(typeof data.email != 'string') {
                 this.data.account.email = data.email || this.data.account.email;
             } else {
-                this.data.account.email = {value:data.email};
+                this.data.account.email = {value:data.email,isVerified:false};
             }
 
             if(typeof data.phoneNumber != 'string') {
                 this.data.account.phoneNumber = data.phoneNumber || this.data.account.phoneNumber;
             } else {
-                this.data.account.phoneNumber = {value:data.phoneNumber};
+                this.data.account.phoneNumber = {value:data.phoneNumber,isVerified:false};
             }
 
             this.trigger('account:updated');

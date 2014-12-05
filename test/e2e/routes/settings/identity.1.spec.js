@@ -9,7 +9,7 @@ describe('Route Settings Identity: ', function(){
 
     var newDisplayName = 'TestMoeper';
     var newPhoneNumber = '+49123456789';
-    var newEmail = 'moeper@moep.moep';
+    var newEmail = 'devnull@cameo.io';
 
     describe('Test 1 - GUI', function(){
         it('should load at "#/settings/identity/edit" after login.', function(){
@@ -135,7 +135,7 @@ describe('Route Settings Identity: ', function(){
             expect($("[data-qa='input-email']").isPresent()).toBe(true)
 
             util.clearInput('input-email')
-            $("[data-qa='input-email']").sendKeys('moep@moep')
+            $("[data-qa='input-email']").sendKeys('devnull@cameo')
             $("body").click()
 
             util.waitForElement("[data-qa='form-error-email-invalid']");
@@ -146,7 +146,7 @@ describe('Route Settings Identity: ', function(){
             expect($("[data-qa='input-email']").isPresent()).toBe(true)
 
             util.clearInput('input-email')
-            $("[data-qa='input-email']").sendKeys('moep@moep.de')
+            $("[data-qa='input-email']").sendKeys('devnull@cameo.io')
             $("body").click()
 
             ptor.wait(function() {

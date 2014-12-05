@@ -52,7 +52,7 @@ describe('Registration: ', function () {
             return $("[data-qa='cameoId-info-username-invalid']").isDisplayed()
         }, "username invalid timeout")
 
-        util.checkWarning("cameoId-info-username-invalid")
+        util.checkWarning('cameoId-info-username-invalid')
 
         util.clearInput('input-cameoId')
     })

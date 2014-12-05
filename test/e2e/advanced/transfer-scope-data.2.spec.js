@@ -3,19 +3,24 @@ var util = require("../../lib/e2e/cmTestUtil.js")
 var path = require('path')
 
 describe('transfer scope data registration', function () {
-    var ptor = util.getPtorInstance()
+    var ptor = util.getPtorInstance(),
+        cameoId = 'moeper',
+        password = 'moep12345',
+        displayName = 'moepDisp',
+        email = 'devnull@cameo.io',
+        phoneNumber = '+49123456'
 
     it('fill out registration with validation timeout', function () {
         util.logout()
         util.get('/registration')
         util.expectCurrentUrl('/registration')
 
-        util.setVal('input-cameoId', 'moeper')
-        util.setVal('input-password', 'moep12345')
-        util.setVal('input-passwordConfirm', 'moep12345')
-        util.setVal('input-displayName', 'moepDisp')
-        util.setVal('input-email', 'moep@moep.de')
-        util.setVal('input-phone', '+49123456')
+        util.setVal('input-cameoId', cameoId)
+        util.setVal('input-password', password)
+        util.setVal('input-passwordConfirm', password)
+        util.setVal('input-displayName', displayName)
+        util.setVal('input-email', email)
+        util.setVal('input-phone', phoneNumber)
 
         util.scrollToBottom()
         util.click("icon-checkbox-agb")
@@ -31,12 +36,12 @@ describe('transfer scope data registration', function () {
     })
 
     it('check if transfer succeed', function () {
-        expect(util.getVal('input-cameoId')).toBe('moeper')
+        expect(util.getVal('input-cameoId')).toBe(cameoId)
         expect(util.getVal('input-password')).toBe('')
         expect(util.getVal('input-passwordConfirm')).toBe('')
-        expect(util.getVal('input-displayName')).toBe('moepDisp')
-        expect(util.getVal('input-email')).toBe('moep@moep.de')
-        expect(util.getVal('input-phone')).toBe('+49123456')
+        expect(util.getVal('input-displayName')).toBe(displayName)
+        expect(util.getVal('input-email')).toBe(email)
+        expect(util.getVal('input-phone')).toBe(phoneNumber)
 
         expect($("[data-qa='icon-checkbox-agb']").getAttribute('class')).toContain('cm-checkbox-right')
 

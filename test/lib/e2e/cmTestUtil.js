@@ -469,10 +469,10 @@ this.waitForProgressbar = function (timeout) {
     return this
 }
 
-this.checkWarning = function (qaValue) {
+this.checkWarning = function (qaValue, isntDisplayed) {
     var css = "[data-qa='" + qaValue + "']"
     var warn = $(css)
-    expect(warn.isDisplayed()).toBe(true)
+    expect(warn.isDisplayed()).toBe(isntDisplayed ? false : true)
     warn.getText().then(function (text) {
         expect(text).not.toBe("")
     })
