@@ -192,11 +192,12 @@ describe('Route: Purl - ', function () {
         })
 
         it('login modal should be visible, when Internal User1 open his Purl', function(){
+            ptor.sleep(1000) //without sleep tests will fail :( ??
             util.get('/purl/' + config.purlUser1)
+            ptor.sleep(1000) //without sleep tests will fail :( ??
             util.expectCurrentUrl('#/purl/' + config.purlUser1)
 
             util.waitForElement("[data-qa='modal-login']")
-            ptor.debugger()
             
             expect($("[data-qa='modal-login']").isPresent()).toBe(true)
         })
