@@ -151,11 +151,12 @@
 
     i.cm-nose-up,
     i.cm-nose-down {
-      position: absolute;
+      .pos-abs;
       color: @cm-light-grey;
       font-size: 0.75*@cm-unit;
       margin-left:-0.575*@cm-unit;
       margin-right:0;
+      z-index: -1;
 
       &.flip{
         margin-left:0;

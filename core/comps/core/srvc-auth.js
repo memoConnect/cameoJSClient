@@ -451,18 +451,23 @@ angular.module('cmCore').service('cmAuth', [
         cmObject.addEventHandlingTo(auth);
 
         cmApi.on('identity:update', function (event, data){
-//            cmLogger.debug('cmAuth.on:identity:update')
-            auth.trigger('identity:updated', data)
+            //cmLogger.debug('cmAuth.on:identity:update')
+            auth.trigger('identity:updated', data);
         });
 
         cmApi.on('identity:new', function (event, data){
             //cmLogger.debug('cmAuth.on:identity:new')
-            auth.trigger('identity:new', data)
+            auth.trigger('identity:new', data);
         });
 
         cmApi.on('conversation:new-aePassphrase', function(event, data){
-           //cmLogger.debug('conversation:new-aePassphrase');
-            auth.trigger('conversation:update', data)
+            //cmLogger.debug('cmAuth.on:conversation:new-aePassphrase');
+            auth.trigger('conversation:update', data);
+        });
+
+        cmApi.on('account:update', function (event, data){
+            //cmLogger.debug('cmAuth.on:account:update')
+            auth.trigger('account:update', data);
         });
 
         return auth;

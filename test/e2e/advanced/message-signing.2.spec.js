@@ -1,5 +1,5 @@
 var util = require("../../lib/e2e/cmTestUtil.js")
-
+var config = require("../config/specs.js")
 
 describe('Message signing -', function () {
 
@@ -107,12 +107,12 @@ describe('Message signing -', function () {
                             })
                 }).then(function(){
                     ptor.wait(function(){
-                        return message.$("[data-qa = 'signed']").isPresent()
-                    }, null, 'message not signed.')
+                        return message.$("[data-qa='signed']").isPresent()
+                    }, config.waitForTimeout, 'message not signed.')
                     .then(function(){
                         return ptor.wait(function(){
-                            return message.$("[data-qa = 'valid']").isPresent()
-                        }, null, 'signature is not valid.')
+                            return message.$("[data-qa='valid']").isPresent()
+                        }, config.waitForTimeout, 'signature is not valid.')
                     })
                     .then(function(){
                         expect(message.$("[data-qa = 'authentic']").isPresent()).toBe(false)

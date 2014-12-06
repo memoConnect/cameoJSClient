@@ -14,14 +14,6 @@ describe('Route: Start - ', function () {
             util.waitForPageLoad('/start/welcome')
         })
 
-        /**
-         * @deprecated
-         */
-        //it("next step should be the /start/quickstart", function () {
-        //    util.waitAndClickQa("btn-next-step")
-        //    util.waitForPageLoad('/start/quickstart')
-        //})
-
         it("the next step should be key generation", function () {
             util.waitAndClickQa("btn-next-step")
             util.waitForPageLoad('/settings/identity/key/create')
@@ -56,14 +48,6 @@ describe('Route: Start - ', function () {
             testUserWithoutKey = util.createTestUser(undefined, 'start - 2')
             util.waitForPageLoad('/start/welcome')
         })
-
-        /**
-         * @deprecated
-         */
-        //it("next step should be the /start/quickstart", function () {
-        //    util.waitAndClickQa("btn-next-step")
-        //    util.waitForPageLoad('/start/quickstart')
-        //})
 
         it("the next step should be key generation", function () {
             util.waitAndClickQa("btn-next-step")

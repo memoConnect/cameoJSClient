@@ -27,6 +27,7 @@
         cm-tabindex="2"
         cm-label="ACCOUNT.PLACEHOLDER.PHONENUMBER"
         cm-info="ACCOUNT.INFO.INVALID.PHONENUMBER"
+        cm-verify="account.phoneNumber"
     ></cm-form-phonenumber>
 
     <hr class="margin-small" />
@@ -36,6 +37,7 @@
         cm-tabindex="3"
         cm-label="ACCOUNT.PLACEHOLDER.EMAIL"
         cm-info="ACCOUNT.INFO.INVALID.EMAIL"
+        cm-verify="account.email"
     ></cm-form-email>
 
     <ul class="border-top border-bottom mt5">
@@ -70,15 +72,15 @@
 
                 <hr class="margin-small" />
 
-                <cm-password ng-model="formData.password" cm-with-stars="false" cm-tabindex="5"></cm-password>
+                <cm-password ng-model="formData.password" cm-tabindex="5" cm-disable-required></cm-password>
             </section>
         </li>
     </ul>
 </form>
 
 <cm-footer>
-    <button class="cm-btn-grey" ng-click="saveAccount()" data-qa="btn-footer" cm-reactive>
-        <span ng-show="!showLoader && !isPristine" data-qa="btn-saveAccount">
+    <button class="cm-btn-grey" ng-click="saveAccount()" data-qa="btn-saveAccount" cm-reactive>
+        <span ng-show="!showLoader && !isPristine">
             {{'ACCOUNT.FOOTER.SAVE'|cmTranslate}}
             <i class="fa cm-checker"></i>
         </span>

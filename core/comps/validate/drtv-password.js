@@ -9,12 +9,10 @@ angular.module('cmValidate').directive('cmPassword', [
             templateUrl: 'comps/validate/drtv-password.html',
             scope: {
                 password: '=ngModel',
-                tabindex: '@cmTabindex',
-                withStars: '@cmWithStars'
+                tabindex: '@cmTabindex'
             },
 
             link: function(scope, attrs, element, ngModel){
-
                 // scope.$watch('showPasswordLengthError', function(error){
                 //     ngModel.$setValidity('password', !error);
                 // })
@@ -28,9 +26,8 @@ angular.module('cmValidate').directive('cmPassword', [
                 // })
             },
 
-            controller: function($scope){
-
-                $scope.withStars = $scope.withStars || true;
+            controller: function($scope, $element, $attrs){
+                $scope.required = ('cmDisableRequired' in $attrs) ? false : true;
 
                 $scope.nextTabIndex = parseInt($scope.tabindex) + 1;
 
