@@ -955,6 +955,7 @@ angular.module('cmConversations')
 //                cmLogger.debug('cmConversationModel.setLastMessage!');
 
                 if(this.messages.length > 0){
+
                     this.lastMessage = this.messages.reduce(function(value, message){
                         return value != undefined ? ( (value.created > message.created) ? value : message) : message;
                     });
@@ -1017,7 +1018,12 @@ angular.module('cmConversations')
                         self.decrypt();
                         self.setLastMessage();
 
-                        cmBrowserNotifications.showNewMessage(message.from, self.id);
+                        if(!message.state.is('notified')){
+                            message.state.set('notified');
+
+                            cmBrowserNotifications.showNewMessage(message.from, self.id);
+                        }
+
 
                         self.trigger('message:reInitFiles');
                     }
@@ -1048,7 +1054,7 @@ angular.module('cmConversations')
             });
 
             this.messages.on('last-message:read', function(event, message){
-                if(message.from.id != cmUserModel.data.identity.id && self.unreadMessages > 0 && cmSettings.get('enableUnreadMessages')){
+                if(message.from.id != cmUserModel.data.identity.id && (!message.isEncrypted() || message.state.is('decrypted') || message.state.is('incomplete')) && self.unreadMessages > 0 && cmSettings.get('enableUnreadMessages')){
                     self.unreadMessages = 0;
                     cmConversationsAdapter.sendReadStatus(self.id, message.id)
                 }

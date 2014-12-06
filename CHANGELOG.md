@@ -1,7 +1,43 @@
-0.4.4.
+Dev
+# WW 06.12.2014
+* account email & phoneNumber verification
+** on edit email or phoneNumber automatically notfication via mail or sms
+** on inputs are manually buttons for new verricationSecret and modal for confirm verification
+
+# WW 05.12.2014
+* ssl certificat checker
+** plugin for ios and android
+** checks on dev/stage against *.cameo.io certificate
+** checks on prod against cameonet.de certificate
+** if fingerprint doesn't match the cmConnectionHandler shows a modal and blocked the app
+
+# BS 03.12.2014
+* update Event Handling CAM-1422 
+** add "contact:update" in FE
+** add "friendRequest:rejected" in FE
+** add "identity:new" in FE
+
+# WW 02.12.2014
+* internet explorer 11 & iemobile 11 solved
+
+# AP 02.12.2014
+* message signing and verify
+
 # BS 28.11.2014
 * add Authentication Route to Desktop Modus, CAM-1374
 
+0.4.4.
+# BS 05.12.2014
+* fix CAM-1398, error will now shown, if key saving failed
+# BS 0..12.2014
+* fix CAM-1482, set timeout for browser notifications to 5s
+* fix CAM-1483, set z-index to choose element
+* fix CAM-1481, only one browser notification per message
+* fix CAM-1474, on MacOS Safari, in Desktop Mod, Footer will be displayed correct
+# BS 03.12.2014
+* fix CAM-1478, last-message:read will only send, if message is decrypted
+# BS 28.11.2014
+* add Authentication Route to Desktop Modus, CAM-1374
 
 0.4.3.
 # BS 27.11.2014

@@ -28,7 +28,7 @@
 
     <hr class="margin-small">
 
-    <cm-password ng-model="formData.password" cm-tabindex="2" cm-with-stars="true"></cm-password>
+    <cm-password ng-model="formData.password" cm-tabindex="2"></cm-password>
 
     <hr class="margin-small">
 
@@ -62,7 +62,7 @@
         <label>{{'REGISTER.PLACEHOLDER.PHONENUMBER'|cmTranslate}}</label>
         <div class="cm-input-ctn with-inside-icon" ng-class="{'cm-input-error':registrationForm.phone.$invalid}" data-qa="form-input" cm-input-watcher>
             <input
-                    tabindex="6" data-qa="input-phone"
+                    tabindex="5" data-qa="input-phone"
                     type="tel" id="phone" name="phone"
                     ng-model="formData.phone" cm-validate-phone cm-adaptive-change="3000" ng-minlength="6"
                     ng-class="{'cm-input-error':registrationForm.phone.$invalid}" />
@@ -87,7 +87,7 @@
         <label>{{'REGISTER.PLACEHOLDER.EMAIL'|cmTranslate}}</label>
         <div class="cm-input-ctn with-inside-icon" ng-class="{'cm-input-error':registrationForm.email.$invalid}" data-qa="form-input" cm-input-watcher>
             <input
-                    tabindex="5" data-qa="input-email"
+                    tabindex="6" data-qa="input-email"
                     type="text" id="email" name="email"
                     ng-model="formData.email" ng-class="{'cm-input-error':registrationForm.email.$invalid}"
                     cm-validate-email cm-adaptive-change="3000" />

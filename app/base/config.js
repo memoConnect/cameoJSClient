@@ -2,6 +2,7 @@ angular.module('cmConfig',[])
 .provider('cmConfig', [
     function(){
         var self = {
+            target: '<%= currentTarget %>',
             restApi: '<%= currentApiUrl %>',
             version: '<%= currentVersion %>',
 
@@ -17,9 +18,11 @@ angular.module('cmConfig',[])
     		WebworkerDefaultLimitMobile: 2,
     		WebworkerDefaultLimitApp: 2,
     		WebworkerDefaultLimitDesktop: 2,
+
+            browserNotificationTimeout: 5000,
             
             token: null,
-            supportedLanguages: ['de_DE', 'en_US'],
+            supportedLanguages: ['de', 'en'],
             pathToLanguages: 'i18n',
             cacheLangFiles: false,
             errorOnTodoInI18n: ('<%= errorOnTodoInI18n %>' == 'true'),
@@ -214,7 +217,8 @@ angular.module('cmConfig',[])
                     hasCtrl: true
                 },
                 'verification': {
-                    routes:['/verification/:secret']
+                    routes:['/verification/:secret'],
+                    hasCtrl: true
                 },
                 'server_down' : {
                     templateUrl: 'routes/landingpages/server_down.html'
@@ -245,9 +249,7 @@ angular.module('cmConfig',[])
                 }
             },
 
-            appLinks: JSON.parse('<%= appLinks %>'),
-            appProtocol: '<%= appProtocol %>',
-            appIcon: '<%= appIcon %>',
+            static: JSON.parse('<%= static %>'),
 
             autoLoginData: {
                 'Dumpuser local': {
@@ -261,7 +263,7 @@ angular.module('cmConfig',[])
             },
 
             menu: {
-                'conversation/new': {i18n:'MENU.NEW_TALK', icon:'cm-new-talk'},
+                'conversation/new': {i18n:'MENU.NEW_TALK', icon:'cm-new-talk', rootScopeCallback:'createNewConversation', 'data-qa':'menu-btn-new-conversation'},
                 'contact/create': {i18n:'MENU.NEW_CONTACT', icon:'cm-new-contact'},
                 'settings/identity/key/list': {i18n:'MENU.OWN_KEYS', icon:'cm-key'},
                 'contact/request/list': {'data-qa':'btn-menu-contact-requests', i18n:'MENU.REQUESTS', icon:'cm-new-contact-query', css:'cm-menu-notify qa-btn-request-notify', drtv:'cm-friend-request-counter'},
@@ -310,7 +312,7 @@ angular.module('cmConfig',[])
             autoLogin: ('<%= autoLogin %>' == 'true'),
             loadingBar: ('<%= loadingBar %>' == 'true'),
             enableDebug: ('<%= enableDebug %>' == 'true')
-        }
+        };
 
         this.get = function(key){
             return self[key];
@@ -318,7 +320,7 @@ angular.module('cmConfig',[])
 
         this.$get = function () {
             return self;
-        }
+        };
     }
 ])
 

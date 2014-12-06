@@ -5,8 +5,8 @@
 // controller 'languageCtrl' for language switch
 // Example:
 // <div ng-controller="LanguageCtrl">
-//		<a href="" ng-click="switchLang('en_US')">Englisch</a></li>
-//		<a href="" ng-click="switchLang('de_DE')">German</li>
+//		<a href="" ng-click="switchLang('en')">Englisch</a></li>
+//		<a href="" ng-click="switchLang('de')">German</li>
 // </div>
 // language files: /languages/lang-$langKey.json
 // language file format:

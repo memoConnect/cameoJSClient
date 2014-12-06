@@ -8,7 +8,7 @@ describe('Route Settings Account: ', function(){
     var loginName = 'testuser23_',
         genLoginName = '',
         phoneNumber = '+1234567890',
-        email = 'moep@moep.de',
+        email = 'devnull@cameo.io',
         oldPassword = 'password',
         newPassword = 'holymoly'
 
@@ -28,7 +28,7 @@ describe('Route Settings Account: ', function(){
 
         it('check pristine, click footer btn should go back', function(){
             expect($("[data-qa='btn-pristineBack']").isDisplayed()).toBeTruthy()
-            util.click('btn-footer')
+            util.click('btn-saveAccount')
             util.expectCurrentUrl('#/settings')
         })
 
@@ -114,7 +114,7 @@ describe('Route Settings Account: ', function(){
         it('enter new password without old password', function() {
             util.setVal('input-password', newPassword)
             util.setVal('input-passwordConfirm', newPassword)
-            util.click('btn-footer')
+            util.click('btn-saveAccount')
 
             util.waitForElementVisible("[data-qa='form-error-oldPassword-empty']")
             expect($("[data-qa='form-error-oldPassword-empty']").isDisplayed()).toBeTruthy()
@@ -122,7 +122,7 @@ describe('Route Settings Account: ', function(){
 
         it('enter wrong old password', function(){
             util.setVal('input-oldPassword','meop')
-            util.click('btn-footer')
+            util.click('btn-saveAccount')
             util.waitForElementVisible("[data-qa='form-error-oldPassword-invalid']")
             expect($("[data-qa='form-error-oldPassword-invalid']").isDisplayed()).toBeTruthy()
         })
@@ -130,9 +130,9 @@ describe('Route Settings Account: ', function(){
         it('enter right old password and save account', function(){
             util.clearInput('input-oldPassword')
             util.setVal('input-oldPassword',oldPassword)
-            util.click('btn-footer')
+            util.click('btn-saveAccount')
 
-            util.waitForLoader()
+            util.waitForLoader(1,'cm-footer')
         })
 
         it('check saved data & test login with new password', function(){

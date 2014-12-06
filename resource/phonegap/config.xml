@@ -42,6 +42,7 @@
     <gap:plugin name="nl.x-services.plugins.launchmyapp">
         <param name="URL_SCHEME" value="<%= appProtocol %>" />
     </gap:plugin>
+    <gap:plugin name="nl.x-services.plugins.sslcertificatechecker" />
     <!-- utils & debug -->
     <!--<gap:plugin name="com.verso.cordova.clipboard" version="0.1.0" />-->
     <gap:plugin name="de.appplant.cordova.plugin.hidden-statusbar-overlay" version="1.2.0" />

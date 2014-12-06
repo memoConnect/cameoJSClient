@@ -117,7 +117,7 @@ angular.module('cmCore').service('cmBrowserNotifications', [
 
                 var options = {
                     body: notify.body,
-                    icon: $window.location.origin + $window.location.pathname + cmConfig.appIcon
+                    icon: $window.location.origin + $window.location.pathname + cmConfig.static.appIcon
                 };
 
                 var notification = new Notification(title, options);
@@ -128,13 +128,9 @@ angular.module('cmCore').service('cmBrowserNotifications', [
                     notification.onclick = callbackOnClick;
                 }
 
-                /**
-                 * @TODO
-                 * TTL in settings
-                 */
                 $timeout(function(){
                     close(notification);
-                }, 3000)
+                }, cmConfig.browserNotificationTimeout)
 
            } else if(cmSettings.get('browserNotifications')) {
                 this.askPermission(notify);

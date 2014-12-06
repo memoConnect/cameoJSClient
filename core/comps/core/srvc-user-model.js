@@ -225,7 +225,7 @@ angular.module('cmCore')
                                     switch(response.status){
                                         case 0:
                                             cmLogger.debug('cmUserModel:init:failed:0');
-                                            $rootScope.$broadcast('connection:failed', function(){
+                                            $rootScope.$broadcast('cmConnectionHandler:failed', function(){
                                                 self.loadIdentity(accountData);
                                             });
                                             return false;
@@ -270,13 +270,13 @@ angular.module('cmCore')
             if(typeof data.email != 'string') {
                 this.data.account.email = data.email || this.data.account.email;
             } else {
-                this.data.account.email = {value:data.email};
+                this.data.account.email = {value:data.email,isVerified:false};
             }
 
             if(typeof data.phoneNumber != 'string') {
                 this.data.account.phoneNumber = data.phoneNumber || this.data.account.phoneNumber;
             } else {
-                this.data.account.phoneNumber = {value:data.phoneNumber};
+                this.data.account.phoneNumber = {value:data.phoneNumber,isVerified:false};
             }
 
             this.trigger('account:updated');
@@ -467,19 +467,24 @@ angular.module('cmCore')
                         key:     local_key.getPublicKey(),
                         keySize: local_key.getSize()
                     })
-                    .then(function(data){
-                        //data brings an id for the key
-                        local_key.importData(data)
+                    .then(
+                        function(data){
+                            //data brings an id for the key
+                            local_key.importData(data)
 
-                        //add public key to identity
-                        self.data.identity.keys.create(data)
+                            //add public key to identity
+                            self.data.identity.keys.create(data)
 
-                        //store the key with its new id:
-                        self.storeKey(local_key)
+                            //store the key with its new id:
+                            self.storeKey(local_key)
 
-                        // event for handshake modal
-                        self.trigger('key:saved', {keyId: data.id});
-                    })
+                            // event for handshake modal
+                            self.trigger('key:saved', {keyId: data.id});
+                        },
+                        function(){
+                            self.removeLocalKey(local_key);
+                        }
+                    )
                 }
             });
 
@@ -495,15 +500,20 @@ angular.module('cmCore')
             cmAuth
             .removePublicKey(keyToRemove.id)
             .then(function(){
-                // renew ls
-                if(local_keys.deregister(keyToRemove)){
-                    self.storageSave('rsa', local_keys.exportDataArray());
-                }
-                // clear identity
-                self.data.identity.keys.deregister(keyToRemove);
-
-                self.trigger('key:removed');
+                self.removeLocalKey(keyToRemove);
             });
+        };
+
+        this.removeLocalKey = function(keyToRemove){
+            var local_keys = this.loadLocalKeys();
+            // renew ls
+            if(local_keys.deregister(keyToRemove)){
+                this.storageSave('rsa', local_keys.exportDataArray());
+            }
+            // clear identity
+            this.data.identity.keys.deregister(keyToRemove);
+
+            this.trigger('key:removed');
         };
 
         /**
@@ -931,7 +941,7 @@ angular.module('cmCore')
             cmBoot.ready.userModel();
         });
 
-        var signOwnKeys_scheduled = false
+        var signOwnKeys_scheduled = false;
 
         cmAuth.on('identity:updated', function(event, data){
             if(typeof data.id != 'undefined' && data.id == self.data.identity.id) {
@@ -947,6 +957,17 @@ angular.module('cmCore')
                     }, 20000, false)
                 }
             }
+        });
+
+        cmAuth.on('identity:new', function(event, data){
+            if(typeof data.id != 'undefined' && data.id != self.data.identity.id) {
+                var tmpIdentity = cmIdentityFactory.clear(data).create(data);
+                self.data.identities.push(tmpIdentity);
+            }
+        });
+
+        cmAuth.on('account:update', function(event, data){
+            self.importAccount(data);
         });
 
     }

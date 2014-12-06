@@ -70,7 +70,7 @@ angular.module('cmContacts').service('cmContactsModel',[
                                     })[0]
                                 }
 
-        this.findByIdentityId =   function(identityId){
+        this.findByIdentityId = function(identityId){
             return this.contacts.filter(function(contact){
                 return contact.identity.id == identityId
             })[0]
@@ -311,6 +311,24 @@ angular.module('cmContacts').service('cmContactsModel',[
             }
         });
 
+        cmContactsAdapter.on('friendRequest:rejected', function(event, data){
+            if(data.to == cmUserModel.data.identity.id){
+                self.requests.forEach(function(request){
+                    if(request.identity.id == data.from)
+                        self.requests.deregister(request)
+                });
+
+                cmNotify.trigger('bell:unring');
+            }
+
+            if(data.from == cmUserModel.data.identity.id){
+                self.contacts.forEach(function(contact){
+                    if(contact.identity.id == data.to)
+                        self.contacts.deregister(contact)
+                });
+            }
+        });
+
         this.requests.on('register', function(){
             cmNotify.create({label: 'NOTIFICATIONS.TYPES.FRIEND_REQUEST', bell:true});
         });
@@ -325,6 +343,11 @@ angular.module('cmContacts').service('cmContactsModel',[
                     contact.identity.importData(data);
                 }
             }
+        });
+
+        cmContactsAdapter.on('contact:update', function(event, data){
+            //console.log('cmContactsModel contact:update', data)
+            self.contacts.create(data, true);
         });
 
         cmContactsAdapter.on('subscriptionId:changed', function(){

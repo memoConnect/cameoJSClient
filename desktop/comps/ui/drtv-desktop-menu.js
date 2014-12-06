@@ -2,9 +2,9 @@
 
 angular.module('cmDesktopUi').directive('cmDesktopMenu',[
     'cmUserModel', 'cmConfig', 'cmNotify', 'cmUtil',
-    '$location', '$window',
+    '$location', '$window', '$rootScope',
     function (cmUserModel, cmConfig, cmNotify, cmUtil,
-              $location, $window){
+              $location, $window, $rootScope){
         return {
             restrict: 'AE',
             scope: true,
@@ -33,6 +33,12 @@ angular.module('cmDesktopUi').directive('cmDesktopMenu',[
                 };
 
                 $scope.goTo = function(parentBtn, url, isSub){
+
+                    if(typeof parentBtn.rootScopeCallback == 'string' && typeof $rootScope[parentBtn.rootScopeCallback] == 'function'){
+                        $rootScope[parentBtn.rootScopeCallback]();
+                        return false;
+                    }
+
                     // for extern and performance
                     if('link' in parentBtn){
                         // file:///android_asset/www/index.html#/login

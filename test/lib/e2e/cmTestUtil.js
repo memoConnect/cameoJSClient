@@ -469,13 +469,19 @@ this.waitForProgressbar = function (timeout) {
     return this
 }
 
-this.checkWarning = function (qaValue) {
+this.checkWarning = function (qaValue, shouldBeHidden) {
     var css = "[data-qa='" + qaValue + "']"
     var warn = $(css)
-    expect(warn.isDisplayed()).toBe(true)
-    warn.getText().then(function (text) {
-        expect(text).not.toBe("")
-    })
+
+    if(shouldBeHidden){
+        expect(warn.isDisplayed()).toBeFalsy()
+    } else {
+        expect(warn.isDisplayed()).toBeTruthy()
+
+        warn.getText().then(function (text) {
+            expect(text).not.toBe("")
+        })
+    }
 
     return this
 }
@@ -671,7 +677,11 @@ this.waitAndClick = function (selector) {
     $(selector).click()
 }
 
-this.setVal = function (dataQa, text) {
+this.setVal = function (dataQa, text, withClear){
+
+    if(withClear)
+        this.clearInput(dataQa)
+
     $("[data-qa='" + dataQa + "']").sendKeys(text)
 }
 
@@ -697,6 +707,12 @@ this.createEncryptedConversation = function (subject, message) {
     self.waitAndClickQa("btn-confirm","cm-modal.active")
     self.waitForPageLoad("/conversation/*")
     self.waitForElements("cm-message", 1)
+
+    ptor.wait(function(){
+        return self.getVal("input-answer").then(function(answer){
+            return answer == ''
+        })
+    })
 }
 
 this.getConversation = function(subject){

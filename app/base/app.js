@@ -50,7 +50,7 @@ angular.module('cameoClient', [
             .cacheLangFiles( cmConfigProvider.get('cacheLangFiles') )
             .supportedLanguages( cmConfigProvider.get('supportedLanguages') )
             .pathToLanguages( cmConfigProvider.get('pathToLanguages') )
-            .preferredLanguage('en_US')   //for now
+            .preferredLanguage('en')
             .useLocalStorage()
 
         cmCallbackQueueProvider
@@ -209,9 +209,14 @@ angular.module('cameoClient', [
 ])
 // app run handling
 .run([
-    'cmNetworkInformation', 'cmPushNotificationAdapter', 'cmPhonegap', 'cmLauncher',
-    function(cmNetworkInformation, cmPushNotificationAdapter, cmPhonegap, cmLauncher){
+    'cmSslCertificateChecker', 'cmNetworkInformation', 'cmPushNotificationAdapter',
+    'cmPhonegap', 'cmLauncher',
+    function(cmSslCertificateChecker, cmNetworkInformation, cmPushNotificationAdapter,
+             cmPhonegap, cmLauncher){
+
         cmPhonegap.isReady(function(){
+            // check ssl certificate
+            cmSslCertificateChecker.init();
             // check internet connection
             cmNetworkInformation.init();
             // register device for pushnotification

@@ -2,6 +2,7 @@ angular.module('cmConfig',[])
 .provider('cmConfig', [
     function(){
         var self = {
+            target: '<%= currentTarget %>',
             restApi: '<%= currentApiUrl %>',
             version: '<%= currentVersion %>',
 
@@ -18,8 +19,10 @@ angular.module('cmConfig',[])
             WebworkerDefaultLimitApp: 2,
             WebworkerDefaultLimitDesktop: 2,
 
+            browserNotificationTimeout: 5000,
+
             token: null,
-            supportedLanguages: ['de_DE', 'en_US'],
+            supportedLanguages: ['de', 'en'],
             pathToLanguages: 'i18n',
             cacheLangFiles: false,
             errorOnTodoInI18n: ('<%= errorOnTodoInI18n %>' == 'true'),
@@ -230,7 +233,7 @@ angular.module('cmConfig',[])
                 }
             },
 
-            appIcon: '<%= appIcon %>',
+            static: JSON.parse('<%= static %>'),
 
             autoLoginData: {
                 'Dumpuser local': {
@@ -244,7 +247,7 @@ angular.module('cmConfig',[])
             },
 
             menu: {
-                'conversation/new': {i18n:'MENU.NEW_TALK', icon:'cm-new-talk'},
+                'conversation/new': {i18n:'MENU.NEW_TALK', icon:'cm-new-talk', rootScopeCallback:'createNewConversation'},
                 'contact/create': {i18n:'MENU.NEW_CONTACT', icon:'cm-new-contact'},
                 //'settings/identity/key/list': {i18n:'MENU.OWN_KEYS', icon:'cm-key'},
                 'contact/request/list': {'data-qa':'btn-menu-contact-requests', i18n:'MENU.REQUESTS', icon:'cm-new-contact-query', css:'cm-menu-notify qa-btn-request-notify', drtv:'cm-friend-request-counter'},

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="cameoClient">
+<html ng-app="cameoClient">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -35,7 +35,7 @@
 
     <div id="cm-bg-wrapper"></div>
 
-    <div id="cm-app" cm-offline-handler>
+    <div id="cm-app" cm-connection-handler>
         <div ng-view cm-view class="view-frame cm-content" ng-class="css"></div>
     </div>
 </body>

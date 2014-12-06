@@ -136,14 +136,14 @@
     },
 
     "LANG": {
-        "DE_DE": "Deutsch",
-        "EN_US": "Englisch",
+        "DE": "Deutsch",
+        "EN": "Englisch",
         "SWITCH": {
             "SUCCESS": "Sprache auf {{lang}} gestellt.",
             "ERROR": "Konnte Sprache nicht auf {{lang}} stellen.",
             "LABEL": {
-                "DE_DE": "@:LANG.DE_DE",
-                "EN_US": "@:LANG.EN_US"
+                "DE": "@:LANG.DE",
+                "EN": "@:LANG.EN"
             }
         }
     },
@@ -666,12 +666,25 @@
                 "EMPTY": "Bitte ein Passwort eingeben und bestätigen!"
             }
         },
+        "MODAL_VERIFICATION": {
+            "HEADER": "@todo Verifizierung",
+            "TEXT": "@todo Ihnen wurde soeben eine Nachricht zugeschickt. In dieser Nachricht finden Sie einen Link und einen Code. Den Link können Sie einfach klicken oder den Code hier eingeben.",
+            "LABEL": {
+                "CANCEL": "@:MODAL.LABEL.CANCEL",
+                "CONFIRM": "@todo Bestätigen"
+            },
+            "INFO": {
+                "EMPTY": "@todo Bitte geben Sie einen Code ein",
+                "INVALID": "@todo Der Code ist entweder ungültig oder abgelaufen."
+            }
+        },
         "VALIDATE_EMAIL": {
             "LABEL": "E-Mail",
             "PLACEHOLDER": "E-Mail",
             "INFO": {
                 "INVALID": "Bitte geben Sie eine korrekte E-Mail-Adresse ein!",
-                "EMPTY": "Sie haben keine E-Mail Adresse eingegeben."
+                "EMPTY": "Sie haben keine E-Mail Adresse eingegeben.",
+                "ISNT_VERIFIED": "@todo Diese E-Mail ist noch nicht verifiziert. Klicken Sie auf das {{icon}}-Icon um einen neue Verifizierung auszulösen. Sie bekommen nach auslösen der Verifizierung eine E-Mail mit einem Link."
             }
         },
         "VALIDATE_PHONE": {
@@ -679,7 +692,8 @@
             "PLACEHOLDER": "Mobilfunknummer",
             "INFO": {
                 "INVALID_PHONE_NUMBER": "Die Nummer scheint keine gültige Mobilfunknummer zu sein.",
-                "EMPTY": "Sie haben keine Mobilfunknummer eingegeben."
+                "EMPTY": "Sie haben keine Mobilfunknummer eingegeben.",
+                "ISNT_VERIFIED": "@todo Diese Telefonnummer ist noch nicht verifiziert. Klicken Sie auf das {{icon}}-Icon um einen neue Verifizierung auszulösen. Sie bekommen nach auslösen der Verifizierung eine SMS mit einem Link."
             }
         },
         "VALIDATE_MIXED": {
@@ -794,9 +808,15 @@
             "CANCEL": "Abbrechen",
             "START": "Start"
         },
-        "OFFLINE_HANDLER": {
-            "MESSAGE": "Es konnte keine Verbindung zu cameoNet hergestellt werden.<br>Bitte versuchen Sie es später noch einmal oder überprüfen Sie ihre Internet Verbindung und drücken 'Neu verbinden'",
-            "FOOTER": "Neu verbinden"
+        "CONNECTION_HANDLER": {
+            "FAILED": {
+                "TEXT": "Es konnte keine Verbindung zu cameoNet hergestellt werden.<br>Bitte versuchen Sie es später noch einmal oder überprüfen Sie ihre Internet Verbindung und drücken 'Neu verbinden'",
+                "FOOTER": "Neu verbinden"
+            },
+            "NOTSECURE": {
+                "TEXT": "@todo Es konnte keine sichere Verbindung zu unseren Servern aufgebaut werden. Das erwartete Zertifkat stimmt nicht mit dem überein was der Server zurück liefert. Dies könnte einen \"Man in the middle\" Attacke sein.",
+                "FOOTER": "@todo neu überprüfen"
+            }
         },
         "EXIT": {
             "HEADER": "App schließen",
@@ -873,6 +893,46 @@
             },
             "FILESIZE": {
                 "EXCEEDED": "Die maximale Dateigröße wurde überschritten. <br>Die Datei die Sie hochladen möchten ist {{fileSize | cmBytesHumanReadable}} groß. <br>Die maximale Dateigröße beträgt <strong>{{maxFileSize | cmBytesHumanReadable}}</strong>."
+            }
+        }
+    } ,
+
+    "BACKEND": {
+        "PUSH_MESSAGE": {
+            "NEW_MESSAGE": {
+                "TITLE": "Neue Nachricht",
+                "MSG": "Nachricht von {{sender}}"
+            },
+            "FRIEND_REQUEST": {
+                "TITLE": "Freundschaftsanfrage",
+                "MSG": "Freundschaftsanfrage von {{sender}}"
+            }
+        },
+        "VERIFICATION": {
+            "SMS": {
+                "SENDER": "cameoNet",
+                "MESSAGE": "Der Code zur Verifikation lautet \"{{code}}\". Sie können auch auf folgenden Link klicken: {{link}}"
+            },
+            "MAIL": {
+                "SENDER": "cameoNet",
+                "MESSAGE": "Willkommen bei cameoNet,\nder Code zur verifikation dieser E-Mailaddresse lautet \"{{code}}\". Alternativ können Sie auch auf folgenden Link klicken:\n{{link}}",
+                "SUBJECT": "Verifikation Ihrer E-Mailaddresse bei cameoNet"
+            },
+            "LANDING_PAGE": {
+                "SUCCESS": "Verifikation erfolgreich",
+                "EXPIRED": "Verifikationscode ist abgelaufen",
+                "ERROR": "Es ist ein Fehler aufgetreten"
+            }
+        },
+        "RESET_PASSWORD": {
+            "SMS": {
+                "SENDER": "cameoNet",
+                "MESSAGE": "Der Code zum Passwortreset lautet \"{{code}}\". Sie können auch auf folgenden Link klicken: {{link}}"
+            },
+            "MAIL": {
+                "SENDER": "cameoNet",
+                "MESSAGE": "Willkommen bei cameoNet,\nder Code zum Passwortreset lautet \"{{code}}\". Alternativ können Sie auch auf folgenden Link klicken:\n{{link}}",
+                "SUBJECT": "Passwortreset bei cameoNet"
             }
         }
     }

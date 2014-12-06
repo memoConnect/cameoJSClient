@@ -51,7 +51,7 @@ angular.module('cameoClient', [
             .cacheLangFiles( cmConfigProvider.get('cacheLangFiles') )
             .supportedLanguages( cmConfigProvider.get('supportedLanguages') )
             .pathToLanguages( cmConfigProvider.get('pathToLanguages') )
-            .preferredLanguage('en_US')   //for now
+            .preferredLanguage('en')
             .useLocalStorage()
 
         cmCallbackQueueProvider

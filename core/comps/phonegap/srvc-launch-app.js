@@ -11,7 +11,7 @@ angular.module('cmPhonegap')
             params: {},
 
             init: function(){
-                // triggered at phonegapCameoConfig 'resources/tempaltes/phonegap/config.js'
+                // triggered at phonegapCameoConfig 'resources/phonegap/config.js'
                 angular.element($window).on('launchApp',function(event) {
                     var url = event.detail.url,
                         protocolRegexp = '.*://',
