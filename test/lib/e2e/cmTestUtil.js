@@ -469,13 +469,19 @@ this.waitForProgressbar = function (timeout) {
     return this
 }
 
-this.checkWarning = function (qaValue, isntDisplayed) {
+this.checkWarning = function (qaValue, shouldBeHidden) {
     var css = "[data-qa='" + qaValue + "']"
     var warn = $(css)
-    expect(warn.isDisplayed()).toBe(isntDisplayed ? false : true)
-    warn.getText().then(function (text) {
-        expect(text).not.toBe("")
-    })
+
+    if(shouldBeHidden){
+        expect(warn.isDisplayed()).toBeFalsy()
+    } else {
+        expect(warn.isDisplayed()).toBeTruthy()
+
+        warn.getText().then(function (text) {
+            expect(text).not.toBe("")
+        })
+    }
 
     return this
 }
@@ -671,7 +677,11 @@ this.waitAndClick = function (selector) {
     $(selector).click()
 }
 
-this.setVal = function (dataQa, text) {
+this.setVal = function (dataQa, text, withClear){
+
+    if(withClear)
+        this.clearInput(dataQa)
+
     $("[data-qa='" + dataQa + "']").sendKeys(text)
 }
 

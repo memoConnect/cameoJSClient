@@ -132,7 +132,7 @@ describe('Route Settings Account: ', function(){
             util.setVal('input-oldPassword',oldPassword)
             util.click('btn-saveAccount')
 
-            util.waitForLoader()
+            util.waitForLoader(1,'cm-footer')
         })
 
         it('check saved data & test login with new password', function(){

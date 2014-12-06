@@ -6,10 +6,10 @@
         </div>
 
         <cm-info-bubble class="cm-alert" ng-show="error.empty || error.invalid">
-            <div ng-show="error.empty" data-qa="">
+            <div ng-show="error.empty" data-qa="info-secretIsEmpty">
                 <i class="fa cm-info"></i> {{'DRTV.MODAL_VERIFICATION.INFO.EMPTY'|cmTranslate}}
             </div>
-            <div ng-show="error.invalid" data-qa="">
+            <div ng-show="error.invalid" data-qa="info-secretIsInvalid">
                 <i class="fa cm-info"></i> {{'DRTV.MODAL_VERIFICATION.INFO.INVALID'|cmTranslate}}
             </div>
         </cm-info-bubble>

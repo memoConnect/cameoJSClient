@@ -31,7 +31,9 @@ angular.module('cmValidate').directive('cmConfirmVerification',[
                     if($scope.cmForm.$error.required)
                         $scope.error.empty = true;
 
-                    if($scope.cmForm.$valid) {
+                    if(!$scope.cmForm.$valid) {
+                        loader.stop();
+                    } else {
                         cmVerify.confirm($scope.verifySecret).then(
                             function () {
                                 cmUserModel.one('account:updated', function(){

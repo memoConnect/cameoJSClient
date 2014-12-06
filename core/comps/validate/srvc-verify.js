@@ -20,6 +20,28 @@ angular.module('cmValidate').service('cmVerify',[
         }
 
         var self = {
+            handleInput: function(type, scope){
+                scope.verificationManuallyIcon = '<i class="fa cm-checkbox-wrong"></i>';
+
+                scope.verfication = {
+                    isVisible: false,
+                    isVerified: false
+                };
+
+                scope.$watch('verificationData', function(data){
+                    if(data && data.value != '') {
+                        scope.verfication.isVisible = true;
+                        scope.verfication.isVerified = 'isVerified' in data ? data.isVerified : false;
+                    } else
+                        scope.verfication.isVisible = false;
+                });
+
+                scope.doVerification = function(){
+                    if(!scope.verfication.isVerified)
+                        self.send(type);
+                };
+            },
+
             send: function(type){
                 var data = {};
 
@@ -28,7 +50,7 @@ angular.module('cmValidate').service('cmVerify',[
                         data.verifyPhoneNumber = true;
                     break;
                     case 'email':
-                        data.verifyMail = true;
+                        data.verifyEmail = true;
                     break;
                 }
 
@@ -44,6 +66,7 @@ angular.module('cmValidate').service('cmVerify',[
                     }
                 );
             },
+
             confirm: function(secret){
                 return cmApi.post({
                     path: '/verify/'+secret

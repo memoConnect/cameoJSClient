@@ -14,14 +14,10 @@ describe('Route Settings Account Verification: ', function(){
     function getVerificationSecret() {
         verifySecret = undefined
 
-        console.log('getTestUserNotifications',testUser)
-
         ptor.wait(function () {
             return util.getTestUserNotifications(testUser).then(function (response) {
-                console.log('getVerificationSecret',response['data'])
-
-                //if(response['data'].length > 0 && 'content' in response['data'][0])
-                //    purlId = response['data'][0]['content'].split("/p/")[1]
+                if(response['data'].length > 0 && 'content' in response['data'][0])
+                    verifySecret = response['data'][0]['content'].split("\"")[1]
 
                 return verifySecret != undefined
             })
@@ -64,24 +60,52 @@ describe('Route Settings Account Verification: ', function(){
             })
         })
 
-        it('submit email and check if info bubble appear', function(){
-
+        it('save phoneNumber and check if info bubble appear', function(){
             util.checkWarning('info-emailNotVerified',true)
             util.checkWarning('info-phoneNumberNotVerified',true)
 
             util.setVal('input-phoneNumber',phoneNumber)
 
             util.click('btn-saveAccount')
-            util.waitForLoader()
+            util.waitForLoader(1,'cm-footer')
 
-            // info bubble appear
+            // phone info bubble for do verification
+            expect( $("[data-qa='btn-manuallyPhoneNumberVerfication']").getAttribute('class')).toContain('cm-checkbox-wrong')
             util.checkWarning('info-phoneNumberNotVerified')
 
+            // automatic generated secret -> get and clear
             getVerificationSecret()
+        })
 
-            // info-phoneNumberNotVerified
+        it('start manually verification', function(){
+            util.click('btn-manuallyPhoneNumberVerfication')
+            // get manually generated secret
+            getVerificationSecret()
+        })
 
+        it('check verfication modal', function(){
+            // check default all error info bubbles are hidden
+            util.checkWarning('info-secretIsEmpty', true)
+            util.checkWarning('info-secretIsInvalid', true)
+            // send enter on empty input
+            util.setVal('inp-verifySecret', protractor.Key.ENTER)
+            util.checkWarning('info-secretIsEmpty')
 
+            // check invalidation
+            util.setVal('inp-verifySecret', 'moep', true)
+            util.click('btn-confirmVerification')
+            util.waitForLoader(1,'cm-modal')
+            util.checkWarning('info-secretIsInvalid')
+
+            // type right secret
+            util.setVal('inp-verifySecret', verifySecret, true)
+            util.click('btn-confirmVerification')
+            util.waitForLoader(1,'cm-modal')
+            util.waitForModalClose()
+
+            // phone info bubble for verification is appear
+            expect($("[data-qa='btn-manuallyPhoneNumberVerfication']").getAttribute('class')).toContain('cm-checkbox-right')
+            util.checkWarning('info-phoneNumberNotVerified',true)
         })
 
         it('delete test user', function(){

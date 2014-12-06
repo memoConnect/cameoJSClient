@@ -171,7 +171,7 @@
       "INFO": {
         "INVALID_PHONE_NUMBER": "The entered value does not seem to be a vaild mobile number.",
         "EMPTY": "You have not entered a valid mobile number",
-        "ISNT_VERIFIED":  "@todo Diese Telefonnummer ist noch nicht verifiziert. Klicken Sie auf das {{icon}}-Icon um einen neue Verifizierung auszulösen. Sie bekommen nach auslösen der Verifizierung eine SMS mit einem Link."
+        "ISNT_VERIFIED":  "@todo This phonenumber isn't verified. Click on this {{icon}}-Icon to start a new verification. We send you a sms with a link or code to verify."
       },
       "PLACEHOLDER": "Mobile number",
       "LABEL": "Mobile number"
@@ -187,7 +187,7 @@
     "PASSWORD": {
       "INFO": {
         "EMPTY": "Please add a password and confirm.",
-        "MIN_LETTER_COUNT": "Bitte mindestens {{count}} Zeichen verwenden!"
+        "MIN_LETTER_COUNT": "@todo Please enter {{count}} chars!"
       },
       "PASSWORD": "Password",
       "PASSWORD_CONFIRM": "Confirm Password"
@@ -196,7 +196,7 @@
       "INFO": {
         "INVALID": "Please enter a correct e-mail.",
         "EMPTY": "You have not entered an e-mail.",
-        "ISNT_VERIFIED": "@todo Diese E-Mail ist noch nicht verifiziert. Klicken Sie auf das {{icon}}-Icon um einen neue Verifizierung auszulösen. Sie bekommen nach auslösen der Verifizierung eine E-Mail mit einem Link."
+        "ISNT_VERIFIED": "@todo This email isn't verified. Click on this {{icon}}-Icon to start a new verification. You get a email with a link and code for the verification."
       },
       "PLACEHOLDER": "e-mail",
       "LABEL": "e-mail"
@@ -251,6 +251,18 @@
         },
         "MIN_LETTER_COUNT": "Please use at least {{count}} characters.",
         "MAX_LETTER_COUNT": "Please use a maximum of {{count}} characters."
+      }
+    },
+    "MODAL_VERIFICATION": {
+      "HEADER": "@todo Verification",
+      "TEXT": "@todo We send you a message. In this message you find a link and a code. The link you can click or enter the code here.",
+      "LABEL": {
+        "CANCEL": "@:MODAL.LABEL.CANCEL",
+        "CONFIRM": "@todo Confirm"
+      },
+      "INFO": {
+        "EMPTY": "@todo Please enter a code",
+        "INVALID": "@todo The code is invalid or expired."
       }
     }
   },

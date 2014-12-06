@@ -654,7 +654,7 @@
         },
         "MODAL_VERIFICATION": {
             "HEADER": "@todo Verifizierung",
-            "TEXT": "@todo Ihnen wurde soeben eine Nachricht zugeschickt. In dieser Nachricht finden Sie einen Link und einen Code. Den Link können Sie einfach klicken und den Code können Sie hier eingeben.",
+            "TEXT": "@todo Ihnen wurde soeben eine Nachricht zugeschickt. In dieser Nachricht finden Sie einen Link und einen Code. Den Link können Sie einfach klicken oder den Code hier eingeben.",
             "LABEL": {
                 "CANCEL": "@:MODAL.LABEL.CANCEL",
                 "CONFIRM": "@todo Bestätigen"
