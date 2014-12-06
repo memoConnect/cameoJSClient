@@ -1,4 +1,9 @@
 Dev
+# WW 06.12.2014
+* account email & phoneNumber verification
+** on edit email or phoneNumber automatically notfication via mail or sms
+** on inputs are manually buttons for new verricationSecret and modal for confirm verification
+
 # WW 05.12.2014
 * ssl certificat checker
 ** plugin for ios and android
@@ -11,6 +16,15 @@ Dev
 ** add "contact:update" in FE
 ** add "friendRequest:rejected" in FE
 ** add "identity:new" in FE
+
+# WW 02.12.2014
+* internet explorer 11 & iemobile 11 solved
+
+# AP 02.12.2014
+* message signing and verify
+
+# BS 28.11.2014
+* add Authentication Route to Desktop Modus, CAM-1374
 
 0.4.4.
 # BS 04.12.2014
