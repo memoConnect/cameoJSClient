@@ -1,10 +1,10 @@
 <article class="content cm-form-style">
-    <h3>{{'SETTINGS.PAGES.IDENTITY.KEYS.PRIVATE_KEY'|cmTranslate}}</h3>
+    <h3 ng-show="!isError">{{'SETTINGS.PAGES.IDENTITY.KEYS.PRIVATE_KEY'|cmTranslate}}</h3>
 
-    <textarea ng-model="privKey" ng-readonly="isValid" data-qa="display-private-key"></textarea>
+    <textarea ng-model="privKey" ng-readonly="isValid" data-qa="display-private-key" ng-show="!isError"></textarea>
 
-    <h3 ng-if="keySize" class="mt15">{{'SETTINGS.PAGES.IDENTITY.KEYS.KEY_SIZE'|cmTranslate}}: {{keySize}}</h3>
-    <div ng-show="isValid">
+    <h3 ng-if="isValid && keySize && !isError" class="mt15">{{'SETTINGS.PAGES.IDENTITY.KEYS.KEY_SIZE'|cmTranslate}}: {{keySize}}</h3>
+    <div ng-show="isValid && !isError">
         <h3>{{'SETTINGS.PAGES.IDENTITY.KEYS.PUBLIC_KEY'|cmTranslate}}</h3>
 
         <textarea ng-model="pubKey" readonly="readonly" data-qa="display-public-key"></textarea>
@@ -16,15 +16,24 @@
             <i class="fa cm-write"></i>
         </div>
     </div>
+
+    <cm-info-bubble class="cm-alert" ng-show="isError">
+        <i class="fa cm-info"></i>
+        {{'SETTINGS.PAGES.IDENTITY.KEYS.WARN.IMPORT_FAILED'|cmTranslate}}
+    </cm-info-bubble>
 </article>
 
 <cm-footer>
-    <button ng-click="import()" class="cm-btn-grey" data-qa="btn-import-key" ng-if="!isValid" cm-reactive>
+    <button ng-click="import()" class="cm-btn-grey" data-qa="btn-import-key" ng-if="!isValid && !isError" cm-reactive>
         {{'SETTINGS.PAGES.IDENTITY.KEYS.IMPORT.BUTTON'|cmTranslate}}
         <i class="fa cm-checker"></i>
     </button>
-    <button ng-click="store()" class="cm-btn-grey" data-qa="btn-save-key" ng-if="isValid" cm-reactive>
+    <button ng-click="store()" class="cm-btn-grey" data-qa="btn-save-key" ng-if="isValid && !isError" cm-reactive>
         {{'SETTINGS.PAGES.IDENTITY.KEYS.STORE_KEYPAIR'|cmTranslate}}
         <i class="fa cm-checker"></i>
+    </button>
+    <button ng-click="goTo('/settings/identity/key/list')" class="cm-btn-grey" data-qa="btn-import-error" ng-if="isError" cm-reactive>
+        {{'NAVIGATION.TABS.BACK'|cmTranslate}}
+        <i class="fa cm-out"></i>
     </button>
 </cm-footer>
