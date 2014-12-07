@@ -191,6 +191,7 @@ angular.module('cameoClient', [
 
                 // add route to provider
                 angular.forEach(routes,function(route){
+                    console.log(routeParams)
                     $routeProvider.
                         when(route, routeParams);
                 });
@@ -249,7 +250,7 @@ angular.module('cameoClient', [
     function($rootScope, $location, $route,
              cmUserModel){
         $rootScope.$on('$routeChangeSuccess', function(){
-            var guestVisibility = $route.current.$$route.guests,
+            var guestVisibility = '$$route' in $route.current && 'guests' in $route.current.$$route ?  $route.current.$$route.guests : false,
                 path = $location.$$path;
             // exists none token then otherwise to login
             if (cmUserModel.isAuth() === false){

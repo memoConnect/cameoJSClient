@@ -458,11 +458,12 @@
     "LABEL": {
       "REMEMBER_ME": "Remember.",
       "SUBMIT": "Log in",
-      "AUTO": "Choose auto login"
+      "PASSWORD_LOST": "@todo Password missing?"
     },
     "PLACEHOLDER": {
       "PASSWORD": "Password",
-      "USERNAME": "Username"
+      "USERNAME": "Username",
+      "AUTOLOGIN": "Choose auto login"
     },
     "LINK": "Login",
     "HEADING": "Login",
@@ -474,6 +475,18 @@
       "X": "Something went wrong.<br>Please try again."
     }
   },
+  "PASSWORD_LOST": {
+  "HEADING": "@todo Password missing?",
+  "INFO": {
+    "TITLE_TEXT": "@todo Here you can enter your loginName, cameoId, verified email or phonenumber to reset your password. After successful indentification you will get a email or sms in which you can find a link."
+  },
+  "PLACEHOLDER": {
+    "MIXED": "@todo loginName, cameoId, email oder telephone"
+  },
+  "LABEL": {
+    "SUBMIT": "@todo Password reset"
+  }
+},
   "SECURITY_ASPECT": {
     "CONVERSATION": {
       "ENCRYPTED": {

@@ -1,20 +1,22 @@
 'use strict';
 
 angular.module('cmWidgets').directive('cmWidgetPasswordReset', [
-    'cmAuth', 'cmLoader',
+    'cmAuth', 'cmLoader', 'cmCrypt',
     '$rootScope', '$q',
-    function (cmAuth, cmLoader,
+    function (cmAuth, cmLoader, cmCrypt,
               $rootScope, $q) {
         return {
             restrict: 'E',
-            scope: true,
-            templateUrl: 'widgets/password/reset/wdgt-password-reset.html',
+            scope: {
+                resetId: '=cmData'
+            },
+            templateUrl: 'widgets/password/wdgt-password-lost.html',
 
             controller: function ($scope) {
                 var loader = new cmLoader($scope);
 
                 $scope.formData = {
-                    mixed: ''
+                    password: ''
                 };
 
                 /**
@@ -24,6 +26,19 @@ angular.module('cmWidgets').directive('cmWidgetPasswordReset', [
                 $scope.validateForm = function () {
                     var deferred = $q.defer(),
                         objectData = {};
+
+                    function checkPassword(){
+                        // check password
+                        if ($scope.formData.password == ''
+                            || $scope.formData.password == 'none'
+                            || $scope.formData.password == undefined) {
+                            $rootScope.$broadcast('cm-password:empty');
+                        } else {
+                            objectData.newPassword = $scope.formData.password;
+                        }
+                    }
+
+                    checkPassword();
 
                     if ($scope.cmForm.$valid !== false) {
                         deferred.resolve(objectData);
@@ -44,8 +59,9 @@ angular.module('cmWidgets').directive('cmWidgetPasswordReset', [
                     loader.start();
 
                     $scope.validateForm().then(
-                        function(objectChange) {
-                            cmAuth.sendPasswordReset(objectChange).then(
+                        function(objectData) {
+
+                            cmAuth.resetPassword(objectData, $scope.resetId).then(
                                 function(){
                                     loader.stop();
                                     // everything is fine goTo login
@@ -53,7 +69,8 @@ angular.module('cmWidgets').directive('cmWidgetPasswordReset', [
                                 },
                                 function(){
                                     loader.stop();
-                                    // TODO errorcodes
+
+                                    //PASSWORD.RESET.EXPIRED
                                 }
                             )
                         },

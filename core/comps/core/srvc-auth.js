@@ -448,9 +448,16 @@ angular.module('cmCore')
                 return localStorage.getItem('twoFactorToken');
             },
 
-            sendPasswordReset: function(data){
+            sendPasswordLost: function(data){
                 return cmApi.post({
-                    path: '/passwordReset',
+                    path: '/resetPassword',
+                    data: data
+                });
+            },
+
+            resetPassword: function(data, resetId){
+                return cmApi.post({
+                    path: '/resetPassword/'+resetId,
                     data: data
                 });
             }

@@ -168,11 +168,20 @@ angular.module('cmConfig',[])
                     guests: true,
                     resolvePurl: true
                 },
-                'password-reset': {
-                    templateUrl: 'routes/password-reset/password-reset.html',
+                'password-lost': {
+                    templateUrl: 'routes/password/lost/password-lost.html',
                     routes:[
-                        '/password-reset'
+                        '/password/lost',
+                        '/password'
                     ],
+                    guests: true
+                },
+                'password-reset': {
+                    templateUrl: 'routes/password/reset/password-reset.html',
+                    routes:[
+                        '/password/reset/:resetId'
+                    ],
+                    hasCtrl: true,
                     guests: true
                 },
                 'registration': {

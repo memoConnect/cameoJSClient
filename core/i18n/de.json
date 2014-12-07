@@ -21,7 +21,7 @@
         "LABEL": {
             "SUBMIT": "Einloggen",
             "REMEMBER_ME": "Merken.",
-            "PASSWORD_RESET": "@todo Passwort vergessen?"
+            "PASSWORD_LOST": "@todo Passwort vergessen?"
         },
         "LINK": "Login",
         "PLACEHOLDER": {
@@ -38,13 +38,23 @@
         }
     },
 
-    "PASSWORD_RESET": {
-        "HEADING": "@todo Passwortrücksetzung",
+    "PASSWORD_LOST": {
+        "HEADING": "@todo Passwort vergessen?",
         "INFO": {
             "TITLE_TEXT": "@todo Hier können Sie anhand von loginName, cameoId, verifizierte Mail oder Telefonnummer Ihr Passwort zurücksetzen lassen. Nach eingabe der Indentifikation wird Ihnen eine Nachricht übermittelt in dem Sie einen Link finden."
         },
         "PLACEHOLDER": {
             "MIXED": "@todo loginName, cameoId, E-Mail oder Telefon"
+        },
+        "LABEL": {
+            "SUBMIT": "@todo Passwort vergessen!"
+        }
+    },
+
+    "PASSWORD_RESET": {
+        "HEADING": "@todo Passwortrücksetzung",
+        "INFO": {
+            "TITLE_TEXT": "@todo Sie haben auf den Link in der Nachricht geklickt. Jetzt haben Sie die möglichkeit das Passwort neu zuwählen. Bitte wiederholen Sie die Eingabe."
         },
         "LABEL": {
             "SUBMIT": "@todo Passwort zurücksetzen"
