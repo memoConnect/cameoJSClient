@@ -10,12 +10,13 @@ angular.module('cmWidgets').directive('cmWidgetPasswordReset', [
             scope: {
                 resetId: '=cmData'
             },
-            templateUrl: 'widgets/password/wdgt-password-lost.html',
+            templateUrl: 'widgets/password/wdgt-password-reset.html',
 
             controller: function ($scope) {
                 var loader = new cmLoader($scope);
 
                 $scope.formData = {
+                    resetCode: '',
                     password: ''
                 };
 
@@ -61,7 +62,8 @@ angular.module('cmWidgets').directive('cmWidgetPasswordReset', [
                     $scope.validateForm().then(
                         function(objectData) {
 
-                            cmAuth.resetPassword(objectData, $scope.resetId).then(
+                            //$scope.resetId
+                            cmAuth.resetPassword(objectData, $scope.formData.resetCode).then(
                                 function(){
                                     loader.stop();
                                     // everything is fine goTo login

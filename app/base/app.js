@@ -191,7 +191,6 @@ angular.module('cameoClient', [
 
                 // add route to provider
                 angular.forEach(routes,function(route){
-                    console.log(routeParams)
                     $routeProvider.
                         when(route, routeParams);
                 });

@@ -54,7 +54,10 @@
     "PASSWORD_RESET": {
         "HEADING": "@todo Passwortrücksetzung",
         "INFO": {
-            "TITLE_TEXT": "@todo Sie haben auf den Link in der Nachricht geklickt. Jetzt haben Sie die möglichkeit das Passwort neu zuwählen. Bitte wiederholen Sie die Eingabe."
+            "TITLE_TEXT": "@todo Sie haben auf den Link in der Nachricht geklickt. Benutzten Sie den Code und jetzt haben Sie die möglichkeit das Passwort zuändern. Bitte wiederholen Sie die Eingabe."
+        },
+        "PLACEHOLDER": {
+            "CODE": "@todo Code aus der Nachricht"
         },
         "LABEL": {
             "SUBMIT": "@todo Passwort zurücksetzen"
