@@ -55,7 +55,7 @@ angular.module('cmValidate')
                 if(!searchElement(element)){
                     elements.push({name: element.$name, isPristine: true});
                 } else {
-                    cmLogger.warn('cmFormPristine detects same element more then one time!');
+                    cmLogger.debug('cmFormPristine detects same element more then one time!');
                 }
             };
 
@@ -69,7 +69,7 @@ angular.module('cmValidate')
                 //cmLogger.debug('cmPristine.set');
 
                 if(!checkElement(element)){
-                    cmLogger.warn('cmFormPristine (set) detects that element has no name! Is it an ngModel Object?');
+                    cmLogger.debug('cmFormPristine (set) detects that element has no name! Is it an ngModel Object?');
                     return false;
                 }
 
@@ -84,7 +84,7 @@ angular.module('cmValidate')
                 //cmLogger.debug('cmPristine.remove');
 
                 if(!checkElement(element)){
-                    cmLogger.warn('cmFormPristine (remove) detects that element has no name! Is it an ngModel Object?');
+                    cmLogger.debug('cmFormPristine (remove) detects that element has no name! Is it an ngModel Object?');
                     return false;
                 }
 

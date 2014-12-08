@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('cmUser').directive('cmIdentityEdit', [
-    'cmUserModel', 'cmNotify', 'cmLoader', 'cmUtil', 
+    'cmUserModel', 'cmNotify', 'cmLoader', 'cmUtil', 'cmPristine',
     '$q', '$rootScope',
-    function(cmUserModel, cmNotify, cmLoader, cmUtil,
+    function(cmUserModel, cmNotify, cmLoader, cmUtil, cmPristine,
              $q, $rootScope){
         return {
             restrict: 'E',
@@ -13,13 +13,6 @@ angular.module('cmUser').directive('cmIdentityEdit', [
                 var loader = new cmLoader($scope);
 
                 $scope.identity = cmUserModel.data.identity;
-                $scope.isPristine = true;
-                $rootScope.$on('pristine:false', function(){
-                    $scope.isPristine = false;
-                });
-                $rootScope.$on('pristine:true', function(){
-                    $scope.isPristine = true;
-                });
 
                 function reset(){
                     $scope.formData = {
@@ -117,6 +110,19 @@ angular.module('cmUser').directive('cmIdentityEdit', [
                         }
                     )
                 };
+
+                /**
+                 * Pristine Service Handling
+                 */
+                $scope.isPristine = true;
+                function pristine_callback(){
+                    $scope.isPristine = cmPristine.is();
+                }
+                cmPristine.on('updated',pristine_callback);
+
+                $scope.$on('$destroy', function(){
+                    cmPristine.off('updated',pristine_callback);
+                })
             }
         }
     }

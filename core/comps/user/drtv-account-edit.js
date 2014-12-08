@@ -2,9 +2,9 @@
 
 angular.module('cmUser')
 .directive('cmAccountEdit', [
-    'cmUserModel', 'cmNotify', 'cmCrypt', 'cmLoader', 'cmUtil', 
+    'cmUserModel', 'cmNotify', 'cmCrypt', 'cmLoader', 'cmUtil', 'cmPristine',
     '$q', '$rootScope',
-    function(cmUserModel, cmNotify, cmCrypt, cmLoader, cmUtil, 
+    function(cmUserModel, cmNotify, cmCrypt, cmLoader, cmUtil, cmPristine,
              $q, $rootScope){
         return {
             restrict: 'E',
@@ -16,10 +16,6 @@ angular.module('cmUser')
 
                 $scope.showPasswordChange = false;
                 $scope.showReadOnly = false;
-                $scope.isPristine = true;
-                $rootScope.$on('pristine:false', function(){
-                    $scope.isPristine = false;
-                });
 
                 $scope.togglePasswordChange = function(action){
                     $scope.showPasswordChange = action && action == 'close' || $scope.showPasswordChange ? false : true;
@@ -144,6 +140,19 @@ angular.module('cmUser')
                         }
                     )
                 };
+
+                /**
+                 * Pristine Service Handling
+                 */
+                $scope.isPristine = true;
+                function pristine_callback(){
+                    $scope.isPristine = cmPristine.is();
+                }
+                cmPristine.on('updated',pristine_callback);
+
+                $scope.$on('$destroy', function(){
+                    cmPristine.off('updated',pristine_callback);
+                })
             }
         }
     }

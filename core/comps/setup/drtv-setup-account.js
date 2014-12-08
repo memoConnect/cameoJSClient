@@ -83,7 +83,7 @@ angular.module('cmSetup')
                     };
 
                     /**
-                     * Pristine Handling
+                     * Pristine Service Handling
                      */
                     $scope.isPristine = true;
                     function pristine_callback(){
