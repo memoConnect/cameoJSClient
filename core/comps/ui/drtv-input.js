@@ -107,7 +107,6 @@ angular.module('cmUi').directive('input', [
                 }
 
                 function handleChange(){
-                    console.log('initValue: ' + initValue, 'currentValue: ' + getValue())
                     if(initValue != getValue()){
                         broadcastPristine();
                     } else if(initValue == getValue()){
@@ -119,14 +118,10 @@ angular.module('cmUi').directive('input', [
                     }
 
                     if('cmAdaptiveChange' in attrs){
-                        console.log('adaptiveChange true', attrs.cmAdaptiveChange)
-
                         timeout = $timeout(function(){
                             apply();
                         },attrs.cmAdaptiveChange || 1000);
                     } else {
-                        console.log('adaptiveChange false')
-
                         timeout = $timeout(function (){
                             apply();
                         }, 100)
@@ -147,6 +142,13 @@ angular.module('cmUi').directive('input', [
                     .on('keyup', handleChange)
                     .on('blur', handleChange);
 
+
+                scope.$on('$destroy', function(){
+                    element
+                        .off('focus', handleChange)
+                        .off('keyup', handleChange)
+                        .off('blur', handleChange);
+                })
             }
         }
     }
