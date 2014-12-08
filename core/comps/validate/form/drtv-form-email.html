@@ -1,16 +1,35 @@
 <article class="content" ng-form="cmInnerForm">
     <label>{{label|cmTranslate}}</label>
-    <div class="cm-input-ctn with-chooser" ng-class="{'cm-input-disabled':disabled,'with-inside-icon':!disabled}">
+    <div class="cm-input-ctn" ng-class="{
+        'cm-input-disabled': disabled,
+        'with-inside-icon': !disabled && !verification.isVisible,
+        'with-inside-icons': !disabled && verification.isVisible
+    }">
         <input
-                type="text"
-                tabindex="{{tabIndex}}" data-qa="input-email"
-                name="email" ng-model="ngModel"
-                ng-disabled="disabled" cm-validate-email cm-adaptive-change="3000" />
+            type="text"
+            tabindex="{{tabIndex}}" data-qa="input-email"
+            name="email" ng-model="ngModel"
+            ng-disabled="disabled" cm-validate-email cm-adaptive-change="3000" />
+        <i class="fa"
+           data-qa="btn-manuallyEmailVerfication"
+            ng-show="!disabled && verfication.isVisible"
+            ng-click="doVerification()"
+            cm-reactive="{{verfication.isVerified}}"
+            ng-class="{
+                'cm-checkbox-right': verfication.isVerified,
+                'cm-checkbox-wrong': !verfication.isVerified
+            }"></i>
         <i class="fa cm-write" ng-show="!disabled"></i>
     </div>
+
     <cm-info-bubble class="cm-alert" ng-show="cmInnerForm.email.$dirty && cmInnerForm.email.$invalid">
         <div ng-show="cmInnerForm.email.$invalid" data-qa="form-error-email-invalid">
             <i class="fa cm-info"></i> {{info|cmTranslate}}
         </div>
+    </cm-info-bubble>
+
+    <cm-info-bubble nose-x="85%" ng-show="verfication.isVisible && !verfication.isVerified" data-qa="info-emailNotVerified">
+        <i class="fa cm-attention cm-orange"></i>
+        <span ng-bind-html="'DRTV.VALIDATE_EMAIL.INFO.ISNT_VERIFIED'|cmTranslate:{ 'icon':icon}"></span>
     </cm-info-bubble>
 </article>

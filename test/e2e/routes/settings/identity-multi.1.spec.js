@@ -8,7 +8,7 @@ describe('Multi Identity: ', function () {
         cameoId: 'testCameoId_'+Math.random().toString(36).substring(2, 9),
         displayName: 'moep1337Oida',
         phoneNumber: 1234567,
-        email: '1337@cameo.io'
+        email: 'devnull@cameo.io'
     }
 
     it('create new user and open identity settings', function () {

@@ -210,7 +210,8 @@ angular.module('cmConfig',[])
                     hasCtrl: true
                 },
                 'verification': {
-                    routes:['/verification/:secret']
+                    routes:['/verification/:secret'],
+                    hasCtrl: true
                 },
                 'server_down' : {
                     templateUrl: 'routes/landingpages/server_down.html'

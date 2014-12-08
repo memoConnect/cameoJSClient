@@ -31,12 +31,12 @@ describe('Registration: ', function () {
         util.waitForPageLoad('/registration')
 
         $("[data-qa='input-cameoId']").sendKeys("mo")
-        ptor.sleep(1001)//adaptive change delay
+        ptor.sleep(1150)
         util.checkWarning("cameoId-info-user-min-letter-count")
 
         // it should disappear if we type more letters
         $("[data-qa='input-cameoId']").sendKeys("ep")
-        ptor.sleep(1001)//adaptive change delay
+        ptor.sleep(1150)
         expect($("[data-qa='cameoId-info-user-min-letter-count']").isDisplayed()).toBe(false)
 
         util.clearInput('input-cameoId')
@@ -52,7 +52,7 @@ describe('Registration: ', function () {
             return $("[data-qa='cameoId-info-username-invalid']").isDisplayed()
         }, "username invalid timeout")
 
-        util.checkWarning("cameoId-info-username-invalid")
+        util.checkWarning('cameoId-info-username-invalid')
 
         util.clearInput('input-cameoId')
     })

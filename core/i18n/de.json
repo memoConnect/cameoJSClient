@@ -655,12 +655,25 @@
                 "EMPTY": "Bitte ein Passwort eingeben und bestätigen!"
             }
         },
+        "MODAL_VERIFICATION": {
+            "HEADER": "@todo Verifizierung",
+            "TEXT": "@todo Ihnen wurde soeben eine Nachricht zugeschickt. In dieser Nachricht finden Sie einen Link und einen Code. Den Link können Sie einfach klicken oder den Code hier eingeben.",
+            "LABEL": {
+                "CANCEL": "@:MODAL.LABEL.CANCEL",
+                "CONFIRM": "@todo Bestätigen"
+            },
+            "INFO": {
+                "EMPTY": "@todo Bitte geben Sie einen Code ein",
+                "INVALID": "@todo Der Code ist entweder ungültig oder abgelaufen."
+            }
+        },
         "VALIDATE_EMAIL": {
             "LABEL": "E-Mail",
             "PLACEHOLDER": "E-Mail",
             "INFO": {
                 "INVALID": "Bitte geben Sie eine korrekte E-Mail-Adresse ein!",
-                "EMPTY": "Sie haben keine E-Mail Adresse eingegeben."
+                "EMPTY": "Sie haben keine E-Mail Adresse eingegeben.",
+                "ISNT_VERIFIED": "@todo Diese E-Mail ist noch nicht verifiziert. Klicken Sie auf das {{icon}}-Icon um einen neue Verifizierung auszulösen. Sie bekommen nach auslösen der Verifizierung eine E-Mail mit einem Link."
             }
         },
         "VALIDATE_PHONE": {
@@ -668,7 +681,8 @@
             "PLACEHOLDER": "Mobilfunknummer",
             "INFO": {
                 "INVALID_PHONE_NUMBER": "Die Nummer scheint keine gültige Mobilfunknummer zu sein.",
-                "EMPTY": "Sie haben keine Mobilfunknummer eingegeben."
+                "EMPTY": "Sie haben keine Mobilfunknummer eingegeben.",
+                "ISNT_VERIFIED": "@todo Diese Telefonnummer ist noch nicht verifiziert. Klicken Sie auf das {{icon}}-Icon um einen neue Verifizierung auszulösen. Sie bekommen nach auslösen der Verifizierung eine SMS mit einem Link."
             }
         },
         "VALIDATE_MIXED": {
