@@ -20,7 +20,7 @@
     "phonegap": {
         "baseName": "cameoNet",
         "appId": "1028579",
-        "bundleId": "de.cameonet.app.prod",
+        "bundleId": "de.cameonet",
         "extraName": "",
         "androidDebuggable": false
     }
