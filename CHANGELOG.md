@@ -1,6 +1,12 @@
 ## RC 0.4.5 - 08.12.2014
 
 ## Dev
+# WW 08.12.2014
+* password reset (desktop and app)
+** new routes #/password/lost & #/password/reset
+** password lost starts a request send message to mail/sms
+** password reset handle the new password with the requestId
+
 # WW 06.12.2014
 * account email & phoneNumber verification
 ** on edit email or phoneNumber automatically notfication via mail or sms
