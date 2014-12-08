@@ -23,9 +23,6 @@ Dev
 # AP 02.12.2014
 * message signing and verify
 
-# BS 28.11.2014
-* add Authentication Route to Desktop Modus, CAM-1374
-
 0.4.4.
 # BS 05.12.2014
 * fix CAM-1398, error will now shown, if key saving failed
