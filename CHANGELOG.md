@@ -1,4 +1,6 @@
-Dev
+## RC 0.4.5 - 08.12.2014
+
+## Dev
 # WW 06.12.2014
 * account email & phoneNumber verification
 ** on edit email or phoneNumber automatically notfication via mail or sms
@@ -23,7 +25,7 @@ Dev
 # AP 02.12.2014
 * message signing and verify
 
-0.4.4.
+## RC 0.4.4.
 # BS 05.12.2014
 * fix CAM-1398, error will now shown, if key saving failed
 # BS 0..12.2014
