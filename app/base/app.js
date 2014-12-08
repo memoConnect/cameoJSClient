@@ -248,22 +248,42 @@ angular.module('cameoClient', [
     'cmUserModel',
     function($rootScope, $location, $route,
              cmUserModel){
-        $rootScope.$on('$routeChangeSuccess', function(){
-            var guestVisibility = '$$route' in $route.current && 'guests' in $route.current.$$route ?  $route.current.$$route.guests : false,
+
+        function checkAccess(){
+            var guestVisibility =
+                    $route
+                    && 'current' in $route
+                    && '$$route' in $route.current
+                    && 'guests' in $route.current.$$route
+                        ? $route.current.$$route.guests
+                        : false,
                 path = $location.$$path;
-            // exists none token then otherwise to login
-            if (cmUserModel.isAuth() === false){
-                if (!guestVisibility) {
-                    $rootScope.goTo('/login',true);
-                }
-            // when token exists
-            } else if ((path == '/login' || path == '/registration') && cmUserModel.isGuest() !== true) {
-                $rootScope.goTo('/talks',true);
-            // logout route
-            } else if (path == '/logout'){
-                cmUserModel.doLogout(true,'app.js logout-route');
+
+            switch(true){
+                // exists none token then otherwise to login
+                case cmUserModel.isAuth() === false:
+                    if (!guestVisibility) {
+                        //$rootScope.goTo('/login',true);
+                        $location.path('/login').replace();
+                    }
+                    break;
+                // when token exists
+                case cmUserModel.isAuth() === true && ((path == '/login' || path == '/registration') && cmUserModel.isGuest() !== true):
+                    //$rootScope.goTo('/talks',true);
+                    $location.path('/talks').replace();
+                    break;
+                // logout route
+                case (path == '/logout'):
+                    cmUserModel.doLogout(true,'app.js logout-route');
+                    break;
             }
+        }
+
+        $rootScope.$on('$routeChangeSuccess', function(){
+            checkAccess();
         });
+
+        checkAccess();
     }
 ])
 

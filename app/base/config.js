@@ -179,7 +179,8 @@ angular.module('cmConfig',[])
                 'password-reset': {
                     templateUrl: 'routes/password/reset/password-reset.html',
                     routes:[
-                        '/password/reset/:resetId'
+                        '/password/reset/:resetId',
+                        '/passwordReset/:resetId'
                     ],
                     hasCtrl: true,
                     guests: true
