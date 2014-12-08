@@ -22,7 +22,6 @@ angular.module('cmCore')
         });
 
         $rootScope.$on('cmBoot:appSpinner', function(event, action, where){
-            console.log('appSpinner',action)
             // hide app spinner
             angular.element($document[0].querySelector('.app-spinner'))
                 .css('display',action == 'hide'?'none':null);
@@ -35,7 +34,6 @@ angular.module('cmCore')
 
             $q.all(allPromises)
             .then(function(){
-                console.log('allPromises')
                 $rootScope.$broadcast('cmBoot:appSpinner','hide');
             });
         }

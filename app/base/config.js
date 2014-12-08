@@ -56,7 +56,7 @@ angular.module('cmConfig',[])
                 'login': {
                     isDefault: true,
                     css: 'no-header no-footer',
-                    guests: false
+                    guests: true
                 },
                 'settings': {
                     routes: ['/settings'],

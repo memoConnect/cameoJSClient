@@ -244,46 +244,40 @@ angular.module('cameoClient', [
 }])
 // router passing wrong route calls
 .run([
-    '$rootScope', '$location', '$route',
+    '$rootScope', '$location',
     'cmUserModel',
-    function($rootScope, $location, $route,
+    function($rootScope, $location,
              cmUserModel){
 
-        function checkAccess(){
+        function checkAccess(route){
             var guestVisibility =
-                    $route
-                    && 'current' in $route
-                    && '$$route' in $route.current
-                    && 'guests' in $route.current.$$route
-                        ? $route.current.$$route.guests
-                        : false,
+                                route
+                                && 'guests' in route
+                                ? route.guests
+                                : false,
                 path = $location.$$path;
 
             switch(true){
                 // exists none token then otherwise to login
                 case cmUserModel.isAuth() === false:
-                    if (!guestVisibility) {
-                        //$rootScope.goTo('/login',true);
-                        $location.path('/login').replace();
+                    if (!guestVisibility){
+                        $rootScope.goTo('/login',true);
                     }
-                    break;
+                break;
                 // when token exists
-                case cmUserModel.isAuth() === true && ((path == '/login' || path == '/registration') && cmUserModel.isGuest() !== true):
-                    //$rootScope.goTo('/talks',true);
-                    $location.path('/talks').replace();
-                    break;
+                case ((path == '/login' || path == '/registration') && cmUserModel.isGuest() !== true):
+                    $rootScope.goTo('/talks',true);
+                break;
                 // logout route
                 case (path == '/logout'):
                     cmUserModel.doLogout(true,'app.js logout-route');
-                    break;
+                break;
             }
         }
 
-        $rootScope.$on('$routeChangeSuccess', function(){
-            checkAccess();
+        $rootScope.$on('$routeChangeStart', function(event, jesör){
+            checkAccess(jesör.$$route);
         });
-
-        checkAccess();
     }
 ])
 
