@@ -18,6 +18,8 @@ angular.module('cmConfig',[])
             WebworkerDefaultLimitApp: 2,
             WebworkerDefaultLimitDesktop: 2,
 
+            browserNotificationTimeout: 5000,
+
             token: null,
             supportedLanguages: ['de_DE', 'en_US'],
             pathToLanguages: 'i18n',
@@ -229,6 +231,8 @@ angular.module('cmConfig',[])
                     guests: true
                 }
             },
+
+            appIcon: '<%= appIcon %>',
 
             autoLoginData: {
                 'Dumpuser local': {

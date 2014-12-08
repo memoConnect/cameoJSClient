@@ -2,9 +2,9 @@
 
 angular.module('cmUser')
 .directive('cmAccountEdit', [
-    'cmUserModel', 'cmNotify', 'cmCrypt', 'cmLoader',
+    'cmUserModel', 'cmNotify', 'cmCrypt', 'cmLoader', 'cmUtil', 
     '$q', '$rootScope',
-    function(cmUserModel, cmNotify, cmCrypt, cmLoader,
+    function(cmUserModel, cmNotify, cmCrypt, cmLoader, cmUtil, 
              $q, $rootScope){
         return {
             restrict: 'E',
@@ -142,6 +142,7 @@ angular.module('cmUser')
 
                         }, function(){
                             loader.stop();
+                            cmUtil.scrollToInputError()
                         }
                     )
                 };

@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('cmUser').directive('cmIdentityEdit', [
-    'cmUserModel', 'cmNotify', 'cmLoader',
+    'cmUserModel', 'cmNotify', 'cmLoader', 'cmUtil', 
     '$q', '$rootScope',
-    function(cmUserModel, cmNotify, cmLoader,
+    function(cmUserModel, cmNotify, cmLoader, cmUtil,
              $q, $rootScope){
         return {
             restrict: 'E',
@@ -110,6 +110,7 @@ angular.module('cmUser').directive('cmIdentityEdit', [
                         },
                         function(){
                             loader.stop();
+                            cmUtil.scrollToInputError()
                         }
                     )
                 };

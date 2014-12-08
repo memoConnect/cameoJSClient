@@ -1,12 +1,42 @@
+0.4.4.
+# BS 05.12.2014
+* fix CAM-1398, error will now shown, if key saving failed
+# BS 0..12.2014
+* fix CAM-1482, set timeout for browser notifications to 5s
+* fix CAM-1483, set z-index to choose element
+* fix CAM-1481, only one browser notification per message
+* fix CAM-1474, on MacOS Safari, in Desktop Mod, Footer will be displayed correct
+# BS 03.12.2014
+* fix CAM-1478, last-message:read will only send, if message is decrypted
+# BS 28.11.2014
+* add Authentication Route to Desktop Modus, CAM-1374
+
+
+0.4.3.
 # BS 27.11.2014
 * fix new Talk with -1 recipients CAM-1412
 * add route controller to start/keyinfo to check skipKeyInfo and redirect to talks, if skip is activated in settings
 * fix CAM-1415, redirect from d/ to d/#/talks or d/#/login fixed
 * add selectable class to message elements, key-edit and start routes
 
+# BS 25.11.2014
+* finish Story unread Messages CAM-1321
+** add button to settings to show or not the quantity of unread messages
+** if it is off, the client will not post the last message, the user reads, to the server, or show the quantity in talks view
+** somme settings will now synced with server
+
+# WW 21.11.2014
+* fix menu button CAM-1384
+* update back button, show modal if leaving app, fix CAM-1383
+
 # BS 21.11.2014
 * fix edit icon in contact edit view, disable if contact is cameo member
 * fix edit own identity CAM-1340
+
+# BS 20.11.2014
+* add BrowserNotificationService
+* fix invite service after importing a local contact
+* fix pending contacts in contacts-list CAM-1378
 
 0.4.2.
 * framework major update
@@ -30,5 +60,3 @@
 ** webworker for verify now cache the results
 ** through major framework update route changes raised up 50%
 ** cm-rubber-space tighten was optimized (now only once per digest and drtv)
-* fix invite service after importing a local contact
-* fix pending contacts in contacts-list CAM-1378

@@ -3,13 +3,9 @@
 describe('cmContactsModel', function(){
     var model;
 
-    beforeEach(function(){
-        module(function($provide){
-            $provide.constant('cmEnv',{});
-        })
-    })
-
     beforeEach(module('cmContacts'))
+
+    beforeEach(module('cmConfig'))
 
     beforeEach(inject(function(_cmContactsModel_) {
         model = _cmContactsModel_;

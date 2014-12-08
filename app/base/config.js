@@ -17,6 +17,8 @@ angular.module('cmConfig',[])
     		WebworkerDefaultLimitMobile: 2,
     		WebworkerDefaultLimitApp: 2,
     		WebworkerDefaultLimitDesktop: 2,
+
+            browserNotificationTimeout: 5000,
             
             token: null,
             supportedLanguages: ['de_DE', 'en_US'],
@@ -240,6 +242,7 @@ angular.module('cmConfig',[])
 
             appLinks: JSON.parse('<%= appLinks %>'),
             appProtocol: '<%= appProtocol %>',
+            appIcon: '<%= appIcon %>',
 
             autoLoginData: {
                 'Dumpuser local': {

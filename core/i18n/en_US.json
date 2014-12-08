@@ -341,7 +341,8 @@
         "TITLE" : "About us"
       },
       "NOTIFY" : {
-        "PUSH_NOTIFICATIONS" : "Push Notifications"
+        "PUSH_NOTIFICATIONS" : "Push Notifications",
+        "BROWSER_NOTIFICATIONS": "Browser Notifications"
       },
       "IDENTITY" : {
         "KEYS" : {
@@ -417,7 +418,8 @@
         "SEND_ON_RETURN" : "Send on Return",
         "EMOJI_CONVERT" : "Convert Smileys to Emojis",
         "TIME_FORMAT" : "Time format",
-        "SKIP_KEY_INFO" : "Skip cameoKey information"
+        "SKIP_KEY_INFO" : "Skip cameoKey information",
+        "ENABLE_UNREAD_MESSAGES": "enable unread messages"
       },
       "PERFORMANCE" : {
         "TITLE" : "Performance"
@@ -531,11 +533,11 @@
       "START" : "contact can be trusted"
     },
     "IMPORT" :{
-        "NOTIFICATION" :{
-            "HEADER": "Import contact",
-            "TEXT": "You have imported personal data of a contact. You can inform him and invite him to cameoNet.",
-            "MESSAGE_TEMPLATE": "Dear {{to}},\nI have added your contact information to my address book at cameoNet. Register there as well so we can have easy private and encrypted conversations. I hope hearing from you soon in cameoNet.\nYours {{from}}"
-        }
+      "NOTIFICATION" :{
+        "HEADER": "Import contact",
+        "TEXT": "You have imported personal data of a contact. You can inform him and invite him to cameoNet.",
+        "MESSAGE_TEMPLATE": "Dear {{to}},\nI have added your contact information to my address book at cameoNet. Register there as well so we can have easy private and encrypted conversations. I hope hearing from you soon in cameoNet.\nYours {{from}}"
+      }
     },
     "WIDGET" : "Talks",
     "HEADLINE" : "Contact"
@@ -711,7 +713,17 @@
     "WELCOME" : {
       "SUBJECT" : "Welcome to cameoNet!",
       "MESSAGE" : "Hello, I am the cameoNet support. \n\nIf you have any questions or problems do not hesitate to reply on this message. You can also use our help system at http://support.cameonet.de,\n\nthe cameoNet team."
-    }
+    },
+      "EVENTS": {
+          "NEW_MESSAGE": {
+              "TITLE": "New Message",
+              "MSG": "Message from {{sender}}"
+          },
+          "FRIEND_REQUEST": {
+              "TITLE": "New Friend Request",
+              "MSG": "Friend request from {{sender}}"
+          }
+      }
   },
   "TALKS" : {
     "HEADING" : "Talks",
@@ -787,6 +799,7 @@
     "LABEL_PW" : "Password"
   },
   "CAMEO" : {
+    "NAME": "CameoNet",
     "MOEP" : "moep",
     "VERSION" : "version",
     "SLOGAN" : "Safer Communication - Made in Germany!",

@@ -114,7 +114,7 @@
     <div ng-repeat="bundle in icons" class="maincat">
         <h3 ng-if="bundle.title">{{bundle.title}}</h3>
         <figure ng-repeat="css in bundle.css.split(' ')">
-            <i class="fa {{css}}"></i><figcaption ng-show="withFigcaption">{{css}}</figcaption>
+            <i class="fa {{css}}"></i><figcaption class="is-selectable">{{css}}</figcaption>
         </figure>
     </div>
 
@@ -126,7 +126,7 @@
     <div ng-repeat="bundle in types" class="maincat">
         <h3 ng-if="bundle.title">{{bundle.title}}</h3>
         <figure ng-repeat="css in bundle.css.split(' ')">
-            <i class="file {{css}}"></i><figcaption ng-show="withFigcaption">{{css}}</figcaption>
+            <i class="file {{css}}"></i><figcaption class="is-selectable">{{css}}</figcaption>
         </figure>
     </div>
 </section>
@@ -139,7 +139,7 @@
         <div ng-repeat="(index,subCat) in getKeys(emojis[mainCat])" class="subcat">
             <h3 ng-if="subCat">{{subCat}}</h3>
             <figure ng-repeat="icon in emojis[mainCat][subCat]" class="emoji-figure">
-                <i class="emoji emoji_{{icon | clearClassName}}"></i><figcaption ng-show="withFigcaption">{{icon | clearClassName}}</figcaption>
+                <i class="emoji emoji_{{icon | clearClassName}}"></i><figcaption class="is-selectable">{{icon | clearClassName}}</figcaption>
             </figure>
         </div>
     </div>
@@ -226,7 +226,8 @@
     .module('icons',['ngTouch','cmConfig','cmUi'])
 
     .controller('ctrl',function ($scope, emoji){
-        $scope.active = location.hash != '' ? location.hash.replace('#/','') : 'cameofont';
+        var clearHash = location.hash.replace('#/','');
+        $scope.active = clearHash != '' ? clearHash : 'cameofont';
 
         $scope.baselineIcon = 'cm-checkbox-wrong';
         $scope.getKeys = function(object){
@@ -235,16 +236,18 @@
 
         $scope.icons = [
             {title:'ci icons',css:'cm-logo cm-logo-c cm-logo-a cm-logo-m cm-logo-e cm-logo-o cm-logo-net cm-rhino-bubble-glyph cm-rhino-positive cm-beta cm-cameo-beta'},
-            {title:'specials',css:'cm-edge cm-edge-add cm-scroll-pane cm-grip'},
-            {title:'contact handler',css:'cm-client-add cm-address-book-positive cm-address-book cm-load-to-rhino cm-load-to'},
+            {title:'specials',css:'cm-edge cm-edge-add cm-scroll-pane cm-grip cm-grid cm-change cm-expand-bottom-left cm-expand-bottom-right cm-expand-top-left cm-expand-top-right'},
             {title:'checkbox',css:'cm-checkbox-bg cm-checkbox cm-checker cm-checkbox-right cm-checkbox-wrong cm-checkbox-add cm-checkbox-minus cm-radio-0 cm-radio-1'},
             {title:'menu',css:'cm-menu cm-menue-bell cm-menu-right-close cm-menu-right-open cm-menu-weight cm-menu-weight-bell'},
             {title:'directions',css:'cm-nose-left cm-nose-right cm-nose-up cm-nose-down cm-left cm-right cm-down cm-up'},
             {title:'notifications',css:'cm-info cm-attention cm-reject cm-ignore cm-bell cm-bell-ring cm-notification cm-notification-on cm-key-plus cm-key-minus'},
             {title:'message states',css:'cm-envelope-closed cm-envelope-open cm-send cm-lock cm-unlock'},
-            {title:'handler',css:'cm-write cm-contacts cm-key cm-no-key cm-export cm-visible cm-hidden cm-group cm-person cm-arrange cm-filter cm-anchor cm-clipboard cm-search cm-change cm-grid cm-close cm-fix cm-settings cm-in cm-out cm-logout cm-register cm-add-recipient cm-talk cm-talk-full cm-new-talk cm-new-contact cm-new-contact-query cm-list cm-import-key cm-export-key cm-create-key cm-cancel-key cm-handshake cm-key-request cm-key-response cm-trust cm-tag cm-connection-trusted cm-not-connected cm-connected cm-trash cm-save cm-avatar cm-avatar-add cm-qr-code cm-download-blanc cm-download-data'},
+            {title:'handler',css:'cm-write cm-export cm-visible cm-hidden cm-arrange cm-filter cm-anchor cm-clipboard cm-search cm-close cm-fix cm-settings cm-in cm-out cm-logout cm-register cm-list cm-tag cm-trash cm-save cm-download-blanc cm-download-data cm-not-connected cm-connected cm-fullscreen cm-fullscreen-off'},
+            {title:'talk',css:'cm-new-talk cm-talk cm-talk-full cm-show-talk cm-hide-talk'},
+            {title:'contacts & identity',css:'cm-contacts cm-new-contact cm-new-contact-query cm-avatar cm-avatar-add cm-add-recipient cm-group cm-person cm-client-add cm-address-book-positive cm-address-book cm-load-to-rhino cm-load-to'},
             {title:'answer',css:'cm-plus cm-smile-negative cm-smile-positive cm-post cm-post-attention cm-post-idle cm-attachment'},
-            {title:'media',css:'cm-video cm-file cm-sound cm-location cm-pictures cm-camera cm-mobile cm-contract'}
+            {title:'media',css:'cm-video cm-file cm-sound cm-location cm-pictures cm-camera cm-mobile cm-contract'},
+            {title:'security',css:'cm-key cm-no-key cm-import-key cm-export-key cm-create-key cm-cancel-key cm-handshake cm-key-request cm-key-response cm-trust cm-connection-trusted cm-qr-code'}
         ];
 
         $scope.types = [
@@ -276,71 +279,70 @@
     })
 
     .directive('figure',function($window, $document){
+        function getDocHeight() {
+            return Math.max(
+                    $document[0].body.scrollHeight, document.documentElement.scrollHeight,
+                    $document[0].body.offsetHeight, document.documentElement.offsetHeight,
+                    $document[0].body.clientHeight, document.documentElement.clientHeight
+            );
+        }
 
-                function getDocHeight() {
-                    return Math.max(
-                            $document[0].body.scrollHeight, document.documentElement.scrollHeight,
-                            $document[0].body.offsetHeight, document.documentElement.offsetHeight,
-                            $document[0].body.clientHeight, document.documentElement.clientHeight
-                    );
-                }
+        return {
+            restrict: 'E',
+            link: function(scope, element){
 
-                return {
-                    restrict: 'E',
-                    link: function(scope, element){
+                var viewport = {
+                    w: $window.innerWidth,
+                    h: $window.innerHeight
+                };
 
-                        var viewport = {
-                            w: $window.innerWidth,
-                            h: $window.innerHeight
-                        };
+                element.on('mouseenter', function(){
 
-                        element.on('mouseenter', function(){
+                    if(element.find('figcaption').length == 0)
+                        return false;
 
-                            if(element.find('figcaption').length == 0)
-                                return false;
+                    element.addClass('showCaption')
 
-                            element.addClass('showCaption')
+                    var pos = {},
+                            caption = element.find('figcaption'),
+                            top = (element[0].offsetHeight),
+                            left = (caption[0].offsetWidth / 2)-(element[0].offsetWidth / 2);
 
-                            var pos = {},
-                                    caption = element.find('figcaption'),
-                                    top = (element[0].offsetHeight),
-                                    left = (caption[0].offsetWidth / 2)-(element[0].offsetWidth / 2);
-
-                            // fix for leftedge viewport
-                            if(left > element[0].offsetLeft){
-                                pos.left = 0;
-                            } else {
-                                pos.left = left;
-                            }
-
-                            // fix for right edge viewport
-                            var rightCaption = (element[0].offsetLeft-left)+caption[0].offsetWidth;
-                            if(rightCaption > viewport.w){
-                                pos.left = 'auto';
-                                pos.right = 0;
-                            }
-
-                            // fix viewport bottom
-                            // TODO
-
-                            // fix doc bottom
-                            var topCaption = (element[0].offsetTop + top + caption[0].offsetHeight);
-                            if(topCaption > getDocHeight()){
-                                top = -(element.find('i')[0].offsetHeight - caption[0].offsetHeight)
-                            }
-
-                            pos.top = top+'px'
-
-                            if('left' in pos && pos.left != 'auto')
-                                pos.left = -(pos.left)+'px';
-
-                            caption.css(pos);
-                        }).on('mouseleave', function(){
-                            element.removeClass('showCaption');
-                        })
+                    // fix for leftedge viewport
+                    if(left > element[0].offsetLeft){
+                        pos.left = 0;
+                    } else {
+                        pos.left = left;
                     }
-                }
-            })
+
+                    // fix for right edge viewport
+                    var rightCaption = (element[0].offsetLeft-left)+caption[0].offsetWidth;
+                    if(rightCaption > viewport.w){
+                        pos.left = 'auto';
+                        pos.right = 0;
+                    }
+
+                    // fix viewport bottom
+                    // TODO
+
+                    // fix doc bottom
+                    var topCaption = (element[0].offsetTop + top + caption[0].offsetHeight);
+                    if(topCaption > getDocHeight()){
+                        top = -(element.find('i')[0].offsetHeight - caption[0].offsetHeight)
+                    }
+
+                    pos.top = top+'px'
+
+                    if('left' in pos && pos.left != 'auto')
+                        pos.left = -(pos.left)+'px';
+
+                    caption.css(pos);
+                }).on('mouseleave', function(){
+                    element.removeClass('showCaption');
+                })
+            }
+        }
+    })
 </script>
 </body>
 </html>

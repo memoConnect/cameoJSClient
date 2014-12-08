@@ -228,7 +228,15 @@ angular.module('cameoClient', [
 .run(['cmError', 'cmHistory',function(cmError, cmHistory){
     // only an inject is nessarary
 }])
+.run(['cmUserModel', 'cmBrowserNotifications', '$rootScope', function(cmUserModel, cmBrowserNotifications, $rootScope){
+    if(cmUserModel.isAuth()){
+        cmBrowserNotifications.askPermission();
+    }
 
+    $rootScope.$on('login', function(){
+        cmBrowserNotifications.askPermission();
+    })
+}])
 // router passing wrong route calls
 .run([
     '$rootScope', '$location',
@@ -351,6 +359,5 @@ angular.module('cameoClient', [
 
         // Systemcheck
         cmSystemCheck.run(true);
-
     }
 ]);

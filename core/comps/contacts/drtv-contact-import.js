@@ -77,13 +77,13 @@ angular.module('cmContacts')
                                 $scope.formData.phoneNumber = item.value;
                             else
                                 $scope.formData.phoneNumber = '';
-                            break;
+                        break;
                         case 'email':
                             if($scope.formData.email != item.value)
                                 $scope.formData.email = item.value;
                             else
                                 $scope.formData.email = '';
-                            break;
+                        break;
                     }
                 };
 
@@ -113,7 +113,7 @@ angular.module('cmContacts')
                             valueEmail = $scope.formData.email;
                         // both is empty
                         if(valuePhone == '' && valueEmail == ''
-                            || !valuePhone && !valueEmail){
+                        || !valuePhone && !valueEmail){
                             $scope.error.selectPhoneNumber = true;
                             $scope.error.selectEmail = true;
                             isValid = false;
@@ -146,10 +146,10 @@ angular.module('cmContacts')
                     $scope.validateForm().then(
                         function(objectChange) {
                             cmContactsModel
-                                .addContact({
-                                    identity: objectChange
-                                })
-                                .then(
+                            .addContact({
+                                identity: objectChange
+                            })
+                            .then(
                                 function (data) {
                                     loader.stop();
                                     return new cmModalContactImport(data);
@@ -160,10 +160,10 @@ angular.module('cmContacts')
                                     return $q.reject();
                                 }
                             )
-                                .finally(function(){
-                                    loader.stop();
-                                    $scope.gotoContactList();
-                                })
+                            .finally(function(){
+                                loader.stop();
+                                $scope.gotoContactList();
+                            })
 
                         },
                         function(){

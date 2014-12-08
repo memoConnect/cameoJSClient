@@ -122,6 +122,12 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
                         })
             },
 
+            sendReadStatus: function(idConversation, idMessage){
+                return	cmApi.post({
+                    path:	"/conversation/" + idConversation + "/message/" + idMessage + "/read"
+                })
+            },
+
             updateEncryptedPassphraseList: function(id, aePassphraseList){
                 return  cmApi.post({
                             path:    "/conversation/%1/aePassphrases".replace(/%1/, id),
@@ -138,6 +144,10 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
 
         cmApi.on('conversation:new', function(event, data){
             adapter.trigger('conversation:new', data)
+        });
+
+        cmApi.on('conversation:update', function(event, data){
+            adapter.trigger('conversation:update', data)
         });
 
         cmApi.on('rekeying:finished', function(event, data){

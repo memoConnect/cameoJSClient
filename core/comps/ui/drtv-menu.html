@@ -2,20 +2,18 @@
     <cm-notify-signal></cm-notify-signal>
 </div>
 <div class="cm-menu-layer" ng-show="menuVisible">
-    <div cm-transparent-bg></div>
+    <div cm-transparent-bg ng-click="handleMenu()"></div>
     <div class="cm-menu-list">
-        <ul>
+        <ul class="no-border-bottom">
             <li class="cm-nose-wrapper" ng-click="handleMenu()">
                 <i class="fa cm-nose-up"></i>
             </li>
 
             <li class="cm-menu-header">
-                <button ng-click="goTo({},'talks')"
-                        ng-class="{'is-active':checkActive('talks')}" cm-reactive>
+                <button ng-click="goTo({},'talks')" cm-reactive>
                     <i class="fa cm-talk"></i><div class="seperator"></div>
                 </button>
-                <button ng-click="goTo({},'contacts')"
-                        ng-class="{'is-active':checkActive('contact')}" cm-reactive>
+                <button ng-click="goTo({},'contacts')" cm-reactive>
                     <i class="fa cm-person"></i>
                 </button>
             </li>

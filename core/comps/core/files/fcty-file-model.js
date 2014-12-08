@@ -44,13 +44,15 @@ angular.module('cmCore')
             this.isImage = function(){
                 return this.type == undefined
                      ? false
-                     : this.type.search('^image/') != -1;
+                     : this.type.search('^image/') != -1
+                       && this.type.search('tiff') == -1;
             };
 
             this.isEmbed = function(specificMime){
                 return this.type == undefined
                      ? false
-                     : this.type.search('^('+(specificMime||'image|video|audio')+')') != -1;
+                     : this.type.search('^('+(specificMime||'image|video|audio')+')') != -1
+                       && this.type.search('tiff') == -1;
             };
 
             // message id for backend event message:new
@@ -348,7 +350,7 @@ angular.module('cmCore')
             };
 
             this.downloadChunks = function(){
-//                cmLogger.debug('cmFileModel:downloadChunks');
+                //cmLogger.debug('cmFileModel:downloadChunks '+this.id);
                 // only crashed when fileId is missing
                 if(!this.id && this.state.is('onlyFileId')){
 //                    cmLogger.debug('cmFile.downloadChunks();')

@@ -80,7 +80,6 @@ angular.module('cmCore')
             self.trigger('init');// deprecated
             self.trigger('init:finish');
 
-
             self.one('update:finished', function(){
                 if(self.data.identity.keys){
                     self.signOwnKeys();
@@ -92,6 +91,7 @@ angular.module('cmCore')
         }
 
         this.importData = function(activeIdentity, data_identities){
+            //console.log('activeIdentity', activeIdentity)
 
             this.data.identity = activeIdentity;
             this.data.identity.isAppOwner = true;
@@ -150,6 +150,7 @@ angular.module('cmCore')
 
                     self.importData(identity, accountData.identities);
                     self.importAccount(accountData);
+                    self.setAppSettings(accountData)
 
                     // check device for pushing
                     cmPushNotificationAdapter.checkRegisteredDevice();
@@ -282,6 +283,8 @@ angular.module('cmCore')
         };
 
         this.updateAccount = function(newAccountData){
+            //cmLogger.debug('cmUserModel.updateAccount');
+
             return cmAuth.putAccount(newAccountData)
             .then(
                 function(){
@@ -464,19 +467,24 @@ angular.module('cmCore')
                         key:     local_key.getPublicKey(),
                         keySize: local_key.getSize()
                     })
-                    .then(function(data){
-                        //data brings an id for the key
-                        local_key.importData(data)
+                    .then(
+                        function(data){
+                            //data brings an id for the key
+                            local_key.importData(data)
 
-                        //add public key to identity
-                        self.data.identity.keys.create(data)
+                            //add public key to identity
+                            self.data.identity.keys.create(data)
 
-                        //store the key with its new id:
-                        self.storeKey(local_key)
+                            //store the key with its new id:
+                            self.storeKey(local_key)
 
-                        // event for handshake modal
-                        self.trigger('key:saved', {keyId: data.id});
-                    })
+                            // event for handshake modal
+                            self.trigger('key:saved', {keyId: data.id});
+                        },
+                        function(){
+                            self.removeLocalKey(local_key);
+                        }
+                    )
                 }
             });
 
@@ -492,15 +500,20 @@ angular.module('cmCore')
             cmAuth
             .removePublicKey(keyToRemove.id)
             .then(function(){
-                // renew ls
-                if(local_keys.deregister(keyToRemove)){
-                    self.storageSave('rsa', local_keys.exportDataArray());
-                }
-                // clear identity
-                self.data.identity.keys.deregister(keyToRemove);
-
-                self.trigger('key:removed');
+                self.removeLocalKey(keyToRemove);
             });
+        };
+
+        this.removeLocalKey = function(keyToRemove){
+            var local_keys = this.loadLocalKeys();
+            // renew ls
+            if(local_keys.deregister(keyToRemove)){
+                this.storageSave('rsa', local_keys.exportDataArray());
+            }
+            // clear identity
+            this.data.identity.keys.deregister(keyToRemove);
+
+            this.trigger('key:removed');
         };
 
         /**
@@ -777,7 +790,6 @@ angular.module('cmCore')
 
             var token = cmAuth.getToken();
 
-
             if(token !== undefined && token !== 'undefined' && token !== null && token.length > 0){
                 return token;
             }
@@ -814,7 +826,11 @@ angular.module('cmCore')
         this.storageSave = function(key, value){
             if(isAuth !== false && this.data.storage !== null){
                 this.data.storage.save(key, value);
+
+                return true;
             }
+
+            return false;
         };
 
         /**
@@ -840,6 +856,28 @@ angular.module('cmCore')
         };
 
         /**
+         * setLocalStorageSettings
+         * Server Overwrite Local Changes
+         */
+        this.setAppSettings = function(data){
+            //cmLogger.debug('cmUserModel.setAppSettings');
+            var settings = this.storageGet('appSettings') || {};
+
+            if('userSettings' in data){
+                this.storageSave('appSettings', angular.extend({}, settings, data.userSettings));
+            }
+        };
+
+        this.saveAppSettings = function(){
+            //cmLogger.debug('cmUserModel.saveAppSettings');
+            var settings = this.storageGet('appSettings') || {};
+
+            if(cmUtil.objLen(settings) > 0){
+                this.updateAccount({'userSettings': settings})
+            }
+        };
+
+        /**
          * clear identity storage
          */
         this.resetUser = function(){
@@ -854,7 +892,7 @@ angular.module('cmCore')
         $rootScope.$on('logout', function(event, data){
             //cmLogger.debug('cmUserModel - $rootScope.logout');
 
-            self.resetUser();
+            self.reset();
             isAuth = false;
 
             if(typeof data == 'object' && 'where' in data){

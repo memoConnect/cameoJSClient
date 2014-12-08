@@ -5,12 +5,7 @@ describe('Directive cmFriendRequestCounter', function () {
     var directive, element, $scope, $httpBackend, cmContactsModel;
 
     beforeEach(module('cmContacts'))
-
-    beforeEach(function(){
-        module(function($provide){
-            $provide.constant('cmEnv',{});
-        })
-    })
+    beforeEach(module('cmConfig'))
 
     beforeEach(inject(function(_$httpBackend_){
         $httpBackend = _$httpBackend_;

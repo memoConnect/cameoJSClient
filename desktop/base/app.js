@@ -250,6 +250,15 @@ angular.module('cameoClient', [
         });
     }
 ])
+.run(['cmUserModel', 'cmBrowserNotifications', '$rootScope', function(cmUserModel, cmBrowserNotifications, $rootScope){
+    if(cmUserModel.isAuth()){
+        cmBrowserNotifications.askPermission();
+    }
+
+    $rootScope.$on('login', function(){
+        cmBrowserNotifications.askPermission();
+    })
+}])
 /**
  * @TODO cmContactsModel anders initialisieren
  */
