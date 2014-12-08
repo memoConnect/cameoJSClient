@@ -56,7 +56,7 @@ angular.module('cmConfig',[])
                 'login': {
                     isDefault: true,
                     css: 'no-header no-footer',
-                    guests: false
+                    guests: true
                 },
                 'settings': {
                     routes: ['/settings'],
@@ -167,6 +167,23 @@ angular.module('cmConfig',[])
                     hasCtrl: true,
                     guests: true,
                     resolvePurl: true
+                },
+                'password-lost': {
+                    templateUrl: 'routes/password/lost/password-lost.html',
+                    routes:[
+                        '/password/lost',
+                        '/password'
+                    ],
+                    guests: true
+                },
+                'password-reset': {
+                    templateUrl: 'routes/password/reset/password-reset.html',
+                    routes:[
+                        '/password/reset/:resetId',
+                        '/passwordReset/:resetId'
+                    ],
+                    hasCtrl: true,
+                    guests: true
                 },
                 'registration': {
                     guests: true

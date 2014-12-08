@@ -35,7 +35,7 @@ angular.module('cmValidate').directive('cmConfirmVerification',[
                         loader.stop();
                     } else {
                         cmVerify.confirm($scope.verifySecret).then(
-                            function () {
+                            function(){
                                 cmUserModel.one('account:updated', function(){
                                     loader.stop();
                                     var closeModal = false;

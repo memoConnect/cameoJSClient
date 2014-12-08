@@ -458,11 +458,12 @@
     "LABEL": {
       "REMEMBER_ME": "Remember.",
       "SUBMIT": "Log in",
-      "AUTO": "Choose auto login"
+      "PASSWORD_LOST": "@todo Password missing?"
     },
     "PLACEHOLDER": {
       "PASSWORD": "Password",
-      "USERNAME": "Username"
+      "USERNAME": "Username",
+      "AUTOLOGIN": "Choose auto login"
     },
     "LINK": "Login",
     "HEADING": "Login",
@@ -472,6 +473,35 @@
       "404": "Login is impossible right now.",
       "PW": "@:LOGIN.INFO.401",
       "X": "Something went wrong.<br>Please try again."
+    }
+  },
+  "PASSWORD_LOST": {
+    "HEADING": "@todo Password missing?",
+    "INFO": {
+      "TITLE_TEXT": "@todo Here you can enter your loginName, cameoId, verified email or phonenumber to reset your password. After successful indentification you will get a email or sms in which you can find a link.",
+      "EMPTY": "@todo Please enter a identifier.",
+      "LOGIN_NOT_FOUND": "@todo The loginName can't found.",
+      "PHONENUMBER_NOT_FOUND": "@todo The phoneNumber can't found.",
+      "EMAIL_NOT_FOUND": "@todo The email can't found.",
+      "NO_EMAIL_PHONENUMBER": "@todo Please correct your input.",
+      "CONFIRMATION_SENDED": "@todo Now we send you a message with a link inside. Please click this link and follow the password reset."
+    },
+    "PLACEHOLDER": {
+      "MIXED": "@todo loginName, cameoId, email oder telephone"
+    },
+    "LABEL": {
+      "SUBMIT": "@todo Password reset"
+    }
+  },
+  "PASSWORD_RESET": {
+    "HEADING": "@todo Passwordreset",
+    "INFO": {
+      "TITLE_TEXT": "@todo You have clicked on the link in the message. Now you can change your password. Please repeat your input.",
+      "EXPIRED": "@todo Your request is expired. Here under {{linkGotoPasswordLost}} you can create a new password reset."
+    },
+    "LABEL": {
+      "LINK_GOTO_PASSWORD_LOST": "@todo password missing",
+      "SUBMIT": "@todo Passwordreset"
     }
   },
   "SECURITY_ASPECT": {

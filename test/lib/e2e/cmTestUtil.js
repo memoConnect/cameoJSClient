@@ -166,19 +166,18 @@ this.createTestUser = function (testUserId, from){
     var loginName = prefix + id
     var password = 'password'
 
-    this.get("/registration");
+    this.get('/registration');
 
-    $("[data-qa='input-cameoId']").clear()
-    $("[data-qa='input-cameoId']").sendKeys(loginName)
-    $("[data-qa='input-password']").sendKeys(password)
-    $("[data-qa='input-passwordConfirm']").sendKeys(password)
+    this.setVal('input-cameoId',loginName,true)
+    this.setVal('input-password',password)
+    this.setVal('input-passwordConfirm',password)
 
-    $("[data-qa='input-displayName']").sendKeys(loginName)
+    this.setVal('input-displayName',loginName)
 
     this.scrollToBottom()
-    $("[data-qa='icon-checkbox-agb']").click()
 
-    $("[data-qa='btn-createUser']").click()
+    this.click('icon-checkbox-agb')
+    this.click('btn-createUser')
 
     this.waitForPageLoad("/start/welcome")
 
@@ -683,6 +682,10 @@ this.setVal = function (dataQa, text, withClear){
         this.clearInput(dataQa)
 
     $("[data-qa='" + dataQa + "']").sendKeys(text)
+}
+
+this.sendEnter = function(dataQa, withClear){
+    self.setVal(dataQa, protractor.Key.ENTER, withClear)
 }
 
 this.blurQa = function (dataQa) {

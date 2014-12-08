@@ -248,23 +248,35 @@ angular.module('cameoClient', [
     'cmUserModel',
     function($rootScope, $location,
              cmUserModel){
-        $rootScope.$on('$routeChangeSuccess', function(){
 
-            // expections
-            var path_regex = /^(\/login|\/registration|\/systemcheck|\/terms|\/disclaimer|\/404|\/version|\/purl\/[a-zA-Z0-9]{1,})$/;
-            var path = $location.$$path;
-            // exists none token then otherwise to login
-            if (cmUserModel.isAuth() === false){
-                if (!path_regex.test(path)) {
-                    $rootScope.goTo('/login',true);
-                }
-            // when token exists
-            } else if ((path == '/login' || path == '/registration') && cmUserModel.isGuest() !== true) {
-                $rootScope.goTo('/talks',true);
-            // logout route
-            } else if (path == '/logout'){
-                cmUserModel.doLogout(true,'app.js logout-route');
+        function checkAccess(route){
+            var guestVisibility =
+                                route
+                                && 'guests' in route
+                                ? route.guests
+                                : false,
+                path = $location.$$path;
+
+            switch(true){
+                // exists none token then otherwise to login
+                case cmUserModel.isAuth() === false:
+                    if (!guestVisibility){
+                        $rootScope.goTo('/login',true);
+                    }
+                break;
+                // when token exists
+                case ((path == '/login' || path == '/registration') && cmUserModel.isGuest() !== true):
+                    $rootScope.goTo('/talks',true);
+                break;
+                // logout route
+                case (path == '/logout'):
+                    cmUserModel.doLogout(true,'app.js logout-route');
+                break;
             }
+        }
+
+        $rootScope.$on('$routeChangeStart', function(event, jesör){
+            checkAccess(jesör.$$route);
         });
     }
 ])
