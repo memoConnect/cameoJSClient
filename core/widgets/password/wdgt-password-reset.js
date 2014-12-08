@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('cmWidgets').directive('cmWidgetPasswordReset', [
-    'cmAuth', 'cmLoader', 'cmCrypt',
+    'cmAuth', 'cmLoader', 'cmCrypt', 'cmUtil',
     '$rootScope', '$q',
-    function (cmAuth, cmLoader, cmCrypt,
+    function (cmAuth, cmLoader, cmCrypt, cmUtil,
               $rootScope, $q) {
         return {
             restrict: 'E',
@@ -15,8 +15,11 @@ angular.module('cmWidgets').directive('cmWidgetPasswordReset', [
             controller: function ($scope) {
                 var loader = new cmLoader($scope);
 
+                $scope.link = '<a href="#/password/lost">{{\'PASSWORD_RESET.LABEL.LINK_GOTO_PASSWORD_LOST\'|cmTranslate}}</a>';
+
+                $scope.cmUtil = cmUtil;
+                $scope.info = {};
                 $scope.formData = {
-                    resetCode: '',
                     password: ''
                 };
 
@@ -41,7 +44,7 @@ angular.module('cmWidgets').directive('cmWidgetPasswordReset', [
 
                     checkPassword();
 
-                    if ($scope.cmForm.$valid !== false) {
+                    if ($scope.cmForm.$valid !== false && cmUtil.objLen(objectData) > 0) {
                         deferred.resolve(objectData);
                     } else {
                         deferred.reject();
@@ -58,21 +61,26 @@ angular.module('cmWidgets').directive('cmWidgetPasswordReset', [
                         return false;
 
                     loader.start();
+                    $scope.info = {};
 
                     $scope.validateForm().then(
                         function(objectData) {
 
                             //$scope.resetId
-                            cmAuth.resetPassword(objectData, $scope.formData.resetCode).then(
+                            cmAuth.resetPassword(objectData, $scope.resetId).then(
                                 function(){
                                     loader.stop();
                                     // everything is fine goTo login
+                                    // autologin???
                                     $rootScope.goTo('/login');
                                 },
-                                function(){
+                                function(response){
                                     loader.stop();
-
-                                    //PASSWORD.RESET.EXPIRED
+                                    switch(response.data.errorCode) {
+                                        case 'PASSWORD.RESET.EXPIRED':
+                                            $scope.info.expired = true;
+                                        break;
+                                    }
                                 }
                             )
                         },

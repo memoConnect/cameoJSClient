@@ -41,7 +41,13 @@
     "PASSWORD_LOST": {
         "HEADING": "@todo Passwort vergessen?",
         "INFO": {
-            "TITLE_TEXT": "@todo Hier können Sie anhand von loginName, cameoId, verifizierte Mail oder Telefonnummer Ihr Passwort zurücksetzen lassen. Nach eingabe der Indentifikation wird Ihnen eine Nachricht übermittelt in dem Sie einen Link finden."
+            "TITLE_TEXT": "@todo Hier können Sie anhand von loginName, cameoId, verifizierte Mail oder Telefonnummer Ihr Passwort zurücksetzen lassen. Nach eingabe der Indentifikation wird Ihnen eine Nachricht übermittelt in dem Sie einen Link finden.",
+            "EMPTY": "@todo Bitte geben Sie eine Indentifizierung ein.",
+            "LOGIN_NOT_FOUND": "@todo Der loginName wurde nicht gefunden.",
+            "PHONENUMBER_NOT_FOUND": "@todo Diese Telefonnummer wurde nicht gefunden.",
+            "EMAIL_NOT_FOUND": "@todo Diese E-Mail wurde nicht gefunden.",
+            "NO_EMAIL_PHONENUMBER": "@todo Bitte korrigieren Sie ihre Eingabe.",
+            "CONFIRMATION_SENDED": "@todo Wir haben Ihnen eine Nachricht zugeschickt. Klicken Sie dort auf den Link und folgen der Passwortrücksetzung."
         },
         "PLACEHOLDER": {
             "MIXED": "@todo loginName, cameoId, E-Mail oder Telefon"
@@ -54,12 +60,11 @@
     "PASSWORD_RESET": {
         "HEADING": "@todo Passwortrücksetzung",
         "INFO": {
-            "TITLE_TEXT": "@todo Sie haben auf den Link in der Nachricht geklickt. Benutzten Sie den Code und jetzt haben Sie die möglichkeit das Passwort zuändern. Bitte wiederholen Sie die Eingabe."
-        },
-        "PLACEHOLDER": {
-            "CODE": "@todo Code aus der Nachricht"
+            "TITLE_TEXT": "@todo Sie haben auf den Link in der Nachricht geklickt. Jetzt haben Sie die möglichkeit das Passwort zuändern. Bitte wiederholen Sie die Eingabe.",
+            "EXPIRED": "@todo Ihre Anfrage ist leider abgelaufen. Hier unter {{linkGotoPasswordLost}} können Sie eine neue Anfrage auslösen."
         },
         "LABEL": {
+            "LINK_GOTO_PASSWORD_LOST": "@todo Passwort vergessen",
             "SUBMIT": "@todo Passwort zurücksetzen"
         }
     },

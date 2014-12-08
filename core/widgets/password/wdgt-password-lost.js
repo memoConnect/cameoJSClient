@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('cmWidgets').directive('cmWidgetPasswordLost', [
-    'cmAuth', 'cmLoader',
+    'cmAuth', 'cmLoader', 'cmUtil',
     '$rootScope', '$q',
-    function (cmAuth, cmLoader,
+    function (cmAuth, cmLoader, cmUtil,
               $rootScope, $q) {
         return {
             restrict: 'E',
@@ -13,6 +13,8 @@ angular.module('cmWidgets').directive('cmWidgetPasswordLost', [
             controller: function ($scope) {
                 var loader = new cmLoader($scope);
 
+                $scope.cmUtil = cmUtil;
+                $scope.info = {};
                 $scope.formData = {
                     identifier: ''
                 };
@@ -27,8 +29,10 @@ angular.module('cmWidgets').directive('cmWidgetPasswordLost', [
 
                     if($scope.cmForm.identifier.$modelValue != '')
                         objectData.identifier = $scope.cmForm.identifier.$modelValue;
+                    else
+                        $scope.info.empty = true;
 
-                    if ($scope.cmForm.$valid !== false) {
+                    if ($scope.cmForm.$valid !== false && cmUtil.objLen(objectData) > 0) {
                         deferred.resolve(objectData);
                     } else {
                         deferred.reject();
@@ -45,28 +49,36 @@ angular.module('cmWidgets').directive('cmWidgetPasswordLost', [
                         return false;
 
                     loader.start();
+                    $scope.info = {};
 
                     $scope.validateForm().then(
                         function(objectChange) {
 
-                            console.log(objectChange)
-
                             cmAuth.sendPasswordLost(objectChange).then(
                                 function(){
                                     loader.stop();
+
+                                    $scope.info.confirmationSended = true;
+                                    $scope.formData = {
+                                        identifier: ''
+                                    };
                                     // everything is fine goTo login
-                                    $rootScope.goTo('/password/reset');
+                                    //$rootScope.goTo('/password/reset');
                                 },
                                 function(response){
                                     loader.stop();
-                                    // TODO errorcodes
-
                                     switch(response.data.errorCode){
                                         case 'PASSWORD.RESET.LOGIN.NOT.FOUND':
-                                        case 'PASSWORD_RESET_PHONENUMBER_NOT_FOUND':
-                                        case 'PASSWORD_RESET_EMAIL_NOT_FOUND':
-                                        case 'PASSWORD_RESET_NO_EMAIL_OR_PHONENUMBER':
-
+                                            $scope.info.loginNotFound = true;
+                                        break;
+                                        case 'PASSWORD.RESET.PHONENUMBER.NOT.FOUND':
+                                            $scope.info.phoneNumberNotFound = true;
+                                        break;
+                                        case 'PASSWORD.RESET.EMAIL.NOT.FOUND':
+                                            $scope.info.emailNotFound = true;
+                                        break;
+                                        case 'PASSWORD.RESET.NO.EMAIL.PHONENUMBER':
+                                            $scope.info.noEmailPhonenumber = true;
                                         break;
                                     }
 
