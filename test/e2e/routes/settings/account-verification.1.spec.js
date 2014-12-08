@@ -88,7 +88,7 @@ describe('Route Settings Account Verification: ', function(){
             util.checkWarning('info-secretIsEmpty', true)
             util.checkWarning('info-secretIsInvalid', true)
             // send enter on empty input
-            util.setVal('inp-verifySecret', protractor.Key.ENTER)
+            util.sendEnter('inp-verifySecret')
             util.checkWarning('info-secretIsEmpty')
 
             // check invalidation

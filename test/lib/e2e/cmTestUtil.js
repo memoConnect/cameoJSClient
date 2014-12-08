@@ -685,6 +685,10 @@ this.setVal = function (dataQa, text, withClear){
     $("[data-qa='" + dataQa + "']").sendKeys(text)
 }
 
+this.sendEnter = function(dataQa, withClear){
+    self.setVal(dataQa, protractor.Key.ENTER, withClear)
+}
+
 this.blurQa = function (dataQa) {
     $("[data-qa='" + dataQa + "']").sendKeys(protractor.Key.TAB)
 }
