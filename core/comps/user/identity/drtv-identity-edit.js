@@ -17,6 +17,9 @@ angular.module('cmUser').directive('cmIdentityEdit', [
                 $rootScope.$on('pristine:false', function(){
                     $scope.isPristine = false;
                 });
+                $rootScope.$on('pristine:true', function(){
+                    $scope.isPristine = true;
+                });
 
                 function reset(){
                     $scope.formData = {

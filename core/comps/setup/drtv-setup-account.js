@@ -16,6 +16,9 @@ angular.module('cmSetup')
                     $rootScope.$on('pristine:false', function(){
                         $scope.isPristine = false;
                     });
+                    $rootScope.$on('pristine:true', function(){
+                        $scope.isPristine = true;
+                    });
 
                     $scope.formData = {
                         phoneNumber: '',

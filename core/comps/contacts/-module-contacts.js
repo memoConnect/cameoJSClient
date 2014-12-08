@@ -2,5 +2,6 @@
 
 angular.module('cmContacts',[
     'cmCore',
-    'cmPhonegap'
+    'cmPhonegap',
+    'cmUi'
 ]);

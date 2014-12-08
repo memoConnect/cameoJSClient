@@ -1,5 +1,6 @@
 'use strict';
 
 angular.module('cmValidate', [
-    'cmCore'
+    'cmCore',
+    'cmUi'
 ])

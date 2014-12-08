@@ -38,27 +38,27 @@ angular.module('cmUi').directive('cmAdaptiveChange', [
             scope: false,
             link: function(scope, element, attrs, ngModel){
                 var timeout;
-                element
-                .unbind('input')
-                .unbind('keydown')
-                .on('keydown', function(){
-                    // clear exists timeout
-                    if(timeout)
-                        $timeout.cancel(timeout);
-                    // create new timeout
-                    timeout = $timeout(function(){
-                        scope.$apply(function() {
-                            ngModel.$setViewValue(element.val());
-                            ngModel.$commitViewValue();
-                            $rootScope.$broadcast('multi-input:changed',ngModel);
-                        });
-                    },attrs.cmAdaptiveChange || 1000);
-                })
-                .on('blur', function(){
-                    ngModel.$setViewValue(element.val());
-                    ngModel.$commitViewValue();
-                    $rootScope.$broadcast('multi-input:changed',ngModel);
-                })
+                //element
+                //.unbind('input')
+                //.unbind('keydown')
+                //.on('keydown', function(){
+                //    // clear exists timeout
+                //    if(timeout)
+                //        $timeout.cancel(timeout);
+                //    // create new timeout
+                //    timeout = $timeout(function(){
+                //        scope.$apply(function() {
+                //            ngModel.$setViewValue(element.val());
+                //            ngModel.$commitViewValue();
+                //            $rootScope.$broadcast('multi-input:changed',ngModel);
+                //        });
+                //    },attrs.cmAdaptiveChange || 1000);
+                //})
+                //.on('blur', function(){
+                //    ngModel.$setViewValue(element.val());
+                //    ngModel.$commitViewValue();
+                //    $rootScope.$broadcast('multi-input:changed',ngModel);
+                //})
             }
         }
     }
