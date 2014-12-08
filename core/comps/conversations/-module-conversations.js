@@ -4,5 +4,6 @@ angular.module('cmConversations', [
     'cmCore',
     'cmFiles',
     'cmSecurityAspects',
-    'cmUser'
+    'cmUser',
+    'cmValidate'
 ]);

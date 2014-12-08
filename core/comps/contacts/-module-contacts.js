@@ -3,5 +3,5 @@
 angular.module('cmContacts',[
     'cmCore',
     'cmPhonegap',
-    'cmUi'
+    'cmValidate'
 ]);

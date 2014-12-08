@@ -2,8 +2,8 @@
 
 angular.module('cmSetup')
     .directive('cmSetupAccount', [
-        'cmUserModel','cmUtil','cmLoader','cmLogger', '$rootScope', '$q',
-        function(cmUserModel, cmUtil, cmLoader, cmLogger, $rootScope, $q){
+        'cmUserModel','cmUtil','cmLoader','cmLogger', 'cmPristine', '$rootScope', '$q',
+        function(cmUserModel, cmUtil, cmLoader, cmLogger, cmPristine, $rootScope, $q){
             return {
                 restrict: 'E',
                 templateUrl: 'comps/setup/drtv-setup-account.html',
@@ -11,14 +11,6 @@ angular.module('cmSetup')
                     var loader = new cmLoader($scope);
 
                     $scope.account = cmUserModel.data.account;
-
-                    $scope.isPristine = true;
-                    $rootScope.$on('pristine:false', function(){
-                        $scope.isPristine = false;
-                    });
-                    $rootScope.$on('pristine:true', function(){
-                        $scope.isPristine = true;
-                    });
 
                     $scope.formData = {
                         phoneNumber: '',
@@ -57,8 +49,10 @@ angular.module('cmSetup')
                     };
 
                     $scope.saveAccount = function(){
-                        if($scope.isPristine)
+                        if($scope.isPristine){
                             $scope.goToNextStep();
+                            return false;
+                        }
 
                         if(loader.isIdle())
                             return false;
@@ -69,7 +63,7 @@ angular.module('cmSetup')
                             function(objectChange){
                                 cmUserModel.updateAccount(objectChange).then(
                                     function(){
-                                        $rootScope.goTo('/setup/identity');
+                                        $scope.goToNextStep();
                                         loader.stop();
                                     },
                                     function(){
@@ -87,6 +81,19 @@ angular.module('cmSetup')
                     $scope.goToNextStep = function(){
                         $rootScope.goTo('/setup/identity');
                     };
+
+                    /**
+                     * Pristine Handling
+                     */
+                    $scope.isPristine = true;
+                    function pristine_callback(){
+                        $scope.isPristine = cmPristine.is();
+                    }
+                    cmPristine.on('updated',pristine_callback);
+
+                    $scope.$on('$destroy', function(){
+                        cmPristine.off('updated',pristine_callback);
+                    })
                 }
             }
         }

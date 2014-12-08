@@ -1,9 +1,10 @@
 'use strict';
 
 angular.module('cmUi').directive('input', [
+    'cmPristine',
     '$rootScope',
     '$timeout',
-    function ($rootScope, $timeout) {
+    function (cmPristine, $rootScope, $timeout) {
         return {
             restrict: 'EA',
             require: '?ngModel',
@@ -19,17 +20,11 @@ angular.module('cmUi').directive('input', [
                     });
                 }
 
-                /**
-                 * @todo Idee
-                 * umbau pristine broadcast
-                 * ein Formular kann mehrere Elemente beinhalten und muss dementsprechend auch den Status pro Element handlen
-                 * aus der Summer der Pristine Statie der Elemente, ergibt sich, ob das Formular geändert wurde oder nicht
-                 */
                 function broadcastPristine(bool){
                     if(bool){
-                        $rootScope.$broadcast('pristine:true');
+                        cmPristine.set(ngModel, true);
                     } else {
-                        $rootScope.$broadcast('pristine:false');
+                        cmPristine.set(ngModel, false);
                     }
 
                 }
@@ -41,18 +36,17 @@ angular.module('cmUi').directive('input', [
                 function setValue(){
                     ngModel.$setViewValue(getValue());
                     ngModel.$commitViewValue();
-                    $rootScope.$broadcast('multi-input:changed', ngModel);
                 }
 
                 function handleChange(){
+                    if(timeout){
+                        $timeout.cancel(timeout);
+                    }
+
                     if(initValue != getValue()){
                         broadcastPristine();
                     } else if(initValue == getValue()){
                         broadcastPristine(true);
-                    }
-
-                    if(timeout){
-                        $timeout.cancel(timeout);
                     }
 
                     if('cmAdaptiveChange' in attrs){
@@ -68,6 +62,7 @@ angular.module('cmUi').directive('input', [
 
                 function init(){
                     initValue = getValue();
+                    cmPristine.add(ngModel)
                 }
 
                 init();
@@ -86,6 +81,8 @@ angular.module('cmUi').directive('input', [
                         .off('focus', handleChange)
                         .off('keyup', handleChange)
                         .off('blur', handleChange);
+
+                    cmPristine.remove(ngModel);
                 })
             }
         }
