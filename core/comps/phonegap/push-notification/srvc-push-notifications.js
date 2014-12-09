@@ -150,7 +150,7 @@ angular.module('cmPhonegap')
                     }
                 },
                 iOS: function (event) {
-                    if('sound' in event && event.sound != '') {
+                    if('sound' in event && event.sound != '' && event.foreground != 1) {
                         self.onContext(event.sound);
                     }
 

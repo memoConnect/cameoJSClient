@@ -235,6 +235,7 @@ angular.module('cmConversations')
                                     clearTransferScopeData();
                                     $scope.newMessageText = '';
                                     filesForMessage = [];
+                                    cmAnswerFiles.reset();
                                     $rootScope.$broadcast('cmAnswer:reset');
                                     
                                     //Todo: This is not the right place to count messages:
@@ -306,11 +307,8 @@ angular.module('cmConversations')
                     $scope.conversation.update(undefined, true);
 
                     self.addPendingRecipients();
-                    // $scope.showAsymmetricKeyError();
 
                     $scope.show_contacts  = false;
-
-    //                $scope.showGoToSettingsModal(); 18.07.2014 BS can be removed because on updated:finished event do this check
 
                     /** Event callbacks **/
                     function callback_update_finished(){
@@ -340,7 +338,6 @@ angular.module('cmConversations')
                             $scope.conversation.solitary = true;
                             $scope.send();
                         })
-                    
                     }
 
                     function callback_save_aborted(){
@@ -382,11 +379,11 @@ angular.module('cmConversations')
                     id:'conversation-'+($scope.conversation.id||'new'),
                     scopeVar:'newMessageText',
                     onSet: function(){
-                        this.noneScopeData = cmAnswerFiles.files;
+                        this.noneScopeData = cmAnswerFiles.getFilesForTransfer();
                     },
                     onGet: function(formData, noneScopeData){
                         if(noneScopeData != null)
-                            cmAnswerFiles.files = noneScopeData;
+                            cmAnswerFiles.setFiles(noneScopeData);
                     }
                 });
 
