@@ -1,0 +1,27 @@
+.createContactTrustColor(@color){
+  i {
+    .vatb;
+    margin-right:0 !important;
+    color: @color !important;
+    font-size: @cm-large-font !important;
+    letter-spacing:-0.5rem;
+  }
+  color: @color !important;
+  font-size: @cm-large-font !important;
+}
+
+cm-contact-trust{
+  .vam;
+  .dib;
+  .aspect-icons{
+    &.positive{
+      .createContactTrustColor(@cm-ci-color);
+    }
+    &.negative{
+      .createContactTrustColor(@cm-red);
+    }
+  }
+  .aspect-text{
+    padding-left:1rem;
+  }
+}

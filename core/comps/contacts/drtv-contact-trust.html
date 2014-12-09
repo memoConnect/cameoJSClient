@@ -1,0 +1,20 @@
+<span ng-if="noKey" data-qa="contact-noKey">
+    <span class="aspect-icons negative">
+        <i class="fa cm-checkbox"></i><i class="fa cm-checkbox"></i>
+        !
+    </span>
+    <span class="aspect-text" ng-if="withText">{{'CONTACT.TRUST.NO_CAMEOKEYS'|cmTranslate}}</span>
+</span>
+<span ng-if="hasKey" data-qa="contact-hasKey">
+    <span class="aspect-icons positive">
+        <i class="fa cm-checkbox-bg"></i><i class="fa cm-checkbox"></i>
+        !
+    </span>
+    <span class="aspect-text" ng-if="withText">{{'CONTACT.TRUST.HAS_CAMEOKEYS'|cmTranslate}}</span>
+</span>
+<span ng-if="hasAuthenticatedKey" data-qa="contact-hasAuthenticatedKey" class="positive">
+    <span class="aspect-icons positive">
+        <i class="fa cm-checkbox-bg"></i><i class="fa cm-checkbox-bg"></i>
+    </span>
+    <span class="aspect-text" ng-if="withText">{{'CONTACT.TRUST.OK'|cmTranslate}}</span>
+</span>

@@ -19,30 +19,11 @@ angular.module('cmContacts').directive('cmContactTag',[
                 }
             },
             controller: function($scope){
-
                 $scope.editContact = function () {
                     if($scope.contact.contactType != 'pending') {
                         $rootScope.goTo('/contact/' + $scope.contact.id);
                     }
                 };
-   
-                function refreshScope(){
-                    $scope.contact.securityAspects
-                    .get()
-                    .then(function(){
-                        $scope.noKey                = $scope.contact.securityAspects.applies('NO_KEY')
-                        $scope.hasKey               = $scope.contact.securityAspects.applies('AT_LEAST_ONE_KEY')
-                        $scope.hasAuthenticatedKey  = $scope.contact.securityAspects.applies('AT_LEAST_ONE_AUTHENTICATED_KEY')
-                    })
-                }
-
-                refreshScope()
-
-                $scope.contact.securityAspects.on('refresh', refreshScope)
-
-                $scope.$on('$destroy',function(){
-                    $scope.contact.securityAspects.on('refresh', refreshScope)
-                })
             }
         }
     }
