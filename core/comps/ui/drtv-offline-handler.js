@@ -14,7 +14,6 @@ angular.module('cmUi').directive('cmOfflineHandler',[
                     var scope = $rootScope.$new();
                         scope.onFooterClick = function(){
                             reconnectCallback();
-                            $rootScope.$broadcast('appSpinner','show');
                             $rootScope.$broadcast('getBrowserInfo');
                             element.removeClass('ng-hide');
                         };

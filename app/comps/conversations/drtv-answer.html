@@ -15,14 +15,14 @@
 
     <div class="message" data-qa="answer-ctn">
         <textarea
-                id="answer-textarea"
-                data-qa="input-answer"
-                ng-model="newMessageText"
-                cm-resize-textarea
-                cm-send-on-return
-                cm-max-rows="8"
-                input
-                ></textarea>
+            id="answer-textarea"
+            data-qa="input-answer"
+            ng-model="newMessageText"
+            cm-resize-textarea
+            cm-send-on-return
+            cm-max-rows="8"
+            input
+            ></textarea>
         <div class="inputter"></div>
     </div>
 
@@ -31,8 +31,8 @@
 
         <div class="post-wrap" data-qa="btn-send-answer" ng-click="send()" cm-reactive>
             <i
-                    class="fa cm-post with-cursor {{conversation.lockStatus.class}}-wrap"
-                    ng-class="{
+                class="fa cm-post with-cursor {{conversation.lockStatus.class}}-wrap"
+                ng-class="{
                 'cm-post-idle':isSending,
                 'cm-post-attention':isSendingAbort
             }"></i>
