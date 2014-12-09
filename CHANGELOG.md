@@ -5,7 +5,7 @@
 * fix CAM-1500
 * fix Textarea Resize
 
-## RC 0.4.5 - 08.12.2014
+## RC 0.4.6 - 08.12.2014
 
 ## Dev
 # WW 08.12.2014
