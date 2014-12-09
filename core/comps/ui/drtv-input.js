@@ -26,7 +26,6 @@ angular.module('cmUi').directive('input', [
                     } else {
                         cmPristine.set(ngModel, false);
                     }
-
                 }
 
                 function getValue(){
