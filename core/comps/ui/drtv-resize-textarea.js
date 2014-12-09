@@ -49,9 +49,6 @@ angular.module('cmUi').directive('cmResizeTextarea',[
     function ($timeout, $rootScope) {
         return {
             restrict: 'A',
-            scope: {
-                text: '=ngModel'
-            },
             link: function (scope, element, attrs) {
                 // vars
                 var paddingLeft, paddingRight,
@@ -67,7 +64,7 @@ angular.module('cmUi').directive('cmResizeTextarea',[
                  */
                 function createShadow(){
 
-                    var paddginLef = element.css('paddingLeft'),
+                    var paddginLeft = element.css('paddingLeft'),
                         paddingRight = element.css('paddingRight'),
                         width = element[0].offsetWidth;
 
@@ -76,8 +73,8 @@ angular.module('cmUi').directive('cmResizeTextarea',[
 
                     shadow = angular.element('<div class="textarea-shadow"></div>').css({
                         position: 'fixed',
-                        top: -10000+unit,
-                        left: -10000+unit,
+                        top: 0,//-10000+unit,
+                        left: 0,//-10000+unit,
 //                        top: 0,
 //                        left: 0,
                         width: width - parseInt(paddingLeft || 0) - parseInt(paddingRight || 0)+unit,
@@ -113,6 +110,7 @@ angular.module('cmUi').directive('cmResizeTextarea',[
                         .replace(/\s{2,}/g, function(space) {
                             return times('&nbsp;', space.length - 1) + ' '
                         });
+
                     shadow.html(val);
 
                     // on init get one row height

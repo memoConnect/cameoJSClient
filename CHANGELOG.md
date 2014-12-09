@@ -1,3 +1,10 @@
+## Hotfix 0.4.4.2
+* check CAM-1496
+* check CAM-1497
+* fix CAM-1495
+* fix CAM-1500
+* fix Textarea Resize
+
 ## RC 0.4.5 - 08.12.2014
 
 ## Dev

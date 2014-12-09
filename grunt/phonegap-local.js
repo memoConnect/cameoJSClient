@@ -44,12 +44,12 @@ module.exports = function(grunt, options){
                         'https://github.com/memoConnect/cordova-plugin-contacts.git',
                         'de.appplant.cordova.plugin.hidden-statusbar-overlay',
                         'com.jamiestarke.webviewdebug',
-                        'https://github.com/memoConnect/de.cameonet.cordova.crypto.git',
-                        'https://github.com/EddyVerbruggen/cordova-plugin-wkwebview'
+                        'https://github.com/memoConnect/de.cameonet.cordova.crypto.git'
+                        //,'https://github.com/EddyVerbruggen/cordova-plugin-wkwebview.git'
                     ],
                     platforms: [
-//                        'android'
-                        'ios'
+                        'android'
+//                        'ios'
                     ],
 
                     maxBuffer: 1000, // You may need to raise this for iOS.
