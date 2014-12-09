@@ -1,6 +1,7 @@
 ## Dev
 # WW 09.12.2014
 * search for cameoContacts with 3 letter minlength CAM-1417
+* fixxed desktop identity-list and menu without word break CAM-1414
 
 ## RC 0.4.6 - 08.12.2014
 
