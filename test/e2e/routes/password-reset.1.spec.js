@@ -131,7 +131,7 @@ describe('Route Password Lost/Reset:', function(){
             util.setVal('input-passwordConfirm',password)
 
             util.click('btn-resetPassword')
-
+            util.waitForLoader()
             util.checkWarning('info-requestExpired')
         })
 
