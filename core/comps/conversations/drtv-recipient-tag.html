@@ -1,8 +1,8 @@
 <div class="wrap" cm-reactive ng-click="goToContactWithIdentity(identity)">
     <cm-avatar cm-data="identity" cm-weight="1" cm-stop-download></cm-avatar>
+    <cm-contact-trust cm-data="identity"></cm-contact-trust>
     <section cm-weight="4" class="identityName">
-        <div class="displayName" data-qa="contact-display-name">{{identity.getDisplayName()}}</div>
-        <cm-contact-trust cm-data="identity"></cm-contact-trust>
+        <div class="displayName no-margin-bottom" data-qa="contact-display-name">{{identity.getDisplayName()}}</div>
     </section>
     <cm-contact-type cm-data="identity"></cm-contact-type>
 </div>
