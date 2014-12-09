@@ -46,6 +46,7 @@ module.exports = function(grunt, options){
                         'de.appplant.cordova.plugin.hidden-statusbar-overlay',
                         'com.jamiestarke.webviewdebug',
                         'https://github.com/memoConnect/de.cameonet.cordova.crypto.git'
+                        //,'https://github.com/EddyVerbruggen/cordova-plugin-wkwebview.git'
                     ],
                     platforms: [
                         'android'
