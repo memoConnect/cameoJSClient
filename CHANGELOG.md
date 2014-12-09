@@ -2,6 +2,7 @@
 # WW 09.12.2014
 * search for cameoContacts with 3 letter minlength CAM-1417
 * fixxed desktop identity-list and menu without word break CAM-1414
+* added cm-enter on password-input to react on "Öffnen" on android keyboard CAM-1335
 
 ## RC 0.4.6 - 08.12.2014
 
