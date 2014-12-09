@@ -1,3 +1,7 @@
+## Dev
+# WW 09.12.2014
+* search for cameoContacts with 3 letter minlength CAM-1417
+
 ## RC 0.4.6 - 08.12.2014
 
 ## Hotfix 0.4.4.2
