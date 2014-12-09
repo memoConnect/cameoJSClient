@@ -16,7 +16,7 @@ angular.module('cmCore').directive('cmConnectionHandler',[
 
                 function showModal(event, reconnectCallback){
                     // hide spinner and hide app content
-                    $rootScope.$broadcast('appSpinner','hide');
+                    $rootScope.$broadcast('cmBoot:appSpinner','hide','cmConnectionHandler');
                     element.addClass('ng-hide');
                     // prepare reconnect callback
                     var scope = $rootScope.$new();
@@ -24,7 +24,7 @@ angular.module('cmCore').directive('cmConnectionHandler',[
                         reconnectCallback();
 
                         // TODO: at no routechange the spinner doesn't disappear
-                        // $rootScope.$broadcast('appSpinner','show');
+                        // $rootScope.$broadcast('cmBoot:appSpinner','show');
 
                         $rootScope.$broadcast('getBrowserInfo');
                         element.removeClass('ng-hide');

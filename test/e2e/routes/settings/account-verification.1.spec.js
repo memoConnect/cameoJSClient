@@ -70,7 +70,7 @@ describe('Route Settings Account Verification: ', function(){
             util.waitForLoader(1,'cm-footer')
 
             // phone info bubble for do verification
-            expect( $("[data-qa='btn-manuallyPhoneNumberVerfication']").getAttribute('class')).toContain('cm-checkbox-wrong')
+            expect( $("[data-qa='btn-manuallyPhoneNumberVerification']").getAttribute('class')).toContain('cm-checkbox-wrong')
             util.checkWarning('info-phoneNumberNotVerified')
 
             // automatic generated secret -> get and clear
@@ -78,17 +78,17 @@ describe('Route Settings Account Verification: ', function(){
         })
 
         it('start manually verification', function(){
-            util.click('btn-manuallyPhoneNumberVerfication')
+            util.click('btn-manuallyPhoneNumberVerification')
             // get manually generated secret
             getVerificationSecret()
         })
 
-        it('check verfication modal', function(){
+        it('check verification modal', function(){
             // check default all error info bubbles are hidden
             util.checkWarning('info-secretIsEmpty', true)
             util.checkWarning('info-secretIsInvalid', true)
             // send enter on empty input
-            util.setVal('inp-verifySecret', protractor.Key.ENTER)
+            util.sendEnter('inp-verifySecret')
             util.checkWarning('info-secretIsEmpty')
 
             // check invalidation
@@ -104,7 +104,7 @@ describe('Route Settings Account Verification: ', function(){
             util.waitForModalClose()
 
             // phone info bubble for verification is appear
-            expect($("[data-qa='btn-manuallyPhoneNumberVerfication']").getAttribute('class')).toContain('cm-checkbox-right')
+            expect($("[data-qa='btn-manuallyPhoneNumberVerification']").getAttribute('class')).toContain('cm-checkbox-right')
             util.checkWarning('info-phoneNumberNotVerified',true)
         })
 
