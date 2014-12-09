@@ -1,3 +1,11 @@
+## Hotfix 0.4.4.2
+* check CAM-1496
+* check CAM-1497
+* fix CAM-1495
+* fix CAM-1500
+* fix Textarea Resize
+
+
 0.4.4.
 # BS 05.12.2014
 * fix CAM-1398, error will now shown, if key saving failed
