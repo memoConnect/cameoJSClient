@@ -5,9 +5,9 @@
 angular.module('cmPhonegap')
 .service('cmSslCertificateChecker', [
     'cmPhonegap', 'cmConfig',
-    '$rootScope', '$window',
+    '$rootScope', '$window', '$document',
     function (cmPhonegap, cmConfig,
-              $rootScope, $window) {
+              $rootScope, $window, $document) {
 
         var self = {
             plugin: null,
