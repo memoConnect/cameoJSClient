@@ -5,8 +5,8 @@ describe('Route Contact: ', function () {
     var ptor = util.getPtorInstance(),
         extUserName = 'moeper_'+ Date.now(),
         extUserTel = '+4912345678',
-        extUserMail1 = 'mail@moeper.de',
-        extUserMail2 = 'moep@moeper.de',
+        extUserMail1 = 'devnull@cameo.io',
+        extUserMail2 = 'devnull1@cameo.io',
         testUser
 
     it('should create a test user', function(){

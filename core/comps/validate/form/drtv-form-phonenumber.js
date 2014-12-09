@@ -2,7 +2,8 @@
 
 angular.module('cmValidate')
 .directive('cmFormPhonenumber', [
-    function () {
+    'cmVerify',
+    function (cmVerify) {
         return {
             restrict: 'E',
             scope: {
@@ -10,9 +11,13 @@ angular.module('cmValidate')
                 tabIndex: '@cmTabindex',
                 label: '@cmLabel',
                 info: '@cmInfo',
-                disabled: '=cmDisable'
+                disabled: '=cmDisable',
+                verificationData: '=cmVerify'
             },
-            templateUrl: 'comps/validate/form/drtv-form-phonenumber.html'
+            templateUrl: 'comps/validate/form/drtv-form-phonenumber.html',
+            controller: function($scope){
+                cmVerify.handleInput('phoneNumber',$scope);
+            }
         }
     }
 ]);

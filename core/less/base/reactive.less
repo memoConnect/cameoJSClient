@@ -1,6 +1,6 @@
 [cm-reactive]{
+  .with-cursor;
   outline: none;
-  cursor:pointer;
   -webkit-transition: background-color 0.15s ease-in-out; /* Firefox */
   -moz-transition: background-color 0.15s ease-in-out; /* WebKit */
   -o-transition: background-color 0.15s ease-in-out; /* Opera */
@@ -52,6 +52,17 @@
   }
 }
 
+.cm-reactive-disabled{
+  &[cm-reactive]{
+    .without-cursor;
+    -webkit-transition: none;
+    -moz-transition: none;
+    -o-transition: none;
+    transition: none;
+    background-color: transparent!important;
+  }
+}
+
 
 // white -> darken
 .cm-reactive-default(){
@@ -82,6 +93,11 @@ section.default-pages, .cm-demo-default-pages{
     .border-radius-tl;
   }
 }
+
+.cm-input-ctn{
+  .createReactive(@cm-dark-white);
+}
+
 // footer
 button[cm-reactive] {
   // grey -> darken
@@ -95,7 +111,7 @@ button[cm-reactive] {
 }
 // lighten! transparent -> lighter
 .theme-b {
-  article[cm-reactive]{
+  article[cm-reactive], h2[cm-reactive]{
     .createInnerReactive(transparent);
   }
 }

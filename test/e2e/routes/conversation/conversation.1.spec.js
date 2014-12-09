@@ -76,7 +76,6 @@ describe('Route conversation:', function () {
 
         util.waitAndClickQa('btn-submit-on-the-fly-contact')
 
-
         ptor.wait(function(){
             return $$('cm-recipient-tag .displayName').then(function(elements){
                 return elements[1] && elements[1].getText().then(function(value){

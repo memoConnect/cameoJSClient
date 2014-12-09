@@ -21,10 +21,11 @@
         "LABEL": {
             "SUBMIT": "Einloggen",
             "REMEMBER_ME": "Merken.",
-            "AUTO": "Automatisches Login auswählen"
+            "PASSWORD_LOST": "@todo Passwort vergessen?"
         },
         "LINK": "Login",
         "PLACEHOLDER": {
+            "AUTOLOGIN": "Automatisches Login auswählen",
             "USERNAME": "Benutzername",
             "PASSWORD": "Passwort"
         },
@@ -34,6 +35,37 @@
             "500": "Server Error. 500",
             "X": "Es ist ein Problem aufgetreten.<br>Versuchen Sie es bitte erneut",
             "PW": "@:LOGIN.INFO.401"
+        }
+    },
+
+    "PASSWORD_LOST": {
+        "HEADING": "@todo Passwort vergessen?",
+        "INFO": {
+            "TITLE_TEXT": "@todo Hier können Sie anhand von loginName, cameoId, verifizierte Mail oder Telefonnummer Ihr Passwort zurücksetzen lassen. Nach eingabe der Indentifikation wird Ihnen eine Nachricht übermittelt in dem Sie einen Link finden.",
+            "EMPTY": "@todo Bitte geben Sie eine Indentifizierung ein.",
+            "LOGIN_NOT_FOUND": "@todo Der loginName wurde nicht gefunden.",
+            "PHONENUMBER_NOT_FOUND": "@todo Diese Telefonnummer wurde nicht gefunden.",
+            "EMAIL_NOT_FOUND": "@todo Diese E-Mail wurde nicht gefunden.",
+            "NO_EMAIL_PHONENUMBER": "@todo Bitte korrigieren Sie ihre Eingabe.",
+            "CONFIRMATION_SENDED": "@todo Wir haben Ihnen eine Nachricht zugeschickt. Klicken Sie dort auf den Link und folgen der Passwortrücksetzung."
+        },
+        "PLACEHOLDER": {
+            "MIXED": "@todo loginName, cameoId, E-Mail oder Telefon"
+        },
+        "LABEL": {
+            "SUBMIT": "@todo Passwort vergessen!"
+        }
+    },
+
+    "PASSWORD_RESET": {
+        "HEADING": "@todo Passwortrücksetzung",
+        "INFO": {
+            "TITLE_TEXT": "@todo Sie haben auf den Link in der Nachricht geklickt. Jetzt haben Sie die möglichkeit das Passwort zuändern. Bitte wiederholen Sie die Eingabe.",
+            "EXPIRED": "@todo Ihre Anfrage ist leider abgelaufen. Hier unter {{linkGotoPasswordLost}} können Sie eine neue Anfrage auslösen."
+        },
+        "LABEL": {
+            "LINK_GOTO_PASSWORD_LOST": "@todo Passwort vergessen",
+            "SUBMIT": "@todo Passwort zurücksetzen"
         }
     },
 
@@ -652,12 +684,25 @@
                 "EMPTY": "Bitte ein Passwort eingeben und bestätigen!"
             }
         },
+        "MODAL_VERIFICATION": {
+            "HEADER": "@todo Verifizierung",
+            "TEXT": "@todo Ihnen wurde soeben eine Nachricht zugeschickt. In dieser Nachricht finden Sie einen Link und einen Code. Den Link können Sie einfach klicken oder den Code hier eingeben.",
+            "LABEL": {
+                "CANCEL": "@:MODAL.LABEL.CANCEL",
+                "CONFIRM": "@todo Bestätigen"
+            },
+            "INFO": {
+                "EMPTY": "@todo Bitte geben Sie einen Code ein",
+                "INVALID": "@todo Der Code ist entweder ungültig oder abgelaufen."
+            }
+        },
         "VALIDATE_EMAIL": {
             "LABEL": "E-Mail",
             "PLACEHOLDER": "E-Mail",
             "INFO": {
                 "INVALID": "Bitte geben Sie eine korrekte E-Mail-Adresse ein!",
-                "EMPTY": "Sie haben keine E-Mail Adresse eingegeben."
+                "EMPTY": "Sie haben keine E-Mail Adresse eingegeben.",
+                "ISNT_VERIFIED": "@todo Diese E-Mail ist noch nicht verifiziert. Klicken Sie auf das {{icon}}-Icon um einen neue Verifizierung auszulösen. Sie bekommen nach auslösen der Verifizierung eine E-Mail mit einem Link."
             }
         },
         "VALIDATE_PHONE": {
@@ -665,7 +710,8 @@
             "PLACEHOLDER": "Mobilfunknummer",
             "INFO": {
                 "INVALID_PHONE_NUMBER": "Die Nummer scheint keine gültige Mobilfunknummer zu sein.",
-                "EMPTY": "Sie haben keine Mobilfunknummer eingegeben."
+                "EMPTY": "Sie haben keine Mobilfunknummer eingegeben.",
+                "ISNT_VERIFIED": "@todo Diese Telefonnummer ist noch nicht verifiziert. Klicken Sie auf das {{icon}}-Icon um einen neue Verifizierung auszulösen. Sie bekommen nach auslösen der Verifizierung eine SMS mit einem Link."
             }
         },
         "VALIDATE_MIXED": {

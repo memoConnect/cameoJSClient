@@ -1,4 +1,17 @@
-Dev
+## RC 0.4.5 - 08.12.2014
+
+## Dev
+# WW 08.12.2014
+* password reset (desktop and app)
+** new routes #/password/lost & #/password/reset
+** password lost starts a request send message to mail/sms
+** password reset handle the new password with the requestId
+
+# WW 06.12.2014
+* account email & phoneNumber verification
+** on edit email or phoneNumber automatically notfication via mail or sms
+** on inputs are manually buttons for new verricationSecret and modal for confirm verification
+
 # WW 05.12.2014
 * ssl certificat checker
 ** plugin for ios and android
@@ -12,8 +25,16 @@ Dev
 ** add "friendRequest:rejected" in FE
 ** add "identity:new" in FE
 
-0.4.4.
-# BS 04.12.2014
+# WW 02.12.2014
+* internet explorer 11 & iemobile 11 solved
+
+# AP 02.12.2014
+* message signing and verify
+
+## RC 0.4.4.
+# BS 05.12.2014
+* fix CAM-1398, error will now shown, if key saving failed
+# BS 0..12.2014
 * fix CAM-1482, set timeout for browser notifications to 5s
 * fix CAM-1483, set z-index to choose element
 * fix CAM-1481, only one browser notification per message
@@ -22,7 +43,6 @@ Dev
 * fix CAM-1478, last-message:read will only send, if message is decrypted
 # BS 28.11.2014
 * add Authentication Route to Desktop Modus, CAM-1374
-
 
 0.4.3.
 # BS 27.11.2014

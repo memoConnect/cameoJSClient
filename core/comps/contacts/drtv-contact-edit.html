@@ -74,9 +74,9 @@
     <article class="content" ng-if="!showCameoId" data-qa="internal-user">
         <label>{{'CONTACT.PLACEHOLDER.CAMEOID'|cmTranslate}}</label>
         <div class="cm-input-ctn with-inside-icon cm-icon-grey" ng-class="{'cm-input-disabled':disabled}">
-            <i class="fa cm-rhino-positive"></i>
             <input data-qa="input-cameoId" disabled
                    type="text" name="cameoId" ng-model="contact.identity.cameoId" />
+            <i class="fa cm-rhino-positive without-cursor"></i>
         </div>
     </article>
 

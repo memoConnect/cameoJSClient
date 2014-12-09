@@ -18,20 +18,43 @@
     margin-bottom: 0.5em;
     background:transparent;
   }
-  &.with-inside-icon{
-    position: relative;
+
+  .default-one-icon{
+    .pos-rel;
     white-space:nowrap;
     input{
       width:90%;
     }
     i{
       .with-cursor;
+      .pos-abs;
       color: @cm-grey;
-      position: absolute;
-      top: 0.4rem;
-      right: 0;
-      font-size: 1.5em;
+      top:0;
+      bottom:0;
+      right:0;
+      font-size:@cm-mega-font;
       width:10%;
+      text-align:center;
+      line-height:@cm-unit - 1;
+      &.cm-write{
+        .without-cursor;
+      }
+    }
+  }
+
+  &.with-inside-icon{
+    .default-one-icon;
+  }
+  &.with-inside-icons{
+    .default-one-icon;
+    input{
+      width:80%;
+    }
+    i{
+      right:10%;
+    }
+    i + i{
+      right:0;
     }
   }
 }
