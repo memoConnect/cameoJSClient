@@ -5,7 +5,7 @@
     </span>
     <span class="aspect-text" ng-if="withText">{{'CONTACT.TRUST.NO_CAMEOKEYS'|cmTranslate}}</span>
 </span>
-<span ng-if="hasKey" data-qa="contact-hasKey">
+<span ng-if="hasKey && !hasAuthenticatedKey" data-qa="contact-hasKey">
     <span class="aspect-icons positive">
         <i class="fa cm-checkbox-bg"></i><i class="fa cm-checkbox"></i>
         !
