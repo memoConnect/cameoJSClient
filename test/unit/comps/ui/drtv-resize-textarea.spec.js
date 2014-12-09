@@ -40,6 +40,14 @@ describe('Directive cmResizeTextarea', function () {
         expect(area.val()).toBe('')
         expect(shadow.html()).toBe('')
     })
+
+    it('shadow should be invisible',function(){
+        createDrtv('<textarea cm-resize-textarea></textarea>')
+
+        expect(shadow.css('left')).toContain('-10000')
+        expect(shadow.css('top')).toContain('-10000')
+    })
+
     // in unit tests only can check one row
     it('check cm-rows calculation',function(){
         createDrtv('<textarea cm-resize-textarea style="width:100px"></textarea>')
