@@ -8,9 +8,9 @@ angular.module('cmValidate')
             var self = this,
                 elements = [];
                 /*
-                {
-                    name: '',
-                    isPristine: true
+                element = {
+                    name: 'moep',
+                    isPristine: true || false
                 }
                  */
             cmObject.addEventHandlingTo(this);
@@ -44,6 +44,10 @@ angular.module('cmValidate')
                 return index;
             }
 
+            /**
+             * add Element
+             * @param element ngModel
+             */
             this.add = function(element){
                 //cmLogger.debug('cmPristine.add');
 
@@ -54,6 +58,8 @@ angular.module('cmValidate')
 
                 if(!searchElement(element)){
                     elements.push({name: element.$name, isPristine: true});
+
+                    this.trigger('added');
                 } else {
                     cmLogger.debug('cmFormPristine detects same element more then one time!');
                 }
@@ -94,6 +100,7 @@ angular.module('cmValidate')
                     if(index != -1){
                         elements.splice(index, 1);
                     }
+                    this.trigger('removed');
                 }
             };
 
@@ -102,7 +109,15 @@ angular.module('cmValidate')
 
                 elements = null;
                 elements = [];
+
+                this.trigger('reset');
             };
+
+            this.getAll = function(){
+                //cmLogger.debug('cmPristine.getAll');
+
+                return elements;
+            }
         }
     ]
 );
