@@ -210,7 +210,6 @@ angular.module('cmCore')
                             }
                         )
                     } else {
-                        $rootScope.$broadcast('appSpinner','show');
                         cmAuth.getAccount().then(
                             function (data) {
                                 if (importAccount(data)) {

@@ -370,11 +370,11 @@ angular.module('cmConversations')
                     id:'conversation-'+($scope.conversation.id||'new'),
                     scopeVar:'newMessageText',
                     onSet: function(){
-                        this.noneScopeData = cmAnswerFiles.files;
+                        this.noneScopeData = cmAnswerFiles.getFilesForTransfer();
                     },
                     onGet: function(formData, noneScopeData){
                         if(noneScopeData != null)
-                            cmAnswerFiles.files = noneScopeData;
+                            cmAnswerFiles.setFiles(noneScopeData);
                     }
                 });
 

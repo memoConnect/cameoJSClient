@@ -42,9 +42,18 @@ angular.module('cmFiles').service('cmAnswerFiles', [
                 return false;
             },
             reset: function () {
-                console.log('reset files')
                 this.files = [];
                 this.trigger('files:resetted');
+            },
+
+            getFilesForTransfer: function(){
+                var files = this.files;
+                this.reset();
+                return files;
+            },
+
+            setFiles: function(filesArray){
+                this.files = filesArray;
             },
 
             validateChoosenFiles: function (options) {
