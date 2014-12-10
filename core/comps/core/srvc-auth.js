@@ -151,7 +151,8 @@ angular.module('cmCore')
             createUser: function(data){
                 return cmApi.post({
                     path: '/account',
-                    data: data
+                    data: data,
+                    apiVersion: 'v2'
                 })
             },
             /**
@@ -172,8 +173,7 @@ angular.module('cmCore')
                     data: {
                         loginName: name,
                         reservationSecret: reservationSecret
-                    },
-                    apiVersion: 'v2'
+                    }
     //                exp_ok: 'reservationSecret',
     //                exp_ko: 'alternative'
                 })
