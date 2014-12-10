@@ -53,7 +53,7 @@ angular.module('cmFiles').directive('cmUploadAvatar',[
                 cmAnswerFiles.on('file:setted', callback_file_setted);
 
                 scope.$on('$destroy',function(){
-                    cmAnswerFiles.off('save:aborted', callback_file_setted);
+                    cmAnswerFiles.off('file:setted', callback_file_setted);
                 });
             }
         }
