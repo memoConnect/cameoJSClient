@@ -81,6 +81,7 @@ module.exports = function(grunt, options) {
                             'currentTarget': options.globalCameoBuildConfig.target,
                             'currentVersion': options.globalCameoBuildConfig.config.version,
                             'currentApiUrl': options.globalCameoBuildConfig.config.apiUrl,
+                            'defaultApiVersion': options.globalCameoBuildConfig.config.defaultApiVersion,
                             'autoLogin': options.globalCameoBuildConfig.config.autoLogin,
                             'loadingBar': options.globalCameoBuildConfig.config.loadingBar,
                             'enableDebug': options.globalCameoBuildConfig.config.enableDebug,

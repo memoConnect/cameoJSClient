@@ -4,6 +4,7 @@ angular.module('cmConfig',[])
         var self = {
             target: '<%= currentTarget %>',
             restApi: '<%= currentApiUrl %>',
+            defaultApiVersion: '<%= defaultApiVersion %>',
             version: '<%= currentVersion %>',
 
             commitSize: 50,
