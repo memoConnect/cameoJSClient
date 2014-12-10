@@ -237,7 +237,7 @@ angular.module('cmCore').provider('cmApi',[
                 }
 
                 function prepareConfig(config, method, token, twoFactorToken){
-                    config.apiVersion = config.apiVersion || $injector.get('cmConfig').defaultApiVersion;
+                    config.apiVersion = without_api_url ? '' : config.apiVersion || $injector.get('cmConfig').defaultApiVersion;
                     config.url      =   config.url ||
                         (
                             rest_api +      // base url API
@@ -269,6 +269,8 @@ angular.module('cmCore').provider('cmApi',[
 
                     if(rest_api != '' || without_api_url){
                         prepareConfig(config, method, token, twoFactorToken);
+
+                        console.log(config)
 
                         $http(config).then(
                             function(response){
@@ -320,6 +322,8 @@ angular.module('cmCore').provider('cmApi',[
                     // assume binary as blob
 //                    config.responseType = 'blob';
 
+                    console.log(config)
+
                     $http(config).then(
                         function(response){
                             deferred.resolve(response.data)
@@ -365,7 +369,7 @@ angular.module('cmCore').provider('cmApi',[
                     }
 
 
-                    prepareConfig(config, method)
+                    prepareConfig(config, method, without_api_url)
 
                     var deferred = $q.defer()
 

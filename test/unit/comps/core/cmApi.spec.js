@@ -4,11 +4,13 @@ describe('base config', function(){
 
     var cmApi, $httpBackend
 
+    beforeEach(module('cmConfig'))
+
     beforeEach(module('cmCore',[
         'cmApiProvider',
         function(cmApiProvider){
             cmApiProvider
-            .restApiUrl('my_rest_api')
+            .restApiUrl('my_rest_api/')
             .callStackPath('/my_stack_path')
             .useCallStack(true)
             .commitSize(50)
@@ -36,12 +38,12 @@ describe('base config', function(){
     describe('service', function(){
 
         it('should itself be a universal function for api calls.', function(){
-            $httpBackend.expect('GET',		'my_rest_api/test').respond(200, {res:'OK'} )
-            $httpBackend.expect('POST',		'my_rest_api/test').respond(200, {res:'OK'} )
-            $httpBackend.expect('DELETE',	'my_rest_api/test').respond(200, {res:'OK'} )
-            $httpBackend.expect('HEAD',		'my_rest_api/test').respond(200, {res:'OK'} )
-            $httpBackend.expect('PUT',		'my_rest_api/test').respond(200, {res:'OK'} )
-            $httpBackend.expect('JSONP',	'my_rest_api/test').respond(200, {res:'OK'} )
+            $httpBackend.expect('GET',		'my_rest_api/v1/test').respond(200, {res:'OK'} )
+            $httpBackend.expect('POST',		'my_rest_api/v1/test').respond(200, {res:'OK'} )
+            $httpBackend.expect('DELETE',	'my_rest_api/v1/test').respond(200, {res:'OK'} )
+            $httpBackend.expect('HEAD',		'my_rest_api/v1/test').respond(200, {res:'OK'} )
+            $httpBackend.expect('PUT',		'my_rest_api/v1/test').respond(200, {res:'OK'} )
+            $httpBackend.expect('JSONP',	'my_rest_api/v1/test').respond(200, {res:'OK'} )
 
             var resolved = 0
 
@@ -58,37 +60,37 @@ describe('base config', function(){
         })
 
         it('should provide a function for GET requests.', function(){
-            $httpBackend.expect('GET', 'my_rest_api/test').respond(200, {res:'OK'} )
+            $httpBackend.expect('GET', 'my_rest_api/v1/test').respond(200, {res:'OK'} )
             cmApi.get( {path:'/test'}, true )
             $httpBackend.flush()
         })
 
         it('should provide a function for GET requests.', function(){
-            $httpBackend.expect('POST',	'my_rest_api/test').respond(200, {res:'OK'} )
+            $httpBackend.expect('POST',	'my_rest_api/v1/test').respond(200, {res:'OK'} )
             cmApi.post( {path:'/test'}, true )
             $httpBackend.flush()
         })
 
         it('should provide a function for DELETE requests.', function(){
-            $httpBackend.expect('DELETE', 'my_rest_api/test').respond(200, {res:'OK'} )
+            $httpBackend.expect('DELETE', 'my_rest_api/v1/test').respond(200, {res:'OK'} )
             cmApi.delete( {path:'/test'}, true )
             $httpBackend.flush()
         })
 
         it('should provide a function for HEAD requests.', function(){
-            $httpBackend.expect('HEAD',	'my_rest_api/test').respond(200, {res:'OK'} )
+            $httpBackend.expect('HEAD',	'my_rest_api/v1/test').respond(200, {res:'OK'} )
             cmApi.head( {path:'/test'}, true )
             $httpBackend.flush()
         })
 
         it('should provide a function for PUT requests.', function(){
-            $httpBackend.expect('PUT', 'my_rest_api/test').respond(200, {res:'OK'} )
+            $httpBackend.expect('PUT', 'my_rest_api/v1/test').respond(200, {res:'OK'} )
             cmApi.put( {path:'/test'}, true )
             $httpBackend.flush()
         })
 
         it('should provide a function for JSONP requests.', function(){
-            $httpBackend.expect('JSONP', 'my_rest_api/test').respond(200, {res:'OK'} )
+            $httpBackend.expect('JSONP', 'my_rest_api/v1/test').respond(200, {res:'OK'} )
             cmApi.jsonp( {path:'/test'}, true )
             $httpBackend.flush()
         })
@@ -96,7 +98,7 @@ describe('base config', function(){
         it('should check the api conventions for case 1', function(){
             var my_pony, my_alternative;
 
-            $httpBackend.expect('GET', 'my_rest_api/test')
+            $httpBackend.expect('GET', 'my_rest_api/v1/test')
             .respond(200,{
                 "res" : 'OK',
                 "data": {
@@ -128,7 +130,7 @@ describe('base config', function(){
             var my_pony, my_alternative;
 
             $httpBackend
-            .expect('GET', 'my_rest_api/test')
+            .expect('GET', 'my_rest_api/v1/test')
             .respond(200,{
                 "res" : 'OK',
                 "data": {
@@ -159,7 +161,7 @@ describe('base config', function(){
         it('should check the api conventions for case 3', function(){
             var my_pony, my_alternative;
 
-            $httpBackend.expect('GET', 'my_rest_api/test')
+            $httpBackend.expect('GET', 'my_rest_api/v1/test')
             .respond(200, {
                 "res" : 'KO',
                 "data": {
@@ -191,7 +193,7 @@ describe('base config', function(){
             var my_pony, my_alternative;
 
             $httpBackend
-            .expect('GET', 'my_rest_api/test')
+            .expect('GET', 'my_rest_api/v1/test')
             .respond(200, {
                 "res" : 'XXX',
                 "data": {
@@ -254,7 +256,7 @@ describe('base config', function(){
 
             it('should commit pending requests with one api call and resolve promises separately.', function(){
                 $httpBackend
-                .expect('POST', 'my_rest_api/my_stack_path')
+                .expect('POST', 'my_rest_api/v1/my_stack_path')
                 .respond(200, {
                     res:    'OK',
                     data:   {
@@ -322,7 +324,7 @@ describe('base config', function(){
                 expect(typeof cmApi.subscribeToEventStream).toBe('function')
 
                 $httpBackend
-                .expect('POST', 'my_rest_api/events')
+                .expect('POST', 'my_rest_api/v1/events')
                 .respond(200,{
                     res : "OK",
                     data : {
@@ -345,7 +347,7 @@ describe('base config', function(){
                 cmApi.subscriptionId = 'my_id'
 
                 $httpBackend
-                .expect('GET', 'my_rest_api/events/my_id')
+                .expect('GET', 'my_rest_api/v1/events/my_id')
                 .respond(200,{
                     res : "OK",
                     data : {
@@ -388,7 +390,7 @@ describe('base config', function(){
 
                 spyOn(cmApi, 'subscribeToEventStream').andCallThrough()
 
-                $httpBackend.expect('POST','my_rest_api/events').respond('200')
+                $httpBackend.expect('POST','my_rest_api/v1/events').respond('200')
 
                 cmApi.getEvents()
 
@@ -401,7 +403,7 @@ describe('base config', function(){
                 cmApi.subscriptionId = 'my_id'
 
                 $httpBackend
-                    .expect('GET', 'my_rest_api/events/my_id')
+                    .expect('GET', 'my_rest_api/v1/events/my_id')
                     .respond(232,{
                         res : "KO",
                         data : {
@@ -420,7 +422,7 @@ describe('base config', function(){
                 cmApi.subscriptionId = 'my_id'
 
                 $httpBackend
-                    .expect('GET', 'my_rest_api/events/my_id')
+                    .expect('GET', 'my_rest_api/v1/events/my_id')
                     .respond(232,{
                         res : "KO",
                         data : {

@@ -116,6 +116,9 @@ angular.module('cmWidgets').directive('cmWidgetRegistration', [
                         cmAuth.createUser(data).then(
                             function (accountData) {
 
+                                /*****
+                                 * kein Login mehr!
+                                 */
                                 cmUserModel.doLogin($scope.formData.cameoId, $scope.formData.password, accountData).then(
                                     function() {
                                         if(cmDevice.isDesktop('cmWidgetRegistration') || cmDevice.isApp())
@@ -124,7 +127,7 @@ angular.module('cmWidgets').directive('cmWidgetRegistration', [
                                             $rootScope.goto("/start/download");
                                     },
                                     function() {
-                                        $scope.spinner('stop');
+                                        loader.stop();
                                     }
                                 );
                                 return true;
