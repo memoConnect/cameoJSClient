@@ -270,8 +270,6 @@ angular.module('cmCore').provider('cmApi',[
                     if(rest_api != '' || without_api_url){
                         prepareConfig(config, method, token, twoFactorToken);
 
-                        console.log(config)
-
                         $http(config).then(
                             function(response){
                                 handleSuccess(response, deferred)
@@ -321,8 +319,6 @@ angular.module('cmCore').provider('cmApi',[
                     prepareConfig(config, 'GET', token);
                     // assume binary as blob
 //                    config.responseType = 'blob';
-
-                    console.log(config)
 
                     $http(config).then(
                         function(response){
