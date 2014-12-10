@@ -98,6 +98,8 @@ angular.module('cmSetup')
 
                         $scope.validateForm().then(
                             function (objectChange) {
+                                
+
                                 cmAuth.addIdentity(objectChange).then(
                                     function (res) {
                                         loader.stop();

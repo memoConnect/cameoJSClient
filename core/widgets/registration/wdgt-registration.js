@@ -2,10 +2,10 @@
 
 angular.module('cmWidgets').directive('cmWidgetRegistration', [
     'cmAuth', 'cmUserModel', 'cmUtil', 'cmLogger', 'cmTransferScopeData',
-    'cmNotify', 'cmSystemCheck', 'cmLoader', 'cmDevice',
+    'cmNotify', 'cmSystemCheck', 'cmLoader', 'cmDevice', 'cmCrypt',
     '$rootScope', '$location', '$q',
     function (cmAuth, cmUserModel, cmUtil, cmLogger, cmTransferScopeData,
-              cmNotify, cmSystemCheck, cmLoader, cmDevice,
+              cmNotify, cmSystemCheck, cmLoader, cmDevice, cmCrypt,
               $rootScope, $location, $q) {
         return {
             restrict: 'AE',
@@ -116,21 +116,34 @@ angular.module('cmWidgets').directive('cmWidgetRegistration', [
                         cmAuth.createUser(data).then(
                             function (accountData) {
 
-                                /*****
-                                 * kein Login mehr!
-                                 */
-                                cmUserModel.doLogin($scope.formData.cameoId, $scope.formData.password, accountData).then(
-                                    function() {
+                                accountData.basicAuth = cmCrypt.base64Encode($scope.formData.cameoId + ":" + $scope.formData.password);
+
+                                cmUserModel.setAccount(accountData).then(
+                                    function(){
                                         if(cmDevice.isDesktop('cmWidgetRegistration') || cmDevice.isApp())
-                                            $rootScope.goto("/setup/account");
+                                            $rootScope.goTo('/setup/account');
                                         else
-                                            $rootScope.goto("/start/download");
+                                            $rootScope.goTo('/start/download');
                                     },
-                                    function() {
+                                    function(){
                                         loader.stop();
                                     }
                                 );
-                                return true;
+                                /*
+                                 * kein Login mehr!
+                                 */
+                                //cmUserModel.doLogin($scope.formData.cameoId, $scope.formData.password, accountData).then(
+                                //    function() {
+                                //        if(cmDevice.isDesktop('cmWidgetRegistration') || cmDevice.isApp())
+                                //            $rootScope.goto("/setup/account");
+                                //        else
+                                //            $rootScope.goto("/start/download");
+                                //    },
+                                //    function() {
+                                //        loader.stop();
+                                //    }
+                                //);
+                                //return true;
                             },
                             function (response) {
                                 loader.stop();

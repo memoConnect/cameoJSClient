@@ -150,7 +150,7 @@ angular.module('cmCore')
 
                     self.importData(identity, accountData.identities);
                     self.importAccount(accountData);
-                    self.setAppSettings(accountData)
+                    self.setAppSettings(accountData);
 
                     // check device for pushing
                     cmPushNotificationAdapter.checkRegisteredDevice();
@@ -263,6 +263,26 @@ angular.module('cmCore')
             return this;
         };
 
+        this.getAccount = function(){
+            return this.data.account;
+        };
+
+        this.setAccount = function(data){
+            cmLogger.debug('cmUserModel.setAccount')
+
+            var deferred = $q.defer();
+
+            if(typeof data == 'object'){
+                this.data.account.loginName = data.loginName;
+                this.data.account.basicAuth = data.basicAuth;
+                deferred.resolve();
+            } else {
+                deferred.reject('no data');
+            }
+
+            return deferred.promise;
+        };
+
         this.importAccount = function(data){
             this.data.account.loginName = data.loginName || this.data.account.loginName;
 
@@ -284,8 +304,12 @@ angular.module('cmCore')
         this.updateAccount = function(newAccountData){
             //cmLogger.debug('cmUserModel.updateAccount');
 
-            return cmAuth.putAccount(newAccountData)
-            .then(
+            var auth = undefined;
+            if(!this.getToken()){
+                auth = this.data.account.basicAuth;
+            }
+
+            return cmAuth.putAccount(newAccountData, auth).then(
                 function(){
                     self.importAccount(newAccountData);
                 }
@@ -307,7 +331,14 @@ angular.module('cmCore')
 //                }
 //            }
 
-            return this.getToken();
+            /**
+             * @TODO für den Arsch!
+             */
+            if(this.getToken() !== false || typeof this.data.account.basicAuth == 'string'){
+                return true;
+            }
+
+            return false;
         };
 
         this.setAuth = function(){
