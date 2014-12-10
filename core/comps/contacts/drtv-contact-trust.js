@@ -13,11 +13,13 @@ angular.module('cmContacts').directive('cmContactTrust',[
 
                 $scope.withText = ('cmWithText' in $attrs) ? true : false;
 
-                var contact
+                var contact;
 
                 function init(){
 
                     $scope.$on('$destroy',function(){
+                        contact.securityAspects.off('refresh', refresh);
+                        contact.identity.off('update:finished', refresh);
                         contact.securityAspects.off('refresh', refresh);
                     });
 
@@ -26,11 +28,12 @@ angular.module('cmContacts').directive('cmContactTrust',[
 
                 function refresh(){
 
+                    console.log('refresh')
+
                     contact = $scope.data.contactType
                     ? $scope.data
-                    : cmContactsModel.findByIdentity($scope.data)
+                    : cmContactsModel.findByIdentity($scope.data);
 
-                    contact.securityAspects.off('refresh', refresh);
                     contact.securityAspects.on('refresh', refresh);
 
                     contact.securityAspects
@@ -41,8 +44,8 @@ angular.module('cmContacts').directive('cmContactTrust',[
                             $scope.hasAuthenticatedKey = contact.securityAspects.applies('AT_LEAST_ONE_AUTHENTICATED_KEY');
                     });
 
-                    //contact.identity.off('update:finished', refresh);
-                    //contact.identity.on('update:finished', refresh);
+
+                    contact.identity.on('update:finished', refresh);
                 }
 
                 init();
