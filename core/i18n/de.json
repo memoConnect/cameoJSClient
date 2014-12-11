@@ -19,9 +19,9 @@
     "LOGIN": {
         "HEADING": "Login",
         "LABEL": {
-            "SUBMIT": "Einloggen",
-            "REMEMBER_ME": "Merken.",
-            "PASSWORD_LOST": "@todo Passwort vergessen?"
+            "SUBMIT": "Anmelden",
+            "REMEMBER_ME": "Merken",
+            "PASSWORD_LOST": "Passwort vergessen"
         },
         "LINK": "Login",
         "PLACEHOLDER": {
@@ -33,39 +33,39 @@
             "401": "Benutzername oder Passwort falsch.",
             "404": "Ein Login ist zur Zeit nicht möglich. 404",
             "500": "Server Error. 500",
-            "X": "Es ist ein Problem aufgetreten.<br>Versuchen Sie es bitte erneut",
+            "X": "Es ist ein Problem aufgetreten.<br>Versuchen Sie es bitte erneut.",
             "PW": "@:LOGIN.INFO.401"
         }
     },
 
     "PASSWORD_LOST": {
-        "HEADING": "@todo Passwort vergessen?",
+        "HEADING": "Passwort zurücksetzen",
         "INFO": {
-            "TITLE_TEXT": "@todo Hier können Sie anhand von loginName, cameoId, verifizierte Mail oder Telefonnummer Ihr Passwort zurücksetzen lassen. Nach eingabe der Indentifikation wird Ihnen eine Nachricht übermittelt in dem Sie einen Link finden.",
-            "EMPTY": "@todo Bitte geben Sie eine Indentifizierung ein.",
-            "LOGIN_NOT_FOUND": "@todo Der loginName wurde nicht gefunden.",
-            "PHONENUMBER_NOT_FOUND": "@todo Diese Telefonnummer wurde nicht gefunden.",
-            "EMAIL_NOT_FOUND": "@todo Diese E-Mail wurde nicht gefunden.",
-            "NO_EMAIL_PHONENUMBER": "@todo Bitte korrigieren Sie ihre Eingabe.",
-            "CONFIRMATION_SENDED": "@todo Wir haben Ihnen eine Nachricht zugeschickt. Klicken Sie dort auf den Link und folgen der Passwortrücksetzung."
+            "TITLE_TEXT": "Hier können Sie Ihr Passwort zurücksetzen, wenn Sie für Ihr Benutzerkonto eine E-Mail-Adresse oder Telefonnummer hinterlegt und verifiziert haben.<br> Bitte geben Sie zur Identifikation Ihren Benutzernamen, Ihre cameoID oder Ihre hinterlegte E-Mail-Adresse oder Telefonnummer ein. Sie erhalten dann eine Nachricht. Darin finden Sie einen Link zur Passwortrücksetzung.",
+            "EMPTY": "Bitte geben Sie eine Identifikation ein (Benutzername, cameoID, E-Mail-Adresse oder Telefonnummer).",
+                "LOGIN_NOT_FOUND": "Der Benutzername kann nicht gefunden werden.",
+            "PHONENUMBER_NOT_FOUND": "Die Telefonnummer kann nicht gefunden werden.",
+            "EMAIL_NOT_FOUND": "Die E-Mail-Adresse kann nicht gefunden werden.",
+            "NO_EMAIL_PHONENUMBER": "Bitte korrigieren Sie ihre Eingabe.",
+            "CONFIRMATION_SENDED": "Wir haben Ihnen eine Nachricht gesendet. Darin finden Sie einen Link zur Passwortrücksetzung. Klicken Sie darauf und folgen Sie den Anweisungen."
         },
         "PLACEHOLDER": {
-            "MIXED": "@todo loginName, cameoId, E-Mail oder Telefon"
+            "MIXED": "Benutzername, cameoID, E-Mail-Adresse oder Telefonnummer"
         },
         "LABEL": {
-            "SUBMIT": "@todo Passwort vergessen!"
+            "SUBMIT": "Passwortrücksetzung anfordern"
         }
     },
 
     "PASSWORD_RESET": {
-        "HEADING": "@todo Passwortrücksetzung",
+        "HEADING": "Neues Passwort setzen",
         "INFO": {
-            "TITLE_TEXT": "@todo Sie haben auf den Link in der Nachricht geklickt. Jetzt haben Sie die möglichkeit das Passwort zuändern. Bitte wiederholen Sie die Eingabe.",
-            "EXPIRED": "@todo Ihre Anfrage ist leider abgelaufen. Hier unter {{linkGotoPasswordLost}} können Sie eine neue Anfrage auslösen."
+            "TITLE_TEXT": "Sie haben eine Passwortrücksetzung angefordert. Hier können Sie ein neues Passwort eingeben. Bitte wiederholen Sie Ihr neues Passwort im zweiten Eingabefeld.",
+            "EXPIRED": "Ihre Anfrage ist leider abgelaufen. Unter {{linkGotoPasswordLost}} können Sie eine neue Passwortrücksetzung auslösen."
         },
         "LABEL": {
-            "LINK_GOTO_PASSWORD_LOST": "@todo Passwort vergessen",
-            "SUBMIT": "@todo Passwort zurücksetzen"
+            "LINK_GOTO_PASSWORD_LOST": "Passwort zurücksetzen",
+            "SUBMIT": "Neues Passwort setzen"
         }
     },
 
@@ -688,15 +688,15 @@
             }
         },
         "MODAL_VERIFICATION": {
-            "HEADER": "@todo Verifizierung",
-            "TEXT": "@todo Ihnen wurde soeben eine Nachricht zugeschickt. In dieser Nachricht finden Sie einen Link und einen Code. Den Link können Sie einfach klicken oder den Code hier eingeben.",
+            "HEADER": "Verifizierung",
+            "TEXT": "cameoNet hat Ihnen soeben eine Nachricht zugeschickt. In der Nachricht finden Sie einen Vefizierungs-Code, den Sie hier eingeben können. <br> Alternativ können Sie die Verifizierung über den in der Nachricht enthaltenen Link abschließen.",
             "LABEL": {
                 "CANCEL": "@:MODAL.LABEL.CANCEL",
-                "CONFIRM": "@todo Bestätigen"
+                "CONFIRM": "Verifizierung bestätigen"
             },
             "INFO": {
-                "EMPTY": "@todo Bitte geben Sie einen Code ein",
-                "INVALID": "@todo Der Code ist entweder ungültig oder abgelaufen."
+                "EMPTY": "Bitte tragen Sie hier den Code ein, der Ihnen in der Verifizierungs-E-Mail mitgeteilt wurde.",
+                "INVALID": "Der Code den Sie eingegeben haben ist falsch oder abgelaufen."
             }
         },
         "VALIDATE_EMAIL": {
@@ -704,8 +704,8 @@
             "PLACEHOLDER": "E-Mail",
             "INFO": {
                 "INVALID": "Bitte geben Sie eine korrekte E-Mail-Adresse ein!",
-                "EMPTY": "Sie haben keine E-Mail Adresse eingegeben.",
-                "ISNT_VERIFIED": "@todo Diese E-Mail ist noch nicht verifiziert. Klicken Sie auf das {{icon}}-Icon um einen neue Verifizierung auszulösen. Sie bekommen nach auslösen der Verifizierung eine E-Mail mit einem Link."
+                "EMPTY": "Sie haben keine E-Mail-Adresse eingegeben.",
+                "ISNT_VERIFIED": "Diese E-Mail-Adresse ist noch nicht verifiziert. Klicken Sie auf das {{icon}}-Icon um eine E-Mail an diese Adresse zu senden. Diese E-Mail enthält einen Link und einen Code, über den Sie die Verifizierung abschließen können."
             }
         },
         "VALIDATE_PHONE": {
@@ -714,15 +714,15 @@
             "INFO": {
                 "INVALID_PHONE_NUMBER": "Die Nummer scheint keine gültige Mobilfunknummer zu sein.",
                 "EMPTY": "Sie haben keine Mobilfunknummer eingegeben.",
-                "ISNT_VERIFIED": "@todo Diese Telefonnummer ist noch nicht verifiziert. Klicken Sie auf das {{icon}}-Icon um einen neue Verifizierung auszulösen. Sie bekommen nach auslösen der Verifizierung eine SMS mit einem Link."
+                "ISNT_VERIFIED": "Diese Telefonnummer ist noch nicht verifiziert. Klicken Sie auf das {{icon}}-Icon um eine SMS an diese Telefonnummer zu senden. Diese SMS enthält einen Link und einen Code, über den Sie die Verifizierung abschließen können."
             }
         },
         "VALIDATE_MIXED": {
-            "LABEL": "Mobilfunknummer oder e-mail-Adresse",
-            "PLACEHOLDER": "Mobilfunknummer oder e-mail-Adresse",
+            "LABEL": "Mobilfunknummer oder E-mail-Adresse",
+            "PLACEHOLDER": "Mobilfunknummer oder E-mail-Adresse",
             "INFO": {
                 "INVALID_MIXED": "Die Eigabe scheint weder eine gültige Mobilfunknummer noch eine gültige E-Mail-Adresse zu sein.",
-                "EMPTY": "Sie nichts eingegeben."
+                "EMPTY": "Sie müssen eine E-Mail-Adresse oder Mobilfunknummer eingegeben."
             }
         },
         "VALIDATE_CAMEOID": {
@@ -835,12 +835,12 @@
                 "FOOTER": "Neu verbinden"
             },
             "NOTSECURE": {
-                "TEXT": "@todo Es konnte keine sichere Verbindung zu unseren Servern aufgebaut werden. Das erwartete Zertifkat stimmt nicht mit dem überein was der Server zurück liefert. Dies könnte einen \"Man in the middle\" Attacke sein.",
-                "FOOTER": "@todo neu überprüfen"
+                "TEXT": "Es konnte keine sichere Verbindung zu unseren Servern aufgebaut werden. Das Zertifkat das vom Server zurück geliefert wurde stimmt nicht mit dem überein, das erwartet wurde.",
+                "FOOTER": "Noch einmal versuchen"
             }
         },
         "EXIT": {
-            "HEADER": "App schließen",
+            "HEADER": "Anwendung schließen",
             "TEXT": "Wollen Sie die Anwendung wirklich verlassen?"
         }
     },
@@ -932,28 +932,28 @@
         "VERIFICATION": {
             "SMS": {
                 "SENDER": "cameoNet",
-                "MESSAGE": "Der Code zur Verifikation lautet \"{{code}}\". Sie können auch auf folgenden Link klicken: {{link}}"
+                "MESSAGE": "Der Code zur Verifizierung lautet \"{{code}}\". Sie können auch auf folgenden Link klicken: {{link}}"
             },
             "MAIL": {
                 "SENDER": "cameoNet",
-                "MESSAGE": "Willkommen bei cameoNet,\nder Code zur verifikation dieser E-Mailaddresse lautet \"{{code}}\". Alternativ können Sie auch auf folgenden Link klicken:\n{{link}}",
-                "SUBJECT": "Verifikation Ihrer E-Mailaddresse bei cameoNet"
+                "MESSAGE": "Willkommen bei cameoNet,\nder Code zur Verifizierung dieser E-Mail-Adresse lautet \"{{code}}\". Alternativ können Sie auch auf folgenden Link klicken:\n{{link}}",
+                "SUBJECT": "Verifizierung Ihrer E-Mail-Adresse bei cameoNet"
             },
             "LANDING_PAGE": {
-                "SUCCESS": "Verifikation erfolgreich",
-                "EXPIRED": "Verifikationscode ist abgelaufen",
+                "SUCCESS": "Verifizierung erfolgreich",
+                "EXPIRED": "Verifizierungscode ist abgelaufen",
                 "ERROR": "Es ist ein Fehler aufgetreten"
             }
         },
         "RESET_PASSWORD": {
             "SMS": {
                 "SENDER": "cameoNet",
-                "MESSAGE": "Der Code zum Passwortreset lautet \"{{code}}\". Sie können auch auf folgenden Link klicken: {{link}}"
+                "MESSAGE": "Der Code zur Passwortrücksetzung lautet \"{{code}}\". Sie können auch auf folgenden Link klicken: {{link}}"
             },
             "MAIL": {
                 "SENDER": "cameoNet",
-                "MESSAGE": "Willkommen bei cameoNet,\nder Code zum Passwortreset lautet \"{{code}}\". Alternativ können Sie auch auf folgenden Link klicken:\n{{link}}",
-                "SUBJECT": "Passwortreset bei cameoNet"
+                "MESSAGE": "Willkommen bei cameoNet,\nder Code zur Passwortrücksetzung lautet \"{{code}}\". Alternativ können Sie auch auf folgenden Link klicken:\n{{link}}",
+                "SUBJECT": "Passwortrücksetzung für Ihren cameoNet-Account"
             }
         }
     }
