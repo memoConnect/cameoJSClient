@@ -4,7 +4,9 @@ angular.module('cmSecurityAspects')
 .factory('cmSecurityAspects',[
     'cmObject',
     'cmLogger',
-    function (cmObject, cmLogger){
+    '$q',
+    '$timeout',
+    function (cmObject, cmLogger, $q, $timeout){
         /**
          * Generic security aspect
          * @param {Object} [config] contains id, dependencies, value and a function check() that checks if the security aspect applies, returning its value. 
@@ -80,19 +82,12 @@ angular.module('cmSecurityAspects')
             this.aspects = [];
             // Object all aspects should apply to
             this.target = undefined;
-            this.applyingAspects = [];
+            this.applyingAspects = null
 
             this.countForDigest = 0;
 
             this.languagePrefix = config.languagePrefix;
 
-            this.refresh = function(){
-                //cmLogger.debug('cmSecurityAspects.refresh');
-
-                this.countForDigest++;
-                this.applyingAspects = this.getApplyingAspects();
-                this.trigger('refresh');
-            };
 
             /**
              * Function to set the target all aspects should evaluate against
@@ -102,7 +97,6 @@ angular.module('cmSecurityAspects')
                 //cmLogger.debug('cmSecurityAspects.setTarget');
 
                 this.target = target;
-                this.applyingAspects = this.getApplyingAspects();
                 return this;
             };
 
@@ -127,18 +121,101 @@ angular.module('cmSecurityAspects')
                 return this;
             };
 
-            /**
-             * Function to filter aspects by id
-             * @param  {Array}     List of aspect ids
-             * @return {Array}     Array of aspects with matching ids
-             */
-            this.getAspectsById = function(ids){
-                ids = typeof ids == "String" ? [ids] : ids;
+            this.reset = function(){
+                this.applyingAspects    = null
+            }
 
-                return this.aspects.filter(function(aspect){
-                    return ids.indexOf(aspect.id) != -1
-                })
-            };
+            this.refresh = function(){
+                //cmLogger.debug('cmSecurityAspects.refresh');
+
+                this.countForDigest++;
+
+                this.reset()
+
+                var failed_aspects = []
+
+                function calculate(applying_aspects){
+                    applying_aspects = applying_aspects || [];
+
+                    var candidates =    self.aspects.filter(function(aspect){
+                                            return  (
+                                                        // Only add aspects not already assumed to apply:
+                                                        applying_aspects.indexOf(aspect) == -1
+                                                        // Only add aspects that still can apply:
+                                                        && failed_aspects.indexOf(aspect) == -1
+                                                        // check if all dependencies are among the applying aspects:
+                                                        && aspect.dependencies.every(function(dependency_id){
+                                                            return applying_aspects.some(function(applying_aspect){
+                                                                 return applying_aspect.id == dependency_id
+                                                            })
+                                                        })
+                                                    )
+                                        })
+
+                    var additional_aspects = []
+
+                    return $q.all(
+                                candidates.map(function(aspect){
+                                    return  $q.when(aspect.check(self.target))
+                                            .then(function(result){
+                                                result === true
+                                                ?   additional_aspects.push(aspect)
+                                                :   failed_aspects.push(aspect)
+                                            })
+                                            .finally(function(){
+                                                return $q.when()
+                                            })
+
+                                })
+                            ).then(function(){
+                                return  additional_aspects.length == 0
+                                        ?   $q.when(applying_aspects)
+                                        :   calculate( applying_aspects.concat(additional_aspects) );
+                            })
+
+                }
+
+                return  calculate()
+                        .then(function(applying_aspects){
+                            self.applyingAspects = applying_aspects
+                            self.trigger('refresh')
+                            $q.when(applying_aspects)
+                        })
+
+            }
+
+
+
+            var refresh_scheduled = false
+
+            this.scheduleRefresh = function(){
+
+                //prevent more than 1 refresh call per second
+                if(!refresh_scheduled){
+                    self.reset()
+
+                    $timeout(function(){
+                        self.refresh();
+                    }, 400)
+                    .then(function(){
+                        refresh_scheduled = false
+                    })
+
+                    refresh_scheduled = true
+                    self.trigger('schedule')
+                } 
+            }
+
+            /**
+             * Function to calculate applying aspects if needed, i.e. cached is empty
+             * @return {[type]} [description]
+             */
+            this.get = function(){
+                return  this.applyingAspects == null
+                        ?   this.refresh()
+                        :   $q.when(this.applyingAspects)
+            }
+
 
             /**
              * Function to get all applying security aspects
@@ -146,36 +223,18 @@ angular.module('cmSecurityAspects')
              * @return  {Array}                             Array of all applying aspects
              */
             this.getApplyingAspects = function(applying_aspects){
-                //cmLogger.debug('cmSecurityAspects.getApplyingAspects');
+                if(this.applyingAspects == null)
+                    cmLogger.warn('cmSecurityAspects: no applying aspects found, you probably forgot to call .refresh().')
 
-                applying_aspects = applying_aspects || [];
-
-                var additional_aspects = this.aspects.filter(function(aspect){
-                    return (
-                        // aspect already assumed to apply, do not add again:
-                        applying_aspects.indexOf(aspect) == -1
-                        // check if all dependencies are among the applying aspects:
-                        && aspect.dependencies.every(function(dependency_id){
-                            return applying_aspects.some(function(applying_aspect){
-                                 return applying_aspect.id == dependency_id
-                            });
-                        })
-                        //check if aspect applies:
-                        && aspect.check(self.target) === true
-                    )
-                 });
-
-                return  additional_aspects.length == 0
-                        ?   applying_aspects
-                        :   this.getApplyingAspects( applying_aspects.concat(additional_aspects) );
-            };
+                return  this.applyingAspects 
+            }
 
             /**
              * Function to get all security aspects that evaluate positively against the target
              * @return {Array}              Array of aspects
              */
             this.getPositiveAspects = function(){
-                return this.applyingAspects.filter(function(aspect){ return aspect.value > 0 });
+                return this.getApplyingAspects().filter(function(aspect){ return aspect.value > 0 });
             };
 
             /**
@@ -183,7 +242,7 @@ angular.module('cmSecurityAspects')
              * @return {Array}              Array of aspects
              */           
             this.getNegativeAspects = function(){
-                return this.applyingAspects.filter(function(aspect){ return aspect.value < 0 });
+                return this.getApplyingAspects().filter(function(aspect){ return aspect.value < 0 });
             };
 
             /**
@@ -191,7 +250,7 @@ angular.module('cmSecurityAspects')
             * @return {Array}              Array of aspects
             */           
             this.getNeutralAspects = function(){
-                return this.applyingAspects.filter(function(aspect){ return aspect.value === 0 });
+                return this.getApplyingAspects().filter(function(aspect){ return aspect.value === 0 });
             };
 
             /**
@@ -199,9 +258,19 @@ angular.module('cmSecurityAspects')
              * @return {Array}              Array of aspects
              */
             this.getNonApplyingAspects = function(){                
-                return this.aspects.filter(function(aspect){ return self.applyingAspects.indexOf(aspect) == -1 });
+                return this.aspects.filter(function(aspect){ return self.getApplyingAspects().indexOf(aspect) == -1 });
             };
+
+            /**
+             * Function to check wether an aspect with given id applies
+             * @param  {string} id  Aspect id
+             * @return {boolean}    true iff the aspect applies
+             */
+            this.applies = function(id){
+                return !!this.getApplyingAspects().filter(function(aspect){ return aspect.id == id })[0]
+            }
         }
+
 
         return cmSecurityAspects
     }

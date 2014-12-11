@@ -1,4 +1,13 @@
 ## Dev
+# WW 11.12.2014
+* trusted contacts
+** in contact list, detail and recipients
+** oo = check trust
+** oo! = no key and untrusted
+** xo! = has key but untrusted
+** xx = trusted connection between two contacts
+* unit test command line -specs option available
+
 # BS 11.12.2014
 * fix CAM-1490, add email or phone number to possible display names
 

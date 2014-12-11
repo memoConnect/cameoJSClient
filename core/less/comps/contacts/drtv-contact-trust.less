@@ -1,0 +1,37 @@
+.createContactTrustColor(@color){
+  i {
+    .vatb;
+    margin-right:0 !important;
+    color: @color !important;
+    font-size: @cm-large-font !important;
+    letter-spacing:-0.5rem;
+  }
+  color: @color !important;
+  font-size: @cm-large-font !important;
+}
+
+cm-contact-trust{
+  .vam;
+  .dib;
+  .aspect-icons{
+    &.loading{
+      .createContactTrustColor(@cm-border-grey);
+    }
+    &.positive{
+      .createContactTrustColor(@cm-ci-color);
+    }
+    &.negative{
+      .createContactTrustColor(@cm-red);
+    }
+  }
+  .aspect-text{
+    padding-left:1rem;
+  }
+}
+
+cm-contact-tag, cm-recipient-tag{
+  cm-contact-trust{
+    width:@cm-unit - 1;
+    margin-right:1rem;
+  }
+}

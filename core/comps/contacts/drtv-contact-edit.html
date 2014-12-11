@@ -5,30 +5,9 @@
     <div class="cm-fl w72">
         <ul class="no-border">
             <li>
-                <section ng-if="!isTrusted && (!hasKeys || !hasLocalKey)" class="cm-disabled">
+                <section>
                      <span class="item clearfix">
-                        <i  class="fa cm-no-key cm-ci-color"></i>
-                         {{'CONTACT.TRUST.NO_CAMEOKEYS'|cmTranslate}}
-                     </span>
-                    <section class="icon-list">
-                        <i class="fa cm-info"></i>
-                    </section>
-                </section>
-
-                <section ng-if="!isTrusted && hasKeys && hasLocalKey">
-                     <span class="item clearfix">
-                        <i  class="fa cm-key cm-ci-color"></i>
-                         {{'CONTACT.TRUST.HAS_CAMEOKEYS'|cmTranslate}}
-                     </span>
-                    <section class="icon-list">
-                        <i class="fa cm-info"></i>
-                    </section>
-                </section>
-
-                <section ng-if="isTrusted" data-qa="trust-confirmed">
-                     <span class="item clearfix">
-                        <i  class="fa cm-connection-trusted cm-ci-color"></i>
-                        {{'CONTACT.TRUST.OK'|cmTranslate}}
+                        <cm-contact-trust cm-data="contact" cm-with-text></cm-contact-trust>
                      </span>
                     <section class="icon-list">
                         <i class="fa cm-info"></i>

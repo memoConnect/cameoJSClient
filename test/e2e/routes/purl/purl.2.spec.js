@@ -96,7 +96,7 @@ describe('Route: Purl - ', function () {
         })
 
         it('login modal should be visible', function(){
-            util.waitForElement("[data-qa='modal-login']");
+            util.waitForElement("[data-qa='modal-login']")
             expect($("[data-qa='modal-login']").isPresent()).toBe(true)
         })
 
@@ -177,7 +177,7 @@ describe('Route: Purl - ', function () {
      * Test 5
      * External User has open Purl then Internal User 1 will see his PURL
      */
-    describe('Test 5 - External User opens Purl, then User 1 open Purl "#/purl/' + config.purlExternal +'"', function(){
+    describe('Test 5 - External User opens Purl, then User 1 opens Purl "#/purl/' + config.purlExternal +'"', function(){
         it('should open', function(){
             util.logout();
 
@@ -192,10 +192,13 @@ describe('Route: Purl - ', function () {
         })
 
         it('login modal should be visible, when Internal User1 open his Purl', function(){
+            ptor.sleep(1000) //without sleep tests will fail :( ??
             util.get('/purl/' + config.purlUser1)
+            ptor.sleep(1000) //without sleep tests will fail :( ??
             util.expectCurrentUrl('#/purl/' + config.purlUser1)
 
-            util.waitForElement("[data-qa='modal-login']");
+            util.waitForElement("[data-qa='modal-login']")
+            
             expect($("[data-qa='modal-login']").isPresent()).toBe(true)
         })
 

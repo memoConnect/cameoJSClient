@@ -13,10 +13,10 @@ angular.module('cmContacts')
 .directive('cmContactEdit', [
     'cmIdentityFactory', 'cmUtil', 'cmNotify', 'cmUserModel',
     'cmContactsModel', 'cmLogger', 'cmLoader', 
-    '$rootScope', '$q',
+    '$rootScope', '$q', '$timeout',
     function(cmIdentityFactory, cmUtil, cmNotify, cmUserModel,
              cmContactsModel, cmLogger, cmLoader,
-             $rootScope, $q){
+             $rootScope, $q, $timeout){
 
         return {
             restrict: 'E',
@@ -76,6 +76,8 @@ angular.module('cmContacts')
                 });
 
                 reset();
+
+
 
                 /**
                  * handle every single contact via model

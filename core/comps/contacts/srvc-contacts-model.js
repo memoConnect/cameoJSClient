@@ -339,6 +339,8 @@ angular.module('cmContacts').service('cmContactsModel',[
                     return contact.identity.id == data.id
                 })[0];
 
+                console.log('identity:updated',contact,data)
+
                 if (typeof contact == 'object' && 'identity' in contact && typeof contact.identity.importData == 'function') {
                     contact.identity.importData(data);
                 }
