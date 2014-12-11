@@ -5,9 +5,6 @@ angular.module('cmContacts').directive('cmContactTrust',[
     function (cmContactsModel){
         return {
             restrict: 'E',
-            scope: {
-                data: '=cmData'
-            },
             templateUrl: 'comps/contacts/drtv-contact-trust.html',
             controller: function($scope, $element, $attrs){
 
@@ -18,19 +15,20 @@ angular.module('cmContacts').directive('cmContactTrust',[
 
                 function init(){
                     $scope.$on('$destroy',function(){
-                        contact.securityAspects.off('refresh', refresh);
+                        if(contact && 'securityAspects' in contact)
+                            contact.securityAspects.off('refresh', refresh);
                     });
 
                     initWatch();
                 }
 
-                function initWatch(){
-                    if(!watchOn)
+                function initWatch(data){
+                    if(!watchOn || !data)
                         return false;
 
-                    contact = $scope.data.contactType
-                    ? $scope.data
-                    : cmContactsModel.findByIdentity($scope.data);
+                    contact = data.contactType
+                    ? data
+                    : cmContactsModel.findByIdentity(data);
 
                     if(contact)
                         watchOn = false;
@@ -54,7 +52,7 @@ angular.module('cmContacts').directive('cmContactTrust',[
 
                 init();
 
-                $scope.$watchCollection($scope.data, initWatch);
+                $scope.$watchCollection($attrs.cmData, initWatch);
             }
         }
     }

@@ -7,6 +7,7 @@
 ** xo! = has key but untrusted
 ** xx = trusted connection between two contacts
 * unit test command line -specs option available
+* fix icons for anrdoid devices lower then kitkat < 4.4
 
 # BS 11.12.2014
 * fix CAM-1490, add email or phone number to possible display names
