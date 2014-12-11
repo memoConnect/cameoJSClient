@@ -399,6 +399,16 @@
             "HEADER": "Übersicht Identitäten",
             "INFO_TEXT": "Hier können Sie zwischen Ihren Identitäten wechseln und neue Identitäten anlegen."
         },
+        "INFO":{
+            "CREATE": {
+                "HEADLINE": "@todo IDENTITY.INFO.CREATE.HEADLINE",
+                "AVATAR": "@todo IDENTITY.INFO.CREATE.AVATAR",
+                "CAMEOID": "@todo IDENTITY.INFO.CREATE.CAMEOID",
+                "DISPLAYNAME": "@todo IDENTITY.INFO.CREATE.DISPLAYNAME",
+                "PHONE": "@todo IDENTITY.INFO.CREATE.PHONE",
+                "EMAIL": "@todo IDENTITY.INFO.CREATE.EMAIL"
+            }
+        },
         "KEYS": {
             "HEADER": "cameoKeys",
             "KEYLIST": {

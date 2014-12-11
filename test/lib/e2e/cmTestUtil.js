@@ -150,7 +150,7 @@ this.login = function (username, password, expectedRoute) {
     if (typeof expectedRoute == 'string' && expectedRoute.length > 0) {
         self.waitForPageLoad(expectedRoute)
     } else {
-        self.waitForPageLoad('(start|talks)')
+        self.waitForPageLoad('(start|talks|setup)')
     }
 
     return this

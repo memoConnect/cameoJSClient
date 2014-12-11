@@ -264,7 +264,8 @@ angular.module('cmConfig',[])
                 },
                 'setup-identity':{
                     routes: ['/setup/identity'],
-                    guests: false
+                    guests: false,
+                    resolveUserModel: true
                 }
             },
 

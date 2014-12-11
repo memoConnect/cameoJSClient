@@ -151,8 +151,7 @@ angular.module('cmCore')
             createUser: function(data){
                 return cmApi.post({
                     path: '/account',
-                    data: data,
-                    apiVersion: 'v2'
+                    data: data
                 })
             },
             /**
@@ -167,17 +166,13 @@ angular.module('cmCore')
              * @param {String} reservationSecret From api given token for Username
              * @returns {Promise} for async handling
              */
-            checkAccountName: function(name, auth){
+            checkAccountName: function(name){
                 var apiCall = {
                     path: '/account/check',
                     data: {
                         loginName: name
                     }
                 };
-
-                if(typeof auth == 'string'){
-                    apiCall.headers = {'Authorization': 'Basic ' + auth};
-                }
 
                 return cmApi.post(apiCall);
             },
@@ -225,15 +220,11 @@ angular.module('cmCore')
                 })
             },
 
-            putAccount: function(data, auth){
+            putAccount: function(data){
                 var apiCall = {
                     path: '/account',
                     data: data
                 };
-
-                if(typeof auth == 'string'){
-                    apiCall.headers = {'Authorization': 'Basic ' + auth};
-                }
 
                 return cmApi.put(apiCall)
             },
@@ -279,15 +270,11 @@ angular.module('cmCore')
                 })
             },
 
-            initialIdentity: function(data, auth){
+            initialIdentity: function(data){
                 var apiCall = {
                     path: '/identity/initial',
                     data: data
                 };
-
-                if(typeof auth == 'string'){
-                    apiCall.headers = {'Authorization': 'Basic ' + auth};
-                }
 
                 return cmApi.post(apiCall)
             },

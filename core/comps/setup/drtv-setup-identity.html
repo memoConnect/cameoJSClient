@@ -3,17 +3,32 @@
     <article class="content tac">
         <div class="avatar">
             <cm-upload-avatar class="border-complete"></cm-upload-avatar>
-            <cm-avatar cm-view="unknown" class="mega"></cm-avatar>
+            <cm-avatar cm-data="identity" cm-view="{{chooseAvatar?'unknown':''}}" class="mega"></cm-avatar>
         </div>
+    </article>
+
+    <article class="content">
+        <cm-info-bubble class="cm-alert">
+            <i class="fa cm-info cm-ci-color"></i> {{'IDENTITY.INFO.CREATE.AVATAR'|cmTranslate}}
+        </cm-info-bubble>
     </article>
 
     <hr class="margin-small" />
 
     <article class="content">
-        <cm-cameo-id
-            ng-model="formData.cameoId" form-name="cmForm" cm-tabindex="1"
-            placeholder="SETTINGS.PAGES.IDENTITY.CREATE.PLACEHOLDER.CAMEOID"
-        ></cm-cameo-id>
+        <label>{{'CONTACT.PLACEHOLDER.CAMEOID'|cmTranslate}}</label>
+        <div class="cm-input-ctn cm-input-readonly">
+            <i class="fa cm-rhino-positive"></i>
+            <input
+                tabindex="1" data-qa="input-cameoId" disabled
+                type="text" name="cameoId" ng-model="identity.cameoId" />
+        </div>
+    </article>
+
+    <article class="content">
+        <cm-info-bubble class="cm-alert">
+            <i class="fa cm-info cm-ci-color"></i> {{'IDENTITY.INFO.CREATE.CAMEOID'|cmTranslate}}
+        </cm-info-bubble>
     </article>
 
     <hr class="margin-small" />
@@ -40,6 +55,12 @@
         </cm-info-bubble>
     </article>
 
+    <article class="content">
+        <cm-info-bubble class="cm-alert">
+            <i class="fa cm-info cm-ci-color"></i> {{'IDENTITY.INFO.CREATE.DISPLAYNAME'|cmTranslate}}
+        </cm-info-bubble>
+    </article>
+
     <hr class="margin-small" />
 
     <cm-form-phonenumber
@@ -49,20 +70,36 @@
         cm-info="SETTINGS.PAGES.IDENTITY.CREATE.INFO.INVALID.PHONENUMBER"
     ></cm-form-phonenumber>
 
+    <article class="content">
+        <cm-info-bubble class="cm-alert">
+            <i class="fa cm-info cm-ci-color"></i> {{'IDENTITY.INFO.CREATE.PHONE'|cmTranslate}}
+        </cm-info-bubble>
+    </article>
+
     <hr class="margin-small" />
 
     <cm-form-email
-            ng-model="formData.email"
-            cm-tabindex="4"
-            cm-label="SETTINGS.PAGES.IDENTITY.CREATE.PLACEHOLDER.EMAIL"
-            cm-info="SETTINGS.PAGES.IDENTITY.CREATE.INFO.INVALID.EMAIL"
-            ></cm-form-email>
+        ng-model="formData.email"
+        cm-tabindex="4"
+        cm-label="SETTINGS.PAGES.IDENTITY.CREATE.PLACEHOLDER.EMAIL"
+        cm-info="SETTINGS.PAGES.IDENTITY.CREATE.INFO.INVALID.EMAIL"
+    ></cm-form-email>
+
+    <article class="content">
+        <cm-info-bubble class="cm-alert">
+            <i class="fa cm-info cm-ci-color"></i> {{'IDENTITY.INFO.CREATE.EMAIL'|cmTranslate}}
+        </cm-info-bubble>
+    </article>
 </form>
 
 <cm-footer>
-    <button class="cm-btn-grey" ng-click="createIdentity()" data-qa="btn-identity-create" cm-reactive>
-        <span ng-show="!showLoader">
+    <button class="cm-btn-grey" ng-click="updateIdentity()" data-qa="btn-identity-create" cm-reactive>
+        <span ng-show="!showLoader && !isPristine">
             {{'SETTINGS.PAGES.IDENTITY.CREATE.FOOTER'|cmTranslate}} <i class="fa cm-checker"></i>
+        </span>
+        <span ng-show="isPristine" data-qa="btn-pristineSkip">
+            {{'ACCOUNT.FOOTER.SKIP'|cmTranslate}}
+            <i class="fa cm-right"></i>
         </span>
         <cm-loader ng-show="showLoader" cm-color="ci-color"></cm-loader>
     </button>

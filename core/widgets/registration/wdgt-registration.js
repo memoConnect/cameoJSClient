@@ -116,40 +116,24 @@ angular.module('cmWidgets').directive('cmWidgetRegistration', [
                         cmAuth.createUser(data).then(
                             function (accountData) {
 
-                                accountData.basicAuth = cmCrypt.base64Encode($scope.formData.cameoId + ":" + $scope.formData.password);
-
-                                cmUserModel.setAccount(accountData).then(
-                                    function(){
+                                cmUserModel.doLogin($scope.formData.cameoId, $scope.formData.password, accountData).then(
+                                    function() {
                                         if(cmDevice.isDesktop('cmWidgetRegistration') || cmDevice.isApp())
-                                            $rootScope.goTo('/setup/account');
+                                            $rootScope.goTo("/setup/account");
                                         else
-                                            $rootScope.goTo('/start/download');
+                                            $rootScope.goTo("/start/download");
                                     },
-                                    function(){
+                                    function() {
                                         loader.stop();
                                     }
                                 );
-                                /*
-                                 * kein Login mehr!
-                                 */
-                                //cmUserModel.doLogin($scope.formData.cameoId, $scope.formData.password, accountData).then(
-                                //    function() {
-                                //        if(cmDevice.isDesktop('cmWidgetRegistration') || cmDevice.isApp())
-                                //            $rootScope.goto("/setup/account");
-                                //        else
-                                //            $rootScope.goto("/start/download");
-                                //    },
-                                //    function() {
-                                //        loader.stop();
-                                //    }
-                                //);
-                                //return true;
+                                return true;
                             },
                             function (response) {
                                 loader.stop();
 
                                 if (typeof response == 'object' && 'data' in response && typeof response.data == 'object') {
-                                    if ('error' in response.data && response.data.error == 'invalid reservation secret') {
+                                    if (typeof response.data.error != 'undefined' && response.data.error == 'invalid reservation secret') {
                                         $rootScope.$broadcast('registration:checkAccountName');
                                     }
                                 } else {
@@ -167,15 +151,15 @@ angular.module('cmWidgets').directive('cmWidgetRegistration', [
                             sendCreateUserRequest(data);
                         },
                         function () {
-                            loader.stop()
-                            cmUtil.scrollToInputError()
+                            loader.stop();
+                            cmUtil.scrollToInputError();
                         }
                     );
                 };
 
-                $rootScope.$on('registration:createUser', function () {
-                    $scope.createUser();
-                });
+                var stop_listening_to_create_user = $rootScope.$on('registration:createUser', function () {
+                                                        $scope.createUser();
+                                                    });
 
                 /**
                  * Guest Handling
@@ -197,6 +181,10 @@ angular.module('cmWidgets').directive('cmWidgetRegistration', [
                             $scope.reservationSecrets = noneScopeData
                     }
                 });
+
+                $scope.$on('$destroy', function(){
+                    stop_listening_to_create_user();
+                })
             }
         }
     }

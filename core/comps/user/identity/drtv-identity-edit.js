@@ -97,12 +97,13 @@ angular.module('cmUser').directive('cmIdentityEdit', [
                     $scope.validateForm()
                     .then(
                         function(objectChange){
-                            cmUserModel.data.identity.update(objectChange);
                             cmUserModel.data.identity.one('update:finished',function(){
                                 loader.stop();
                                 $scope.isPristine = true;
                                 reset();
                             });
+
+                            cmUserModel.data.identity.update(objectChange);
                         },
                         function(){
                             loader.stop();

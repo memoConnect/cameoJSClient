@@ -255,15 +255,6 @@ angular.module('cmCore')
             return this.data.identity;
         };
 
-        this.initialIdentity = function(identity_data, token){
-            cmLogger.debug('cmUserModel.initialIdentity')
-
-            cmAuth.storeToken(token);
-
-            this.importData(cmIdentityFactory.clear(identity_data).create(identity_data, true),[]);
-            $rootScope.$broadcast('login');
-        };
-
         this.setIdentity = function(identity_data){
             //cmLogger.debug('cmUserModel:setIdentity');
 
@@ -276,23 +267,9 @@ angular.module('cmCore')
             return this.data.account;
         };
 
-        this.setAccount = function(data){
-            cmLogger.debug('cmUserModel.setAccount')
-
-            var deferred = $q.defer();
-
-            if(typeof data == 'object'){
-                this.data.account.loginName = data.loginName;
-                this.data.account.basicAuth = data.basicAuth;
-                deferred.resolve();
-            } else {
-                deferred.reject('no data');
-            }
-
-            return deferred.promise;
-        };
-
         this.importAccount = function(data){
+            //cmLogger.debug('cmUserModel.importAccount');
+
             this.data.account.loginName = data.loginName || this.data.account.loginName;
 
             if(typeof data.email != 'string') {
@@ -313,12 +290,7 @@ angular.module('cmCore')
         this.updateAccount = function(newAccountData){
             //cmLogger.debug('cmUserModel.updateAccount');
 
-            var auth = undefined;
-            if(!this.getToken()){
-                auth = this.data.account.basicAuth;
-            }
-
-            return cmAuth.putAccount(newAccountData, auth).then(
+            return cmAuth.putAccount(newAccountData).then(
                 function(){
                     self.importAccount(newAccountData);
                 }
@@ -340,14 +312,7 @@ angular.module('cmCore')
 //                }
 //            }
 
-            /**
-             * @TODO für den Arsch!
-             */
-            if(this.getToken() !== false || typeof this.data.account.basicAuth == 'string'){
-                return true;
-            }
-
-            return false;
+            return this.getToken();
         };
 
         this.setAuth = function(){

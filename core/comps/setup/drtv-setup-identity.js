@@ -2,8 +2,8 @@
 
 angular.module('cmSetup')
     .directive('cmSetupIdentity', [
-        'cmUserModel', 'cmAuth', 'cmIdentityFactory', 'cmUtil','cmLoader','cmLogger', '$rootScope', '$q',
-        function(cmUserModel, cmAuth, cmIdentityFactory, cmUtil, cmLoader, cmLogger, $rootScope, $q){
+        'cmUserModel', 'cmAuth', 'cmIdentityFactory', 'cmUtil', 'cmPristine', 'cmLoader','cmLogger', '$rootScope', '$q',
+        function(cmUserModel, cmAuth, cmIdentityFactory, cmUtil, cmPristine, cmLoader, cmLogger, $rootScope, $q){
             return {
                 restrict: 'E',
                 templateUrl: 'comps/setup/drtv-setup-identity.html',
@@ -15,12 +15,17 @@ angular.module('cmSetup')
                         keySize: 2048
                     };
 
-                    $scope.formData = {
-                        cameoId: cmUserModel.data.account.loginName || '',
-                        email: '',
-                        phoneNumber: '',
-                        displayName: ''
-                    };
+                    $scope.identity = cmUserModel.data.identity;
+
+                    function reset(){
+                        $scope.formData = {
+                            displayName: $scope.identity.displayName,
+                            phoneNumber: $scope.identity.phoneNumber ? $scope.identity.phoneNumber.value : '',
+                            email: $scope.identity.email ? $scope.identity.email.value : ''
+                        };
+                    }
+
+                    reset();
 
                     $scope.validateDisplayName = function () {
                         if ($scope.formData.displayName == undefined
@@ -35,13 +40,6 @@ angular.module('cmSetup')
                         var deferred = $q.defer(),
                             objectChange = {};
 
-                        function checkCameoId() {
-                            var value = $scope.formData.cameoId;
-                            if (value && value != '') {
-                                objectChange.cameoId = value;
-                                objectChange.reservationSecret = $scope.reservationSecrets[objectChange.cameoId];
-                            }
-                        }
 
                         function checkDisplayName() {
                             var value = $scope.formData.displayName;
@@ -76,7 +74,6 @@ angular.module('cmSetup')
                             }
                         }
 
-                        checkCameoId();
                         checkDisplayName();
                         checkPhoneNumber();
                         checkEmail();
@@ -90,7 +87,10 @@ angular.module('cmSetup')
                         return deferred.promise;
                     };
 
-                    $scope.createIdentity = function () {
+                    $scope.updateIdentity = function () {
+                        if($scope.isPristine)
+                            $scope.goTo('/settings/identity/key/create');
+
                         if (loader.isIdle())
                             return false;
 
@@ -99,23 +99,32 @@ angular.module('cmSetup')
                         $scope.validateForm().then(
                             function (objectChange) {
 
-                                cmAuth.initialIdentity(objectChange, cmUserModel.data.account.basicAuth).then(
-                                    function (res) {
+                                cmUserModel.data.identity.one('update:finished',function(){
+                                    loader.stop();
 
-                                        cmUserModel.initialIdentity(res.identity, res.token.token);
-                                        loader.stop();
-                                        $rootScope.goTo('/settings/identity/key/create');
-                                    },
-                                    function () {
-                                        loader.stop();
-                                    }
-                                );
+                                    $rootScope.goTo('/settings/identity/key/create');
+                                });
+
+                                cmUserModel.data.identity.update(objectChange);
                             },
                             function () {
                                 loader.stop();
                             }
                         )
                     };
+
+                    /**
+                     * Pristine Service Handling
+                     */
+                    $scope.isPristine = true;
+                    function pristine_callback(){
+                        $scope.isPristine = cmPristine.is();
+                    }
+                    cmPristine.on('updated',pristine_callback);
+
+                    $scope.$on('$destroy', function(){
+                        cmPristine.off('updated',pristine_callback);
+                    })
                 }
             }
         }
