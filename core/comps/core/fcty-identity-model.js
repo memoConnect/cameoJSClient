@@ -177,7 +177,7 @@ angular.module('cmCore')
 
             this.getDisplayName = function(){
                 var cameoId = this.cameoId || '',
-                    name = this.displayName || cameoId.split("@")[0] || this.id;
+                    name = this.displayName || this.email.value || this.phoneNumber.value ||  cameoId.split("@")[0] || this.id;
                 return name;
             };
 
