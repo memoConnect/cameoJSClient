@@ -27,7 +27,7 @@
         ></cm-security-indicator>
     </cm-header>
 
-    <cm-second-header cm-rubber-space>
+    <cm-second-header ng-if="headerGuest" cm-rubber-space>
         <div cm-weight="1" cm-reactive ng-click="gotoRegistration()" data-qa="btn-fast-sign-in">
             <i class="fa cm-register"></i>
             <span>{{'PURL.SIGN_IN'|cmTranslate}}</span>
