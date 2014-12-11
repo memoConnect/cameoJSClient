@@ -49,7 +49,7 @@
           "TIMEOUT": "Time out - please try again.",
           "VERIFY": "Linking failed - please try again."
         },
-        "EXPLANATION": "@todo: To read your encrypted messages completed as {{identity}} on other devices, please link the local cameoKey to all other keys first.",
+        "EXPLANATION": "To be able to read the messages which you have sent as {{identity}} on all devices you need to link your local cameoKey with your cameoKeys on other devices.",
         "MODAL": {
           "SUCCESS": "You have successfully linked your cameoKeys.",
           "CANCELED": "Linking was canceled."
@@ -171,7 +171,7 @@
       "INFO": {
         "INVALID_PHONE_NUMBER": "The entered value does not seem to be a vaild mobile number.",
         "EMPTY": "You have not entered a valid mobile number",
-        "ISNT_VERIFIED":  "@todo This phonenumber isn't verified. Click on this {{icon}}-Icon to start a new verification. We send you a sms with a link or code to verify."
+        "ISNT_VERIFIED":  "This phone number has not been verified yet. Please click on the {{icon}}-Icon to send a text message to this phone number. This text message will contain a link and a code needed to finalize the verification."
       },
       "PLACEHOLDER": "Mobile number",
       "LABEL": "Mobile number"
@@ -187,7 +187,7 @@
     "PASSWORD": {
       "INFO": {
         "EMPTY": "Please add a password and confirm.",
-        "MIN_LETTER_COUNT": "@todo Please enter {{count}} chars!"
+        "MIN_LETTER_COUNT": "Please use at least {{count}} characters!"
       },
       "PASSWORD": "Password",
       "PASSWORD_CONFIRM": "Confirm Password"
@@ -196,7 +196,7 @@
       "INFO": {
         "INVALID": "Please enter a correct e-mail.",
         "EMPTY": "You have not entered an e-mail.",
-        "ISNT_VERIFIED": "@todo This email isn't verified. Click on this {{icon}}-Icon to start a new verification. You get a email with a link and code for the verification."
+        "ISNT_VERIFIED": "This e-mail adress has not been verified yet. Please click on the {{icon}}-Icon to send an e-mail to this e-mail adress. This e-mail will contain a link and a code needed to finalize the verification."
       },
       "PLACEHOLDER": "e-mail",
       "LABEL": "e-mail"
@@ -254,15 +254,15 @@
       }
     },
     "MODAL_VERIFICATION": {
-      "HEADER": "@todo Verification",
-      "TEXT": "@todo We send you a message. In this message you find a link and a code. The link you can click or enter the code here.",
+      "HEADER": "Verification",
+      "TEXT": "cameoNet has sent you a message. The message contains a verification code. Please enter this code her.",
       "LABEL": {
         "CANCEL": "@:MODAL.LABEL.CANCEL",
-        "CONFIRM": "@todo Confirm"
+        "CONFIRM": "Confirm verification"
       },
       "INFO": {
-        "EMPTY": "@todo Please enter a code",
-        "INVALID": "@todo The code is invalid or expired."
+        "EMPTY": "Please enter the code from the verification e-mail.",
+        "INVALID": "The code you have entered is wrong or has expired."
       }
     }
   },
@@ -276,8 +276,8 @@
         "FOOTER": "Reconnect"
       },
       "NOTSECURE": {
-        "TEXT": "@todo We can't connect our servers safely. The certificates didn't match the expected. It could be a \"man in the middle\" attack.",
-        "FOOTER": "@todo Try again"
+        "TEXT": "A secure connection to our servers could not be established. The transmitted certificate does not match the expected certificate.",
+        "FOOTER": "Please try again"
       }
     },
     "LABEL": {
@@ -458,7 +458,7 @@
     "LABEL": {
       "REMEMBER_ME": "Remember.",
       "SUBMIT": "Log in",
-      "PASSWORD_LOST": "@todo Password missing?"
+      "PASSWORD_LOST": "Forgot password"
     },
     "PLACEHOLDER": {
       "PASSWORD": "Password",
@@ -476,32 +476,32 @@
     }
   },
   "PASSWORD_LOST": {
-    "HEADING": "@todo Password missing?",
+    "HEADING": "Reset password",
     "INFO": {
-      "TITLE_TEXT": "@todo Here you can enter your loginName, cameoId, verified email or phonenumber to reset your password. After successful indentification you will get a email or sms in which you can find a link.",
-      "EMPTY": "@todo Please enter a identifier.",
-      "LOGIN_NOT_FOUND": "@todo The loginName can't found.",
-      "PHONENUMBER_NOT_FOUND": "@todo The phoneNumber can't found.",
-      "EMAIL_NOT_FOUND": "@todo The email can't found.",
-      "NO_EMAIL_PHONENUMBER": "@todo Please correct your input.",
-      "CONFIRMATION_SENDED": "@todo Now we send you a message with a link inside. Please click this link and follow the password reset."
+      "TITLE_TEXT": "You can reset your password here if you have added and verified an e-mail adress or phone number to your account.<br> To identify yourself please enter either your username or cameoID or e-mail adress or phone number. You will then receive a message containing the link to reset your password.",
+      "EMPTY": "Please enter an identification (username, cameoID, e-mail adress or phone number).",
+      "LOGIN_NOT_FOUND": "Username could not be found.",
+      "PHONENUMBER_NOT_FOUND": "Phone number could not be found.",
+      "EMAIL_NOT_FOUND": "e-mail address could not be found.",
+      "NO_EMAIL_PHONENUMBER": "Please verify your entries.",
+      "CONFIRMATION_SENDED": "We have sent you a message. This contains a link to reset your password. Please click it and follow the instructions."
     },
     "PLACEHOLDER": {
-      "MIXED": "@todo loginName, cameoId, email oder telephone"
+      "MIXED": "Username, cameoID, e-mail address or phone number"
     },
     "LABEL": {
-      "SUBMIT": "@todo Password reset"
+      "SUBMIT": "Request password reset"
     }
   },
   "PASSWORD_RESET": {
-    "HEADING": "@todo Passwordreset",
+    "HEADING": "Set new password",
     "INFO": {
-      "TITLE_TEXT": "@todo You have clicked on the link in the message. Now you can change your password. Please repeat your input.",
-      "EXPIRED": "@todo Your request is expired. Here under {{linkGotoPasswordLost}} you can create a new password reset."
+      "TITLE_TEXT": "You have requested a password reset. Please enter your new password here and retype it in the second input box.",
+      "EXPIRED": "Your password reset has expired. Please request a new password reset at {{linkGotoPasswordLost}}"
     },
     "LABEL": {
-      "LINK_GOTO_PASSWORD_LOST": "@todo password missing",
-      "SUBMIT": "@todo Passwordreset"
+      "LINK_GOTO_PASSWORD_LOST": "Reset password",
+      "SUBMIT": "Set new password"
     }
   },
   "SECURITY_ASPECT": {

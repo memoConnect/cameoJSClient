@@ -53,7 +53,7 @@ describe('Route conversation:', function () {
     })
 
     it('should filter contacts', function () {
-        util.headerSearchInList(config.contactUser1DisplayName)
+        util.headerSearchInList(config.contactUser1CameoId)
         util.waitForElement("[data-qa='contact-display-name']")
     })
 
@@ -78,9 +78,11 @@ describe('Route conversation:', function () {
 
         ptor.wait(function(){
             return $$('cm-recipient-tag .displayName').then(function(elements){
-                return elements[1] && elements[1].getText().then(function(value){
-                    return value == "On-the-fly Contact" 
-                }) 
+                return elements.some(function(element){
+                    return element.getText().then(function(value){
+                        return value == "On-the-fly Contact"
+                    })
+                })
             })
         })
 
@@ -93,7 +95,6 @@ describe('Route conversation:', function () {
 
     it('added recipient should be displayed', function () {
         expect($(".recipients-counter").getText()).toBe('(2)')      //one internal contact an one external on-the-fly contact
-        expect($(".recipient-name").getText()).toBe(config.contactUser1DisplayName)
     })
 
     it('should have an answer bar', function () {

@@ -53,6 +53,7 @@ angular.module('cmUi').filter('cmSearch', [
                     case 'contacts':
                         if('contactType' in item && isMatch(item.contactType) ||
                             'identity' in item && isMatch(item.identity.getDisplayName()) ||
+                            'identity' in item && isMatch(item.identity.cameoId) ||
                             'identity' in item && isMatch(item.identity.email.value) ||
                             'identity' in item && isMatch(item.identity.phoneNumber.value && item.identity.phoneNumber.value.replace(/^0|\+\d\d/g, ''))
                             )
