@@ -172,14 +172,14 @@ this.createTestUser = function (testUserId, from){
     this.setVal('input-password',password)
     this.setVal('input-passwordConfirm',password)
 
-    this.setVal('input-displayName',loginName)
+    //this.setVal('input-displayName',loginName)
 
     this.scrollToBottom()
 
     this.click('icon-checkbox-agb')
     this.click('btn-createUser')
 
-    this.waitForPageLoad("/start/welcome")
+    this.waitForPageLoad("/setup/account")
 
     return loginName
 }
