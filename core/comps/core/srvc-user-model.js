@@ -255,6 +255,15 @@ angular.module('cmCore')
             return this.data.identity;
         };
 
+        this.initialIdentity = function(identity_data, token){
+            cmLogger.debug('cmUserModel.initialIdentity')
+
+            cmAuth.storeToken(token);
+
+            this.importData(cmIdentityFactory.clear(identity_data).create(identity_data, true),[]);
+            $rootScope.$broadcast('login');
+        };
+
         this.setIdentity = function(identity_data){
             //cmLogger.debug('cmUserModel:setIdentity');
 
@@ -561,7 +570,6 @@ angular.module('cmCore')
                                 }
             return  cmCrypt.hashObject(dataObject)
         };
-
 
         this.signData = function(data){
 

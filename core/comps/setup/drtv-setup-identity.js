@@ -2,8 +2,8 @@
 
 angular.module('cmSetup')
     .directive('cmSetupIdentity', [
-        'cmUserModel', 'cmIdentityFactory', 'cmUtil','cmLoader','cmLogger', '$rootScope', '$q',
-        function(cmUserModel, cmIdentityFactory, cmUtil, cmLoader, cmLogger, $rootScope, $q){
+        'cmUserModel', 'cmAuth', 'cmIdentityFactory', 'cmUtil','cmLoader','cmLogger', '$rootScope', '$q',
+        function(cmUserModel, cmAuth, cmIdentityFactory, cmUtil, cmLoader, cmLogger, $rootScope, $q){
             return {
                 restrict: 'E',
                 templateUrl: 'comps/setup/drtv-setup-identity.html',
@@ -98,21 +98,16 @@ angular.module('cmSetup')
 
                         $scope.validateForm().then(
                             function (objectChange) {
-                                
 
-                                cmAuth.addIdentity(objectChange).then(
+                                cmAuth.initialIdentity(objectChange, cmUserModel.data.account.basicAuth).then(
                                     function (res) {
-                                        loader.stop();
-                                        /**
-                                         * @TODO set Identity - Token Handling??!
-                                         */
-                                        cmUserModel.setIdentity(res.identity, res.token.token);
 
+                                        cmUserModel.initialIdentity(res.identity, res.token.token);
+                                        loader.stop();
                                         $rootScope.goTo('/settings/identity/key/create');
                                     },
                                     function () {
                                         loader.stop();
-                                        cmNotify.warn('SETTINGS.PAGES.IDENTITY.CREATE.WARN.FAILED');
                                     }
                                 );
                             },

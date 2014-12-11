@@ -279,6 +279,19 @@ angular.module('cmCore')
                 })
             },
 
+            initialIdentity: function(data, auth){
+                var apiCall = {
+                    path: '/identity/initial',
+                    data: data
+                };
+
+                if(typeof auth == 'string'){
+                    apiCall.headers = {'Authorization': 'Basic ' + auth};
+                }
+
+                return cmApi.post(apiCall)
+            },
+
             /**
              * @ngdoc method
              * @methodOf cmAuth
