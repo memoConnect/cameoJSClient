@@ -260,7 +260,8 @@ angular.module('cmConfig',[])
                 },
                 'setup-account':{
                     routes: ['/setup/account'],
-                    guests: false
+                    guests: false,
+                    resolveUserModel: true
                 },
                 'setup-identity':{
                     routes: ['/setup/identity'],
