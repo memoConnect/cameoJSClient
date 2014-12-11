@@ -3,21 +3,21 @@
         <i class="fa cm-checkbox"></i><i class="fa cm-checkbox"></i>
     </span>
 </span>
-<span ng-if="noKey" data-qa="contact-noKey">
+<span ng-if="noKey" data-qa="no-key">
     <span class="aspect-icons negative">
         <i class="fa cm-checkbox"></i><i class="fa cm-checkbox"></i>
         !
     </span>
     <span class="aspect-text" ng-if="withText">{{'CONTACT.TRUST.NO_CAMEOKEYS'|cmTranslate}}</span>
 </span>
-<span ng-if="hasKey && !hasAuthenticatedKey" data-qa="contact-hasKey">
+<span ng-if="hasKey && !hasAuthenticatedKey" data-qa="untrusted-key">
     <span class="aspect-icons positive">
         <i class="fa cm-checkbox-bg"></i><i class="fa cm-checkbox"></i>
         !
     </span>
     <span class="aspect-text" ng-if="withText">{{'CONTACT.TRUST.HAS_CAMEOKEYS'|cmTranslate}}</span>
 </span>
-<span ng-if="hasAuthenticatedKey" data-qa="contact-hasAuthenticatedKey" class="positive">
+<span ng-if="hasAuthenticatedKey" data-qa="trusted-key" class="positive">
     <span class="aspect-icons positive">
         <i class="fa cm-checkbox-bg"></i><i class="fa cm-checkbox-bg"></i>
     </span>

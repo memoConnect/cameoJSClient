@@ -58,15 +58,12 @@ angular.module('cmContacts')
                     toggleCall: function(contact){
                         
                     }
-                })
+                });
 
-
-                contact.identity.on('update:finished', self.scheduleRefresh)
                 cmUserModel.on('update:finished', self.scheduleRefresh)
 
             return self;
         }
-
 
         return securityAspectsContact
     }

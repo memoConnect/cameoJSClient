@@ -1,37 +1,20 @@
-var testAllSpecs = true,
-    specs = '';
-
-if(testAllSpecs){
-    // all specs
-    specs = 'test/unit/**/*.spec.js';
-} else {
-    specs = 'test/unit/**/cm *.spec.js';
-}
-
 module.exports = function(config) {
 
-    var files = [
-        'test/lib/jquery/*.js',
-        'dist/app/vendor*.js',
-        'test/lib/angular/angular-mocks.js',
-        'dist/app/cameo*.js',
-
-        'dist/app/i18n/*.json',
-        'build/i18n/language-keys.json'
-    ];
-
-    files.push(specs);
-
     config.set({
-
-        // list of files / patterns to load in the browser
-        files: files,
-
         // base path, that will be used to resolve files and exclude
         basePath: '../../../',
 
-        // frameworks to use
-        frameworks: ['jasmine'],
+        files: [
+            'test/lib/jquery/*.js',
+            'dist/app/vendor*.js',
+            'test/lib/angular/angular-mocks.js',
+            'dist/app/cameo*.js',
+
+            'test/unit/**/*.spec.js',
+
+            'dist/app/i18n/*.json',
+            'build/i18n/language-keys.json'
+        ],
 
         preprocessors: {
             'dist/app/i18n/*.json': ['json2js'],
@@ -41,6 +24,9 @@ module.exports = function(config) {
         ngJson2JsPreprocessor: {
             stripPrefix: '(dist/app/)|(build/)'
         },
+
+        // frameworks to use
+        frameworks: ['jasmine'],
 
         // list of files to exclude
         exclude: [],

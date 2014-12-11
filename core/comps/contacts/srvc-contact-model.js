@@ -10,13 +10,13 @@ angular.module('cmContacts')
     'cmLogger',
     'cmSecurityAspectsContact',
     '$q',
-    function(cmContactsAdapter, cmIdentityFactory, cmObject, cmStateManagement, cmUtil, cmLogger, cmSecurityAspectsContact,$q){
+    function(cmContactsAdapter, cmIdentityFactory, cmObject, cmStateManagement, cmUtil, cmLogger, cmSecurityAspectsContact, $q){
         function ContactModel(data){
             var self = this;
 
             cmObject.addEventHandlingTo(this);
 
-            this.state              = new cmStateManagement(['loading']);
+            this.state         = new cmStateManagement(['loading']);
 
             this.id            = undefined;
             this.contactType   = undefined;
@@ -111,6 +111,10 @@ angular.module('cmContacts')
             };
 
             init(data);
+
+            this.identity.on('update:finished', function(){
+                self.securityAspects.scheduleRefresh();
+            });
 
         }
 

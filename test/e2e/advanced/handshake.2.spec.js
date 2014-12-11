@@ -47,7 +47,7 @@ describe('Authentication requests -', function () {
         data: {}
     }
 
-    var checkKeyTrust = function (keyName, isTrusted) {
+    function checkKeyTrust (keyName, isTrusted) {
         ptor.getCurrentUrl().then(function(url){
             if(!url.match("/settings/identity/key/list"))
                 util.get("/settings/identity/key/list")
@@ -72,7 +72,7 @@ describe('Authentication requests -', function () {
 
     }
 
-    var getAuthEvent = function (token, eventSubscription, index, skip) {
+    function getAuthEvent (token, eventSubscription, index, skip) {
         var s = skip || 0
         var events = []
 
@@ -97,9 +97,52 @@ describe('Authentication requests -', function () {
         get()
     }
 
+    function checkContactTrust(userName, trustState){
+        util.get('/contact/list')
+        util.expectCurrentUrl('/contact/list')
+
+        util.headerSearchInList(userName)
+
+        switch(trustState){
+            case 'no-key':
+                $$("cm-contact-trust [data-qa='no-key'] .cm-checkbox").then(function(elements){
+                    expect(elements.length).toEqual(2)
+                })
+            break;
+            case 'untrusted-key':
+                // check list
+                var trustDrtv = $("cm-contact-trust [data-qa='untrusted-key']")
+                trustDrtv.$$('.cm-checkbox-bg').then(function(elements){
+                    expect(elements.length).toEqual(1)
+                })
+                trustDrtv.$$('.cm-checkbox').then(function(elements){
+                    expect(elements.length).toEqual(1)
+                })
+                // check detail
+                util.waitAndClick("cm-contact-tag")
+                expect($("[data-qa='start-trust-handshake-btn']").isElementPresent(by.css(".cm-checkbox-right"))).toBe(false)
+            break;
+            case 'trusted-key':
+                // check list
+                util.waitForElements("cm-contact-trust [data-qa='trusted-key'] .cm-checkbox-bg",2)
+                $$("cm-contact-trust [data-qa='trusted-key'] .cm-checkbox-bg").then(function(elements){
+                    expect(elements.length).toEqual(2)
+                })
+                // check detail
+                util.waitAndClick("cm-contact-tag")
+                ptor.wait(function(){
+                    return $$("[data-qa='trusted-key']").then(function(items){
+                        return items.length > 0
+                    })
+                }, config.waitForTimeout, '[data-qa="trusted-key"]')
+            break;
+        }
+    }
+
     describe("key1 -", function () {
         // reset!!
         it('before all test starting clear Localstorage', function(){
+            util.get('/login')
             util.clearLocalStorage()
         })
 
@@ -136,7 +179,6 @@ describe('Authentication requests -', function () {
 
     describe("key3 -", function () {
 
-        // reset!!
         it('before all test starting clear Localstorage', function(){
             util.clearLocalStorage()
         })
@@ -509,6 +551,7 @@ describe('Authentication requests -', function () {
         })
     })
 
+
     describe("trust other user -", function () {
 
         describe("testuser 2 -", function () {
@@ -520,6 +563,10 @@ describe('Authentication requests -', function () {
 
             it("send friendrequest to testuser1", function () {
                 util.sendFriendRequest(testUser1)
+            })
+
+            it("check support no key and untrusted 'oo!", function(){
+                checkContactTrust('support','no-key')
             })
 
             it("get token", function () {
@@ -541,28 +588,18 @@ describe('Authentication requests -', function () {
                 util.acceptFriendRequests()
             })
 
-            it("testuser2 should not be trusted", function () {
-                util.get("/contact/list")
-                util.waitForElements("cm-contact-tag", 2)
-                util.headerSearchInList(testUser2)
-                util.waitAndClick("cm-contact-tag")
-                expect($("[data-qa='start-trust-handshake-btn']").isElementPresent(by.css(".cm-checkbox-right"))).toBe(false)
+            it("testuser2 should not be trusted 'xo!", function () {
+                checkContactTrust(testUser2,'untrusted-key')
             })
         })
 
         describe("testuser 2 again -", function () {
-
-
             it("login as testUser2", function () {
                 util.login(testUser2, "password")
             })
 
-            it("testuser1 should not be trusted", function () {
-                util.get("/contact/list")
-                util.waitForElements("cm-contact-tag", 2)
-                util.headerSearchInList(testUser1)
-                util.waitAndClick("cm-contact-tag")
-                expect($("[data-qa='start-trust-handshake-btn']").isElementPresent(by.css(".cm-checkbox-right"))).toBe(false)
+            it("testuser1 should not be trusted 'xo!'", function () {
+                checkContactTrust(testUser1,'untrusted-key')
             })
 
             it("start handshake", function () {
@@ -609,16 +646,8 @@ describe('Authentication requests -', function () {
                 util.waitForElementDisappear("cm-modal.active [data-qa='inp-transactSecret']")
             })
 
-            it("testuser2 should now be trusted", function () {
-                util.get("/contact/list")
-                util.waitForElements("cm-contact-tag", 2)
-                util.headerSearchInList(testUser2)
-                util.waitAndClick("cm-contact-tag")
-                ptor.wait(function(){
-                    return $$("[data-qa='trust-confirmed']").then(function(items){
-                        return items.length > 0 
-                    })
-                }, config.waitForTimeout, '[data-qa="trust-confirmed"]')
+            it("testuser2 should now be trusted 'xx'", function () {
+                checkContactTrust(testUser2,'trusted-key')
             })
 
             it("get authentication:start event send to testUser2", function () {
@@ -650,17 +679,8 @@ describe('Authentication requests -', function () {
                 util.waitForElementDisappear("cm-modal.active [data-qa='inp-transactSecret']")
             })
 
-            it("testuser1 should now be trusted", function () {
-                util.get("/contact/list")
-                util.waitForPageLoad("/contact/list")
-                util.waitForElements("cm-contact-tag", 2)
-                util.headerSearchInList(testUser1)
-                util.waitAndClick("cm-contact-tag")
-                ptor.wait(function(){
-                    return $$("[data-qa='trust-confirmed']").then(function(items){
-                        return items.length > 0 
-                    })
-                }, config.waitForTimeout, '[data-qa="trust-confirmed"]')
+            it("testuser1 should now be trusted 'xx'", function () {
+                checkContactTrust(testUser1,'trusted-key')
             })
         })
 
@@ -682,25 +702,11 @@ describe('Authentication requests -', function () {
                 util.waitForEventSubscription()
             })
 
-            it("testuser2 should still be trusted", function () {
-                util.get("/contact/list")
-                util.waitForElements("cm-contact-tag", 2)
-                util.headerSearchInList(testUser2)
-                util.waitAndClick("cm-contact-tag")
-                ptor.wait(function(){
-                    return $$("[data-qa='trust-confirmed']").then(function(items){
-                        return items.length > 0 
-                    })
-                }, config.waitForTimeout, '[data-qa="trust-confirmed"]')
+            it("testuser2 should still be trusted 'xx'", function () {
+                checkContactTrust(testUser2,'trusted-key')
             })
         })
     })
-
-
-
-
-
-
 
     /*** check if message signatures are authentic now: ***/
     describe('Message Signing with trusted keys: ', function(){
