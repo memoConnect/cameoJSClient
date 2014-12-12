@@ -51,28 +51,106 @@ module.exports = function(grunt, options){
             'currentVersion': options.globalCameoBuildConfig.phonegap.version,
             'currentAppId': options.globalCameoBuildConfig.phonegap.bundleId,
             'logLevel': options.globalCameoBuildConfig.config.logLevel || 'DEBUG',
-            'appProtocol': options.globalCameoBuildConfig.static.appProtocol,
             'androidDebuggable': options.globalCameoBuildConfig.phonegap.androidDebuggable || "false",
-            'wwwPath': isLocal ? 'www/' : '',
-            'plugins': genPluginsForXML(isLocal),
+            'plugins': genPluginsForXML(),
+            'resources': genResourcesForXML(isLocal),
             'phonegapConfig': options.globalCameoPhonegapConfig.build
         }
     }
 
     function genPluginsForXML(){
-        /*
-         <gap:plugin name="" version="">
-            inner
-         </gap:plugin>
-        */
         var plugins = options.globalCameoPhonegapConfig.plugins,
             xml = '';
 
         plugins.forEach(function(plugin){
             xml += '<gap:plugin name="' + plugin.name + '" version="' + plugin.version + '">';
-            if ('inner' in plugin)
-                xml += plugin.inner;
-            xml += '</gap:plugin>';
+            if ('inner' in plugin){
+                xml += grunt.template.process(plugin.inner, {
+                    data:{
+                        'appProtocol': options.globalCameoBuildConfig.static.appProtocol
+                    }
+                });
+            }
+            xml += '</gap:plugin>\n';
+        });
+
+        return xml;
+    }
+
+    function genResourcesForXML(isLocal){
+        var resources = options.globalCameoPhonegapConfig.resources,
+            xml = '';
+
+        resources.forEach(function(resource){
+            if(resource.platform != 'default' && isLocal)
+                xml+= '<platform name="'+resource.platform+'">\n';
+
+            resource.icons.forEach(function(icon){
+                var resourceXml = [];
+
+                resourceXml.push('<icon');
+                if(!isLocal)
+                    resourceXml.push('gap:platform="'+resource.platform+'"');
+
+                if(resource.platform != 'default')
+                    resourceXml.push('src="'+(isLocal ? 'www/' : '')+'res/icons/'+resource.platform+'/'+icon.src+'"');
+                else
+                    resourceXml.push('src="'+(isLocal ? 'www/' : '')+'res/icons/'+icon.src+'"');
+
+                if('qualifier' in icon)
+                    resourceXml.push('gap:qualifier="'+icon.qualifier+'"');
+
+                if('density' in icon)
+                    resourceXml.push('gap:density="'+icon.density+'"');
+
+                if('dim' in icon) {
+                    var dimensions = icon.dim.split('x');
+                    resourceXml.push('width="' + dimensions[0] + '"');
+                    resourceXml.push('height="' + dimensions[1] + '"');
+                }
+
+                if('role' in icon)
+                    resourceXml.push('gap:role="'+icon.role+'"');
+
+                resourceXml.push('/>\n');
+
+                xml+= resourceXml.join(' ');
+            });
+
+            resource.screens.forEach(function(screen){
+                var resourceXml = [];
+
+                if(!isLocal) {
+                    resourceXml.push('<gap:splash');
+                    resourceXml.push('gap:platform="' + resource.platform + '"');
+                } else {
+                    resourceXml.push('<splash');
+                }
+
+                if(resource.platform != 'default')
+                    resourceXml.push('src="'+(isLocal ? 'www/' : '')+'res/screens/'+resource.platform+'/'+screen.src+'"');
+                else
+                    resourceXml.push('src="'+(isLocal ? 'www/' : '')+'res/screens/'+screen.src+'"');
+
+                if('qualifier' in screen)
+                    resourceXml.push('gap:qualifier="'+screen.qualifier+'"');
+
+                if('density' in screen)
+                    resourceXml.push('gap:density="'+screen.density+'"');
+
+                if('dim' in screen) {
+                    var dimensions = screen.dim.split('x');
+                    resourceXml.push('width="' + dimensions[0] + '"');
+                    resourceXml.push('height="' + dimensions[1] + '"');
+                }
+
+                resourceXml.push('/>\n');
+
+                xml+= resourceXml.join(' ');
+            });
+
+            if(resource.platform != 'default' && isLocal)
+                xml+= '</platform>\n';
         });
 
         return xml;
