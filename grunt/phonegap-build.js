@@ -15,7 +15,7 @@ module.exports = function(grunt, options){
     grunt.registerTask('phonegap:app-to-build-dir', [
         'app:deploy',
         'copy:resources-phonegap',
-        'template:app-index-phonegap',
+        'template:phonegap-index-html',
         'phonegap:app-config'
     ]);
 
@@ -32,13 +32,51 @@ module.exports = function(grunt, options){
     ]);
 
     grunt.registerTask('phonegap:app-config', [
-        'template:app-config-phonegap'
+        'template:phonegap-config-xml',
+        'template:phonegap-config-js'
     ]);
 
+    grunt.registerTask('phonegap:app-config-local', [
+        'template:phonegap-config-xml-local',
+        'template:phonegap-config-js'
+    ]);
 
     var archive = {
         app: 'dist/dl/cameoNetApp.zip'
     };
+
+    function configXMLData(isLocal){
+        return {
+            'currentName': options.globalCameoBuildConfig.phonegap.baseName + options.globalCameoBuildConfig.phonegap.extraName,
+            'currentVersion': options.globalCameoBuildConfig.phonegap.version,
+            'currentAppId': options.globalCameoBuildConfig.phonegap.bundleId,
+            'logLevel': options.globalCameoBuildConfig.config.logLevel || 'DEBUG',
+            'appProtocol': options.globalCameoBuildConfig.static.appProtocol,
+            'androidDebuggable': options.globalCameoBuildConfig.phonegap.androidDebuggable || "false",
+            'wwwPath': isLocal ? 'www/' : '',
+            'plugins': genPluginsForXML(isLocal),
+            'phonegapConfig': options.globalCameoPhonegapConfig.build
+        }
+    }
+
+    function genPluginsForXML(){
+        /*
+         <gap:plugin name="" version="">
+            inner
+         </gap:plugin>
+        */
+        var plugins = options.globalCameoPhonegapConfig.plugins,
+            xml = '';
+
+        plugins.forEach(function(plugin){
+            xml += '<gap:plugin name="' + plugin.name + '" version="' + plugin.version + '">';
+            if ('inner' in plugin)
+                xml += plugin.inner;
+            xml += '</gap:plugin>';
+        });
+
+        return xml;
+    }
 
     return {
         tasks:{
@@ -72,7 +110,7 @@ module.exports = function(grunt, options){
                 }
             },
             template: {
-                'app-index-phonegap': {
+                'phonegap-index-html': {
                     'options': {
                         'data': {
                             'currentVersion': options.globalCameoBuildConfig.config.version,
@@ -86,20 +124,29 @@ module.exports = function(grunt, options){
                         'build/phonegap/www/index.html': ['app/index.html']
                     }
                 },
-                'app-config-phonegap': {
+                'phonegap-config-xml': {
+                    'options': {
+                        'data': configXMLData()
+                    },
+                    'files': {
+                        'build/phonegap/www/config.xml': ['resource/phonegap/config.xml']
+                    }
+                },
+                'phonegap-config-xml-local': {
+                    'options': {
+                        'data': configXMLData(true)
+                    },
+                    'files': {
+                        'build/phonegap/www/config.xml': ['resource/phonegap/config.xml']
+                    }
+                },
+                'phonegap-config-js': {
                     'options': {
                         'data': {
-                            'currentName': options.globalCameoBuildConfig.phonegap.baseName + options.globalCameoBuildConfig.phonegap.extraName,
-                            'currentVersion': options.globalCameoBuildConfig.phonegap.version,
-                            'currentAppId': options.globalCameoBuildConfig.phonegap.bundleId,
-                            'logLevel': options.globalCameoBuildConfig.config.logLevel || 'DEBUG',
-                            'googleSenderId': options.globalCameoSecrets.google.senderId,
-                            'appProtocol': options.globalCameoBuildConfig.static.appProtocol,
-                            'androidDebuggable': options.globalCameoBuildConfig.phonegap.androidDebuggable || "false"
+                            'googleSenderId': options.globalCameoSecrets.google.senderId
                         }
                     },
                     'files': {
-                        'build/phonegap/www/config.xml': ['resource/phonegap/config.xml'],
                         'build/phonegap/www/config.js': ['resource/phonegap/config.js']
                     }
                 }

@@ -4,14 +4,27 @@ module.exports = function(grunt, options){
 
     grunt.registerTask('phonegap:build-only', [
         'phonegap:app-prepare',
+        'phonegap:app-config-local',
         'phonegap:build'
     ]);
 
     grunt.registerTask('phonegap:build-n-run', [
         'phonegap:app-prepare',
+        'phonegap:app-config-local',
         'phonegap:build',
         'phonegap:run'
     ]);
+
+    function genPlugins(useRepo){
+        var plugins = options.globalCameoPhonegapConfig.plugins,
+            array = [];
+
+        plugins.forEach(function(plugin){
+            array.push(useRepo && 'repo' in plugin ? plugin.repo : plugin.name);
+        });
+
+        return array;
+    }
 
     return {
         tasks:{
@@ -34,19 +47,7 @@ module.exports = function(grunt, options){
                     config: 'build/phonegap/www/config.xml',
                     cordova: '.cordova',
                     path: 'build/phonegap-tmp',
-                    plugins: [
-                        'org.apache.cordova.device',
-                        'org.apache.cordova.camera',
-                        'org.apache.cordova.file',
-                        'org.apache.cordova.file-transfer',
-                        'org.apache.cordova.network-information',
-                        'com.phonegap.plugins.pushplugin',
-                        'https://github.com/memoConnect/cordova-plugin-contacts.git',
-                        'de.appplant.cordova.plugin.hidden-statusbar-overlay',
-                        'com.jamiestarke.webviewdebug',
-                        'https://github.com/memoConnect/de.cameonet.cordova.crypto.git'
-                        //,'https://github.com/EddyVerbruggen/cordova-plugin-wkwebview.git'
-                    ],
+                    plugins: genPlugins(true),
                     platforms: [
                         'android'
 //                        'ios'
