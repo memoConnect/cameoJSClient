@@ -45,7 +45,7 @@ module.exports = function(grunt, options){
                 config: {
                     root: 'build/phonegap/www',
                     config: 'build/phonegap/www/config.xml',
-                    cordova: '.cordova',
+                    cordova: 'resource/phonegap/.cordova',
                     path: 'build/phonegap-tmp',
                     plugins: genPlugins(true),
                     platforms: [
