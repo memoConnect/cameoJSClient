@@ -20,7 +20,16 @@ module.exports = function(grunt, options){
             array = [];
 
         plugins.forEach(function(plugin){
-            array.push(useRepo && 'repo' in plugin ? plugin.repo : plugin.name);
+            if('repo' in plugin) {
+                var repo = grunt.template.process(plugin.repo, {
+                    data: {
+                        'appProtocol': options.globalCameoBuildConfig.static.appProtocol
+                    }
+                });
+                array.push(repo);
+            } else {
+                array.push(plugin.name);
+            }
         });
 
         return array;

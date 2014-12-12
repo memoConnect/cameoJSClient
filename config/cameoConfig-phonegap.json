@@ -17,16 +17,16 @@
     {"name":"org.apache.cordova.inappbrowser","version":"0.5.2"},
 
     {"name":"com.phonegap.plugins.pushplugin","version":"2.1.1"},
-    {"name":"nl.x-services.plugins.launchmyapp","version":"3.2.0","inner":"<param name=\"URL_SCHEME\" value=\"<%= appProtocol %>\" />"},
-    {"name":"nl.x-services.plugins.sslcertificatechecker","version":"3.3.1"},
+    {"name":"nl.x-services.plugins.launchmyapp","version":"3.2.0","inner":"<param name=\"URL_SCHEME\" value=\"<%= appProtocol %>\" />","repo":"https://github.com/EddyVerbruggen/LaunchMyApp-PhoneGap-Plugin.git --variable URL_SCHEME=<%= appProtocol %>"},
+    {"name":"nl.x-services.plugins.sslcertificatechecker","version":"3.3.1","repo":"https://github.com/EddyVerbruggen/SSLCertificateChecker-PhoneGap-Plugin.git "},
 
-    {"name":"com.verso.cordova.clipboard","version":"0.1.0"},
     {"name":"de.appplant.cordova.plugin.hidden-statusbar-overlay","version":"1.2.0"},
     {"name":"com.jamiestarke.webviewdebug","version":"1.0.8"},
-    {"name":"com.telerik.plugins.wkwebview","version":"0.2.5"}
+    {"name":"com.telerik.plugins.wkwebview","version":"0.2.5","repo":"https://github.com/Telerik-Verified-Plugins/WKWebView.git "}
   ],
 
   "unused-plugins": [
+    {"name":"com.verso.cordova.clipboard","version":"0.1.0"},
     {"name":"net.tunts.webintent","version":"0.2.1"},
     {"name":"uk.co.ibcomputing.phonegapbuild.plugins.receivesendintents","version":"0.2.1","inner":"<param name=\"LAUNCHMODE\" value=\"singleTop\" />"}
   ],
