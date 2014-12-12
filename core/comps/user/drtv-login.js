@@ -2,10 +2,10 @@
 
 angular.module('cmUser').directive('cmLogin', [
     'cmNotify', 'cmUserModel', 'cmKeyStorageService', 'cmCrypt',
-    'cmConfig', 'cmEnv', 'cmLoader', 'cmSslCertificateChecker',
+    'cmConfig', 'cmEnv', 'cmLoader',
     '$location',
     function (cmNotify, cmUserModel, cmKeyStorageService, cmCrypt,
-              cmConfig, cmEnv, cmLoader, cmSslCertificateChecker,
+              cmConfig, cmEnv, cmLoader,
               $location) {
         return  {
             restrict    :   'AE',
@@ -29,10 +29,6 @@ angular.module('cmUser').directive('cmLogin', [
 
                     return true;
                 }
-
-                $scope.checkSSL = function(){
-                    cmSslCertificateChecker.control();
-                };
 
                 $scope.handlePassword = function(){
                     $scope.passwordType = ($scope.passwordType != 'password')
