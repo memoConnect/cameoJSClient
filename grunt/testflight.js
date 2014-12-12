@@ -23,6 +23,12 @@ module.exports = function(grunt, options){
                     }
                 },
 
+                'ios-manually': {
+                    options: {
+                        file: 'dist/dl/cameoNet-stage-0.4.6.224.ipa'
+                    }
+                },
+
                 'android': {
                     options: {
                         file: 'dist/dl/' + options.globalCameoBuildConfig.phonegap.phonegapBaseFilename + '.apk'

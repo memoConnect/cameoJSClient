@@ -33,7 +33,7 @@ angular.module('cmPhonegap')
 
             control: function(){
                 var target = (function(){
-                    if(cmConfig.target == 'test' || cmConfig.target == 'default')
+                    if(cmConfig.target != 'prod')
                         return 'stage';
                     return cmConfig.target;
                 })(),
@@ -60,6 +60,7 @@ angular.module('cmPhonegap')
                     self.isSecure = true;
                 },
                 error: function(message){
+
                     switch(true){
                         case message == 'CONNECTION_NOT_SECURE':
                         case message.indexOf('CONNECTION_FAILED') >= 0:

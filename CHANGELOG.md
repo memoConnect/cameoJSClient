@@ -1,4 +1,10 @@
 ## Dev
+# WW 12.12.2014
+* new config.xml handling for phonegap
+** local building leads www/res/.. at path to resources
+** build.phonegap building needs res/.. at path to resources
+** new config with plugins and resoures for phonegap config/cameoConfig-phonegap.json
+
 # WW 11.12.2014
 * trusted contacts
 ** in contact list, detail and recipients
