@@ -401,12 +401,11 @@
         },
         "INFO":{
             "CREATE": {
-                "HEADLINE": "@todo IDENTITY.INFO.CREATE.HEADLINE",
-                "AVATAR": "@todo IDENTITY.INFO.CREATE.AVATAR",
-                "CAMEOID": "@todo IDENTITY.INFO.CREATE.CAMEOID",
-                "DISPLAYNAME": "@todo IDENTITY.INFO.CREATE.DISPLAYNAME",
-                "PHONE": "@todo IDENTITY.INFO.CREATE.PHONE",
-                "EMAIL": "@todo IDENTITY.INFO.CREATE.EMAIL"
+                "HEADLINE": "In Ihrer Identität legen Sie fest, was andere Nutzer von Ihnen sehen. Wenn Sie eine Kontaktanfrage eines anderen Nutzers akzeptieren, sieht dieser in seinen Kontakten anschließend alle Daten, die Sie in Ihr Identitätsprofil eingegeben haben.\nIhre Identität kann über die cameoID oder den Anzeigenamen gefunden werden.",
+                "CAMEOID": "Jede Identität besitzt eine eindeutige cameoID, über die sie im cameoNet gefunden werden kann.",
+                "DISPLAYNAME": "Wenn Sie Ihrer Identität einen Anzeigenamen geben, wird dieser überall anstatt der cameoID angezeigt. Ihre Identität kann im cameoNet auch über den Anzeigenamen gefunden werden. Der Anzeigename muss aber nicht eindeutig sein.",
+                "PHONE": "Hier können Sie eine Mobilfunknummer eingeben. Sie wird anderen Nutzern in Ihrem Identitätsprofil angezeigt aber weder verifiziert noch weiter verwendet. Sie erhalten Benachrichtigungen für diese Identität an die in Ihrem Benutzerkonto eingetragenen Mobilfunknummer.",
+                "EMAIL": "Hier können Sie eine E-Mail-Adresse eingeben. Sie wird anderen Nutzern in Ihrem Identitätsprofil angezeigt aber weder verifiziert noch weiter verwendet. Sie erhalten Benachrichtigungen für diese Identität an die in Ihrem Benutzerkonto eingetragenen E-Mail-Adresse."
             }
         },
         "KEYS": {
