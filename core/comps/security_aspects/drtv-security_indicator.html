@@ -1,4 +1,8 @@
-<i ng-if="leading_icon" class="fa with-response leading-icon {{leading_icon}}"></i>
-<cm-icons count="{{positive}}" icons="cm-checkbox-add"    class="positive" with-response></cm-icons>
-<cm-icons count="{{negative}}" icons="cm-checkbox-minus"  class="negative" with-response></cm-icons>
-<span ng-if="missing_aspects" class="ng-hide">{{"SECURITY_ASPECTS.ERROR.MISSING_DATA"|cmTranslate}}</span>
+<cm-loader ng-if ="checking" cm-color ="ci-color">
+</cm-loader>
+<div ng-if = "!checking">
+    <i ng-if="leading_icon" class="fa with-response leading-icon {{leading_icon}}"></i>
+    <cm-icons count="{{positive}}" icons="cm-checkbox-add"    class="positive" with-response></cm-icons>
+    <cm-icons count="{{negative}}" icons="cm-checkbox-minus"  class="negative" with-response></cm-icons>
+    <span ng-if="missing_aspects" class="ng-hide">{{"SECURITY_ASPECTS.ERROR.MISSING_DATA"|cmTranslate}}</span>
+</div>

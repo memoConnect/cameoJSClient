@@ -4,5 +4,6 @@ angular.module('cmContacts',[
     'cmConfig',
     'cmCore',
     'cmPhonegap',
-    'cmValidate'
+    'cmValidate',
+    'cmSecurityAspects'
 ]);

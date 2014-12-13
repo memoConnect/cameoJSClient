@@ -61,6 +61,8 @@ angular.module('cmConversations')
                 moep                = undefined;
 
 
+            cmObject.addEventHandlingTo(self);
+
             this.id                 = undefined;
             
             this.recipients         = new cmFactory(cmIdentityModel);      //list of cmIdentityModel objects
@@ -103,7 +105,6 @@ angular.module('cmConversations')
             this.passCaptcha = undefined;
             this.tmpPassCaptcha = '';
 
-            cmObject.addEventHandlingTo(this);
 
             this.localPWHandler = new cmKeyStorageService('pw');
 

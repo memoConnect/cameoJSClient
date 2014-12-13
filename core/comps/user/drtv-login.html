@@ -1,5 +1,4 @@
 <form class="form-signin" role="form" autocomplete="off" data-qa="login" ng-submit="doLogin()">
-
     <article class="content" ng-if="cmEnv.autoLogin">
         <select ng-model="formData.autologin" class="cm-form-control btn-block autologin" ng-change="changeAutologin()">
             <option value="none">{{'LOGIN.PLACEHOLDER.AUTOLOGIN'|cmTranslate}}</option>

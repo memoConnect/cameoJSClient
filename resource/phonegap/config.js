@@ -1,6 +1,5 @@
 var phonegapCameoConfig = {
     deviceReady: false,
-    pushIpAppId: '<%= pushIpAppId %>',
     googleSenderId: '<%= googleSenderId %>'
 };
 // device plugin handle that

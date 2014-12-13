@@ -4,9 +4,9 @@
 
 angular.module('cmPhonegap')
 .service('cmSslCertificateChecker', [
-    'cmPhonegap', 'cmConfig',
+    'cmPhonegap', 'cmConfig', 'cmLogger',
     '$rootScope', '$window', '$document',
-    function (cmPhonegap, cmConfig,
+    function (cmPhonegap, cmConfig, cmLogger,
               $rootScope, $window, $document) {
 
         var self = {
@@ -33,7 +33,7 @@ angular.module('cmPhonegap')
 
             control: function(){
                 var target = (function(){
-                    if(cmConfig.target == 'test' || cmConfig.target == 'default')
+                    if(cmConfig.target != 'prod')
                         return 'stage';
                     return cmConfig.target;
                 })(),
@@ -42,6 +42,8 @@ angular.module('cmPhonegap')
                                    : null,
                     server = certificate != null ? certificate.server : '',
                     fingerprint = certificate != null ? certificate.fingerprint : '';
+
+                cmLogger.info('cmSslCertificateChecker '+cmConfig.target+'/'+target+' '+server+' '+fingerprint);
 
                 if(server != '' && fingerprint != '') {
                     self.plugin.check(
@@ -57,14 +59,18 @@ angular.module('cmPhonegap')
 
             handler: {
                 success: function(){
+                    cmLogger.info('cmSslCertificateChecker secure');
                     self.isSecure = true;
                 },
                 error: function(message){
+                    cmLogger.error('cmSslCertificateChecker insecure '+message);
                     switch(true){
                         case message == 'CONNECTION_NOT_SECURE':
                         case message.indexOf('CONNECTION_FAILED') >= 0:
                         case message == 'NO_CREDENTIALS':
-                            $rootScope.$broadcast('cmConnectionHandler:notSecure',self.control);
+                            $rootScope.$broadcast('cmConnectionHandler:notSecure',function(){
+                                self.control();
+                            });
                         break;
                     }
 

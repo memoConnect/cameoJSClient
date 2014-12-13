@@ -46,10 +46,10 @@ angular.module('cmConversations').directive('cmSecuritySettings', [
                     }
                 });
 
-                scope.$watch('conversation.password', function(){
-                    if(scope.conversation.state.is('new'))
-                        scope.conversation.securityAspects.refresh()
-                })
+                // scope.$watch('conversation.password', function(){
+                //     if(scope.conversation.state.is('new'))
+                //         scope.conversation.securityAspects.refresh()
+                // })
             },
 
             controller: function($scope, $element, $attrs){

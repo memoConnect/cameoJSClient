@@ -321,6 +321,23 @@ this.remoteBroadcastEvent = function (token, event, identityId) {
     }, token, event, config.apiUrl, identityId)
 }
 
+this.getIdentityId = function(token){
+    return ptor.executeAsyncScript(function (token, apiUrl) {
+
+        var callback = arguments[arguments.length - 1];
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", apiUrl + "/identity", true);
+        xhr.setRequestHeader("Authorization", token);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4) {
+                callback(JSON.parse(xhr.responseText))
+            }
+        }
+        xhr.send();
+    }, token, config.apiUrl)
+}
+
 this.waitForPageLoad = function (expectedRoute) {
     ptor.wait(function () {
         return ptor.executeScript('return window != undefined && window._route').then(function (route) {
@@ -512,8 +529,8 @@ this.getFileExtension = function (file) {
 }
 
 this.headerSearchInList = function (searchString) {
-    self.waitAndClickQa("btn-header-list-search")
-    $("[data-qa='inp-list-search']").sendKeys(searchString)
+    self.waitAndClickQa('btn-header-list-search')
+    self.setVal('inp-list-search',searchString,true)
 }
 
 this.clearLocalStorage = function () {

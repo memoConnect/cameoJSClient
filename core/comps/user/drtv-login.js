@@ -1,15 +1,11 @@
 'use strict';
 
 angular.module('cmUser').directive('cmLogin', [
-    'cmNotify',
-    'cmUserModel',
-    'cmKeyStorageService',
-    'cmCrypt',
-    'cmConfig',
-    'cmEnv',
-    'cmLoader',
+    'cmNotify', 'cmUserModel', 'cmKeyStorageService', 'cmCrypt',
+    'cmConfig', 'cmEnv', 'cmLoader',
     '$location',
-    function (cmNotify, cmUserModel, cmKeyStorageService, cmCrypt, cmConfig, cmEnv, cmLoader,
+    function (cmNotify, cmUserModel, cmKeyStorageService, cmCrypt,
+              cmConfig, cmEnv, cmLoader,
               $location) {
         return  {
             restrict    :   'AE',

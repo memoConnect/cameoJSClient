@@ -84,7 +84,7 @@ module.exports = function (grunt) {
         // load static data and compile vars
         buildConfig.static = JSON.parse(
             grunt.template.process(
-                grunt.file.read('config/cameoBuildConfig-static.json'),
+                grunt.file.read('config/cameoConfig-static.json'),
                 {
                     data: {
                         'dlPath': buildConfig.path.dl,
@@ -213,7 +213,8 @@ module.exports = function (grunt) {
         },
         globalCameoSecrets: globalCameoSecrets,
         globalCameoBuildConfig: globalCameoBuildConfig,
-        globalCameoTestConfig: globalCameoTestConfig
+        globalCameoTestConfig: globalCameoTestConfig,
+        globalCameoPhonegapConfig: grunt.file.readJSON('./config/cameoConfig-phonegap.json')
     });
 
     configs.pkg = grunt.file.readJSON('package.json');

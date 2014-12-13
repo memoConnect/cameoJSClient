@@ -222,10 +222,10 @@ angular.module('cmContacts').service('cmContactsModel',[
             return  cmContactsAdapter
                     .addContact(data)
                     .then(function(data){
-                            self.trigger('add-contact', data)
-                            var contact = _add(data);
-                            self.trigger('after-add-contact', data)
-                            return contact
+                        self.trigger('add-contact', data)
+                        var contact = _add(data);
+                        self.trigger('after-add-contact', data)
+                        return contact
                     })
         };
 
@@ -338,6 +338,8 @@ angular.module('cmContacts').service('cmContactsModel',[
                 var contact = self.contacts.filter(function (contact) {
                     return contact.identity.id == data.id
                 })[0];
+
+                console.log('identity:updated',contact,data)
 
                 if (typeof contact == 'object' && 'identity' in contact && typeof contact.identity.importData == 'function') {
                     contact.identity.importData(data);

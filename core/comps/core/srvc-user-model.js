@@ -616,6 +616,8 @@ angular.module('cmCore')
          * @param  {cmIdentitymodel} identity [description]
          * @return {cmKeyFactory}   cmKeyFactory returning all transitively trusted keys of identity. Users local keys are assumed to be trusted.
          */
+
+        // TODO: purl.2.spec.js test 6 login and logut failed right here
         this.verifyIdentityKeys = function(identity, sign, use_cache){
             //cmLogger.debug('cmUserModel.verifyIdentityKeys');
 
@@ -633,7 +635,7 @@ angular.module('cmCore')
 
             return  $q.when()
                     .then(function(){
-                        return  self.data.identity.keys.getTransitivelyTrustedKeys(local_keys, function trust(trusted_key, key){
+                        return self.data.identity.keys.getTransitivelyTrustedKeys(local_keys, function trust(trusted_key, key){
                                     return trusted_key.verifyKey(key, self.getTrustToken(key, self.data.identity.cameoId), use_cache)
                                 })
                     })

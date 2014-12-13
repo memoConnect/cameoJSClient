@@ -15,7 +15,7 @@ module.exports = function(grunt, options){
     grunt.registerTask('phonegap:app-to-build-dir', [
         'app:deploy',
         'copy:resources-phonegap',
-        'template:app-index-phonegap',
+        'template:phonegap-index-html',
         'phonegap:app-config'
     ]);
 
@@ -32,13 +32,129 @@ module.exports = function(grunt, options){
     ]);
 
     grunt.registerTask('phonegap:app-config', [
-        'template:app-config-phonegap'
+        'template:phonegap-config-xml',
+        'template:phonegap-config-js'
     ]);
 
+    grunt.registerTask('phonegap:app-config-local', [
+        'template:phonegap-config-xml-local',
+        'template:phonegap-config-js'
+    ]);
 
     var archive = {
         app: 'dist/dl/cameoNetApp.zip'
     };
+
+    function configXMLData(isLocal){
+        return {
+            'currentName': options.globalCameoBuildConfig.phonegap.baseName + options.globalCameoBuildConfig.phonegap.extraName,
+            'currentVersion': options.globalCameoBuildConfig.phonegap.version,
+            'currentAppId': options.globalCameoBuildConfig.phonegap.bundleId,
+            'logLevel': options.globalCameoBuildConfig.config.logLevel || 'DEBUG',
+            'androidDebuggable': options.globalCameoBuildConfig.phonegap.androidDebuggable || "false",
+            'plugins': genPluginsForXML(),
+            'resources': genResourcesForXML(isLocal),
+            'phonegapConfig': options.globalCameoPhonegapConfig.build
+        }
+    }
+
+    function genPluginsForXML(){
+        var plugins = options.globalCameoPhonegapConfig.plugins,
+            xml = '';
+
+        plugins.forEach(function(plugin){
+            xml += '<gap:plugin name="' + plugin.name + '" version="' + plugin.version + '">';
+            if ('inner' in plugin){
+                xml += grunt.template.process(plugin.inner, {
+                    data:{
+                        'appProtocol': options.globalCameoBuildConfig.static.appProtocol
+                    }
+                });
+            }
+            xml += '</gap:plugin>\n';
+        });
+
+        return xml;
+    }
+
+    function genResourcesForXML(isLocal){
+        var resources = options.globalCameoPhonegapConfig.resources,
+            xml = '';
+
+        resources.forEach(function(resource){
+            if(resource.platform != 'default' && isLocal)
+                xml+= '<platform name="'+resource.platform+'">\n';
+
+            resource.icons.forEach(function(icon){
+                var resourceXml = [];
+
+                resourceXml.push('<icon');
+                if(!isLocal)
+                    resourceXml.push('gap:platform="'+resource.platform+'"');
+
+                if(resource.platform != 'default')
+                    resourceXml.push('src="'+(isLocal ? 'www/' : '')+'res/icons/'+resource.platform+'/'+icon.src+'"');
+                else
+                    resourceXml.push('src="'+(isLocal ? 'www/' : '')+'res/icons/'+icon.src+'"');
+
+                if('qualifier' in icon)
+                    resourceXml.push('gap:qualifier="'+icon.qualifier+'"');
+
+                if('density' in icon)
+                    resourceXml.push('gap:density="'+icon.density+'"');
+
+                if('dim' in icon) {
+                    var dimensions = icon.dim.split('x');
+                    resourceXml.push('width="' + dimensions[0] + '"');
+                    resourceXml.push('height="' + dimensions[1] + '"');
+                }
+
+                if('role' in icon)
+                    resourceXml.push('gap:role="'+icon.role+'"');
+
+                resourceXml.push('/>\n');
+
+                xml+= resourceXml.join(' ');
+            });
+
+            resource.screens.forEach(function(screen){
+                var resourceXml = [];
+
+                if(!isLocal) {
+                    resourceXml.push('<gap:splash');
+                    resourceXml.push('gap:platform="' + resource.platform + '"');
+                } else {
+                    resourceXml.push('<splash');
+                }
+
+                if(resource.platform != 'default')
+                    resourceXml.push('src="'+(isLocal ? 'www/' : '')+'res/screens/'+resource.platform+'/'+screen.src+'"');
+                else
+                    resourceXml.push('src="'+(isLocal ? 'www/' : '')+'res/screens/'+screen.src+'"');
+
+                if('qualifier' in screen)
+                    resourceXml.push('gap:qualifier="'+screen.qualifier+'"');
+
+                if('density' in screen)
+                    resourceXml.push('gap:density="'+screen.density+'"');
+
+                if('dim' in screen) {
+                    var dimensions = screen.dim.split('x');
+                    resourceXml.push('width="' + dimensions[0] + '"');
+                    resourceXml.push('height="' + dimensions[1] + '"');
+                }
+
+                resourceXml.push('/>\n');
+
+                xml+= resourceXml.join(' ');
+            });
+
+            if(resource.platform != 'default' && isLocal)
+                xml+= '</platform>\n';
+        });
+
+        return xml;
+    }
 
     return {
         tasks:{
@@ -72,7 +188,7 @@ module.exports = function(grunt, options){
                 }
             },
             template: {
-                'app-index-phonegap': {
+                'phonegap-index-html': {
                     'options': {
                         'data': {
                             'currentVersion': options.globalCameoBuildConfig.config.version,
@@ -86,20 +202,29 @@ module.exports = function(grunt, options){
                         'build/phonegap/www/index.html': ['app/index.html']
                     }
                 },
-                'app-config-phonegap': {
+                'phonegap-config-xml': {
+                    'options': {
+                        'data': configXMLData()
+                    },
+                    'files': {
+                        'build/phonegap/www/config.xml': ['resource/phonegap/config.xml']
+                    }
+                },
+                'phonegap-config-xml-local': {
+                    'options': {
+                        'data': configXMLData(true)
+                    },
+                    'files': {
+                        'build/phonegap/www/config.xml': ['resource/phonegap/config.xml']
+                    }
+                },
+                'phonegap-config-js': {
                     'options': {
                         'data': {
-                            'currentName': options.globalCameoBuildConfig.phonegap.baseName + options.globalCameoBuildConfig.phonegap.extraName,
-                            'currentVersion': options.globalCameoBuildConfig.phonegap.version,
-                            'currentAppId': options.globalCameoBuildConfig.phonegap.bundleId,
-                            'logLevel': options.globalCameoBuildConfig.config.logLevel || 'DEBUG',
-                            'googleSenderId': options.globalCameoSecrets.google.senderId,
-                            'appProtocol': options.globalCameoBuildConfig.static.appProtocol,
-                            'androidDebuggable': options.globalCameoBuildConfig.phonegap.androidDebuggable || "false"
+                            'googleSenderId': options.globalCameoSecrets.google.senderId
                         }
                     },
                     'files': {
-                        'build/phonegap/www/config.xml': ['resource/phonegap/config.xml'],
                         'build/phonegap/www/config.js': ['resource/phonegap/config.js']
                     }
                 }
