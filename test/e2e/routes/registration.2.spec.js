@@ -7,7 +7,7 @@ var password = "PWD_Z" + Date.now();
 describe('Registration: ', function () {
     var ptor = util.getPtorInstance()
 
-    it('should contain 7 input fields', function () {
+    it('should contain 4 input fields', function () {
         util.logout()
 
         util.get("/registration");
@@ -92,9 +92,9 @@ describe('Registration: ', function () {
     /**
      * @TODO!
      */
-    xit('should create account with valid credentials and have a support talk', function() {
+    it('should create account with valid credentials and have a support talk', function() {
         var loginName = util.createTestUser()
-        util.waitForPageLoad('/start/welcome')
+        util.waitForPageLoad('/setup/account')
 
         util.get('/talks')
         util.waitForPageLoad('/talks')

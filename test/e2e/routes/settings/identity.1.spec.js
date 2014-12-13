@@ -14,7 +14,6 @@ describe('Route Settings Identity: ', function(){
     describe('Test 1 - GUI', function(){
         it('should load at "#/settings/identity/edit" after login.', function(){
             util.login()
-            util.expectCurrentUrl('#/start')
 
             util.get('/settings/identity/edit')
             util.expectCurrentUrl('#/settings/identity/edit')
@@ -51,7 +50,7 @@ describe('Route Settings Identity: ', function(){
         })
 
         it('should be logged in', function(){
-            util.expectCurrentUrl('#/start')
+            util.expectCurrentUrl('/setup/account')
         })
 
         it('should go to identity settings', function(){
