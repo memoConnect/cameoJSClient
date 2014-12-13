@@ -21,7 +21,7 @@
         ng-repeat="btn in menuKeys"
         ng-click="goTo(menu[btn], btn)"
         data-qa="{{menu[btn]['data-qa']}}"
-        ng-class="{'is-active':checkActive(btn)}"
+        ng-class="{'is-active':checkActive(btn),'info':(menu[btn].name == 'quickstart' && markQuickstart)}"
         cm-reactive>
         <span class="item clearfix">
             <span class="title">

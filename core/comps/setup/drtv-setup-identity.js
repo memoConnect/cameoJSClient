@@ -79,10 +79,8 @@ angular.module('cmSetup')
                         checkEmail();
 
                         if ($scope.cmForm.$valid !== false) {
-                            console.log('moep')
                             deferred.resolve(objectChange);
                         } else {
-                            console.log('miep')
                             deferred.reject();
                         }
 
