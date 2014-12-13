@@ -18,7 +18,8 @@
                 </button>
             </li>
 
-            <li class="{{menu[btn].css}}"
+            <li ng-class="{'info':(menu[btn].name == 'quickstart' && markQuickstart)}"
+                class="{{menu[btn].css}}"
                 ng-repeat="btn in menuKeys"
                 ng-click="goTo(menu[btn], btn)"
                 data-qa="{{menu[btn]['data-qa']}}"

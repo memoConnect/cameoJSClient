@@ -2,8 +2,8 @@
 
 angular.module('cmSetup')
     .directive('cmSetupIdentity', [
-        'cmUserModel', 'cmAuth', 'cmIdentityFactory', 'cmUtil', 'cmPristine', 'cmLoader','cmLogger', '$rootScope', '$q',
-        function(cmUserModel, cmAuth, cmIdentityFactory, cmUtil, cmPristine, cmLoader, cmLogger, $rootScope, $q){
+        'cmUserModel', 'cmAuth', 'cmIdentityFactory', 'cmUtil', 'cmPristine', 'cmNotify', 'cmLoader', 'cmLogger', '$rootScope', '$q',
+        function(cmUserModel, cmAuth, cmIdentityFactory, cmUtil, cmPristine, cmNotify, cmLoader, cmLogger, $rootScope, $q){
             return {
                 restrict: 'E',
                 templateUrl: 'comps/setup/drtv-setup-identity.html',
@@ -78,9 +78,11 @@ angular.module('cmSetup')
                         checkPhoneNumber();
                         checkEmail();
 
-                        if ($scope.cmForm.$valid !== false && Object.keys(objectChange).length > 0) {
+                        if ($scope.cmForm.$valid !== false) {
+                            console.log('moep')
                             deferred.resolve(objectChange);
                         } else {
+                            console.log('miep')
                             deferred.reject();
                         }
 
@@ -98,19 +100,29 @@ angular.module('cmSetup')
 
                         $scope.validateForm().then(
                             function (objectChange) {
+                                if(cmUtil.objLen(objectChange) > 0){
+                                    cmUserModel.data.identity.one('update:finished',function(){
+                                        $scope.goToNextStep();
+                                    });
 
-                                cmUserModel.data.identity.one('update:finished',function(){
-                                    loader.stop();
-
-                                    $rootScope.goTo('/settings/identity/key/create');
-                                });
-
-                                cmUserModel.data.identity.update(objectChange);
+                                    cmUserModel.data.identity.update(objectChange);
+                                } else {
+                                    $scope.goToNextStep();
+                                }
                             },
                             function () {
                                 loader.stop();
                             }
                         )
+                    };
+
+                    $scope.goToNextStep = function(){
+                        loader.stop();
+
+                        cmNotify.trigger('bell:ring');
+                        $rootScope.markQuickstart = true;
+
+                        $rootScope.goTo('/settings/identity/key/create');
                     };
 
                     /**
