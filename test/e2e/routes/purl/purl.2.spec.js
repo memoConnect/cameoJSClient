@@ -65,7 +65,7 @@ describe('Route: Purl - ', function () {
      * Test 1
      * Internal User is logged in and Purl is for that User
      */
-    xdescribe("Test 1 - User1 opens Purl and is logged in", function(){
+    describe("Test 1 - User1 opens Purl and is logged in", function(){
         it('should open "#/purl/+' + config.purlUser1 +'" after login.', function(){
             util.login()
             util.get('/purl/' + config.purlUser1)
@@ -88,7 +88,7 @@ describe('Route: Purl - ', function () {
      * Test 2
      * Internal User is logged out and Purl is for that User
      */
-    xdescribe('Test 2 - User1 opens Purl and is logged out "#/purl/' + config.purlUser1 +'"', function(){
+    describe('Test 2 - User1 opens Purl and is logged out "#/purl/' + config.purlUser1 +'"', function(){
         it('should open after logout before login.', function(){
             util.logout();
             util.get('/purl/' + config.purlUser1)
@@ -132,7 +132,7 @@ describe('Route: Purl - ', function () {
      * Test 3
      * External User open Purl when Browser is "empty"
      */
-    xdescribe('Test 3 - External User opens Purl, no User is logged in "#/purl/' + config.purlExternal +'"', function(){
+    describe('Test 3 - External User opens Purl, no User is logged in "#/purl/' + config.purlExternal +'"', function(){
         it('should open', function(){
             util.logout();
             util.get('/purl/' + config.purlExternal)
@@ -154,7 +154,7 @@ describe('Route: Purl - ', function () {
      * Test 4
      * External User open Purl when Browser is Internal User 1 is logged in
      */
-    xdescribe('Test 4 - User 1 is logged in, External User open Purl "#/purl/' + config.purlExternal +'"', function(){
+    describe('Test 4 - User 1 is logged in, External User open Purl "#/purl/' + config.purlExternal +'"', function(){
         it('should open', function(){
             util.login();
 
@@ -177,7 +177,7 @@ describe('Route: Purl - ', function () {
      * Test 5
      * External User has open Purl then Internal User 1 will see his PURL
      */
-    xdescribe('Test 5 - External User opens Purl, then User 1 opens Purl "#/purl/' + config.purlExternal +'"', function(){
+    describe('Test 5 - External User opens Purl, then User 1 opens Purl "#/purl/' + config.purlExternal +'"', function(){
         it('should open', function(){
             util.logout();
 

@@ -233,12 +233,14 @@ this.deleteKeys = function(){
 this.getTestUserNotifications = function (loginName) {
 
     var testUserId = loginName.split("_")[1]
+
     return ptor.executeAsyncScript(function (testUserId, apiUrl) {
 
         var callback = arguments[arguments.length - 1]
 
         var xhr = new XMLHttpRequest()
-        xhr.open("GET", apiUrl + "/v1/testUser/" + testUserId+'?ts='+(new Date()).getTime(), true)
+
+        xhr.open("GET", apiUrl + "v1/testUser/" + testUserId+'?ts='+(new Date()).getTime(), true)
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4) {
                 callback(JSON.parse(xhr.responseText))
@@ -256,7 +258,7 @@ this.getEventSubscription = function (token) {
         var callback = arguments[arguments.length - 1];
 
         var xhr = new XMLHttpRequest();
-        xhr.open("POST", apiUrl + "/v1/eventSubscription", true);
+        xhr.open("POST", apiUrl + "v1/eventSubscription", true);
         xhr.setRequestHeader("Authorization", token);
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4) {
@@ -274,7 +276,7 @@ this.getEvents = function (token, subscriptionId) {
         var callback = arguments[arguments.length - 1];
 
         var xhr = new XMLHttpRequest();
-        xhr.open("GET", apiUrl + "/v1/eventSubscription/" + subscriptionId+'?ts='+(new Date()).getTime(), true);
+        xhr.open("GET", apiUrl + "v1/eventSubscription/" + subscriptionId+'?ts='+(new Date()).getTime(), true);
         xhr.setRequestHeader("Authorization", token);
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4) {
@@ -292,7 +294,7 @@ this.broadcastEvent = function (token, event) {
         var callback = arguments[arguments.length - 1];
 
         var xhr = new XMLHttpRequest();
-        xhr.open("POST", apiUrl + "/v1/event/broadcast", true);
+        xhr.open("POST", apiUrl + "v1/event/broadcast", true);
         xhr.setRequestHeader("Authorization", token);
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4) {
@@ -310,7 +312,7 @@ this.remoteBroadcastEvent = function (token, event, identityId) {
         var callback = arguments[arguments.length - 1];
 
         var xhr = new XMLHttpRequest();
-        xhr.open("POST", apiUrl + "/v1/event/broadcast/identity/" + identityId, true);
+        xhr.open("POST", apiUrl + "v1/event/broadcast/identity/" + identityId, true);
         xhr.setRequestHeader("Authorization", token);
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4) {
@@ -327,7 +329,7 @@ this.getIdentityId = function(token){
         var callback = arguments[arguments.length - 1];
 
         var xhr = new XMLHttpRequest();
-        xhr.open("GET", apiUrl + "/v1/identity", true);
+        xhr.open("GET", apiUrl + "v1/identity", true);
         xhr.setRequestHeader("Authorization", token);
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4) {
