@@ -104,6 +104,7 @@ describe('Route Contact: ', function () {
             util.headerSearchInList(extUserName)
 
             //expect($$('cm-contact-list cm-contact-tag cm-avatar').count()).toBe(1)
+            ptor.sleep(50)
             expect($$('cm-contact-tag').count()).toBe(1)
         })
 
