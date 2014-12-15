@@ -257,8 +257,8 @@ angular.module('cameoClient', [
             }
         }
 
-        $rootScope.$on('$routeChangeStart', function(event, jesör){
-            checkAccess(jesör.$$route);
+        $rootScope.$on('$routeChangeSuccess', function(event, route){
+            checkAccess(route.$$route);
         });
     }
 ])
