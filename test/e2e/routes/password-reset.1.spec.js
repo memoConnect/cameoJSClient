@@ -12,7 +12,8 @@ describe('Route Password Lost/Reset:', function(){
         password = 'passwordNew',
         resetId,
         resetIdExpired = 'lx8J3P1hJqA5jcy',
-        verifySecret
+        verifySecret,
+        moep
 
     function getVerificationSecret() {
         verifySecret = undefined
