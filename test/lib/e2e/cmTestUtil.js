@@ -177,6 +177,9 @@ this.createTestUser = function (testUserId, from){
     this.scrollToBottom()
 
     this.click('icon-checkbox-agb')
+
+    //ptor.pause()
+
     this.click('btn-createUser')
 
     this.waitForPageLoad("/setup/account")

@@ -83,7 +83,6 @@ angular.module('cmUser').directive('cmLogin', [
                                     $rootScope.goTo("/talks");
                                 }
                             }
-                            $rootScope.$broadcast('cmLogin:success');
                         },
                         function(error){
                             loader.stop();
