@@ -253,19 +253,21 @@ angular.module('cmConfig',[])
                     guests: true
                 },
                 'setup-account':{
+                    hasCtrl: true,
                     routes: ['/setup/account'],
                     guests: false,
                     resolveUserModel: true
                 },
                 'setup-identity':{
+                    hasCtrl: true,
                     routes: ['/setup/identity'],
                     guests: false,
                     resolveUserModel: true
                 },
                 'setup-keyinfo': {
-                    guests: false,
                     hasCtrl: true,
                     routes: ['/setup/keyinfo'],
+                    guests: false,
                     resolveUserModel: true
                 }
             },
