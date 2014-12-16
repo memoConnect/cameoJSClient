@@ -935,7 +935,7 @@ angular.module('cmCore')
             init();
             self.one('update:finished', function(){
                 if(!self.hasLocalKeys()){
-                    $rootScope.goTo('/start/keyinfo');
+                    $rootScope.goTo('/setup/keyinfo');
                 } else {
                     $rootScope.goTo('/talks');
                 }
