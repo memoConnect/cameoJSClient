@@ -455,6 +455,12 @@ angular.module('cmCore')
                 });
             },
 
+            checkResetPassword: function(resetId){
+                return cmApi.get({
+                    path: '/resetPassword/'+resetId
+                });
+            },
+
             resetPassword: function(data, resetId){
                 return cmApi.post({
                     path: '/resetPassword/'+resetId,

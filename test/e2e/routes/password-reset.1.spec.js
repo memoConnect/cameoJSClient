@@ -10,8 +10,11 @@ describe('Route Password Lost/Reset:', function(){
         phoneNumber = '+1234567890',
         email = 'devnull@cameo.io',
         password = 'passwordNew',
-        resetId,
-        resetIdExpired = 'lx8J3P1hJqA5jcy',
+        resetData,
+        resetDataExpired = {
+            code: 'U217HK',
+            id: '6hARkakoWlkPYEG'
+        },
         verifySecret
 
     function getVerificationSecret() {
@@ -27,15 +30,23 @@ describe('Route Password Lost/Reset:', function(){
         }, 5000, 'unable to getVerificationSecret')
     }
 
-    function getResetId() {
-        resetId = undefined
+    function getResetData() {
+        resetData = undefined
 
         ptor.wait(function () {
             return util.getTestUserNotifications(testUser).then(function (response) {
-                if(response['data'].length > 0 && 'content' in response['data'][0])
-                    resetId = response['data'][0]['content'].split('/pr/')[1]
+                if(response['data'].length > 0 && 'content' in response['data'][0]) {
+                    var message = response['data'][0]['content'],
+                        code = message.split('\"')[1],
+                        id = message.split('/pr/')[1]
 
-                return resetId != undefined
+                    resetData = {
+                        code: code,
+                        id: id
+                    }
+                }
+
+                return resetData != undefined
             })
         }, 5000, 'unable to getResetId')
     }
@@ -95,11 +106,15 @@ describe('Route Password Lost/Reset:', function(){
             util.checkWarning('info-confirmationSended',true)
 
             // empty
-            util.click('btn-resetPassword')
+            util.click('btn-startResetPassword')
+            util.checkWarning('info-identifierEmpty')
+
+            util.setVal('inp-passwordLost',' ')
+            util.sendEnter('inp-passwordLost')
             util.checkWarning('info-identifierEmpty')
 
             // check loginname info
-            util.setVal('inp-passwordLost','moep')
+            util.setVal('inp-passwordLost','moep',true)
             util.sendEnter('inp-passwordLost')
             util.checkWarning('info-loginNotFound')
 
@@ -116,31 +131,82 @@ describe('Route Password Lost/Reset:', function(){
             // identitify with loginName
             util.setVal('inp-passwordLost',testUser,true)
             util.sendEnter('inp-passwordLost')
-            util.checkWarning('info-confirmationSended')
 
-            getResetId()
+            // get data from notification
+            getResetData()
         })
 
-        it('check form with expired resetId', function(){
-            util.get('/password/reset/'+resetIdExpired)
-            util.expectCurrentUrl('#/password/reset/'+resetIdExpired)
+        it('check code with invalid input', function(){
+            util.expectCurrentUrl('#/password/lost')
 
-            util.checkWarning('info-requestExpired',true)
+            util.waitForElement("[data-qa='inp-codeResetPassword']")
 
-            util.setVal('input-password',password)
-            util.setVal('input-passwordConfirm',password)
+            util.checkWarning('info-confirmationSended')
+            util.checkWarning('info-codeEmpty',true)
+            util.checkWarning('info-expired',true)
 
-            util.click('btn-resetPassword')
-            util.waitForLoader()
+            util.click('btn-checkResetPassword')
+            util.checkWarning('info-codeEmpty')
+
+            util.setVal('inp-codeResetPassword',' ')
+            util.sendEnter('inp-codeResetPassword')
+            util.checkWarning('info-codeEmpty')
+
+            util.setVal('inp-codeResetPassword','moep',true)
+            util.sendEnter('inp-codeResetPassword')
+            util.checkWarning('info-expired')
+
+            util.setVal('inp-codeResetPassword',resetDataExpired.id,true)
+            util.sendEnter('inp-codeResetPassword')
+            util.checkWarning('info-expired')
+
+            util.setVal('inp-codeResetPassword',resetDataExpired.code,true)
+            util.sendEnter('inp-codeResetPassword')
+            util.checkWarning('info-expired')
+        })
+
+        it('click cancel and be in clear start form', function(){
+            util.click('btn-resetForm')
+
+            util.expectCurrentUrl('#/password/lost')
+
+            util.waitForElement("[data-qa='inp-passwordLost']")
+
+            util.checkWarning('info-identifierEmpty',true)
+            util.checkWarning('info-loginNotFound',true)
+            util.checkWarning('info-phoneNumberNotFound',true)
+            util.checkWarning('info-emailNotFound',true)
+            util.checkWarning('info-noEmailPhonenumber',true)
+            util.checkWarning('info-confirmationSended',true)
+
+        })
+
+        it('check expired password link', function(){
+            util.get('/password/reset/'+resetDataExpired.id)
+            util.expectCurrentUrl('#/password/reset/'+resetDataExpired.id)
+
             util.checkWarning('info-requestExpired')
         })
 
-        it('do password reset with valid resetId', function(){
-            expect(typeof resetId).not.toBe('undefined')
+        it('start a new reset and get new resetData', function(){
+            util.get('/password/lost')
+            // identitify with loginName
+            util.setVal('inp-passwordLost',testUser,true)
+            util.sendEnter('inp-passwordLost')
 
-            util.get('/password/reset/'+resetId)
-            util.expectCurrentUrl('#/password/reset/'+resetId)
+            // get data from notification
+            getResetData()
+        })
 
+        it('enter valid code and check form', function(){
+            util.waitForElement("[data-qa='inp-codeResetPassword']")
+
+            util.setVal('inp-codeResetPassword',resetData.code,true)
+            util.sendEnter('inp-codeResetPassword')
+
+            util.expectCurrentUrl('#/password/reset/'+resetData.id)
+
+            // isnt expired
             util.checkWarning('info-requestExpired',true)
 
             util.setVal('input-password',password)

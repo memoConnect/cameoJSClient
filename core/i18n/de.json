@@ -47,13 +47,18 @@
             "PHONENUMBER_NOT_FOUND": "Die Telefonnummer kann nicht gefunden werden.",
             "EMAIL_NOT_FOUND": "Die E-Mail-Adresse kann nicht gefunden werden.",
             "NO_EMAIL_PHONENUMBER": "Bitte korrigieren Sie ihre Eingabe.",
-            "CONFIRMATION_SENDED": "Wir haben Ihnen eine Nachricht gesendet. Darin finden Sie einen Link zur Passwortrücksetzung. Klicken Sie darauf und folgen Sie den Anweisungen."
+            "CONFIRMATION_SENDED": "@todo Wir haben Ihnen eine Nachricht gesendet. Darin finden Sie einen Code den Sie hier eingeben können oder einen Link der Sie direkt zur Passwortrücksetzung weiterleitet.",
+            "EMPTY_CODE": "@todo Bitte geben Sie einen Code ein",
+            "EXPIRED": "@:PASSWORD_RESET.INFO.EXPIRED"
         },
         "PLACEHOLDER": {
-            "MIXED": "Benutzername, cameoID, E-Mail-Adresse oder Telefonnummer"
+            "MIXED": "Benutzername, cameoID, E-Mail-Adresse oder Telefonnummer",
+            "RESET_CODE": "@todo Code aus der empfangenen Nachricht"
         },
         "LABEL": {
-            "SUBMIT": "Passwortrücksetzung anfordern"
+            "SUBMIT": "Passwortrücksetzung anfordern",
+            "RESET": "@todo Abbrechen",
+            "SUBMIT_CODE": "@todo Code überprüfen"
         }
     },
 
@@ -189,7 +194,7 @@
 
     "CONVERSATION": {
         "NO_SUBJECT": "Kein Betreff",
-        "HEADING": "Talk",
+        "HEADING": "neuer Talk",
         "LABEL": {
             "LOAD_PREVIOUS":"vorherige Nachrichten laden",
             "SEND": "Abschicken",
