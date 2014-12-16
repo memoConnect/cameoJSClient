@@ -182,6 +182,7 @@ angular.module('cmCore')
                         })
             };
 
+            // returns a promise, resolved on succes and rejected on failure:
             this.verify = function(data, signature, use_cache){
                 if( 
                         use_cache

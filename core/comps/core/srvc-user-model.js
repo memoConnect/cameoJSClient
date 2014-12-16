@@ -533,7 +533,6 @@ angular.module('cmCore')
 
 
         this.signData = function(data){
-
             return  $q.all(this.loadLocalKeys().map(function(signingKey){                
                         return  signingKey.sign(data)
                                 .then(function(signature){
@@ -631,7 +630,7 @@ angular.module('cmCore')
 
             return  $q.when()
                     .then(function(){
-                        return self.data.identity.keys.getTransitivelyTrustedKeys(local_keys, function trust(trusted_key, key){
+                        return  self.data.identity.keys.getTransitivelyTrustedKeys(local_keys, function trust(trusted_key, key){
                                     return trusted_key.verifyKey(key, self.getTrustToken(key, self.data.identity.cameoId), use_cache)
                                 })
                     })
