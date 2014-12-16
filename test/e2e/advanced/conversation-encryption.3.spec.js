@@ -472,6 +472,7 @@ describe('Conversation encryption -', function () {
 
                 util.get("/talks")
                 util.headerSearchInList("password_" + date)
+                ptor.sleep(50);
                 $$("cm-conversation-tag").then(function (tags) {
                     tags[0].click()
 

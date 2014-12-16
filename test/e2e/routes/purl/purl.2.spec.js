@@ -282,7 +282,7 @@ describe('Route: Purl - ', function () {
     describe("Test 7 - Internal user opens Purl that does not exists:", function(){
         it('should be 404 path', function(){
             util.login()
-            util.waitForPageLoad('/start')
+            util.waitForPageLoad('/setup')
             util.get('/purl/moep')
             ptor.wait(function () {
                     return ptor.getCurrentUrl().then(function(url){
