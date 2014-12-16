@@ -42,7 +42,7 @@
             </span>
         </section>
         <section class="icon-list">
-            <i class="fa cm-handshake" ng-if="!isTrustedKey(key) && isHandshakePossible" ng-click="goTo('/authentication/'+key.id, id)" data-qa="btn-start-handshake" cm-reactive></i>
+            <i class="fa cm-handshake" ng-if="!isTrustedKey(key) && isHandshakePossible" ng-click="goTo('/authentication/'+key.id, true)" data-qa="btn-start-handshake" cm-reactive></i>
             <i class="fa cm-cancel-key" ng-click="remove(key)" data-qa="btn-remove-modal" cm-reactive></i>
         </section>
     </li>
@@ -50,6 +50,24 @@
         <cm-loader></cm-loader>
     </li>
 </ul>
+
+<!-- Some Key needs authentications -->
+
+<article class="content" ng-if = "!canCreate && someKeyNeedsAuthentication()" data-qa = "bubble-some-key-needs-authentication">
+        <cm-info-bubble nose-x="18%">
+            <span ng-bind-html="'IDENTITY.KEYS.KEYLIST.EXPLANATION.UNTRUSTED_KEYS' | cmParse"></span>
+        </cm-info-bubble>
+    </article>
+
+
+<cm-footer ng-if = "!canCreate && someKeyNeedsAuthentication()" data-qa = "footer-some-key-needs-authentication">
+    <button class="cm-btn-grey dib" data-qa="btn-create-key" ng-click="goTo('/authentication')" cm-reactive>
+        {{'IDENTITY.KEYS.AUTHENTICATION.START.START_BUTTON'|cmTranslate }}
+        <i class="fa cm-handshake"></i>
+    </button>
+</cm-footer>
+
+<!-- End: Some Key needs authentications -->
 
 <cm-footer ng-if="canCreate" data-qa="canCreate">
     <button class="cm-btn-grey dib w50" data-qa="btn-create-key" ng-click="goTo('/settings/identity/key/create')" cm-reactive>

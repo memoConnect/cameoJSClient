@@ -86,6 +86,12 @@ describe('Identity key settings: ', function () {
             // should contain date
             expect(elements[0].getText()).toMatch(/\d\d\.\d\d\.\d\d\s-\s\d\d:\d\d/)
         })
+
+    })
+
+    it('there should be no info and no footer bubble concerning keys needing authentication.', function(){
+        expect($('[data-qa="bubble-some-key-needs-authentication"').isPresent()).toBe(false)
+        expect($('[data-qa="footer-some-key-needs-authentication"').isPresent()).toBe(false)
     })
 
     it('the key should still be there after logout/login', function () {
@@ -144,6 +150,11 @@ describe('Identity key settings: ', function () {
         util.get('/settings/identity/key/list')
         util.waitForPageLoad('/settings/identity/key/list')
         util.waitForElements("[data-qa='key-list-item']", 2)
+    })
+
+    it('should display info and authenticate footer button, if some key needs authentication.', function(){
+        util.waitForQa('bubble-some-key-needs-authentication')
+        util.waitForQa('footer-some-key-needs-authentication')
     })
 
     it('delete test user', function () {
