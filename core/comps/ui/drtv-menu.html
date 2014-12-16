@@ -19,15 +19,14 @@
             </li>
 
             <li ng-class="{'info':(menu[btn].name == 'quickstart' && markQuickstart)}"
-                class="{{::menu[btn].css}}"
-
+                class="{{menu[btn].css}}"
                 ng-repeat="btn in menuKeys"
                 ng-click="goTo(menu[btn], btn)"
-                data-qa="{{::menu[btn]['data-qa']}}"
+                data-qa="{{menu[btn]['data-qa']}}"
                 cm-reactive>
                 <i class="fa icon-left" ng-if="menu[btn].icon != undefined" ng-class="menu[btn].icon"></i>
                 <span>
-                    {{::menu[btn].i18n|cmTranslate}}
+                    {{menu[btn].i18n|cmTranslate}}
                     <cm-friend-request-counter ng-if="menu[btn].drtv != undefined && menu[btn].drtv == 'cm-friend-request-counter'" ></cm-friend-request-counter>
                 </span>
                 <div class="clearfix"></div>
@@ -35,13 +34,13 @@
 
             <li ng-click="logout()" data-qa="logout-btn" cm-reactive>
                 <i class="fa cm-logout icon-left"></i>
-                <a class="logout">{{::'MENU.LOGOUT'|cmTranslate}}</a>
+                <a class="logout">{{'MENU.LOGOUT'|cmTranslate}}</a>
                 <div class="clearfix"></div>
             </li>
 
             <li>
                 <i class="fa cm-rhino-positive icon-left"></i>
-                <span>{{::version}}</span>
+                <span>{{version}}</span>
                 <div class="clearfix"></div>
             </li>
         </ul>

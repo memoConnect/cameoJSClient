@@ -466,6 +466,30 @@ angular.module('cmCore')
                     path: '/resetPassword/'+resetId,
                     data: data
                 });
+            },
+
+            sendVerification: function(type){
+                var data = {};
+
+                switch(type){
+                    case 'phoneNumber':
+                        data.verifyPhoneNumber = true;
+                    break;
+                    case 'email':
+                        data.verifyEmail = true;
+                    break;
+                }
+
+                cmApi.post({
+                    path: '/verify',
+                    data: data
+                })
+            },
+
+            confirmVerification: function(secret){
+                return cmApi.post({
+                    path: '/verify/'+secret
+                });
             }
         };
 

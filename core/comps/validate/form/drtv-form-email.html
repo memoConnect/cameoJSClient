@@ -1,5 +1,5 @@
 <article class="content" ng-form="cmInnerForm">
-    <label>{{label|cmTranslate}}</label>
+    <label>{{::label|cmTranslate}}</label>
     <div class="cm-input-ctn" ng-class="{
         'cm-input-disabled': disabled,
         'with-inside-icon': !disabled && !verification.isVisible,
@@ -7,13 +7,13 @@
     }">
         <input
             type="text"
-            tabindex="{{tabIndex}}" data-qa="input-email"
+            tabindex="{{::tabIndex}}" data-qa="input-email"
             name="email" ng-model="ngModel"
             ng-disabled="disabled" cm-validate-email cm-adaptive-change="3000" />
         <i class="fa"
            data-qa="btn-manuallyEmailVerification"
             ng-show="!disabled && verification.isVisible"
-            ng-click="doVerification()"
+            ng-click="sendVerification()"
             cm-reactive="{{verification.isVerified}}"
             ng-class="{
                 'cm-checkbox-right': verification.isVerified,
@@ -24,12 +24,42 @@
 
     <cm-info-bubble class="cm-alert" ng-show="cmInnerForm.email.$dirty && cmInnerForm.email.$invalid">
         <div ng-show="cmInnerForm.email.$invalid" data-qa="form-error-email-invalid">
-            <i class="fa cm-info"></i> {{info|cmTranslate}}
+            <i class="fa cm-info"></i> {{::info|cmTranslate}}
         </div>
     </cm-info-bubble>
+</article>
 
-    <cm-info-bubble nose-x="85%" ng-show="verification.isVisible && !verification.isVerified" data-qa="info-emailNotVerified">
+<article class="content" ng-show="verification.isVisible && !verification.isVerified">
+    <cm-info-bubble nose-x="85%" data-qa="info-emailNotVerified">
         <i class="fa cm-attention cm-orange"></i>
-        <span ng-bind-html="'DRTV.VALIDATE_EMAIL.INFO.ISNT_VERIFIED'|cmTranslate:{ 'icon':verificationManuallyIcon}"></span>
+        <span ng-bind-html="::'DRTV.VALIDATE_EMAIL.INFO.ISNT_VERIFIED'|cmTranslate:{ 'icon':verificationManuallyIcon}"></span>
+    </cm-info-bubble>
+
+    <label class="dbl mt15">{{::'DRTV.VALIDATE_EMAIL.LABEL_VERIFICATION_CODE'|cmTranslate}}</label>
+    <div class="cm-input-ctn with-inside-icon">
+        <input
+            type="text"
+            data-qa="inp-codeVerifyEmail"
+            name="codeVerifyEmail"
+            cm-enter="checkVerificationCode()"
+            ng-model="code"
+            />
+        <i class="fa cm-right"
+           data-qa="btn-codeVerifyPhoneNumber"
+           ng-click="checkVerificationCode()"
+           ng-show="!showLoader"
+           cm-reactive></i>
+        <cm-loader cm-color="inp-grey" cm-size="small" ng-show="showLoader"></cm-loader>
+    </div>
+
+    <cm-info-bubble ng-show="cmUtil.objLen(infoBubble) > 0">
+        <div data-qa="info-emailVerficationCodeEmpty" ng-show="infoBubble.empty">
+            <i class="fa cm-attention cm-orange"></i>
+            <span ng-bind-html="::'DRTV.VALIDATE_EMAIL.INFO.EMPTY_CODE'|cmTranslate"></span>
+        </div>
+        <div data-qa="info-emailNotVerified" ng-show="infoBubble.invalid">
+            <i class="fa cm-attention cm-orange"></i>
+            <span ng-bind-html="::'DRTV.VALIDATE_EMAIL.INFO.INVALID_CODE'|cmTranslate"></span>
+        </div>
     </cm-info-bubble>
 </article>
