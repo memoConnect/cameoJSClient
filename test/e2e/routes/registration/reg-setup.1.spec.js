@@ -1,5 +1,5 @@
-var config = require("../config/specs.js")
-var util = require("../../lib/e2e/cmTestUtil.js")
+var config = require("../../config/specs.js")
+var util = require("../../../lib/e2e/cmTestUtil.js")
 
 describe('Registration-Setup : ', function () {
     var ptor = util.getPtorInstance()
