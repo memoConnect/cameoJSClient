@@ -24,7 +24,7 @@ describe('Route Settings Account Verification: ', function(){
         }, 5000, 'unable to getVerificationSecret')
     }
 
-    function createDescribesAndItsForVerification(type,value,extraValue){
+    function createDescribesAndItsForVerification(type, value, extraValue){
         describe('automatic', function(){
 
             it('save '+type+' and check if info bubble appear', function(){
@@ -77,6 +77,9 @@ describe('Route Settings Account Verification: ', function(){
 
                 util.click('btn-saveAccount')
                 util.waitForLoader(1,'cm-footer')
+
+                // clear secret
+                getVerificationSecret()
 
                 util.click('btn-'+type+'ManuallyVerification')
                 // get secret
@@ -134,7 +137,7 @@ describe('Route Settings Account Verification: ', function(){
             createDescribesAndItsForVerification('phoneNumber',phoneNumber,'4')
         })
 
-        xdescribe('verification email', function(){
+        describe('verification email', function(){
             createDescribesAndItsForVerification('email',email,'c')
         })
 

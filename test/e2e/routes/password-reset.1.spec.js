@@ -64,26 +64,18 @@ describe('Route Password Lost/Reset:', function(){
             util.setVal('input-phoneNumber',phoneNumber)
 
             util.click('btn-saveAccount')
-            // clear
+            // get secret
             getVerificationSecret()
         })
 
-        it('start manually verification', function(){
-            util.click('btn-manuallyPhoneNumberVerification')
-            // get manually generated secret
-            getVerificationSecret()
-        })
+        it('verify phoneNumber', function(){
+            util.setVal('inp-phoneNumberCodeVerify',verifySecret,true)
+            util.sendEnter('inp-phoneNumberCodeVerify')
+            util.waitForLoader(1,'.phoneNumberVerification')
 
-        it('do verfication', function(){
-            expect(typeof verifySecret).not.toBe('undefined')
-
-            util.setVal('inp-verifySecret',verifySecret)
-            util.click('btn-confirmVerification')
-
-            util.waitForLoader(1,'cm-modal')
-            util.waitForModalClose()
-
-            expect($("[data-qa='btn-manuallyPhoneNumberVerification']").getAttribute('class')).toContain('cm-checkbox-right')
+            // phone info bubble for verification is appear
+            expect($("[data-qa='btn-phoneNumberManuallyVerification']").getAttribute('class')).toContain('cm-checkbox-right')
+            util.checkWarning('info-phoneNumberNotVerified',true)
 
             util.logout()
         })

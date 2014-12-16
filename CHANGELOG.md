@@ -1,4 +1,14 @@
 ## Dev
+# WW 16.12.2014
+* update password reset with code input
+** after succeed identification form change to code input
+** password/reset landing page checks onload if resetId is expired
+* update verification on phoneNumber and email
+** removed modal
+** added code input under not verified bubble
+* new cm-loader size cm-size="small" for inside a input
+* fixxed long subject in conversation
+
 # WW 12.12.2014
 * new config.xml handling for phonegap
 ** local building leads www/res/.. at path to resources
