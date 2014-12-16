@@ -19,7 +19,7 @@ describe('Route Password Lost/Reset:', function(){
 
         ptor.wait(function () {
             return util.getTestUserNotifications(testUser).then(function (response) {
-                if(response['data'].length > 0 && 'content' in response['data'][0])
+                if(response['data'].length > 0 && 'contents' in response['data'][0])
                     verifySecret = response['data'][0]['content'].split('"')[1]
 
                 return verifySecret != undefined
