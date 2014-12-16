@@ -44,12 +44,6 @@ angular.module('cmConfig',[])
                     guests: false,
                     routes: ['/start/quickstart']
                 },
-                'start-keyinfo': {
-                    guests: false,
-                    hasCtrl: true,
-                    routes: ['/start/keyinfo'],
-                    resolveUserModel: true
-                },
                 'login': {
                     isDefault: true,
                     css: 'no-header no-footer',
@@ -256,6 +250,12 @@ angular.module('cmConfig',[])
                 'setup-identity':{
                     routes: ['/setup/identity'],
                     guests: false
+                },
+                'setup-keyinfo': {
+                    guests: false,
+                    hasCtrl: true,
+                    routes: ['/setup/keyinfo'],
+                    resolveUserModel: true
                 }
             },
 
