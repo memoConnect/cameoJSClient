@@ -665,7 +665,7 @@
                 "PHONENUMBER": "@:DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER",
                 "OLD_PASSWORD": "Das von Ihnen eingegebene Passwort ist ungültig."
             },
-            "NOTE_ABOUT_THIS_DATA": "Hier können Sie die Daten ihres Benutzerkontos ändern. Dies betrifft insbesondere Ihre Zugansdaten, mit denen Sie sich anmelden.<br>Ihre Benutzerdaten sind für andere Nutzer nicht sichtbar - im Gegensatz zu den Daten Ihrer Identitäten. Die Telefonnummer oder E-Mail-Adresse wird nur zur Passwortrücksetzung verwendet und auf Wunsch für Benachrichtigungen, wenn Sie abgemeldet sind.",
+            "NOTE_ABOUT_THIS_DATA": "Hier können Sie die Daten ihres Benutzerkontos ändern. Dies betrifft insbesondere Ihre Zugansdaten, mit denen Sie sich anmelden.\nIhre Benutzerdaten sind für andere Nutzer nicht sichtbar - im Gegensatz zu den Daten Ihrer Identitäten. Die Telefonnummer oder E-Mail-Adresse wird nur zur Passwortrücksetzung verwendet und auf Wunsch für Benachrichtigungen, wenn Sie abgemeldet sind.",
             "LOGINAME": "Der Loginname kann nicht geändert werden."
         },
         "FOOTER": {

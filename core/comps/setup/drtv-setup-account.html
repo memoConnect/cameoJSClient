@@ -1,6 +1,7 @@
 <article class="content">
     <cm-info-bubble class="cm-alert">
-        <i class="fa cm-info cm-ci-color"></i> {{'ACCOUNT.INFO.NOTE_ABOUT_THIS_DATA'|cmTranslate}}
+        <i class="fa cm-info cm-ci-color"></i>
+        <span ng-bind-html="'ACCOUNT.INFO.NOTE_ABOUT_THIS_DATA'|cmParse"></span>
     </cm-info-bubble>
 </article>
 
