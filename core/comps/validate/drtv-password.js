@@ -47,8 +47,10 @@ angular.module('cmValidate').directive('cmPassword', [
                     } else {
                         $scope.showPassword = true;
                         $scope.passwordType = 'text';
-                        $scope.copyPW();
                     }
+
+                    $scope.copyPW();
+                    $scope.confirmPW();
                 };
 
                 $scope.checkPWStrength = function(){
@@ -96,7 +98,7 @@ angular.module('cmValidate').directive('cmPassword', [
                         return false;
                     }
 
-                    if($scope.pw == $scope.pwConfirm){
+                    if(($scope.pw == $scope.pwConfirm) || $scope.showPassword){
                         $scope.showConfirmPWStatus = true;
                         $scope.showPasswordEmptyError = false;
                         setPassword(cmCrypt.hash($scope.pw));
@@ -107,9 +109,7 @@ angular.module('cmValidate').directive('cmPassword', [
                 };
 
                 $scope.copyPW = function(){
-                    if($scope.showPassword){
-                        $scope.pwConfirm = $scope.pw;
-                    }
+                    $scope.pwConfirm = $scope.pw;
                 };
 
                 /**
