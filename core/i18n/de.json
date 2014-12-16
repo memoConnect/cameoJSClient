@@ -47,13 +47,18 @@
             "PHONENUMBER_NOT_FOUND": "Die Telefonnummer kann nicht gefunden werden.",
             "EMAIL_NOT_FOUND": "Die E-Mail-Adresse kann nicht gefunden werden.",
             "NO_EMAIL_PHONENUMBER": "Bitte korrigieren Sie ihre Eingabe.",
-            "CONFIRMATION_SENDED": "Wir haben Ihnen eine Nachricht gesendet. Darin finden Sie einen Link zur Passwortrücksetzung. Klicken Sie darauf und folgen Sie den Anweisungen."
+            "CONFIRMATION_SENDED": "@todo Wir haben Ihnen eine Nachricht gesendet. Darin finden Sie einen Code den Sie hier eingeben können oder einen Link der Sie direkt zur Passwortrücksetzung weiterleitet.",
+            "EMPTY_CODE": "@todo Bitte geben Sie einen Code ein",
+            "EXPIRED": "@:PASSWORD_RESET.INFO.EXPIRED"
         },
         "PLACEHOLDER": {
-            "MIXED": "Benutzername, cameoID, E-Mail-Adresse oder Telefonnummer"
+            "MIXED": "Benutzername, cameoID, E-Mail-Adresse oder Telefonnummer",
+            "RESET_CODE": "@todo Code aus der empfangenen Nachricht"
         },
         "LABEL": {
-            "SUBMIT": "Passwortrücksetzung anfordern"
+            "SUBMIT": "Passwortrücksetzung anfordern",
+            "RESET": "@todo Abbrechen",
+            "SUBMIT_CODE": "@todo Code überprüfen"
         }
     },
 
@@ -189,7 +194,7 @@
 
     "CONVERSATION": {
         "NO_SUBJECT": "Kein Betreff",
-        "HEADING": "Talk",
+        "HEADING": "neuer Talk",
         "LABEL": {
             "LOAD_PREVIOUS":"vorherige Nachrichten laden",
             "SEND": "Abschicken",
@@ -684,34 +689,28 @@
                 "EMPTY": "Bitte ein Passwort eingeben und bestätigen!"
             }
         },
-        "MODAL_VERIFICATION": {
-            "HEADER": "Verifizierung",
-            "TEXT": "cameoNet hat Ihnen soeben eine Nachricht zugeschickt. In der Nachricht finden Sie einen Vefizierungs-Code, den Sie hier eingeben können. <br> Alternativ können Sie die Verifizierung über den in der Nachricht enthaltenen Link abschließen.",
-            "LABEL": {
-                "CANCEL": "@:MODAL.LABEL.CANCEL",
-                "CONFIRM": "Verifizierung bestätigen"
-            },
+        "VALIDATE_PHONE": {
+            "LABEL": "Mobilfunknummer",
+            "PLACEHOLDER": "Mobilfunknummer",
+            "LABEL_VERIFICATION_CODE": "@todo Verfikationscode",
             "INFO": {
-                "EMPTY": "Bitte tragen Sie hier den Code ein, der Ihnen in der Verifizierungs-E-Mail mitgeteilt wurde.",
-                "INVALID": "Der Code den Sie eingegeben haben ist falsch oder abgelaufen."
+                "INVALID_PHONE_NUMBER": "Die Nummer scheint keine gültige Mobilfunknummer zu sein.",
+                "EMPTY": "Sie haben keine Mobilfunknummer eingegeben.",
+                "ISNT_VERIFIED": "@todo Diese Telefonnummer ist noch nicht verifiziert.\nIhnen wurde eine SMS zugeschickt. Diese beinhaltet einen Verfikationscode den Sie hier eingeben können oder Sie klicken auf den Link in der SMS. Haben Sie keine SMS bekommen, klicken Sie auf das {{icon}}-Icon um eine neue SMS zugenerieren.",
+                "EMPTY_CODE": "Bitte tragen Sie hier den Code ein, der Ihnen in der Verifizierungs-SMS mitgeteilt wurde.",
+                "INVALID_CODE": "Der Code den Sie eingegeben haben ist falsch oder abgelaufen."
             }
         },
         "VALIDATE_EMAIL": {
             "LABEL": "E-Mail",
             "PLACEHOLDER": "E-Mail",
+            "LABEL_VERIFICATION_CODE": "@todo Verfikationscode",
             "INFO": {
                 "INVALID": "Bitte geben Sie eine korrekte E-Mail-Adresse ein!",
                 "EMPTY": "Sie haben keine E-Mail-Adresse eingegeben.",
-                "ISNT_VERIFIED": "Diese E-Mail-Adresse ist noch nicht verifiziert. Klicken Sie auf das {{icon}}-Icon um eine E-Mail an diese Adresse zu senden. Diese E-Mail enthält einen Link und einen Code, über den Sie die Verifizierung abschließen können."
-            }
-        },
-        "VALIDATE_PHONE": {
-            "LABEL": "Mobilfunknummer",
-            "PLACEHOLDER": "Mobilfunknummer",
-            "INFO": {
-                "INVALID_PHONE_NUMBER": "Die Nummer scheint keine gültige Mobilfunknummer zu sein.",
-                "EMPTY": "Sie haben keine Mobilfunknummer eingegeben.",
-                "ISNT_VERIFIED": "Diese Telefonnummer ist noch nicht verifiziert. Klicken Sie auf das {{icon}}-Icon um eine SMS an diese Telefonnummer zu senden. Diese SMS enthält einen Link und einen Code, über den Sie die Verifizierung abschließen können."
+                "ISNT_VERIFIED": "@todo Diese E-Mail-Adresse ist noch nicht verifiziert.\nIhnen wurde eine E-Mail zugeschickt. Diese beinhaltet einen Verfikationscode den Sie hier eingeben können oder Sie klicken auf den Link in der E-Mail. Haben Sie keine E-Mail bekommen, klicken Sie auf das {{icon}}-Icon um eine neue E-Mail zugenerieren.",
+                "EMPTY_CODE": "Bitte tragen Sie hier den Code ein, der Ihnen in der Verifizierungs-E-Mail mitgeteilt wurde.",
+                "INVALID_CODE": "Der Code den Sie eingegeben haben ist falsch oder abgelaufen."
             }
         },
         "VALIDATE_MIXED": {
