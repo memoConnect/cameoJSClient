@@ -19,12 +19,12 @@ describe('Message signing -', function () {
 
             it("create test user 1", function () {
                 util.createTestUser(testUserId1)
-                util.generateKey(1)
+                util.generateKey(7)
             })
 
             it("create test user 2, generate key and send friend request", function () {
                 util.createTestUser(testUserId2)
-                util.generateKey(2)
+                util.generateKey(8)
                 util.sendFriendRequest(testUser1)
             })
 
@@ -69,7 +69,6 @@ describe('Message signing -', function () {
                 .then(function(){
                     return util.getConversation(subject)
                 })
-
 
                 // get conversation Id
                 ptor.wait(function () {
