@@ -92,7 +92,7 @@
             },
             "INVALID_EMAIL": "@:DRTV.VALIDATE_EMAIL.INFO.INVALID",
             "INVALID_PHONENUMBER": "@:DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER",
-            "LOGIN_INFORMATION": "Hier legen Sie Ihre Zugangsdaten fest, mit denen Sie sich anschließend im cameoNet anmelden können.<br/><br/>Der Nutzername wird automatisch zu Ihrer (ersten) cameoID, über die andere Nutzer Sie im cameoNet finden können.",
+            "LOGIN_INFORMATION": "@todo Hier legen Sie Ihre Zugangsdaten fest, mit denen Sie sich anschließend im cameoNet anmelden können.<br/><br/>Der Nutzername wird automatisch zu Ihrer (ersten) cameoID, über die andere Nutzer Sie im cameoNet finden können.",
             "USER_INFORMATION": "Die folgenden Felder sind optional:<br/><br/>Wenn Sie einen Anzeigenamen eingeben, wird Ihre Identität überall im cameoNet mit diesem Namen angezeigt. Er muss nicht eindeutig sein. Andere Nutzer können Sie im cameoNet auch über Ihren Anzeigenamen finden.<br/><br/>Wenn Sie eine E-Mail-Adresse und/oder eine Mobilfunknummer eingeben, können Sie sich über neue Nachrichten und Kontaktanfragen informieren lassen und bei Bedarf Ihr Passwort zurücksetzen. Diese Daten sind für andere Nutzer nicht sichtbar und werden nicht in Ihre Identität übertragen."
         },
         "TITLE": {

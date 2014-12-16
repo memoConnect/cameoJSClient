@@ -50,7 +50,7 @@ describe('Multi Identity: ', function () {
 
         util.click('btn-identity-create')
 
-        util.waitForPageLoad('/start/keyinfo')
+        util.waitForPageLoad('/setup/keyinfo')
 
         util.get('/talks')
 
@@ -82,7 +82,7 @@ describe('Multi Identity: ', function () {
 
         $("li[data-qa='identity-list-item']:not(.isActive)").click()
 
-        util.waitForPageLoad('/start')
+        util.waitForPageLoad('/setup')
         
         util.get('/talks')
         util.expectCurrentUrl('/talks')

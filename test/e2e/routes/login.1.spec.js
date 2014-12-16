@@ -58,7 +58,7 @@ describe('login screen', function () {
 
         $("[data-qa='login-submit-btn']").click();
 
-        util.waitForPageLoad("/start")
+        util.waitForPageLoad("/setup")
     })
 
     it('dont show login page when already logged in', function () {

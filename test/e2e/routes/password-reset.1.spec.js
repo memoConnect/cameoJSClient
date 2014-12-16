@@ -12,8 +12,7 @@ describe('Route Password Lost/Reset:', function(){
         password = 'passwordNew',
         resetId,
         resetIdExpired = 'lx8J3P1hJqA5jcy',
-        verifySecret,
-        moep
+        verifySecret
 
     function getVerificationSecret() {
         verifySecret = undefined
@@ -99,32 +98,28 @@ describe('Route Password Lost/Reset:', function(){
             util.click('btn-resetPassword')
             util.checkWarning('info-identifierEmpty')
 
-            ptor.sleep(25)
-
             // check loginname info
             util.setVal('inp-passwordLost','moep')
-            util.sendEnter('inp-passwordLost')
+            //util.sendEnter('inp-passwordLost')
+            util.click('btn-resetPassword')
             util.checkWarning('info-loginNotFound')
-
-            ptor.sleep(25)
 
             // phonenumber
             util.setVal('inp-passwordLost','+49123456789',true)
-            util.sendEnter('inp-passwordLost')
+            //util.sendEnter('inp-passwordLost')
+            util.click('btn-resetPassword')
             util.checkWarning('info-phoneNumberNotFound')
-
-            ptor.sleep(25)
 
             // email
             util.setVal('inp-passwordLost','moep@cameo.ioio',true)
-            util.sendEnter('inp-passwordLost')
+            //util.sendEnter('inp-passwordLost')
+            util.click('btn-resetPassword')
             util.checkWarning('info-emailNotFound')
-
-            ptor.sleep(25)
 
             // identitify with loginName
             util.setVal('inp-passwordLost',testUser,true)
-            util.sendEnter('inp-passwordLost')
+            //util.sendEnter('inp-passwordLost')
+            util.click('btn-resetPassword')
             util.checkWarning('info-confirmationSended')
 
             getResetId()
@@ -163,7 +158,7 @@ describe('Route Password Lost/Reset:', function(){
         })
 
         it('login with new password', function(){
-            util.login(testUser, password, '/start/keyinfo')
+            util.login(testUser, password, '/setup/keyinfo')
         })
 
         it('delete test user', function(){

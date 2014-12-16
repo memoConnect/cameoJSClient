@@ -671,7 +671,7 @@
       "HEAD_LOGIN": "Login information"
     },
     "INFO": {
-      "LOGIN_INFORMATION": "Here you will define your account data that you use for the login at cameoNet.<br/><br/>The choosen user name will become your (first) cameoID automatically. The cameoID can be find by other users to connect with you.",
+      "LOGIN_INFORMATION": "@todo Here you will define your account data that you use for the login at cameoNet.<br/><br/>The choosen user name will become your (first) cameoID automatically. The cameoID can be find by other users to connect with you.",
       "EMPTY": {
         "PASSWORD": "Please enter a password."
       },

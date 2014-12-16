@@ -238,7 +238,7 @@ describe('Route: Purl - ', function () {
             util.logout();
 
             util.login(config.loginUser2, config.passwordUser2);
-            util.expectCurrentUrl("#/start/keyinfo")
+            util.expectCurrentUrl("#/setup/keyinfo")
 
             // TODO: async trust checks
             ptor.sleep(5000)

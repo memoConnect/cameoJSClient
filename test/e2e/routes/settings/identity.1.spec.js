@@ -1,7 +1,7 @@
 var config = require("../../config/specs.js")
 var util = require("../../../lib/e2e/cmTestUtil.js")
 
-describe('Route Settings Identity: ', function(){
+describe('Route Identity Settings: ', function(){
     var ptor = util.getPtorInstance()
 
     var newTestUser = ""
@@ -88,7 +88,7 @@ describe('Route Settings Identity: ', function(){
     describe('Test 3 - check Data after logout and login', function(){
         it('should be load at "#/settings/identity/edit" after login.', function(){
             util.login(newTestUser, password)
-            util.expectCurrentUrl('#/start')
+            util.expectCurrentUrl('/setup')
 
             util.get('/settings/identity/edit')
             util.expectCurrentUrl('#/settings/identity/edit')
@@ -123,7 +123,7 @@ describe('Route Settings Identity: ', function(){
     describe('Test4 - Form Errors on wrong Input', function(){
         it('should be load at "#/settings/identity" after login.', function(){
             util.login()
-            util.expectCurrentUrl('#/start')
+            util.expectCurrentUrl('#/setup')
 
             util.get('/settings/identity/edit')
             util.expectCurrentUrl('#/settings/identity/edit')
