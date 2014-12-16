@@ -22,8 +22,11 @@ angular.module('cmValidate').service('cmVerify',[
                     if(data && data.value != '') {
                         scope.verification.isVisible = true;
                         scope.verification.isVerified = 'isVerified' in data ? data.isVerified : false;
-                    } else
+                        loader.stop();
+                        scope.code = '';
+                    } else {
                         scope.verification.isVisible = false;
+                    }
                 });
 
                 scope.sendVerification = function(){
@@ -48,9 +51,7 @@ angular.module('cmValidate').service('cmVerify',[
                     } else {
                         cmAuth.confirmVerification(scope.code)
                         .then(
-                            function(){
-                                // backend event should close cm-info-bubble
-                            },
+                            function(){},
                             function(response){
                                 loader.stop();
                                 switch (response.data.errorCode){
