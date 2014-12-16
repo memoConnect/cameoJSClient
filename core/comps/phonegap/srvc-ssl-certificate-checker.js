@@ -66,9 +66,13 @@ angular.module('cmPhonegap')
                     cmLogger.error('cmSslCertificateChecker insecure '+message);
                     switch(true){
                         case message == 'CONNECTION_NOT_SECURE':
-                        case message.indexOf('CONNECTION_FAILED') >= 0:
                         case message == 'NO_CREDENTIALS':
                             $rootScope.$broadcast('cmConnectionHandler:notSecure',function(){
+                                self.control();
+                            });
+                        break;
+                        case message.indexOf('CONNECTION_FAILED') >= 0:
+                            $rootScope.$broadcast('cmConnectionHandler:failed',function(){
                                 self.control();
                             });
                         break;

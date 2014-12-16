@@ -178,8 +178,11 @@
       "INFO": {
         "INVALID_PHONE_NUMBER": "The entered value does not seem to be a vaild mobile number.",
         "EMPTY": "You have not entered a valid mobile number",
-        "ISNT_VERIFIED":  "This phone number has not been verified yet. Please click on the {{icon}}-Icon to send a text message to this phone number. This text message will contain a link and a code needed to finalize the verification."
+        "ISNT_VERIFIED":  "This phone number has not been verified yet. Please click on the {{icon}}-Icon to send a text message to this phone number. This text message will contain a link and a code needed to finalize the verification.",
+        "EMPTY_CODE": "Please enter the code from the verification sms.",
+        "INVALID_CODE": "The code you have entered is wrong or has expired."
       },
+      "LABEL_VERIFICATION_CODE": "@todo Verficationscode",
       "PLACEHOLDER": "Mobile number",
       "LABEL": "Mobile number"
     },
@@ -203,8 +206,11 @@
       "INFO": {
         "INVALID": "Please enter a correct e-mail.",
         "EMPTY": "You have not entered an e-mail.",
-        "ISNT_VERIFIED": "This e-mail adress has not been verified yet. Please click on the {{icon}}-Icon to send an e-mail to this e-mail adress. This e-mail will contain a link and a code needed to finalize the verification."
+        "ISNT_VERIFIED": "This e-mail address has not been verified yet. Please click on the {{icon}}-Icon to send an e-mail to this e-mail address. This e-mail will contain a link and a code needed to finalize the verification.",
+        "EMPTY_CODE": "Please enter the code from the verification e-mail.",
+        "INVALID_CODE": "The code you have entered is wrong or has expired."
       },
+      "LABEL_VERIFICATION_CODE": "@todo Verficationscode",
       "PLACEHOLDER": "e-mail",
       "LABEL": "e-mail"
     },
@@ -258,18 +264,6 @@
         },
         "MIN_LETTER_COUNT": "Please use at least {{count}} characters.",
         "MAX_LETTER_COUNT": "Please use a maximum of {{count}} characters."
-      }
-    },
-    "MODAL_VERIFICATION": {
-      "HEADER": "Verification",
-      "TEXT": "cameoNet has sent you a message. The message contains a verification code. Please enter this code her.",
-      "LABEL": {
-        "CANCEL": "@:MODAL.LABEL.CANCEL",
-        "CONFIRM": "Confirm verification"
-      },
-      "INFO": {
-        "EMPTY": "Please enter the code from the verification e-mail.",
-        "INVALID": "The code you have entered is wrong or has expired."
       }
     }
   },
@@ -486,19 +480,24 @@
   "PASSWORD_LOST": {
     "HEADING": "Reset password",
     "INFO": {
-      "TITLE_TEXT": "You can reset your password here if you have added and verified an e-mail adress or phone number to your account.<br> To identify yourself please enter either your username or cameoID or e-mail adress or phone number. You will then receive a message containing the link to reset your password.",
-      "EMPTY": "Please enter an identification (username, cameoID, e-mail adress or phone number).",
+      "TITLE_TEXT": "You can reset your password here if you have added and verified an e-mail address or phone number to your account.<br> To identify yourself please enter either your username or cameoID or e-mail address or phone number. You will then receive a message containing the link to reset your password.",
+      "EMPTY": "Please enter an identification (username, cameoID, e-mail address or phone number).",
       "LOGIN_NOT_FOUND": "Username could not be found.",
       "PHONENUMBER_NOT_FOUND": "Phone number could not be found.",
       "EMAIL_NOT_FOUND": "e-mail address could not be found.",
       "NO_EMAIL_PHONENUMBER": "Please verify your entries.",
-      "CONFIRMATION_SENDED": "We have sent you a message. This contains a link to reset your password. Please click it and follow the instructions."
+      "CONFIRMATION_SENDED": "@todo We have sent you a message. This contains a code taht you can insert here and a link that redirect you to the reset password.",
+      "EMPTY_CODE": "@todo Please enter a code",
+      "EXPIRED": "@:PASSWORD_RESET.INFO.EXPIRED"
     },
     "PLACEHOLDER": {
-      "MIXED": "Username, cameoID, e-mail address or phone number"
+      "MIXED": "Username, cameoID, e-mail address or phone number",
+      "RESET_CODE": "@todo Code out of the message"
     },
     "LABEL": {
-      "SUBMIT": "Request password reset"
+      "SUBMIT": "Request password reset",
+      "RESET": "@todo Cancel",
+      "SUBMIT_CODE": "@todo Check code"
     }
   },
   "PASSWORD_RESET": {
@@ -751,7 +750,7 @@
       "ENCRYPTED": "- encrypted -",
       "REQUEST_CAPTCHA": "Please send a (new) passCaptcha."
     },
-    "HEADING": "Talk",
+    "HEADING": "new Talk",
     "NO_SUBJECT": "no subject"
   },
   "JOB": {
