@@ -17,6 +17,42 @@ angular.module('cmSetup')
 
                     $scope.identity = cmUserModel.data.identity;
 
+                    /**
+                     * Toogle HeadlineInfo
+                     */
+                    $scope.showHeadlineInfo = false;
+                    $scope.toggleHeadlineInfo = function() {
+                        $scope.showHeadlineInfo = !$scope.showHeadlineInfo ? true : false;
+                    };
+                    /**
+                     * Toogle CameoIdInfo
+                     */
+                    $scope.showCameoIdInfo = false;
+                    $scope.toggleCameoIdInfo = function() {
+                        $scope.showCameoIdInfo = !$scope.showCameoIdInfo ? true : false;
+                    };
+                    /**
+                     * Toogle DisplayNameInfo
+                     */
+                    $scope.showDisplayNameInfo = false;
+                    $scope.toggleDisplayNameInfo = function() {
+                        $scope.showDisplayNameInfo = !$scope.showDisplayNameInfo ? true : false;
+                    };
+                    /**
+                     * Toogle PhoneInfo
+                     */
+                    $scope.showPhoneInfo = false;
+                    $scope.togglePhoneInfo = function() {
+                        $scope.showPhoneInfo = !$scope.showPhoneInfo ? true : false;
+                    };
+                    /**
+                     * Toogle EmailInfo
+                     */
+                    $scope.showEmailInfo = false;
+                    $scope.toggleEmailInfo = function() {
+                        $scope.showEmailInfo = !$scope.showEmailInfo ? true : false;
+                    };
+
                     function reset(){
                         $scope.formData = {
                             displayName: $scope.identity.displayName,

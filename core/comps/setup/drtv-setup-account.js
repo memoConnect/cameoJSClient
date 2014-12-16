@@ -12,6 +12,28 @@ angular.module('cmSetup')
 
                     $scope.account = cmUserModel.data.account;
 
+                    /**
+                     * Toogle HeadlineInfo
+                     */
+                    $scope.showHeadlineInfo = false;
+                    $scope.toggleHeadlineInfo = function() {
+                        $scope.showHeadlineInfo = !$scope.showHeadlineInfo ? true : false;
+                    };
+                    /**
+                     * Toogle PhoneInfo
+                     */
+                    $scope.showPhoneInfo = false;
+                    $scope.togglePhoneInfo = function() {
+                        $scope.showPhoneInfo = !$scope.showPhoneInfo ? true : false;
+                    };
+                    /**
+                     * Toogle EmailInfo
+                     */
+                    $scope.showEmailInfo = false;
+                    $scope.toggleEmailInfo = function() {
+                        $scope.showEmailInfo = !$scope.showEmailInfo ? true : false;
+                    };
+
                     $scope.formData = {
                         phoneNumber: '',
                         email: ''

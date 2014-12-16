@@ -1,5 +1,18 @@
 <cm-scrollable>
 
+<article class="content" ng-click="toggleHeadlineInfo()">
+    <cm-info-bubble class="cm-alert">
+        <div ng-show="!showHeadlineInfo">
+            <i class="fa cm-info cm-orange"></i> {{'IDENTITY.INFO.CREATE.HEADLINE_SMALL'|cmTranslate}}
+        </div>
+        <div ng-show="showHeadlineInfo">
+            <i class="fa cm-info cm-ci-color"></i> {{'IDENTITY.INFO.CREATE.HEADLINE'|cmTranslate}}
+        </div>
+    </cm-info-bubble>
+</article>
+
+<hr class="margin-small" />
+
 <form name="cmForm" novalidate autocomplete="off">
 
     <article class="content">
@@ -24,9 +37,14 @@
         </div>
     </article>
 
-    <article class="content">
+    <article class="content" ng-click="toggleCameoIdInfo()">
         <cm-info-bubble>
-            <i class="fa cm-info cm-ci-color"></i> {{'IDENTITY.INFO.CREATE.CAMEOID'|cmTranslate}}
+            <div ng-show="!showCameoIdInfo">
+                <i class="fa cm-info cm-orange"></i> {{'IDENTITY.INFO.CREATE.CAMEOID_SMALL'|cmTranslate}}
+            </div>
+            <div ng-show="showCameoIdInfo">
+                <i class="fa cm-info cm-ci-color"></i> {{'IDENTITY.INFO.CREATE.CAMEOID'|cmTranslate}}
+            </div>
         </cm-info-bubble>
     </article>
 
@@ -54,9 +72,14 @@
         </cm-info-bubble>
     </article>
 
-    <article class="content">
+    <article class="content" ng-click="toggleDisplayNameInfo()">
         <cm-info-bubble>
-            <i class="fa cm-info cm-ci-color"></i> {{'IDENTITY.INFO.CREATE.DISPLAYNAME'|cmTranslate}}
+            <div ng-show="!showDisplayNameInfo">
+                <i class="fa cm-info cm-orange"></i> {{'IDENTITY.INFO.CREATE.DISPLAYNAME_SMALL'|cmTranslate}}
+            </div>
+            <div ng-show="showDisplayNameInfo">
+                <i class="fa cm-info cm-ci-color"></i> {{'IDENTITY.INFO.CREATE.DISPLAYNAME'|cmTranslate}}
+            </div>
         </cm-info-bubble>
     </article>
 
@@ -69,9 +92,14 @@
         cm-info="SETTINGS.PAGES.IDENTITY.CREATE.INFO.INVALID.PHONENUMBER"
     ></cm-form-phonenumber>
 
-    <article class="content">
+    <article class="content" ng-click="togglePhoneInfo()">
         <cm-info-bubble>
-            <i class="fa cm-info cm-ci-color"></i> {{'IDENTITY.INFO.CREATE.PHONE'|cmTranslate}}
+            <div ng-show="!showPhoneInfo">
+                <i class="fa cm-info cm-orange"></i> {{'IDENTITY.INFO.CREATE.PHONE_SMALL'|cmTranslate}}
+            </div>
+            <div ng-show="showPhoneInfo">
+                <i class="fa cm-info cm-ci-color"></i> {{'IDENTITY.INFO.CREATE.PHONE'|cmTranslate}}
+            </div>
         </cm-info-bubble>
     </article>
 
@@ -84,9 +112,14 @@
         cm-info="SETTINGS.PAGES.IDENTITY.CREATE.INFO.INVALID.EMAIL"
     ></cm-form-email>
 
-    <article class="content">
+    <article class="content" ng-click="toggleEmailInfo()">
         <cm-info-bubble>
-            <i class="fa cm-info cm-ci-color"></i> {{'IDENTITY.INFO.CREATE.EMAIL'|cmTranslate}}
+            <div ng-show="!showEmailInfo">
+                <i class="fa cm-info cm-orange"></i> {{'IDENTITY.INFO.CREATE.EMAIL_SMALL'|cmTranslate}}
+            </div>
+            <div ng-show="showEmailInfo">
+                <i class="fa cm-info cm-ci-color"></i> {{'IDENTITY.INFO.CREATE.EMAIL'|cmTranslate}}
+            </div>
         </cm-info-bubble>
     </article>
 </form>
