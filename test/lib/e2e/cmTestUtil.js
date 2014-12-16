@@ -494,6 +494,7 @@ this.checkWarning = function (qaValue, shouldBeHidden) {
     if(shouldBeHidden){
         expect(warn.isDisplayed()).toBeFalsy()
     } else {
+        self.waitForQa(qaValue)
         expect(warn.isDisplayed()).toBeTruthy()
 
         warn.getText().then(function (text) {
