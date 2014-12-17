@@ -6,7 +6,7 @@ describe('invalid route', function () {
 
     it("should go to login route", function() {
         util.logout()
-        util.get("/foo")
+        util.get('/foo')
         util.expectCurrentUrl('#/login$')
     })
 })

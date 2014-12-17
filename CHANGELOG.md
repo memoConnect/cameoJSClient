@@ -1,27 +1,42 @@
 ## Dev
+# WW 17.12.2014
+* better detection for wrong route
+    * no token
+        * /talks & / goto /login
+    * all routes with guests true are visible
+    * with token
+        * /login & / goto /talks
+        * all routes with guests false are invisible
+* reset password routes
+    * /lost , /code & /reset
+    * /lost start a password reset
+    * /code handles the code from message
+    * /reset handles the new password
+
 # WW 16.12.2014
 * update password reset with code input
-** after succeed identification form change to code input
-** password/reset landing page checks onload if resetId is expired
+    * after succeed identification form change to code input
+    * password/reset landing page checks onload if resetId is expired
 * update verification on phoneNumber and email
-** removed modal
-** added code input under not verified bubble
+    * removed modal
+    * added code input under not verified bubble
 * new cm-loader size cm-size="small" for inside a input
 * fixxed long subject in conversation
+* ssl checker if offline shows offline modal instead of not trusted connection
 
 # WW 12.12.2014
 * new config.xml handling for phonegap
-** local building leads www/res/.. at path to resources
-** build.phonegap building needs res/.. at path to resources
-** new config with plugins and resoures for phonegap config/cameoConfig-phonegap.json
+    * local building leads www/res/.. at path to resources
+    * build.phonegap building needs res/.. at path to resources
+    * new config with plugins and resoures for phonegap config/cameoConfig-phonegap.json
 
 # WW 11.12.2014
 * trusted contacts
-** in contact list, detail and recipients
-** oo = check trust
-** oo! = no key and untrusted
-** xo! = has key but untrusted
-** xx = trusted connection between two contacts
+    * in contact list, detail and recipients
+    * oo = check trust
+    * oo! = no key and untrusted
+    * xo! = has key but untrusted
+    * xx = trusted connection between two contacts
 * unit test command line -specs option available
 * fix icons for anrdoid devices lower then kitkat < 4.4
 

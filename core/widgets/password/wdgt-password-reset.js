@@ -20,6 +20,7 @@ angular.module('cmWidgets').directive('cmWidgetPasswordReset', [
                 $scope.formData = {
                     password: ''
                 };
+
                 $scope.link = '<a href="#/password/lost">{{\'PASSWORD_RESET.LABEL.LINK_GOTO_PASSWORD_LOST\'|cmTranslate}}</a>';
 
                 cmAuth.checkResetPassword($scope.resetId).then(

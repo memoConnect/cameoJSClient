@@ -62,7 +62,9 @@ describe('login screen', function () {
     })
 
     it('dont show login page when already logged in', function () {
-        util.get("");
+        util.get('');
         util.expectCurrentUrl('#/talks')
+
+        util.logout()
     })
 })

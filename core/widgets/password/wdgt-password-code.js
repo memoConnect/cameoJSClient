@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('cmWidgets').directive('cmWidgetPasswordLost', [
+angular.module('cmWidgets').directive('cmWidgetPasswordCode', [
     'cmAuth', 'cmLoader', 'cmUtil',
     '$rootScope', '$q',
     function (cmAuth, cmLoader, cmUtil,
@@ -8,17 +8,19 @@ angular.module('cmWidgets').directive('cmWidgetPasswordLost', [
         return {
             restrict: 'E',
             scope: true,
-            templateUrl: 'widgets/password/wdgt-password-lost.html',
+            templateUrl: 'widgets/password/wdgt-password-code.html',
 
             controller: function ($scope) {
                 var loader = new cmLoader($scope);
 
                 $scope.cmUtil = cmUtil;
 
+                $scope.link = '<a href="#/password/lost">{{\'PASSWORD_RESET.LABEL.LINK_GOTO_PASSWORD_LOST\'|cmTranslate}}</a>';
+
                 function reset(){
                     $scope.info = {};
                     $scope.formData = {
-                        identifier: ''
+                        code: ''
                     };
                 }
 
@@ -28,14 +30,14 @@ angular.module('cmWidgets').directive('cmWidgetPasswordLost', [
                  * validate cmForm
                  * @returns {*}
                  */
-                $scope.validateForm = function() {
+                $scope.validateForm = function () {
                     var deferred = $q.defer(),
                         objectData = {};
 
-                    if ($scope.cmForm.identifier.$modelValue && $scope.cmForm.identifier.$modelValue != '')
-                        objectData.identifier = $scope.cmForm.identifier.$modelValue;
+                    if($scope.cmForm.code.$modelValue && $scope.cmForm.code.$modelValue != '')
+                        objectData.code = $scope.cmForm.code.$modelValue;
                     else
-                        $scope.info.empty = true;
+                        $scope.info.emptyCode = true;
 
                     if(cmUtil.objLen(objectData) > 0) {
                         deferred.resolve(objectData);
@@ -46,10 +48,7 @@ angular.module('cmWidgets').directive('cmWidgetPasswordLost', [
                     return deferred.promise;
                 };
 
-                /**
-                 * Form Validation and Apicall to send password reset
-                 */
-                $scope.startResetPassword = function () {
+                $scope.checkCode = function(){
                     if (loader.isIdle())
                         return false;
 
@@ -60,26 +59,17 @@ angular.module('cmWidgets').directive('cmWidgetPasswordLost', [
                     $scope.validateForm().then(
                         function(objectChange) {
 
-                            cmAuth.sendPasswordLost(objectChange).then(
-                                function(){
+                            cmAuth.checkResetPassword(objectChange.code).then(
+                                function(data){
                                     loader.stop();
 
-                                    $rootScope.goTo('/password/code');
+                                    $rootScope.goTo('/password/reset/'+data.id);
                                 },
                                 function(response){
                                     loader.stop();
                                     switch(response.data.errorCode){
-                                        case 'PASSWORD.RESET.LOGIN.NOT.FOUND':
-                                            $scope.info.loginNotFound = true;
-                                        break;
-                                        case 'PASSWORD.RESET.PHONENUMBER.NOT.FOUND':
-                                            $scope.info.phoneNumberNotFound = true;
-                                        break;
-                                        case 'PASSWORD.RESET.EMAIL.NOT.FOUND':
-                                            $scope.info.emailNotFound = true;
-                                        break;
-                                        case 'PASSWORD.RESET.NO.EMAIL.PHONENUMBER':
-                                            $scope.info.noEmailPhonenumber = true;
+                                        case 'PASSWORD.RESET.EXPIRED':
+                                            $scope.info.expired = true;
                                         break;
                                     }
                                 }
@@ -91,8 +81,8 @@ angular.module('cmWidgets').directive('cmWidgetPasswordLost', [
                     );
                 };
 
-                $scope.resetForm = function(){
-                    reset();
+                $scope.cancel = function(){
+                    $rootScope.goTo('/password/lost');
                 };
             }
         }

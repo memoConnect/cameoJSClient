@@ -3,7 +3,8 @@ var util = require("../../lib/e2e/cmTestUtil.js")
 
 describe('Route Password Lost/Reset:', function(){
     var ptor = util.getPtorInstance(),
-        testUser
+        testUser1,
+        testUser2
 
     var loginName = 'testuser23_',
         genLoginName = '',
@@ -17,7 +18,7 @@ describe('Route Password Lost/Reset:', function(){
         },
         verifySecret
 
-    function getVerificationSecret() {
+    function getVerificationSecret(testUser) {
         verifySecret = undefined
 
         ptor.wait(function () {
@@ -30,7 +31,7 @@ describe('Route Password Lost/Reset:', function(){
         }, 5000, 'unable to getVerificationSecret')
     }
 
-    function getResetData() {
+    function getResetData(testUser) {
         resetData = undefined
 
         ptor.wait(function () {
@@ -51,13 +52,172 @@ describe('Route Password Lost/Reset:', function(){
         }, 5000, 'unable to getResetId')
     }
 
-    describe('Start reset', function() {
+    describe('Test password forms', function(){
+
+        it('should be at "#/login/" and goto "#/password/lost"', function () {
+            util.get('/login')
+            util.expectCurrentUrl('#/login')
+
+            expect($("[data-qa='btn-passwordLost']").isDisplayed()).toBeTruthy()
+            util.click('btn-passwordLost')
+        })
+
+        describe('route password/lost', function(){
+
+            var input = 'inp-passwordLost',
+                footer = "cm-footer"
+
+            it('be on route', function(){
+                util.expectCurrentUrl('#/password/lost')
+            })
+
+            it('all info-bubbles should be hidden', function(){
+                util.checkWarning('info-identifierEmpty',true)
+                util.checkWarning('info-loginNotFound',true)
+                util.checkWarning('info-phoneNumberNotFound',true)
+                util.checkWarning('info-emailNotFound',true)
+                util.checkWarning('info-noEmailPhonenumber',true)
+            })
+
+            it('check empty', function(){
+                util.click('btn-startResetPassword')
+                util.checkWarning('info-identifierEmpty')
+            })
+
+            it('check another empty', function(){
+                util.setVal(input,' ')
+                util.sendEnter(input)
+                util.checkWarning('info-identifierEmpty')
+            })
+
+            it('check invalid loginname',function(){
+                util.setVal(input,'moep',true)
+                util.sendEnter(input)
+                util.waitForLoader(1,footer)
+                util.checkWarning('info-loginNotFound')
+            })
+
+            it('check invalid phonenumber',function(){
+                util.setVal(input,'+49123456789',true)
+                util.sendEnter(input)
+                util.waitForLoader(2,footer)
+                util.checkWarning('info-phoneNumberNotFound')
+            })
+
+            it('check invalid email',function(){
+                util.setVal(input,'moep@cameo.ioio',true)
+                util.sendEnter(input)
+                util.waitForLoader(3,footer)
+                util.checkWarning('info-emailNotFound')
+            })
+        })
+
+        describe('route password/code', function(){
+            var input = 'inp-codeResetPassword',
+                footer = "cm-footer"
+
+            it('go to route',function(){
+                util.get('/password/code')
+                util.expectCurrentUrl('#/password/code')
+
+                util.waitForElement("[data-qa='"+input+"']")
+            })
+
+            it('check info bubble',function(){
+                util.checkWarning('info-confirmationSended',true)
+                util.checkWarning('info-codeEmpty',true)
+                util.checkWarning('info-expired',true)
+            })
+
+            it('check empty',function(){
+                util.click('btn-checkResetPassword')
+                util.checkWarning('info-codeEmpty')
+            })
+
+            it('check antoher empty',function(){
+                util.setVal(input,' ')
+                util.sendEnter(input)
+                util.checkWarning('info-codeEmpty')
+            })
+
+            it('check invalid code here moep',function(){
+                util.setVal(input,'moep',true)
+                util.sendEnter(input)
+                util.waitForLoader(1,footer)
+                util.checkWarning('info-expired')
+            })
+
+            it('check invalid expired id',function(){
+                util.setVal(input,resetDataExpired.id,true)
+                util.sendEnter(input)
+                util.waitForLoader(2,footer)
+                util.checkWarning('info-expired')
+            })
+
+            it('check invalid expired code',function(){
+                util.setVal(input,resetDataExpired.code,true)
+                util.sendEnter(input)
+                util.waitForLoader(3,footer)
+                util.checkWarning('info-expired')
+            })
+
+            it('test cancel button',function(){
+                util.click('btn-cancel')
+                util.expectCurrentUrl('#/password/lost')
+            })
+        })
+
+        describe('reset - should display expired', function(){
+            it('got to route', function(){
+                util.get('/password/reset/'+resetDataExpired.id)
+                util.expectCurrentUrl('#/password/reset/'+resetDataExpired.id)
+            })
+
+            it('check inof bubble expired', function(){
+                util.checkWarning('info-requestExpired')
+            })
+        })
+    })
+
+    describe('testuser with unverified phonenumber', function(){
         it('should create a test user', function(){
-            testUser = util.createTestUser(undefined,'password reset')
+            testUser1 = util.createTestUser(undefined,'password reset')
+        })
+
+        it('save phoneNumber', function(){
+            util.get('/settings/account')
+            util.expectCurrentUrl('#/settings/account')
+
+            util.setVal('input-phoneNumber',phoneNumber)
+
+            util.click('btn-saveAccount')
+
+            util.logout()
+        })
+
+        it('check form password/lost should display not verified phonenumber', function(){
+            util.get('/password/lost')
+
+            // identitify with loginName
+            util.setVal('inp-passwordLost',testUser1,true)
+            util.sendEnter('inp-passwordLost')
+            util.waitForLoader(1,'cm-footer')
+
+            util.checkWarning('info-noEmailPhonenumber')
+        })
+
+        it('delete testuser', function(){
+            util.deleteTestUser(testUser1)
+        })
+    })
+
+    describe('testuser with verified phonenumber', function() {
+        it('should create a test user', function(){
+            testUser2 = util.createTestUser(undefined,'password reset')
             util.waitForEventSubscription()
         })
 
-        it('verify phoneNumber', function(){
+        it('save phoneNumber', function(){
             util.get('/settings/account')
             util.expectCurrentUrl('#/settings/account')
 
@@ -65,10 +225,10 @@ describe('Route Password Lost/Reset:', function(){
 
             util.click('btn-saveAccount')
             // get secret
-            getVerificationSecret()
+            getVerificationSecret(testUser2)
         })
 
-        it('verify phoneNumber', function(){
+        it('verify phoneNumber and logout', function(){
             util.setVal('inp-phoneNumberCodeVerify',verifySecret,true)
             util.sendEnter('inp-phoneNumberCodeVerify')
             util.waitForLoader(1,'.phoneNumberVerification')
@@ -80,119 +240,15 @@ describe('Route Password Lost/Reset:', function(){
             util.logout()
         })
 
-        it('should be at "#/login/" and goto "#/password/lost"', function () {
-            util.get('/login')
-            util.expectCurrentUrl('#/login')
-
-            expect($("[data-qa='btn-passwordLost']").isDisplayed()).toBeTruthy()
-            util.click('btn-passwordLost')
-            util.expectCurrentUrl('#/password/lost')
-        })
-
-        it('check form of lost', function(){
-            util.checkWarning('info-identifierEmpty',true)
-            util.checkWarning('info-loginNotFound',true)
-            util.checkWarning('info-phoneNumberNotFound',true)
-            util.checkWarning('info-emailNotFound',true)
-            util.checkWarning('info-noEmailPhonenumber',true)
-            util.checkWarning('info-confirmationSended',true)
-
-            // empty
-            util.click('btn-startResetPassword')
-            util.checkWarning('info-identifierEmpty')
-
-            util.setVal('inp-passwordLost',' ')
-            util.sendEnter('inp-passwordLost')
-            util.checkWarning('info-identifierEmpty')
-
-            // check loginname info
-            util.setVal('inp-passwordLost','moep',true)
-            //util.sendEnter('inp-passwordLost')
-            util.click('btn-resetPassword')
-            util.checkWarning('info-loginNotFound')
-
-            // phonenumber
-            util.setVal('inp-passwordLost','+49123456789',true)
-            //util.sendEnter('inp-passwordLost')
-            util.click('btn-resetPassword')
-            util.checkWarning('info-phoneNumberNotFound')
-
-            // email
-            util.setVal('inp-passwordLost','moep@cameo.ioio',true)
-           //util.sendEnter('inp-passwordLost')
-            util.click('btn-resetPassword')
-            util.checkWarning('info-emailNotFound')
-
-            // identitify with loginName
-            util.setVal('inp-passwordLost',testUser,true)
-            //util.sendEnter('inp-passwordLost')
-            util.click('btn-resetPassword')
-            util.checkWarning('info-confirmationSended')
-
-            // get data from notification
-            getResetData()
-        })
-
-        it('check code with invalid input', function(){
-            util.expectCurrentUrl('#/password/lost')
-
-            util.waitForElement("[data-qa='inp-codeResetPassword']")
-
-            util.checkWarning('info-confirmationSended')
-            util.checkWarning('info-codeEmpty',true)
-            util.checkWarning('info-expired',true)
-
-            util.click('btn-checkResetPassword')
-            util.checkWarning('info-codeEmpty')
-
-            util.setVal('inp-codeResetPassword',' ')
-            util.sendEnter('inp-codeResetPassword')
-            util.checkWarning('info-codeEmpty')
-
-            util.setVal('inp-codeResetPassword','moep',true)
-            util.sendEnter('inp-codeResetPassword')
-            util.checkWarning('info-expired')
-
-            util.setVal('inp-codeResetPassword',resetDataExpired.id,true)
-            util.sendEnter('inp-codeResetPassword')
-            util.checkWarning('info-expired')
-
-            util.setVal('inp-codeResetPassword',resetDataExpired.code,true)
-            util.sendEnter('inp-codeResetPassword')
-            util.checkWarning('info-expired')
-        })
-
-        it('click cancel and be in clear start form', function(){
-            util.click('btn-resetForm')
-
-            util.expectCurrentUrl('#/password/lost')
-
-            util.waitForElement("[data-qa='inp-passwordLost']")
-
-            util.checkWarning('info-identifierEmpty',true)
-            util.checkWarning('info-loginNotFound',true)
-            util.checkWarning('info-phoneNumberNotFound',true)
-            util.checkWarning('info-emailNotFound',true)
-            util.checkWarning('info-noEmailPhonenumber',true)
-            util.checkWarning('info-confirmationSended',true)
-
-        })
-
-        it('check expired password link', function(){
-            util.get('/password/reset/'+resetDataExpired.id)
-            util.expectCurrentUrl('#/password/reset/'+resetDataExpired.id)
-
-            util.checkWarning('info-requestExpired')
-        })
-
-        it('start a new reset and get new resetData', function(){
+        it('check form password/lost', function(){
             util.get('/password/lost')
+
             // identitify with loginName
-            util.setVal('inp-passwordLost',testUser,true)
+            util.setVal('inp-passwordLost',testUser2,true)
             util.sendEnter('inp-passwordLost')
 
             // get data from notification
-            getResetData()
+            getResetData(testUser2)
         })
 
         it('enter valid code and check form', function(){
@@ -217,11 +273,11 @@ describe('Route Password Lost/Reset:', function(){
         })
 
         it('login with new password', function(){
-            util.login(testUser, password, '/start/keyinfo')
+            util.login(testUser2, password, '/start/keyinfo')
         })
 
-        it('delete test user', function(){
-            util.deleteTestUser(testUser)
+        it('delete testuser', function(){
+            util.deleteTestUser(testUser2)
         })
     })
 })

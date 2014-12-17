@@ -167,6 +167,13 @@ angular.module('cmConfig',[])
                     ],
                     guests: true
                 },
+                'password-code': {
+                    templateUrl: 'routes/password/code/password-code.html',
+                    routes:[
+                        '/password/code',
+                    ],
+                    guests: true
+                },
                 'password-reset': {
                     templateUrl: 'routes/password/reset/password-reset.html',
                     routes:[
