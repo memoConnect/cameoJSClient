@@ -1,6 +1,7 @@
 'use strict';
 
-angular.module('cmUi').directive('cmEmojiList',[
+angular.module('cmUi')
+.directive('cmEmojiList',[
     'emoji',
     'cmUtil',
     '$document',
