@@ -69,7 +69,7 @@ describe("cmPristine combine with input drtv", function(){
         })
     })
 
-    xdescribe('check "add" method, with two "valid" elements', function(){
+    describe('check "add" method, with two "valid" elements', function(){
         beforeEach(inject(function(_$compile_, _$rootScope_){
             scope = _$rootScope_
             element = angular.element('<form><input name="email" ng-model="email" /><input name="text" ng-model="text" /></form>')
