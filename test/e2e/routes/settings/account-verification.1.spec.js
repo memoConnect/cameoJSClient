@@ -8,7 +8,9 @@ describe('Route Settings Account Verification: ', function(){
     var loginName = 'testuser23_',
         genLoginName = '',
         phoneNumber = '+1234567890',
+        phoneNumber2 = '+12345678901',
         email = 'devnull@cameo.io',
+        email2 = 'devnull1@cameo.io',
         verifySecret
 
     function getVerificationSecret() {
@@ -73,7 +75,7 @@ describe('Route Settings Account Verification: ', function(){
 
         describe('manually',function(){
             it('start verification', function(){
-                util.setVal('input-'+type, value+extraValue, true)
+                util.setVal('input-'+type, extraValue, true)
 
                 util.click('btn-saveAccount')
                 util.waitForLoader(1,'cm-footer')
@@ -134,11 +136,11 @@ describe('Route Settings Account Verification: ', function(){
         })
 
         describe('verification phoneNumber', function(){
-            createDescribesAndItsForVerification('phoneNumber',phoneNumber,'4')
+            createDescribesAndItsForVerification('phoneNumber',phoneNumber,phoneNumber2)
         })
 
         describe('verification email', function(){
-            createDescribesAndItsForVerification('email',email,'c')
+            createDescribesAndItsForVerification('email',email,email2)
         })
 
         it('delete test user', function(){

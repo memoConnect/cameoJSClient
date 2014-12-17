@@ -57,7 +57,7 @@ describe('Route Password Lost/Reset:', function(){
             util.waitForEventSubscription()
         })
 
-        it('verify phoneNumber', function(){
+        it('save phoneNumber', function(){
             util.get('/settings/account')
             util.expectCurrentUrl('#/settings/account')
 
@@ -68,7 +68,7 @@ describe('Route Password Lost/Reset:', function(){
             getVerificationSecret()
         })
 
-        it('verify phoneNumber', function(){
+        it('verify phoneNumber and logout', function(){
             util.setVal('inp-phoneNumberCodeVerify',verifySecret,true)
             util.sendEnter('inp-phoneNumberCodeVerify')
             util.waitForLoader(1,'.phoneNumberVerification')
@@ -89,7 +89,9 @@ describe('Route Password Lost/Reset:', function(){
             util.expectCurrentUrl('#/password/lost')
         })
 
-        it('check form of lost', function(){
+        it('check form password/lost', function(){
+            var input = 'inp-passwordLost',
+                footer = "cm-footer [data-qa='btn-startResetPassword']"
             util.checkWarning('info-identifierEmpty',true)
             util.checkWarning('info-loginNotFound',true)
             util.checkWarning('info-phoneNumberNotFound',true)
@@ -101,37 +103,43 @@ describe('Route Password Lost/Reset:', function(){
             util.click('btn-startResetPassword')
             util.checkWarning('info-identifierEmpty')
 
-            util.setVal('inp-passwordLost',' ')
-            util.sendEnter('inp-passwordLost')
+            util.setVal(input,' ')
+            util.sendEnter(input)
             util.checkWarning('info-identifierEmpty')
 
             // check loginname info
-            util.setVal('inp-passwordLost','moep',true)
-            util.sendEnter('inp-passwordLost')
+            util.setVal(input,'moep',true)
+            util.sendEnter(input)
+            util.waitForLoader(1,footer)
             util.checkWarning('info-loginNotFound')
 
             // phonenumber
-            util.setVal('inp-passwordLost','+49123456789',true)
-            util.sendEnter('inp-passwordLost')
+            util.setVal(input,'+49123456789',true)
+            util.sendEnter(input)
+            util.waitForLoader(2,footer)
             util.checkWarning('info-phoneNumberNotFound')
 
             // email
-            util.setVal('inp-passwordLost','moep@cameo.ioio',true)
-            util.sendEnter('inp-passwordLost')
+            util.setVal(input,'moep@cameo.ioio',true)
+            util.sendEnter(input)
+            util.waitForLoader(3,footer)
             util.checkWarning('info-emailNotFound')
 
             // identitify with loginName
-            util.setVal('inp-passwordLost',testUser,true)
-            util.sendEnter('inp-passwordLost')
+            util.setVal(input,testUser,true)
+            util.sendEnter(input)
+            util.waitForLoader(4,footer)
 
             // get data from notification
             getResetData()
         })
 
         it('check code with invalid input', function(){
+            var input = 'inp-codeResetPassword',
+                footer = "cm-footer [data-qa='btn-checkResetPassword']"
             util.expectCurrentUrl('#/password/lost')
 
-            util.waitForElement("[data-qa='inp-codeResetPassword']")
+            util.waitForElement("[data-qa='"+input+"']")
 
             util.checkWarning('info-confirmationSended')
             util.checkWarning('info-codeEmpty',true)
@@ -140,20 +148,23 @@ describe('Route Password Lost/Reset:', function(){
             util.click('btn-checkResetPassword')
             util.checkWarning('info-codeEmpty')
 
-            util.setVal('inp-codeResetPassword',' ')
-            util.sendEnter('inp-codeResetPassword')
+            util.setVal(input,' ')
+            util.sendEnter(input)
             util.checkWarning('info-codeEmpty')
 
-            util.setVal('inp-codeResetPassword','moep',true)
-            util.sendEnter('inp-codeResetPassword')
+            util.setVal(input,'moep',true)
+            util.sendEnter(input)
+            util.waitForLoader(1,footer)
             util.checkWarning('info-expired')
 
-            util.setVal('inp-codeResetPassword',resetDataExpired.id,true)
-            util.sendEnter('inp-codeResetPassword')
+            util.setVal(input,resetDataExpired.id,true)
+            util.sendEnter(input)
+            util.waitForLoader(2,footer)
             util.checkWarning('info-expired')
 
-            util.setVal('inp-codeResetPassword',resetDataExpired.code,true)
-            util.sendEnter('inp-codeResetPassword')
+            util.setVal(input,resetDataExpired.code,true)
+            util.sendEnter(input)
+            util.waitForLoader(3,footer)
             util.checkWarning('info-expired')
         })
 
