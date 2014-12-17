@@ -29,7 +29,7 @@ angular.module('cmUi').directive('input', [
                 }
 
                 function getValue(){
-                    return element.val() || '';
+                    return element.val().trim() || '';
                 }
 
                 function setValue(){
@@ -53,9 +53,7 @@ angular.module('cmUi').directive('input', [
                             apply();
                         },attrs.cmAdaptiveChange || 1000);
                     } else {
-                        timeout = $timeout(function (){
-                            apply();
-                        }, 100)
+                        apply();
                     }
                 }
 
