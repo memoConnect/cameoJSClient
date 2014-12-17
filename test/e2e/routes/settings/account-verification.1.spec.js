@@ -49,6 +49,8 @@ describe('Route Settings Account Verification: ', function(){
             })
 
             it('check verification form', function(){
+                util.scrollToBottom()
+
                 util.checkWarning('info-'+type+'VerificationCodeEmpty',true)
                 util.checkWarning('info-'+type+'VerificationCodeInvalid',true)
 
