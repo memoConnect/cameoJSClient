@@ -166,16 +166,15 @@ angular.module('cmCore')
              * @param {String} reservationSecret From api given token for Username
              * @returns {Promise} for async handling
              */
-            checkAccountName: function(name, reservationSecret){
-                return cmApi.post({
+            checkAccountName: function(name){
+                var apiCall = {
                     path: '/account/check',
                     data: {
-                        loginName: name,
-                        reservationSecret: reservationSecret
+                        loginName: name
                     }
-    //                exp_ok: 'reservationSecret',
-    //                exp_ko: 'alternative'
-                })
+                };
+
+                return cmApi.post(apiCall);
             },
             /**
              * @ngdoc method
@@ -222,10 +221,12 @@ angular.module('cmCore')
             },
 
             putAccount: function(data){
-                return cmApi.put({
+                var apiCall = {
                     path: '/account',
                     data: data
-                })
+                };
+
+                return cmApi.put(apiCall)
             },
 
             /**
@@ -267,6 +268,15 @@ angular.module('cmCore')
                     path: '/identity',
                     data: data
                 })
+            },
+
+            initialIdentity: function(data){
+                var apiCall = {
+                    path: '/identity/initial',
+                    data: data
+                };
+
+                return cmApi.post(apiCall)
             },
 
             /**

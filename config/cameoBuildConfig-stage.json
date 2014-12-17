@@ -1,6 +1,7 @@
 {
     "config": {
-        "apiUrl": "https://stage.cameo.io/a/v1",
+        "apiUrl": "https://stage.cameo.io/a/",
+        "defaultApiVersion": "v1",
         "autoLogin": false,
         "loadingBar": true,
         "enableDebug": true,

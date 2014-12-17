@@ -1,4 +1,22 @@
 ## Dev
+# BS 12.12.2014
+* add new setup routes
+    * update registration, now it is possible to turn off confirmPW and show pw input
+    * add setup account route
+    * add setup identity route
+    * update settings key generation header, if $rootScope automaticGeneration is set
+    * update e2e tests
+    * put keyinfo to setup routes
+* add cmPristine Service and update drtv input
+    * inputs handle adaptive change
+    * remove old adaptive change drtv
+* update API Provider
+    * now it is possible to set a special apiVersion to an Ajax Call
+    * update build configs, add new "defaultApiVersion": "v1"
+    * update unit tests
+* update identity settings
+    * cameoId is an normal text container, input is removed
+
 # WW 17.12.2014
 * better detection for wrong route
     * no token

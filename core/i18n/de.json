@@ -103,7 +103,7 @@
             },
             "INVALID_EMAIL": "@:DRTV.VALIDATE_EMAIL.INFO.INVALID",
             "INVALID_PHONENUMBER": "@:DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER",
-            "LOGIN_INFORMATION": "Hier legen Sie Ihre Zugangsdaten fest, mit denen Sie sich anschließend im cameoNet anmelden können.<br/><br/>Der Nutzername wird automatisch zu Ihrer (ersten) cameoID, über die andere Nutzer Sie im cameoNet finden können.",
+            "LOGIN_INFORMATION": "@todo Hier legen Sie Ihre Zugangsdaten fest, mit denen Sie sich anschließend im cameoNet anmelden können.<br/><br/>Der Nutzername wird automatisch zu Ihrer (ersten) cameoID, über die andere Nutzer Sie im cameoNet finden können.",
             "USER_INFORMATION": "Die folgenden Felder sind optional:<br/><br/>Wenn Sie einen Anzeigenamen eingeben, wird Ihre Identität überall im cameoNet mit diesem Namen angezeigt. Er muss nicht eindeutig sein. Andere Nutzer können Sie im cameoNet auch über Ihren Anzeigenamen finden.<br/><br/>Wenn Sie eine E-Mail-Adresse und/oder eine Mobilfunknummer eingeben, können Sie sich über neue Nachrichten und Kontaktanfragen informieren lassen und bei Bedarf Ihr Passwort zurücksetzen. Diese Daten sind für andere Nutzer nicht sichtbar und werden nicht in Ihre Identität übertragen."
         },
         "TITLE": {
@@ -136,7 +136,7 @@
             "TEXT_2": "Drücken Sie auf 'Kontakt hinzufügen' im Header und wählen 'cameoNet durchsuchen'. Ihre Freunde finden Sie über deren cameoIDs oder Anzeigenamen. Senden Sie ihnen eine Kontaktanfrage. Sobald diese angenommen wurde, sind die Kontakte miteinander verknüpft, um sicher zu kommunizieren.",
             "HEADLINE_3": "3. Nachricht schreiben",
             "TEXT_3": "An verknüpfte Kontakte können Sie direkt aus der Kontakt-Übersicht über das Brief-Symbol Nachrichten senden. Es öffnet sich ein neuer Talk (=Unterhaltung). Geben Sie eine Nachricht ein und drücken Sie auf den Senden-Button.<br><br>Herzlichen Glückwunsch! Sie haben Ihren ersten verschlüsselten Talk geführt!",
-            "TEXT_4": "Wenn Sie Fragen oder Verbesserungsvorschläge zu cameoNet haben, nutzen Sie unsere Support- und Hilfeseiten unter http://support.cameonet.de.",
+            "TEXT_4": "Wenn Sie Fragen oder Verbesserungsvorschläge zu cameoNet haben, nutzen Sie unsere Support- und Hilfeseiten unter http://support.cameonet.de,\n oder schreiben Sie eine Mail an <a href=\"mailto:support@cameonet.de\">support@cameonet.de</a>",
             "BTN_TEXT": "Und los..."
         },
         "DOWNLOAD": {
@@ -324,6 +324,7 @@
         "HEADLINE": "Kontakt",
         "WIDGET": "Talks",
         "PLACEHOLDER": {
+            "AVATAR": "Profilbild",
             "CAMEOID": "CameoID",
             "DISPLAYNAME": "@:CONTACTS.LABEL.DISPLAYNAME",
             "PHONENUMBER": "Telefonnummer",
@@ -408,6 +409,17 @@
         "OVERVIEW":{
             "HEADER": "Übersicht Identitäten",
             "INFO_TEXT": "Hier können Sie zwischen Ihren Identitäten wechseln und neue Identitäten anlegen."
+        },
+        "INFO":{
+            "CREATE": {
+                "HEADLINE_SMALL": "@todo IDENTITY.INFO.CREATE.HEADLINE_SMALL",
+                "HEADLINE": "In Ihrer Identität legen Sie fest, was andere Nutzer von Ihnen sehen. Wenn Sie eine Kontaktanfrage eines anderen Nutzers akzeptieren, sieht dieser in seinen Kontakten anschließend alle Daten, die Sie in Ihr Identitätsprofil eingegeben haben.\nIhre Identität kann über die cameoID oder den Anzeigenamen gefunden werden.",
+                "CAMEOID": "Jede Identität besitzt eine eindeutige cameoID, über die sie im cameoNet gefunden werden kann.",
+                "AVATAR": "@todo IDENTITY.INFO.CREATE.AVATAR",
+                "DISPLAYNAME": "Wenn Sie Ihrer Identität einen Anzeigenamen geben, wird dieser überall anstatt der cameoID angezeigt. Ihre Identität kann im cameoNet auch über den Anzeigenamen gefunden werden. Der Anzeigename muss aber nicht eindeutig sein.",
+                "PHONE": "Hier können Sie eine Mobilfunknummer eingeben. Sie wird anderen Nutzern in Ihrem Identitätsprofil angezeigt aber weder verifiziert noch weiter verwendet. Sie erhalten Benachrichtigungen für diese Identität an die in Ihrem Benutzerkonto eingetragenen Mobilfunknummer.",
+                "EMAIL": "Hier können Sie eine E-Mail-Adresse eingeben. Sie wird anderen Nutzern in Ihrem Identitätsprofil angezeigt aber weder verifiziert noch weiter verwendet. Sie erhalten Benachrichtigungen für diese Identität an die in Ihrem Benutzerkonto eingetragenen E-Mail-Adresse."
+            }
         },
         "KEYS": {
             "HEADER": "cameoKeys",
@@ -565,7 +577,8 @@
                         "CAMEOID": "@:CONTACT.PLACEHOLDER.CAMEOID",
                         "DISPLAYNAME": "@:CONTACT.PLACEHOLDER.DISPLAYNAME",
                         "EMAIL": "@:CONTACT.PLACEHOLDER.EMAIL",
-                        "PHONENUMBER": "@:CONTACT.PLACEHOLDER.PHONENUMBER"
+                        "PHONENUMBER": "@:CONTACT.PLACEHOLDER.PHONENUMBER",
+                        "AVATAR": "@:CONTACT.PLACEHOLDER.AVATAR"
                     },
                     "INFO": {
                         "EMPTY": {
@@ -665,12 +678,15 @@
                 "PHONENUMBER": "@:DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER",
                 "OLD_PASSWORD": "Das von Ihnen eingegebene Passwort ist ungültig."
             },
-            "NOTE_ABOUT_THIS_DATA": "Hier können Sie die Daten ihres Benutzerkontos ändern. Dies betrifft insbesondere Ihre Zugansdaten, mit denen Sie sich anmelden.<br>Ihre Benutzerdaten sind für andere Nutzer nicht sichtbar - im Gegensatz zu den Daten Ihrer Identitäten. Die Telefonnummer oder E-Mail-Adresse wird nur zur Passwortrücksetzung verwendet und auf Wunsch für Benachrichtigungen, wenn Sie abgemeldet sind.",
-            "LOGINAME": "Der Loginname kann nicht geändert werden."
+            "NOTE_ABOUT_THIS_DATA": "Hier können Sie die Daten ihres Benutzerkontos ändern. Dies betrifft insbesondere Ihre Zugansdaten, mit denen Sie sich anmelden.\nIhre Benutzerdaten sind für andere Nutzer nicht sichtbar - im Gegensatz zu den Daten Ihrer Identitäten. Die Telefonnummer oder E-Mail-Adresse wird nur zur Passwortrücksetzung verwendet und auf Wunsch für Benachrichtigungen, wenn Sie abgemeldet sind.",
+            "LOGINAME": "Der Loginname kann nicht geändert werden.",
+            "PHONENUMBER": "@todo ACCOUNT.INFO.PHONENUMBER",
+            "EMAIL": "@todo ACCOUNT.INFO.EMAIL"
         },
         "FOOTER": {
             "BACK": "Fertig",
-            "SAVE": "Speichern"
+            "SAVE": "Speichern",
+            "SKIP": "Überspringen"
         }
     },
 

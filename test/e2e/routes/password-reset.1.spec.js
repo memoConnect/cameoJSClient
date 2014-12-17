@@ -68,6 +68,7 @@ describe('Route Password Lost/Reset:', function(){
                 footer = "cm-footer"
 
             it('be on route', function(){
+                util.waitForPageLoad('/password/lost')
                 util.expectCurrentUrl('#/password/lost')
             })
 
@@ -118,6 +119,7 @@ describe('Route Password Lost/Reset:', function(){
 
             it('go to route',function(){
                 util.get('/password/code')
+                util.waitForPageLoad('/password/code')
                 util.expectCurrentUrl('#/password/code')
 
                 util.waitForElement("[data-qa='"+input+"']")
@@ -134,7 +136,7 @@ describe('Route Password Lost/Reset:', function(){
                 util.checkWarning('info-codeEmpty')
             })
 
-            it('check antoher empty',function(){
+            it('check another empty',function(){
                 util.setVal(input,' ')
                 util.sendEnter(input)
                 util.checkWarning('info-codeEmpty')
@@ -186,6 +188,7 @@ describe('Route Password Lost/Reset:', function(){
 
         it('save phoneNumber', function(){
             util.get('/settings/account')
+            util.waitForPageLoad('/settings/account')
             util.expectCurrentUrl('#/settings/account')
 
             util.setVal('input-phoneNumber',phoneNumber)
@@ -219,6 +222,7 @@ describe('Route Password Lost/Reset:', function(){
 
         it('save phoneNumber', function(){
             util.get('/settings/account')
+            util.waitForPageLoad('/settings/account')
             util.expectCurrentUrl('#/settings/account')
 
             util.setVal('input-phoneNumber',phoneNumber)
@@ -242,6 +246,7 @@ describe('Route Password Lost/Reset:', function(){
 
         it('check form password/lost', function(){
             util.get('/password/lost')
+            util.waitForPageLoad('/password/lost')
 
             // identitify with loginName
             util.setVal('inp-passwordLost',testUser2,true)
@@ -273,7 +278,7 @@ describe('Route Password Lost/Reset:', function(){
         })
 
         it('login with new password', function(){
-            util.login(testUser2, password, '/start/keyinfo')
+            util.login(testUser2, password)
         })
 
         it('delete testuser', function(){

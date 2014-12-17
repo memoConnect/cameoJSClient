@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('cmUser').directive('cmIdentityEdit', [
-    'cmUserModel', 'cmNotify', 'cmLoader', 'cmUtil', 
+    'cmUserModel', 'cmNotify', 'cmLoader', 'cmUtil', 'cmPristine',
     '$q', '$rootScope',
-    function(cmUserModel, cmNotify, cmLoader, cmUtil,
+    function(cmUserModel, cmNotify, cmLoader, cmUtil, cmPristine,
              $q, $rootScope){
         return {
             restrict: 'E',
@@ -13,10 +13,6 @@ angular.module('cmUser').directive('cmIdentityEdit', [
                 var loader = new cmLoader($scope);
 
                 $scope.identity = cmUserModel.data.identity;
-                $scope.isPristine = true;
-                $rootScope.$on('pristine:false', function(){
-                    $scope.isPristine = false;
-                });
 
                 function reset(){
                     $scope.formData = {
@@ -101,12 +97,13 @@ angular.module('cmUser').directive('cmIdentityEdit', [
                     $scope.validateForm()
                     .then(
                         function(objectChange){
-                            cmUserModel.data.identity.update(objectChange);
                             cmUserModel.data.identity.one('update:finished',function(){
                                 loader.stop();
                                 $scope.isPristine = true;
                                 reset();
                             });
+
+                            cmUserModel.data.identity.update(objectChange);
                         },
                         function(){
                             loader.stop();
@@ -114,6 +111,19 @@ angular.module('cmUser').directive('cmIdentityEdit', [
                         }
                     )
                 };
+
+                /**
+                 * Pristine Service Handling
+                 */
+                $scope.isPristine = true;
+                function pristine_callback(){
+                    $scope.isPristine = cmPristine.is();
+                }
+                cmPristine.on('updated',pristine_callback);
+
+                $scope.$on('$destroy', function(){
+                    cmPristine.off('updated',pristine_callback);
+                })
             }
         }
     }

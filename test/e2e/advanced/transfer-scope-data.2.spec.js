@@ -5,10 +5,10 @@ var path = require('path')
 describe('transfer scope data registration', function () {
     var ptor = util.getPtorInstance(),
         cameoId = 'moeper',
-        password = 'moep12345',
-        displayName = 'moepDisp',
-        email = 'devnull@cameo.io',
-        phoneNumber = '+49123456'
+        password = 'moep12345'
+        //displayName = 'moepDisp',
+        //email = 'devnull@cameo.io',
+        //phoneNumber = '+49123456'
 
     it('fill out registration with validation timeout', function () {
         util.logout()
@@ -18,9 +18,9 @@ describe('transfer scope data registration', function () {
         util.setVal('input-cameoId', cameoId)
         util.setVal('input-password', password)
         util.setVal('input-passwordConfirm', password)
-        util.setVal('input-displayName', displayName)
-        util.setVal('input-email', email)
-        util.setVal('input-phone', phoneNumber)
+        //util.setVal('input-displayName', displayName)
+        //util.setVal('input-email', email)
+        //util.setVal('input-phone', phoneNumber)
 
         util.scrollToBottom()
         util.click("icon-checkbox-agb")
@@ -39,9 +39,9 @@ describe('transfer scope data registration', function () {
         expect(util.getVal('input-cameoId')).toBe(cameoId)
         expect(util.getVal('input-password')).toBe('')
         expect(util.getVal('input-passwordConfirm')).toBe('')
-        expect(util.getVal('input-displayName')).toBe(displayName)
-        expect(util.getVal('input-email')).toBe(email)
-        expect(util.getVal('input-phone')).toBe(phoneNumber)
+        //expect(util.getVal('input-displayName')).toBe(displayName)
+        //expect(util.getVal('input-email')).toBe(email)
+        //expect(util.getVal('input-phone')).toBe(phoneNumber)
 
         expect($("[data-qa='icon-checkbox-agb']").getAttribute('class')).toContain('cm-checkbox-right')
 

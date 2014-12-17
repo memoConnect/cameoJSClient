@@ -98,12 +98,14 @@ describe('Route Contact: ', function () {
         })
 
         it('search and click to detail',function(){
-            util.waitForPageLoad('/contact')
+            util.waitForPageLoad('/contact/list')
             util.waitForElement('cm-contact-tag')
 
             util.headerSearchInList(extUserName)
 
-            expect($$('cm-contact-list cm-contact-tag cm-avatar').count()).toBe(1)
+            //expect($$('cm-contact-list cm-contact-tag cm-avatar').count()).toBe(1)
+            ptor.sleep(50)
+            expect($$('cm-contact-tag').count()).toBe(1)
         })
 
         it('should find external user after logout/login (1)', function(){

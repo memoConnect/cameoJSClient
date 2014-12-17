@@ -9,7 +9,7 @@ describe('Check CreateNewConversation Buttons', function () {
     describe('create test users: ', function(){
         it('should create user', function(){
             testUser = util.createTestUser(undefined, 'check-create-new-conversation-btns')
-            util.expectCurrentUrl('/start/welcome')
+            util.expectCurrentUrl('/setup/account')
         })
     })
 

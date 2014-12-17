@@ -1,5 +1,10 @@
 <article class="content" ng-form="cmInnerForm">
-    <label>{{::label|cmTranslate}}</label>
+    <label data-qa="ctn-toggle-phone-info" ng-click="togglePhoneInfo()" cm-reactive>{{::label|cmTranslate}}<i class="fa cm-ci-color cm-info" ng-show="toggleInfo"></i></label>
+
+    <cm-info-bubble ng-click="togglePhoneInfo()" ng-show="showPhoneInfo" data-qa="ctn-phone-info" nose-x="25%">
+       {{::toggleInfo|cmTranslate}}
+    </cm-info-bubble>
+
     <div class="cm-input-ctn" ng-class="{
         'cm-input-disabled':disabled,
         'with-inside-icon':!disabled && !verification.isVisible,

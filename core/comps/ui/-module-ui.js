@@ -2,6 +2,7 @@
 
 angular.module('cmUi', [
     'cmCore',
+    'cmValidate',
     'ngSanitize',
     'emoji'
 ])

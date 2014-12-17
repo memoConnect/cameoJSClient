@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('cmRoutes').controller('StartKeyinfoCtrl', [
+angular.module('cmRoutes').controller('SetupKeyinfoCtrl', [
     'cmSettings',
     '$rootScope',
     function(cmSettings, $rootScope) {

@@ -150,7 +150,7 @@ angular.module('cmCore')
 
                     self.importData(identity, accountData.identities);
                     self.importAccount(accountData);
-                    self.setAppSettings(accountData)
+                    self.setAppSettings(accountData);
 
                     // check device for pushing
                     cmPushNotificationAdapter.checkRegisteredDevice();
@@ -263,7 +263,13 @@ angular.module('cmCore')
             return this;
         };
 
+        this.getAccount = function(){
+            return this.data.account;
+        };
+
         this.importAccount = function(data){
+            //cmLogger.debug('cmUserModel.importAccount');
+
             this.data.account.loginName = data.loginName || this.data.account.loginName;
 
             if(typeof data.email != 'string') {
@@ -284,8 +290,7 @@ angular.module('cmCore')
         this.updateAccount = function(newAccountData){
             //cmLogger.debug('cmUserModel.updateAccount');
 
-            return cmAuth.putAccount(newAccountData)
-            .then(
+            return cmAuth.putAccount(newAccountData).then(
                 function(){
                     self.importAccount(newAccountData);
                 }
@@ -530,7 +535,6 @@ angular.module('cmCore')
                                 }
             return  cmCrypt.hashObject(dataObject)
         };
-
 
         this.signData = function(data){
 
@@ -931,7 +935,7 @@ angular.module('cmCore')
             init();
             self.one('update:finished', function(){
                 if(!self.hasLocalKeys()){
-                    $rootScope.goTo('/start/keyinfo');
+                    $rootScope.goTo('/setup/keyinfo');
                 } else {
                     $rootScope.goTo('/talks');
                 }

@@ -349,7 +349,7 @@ describe('Authentication requests -', function () {
     describe("key2 -", function () {
 
         it("generate key2", function () {
-            util.login(testUser1, "password", "/start")
+            util.login(testUser1, "password")
             util.generateKey(2, keyName2)
             util.waitForPageLoad("/authentication")
             util.get("/settings/identity/key/list")

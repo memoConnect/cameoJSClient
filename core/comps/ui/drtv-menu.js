@@ -13,6 +13,8 @@ angular.module('cmUi').directive('cmMenu',[
                 $scope.menu = cmConfig.menu;
                 $scope.menuKeys = Object.keys($scope.menu);
 
+                $scope.markQuickstart = $rootScope.markQuickstart || false;
+
                 $scope.version = cmConfig.version;
                 $scope.menuVisible = false;
 

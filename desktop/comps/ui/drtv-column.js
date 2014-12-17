@@ -12,6 +12,38 @@ angular.module('cmDesktopUi').directive('cmColumn',[
                 }
 
                 addGrabber();
+
+                //function checkScrollable(){
+                //    console.log('find',element.find('cm-footer'))
+                //
+                //    if(element.find('cm-scrollable').length == 1){
+                //        element.css({'overflow':'hidden'});
+                //    }
+                //}
+                //
+                //checkScrollable();
+
+                //if('cmWithoutFooterCheck' in attrs)
+                //    return false;
+                //
+                //function checkFooter(){
+                //    if(element.find('cm-footer').length == 0)
+                //        element.addClass('without-footer');
+                //    else
+                //        element.removeClass('without-footer');
+                //}
+                //
+                //checkFooter();
+                //
+                //var watchersEnd = $rootScope.$on('cmFooter:stateChanged',function(){
+                //    $timeout(function(){
+                //        checkFooter();
+                //    },50);
+                //});
+                //
+                //scope.$on('$destroy', function(){
+                //    watchersEnd();
+                //});
             }
         }
     }

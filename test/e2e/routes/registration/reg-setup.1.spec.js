@@ -1,7 +1,7 @@
-var config = require("../config/specs.js")
-var util = require("../../lib/e2e/cmTestUtil.js")
+var config = require("../../config/specs.js")
+var util = require("../../../lib/e2e/cmTestUtil.js")
 
-describe('Route: Start - ', function () {
+describe('Registration-Setup : ', function () {
     var ptor = util.getPtorInstance()
 
     var testUserWithKey = ""
@@ -9,9 +9,14 @@ describe('Route: Start - ', function () {
     var password = 'password'
 
     describe('After registration with key generation - ', function () {
-        it('register user, first url should be "/start/welcome" ', function () {
-            testUserWithKey = util.createTestUser(undefined, 'start - 1')
-            util.waitForPageLoad('/start/welcome')
+        it('register user, first url should be "/setup/account" ', function () {
+            testUserWithKey = util.createTestUser(undefined, 'reg-setup - 1')
+            util.waitForPageLoad('/setup/account')
+        })
+
+        it("the next step should be setup identity", function () {
+            util.waitAndClickQa("btn-next-step")
+            util.waitForPageLoad('/setup/identity')
         })
 
         it("the next step should be key generation", function () {
@@ -34,7 +39,6 @@ describe('Route: Start - ', function () {
 
     describe('Login user with key -', function(){
         it("login user", function(){
-            util.logout();
             util.login(testUserWithKey, password);
         })
 
@@ -44,9 +48,14 @@ describe('Route: Start - ', function () {
     })
 
     describe('After registration with canceled key generation - ', function () {
-        it('register user, first url should be "/start/welcome" ', function () {
-            testUserWithoutKey = util.createTestUser(undefined, 'start - 2')
-            util.waitForPageLoad('/start/welcome')
+        it('register user, first url should be "/setup/account" ', function () {
+            testUserWithoutKey = util.createTestUser(undefined, 'reg-setup - 2')
+            util.waitForPageLoad('/setup/account')
+        })
+
+        it("the next step should be setup identity", function () {
+            util.waitAndClickQa("btn-next-step")
+            util.waitForPageLoad('/setup/identity')
         })
 
         it("the next step should be key generation", function () {
@@ -62,12 +71,11 @@ describe('Route: Start - ', function () {
 
     describe('Login user without key and skip keygen -', function () {
         it('login user', function () {
-            util.logout();
             util.login(testUserWithoutKey, password);
         })
 
         it('keyinfo should be displayed', function () {
-            util.waitForPageLoad("/start/keyinfo")
+            util.waitForPageLoad("/setup/keyinfo")
         })
 
         it("go to /talks when skipping keygen", function () {
@@ -78,12 +86,11 @@ describe('Route: Start - ', function () {
 
     describe('Login user without key and set skip checkbox -', function () {
         it('login user', function () {
-            util.logout();
             util.login(testUserWithoutKey, password);
         })
 
         it('keyinfo should be displayed', function () {
-            util.waitForPageLoad("/start/keyinfo")
+            util.waitForPageLoad("/setup/keyinfo")
         })
 
         it("go to /talks when skipping keygen", function () {
@@ -93,7 +100,6 @@ describe('Route: Start - ', function () {
         })
 
         it("logout and login", function(){
-            util.logout();
             util.login(testUserWithoutKey, password);
         })
 
@@ -114,7 +120,7 @@ describe('Route: Start - ', function () {
         })
 
         it('keyinfo should be displayed', function () {
-            util.waitForPageLoad("/start/keyinfo")
+            util.waitForPageLoad("/setup/keyinfo")
         })
 
         it("offer differen keysizes", function(){

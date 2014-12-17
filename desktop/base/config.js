@@ -4,6 +4,7 @@ angular.module('cmConfig',[])
         var self = {
             target: '<%= currentTarget %>',
             restApi: '<%= currentApiUrl %>',
+            defaultApiVersion: '<%= defaultApiVersion %>',
             version: '<%= currentVersion %>',
 
             commitSize: 50,
@@ -42,12 +43,6 @@ angular.module('cmConfig',[])
                     hasCtrl: true,
                     guests: false,
                     routes: ['/start/quickstart']
-                },
-                'start-keyinfo': {
-                    guests: false,
-                    hasCtrl: true,
-                    routes: ['/start/keyinfo'],
-                    resolveUserModel: true
                 },
                 'login': {
                     isDefault: true,
@@ -254,6 +249,24 @@ angular.module('cmConfig',[])
                     hasCtrl: true,
                     templateUrl: 'routes/error/error.html',
                     guests: true
+                },
+                'setup-account':{
+                    hasCtrl: true,
+                    routes: ['/setup/account'],
+                    guests: false,
+                    resolveUserModel: true
+                },
+                'setup-identity':{
+                    hasCtrl: true,
+                    routes: ['/setup/identity'],
+                    guests: false,
+                    resolveUserModel: true
+                },
+                'setup-keyinfo': {
+                    guests: false,
+                    hasCtrl: true,
+                    routes: ['/setup/keyinfo'],
+                    resolveUserModel: true
                 }
             },
 
@@ -276,7 +289,7 @@ angular.module('cmConfig',[])
                 //'settings/identity/key/list': {i18n:'MENU.OWN_KEYS', icon:'cm-key'},
                 'contact/request/list': {'data-qa':'btn-menu-contact-requests', i18n:'MENU.REQUESTS', icon:'cm-new-contact-query', css:'cm-menu-notify qa-btn-request-notify', drtv:'cm-friend-request-counter'},
                 'settings': {i18n:'MENU.SETTINGS', icon:'cm-settings'},
-                'start/quickstart': {i18n:'START.QUICKSTART.HEADLINE', icon:'cm-info'}
+                'start/quickstart': {i18n:'START.QUICKSTART.HEADLINE', icon:'cm-info', name:'quickstart'}
             },
 
             footer: {

@@ -237,11 +237,14 @@ angular.module('cmCore').provider('cmApi',[
                 }
 
                 function prepareConfig(config, method, token, twoFactorToken){
+                    config.apiVersion = without_api_url ? '' : config.apiVersion || $injector.get('cmConfig').defaultApiVersion;
                     config.url      =   config.url ||
                         (
                             rest_api +      // base url API
+                            config.apiVersion +  // api version
                             config.path     // path to specific method
-                            )
+                        )
+
                     config.method   =   method || config.method
                     config.headers  =   angular.extend(token           ? {'Authorization': token} : {}, config.headers || {})   //add authorization token to the header
                     config.headers  =   angular.extend(twoFactorToken  ? {'X-TwoFactorToken': twoFactorToken} : {}, config.headers || {})   //add two factor authorization token to the header
@@ -362,7 +365,7 @@ angular.module('cmCore').provider('cmApi',[
                     }
 
 
-                    prepareConfig(config, method)
+                    prepareConfig(config, method, without_api_url)
 
                     var deferred = $q.defer()
 

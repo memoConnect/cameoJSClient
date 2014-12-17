@@ -160,7 +160,16 @@
     },
     "MODAL": {
       "HEADER": "@IDENTITY.LABEL.IDENTITIES"
-    }
+    },
+      "CREATE": {
+          "HEADLINE_SMALL": "@todo IDENTITY.INFO.CREATE.HEADLINE_SMALL",
+          "HEADLINE": "In your identity you define, what information other users can see. If you accept a contact request from another user, he can see all the fields that you enter in your identity profile.\nYour identity can be found by searching for the cameoID or its display name. ",
+          "CAMEOID": "Every identity has a unique cameoID, with which you can be found in cameoNet.",
+          "AVATAR": "@todo IDENTITY.INFO.CREATE.AVATAR",
+          "DISPLAYNAME": "If you enter a display name, this will be displayed instead of the cameoID. Your identity in cameoNet can be found by searching for the display name. The display name does not need to be unique.",
+          "EMAIL": "You can enter an e-mail address here. It will be displayed to other users in your identity profile, but it will not be verified or used for any purpose. Notifications for this identity will be sent to the e-mail address entered in your account.",
+          "PHONE": "You can enter a mobile phone number here. It will be displayed to other users in your identity profile, but it will not be verified or used for any purpose. Notifications for this identity will be sent to the mobile phone number entered in your account."
+      }
   },
   "DRTV": {
     "IMPRINT": {
@@ -304,7 +313,7 @@
   },
   "START": {
     "QUICKSTART": {
-      "TEXT_4": "If you have any questions regarding our service, feel free to let us a short notice through our platform at http://support.cameonet.de.",
+      "TEXT_4": "If you have any questions regarding our service, feel free to let us a short notice through our platform at http://support.cameonet.de or write us an email to support@cameonet.de",
       "HEADLINE_2": "2. Search for Peers",
       "TEXT_1": "A cameoKey is needed for all members of a secure talk. You don't have one? Please open Settings > cameoKeys.",
       "TEXT_2": "To find friends or peers please press 'Add Contact' in the app header and choose 'Search cameoNet' to select a cameoID or display name. If you have selected one, please send him or her a 'Contact Request'. After the confirmation of your request the contact will be included to your 'Contacts'.",
@@ -408,7 +417,8 @@
             "EMAIL": "@:CONTACT.PLACEHOLDER.EMAIL",
             "DISPLAYNAME": "@:CONTACT.PLACEHOLDER.DISPLAYNAME",
             "CAMEOID": "@:CONTACT.PLACEHOLDER.CAMEOID",
-            "PHONENUMBER": "@:CONTACT.PLACEHOLDER.PHONENUMBER"
+            "PHONENUMBER": "@:CONTACT.PLACEHOLDER.PHONENUMBER",
+            "AVATAR": "@:CONTACT.PLACEHOLDER.AVATAR"
           },
           "INFO": {
             "INVALID": {
@@ -545,6 +555,7 @@
   },
   "CONTACT": {
     "PLACEHOLDER": {
+      "AVATAR": "Avatar",
       "STREETNR": "No.",
       "DISPLAYNAME": "@:CONTACTS.LABEL.DISPLAYNAME",
       "EMAIL": "e-mail",
@@ -666,7 +677,7 @@
       "HEAD_LOGIN": "Login information"
     },
     "INFO": {
-      "LOGIN_INFORMATION": "Here you will define your account data that you use for the login at cameoNet.<br/><br/>The choosen user name will become your (first) cameoID automatically. The cameoID can be find by other users to connect with you.",
+      "LOGIN_INFORMATION": "@todo Here you will define your account data that you use for the login at cameoNet.<br/><br/>The choosen user name will become your (first) cameoID automatically. The cameoID can be find by other users to connect with you.",
       "EMPTY": {
         "PASSWORD": "Please enter a password."
       },
@@ -826,7 +837,9 @@
         "LOGINAME": "Please enter a login name.",
         "OLD_PASSWORD": "Please enter your previous password."
       },
-      "LOGINAME": "The login name cannot be changed."
+      "LOGINAME": "The login name cannot be changed.",
+      "PHONENUMBER": "@todo ACCOUNT.INFO.PHONENUMBER",
+      "EMAIL": "@todo ACCOUNT.INFO.EMAIL"
     },
     "PLACEHOLDER": {
       "PASSWORD_CHANGE": "Change password",
@@ -837,7 +850,8 @@
     },
     "FOOTER": {
       "SAVE": "Save",
-      "BACK": "Done"
+      "BACK": "Done",
+      "SKIP": "Skip"
     }
   },
   "ERROR": {

@@ -455,6 +455,7 @@ describe('Conversation encryption -', function () {
 
                 util.get("/talks")                
                 util.headerSearchInList("asym_" + date)
+                ptor.sleep(50)
                 $("cm-conversation-tag").click()
 
                 util.waitForElement("cm-message")
@@ -471,6 +472,7 @@ describe('Conversation encryption -', function () {
 
                 util.get("/talks")
                 util.headerSearchInList("password_" + date)
+                ptor.sleep(50);
                 $$("cm-conversation-tag").then(function (tags) {
                     tags[0].click()
 
@@ -492,6 +494,7 @@ describe('Conversation encryption -', function () {
 
                 util.get("/talks")
                 util.headerSearchInList("passCaptcha_" + date)
+                ptor.sleep(50)
                 $("cm-conversation-tag").click()
 
                 util.waitForElement("cm-modal.active .cm-modal-alert")

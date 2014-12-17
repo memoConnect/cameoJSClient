@@ -67,9 +67,8 @@ describe('Message signing -', function () {
 
                 $("[data-qa='btn-send-answer']").click()
                 .then(function(){
-                    return util.getConversation(subject)                    
+                    return util.getConversation(subject)
                 })
-
 
                 // get conversation Id
                 ptor.wait(function () {
