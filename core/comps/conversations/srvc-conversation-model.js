@@ -321,11 +321,21 @@ angular.module('cmConversations')
                                         ?   passphraseVault.exportData()
                                         :   { keyTransmission: 'none' }
 
-                data.sePassphrase       =   passphrase_data.sePassphrase        || undefined;
-                data.aePassphraseList   =   passphrase_data.aePassphraseList    || undefined;
-                data.keyTransmission    =   passphrase_data.keyTransmission;
+                console.log('exportData')
+                console.dir(passphrase_data)
 
-                data.recipients         =   this.recipients.map(function(recipient){ return recipient.id });
+                data.sePassphrase           =   passphrase_data.sePassphrase        || undefined;
+                data.aePassphraseList       =   passphrase_data.aePassphraseList    || undefined;
+                data.keyTransmission        =   passphrase_data.keyTransmission
+                data.conversationSignatures =   passphrase_data.signatures
+
+                data.recipients             =       passphrase_data.recipientKeyList 
+                                                ||  this.recipients.map(function(recipient){ 
+                                                        return  {
+                                                                    dentityId:     recipient.id ,
+                                                                    keys:          []
+                                                                }
+                                                    });
 
                 return data;
             };

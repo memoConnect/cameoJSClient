@@ -56,32 +56,7 @@ angular.module('cmCore').service('cmPassphraseVault',[
         }
 
 
-
-        /**
-         * Constructor PassphraseVault
-         */
-        function PassphraseVault(data, signature){
-
-
-            var sePassphrase            = data.sePassphrase,
-                aePassphraseList        = data.aePassphraseList || [],
-                recipientKeyList        = data.recipientKeyList || [],
-                self                    = this,
-
-                cache_passphrase        = true,
-                cached_passphrase       = undefined
-
-            /**
-             * @ngdoc method
-             * @methodOf PassphraseVault
-             *
-             * @name getKeyTransmission
-             * @description
-             * return encryption type
-             *
-             * @returns {String} encryption type - 'none' || 'symmetric' || 'asymmetric' || 'mixed'
-             */
-            this.getKeyTransmission = function(){
+        function getKeyTransmission(sePassphrase, aePassphraseList){
 
                 if(sePassphrase && aePassphraseList.length > 0)
                     return 'mixed';
@@ -94,6 +69,39 @@ angular.module('cmCore').service('cmPassphraseVault',[
 
                 return 'none';
             };
+
+
+        /**
+         * Constructor PassphraseVault
+         */
+        function PassphraseVault(data){
+
+
+            var sePassphrase            = data.sePassphrase,
+                aePassphraseList        = data.aePassphraseList || [],
+                recipientKeyList        = data.recipientKeyList || [],
+                signatures              = data.signatures       || [],
+                self                    = this,
+
+                cache_passphrase        = true,
+                cached_passphrase       = undefined
+
+            console.log('data:')
+            console.dir(data)
+
+            /**
+             * @ngdoc method
+             * @methodOf PassphraseVault
+             *
+             * @name getKeyTransmission
+             * @description
+             * return encryption type
+             *
+             * @returns {String} encryption type - 'none' || 'symmetric' || 'asymmetric' || 'mixed'
+             */
+            this.getKeyTransmission = function(){
+                return getKeyTransmission(sePassphrase, aePassphraseList)
+            }
 
 
             /**
@@ -168,30 +176,6 @@ angular.module('cmCore').service('cmPassphraseVault',[
                             return aePassphraseList.some(function(item){
                                 return item.keyId == key.id
                             })
-                        })
-            }
-
-            /**
-             * @ngdoc method
-             * @methodOf PassphraseVault
-             *
-             * @name getSignature
-             * @description
-             * signs recipient key list, passphrase and key transmission type
-             *
-             * @returns {Promise} Returns a promise resolving with an array of signatures (one for each local key, usually one)
-             */
-            this.getSignatures = function(){
-                return  self.get()
-                        .then(function(passphrase){
-                            return  $q.when({
-                                        passphrase              : passphrase,
-                                        keyTransmission         : self.getKeyTransmission(),
-                                        recipientKeyList        : recipientKeyList
-                                    })
-                        })
-                        .then(function(data){
-                            return  cmUserModel.signData(cmCrypt.hashObject(data))
                         })
             }
 
@@ -301,8 +285,9 @@ angular.module('cmCore').service('cmPassphraseVault',[
                 return  {
                             sePassphrase            : sePassphrase,
                             aePassphraseList        : aePassphraseList,
-                            keyTransmission         : this.getKeyTransmission(),
+                            keyTransmission         : getKeyTransmission(sePassphrase, aePassphraseList),
                             recipientKeyList        : recipientKeyList,
+                            signatures              : signatures
                         }
             }
         }
@@ -330,11 +315,10 @@ angular.module('cmCore').service('cmPassphraseVault',[
          */
         this.create = function(data){
             data = data || {}
-            data =  {
-                        sePassphrase:       data.sePassphrase       || null,
-                        aePassphraseList:   data.aePassphraseList   || [],
-                        recipientKeyList:   data.recipientKeyList   || []
-                    }
+            data.sePassphrase       = data.sePassphrase       || null,
+            data.aePassphraseList   = data.aePassphraseList   || [],
+            data.recipientKeyList   = data.recipientKeyList   || [],
+            data.signatures         = data.signatures         || []
 
             return new PassphraseVault(data)
         }
@@ -382,13 +366,15 @@ angular.module('cmCore').service('cmPassphraseVault',[
                                         return Array.prototype.concat.apply([], results)
                                     })
                                 :   $q.when([])                              
+
+
+
                     })
-                    .then(
-                        function(result){
-                            //get list of all recipients an their keys used to encrypt the passphrase:
-                                var recipientKeyList =  config.identities.map(function(identity){
+                    .then(function(result){
+                        //get list of all recipients an their keys used to encrypt the passphrase:
+                        result.recipientKeyList =   config.identities.map(function(identity){
                                                         return  {
-                                                                    id:         identity.id,
+                                                                    identityId: identity.id,
                                                                     keys:       result.asym.filter(function(item){
                                                                                     return identity.keys.find(item.keyId) != null
                                                                                 })
@@ -398,17 +384,40 @@ angular.module('cmCore').service('cmPassphraseVault',[
                                                                 }                                                        
                                                     })
 
-                                var double_check =  result.asym.length ==   recipientKeyList.reduce(function(number_of_keys, item){
-                                                                                return number_of_keys + item.keys.length
-                                                                            },0)
+                        var double_check =  result.asym.length ==   result.recipientKeyList.reduce(function(number_of_keys, item){
+                                                                        return number_of_keys + item.keys.length
+                                                                    },0)
 
-                                return  double_check
-                                        ?   self.create({
-                                                sePassphrase:       result.sym,
-                                                aePassphraseList:   result.asym,
-                                                recipientKeyList:   recipientKeyList
-                                            })
-                                        :   $q.reject('cmPassphraseVault.encryptPassphrase(): double check failed.')
+                        return  double_check
+                                ?   result
+                                :   $q.reject('cmPassphraseVault.encryptPassphrase(): double check failed.')
+
+
+
+                    })
+                    .then(function(result){
+                        //get signatures:
+                        return  cmUserModel.signData(cmCrypt.hashObject({
+                                    passphrase              : config.passphrase,
+                                    keyTransmission         : getKeyTransmission(result.sym, result.asym),
+                                    recipientKeyList        : result.recipientKeyList
+                                }))
+                                .then(function(signatures){
+                                    result.signatures = signatures
+                                    return $q.when(result)
+                                })
+
+
+                    })
+                    .then(
+                        function(result){
+                            console.dir(result)
+                            return  self.create({
+                                        sePassphrase:       result.sym,
+                                        aePassphraseList:   result.asym,
+                                        recipientKeyList:   result.recipientKeyList,
+                                        signatures:         result.signatures
+                                    })
                                 
                         },
                         function(reason){

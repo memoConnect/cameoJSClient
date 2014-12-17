@@ -175,6 +175,7 @@ describe('cmPassphraseVault', function () {
             vault2.getSignatures()
             .then(function(signatures){
                 signatures2 = signatures
+                console.log(signatures)
             })
             .catch(function(reason){
                 console.log(reason)
