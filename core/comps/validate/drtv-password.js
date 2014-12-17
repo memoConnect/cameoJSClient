@@ -49,7 +49,6 @@ angular.module('cmValidate').directive('cmPassword', [
                         $scope.passwordType = 'text';
                     }
 
-                    $scope.copyPW();
                     $scope.confirmPW();
                 };
 
@@ -93,12 +92,14 @@ angular.module('cmValidate').directive('cmPassword', [
                  * validates both password inputs
                  */
                 $scope.confirmPW = function(){
+                    $scope.copyPW();
+
                     if(!$scope.pw || !$scope.pwConfirm){
                         $scope.showConfirmPWStatus = false
                         return false;
                     }
 
-                    if(($scope.pw == $scope.pwConfirm) || $scope.showPassword){
+                    if(($scope.pw == $scope.pwConfirm)){
                         $scope.showConfirmPWStatus = true;
                         $scope.showPasswordEmptyError = false;
                         setPassword(cmCrypt.hash($scope.pw));
@@ -109,7 +110,8 @@ angular.module('cmValidate').directive('cmPassword', [
                 };
 
                 $scope.copyPW = function(){
-                    $scope.pwConfirm = $scope.pw;
+                    if($scope.showPassword)
+                        $scope.pwConfirm = $scope.pw;
                 };
 
                 /**

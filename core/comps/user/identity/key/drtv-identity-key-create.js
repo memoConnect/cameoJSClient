@@ -63,8 +63,8 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
 
                 $scope.getElapsedTime = function(){
                     elapsedTime =   startTime 
-                                    ?   Math.max(new Date().getTime() - startTime, 0)
-                                    :   elapsedTime;
+                                    ?   Math.ceil(Math.max(new Date().getTime() - startTime, 0))
+                                    :   Math.ceil(elapsedTime);
                     return elapsedTime;
                 };
 
@@ -197,7 +197,7 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
                                     if(cmUserModel.data.identity.keys.some(function(key){
                                         return key.id != result.data.keyId
                                     })){
-                                        $scope.goto('/authentication')
+                                        $scope.goTo('/authentication')
                                     } else {
                                         $scope.goTo('/talks');
                                     }

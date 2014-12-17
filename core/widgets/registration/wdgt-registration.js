@@ -49,7 +49,7 @@ angular.module('cmWidgets').directive('cmWidgetRegistration', [
                  */
                 $scope.validateForm = function () {
                     var deferred = $q.defer(),
-                        reservationCheck = false;
+                        valid = true;
 
                     $scope.formValidation = true;
 
@@ -64,6 +64,7 @@ angular.module('cmWidgets').directive('cmWidgetRegistration', [
                         if ($scope.registrationForm.cameoId.$viewValue == undefined
                             || $scope.registrationForm.cameoId.$viewValue.toString() == ''
                         ) {
+                            valid = false;
                             $rootScope.$broadcast('cm-login-name:invalid');
                         }
                     } else {
@@ -75,6 +76,7 @@ angular.module('cmWidgets').directive('cmWidgetRegistration', [
                         || $scope.formData.password == 'none'
                         || $scope.formData.password == undefined) {
                         $rootScope.$broadcast('cm-password:empty');
+                        valid = false;
                     } else {
                         data.password = $scope.formData.password;
                     }
@@ -88,13 +90,13 @@ angular.module('cmWidgets').directive('cmWidgetRegistration', [
                     if (data.loginName != null && cmUtil.objLen($scope.reservationSecrets) > 0) {
                         if (!(data.loginName in $scope.reservationSecrets)) {
                             cmNotify.warn('REGISTRATION.WARN.RESERVATIONSECRET_MISSING');
+                            valid = false;
                         } else {
                             data.reservationSecret = $scope.reservationSecrets[data.loginName];
-                            reservationCheck = true;
                         }
                     }
 
-                    if ($scope.registrationForm.$valid !== false && reservationCheck == true) {
+                    if ($scope.registrationForm.$valid !== false && valid == true) {
                         deferred.resolve(data);
                     } else {
                         deferred.reject();
