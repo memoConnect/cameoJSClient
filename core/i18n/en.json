@@ -615,7 +615,14 @@
     "REQUESTS": "Contact requests",
     "SETTINGS": "@:SETTINGS.LABEL",
     "OWN_KEYS": "Own keys",
+    "HELP": "@:HELP.HEADING",
     "NEW_TALK": "New talk"
+  },
+  "HELP":{
+    "HEADING":"@todo Help",
+    "LABEL": {
+      "SUPPORT": "@todo Support"
+    }
   },
   "CONTACTS": {
     "HEADING": {

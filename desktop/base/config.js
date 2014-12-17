@@ -49,6 +49,10 @@ angular.module('cmConfig',[])
                     css: 'no-header no-footer',
                     guests: true
                 },
+                'help': {
+                    routes: ['/help'],
+                    guests: false
+                },
                 'settings': {
                     routes: ['/settings'],
                     guests: false
@@ -289,8 +293,8 @@ angular.module('cmConfig',[])
                 //'settings/identity/key/list': {i18n:'MENU.OWN_KEYS', icon:'cm-key'},
                 'contact/request/list': {'data-qa':'btn-menu-contact-requests', i18n:'MENU.REQUESTS', icon:'cm-new-contact-query', css:'cm-menu-notify qa-btn-request-notify', drtv:'cm-friend-request-counter'},
                 'settings': {i18n:'MENU.SETTINGS', icon:'cm-settings'},
-                'start/quickstart': {i18n:'START.QUICKSTART.HEADLINE', icon:'cm-info', name:'quickstart'}
-            },
+                'help': {i18n:'MENU.HELP', icon:'cm-info'}
+			},
 
             footer: {
                 'talks': {i18n:'DRTV.FOOTER.TALKS', icon:'cm-talk'},
@@ -306,6 +310,11 @@ angular.module('cmConfig',[])
                 'app': {i18n:'SETTINGS.APP', icon:'cm-fix'},
                 'contracts': {i18n:'SETTINGS.CONTRACTS', icon:'cm-clipboard', disabled:true},
                 'about': {i18n:'SETTINGS.PAGES.ABOUT_US.TITLE', icon:'cm-rhino-positive'}
+            },
+
+            routeHelp: {
+                'start/quickstart': {i18n:'START.QUICKSTART.HEADLINE', icon:'cm-info'},
+                'support': {i18n:'HELP.LABEL.SUPPORT',icon:'cm-rhino-bubble-glyph',externLink:'http://support.cameonet.de'}
             }
         };
         // performance page

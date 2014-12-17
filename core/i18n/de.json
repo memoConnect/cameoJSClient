@@ -809,7 +809,15 @@
         "REQUESTS": "Kontaktanfragen",
         "OWN_KEYS": "Eigene Schlüssel",
         "SETTINGS": "@:SETTINGS.LABEL",
+        "HELP": "@:HELP.HEADING",
         "LOGOUT": "Abmelden"
+    },
+
+    "HELP":{
+        "HEADING":"@todo Hilfe",
+        "LABEL": {
+            "SUPPORT": "@todo Support"
+        }
     },
 
     "NOTIFICATIONS": {
