@@ -244,17 +244,18 @@ angular.module('cameoClient', [
 }])
 // router passing wrong route calls
 .run([
-    '$rootScope', '$location',
+    '$rootScope', '$location', '$route',
     'cmUserModel',
-    function($rootScope, $location,
+    function($rootScope, $location, $route,
              cmUserModel){
 
-        function checkAccess(route){
-            var guestVisibility =
-                                route
-                                && 'guests' in route
-                                ? route.guests
-                                : false,
+        function checkAccess(){
+            var route = $route.current.$$route,
+                guestVisibility =
+                    route
+                    && 'guests' in route
+                    ? route.guests
+                    : false,
                 path = $location.$$path;
 
             switch(true){
@@ -275,8 +276,8 @@ angular.module('cameoClient', [
             }
         }
 
-        $rootScope.$on('$routeChangeSuccess', function(event, route){
-            checkAccess(route.$$route);
+        $rootScope.$on('$locationChangeSuccess', function(event){
+            checkAccess();
         });
     }
 ])

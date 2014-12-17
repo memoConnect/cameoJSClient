@@ -477,19 +477,24 @@
       "LOGIN_NOT_FOUND": "Username could not be found.",
       "PHONENUMBER_NOT_FOUND": "Phone number could not be found.",
       "EMAIL_NOT_FOUND": "e-mail address could not be found.",
-      "NO_EMAIL_PHONENUMBER": "Please verify your entries.",
-      "CONFIRMATION_SENDED": "@todo We have sent you a message. This contains a code taht you can insert here and a link that redirect you to the reset password.",
-      "EMPTY_CODE": "@todo Please enter a code",
-      "EXPIRED": "@:PASSWORD_RESET.INFO.EXPIRED"
-    },
-    "PLACEHOLDER": {
-      "MIXED": "Username, cameoID, e-mail address or phone number",
-      "RESET_CODE": "@todo Code out of the message"
+      "NO_EMAIL_PHONENUMBER": "@todo You haven't a verified email or phonenumber."
     },
     "LABEL": {
-      "SUBMIT": "Request password reset",
-      "RESET": "@todo Cancel",
-      "SUBMIT_CODE": "@todo Check code"
+      "MIXED": "Username, cameoID, e-mail address or phone number",
+      "SUBMIT": "Request password reset"
+    }
+  },
+  "PASSWORD_CODE": {
+    "HEADING": "Password reset code",
+    "INFO": {
+      "CONFIRMATION_SENDED": "@todo We have sent you a message. This contains a code taht you can insert here and a link that redirect you to the reset password.",
+      "EMPTY": "@todo Please enter a code",
+      "EXPIRED": "@:PASSWORD_RESET.INFO.EXPIRED"
+    },
+    "LABEL": {
+      "CODE": "@todo Code out of the message",
+      "CANCEL": "@todo Cancel",
+      "SUBMIT": "@todo Check code"
     }
   },
   "PASSWORD_RESET": {

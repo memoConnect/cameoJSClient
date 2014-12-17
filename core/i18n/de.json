@@ -43,22 +43,28 @@
         "INFO": {
             "TITLE_TEXT": "Hier können Sie Ihr Passwort zurücksetzen, wenn Sie für Ihr Benutzerkonto eine E-Mail-Adresse oder Telefonnummer hinterlegt und verifiziert haben.<br> Bitte geben Sie zur Identifikation Ihren Benutzernamen, Ihre cameoID oder Ihre hinterlegte E-Mail-Adresse oder Telefonnummer ein. Sie erhalten dann eine Nachricht. Darin finden Sie einen Link zur Passwortrücksetzung.",
             "EMPTY": "Bitte geben Sie eine Identifikation ein (Benutzername, cameoID, E-Mail-Adresse oder Telefonnummer).",
-                "LOGIN_NOT_FOUND": "Der Benutzername kann nicht gefunden werden.",
+            "LOGIN_NOT_FOUND": "Der Benutzername kann nicht gefunden werden.",
             "PHONENUMBER_NOT_FOUND": "Die Telefonnummer kann nicht gefunden werden.",
             "EMAIL_NOT_FOUND": "Die E-Mail-Adresse kann nicht gefunden werden.",
-            "NO_EMAIL_PHONENUMBER": "Bitte korrigieren Sie ihre Eingabe.",
-            "CONFIRMATION_SENDED": "@todo Wir haben Ihnen eine Nachricht gesendet. Darin finden Sie einen Code den Sie hier eingeben können oder einen Link der Sie direkt zur Passwortrücksetzung weiterleitet.",
-            "EMPTY_CODE": "@todo Bitte geben Sie einen Code ein",
-            "EXPIRED": "@:PASSWORD_RESET.INFO.EXPIRED"
-        },
-        "PLACEHOLDER": {
-            "MIXED": "Benutzername, cameoID, E-Mail-Adresse oder Telefonnummer",
-            "RESET_CODE": "@todo Code aus der empfangenen Nachricht"
+            "NO_EMAIL_PHONENUMBER": "@todo Sie haben keine verifizierte E-Mail oder Telefonnummer."
         },
         "LABEL": {
-            "SUBMIT": "Passwortrücksetzung anfordern",
-            "RESET": "@todo Abbrechen",
-            "SUBMIT_CODE": "@todo Code überprüfen"
+            "MIXED": "Benutzername, cameoID, E-Mail-Adresse oder Telefonnummer",
+            "SUBMIT": "Passwortrücksetzung anfordern"
+        }
+    },
+
+    "PASSWORD_CODE": {
+        "HEADING": "Passwort zurücksetzen Code",
+        "INFO": {
+            "CONFIRMATION_SENDED": "@todo Wir haben Ihnen eine Nachricht gesendet. Darin finden Sie einen Code den Sie hier eingeben können oder einen Link der Sie direkt zur Passwortrücksetzung weiterleitet.",
+            "EMPTY": "@todo Bitte geben Sie einen Code ein",
+            "EXPIRED": "@:PASSWORD_RESET.INFO.EXPIRED"
+        },
+        "LABEL": {
+            "CODE": "@todo Code aus der empfangenen Nachricht",
+            "CANCEL": "@todo Abbrechen",
+            "SUBMIT": "@todo Code überprüfen"
         }
     },
 
