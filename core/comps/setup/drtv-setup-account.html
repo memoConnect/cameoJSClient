@@ -1,13 +1,13 @@
-<article class="content" ng-click="toggleHeadlineInfo()">
-    <cm-info-bubble class="cm-alert">
-        <div ng-show="!showHeadlineInfo">
-            <i class="fa cm-info cm-orange"></i> {{'ACCOUNT.INFO.NOTE_ABOUT_THIS_DATA_SMALL'|cmTranslate}}
+<article class="content" ng-click="toggleHeadlineInfo()" data-qa="ctn-toggle-headline">
+    <cm-info-bubble nose-x="45%">
+        <div ng-show="!showHeadlineInfo" data-qa="info-headline-small">
+            <i class="fa cm-info cm-ci-color"></i> {{'ACCOUNT.INFO.NOTE_ABOUT_THIS_DATA_SMALL'|cmTranslate}}
         </div>
-        <div ng-show="showHeadlineInfo">
-            <i class="fa cm-info cm-ci-color"></i>
+        <div ng-show="showHeadlineInfo" data-qa="info-headline">
+            <i class="fa cm-info cm-ci-color"></i> {{'ACCOUNT.INFO.NOTE_ABOUT_THIS_DATA_SMALL'|cmTranslate}}
+            <hr class="margin-small" />
             <span ng-bind-html="'ACCOUNT.INFO.NOTE_ABOUT_THIS_DATA'|cmParse"></span>
         </div>
-
     </cm-info-bubble>
 </article>
 
@@ -20,18 +20,8 @@
         cm-tabindex="2"
         cm-label="ACCOUNT.PLACEHOLDER.PHONENUMBER"
         cm-info="ACCOUNT.INFO.INVALID.PHONENUMBER"
+        cm-toggle-info="ACCOUNT.INFO.PHONENUMBER"
     ></cm-form-phonenumber>
-
-    <article class="content" ng-click="togglePhoneInfo()">
-        <cm-info-bubble>
-            <div ng-show="!showPhoneInfo">
-                <i class="fa cm-info cm-orange"></i> {{'ACCOUNT.INFO.PHONE_SMALL'|cmTranslate}}
-            </div>
-            <div ng-show="showPhoneInfo">
-                <i class="fa cm-info cm-ci-color"></i> {{'IDENTITY.INFO.PHONE'|cmTranslate}}
-            </div>
-        </cm-info-bubble>
-    </article>
 
     <hr class="margin-small" />
 
@@ -40,18 +30,8 @@
         cm-tabindex="3"
         cm-label="ACCOUNT.PLACEHOLDER.EMAIL"
         cm-info="ACCOUNT.INFO.INVALID.EMAIL"
+        cm-toggle-info="ACCOUNT.INFO.EMAIL"
     ></cm-form-email>
-
-    <article class="content" ng-click="toggleEmailInfo()">
-        <cm-info-bubble>
-            <div ng-show="!showEmailInfo">
-                <i class="fa cm-info cm-orange"></i> {{'IDENTITY.INFO.EMAIL_SMALL'|cmTranslate}}
-            </div>
-            <div ng-show="showEmailInfo">
-                <i class="fa cm-info cm-ci-color"></i> {{'IDENTITY.INFO.EMAIL'|cmTranslate}}
-            </div>
-        </cm-info-bubble>
-    </article>
 
     <hr class="margin-small" />
 

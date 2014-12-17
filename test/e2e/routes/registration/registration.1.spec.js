@@ -89,9 +89,7 @@ describe('Registration: ', function () {
         util.waitForPageLoad("/terms")
     })
 
-    /**
-     * @TODO!
-     */
+
     it('should create account with valid credentials and have a support talk', function() {
         var loginName = util.createTestUser()
         util.waitForPageLoad('/setup/account')

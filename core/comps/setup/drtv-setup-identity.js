@@ -25,6 +25,13 @@ angular.module('cmSetup')
                         $scope.showHeadlineInfo = !$scope.showHeadlineInfo ? true : false;
                     };
                     /**
+                     * Toogle AvatarInfo
+                     */
+                    $scope.showAvatarInfo = false;
+                    $scope.toggleAvatarInfo = function() {
+                        $scope.showAvatarInfo = !$scope.showAvatarInfo ? true : false;
+                    };
+                    /**
                      * Toogle CameoIdInfo
                      */
                     $scope.showCameoIdInfo = false;
@@ -37,20 +44,6 @@ angular.module('cmSetup')
                     $scope.showDisplayNameInfo = false;
                     $scope.toggleDisplayNameInfo = function() {
                         $scope.showDisplayNameInfo = !$scope.showDisplayNameInfo ? true : false;
-                    };
-                    /**
-                     * Toogle PhoneInfo
-                     */
-                    $scope.showPhoneInfo = false;
-                    $scope.togglePhoneInfo = function() {
-                        $scope.showPhoneInfo = !$scope.showPhoneInfo ? true : false;
-                    };
-                    /**
-                     * Toogle EmailInfo
-                     */
-                    $scope.showEmailInfo = false;
-                    $scope.toggleEmailInfo = function() {
-                        $scope.showEmailInfo = !$scope.showEmailInfo ? true : false;
                     };
 
                     function reset(){

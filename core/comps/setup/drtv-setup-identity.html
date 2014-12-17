@@ -1,23 +1,32 @@
 <cm-scrollable>
 
-<article class="content" ng-click="toggleHeadlineInfo()">
-    <cm-info-bubble class="cm-alert">
-        <div ng-show="!showHeadlineInfo">
-            <i class="fa cm-info cm-orange"></i> {{'IDENTITY.INFO.CREATE.HEADLINE_SMALL'|cmTranslate}}
+<article class="content" ng-click="toggleHeadlineInfo()" data-qa="ctn-toggle-headline">
+    <cm-info-bubble nose-x="45%">
+        <div ng-show="!showHeadlineInfo" data-qa="info-headline-small">
+            <i class="fa cm-info cm-ci-color"></i> {{'IDENTITY.INFO.CREATE.HEADLINE_SMALL'|cmTranslate}}
         </div>
-        <div ng-show="showHeadlineInfo">
-            <i class="fa cm-info cm-ci-color"></i> {{'IDENTITY.INFO.CREATE.HEADLINE'|cmTranslate}}
+        <div ng-show="showHeadlineInfo" data-qa="info-headline">
+            <i class="fa cm-info cm-ci-color"></i> {{'IDENTITY.INFO.CREATE.HEADLINE_SMALL'|cmTranslate}}
+            <hr class="margin-small" />
+            <span ng-bind-html="'IDENTITY.INFO.CREATE.HEADLINE'|cmParse"></span>
         </div>
     </cm-info-bubble>
 </article>
+
+</cm-info-bubble>
 
 <hr class="margin-small" />
 
 <form name="cmForm" novalidate autocomplete="off">
 
     <article class="content">
-        <label>{{'CONTACT.PLACEHOLDER.AVATAR'|cmTranslate}}</label>
+        <label data-qa="ctn-toggle-avatar-info" ng-click="toggleAvatarInfo()" cm-reactive>{{'CONTACT.PLACEHOLDER.AVATAR'|cmTranslate}}<i class="fa cm-ci-color cm-info"></i></label>
+
+        <cm-info-bubble ng-click="toggleAvatarInfo()" ng-show="showAvatarInfo" data-qa="ctn-avatar-info" nose-x="15%">
+            {{'IDENTITY.INFO.CREATE.AVATAR'|cmTranslate}}
+        </cm-info-bubble>
     </article>
+
     <article class="content tac">
         <div class="avatar">
             <cm-upload-avatar class="border-complete"></cm-upload-avatar>
@@ -28,7 +37,12 @@
     <hr class="margin-small" />
 
     <article class="content">
-        <label>{{'CONTACT.PLACEHOLDER.CAMEOID'|cmTranslate}}</label>
+        <label data-qa="ctn-toggle-cameoid-info" ng-click="toggleCameoIdInfo()" cm-reactive>{{'CONTACT.PLACEHOLDER.CAMEOID'|cmTranslate}}<i class="fa cm-ci-color cm-info"></i></label>
+
+        <cm-info-bubble ng-click="toggleCameoIdInfo()" ng-show="showCameoIdInfo" data-qa="ctn-displayname-info" nose-x="25%">
+            {{'IDENTITY.INFO.CREATE.CAMEOID'|cmTranslate}}
+        </cm-info-bubble>
+
         <div class="cm-input-ctn cm-input-readonly">
             <i class="fa cm-rhino-positive"></i>
             <input
@@ -37,21 +51,15 @@
         </div>
     </article>
 
-    <article class="content" ng-click="toggleCameoIdInfo()">
-        <cm-info-bubble>
-            <div ng-show="!showCameoIdInfo">
-                <i class="fa cm-info cm-orange"></i> {{'IDENTITY.INFO.CREATE.CAMEOID_SMALL'|cmTranslate}}
-            </div>
-            <div ng-show="showCameoIdInfo">
-                <i class="fa cm-info cm-ci-color"></i> {{'IDENTITY.INFO.CREATE.CAMEOID'|cmTranslate}}
-            </div>
-        </cm-info-bubble>
-    </article>
-
     <hr class="margin-small" />
 
     <article class="content">
-        <label>{{'SETTINGS.PAGES.IDENTITY.CREATE.PLACEHOLDER.DISPLAYNAME'|cmTranslate}}</label>
+        <label data-qa="ctn-toggle-displayname-info" ng-click="toggleDisplayNameInfo()" cm-reactive>{{'SETTINGS.PAGES.IDENTITY.CREATE.PLACEHOLDER.DISPLAYNAME'|cmTranslate}}<i class="fa cm-ci-color cm-info"></i></label>
+
+        <cm-info-bubble ng-click="toggleDisplayNameInfo()" ng-show="showDisplayNameInfo" data-qa="ctn-displayname-info" nose-x="25%">
+            {{'IDENTITY.INFO.CREATE.DISPLAYNAME'|cmTranslate}}
+        </cm-info-bubble>
+
         <div class="cm-input-ctn with-inside-icon">
             <input
                 tabindex="2" data-qa="input-displayname"
@@ -72,17 +80,6 @@
         </cm-info-bubble>
     </article>
 
-    <article class="content" ng-click="toggleDisplayNameInfo()">
-        <cm-info-bubble>
-            <div ng-show="!showDisplayNameInfo">
-                <i class="fa cm-info cm-orange"></i> {{'IDENTITY.INFO.CREATE.DISPLAYNAME_SMALL'|cmTranslate}}
-            </div>
-            <div ng-show="showDisplayNameInfo">
-                <i class="fa cm-info cm-ci-color"></i> {{'IDENTITY.INFO.CREATE.DISPLAYNAME'|cmTranslate}}
-            </div>
-        </cm-info-bubble>
-    </article>
-
     <hr class="margin-small" />
 
     <cm-form-phonenumber
@@ -90,18 +87,8 @@
         cm-tabindex="3"
         cm-label="SETTINGS.PAGES.IDENTITY.CREATE.PLACEHOLDER.PHONENUMBER"
         cm-info="SETTINGS.PAGES.IDENTITY.CREATE.INFO.INVALID.PHONENUMBER"
+        cm-toggle-info="SETTINGS.PAGES.IDENTITY.CREATE.INFO.PHONENUMBER"
     ></cm-form-phonenumber>
-
-    <article class="content" ng-click="togglePhoneInfo()">
-        <cm-info-bubble>
-            <div ng-show="!showPhoneInfo">
-                <i class="fa cm-info cm-orange"></i> {{'IDENTITY.INFO.CREATE.PHONE_SMALL'|cmTranslate}}
-            </div>
-            <div ng-show="showPhoneInfo">
-                <i class="fa cm-info cm-ci-color"></i> {{'IDENTITY.INFO.CREATE.PHONE'|cmTranslate}}
-            </div>
-        </cm-info-bubble>
-    </article>
 
     <hr class="margin-small" />
 
@@ -110,18 +97,9 @@
         cm-tabindex="4"
         cm-label="SETTINGS.PAGES.IDENTITY.CREATE.PLACEHOLDER.EMAIL"
         cm-info="SETTINGS.PAGES.IDENTITY.CREATE.INFO.INVALID.EMAIL"
+        cm-toggle-info="SETTINGS.PAGES.IDENTITY.CREATE.INFO.EMAIL"
     ></cm-form-email>
 
-    <article class="content" ng-click="toggleEmailInfo()">
-        <cm-info-bubble>
-            <div ng-show="!showEmailInfo">
-                <i class="fa cm-info cm-orange"></i> {{'IDENTITY.INFO.CREATE.EMAIL_SMALL'|cmTranslate}}
-            </div>
-            <div ng-show="showEmailInfo">
-                <i class="fa cm-info cm-ci-color"></i> {{'IDENTITY.INFO.CREATE.EMAIL'|cmTranslate}}
-            </div>
-        </cm-info-bubble>
-    </article>
 </form>
 
 </cm-scrollable>
