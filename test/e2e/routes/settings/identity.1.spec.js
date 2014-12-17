@@ -30,8 +30,8 @@ describe('Route Identity Settings: ', function(){
         })
 
         it('should have a form with following elements', function(){
-            util.waitForElement("[data-qa='input-cameoId']")
-            expect($("[data-qa='input-cameoId']").isPresent()).toBe(true)
+            util.waitForElement("[data-qa='ctn-cameoid']")
+            expect($("[data-qa='ctn-cameoid']").isPresent()).toBe(true)
 
             util.waitForElement("[data-qa='input-displayname']")
             expect($("[data-qa='input-displayname']").isPresent()).toBe(true)
@@ -59,10 +59,10 @@ describe('Route Identity Settings: ', function(){
         })
 
         it('cameoId should be exists ('+ newTestUser +')', function(){
-            util.waitForElement("[data-qa='input-cameoId']")
-            expect($("[data-qa='input-cameoId']").isPresent()).toBe(true)
+            util.waitForElement("[data-qa='ctn-cameoid']")
+            expect($("[data-qa='ctn-cameoid']").isPresent()).toBe(true)
 
-            expect($("[data-qa='input-cameoId']").getAttribute('value')).toBe(newTestUser + "@cameonet.de")
+            expect($("[data-qa='ctn-cameoid']").getText()).toMatch(newTestUser + "@cameonet.de")
         })
 
         it('should change the displayName', function(){
