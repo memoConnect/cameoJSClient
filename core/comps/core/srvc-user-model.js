@@ -410,8 +410,7 @@ angular.module('cmCore')
          * @returns {*}
          */
         this.storeKey = function(key){
-            var local_keys      = this.loadLocalKeys() || new cmKeyFactory(),
-                matching_key    = local_keys.find(key);
+            var local_keys      = this.loadLocalKeys() || new cmKeyFactory()
 
             local_keys.create(key.exportData(), true);
 
@@ -695,7 +694,7 @@ angular.module('cmCore')
                         .catch(function(){
                                 return  key.decrypt(encrypted_passphrase)
                         })
-            }, $q.reject())
+            }, $q.reject('cmUserModel.decrypt(): missing local keys.'))
 
         };
 
