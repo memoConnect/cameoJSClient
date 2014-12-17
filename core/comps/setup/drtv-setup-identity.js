@@ -94,15 +94,6 @@ angular.module('cmSetup')
                             }
                         }
 
-                        // check loginName aka cameoId
-                        if ($scope.cmForm.cameoId.$valid == false) {
-                            if ($scope.cmForm.cameoId.$viewValue == undefined
-                                || $scope.cmForm.cameoId.$viewValue.toString() == ''
-                            ) {
-                                $rootScope.$broadcast('cm-login-name:invalid');
-                            }
-                        }
-
                         checkDisplayName();
                         checkPhoneNumber();
                         checkEmail();
