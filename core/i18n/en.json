@@ -162,8 +162,10 @@
       "HEADER": "@IDENTITY.LABEL.IDENTITIES"
     },
       "CREATE": {
+          "HEADLINE_SMALL": "@todo IDENTITY.INFO.CREATE.HEADLINE_SMALL",
           "HEADLINE": "In your identity you define, what information other users can see. If you accept a contact request from another user, he can see all the fields that you enter in your identity profile.\nYour identity can be found by searching for the cameoID or its display name. ",
           "CAMEOID": "Every identity has a unique cameoID, with which you can be found in cameoNet.",
+          "AVATAR": "@todo IDENTITY.INFO.CREATE.AVATAR",
           "DISPLAYNAME": "If you enter a display name, this will be displayed instead of the cameoID. Your identity in cameoNet can be found by searching for the display name. The display name does not need to be unique.",
           "EMAIL": "You can enter an e-mail address here. It will be displayed to other users in your identity profile, but it will not be verified or used for any purpose. Notifications for this identity will be sent to the e-mail address entered in your account.",
           "PHONE": "You can enter a mobile phone number here. It will be displayed to other users in your identity profile, but it will not be verified or used for any purpose. Notifications for this identity will be sent to the mobile phone number entered in your account."
@@ -830,7 +832,9 @@
         "LOGINAME": "Please enter a login name.",
         "OLD_PASSWORD": "Please enter your previous password."
       },
-      "LOGINAME": "The login name cannot be changed."
+      "LOGINAME": "The login name cannot be changed.",
+      "PHONENUMBER": "@todo ACCOUNT.INFO.PHONENUMBER",
+      "EMAIL": "@todo ACCOUNT.INFO.EMAIL"
     },
     "PLACEHOLDER": {
       "PASSWORD_CHANGE": "Change password",

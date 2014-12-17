@@ -22,7 +22,7 @@
     <article class="content">
         <label data-qa="ctn-toggle-avatar-info" ng-click="toggleAvatarInfo()" cm-reactive>{{'CONTACT.PLACEHOLDER.AVATAR'|cmTranslate}}<i class="fa cm-ci-color cm-info"></i></label>
 
-        <cm-info-bubble ng-click="toggleAvatarInfo()" ng-show="showAvatarInfo" data-qa="ctn-avatar-info" nose-x="15%">
+        <cm-info-bubble ng-click="toggleAvatarInfo()" ng-show="showAvatarInfo" data-qa="ctn-avatar-info" nose-x="20%">
             {{'IDENTITY.INFO.CREATE.AVATAR'|cmTranslate}}
         </cm-info-bubble>
     </article>
@@ -43,11 +43,9 @@
             {{'IDENTITY.INFO.CREATE.CAMEOID'|cmTranslate}}
         </cm-info-bubble>
 
-        <div class="cm-input-ctn cm-input-readonly">
-            <i class="fa cm-rhino-positive"></i>
-            <input
-                tabindex="1" data-qa="input-cameoId" disabled
-                type="text" name="cameoId" ng-model="identity.cameoId" />
+        <div class="cm-input-ctn cm-input-readonly is-selectable">
+            <i class="fa cm-rhino-positive cameo-id-icon"></i>
+            {{identity.cameoId}}
         </div>
     </article>
 
@@ -87,7 +85,7 @@
         cm-tabindex="3"
         cm-label="SETTINGS.PAGES.IDENTITY.CREATE.PLACEHOLDER.PHONENUMBER"
         cm-info="SETTINGS.PAGES.IDENTITY.CREATE.INFO.INVALID.PHONENUMBER"
-        cm-toggle-info="SETTINGS.PAGES.IDENTITY.CREATE.INFO.PHONENUMBER"
+        cm-toggle-info="IDENTITY.INFO.CREATE.PHONE"
     ></cm-form-phonenumber>
 
     <hr class="margin-small" />
@@ -97,7 +95,7 @@
         cm-tabindex="4"
         cm-label="SETTINGS.PAGES.IDENTITY.CREATE.PLACEHOLDER.EMAIL"
         cm-info="SETTINGS.PAGES.IDENTITY.CREATE.INFO.INVALID.EMAIL"
-        cm-toggle-info="SETTINGS.PAGES.IDENTITY.CREATE.INFO.EMAIL"
+        cm-toggle-info="IDENTITY.INFO.CREATE.EMAIL"
     ></cm-form-email>
 
 </form>
