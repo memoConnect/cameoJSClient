@@ -34,7 +34,7 @@ if(useChrome){
 
 exports.config = extend(browserConfig, {
     seleniumServerJar: '../../../test/lib/ptor/selenium-server-standalone-2.44.0.jar',
-    allScriptsTimeout: 30000,
+    allScriptsTimeout: 60000,
 
     onPrepare: function () {
         require('jasmine-reporters');
@@ -50,7 +50,7 @@ exports.config = extend(browserConfig, {
         isVerbose: false,
         showColors: true,
         includeStackTrace: false,
-        defaultTimeoutInterval: 30000,
+        defaultTimeoutInterval: 60000,
         realtimeFailure: true,
         silent:true
     }
