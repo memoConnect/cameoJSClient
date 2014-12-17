@@ -1,7 +1,7 @@
 var config = require("../../config/specs.js")
 var util = require("../../../lib/e2e/cmTestUtil.js")
 
-xdescribe('Route Contact: ', function () {
+describe('Route Contact: ', function () {
     var ptor = util.getPtorInstance(),
         extUserName = 'moeper_'+ Date.now(),
         extUserTel = '+4912345678',
