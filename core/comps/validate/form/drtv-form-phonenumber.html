@@ -1,17 +1,18 @@
-<cm-country-phone-prefix></cm-country-phone-prefix>
-
 <article class="content" ng-form="cmInnerForm">
+
     <label data-qa="ctn-toggle-phone-info" ng-click="togglePhoneInfo()" cm-reactive>{{::label|cmTranslate}}<i class="fa cm-ci-color cm-info" ng-show="toggleInfo"></i></label>
 
     <cm-info-bubble ng-click="togglePhoneInfo()" ng-show="showPhoneInfo" data-qa="ctn-phone-info" nose-x="25%">
        {{::toggleInfo|cmTranslate}}
     </cm-info-bubble>
 
-    <div class="cm-input-ctn" ng-class="{
+    <div class="cm-input-ctn with-phone-prefix-chooser" ng-class="{
+
         'cm-input-disabled':disabled,
         'with-inside-icon':!disabled && !verification.isVisible,
         'with-inside-icons':!disabled && verification.isVisible
     }">
+        <cm-country-phone-prefix-chooser ng-model=""></cm-country-phone-prefix-chooser>
         <input
             type="tel"
             tabindex="{{::tabIndex}}" data-qa="input-phoneNumber"
@@ -26,6 +27,8 @@
                 'cm-checkbox-wrong': !verification.isVerified
             }"></i>
         <i class="fa cm-write" ng-show="!disabled"></i>
+
+        <cm-country-phone-prefix ng-show=""></cm-country-phone-prefix>
     </div>
     <cm-info-bubble class="cm-alert" ng-show="cmInnerForm.phoneNumber.$dirty && cmInnerForm.phoneNumber.$invalid" data-qa="form-error-phoneNumber-invalid">
         <div ng-show="cmInnerForm.phoneNumber.$invalid">
