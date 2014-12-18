@@ -16,6 +16,8 @@ angular.module('cmDesktopUi').directive('cmDesktopMenu',[
                 $scope.version = cmConfig.version;
                 $scope.menuVisible = false;
 
+                $scope.markQuickstart = $rootScope.markQuickstart || false;
+
                 $scope.checkActive = function(urls, ignore){
                     var arrUrl = urls.split(','),
                         isActive = false,

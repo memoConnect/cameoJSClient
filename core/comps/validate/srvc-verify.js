@@ -1,76 +1,68 @@
 'use strict';
 
 angular.module('cmValidate').service('cmVerify',[
-    'cmApi', 'cmModal',
-    function (cmApi, cmModal){
-
-        function confirmModal(type){
-            var modalId = 'confirm-verification';
-
-            cmModal.create({
-                id: modalId,
-                type: 'plain',
-                'class': 'no-padding',
-                'cm-title': 'DRTV.MODAL_VERIFICATION.HEADER'
-            },'<cm-confirm-verification></cm-confirm-verification>');
-
-            cmModal.open(modalId,{
-                type: type
-            });
-        }
+    'cmAuth', 'cmUtil', 'cmLoader',
+    function (cmAuth, cmUtil, cmLoader){
 
         var self = {
             handleInput: function(type, scope){
+                var loader = new cmLoader(scope);
+
+                scope.cmUtil = cmUtil;
+                scope.code = '';
                 scope.verificationManuallyIcon = '<i class="fa cm-checkbox-wrong"></i>';
 
                 scope.verification = {
                     isVisible: false,
                     isVerified: false
                 };
+                scope.infoBubble = {};
 
                 scope.$watch('verificationData', function(data){
                     if(data && data.value != '') {
                         scope.verification.isVisible = true;
                         scope.verification.isVerified = 'isVerified' in data ? data.isVerified : false;
-                    } else
+                        loader.stop();
+                        scope.code = '';
+                    } else {
                         scope.verification.isVisible = false;
-                });
-
-                scope.doVerification = function(){
-                    if(!scope.verification.isVerified)
-                        self.send(type);
-                };
-            },
-
-            send: function(type){
-                var data = {};
-
-                switch(type){
-                    case 'phoneNumber':
-                        data.verifyPhoneNumber = true;
-                    break;
-                    case 'email':
-                        data.verifyEmail = true;
-                    break;
-                }
-
-                cmApi.post({
-                    path: '/verify',
-                    data: data
-                }).then(
-                    function(){
-                        confirmModal(type);
-                    },
-                    function(){
-
                     }
-                );
-            },
-
-            confirm: function(secret){
-                return cmApi.post({
-                    path: '/verify/'+secret
                 });
+
+                scope.sendVerification = function(){
+                    if (loader.isIdle())
+                        return false;
+
+                    if(!scope.verification.isVerified) {
+                        cmAuth.sendVerification(type);
+                    }
+                };
+
+                scope.checkVerificationCode = function(){
+                    if (loader.isIdle())
+                        return false;
+
+                    scope.infoBubble = {};
+                    loader.start();
+
+                    if(!scope.code || scope.code == ''){
+                        scope.infoBubble.empty = true;
+                        loader.stop();
+                    } else {
+                        cmAuth.confirmVerification(scope.code)
+                        .then(
+                            function(){},
+                            function(response){
+                                loader.stop();
+                                switch (response.data.errorCode){
+                                    case "VERIFY.EXPIRED":
+                                        scope.infoBubble.invalid = true;
+                                    break;
+                                }
+                            }
+                        )
+                    }
+                };
             }
         };
 

@@ -16,13 +16,8 @@ cm-footer {
   .w100;
 }
 
-cm-column{
-  .pos-rel;
+cm-column {
   .dib;
-  .vat;
-  //min-width:@cm-app-width;
-  overflow-x:hidden;
-  overflow-y:auto;
   border-right:@cm-border-width @cm-border-grey solid;
 
   &:last-child{
@@ -33,15 +28,33 @@ cm-column{
   }
 }
 
+//cm-scrollable {
+//  .dbl;
+//  height: 100%;
+//  overflow-x:hidden;
+//  overflow-y:auto;
+//}
+
+cm-column {//}, cm-scrollable{
+  .pos-rel;
+  .vat;
+  //min-width:@cm-app-width;
+  overflow-x:hidden;
+  overflow-y:auto;
+}
+
 .fixed-layout{
   cm-column{
     .pos-fxd;
     left:0;
     top:@cm-header-height;
-    bottom:0;
+    bottom: 0; //@cm-footer-height;
 
     &.without-header{
       top:0;
+    }
+    &.without-footer {
+      bottom: 0;
     }
   }
 
@@ -50,6 +63,9 @@ cm-column{
     width:@cm-column-first-size;
     z-index:1;
 
+//    cm-footer {
+//      width:@cm-column-first-size;
+//    }
     cm-loader.spinner.fullscreen{
       width:@cm-column-first-size;
     }
@@ -59,6 +75,10 @@ cm-column{
     left:@cm-column-first-size;
     z-index:2;
 
+//    cm-footer {
+//      width:@cm-column-second-size;
+//      left:@cm-column-first-size;
+//    }
     cm-loader.spinner.fullscreen{
       width:@cm-column-second-size;
       left:@cm-column-first-size;
@@ -69,6 +89,10 @@ cm-column{
     left:@cm-column-first-size + @cm-column-second-size;
     z-index:3;
 
+//    cm-footer {
+//      width:@cm-column-third-size;
+//      left:@cm-column-first-size + @cm-column-second-size;
+//    }
     cm-loader.spinner.fullscreen{
       width:@cm-column-second-size;
       left:@cm-column-first-size + @cm-column-second-size;
@@ -76,18 +100,30 @@ cm-column{
   }
   // all same columns 33 33 34 %
   &.equal-cols {
+//    cm-footer{
+//      width:@cm-column-equal-size;
+//    }
     cm-loader.spinner.fullscreen{
       width:@cm-column-equal-size;
     }
     cm-column{
       width:@cm-column-equal-size;
+//      cm-footer {
+//        left: 0;
+//      }
     }
     cm-column + cm-column{
       left: @cm-column-equal-size;
+//      cm-footer {
+//        left: @cm-column-equal-size;
+//      }
     }
     cm-column + cm-column + cm-column{
       left: @cm-column-equal-size * 2;
       width: @cm-column-equal-size + 1;
+//      cm-footer {
+//        left: @cm-column-equal-size * 2;
+//      }
     }
   }
 }

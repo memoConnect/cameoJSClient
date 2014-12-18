@@ -14,25 +14,30 @@ angular.module('cmWidgets').directive('cmWidgetPasswordLost', [
                 var loader = new cmLoader($scope);
 
                 $scope.cmUtil = cmUtil;
-                $scope.info = {};
-                $scope.formData = {
-                    identifier: ''
-                };
+
+                function reset(){
+                    $scope.info = {};
+                    $scope.formData = {
+                        identifier: ''
+                    };
+                }
+
+                reset();
 
                 /**
                  * validate cmForm
                  * @returns {*}
                  */
-                $scope.validateForm = function () {
+                $scope.validateForm = function() {
                     var deferred = $q.defer(),
                         objectData = {};
 
-                    if($scope.cmForm.identifier.$modelValue != '')
+                    if ($scope.cmForm.identifier.$modelValue && $scope.cmForm.identifier.$modelValue != '')
                         objectData.identifier = $scope.cmForm.identifier.$modelValue;
                     else
                         $scope.info.empty = true;
 
-                    if ($scope.cmForm.$valid !== false && cmUtil.objLen(objectData) > 0) {
+                    if(cmUtil.objLen(objectData) > 0) {
                         deferred.resolve(objectData);
                     } else {
                         deferred.reject();
@@ -44,11 +49,12 @@ angular.module('cmWidgets').directive('cmWidgetPasswordLost', [
                 /**
                  * Form Validation and Apicall to send password reset
                  */
-                $scope.resetPassword = function () {
+                $scope.startResetPassword = function () {
                     if (loader.isIdle())
                         return false;
 
                     loader.start();
+
                     $scope.info = {};
 
                     $scope.validateForm().then(
@@ -58,12 +64,7 @@ angular.module('cmWidgets').directive('cmWidgetPasswordLost', [
                                 function(){
                                     loader.stop();
 
-                                    $scope.info.confirmationSended = true;
-                                    $scope.formData = {
-                                        identifier: ''
-                                    };
-                                    // everything is fine goTo login
-                                    //$rootScope.goTo('/password/reset');
+                                    $rootScope.goTo('/password/code');
                                 },
                                 function(response){
                                     loader.stop();
@@ -81,7 +82,6 @@ angular.module('cmWidgets').directive('cmWidgetPasswordLost', [
                                             $scope.info.noEmailPhonenumber = true;
                                         break;
                                     }
-
                                 }
                             )
                         },
@@ -89,6 +89,10 @@ angular.module('cmWidgets').directive('cmWidgetPasswordLost', [
                             loader.stop();
                         }
                     );
+                };
+
+                $scope.resetForm = function(){
+                    reset();
                 };
             }
         }

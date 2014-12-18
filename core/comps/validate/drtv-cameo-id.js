@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('cmValidate').directive('cmCameoId',[
-    'cmAuth',
+    'cmAuth', 'cmUserModel',
     '$q', '$rootScope',
-    function (cmAuth,
+    function (cmAuth, cmUserModel,
               $q, $rootScope){
         return {
             restrict: 'E',
@@ -79,8 +79,18 @@ angular.module('cmValidate').directive('cmCameoId',[
 
                     // if input is'nt empty && is valid && reservation secret is'nt exists
                     if(!(newValue in $scope.$parent.reservationSecrets)) {
-                        // check cameoId
-                        $scope.pendingAccountCheck = cmAuth.checkAccountName(newValue).then(
+
+                        // check cameoId#
+
+                        /**
+                         * @TODO !!!
+                         */
+                        var auth = undefined;
+                        if(!cmUserModel.getToken()){
+                            auth = cmUserModel.data.account.basicAuth;
+                        }
+
+                        $scope.pendingAccountCheck = cmAuth.checkAccountName(newValue, auth).then(
                             // valid case
                             function (data) {
                                 // reservation secret to parent scope

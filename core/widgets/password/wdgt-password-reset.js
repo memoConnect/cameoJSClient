@@ -15,13 +15,26 @@ angular.module('cmWidgets').directive('cmWidgetPasswordReset', [
             controller: function ($scope) {
                 var loader = new cmLoader($scope);
 
-                $scope.link = '<a href="#/password/lost">{{\'PASSWORD_RESET.LABEL.LINK_GOTO_PASSWORD_LOST\'|cmTranslate}}</a>';
-
                 $scope.cmUtil = cmUtil;
                 $scope.info = {};
                 $scope.formData = {
                     password: ''
                 };
+
+                $scope.link = '<a href="#/password/lost">{{\'PASSWORD_RESET.LABEL.LINK_GOTO_PASSWORD_LOST\'|cmTranslate}}</a>';
+
+                cmAuth.checkResetPassword($scope.resetId).then(
+                    function(){
+
+                    },
+                    function(response){
+                        switch(response.data.errorCode){
+                            case 'PASSWORD.RESET.EXPIRED':
+                                $scope.info.expired = true;
+                            break;
+                        }
+                    }
+                );
 
                 /**
                  * validate cmForm

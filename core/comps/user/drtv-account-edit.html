@@ -10,10 +10,10 @@
 
     <article class="content" ng-click="toggleReadOnly()">
         <label>{{'ACCOUNT.PLACEHOLDER.LOGINNAME'|cmTranslate}}</label>
-        <div class="cm-input-ctn cm-input-readonly">
+        <div class="cm-input-ctn">
             <input
-                    tabindex="1" data-qa="input-loginName" disabled
-                    type="text" name="loginName" ng-model="account.loginName" />
+                tabindex="1" data-qa="input-loginName" disabled
+                type="text" name="loginName" ng-model="account.loginName" />
         </div>
         <cm-info-bubble class="cm-alert" ng-show="showReadOnly">
             <i class="fa cm-info cm-ci-color"></i> {{'ACCOUNT.INFO.LOGINAME'|cmTranslate}}

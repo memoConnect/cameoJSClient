@@ -67,7 +67,6 @@ describe('Friendrequests: ', function () {
         describe('Friendrequests again "'+ user1ToAccept + '"', function(){
             it('login and accept', function() {
                 util.login(user1ToAccept, password)
-                util.waitForPageLoad("/start")
             })
 
             it('accept request', function(){

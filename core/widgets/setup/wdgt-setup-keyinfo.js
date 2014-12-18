@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('cmWidgets').directive('cmWidgetKeyinfo', [
+angular.module('cmWidgets').directive('cmWidgetSetupKeyinfo', [
     'cmUserModel',
     'cmUtil',
     'cmSettings',
@@ -8,7 +8,7 @@ angular.module('cmWidgets').directive('cmWidgetKeyinfo', [
     function(cmUserModel, cmUtil, cmSettings, $rootScope){
         return {
             restrict: 'E',
-            templateUrl: 'widgets/start/wdgt-keyinfo.html',
+            templateUrl: 'widgets/setup/wdgt-setup-keyinfo.html',
             controller: function ($scope) {
 
                 if(cmUserModel.hasPrivateKey()){

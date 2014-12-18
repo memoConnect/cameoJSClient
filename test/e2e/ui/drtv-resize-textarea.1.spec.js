@@ -3,12 +3,15 @@ var util = require("../../lib/e2e/cmTestUtil.js")
 
 // start init tests
 describe('Textarea Resize', function () {
-    var ptor = util.getPtorInstance()
+    var ptor = util.getPtorInstance(),
+        testUser
 
-    it('login & open new conversation', function () {
-        util.login()
-        util.waitForPageLoad('/start')
+    it('should create user1', function(){
+        testUser = util.createTestUser(undefined, 'route talks')
+        util.expectCurrentUrl('/setup/account')
+    })
 
+    it('open new conversation', function () {
         util.get('/conversation/new')
         util.waitForPageLoad('/conversation/new')
     })
@@ -67,5 +70,13 @@ describe('Textarea Resize', function () {
             var r = parseInt(rows)
             expect(r >= 3 || r <= 4).toBeTruthy()
         })
+    })
+
+    it('should logout', function(){
+        util.logout();
+    })
+
+    it('should delete testUser', function(){
+        util.deleteTestUser(testUser)
     })
 })

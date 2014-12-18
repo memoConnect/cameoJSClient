@@ -113,15 +113,16 @@ describe('Purl Registration: ', function () {
         $("[data-qa='input-password']").sendKeys(password)
         $("[data-qa='input-passwordConfirm']").sendKeys(password)
 
-        $("[data-qa='input-displayName']").sendKeys(externalLogin)
-        $("[data-qa='link-terms']").sendKeys(protractor.Key.END)
+        //$("[data-qa='input-displayName']").sendKeys(externalLogin)
+        //$("[data-qa='link-terms']").sendKeys(protractor.Key.END)
+
         $("[data-qa='icon-checkbox-agb']").click()
 
         $("[data-qa='btn-createUser']").click()
     })
 
-    it('first url should be "/start/welcome" ', function () {
-        util.waitForPageLoad('/start/welcome')
+    it('first url should be "/setup/account" ', function () {
+        util.waitForPageLoad('/setup/account')
     })
 
     /**
@@ -131,6 +132,11 @@ describe('Purl Registration: ', function () {
     //    util.waitAndClickQa("btn-next-step")
     //    util.waitForPageLoad('/start/quickstart')
     //})
+
+    it("the next step should be setup/identity ", function () {
+        util.waitAndClickQa("btn-next-step")
+        util.waitForPageLoad('/setup/identity')
+    })
 
     it("the next step should be key generation", function () {
         util.waitAndClickQa("btn-next-step")

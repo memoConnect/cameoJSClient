@@ -108,6 +108,14 @@ module.exports = function (grunt) {
             buildConfig.config.apiUrl = buildConfig.config[jsonPath[0]][jsonPath[1]];
         }
 
+        /**
+         * not important
+         */
+        //var defaultApiVersion = grunt.option('defaultApiVersion');
+        //if(defaultApiVersion){
+        //    buildConfig.config.defaultApiVersion = defaultApiVersion;
+        //}
+
         var version = grunt.option('appVersion');
         if (version) {
             buildConfig.config.version = version;
@@ -150,6 +158,8 @@ module.exports = function (grunt) {
         }
         else
             testConfig = grunt.file.readJSON('./config/cameoTestConfig.json');
+
+        console.log('currentTarget', currentTarget)
 
         switch (currentTarget) {
             case "test" :

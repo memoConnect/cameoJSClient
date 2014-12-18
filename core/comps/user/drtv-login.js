@@ -3,15 +3,15 @@
 angular.module('cmUser').directive('cmLogin', [
     'cmNotify', 'cmUserModel', 'cmKeyStorageService', 'cmCrypt',
     'cmConfig', 'cmEnv', 'cmLoader',
-    '$location',
+    '$location','$rootScope',
     function (cmNotify, cmUserModel, cmKeyStorageService, cmCrypt,
               cmConfig, cmEnv, cmLoader,
-              $location) {
+              $location, $rootScope) {
         return  {
             restrict    :   'AE',
             templateUrl :   'comps/user/drtv-login.html',
             scope       :   {},
-            controller  :   function ($scope, $rootScope) {
+            controller  :   function ($scope) {
                 $scope.cmEnv = cmEnv;
                 var loader = new cmLoader($scope);
                 $scope.alertState = '';
@@ -77,13 +77,12 @@ angular.module('cmUser').directive('cmLogin', [
                                 skipKeyInfo = storageService.get('skipKeyInfo') || false;
 
                             if(!$location.$$path.match(/\/purl\/.*/)){
-                                if(cmUserModel.loadLocalKeys().length == 0 && skipKeyInfo == false){
-                                    $rootScope.goto("/start/keyinfo");
+                                if(!cmUserModel.hasLocalKeys() && skipKeyInfo == false){
+                                    $rootScope.goTo("/setup/keyinfo");
                                 } else {
-                                    $rootScope.goto("/talks");
+                                    $rootScope.goTo("/talks");
                                 }
                             }
-                            $rootScope.$broadcast('cmLogin:success');
                         },
                         function(error){
                             loader.stop();

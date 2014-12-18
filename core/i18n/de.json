@@ -43,17 +43,28 @@
         "INFO": {
             "TITLE_TEXT": "Hier können Sie Ihr Passwort zurücksetzen, wenn Sie für Ihr Benutzerkonto eine E-Mail-Adresse oder Telefonnummer hinterlegt und verifiziert haben.<br> Bitte geben Sie zur Identifikation Ihren Benutzernamen, Ihre cameoID oder Ihre hinterlegte E-Mail-Adresse oder Telefonnummer ein. Sie erhalten dann eine Nachricht. Darin finden Sie einen Link zur Passwortrücksetzung.",
             "EMPTY": "Bitte geben Sie eine Identifikation ein (Benutzername, cameoID, E-Mail-Adresse oder Telefonnummer).",
-                "LOGIN_NOT_FOUND": "Der Benutzername kann nicht gefunden werden.",
+            "LOGIN_NOT_FOUND": "Der Benutzername kann nicht gefunden werden.",
             "PHONENUMBER_NOT_FOUND": "Die Telefonnummer kann nicht gefunden werden.",
             "EMAIL_NOT_FOUND": "Die E-Mail-Adresse kann nicht gefunden werden.",
-            "NO_EMAIL_PHONENUMBER": "Bitte korrigieren Sie ihre Eingabe.",
-            "CONFIRMATION_SENDED": "Wir haben Ihnen eine Nachricht gesendet. Darin finden Sie einen Link zur Passwortrücksetzung. Klicken Sie darauf und folgen Sie den Anweisungen."
-        },
-        "PLACEHOLDER": {
-            "MIXED": "Benutzername, cameoID, E-Mail-Adresse oder Telefonnummer"
+            "NO_EMAIL_PHONENUMBER": "@todo Sie haben keine verifizierte E-Mail oder Telefonnummer."
         },
         "LABEL": {
+            "MIXED": "Benutzername, cameoID, E-Mail-Adresse oder Telefonnummer",
             "SUBMIT": "Passwortrücksetzung anfordern"
+        }
+    },
+
+    "PASSWORD_CODE": {
+        "HEADING": "Passwort zurücksetzen Code",
+        "INFO": {
+            "CONFIRMATION_SENDED": "@todo Wir haben Ihnen eine Nachricht gesendet. Darin finden Sie einen Code den Sie hier eingeben können oder einen Link der Sie direkt zur Passwortrücksetzung weiterleitet.",
+            "EMPTY": "@todo Bitte geben Sie einen Code ein",
+            "EXPIRED": "@:PASSWORD_RESET.INFO.EXPIRED"
+        },
+        "LABEL": {
+            "CODE": "@todo Code aus der empfangenen Nachricht",
+            "CANCEL": "@todo Abbrechen",
+            "SUBMIT": "@todo Code überprüfen"
         }
     },
 
@@ -92,7 +103,7 @@
             },
             "INVALID_EMAIL": "@:DRTV.VALIDATE_EMAIL.INFO.INVALID",
             "INVALID_PHONENUMBER": "@:DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER",
-            "LOGIN_INFORMATION": "Hier legen Sie Ihre Zugangsdaten fest, mit denen Sie sich anschließend im cameoNet anmelden können.<br/><br/>Der Nutzername wird automatisch zu Ihrer (ersten) cameoID, über die andere Nutzer Sie im cameoNet finden können.",
+            "LOGIN_INFORMATION": "@todo Hier legen Sie Ihre Zugangsdaten fest, mit denen Sie sich anschließend im cameoNet anmelden können.<br/><br/>Der Nutzername wird automatisch zu Ihrer (ersten) cameoID, über die andere Nutzer Sie im cameoNet finden können.",
             "USER_INFORMATION": "Die folgenden Felder sind optional:<br/><br/>Wenn Sie einen Anzeigenamen eingeben, wird Ihre Identität überall im cameoNet mit diesem Namen angezeigt. Er muss nicht eindeutig sein. Andere Nutzer können Sie im cameoNet auch über Ihren Anzeigenamen finden.<br/><br/>Wenn Sie eine E-Mail-Adresse und/oder eine Mobilfunknummer eingeben, können Sie sich über neue Nachrichten und Kontaktanfragen informieren lassen und bei Bedarf Ihr Passwort zurücksetzen. Diese Daten sind für andere Nutzer nicht sichtbar und werden nicht in Ihre Identität übertragen."
         },
         "TITLE": {
@@ -125,7 +136,7 @@
             "TEXT_2": "Drücken Sie auf 'Kontakt hinzufügen' im Header und wählen 'cameoNet durchsuchen'. Ihre Freunde finden Sie über deren cameoIDs oder Anzeigenamen. Senden Sie ihnen eine Kontaktanfrage. Sobald diese angenommen wurde, sind die Kontakte miteinander verknüpft, um sicher zu kommunizieren.",
             "HEADLINE_3": "3. Nachricht schreiben",
             "TEXT_3": "An verknüpfte Kontakte können Sie direkt aus der Kontakt-Übersicht über das Brief-Symbol Nachrichten senden. Es öffnet sich ein neuer Talk (=Unterhaltung). Geben Sie eine Nachricht ein und drücken Sie auf den Senden-Button.<br><br>Herzlichen Glückwunsch! Sie haben Ihren ersten verschlüsselten Talk geführt!",
-            "TEXT_4": "Wenn Sie Fragen oder Verbesserungsvorschläge zu cameoNet haben, nutzen Sie unsere Support- und Hilfeseiten unter http://support.cameonet.de.",
+            "TEXT_4": "Wenn Sie Fragen oder Verbesserungsvorschläge zu cameoNet haben, nutzen Sie unsere Support- und Hilfeseiten unter http://support.cameonet.de,\n oder schreiben Sie eine Mail an <a href=\"mailto:support@cameonet.de\">support@cameonet.de</a>",
             "BTN_TEXT": "Und los..."
         },
         "DOWNLOAD": {
@@ -189,7 +200,7 @@
 
     "CONVERSATION": {
         "NO_SUBJECT": "Kein Betreff",
-        "HEADING": "Talk",
+        "HEADING": "neuer Talk",
         "LABEL": {
             "LOAD_PREVIOUS":"vorherige Nachrichten laden",
             "SEND": "Abschicken",
@@ -313,6 +324,7 @@
         "HEADLINE": "Kontakt",
         "WIDGET": "Talks",
         "PLACEHOLDER": {
+            "AVATAR": "Profilbild",
             "CAMEOID": "CameoID",
             "DISPLAYNAME": "@:CONTACTS.LABEL.DISPLAYNAME",
             "PHONENUMBER": "Telefonnummer",
@@ -397,6 +409,17 @@
         "OVERVIEW":{
             "HEADER": "Übersicht Identitäten",
             "INFO_TEXT": "Hier können Sie zwischen Ihren Identitäten wechseln und neue Identitäten anlegen."
+        },
+        "INFO":{
+            "CREATE": {
+                "HEADLINE_SMALL": "@todo IDENTITY.INFO.CREATE.HEADLINE_SMALL",
+                "HEADLINE": "In Ihrer Identität legen Sie fest, was andere Nutzer von Ihnen sehen. Wenn Sie eine Kontaktanfrage eines anderen Nutzers akzeptieren, sieht dieser in seinen Kontakten anschließend alle Daten, die Sie in Ihr Identitätsprofil eingegeben haben.\nIhre Identität kann über die cameoID oder den Anzeigenamen gefunden werden.",
+                "CAMEOID": "Jede Identität besitzt eine eindeutige cameoID, über die sie im cameoNet gefunden werden kann.",
+                "AVATAR": "@todo IDENTITY.INFO.CREATE.AVATAR",
+                "DISPLAYNAME": "Wenn Sie Ihrer Identität einen Anzeigenamen geben, wird dieser überall anstatt der cameoID angezeigt. Ihre Identität kann im cameoNet auch über den Anzeigenamen gefunden werden. Der Anzeigename muss aber nicht eindeutig sein.",
+                "PHONE": "Hier können Sie eine Mobilfunknummer eingeben. Sie wird anderen Nutzern in Ihrem Identitätsprofil angezeigt aber weder verifiziert noch weiter verwendet. Sie erhalten Benachrichtigungen für diese Identität an die in Ihrem Benutzerkonto eingetragenen Mobilfunknummer.",
+                "EMAIL": "Hier können Sie eine E-Mail-Adresse eingeben. Sie wird anderen Nutzern in Ihrem Identitätsprofil angezeigt aber weder verifiziert noch weiter verwendet. Sie erhalten Benachrichtigungen für diese Identität an die in Ihrem Benutzerkonto eingetragenen E-Mail-Adresse."
+            }
         },
         "KEYS": {
             "HEADER": "cameoKeys",
@@ -554,7 +577,8 @@
                         "CAMEOID": "@:CONTACT.PLACEHOLDER.CAMEOID",
                         "DISPLAYNAME": "@:CONTACT.PLACEHOLDER.DISPLAYNAME",
                         "EMAIL": "@:CONTACT.PLACEHOLDER.EMAIL",
-                        "PHONENUMBER": "@:CONTACT.PLACEHOLDER.PHONENUMBER"
+                        "PHONENUMBER": "@:CONTACT.PLACEHOLDER.PHONENUMBER",
+                        "AVATAR": "@:CONTACT.PLACEHOLDER.AVATAR"
                     },
                     "INFO": {
                         "EMPTY": {
@@ -654,12 +678,15 @@
                 "PHONENUMBER": "@:DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER",
                 "OLD_PASSWORD": "Das von Ihnen eingegebene Passwort ist ungültig."
             },
-            "NOTE_ABOUT_THIS_DATA": "Hier können Sie die Daten ihres Benutzerkontos ändern. Dies betrifft insbesondere Ihre Zugansdaten, mit denen Sie sich anmelden.<br>Ihre Benutzerdaten sind für andere Nutzer nicht sichtbar - im Gegensatz zu den Daten Ihrer Identitäten. Die Telefonnummer oder E-Mail-Adresse wird nur zur Passwortrücksetzung verwendet und auf Wunsch für Benachrichtigungen, wenn Sie abgemeldet sind.",
-            "LOGINAME": "Der Loginname kann nicht geändert werden."
+            "NOTE_ABOUT_THIS_DATA": "Hier können Sie die Daten ihres Benutzerkontos ändern. Dies betrifft insbesondere Ihre Zugansdaten, mit denen Sie sich anmelden.\nIhre Benutzerdaten sind für andere Nutzer nicht sichtbar - im Gegensatz zu den Daten Ihrer Identitäten. Die Telefonnummer oder E-Mail-Adresse wird nur zur Passwortrücksetzung verwendet und auf Wunsch für Benachrichtigungen, wenn Sie abgemeldet sind.",
+            "LOGINAME": "Der Loginname kann nicht geändert werden.",
+            "PHONENUMBER": "@todo ACCOUNT.INFO.PHONENUMBER",
+            "EMAIL": "@todo ACCOUNT.INFO.EMAIL"
         },
         "FOOTER": {
             "BACK": "Fertig",
-            "SAVE": "Speichern"
+            "SAVE": "Speichern",
+            "SKIP": "Überspringen"
         }
     },
 
@@ -684,34 +711,28 @@
                 "EMPTY": "Bitte ein Passwort eingeben und bestätigen!"
             }
         },
-        "MODAL_VERIFICATION": {
-            "HEADER": "Verifizierung",
-            "TEXT": "cameoNet hat Ihnen soeben eine Nachricht zugeschickt. In der Nachricht finden Sie einen Vefizierungs-Code, den Sie hier eingeben können. <br> Alternativ können Sie die Verifizierung über den in der Nachricht enthaltenen Link abschließen.",
-            "LABEL": {
-                "CANCEL": "@:MODAL.LABEL.CANCEL",
-                "CONFIRM": "Verifizierung bestätigen"
-            },
+        "VALIDATE_PHONE": {
+            "LABEL": "Mobilfunknummer",
+            "PLACEHOLDER": "Mobilfunknummer",
+            "LABEL_VERIFICATION_CODE": "@todo Verfikationscode",
             "INFO": {
-                "EMPTY": "Bitte tragen Sie hier den Code ein, der Ihnen in der Verifizierungs-E-Mail mitgeteilt wurde.",
-                "INVALID": "Der Code den Sie eingegeben haben ist falsch oder abgelaufen."
+                "INVALID_PHONE_NUMBER": "Die Nummer scheint keine gültige Mobilfunknummer zu sein.",
+                "EMPTY": "Sie haben keine Mobilfunknummer eingegeben.",
+                "ISNT_VERIFIED": "@todo Diese Telefonnummer ist noch nicht verifiziert.\nIhnen wurde eine SMS zugeschickt. Diese beinhaltet einen Verfikationscode den Sie hier eingeben können oder Sie klicken auf den Link in der SMS. Haben Sie keine SMS bekommen, klicken Sie auf das {{icon}}-Icon um eine neue SMS zugenerieren.",
+                "EMPTY_CODE": "Bitte tragen Sie hier den Code ein, der Ihnen in der Verifizierungs-SMS mitgeteilt wurde.",
+                "INVALID_CODE": "Der Code den Sie eingegeben haben ist falsch oder abgelaufen."
             }
         },
         "VALIDATE_EMAIL": {
             "LABEL": "E-Mail",
             "PLACEHOLDER": "E-Mail",
+            "LABEL_VERIFICATION_CODE": "@todo Verfikationscode",
             "INFO": {
                 "INVALID": "Bitte geben Sie eine korrekte E-Mail-Adresse ein!",
                 "EMPTY": "Sie haben keine E-Mail-Adresse eingegeben.",
-                "ISNT_VERIFIED": "Diese E-Mail-Adresse ist noch nicht verifiziert. Klicken Sie auf das {{icon}}-Icon um eine E-Mail an diese Adresse zu senden. Diese E-Mail enthält einen Link und einen Code, über den Sie die Verifizierung abschließen können."
-            }
-        },
-        "VALIDATE_PHONE": {
-            "LABEL": "Mobilfunknummer",
-            "PLACEHOLDER": "Mobilfunknummer",
-            "INFO": {
-                "INVALID_PHONE_NUMBER": "Die Nummer scheint keine gültige Mobilfunknummer zu sein.",
-                "EMPTY": "Sie haben keine Mobilfunknummer eingegeben.",
-                "ISNT_VERIFIED": "Diese Telefonnummer ist noch nicht verifiziert. Klicken Sie auf das {{icon}}-Icon um eine SMS an diese Telefonnummer zu senden. Diese SMS enthält einen Link und einen Code, über den Sie die Verifizierung abschließen können."
+                "ISNT_VERIFIED": "@todo Diese E-Mail-Adresse ist noch nicht verifiziert.\nIhnen wurde eine E-Mail zugeschickt. Diese beinhaltet einen Verfikationscode den Sie hier eingeben können oder Sie klicken auf den Link in der E-Mail. Haben Sie keine E-Mail bekommen, klicken Sie auf das {{icon}}-Icon um eine neue E-Mail zugenerieren.",
+                "EMPTY_CODE": "Bitte tragen Sie hier den Code ein, der Ihnen in der Verifizierungs-E-Mail mitgeteilt wurde.",
+                "INVALID_CODE": "Der Code den Sie eingegeben haben ist falsch oder abgelaufen."
             }
         },
         "VALIDATE_MIXED": {

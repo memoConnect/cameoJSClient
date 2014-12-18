@@ -150,7 +150,7 @@ this.login = function (username, password, expectedRoute) {
     if (typeof expectedRoute == 'string' && expectedRoute.length > 0) {
         self.waitForPageLoad(expectedRoute)
     } else {
-        self.waitForPageLoad('(start|talks)')
+        self.waitForPageLoad('(start|talks|setup)')
     }
 
     return this
@@ -170,16 +170,18 @@ this.createTestUser = function (testUserId, from){
 
     this.setVal('input-cameoId',loginName,true)
     this.setVal('input-password',password)
-    this.setVal('input-passwordConfirm',password)
-
-    this.setVal('input-displayName',loginName)
+    this.waitAndClickQa('icon-toggle-password');
+    //this.setVal('input-passwordConfirm',password)
 
     this.scrollToBottom()
 
     this.click('icon-checkbox-agb')
+
+    //ptor.pause()
+
     this.click('btn-createUser')
 
-    this.waitForPageLoad("/start/welcome")
+    this.waitForPageLoad("/setup/account")
 
     return loginName
 }
@@ -192,7 +194,7 @@ this.deleteTestUser = function (loginName) {
         var callback = arguments[arguments.length - 1];
 
         var xhr = new XMLHttpRequest();
-        xhr.open("DELETE", apiUrl + "/testUser/\n" + testUserId, true);
+        xhr.open("DELETE", apiUrl + "/v1/testUser/\n" + testUserId, true);
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4) {
                 callback(xhr.responseText);
@@ -233,12 +235,14 @@ this.deleteKeys = function(){
 this.getTestUserNotifications = function (loginName) {
 
     var testUserId = loginName.split("_")[1]
+
     return ptor.executeAsyncScript(function (testUserId, apiUrl) {
 
         var callback = arguments[arguments.length - 1]
 
         var xhr = new XMLHttpRequest()
-        xhr.open("GET", apiUrl + "/testUser/" + testUserId+'?ts='+(new Date()).getTime(), true)
+
+        xhr.open("GET", apiUrl + "v1/testUser/" + testUserId+'?ts='+(new Date()).getTime(), true)
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4) {
                 callback(JSON.parse(xhr.responseText))
@@ -256,7 +260,7 @@ this.getEventSubscription = function (token) {
         var callback = arguments[arguments.length - 1];
 
         var xhr = new XMLHttpRequest();
-        xhr.open("POST", apiUrl + "/eventSubscription", true);
+        xhr.open("POST", apiUrl + "v1/eventSubscription", true);
         xhr.setRequestHeader("Authorization", token);
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4) {
@@ -274,7 +278,7 @@ this.getEvents = function (token, subscriptionId) {
         var callback = arguments[arguments.length - 1];
 
         var xhr = new XMLHttpRequest();
-        xhr.open("GET", apiUrl + "/eventSubscription/" + subscriptionId+'?ts='+(new Date()).getTime(), true);
+        xhr.open("GET", apiUrl + "v1/eventSubscription/" + subscriptionId+'?ts='+(new Date()).getTime(), true);
         xhr.setRequestHeader("Authorization", token);
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4) {
@@ -292,7 +296,7 @@ this.broadcastEvent = function (token, event) {
         var callback = arguments[arguments.length - 1];
 
         var xhr = new XMLHttpRequest();
-        xhr.open("POST", apiUrl + "/event/broadcast", true);
+        xhr.open("POST", apiUrl + "v1/event/broadcast", true);
         xhr.setRequestHeader("Authorization", token);
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4) {
@@ -310,7 +314,7 @@ this.remoteBroadcastEvent = function (token, event, identityId) {
         var callback = arguments[arguments.length - 1];
 
         var xhr = new XMLHttpRequest();
-        xhr.open("POST", apiUrl + "/event/broadcast/identity/" + identityId, true);
+        xhr.open("POST", apiUrl + "v1/event/broadcast/identity/" + identityId, true);
         xhr.setRequestHeader("Authorization", token);
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4) {
@@ -327,7 +331,7 @@ this.getIdentityId = function(token){
         var callback = arguments[arguments.length - 1];
 
         var xhr = new XMLHttpRequest();
-        xhr.open("GET", apiUrl + "/identity", true);
+        xhr.open("GET", apiUrl + "v1/identity", true);
         xhr.setRequestHeader("Authorization", token);
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4) {
@@ -492,6 +496,7 @@ this.checkWarning = function (qaValue, shouldBeHidden) {
     if(shouldBeHidden){
         expect(warn.isDisplayed()).toBeFalsy()
     } else {
+        self.waitForQa(qaValue)
         expect(warn.isDisplayed()).toBeTruthy()
 
         warn.getText().then(function (text) {

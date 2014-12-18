@@ -1,7 +1,7 @@
 var config = require("../../config/specs.js")
 var util = require("../../../lib/e2e/cmTestUtil.js")
 
-describe('Route Settings Identity: ', function(){
+describe('Route Identity Settings: ', function(){
     var ptor = util.getPtorInstance()
 
     var newTestUser = ""
@@ -14,7 +14,6 @@ describe('Route Settings Identity: ', function(){
     describe('Test 1 - GUI', function(){
         it('should load at "#/settings/identity/edit" after login.', function(){
             util.login()
-            util.expectCurrentUrl('#/start')
 
             util.get('/settings/identity/edit')
             util.expectCurrentUrl('#/settings/identity/edit')
@@ -31,8 +30,8 @@ describe('Route Settings Identity: ', function(){
         })
 
         it('should have a form with following elements', function(){
-            util.waitForElement("[data-qa='input-cameoId']")
-            expect($("[data-qa='input-cameoId']").isPresent()).toBe(true)
+            util.waitForElement("[data-qa='ctn-cameoid']")
+            expect($("[data-qa='ctn-cameoid']").isPresent()).toBe(true)
 
             util.waitForElement("[data-qa='input-displayname']")
             expect($("[data-qa='input-displayname']").isPresent()).toBe(true)
@@ -51,7 +50,7 @@ describe('Route Settings Identity: ', function(){
         })
 
         it('should be logged in', function(){
-            util.expectCurrentUrl('#/start')
+            util.expectCurrentUrl('/setup/account')
         })
 
         it('should go to identity settings', function(){
@@ -60,10 +59,10 @@ describe('Route Settings Identity: ', function(){
         })
 
         it('cameoId should be exists ('+ newTestUser +')', function(){
-            util.waitForElement("[data-qa='input-cameoId']")
-            expect($("[data-qa='input-cameoId']").isPresent()).toBe(true)
+            util.waitForElement("[data-qa='ctn-cameoid']")
+            expect($("[data-qa='ctn-cameoid']").isPresent()).toBe(true)
 
-            expect($("[data-qa='input-cameoId']").getAttribute('value')).toBe(newTestUser + "@cameonet.de")
+            expect($("[data-qa='ctn-cameoid']").getText()).toMatch(newTestUser + "@cameonet.de")
         })
 
         it('should change the displayName', function(){
@@ -89,7 +88,7 @@ describe('Route Settings Identity: ', function(){
     describe('Test 3 - check Data after logout and login', function(){
         it('should be load at "#/settings/identity/edit" after login.', function(){
             util.login(newTestUser, password)
-            util.expectCurrentUrl('#/start')
+            util.expectCurrentUrl('/setup')
 
             util.get('/settings/identity/edit')
             util.expectCurrentUrl('#/settings/identity/edit')
@@ -124,7 +123,7 @@ describe('Route Settings Identity: ', function(){
     describe('Test4 - Form Errors on wrong Input', function(){
         it('should be load at "#/settings/identity" after login.', function(){
             util.login()
-            util.expectCurrentUrl('#/start')
+            util.expectCurrentUrl('#/setup')
 
             util.get('/settings/identity/edit')
             util.expectCurrentUrl('#/settings/identity/edit')

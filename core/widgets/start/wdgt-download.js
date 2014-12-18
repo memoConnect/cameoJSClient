@@ -13,6 +13,11 @@ angular.module('cmWidgets').directive('cmWidgetDownload',
                     $scope.goTo('/start/welcome');
                 };
 
+                $scope.goToSetup = function(){
+                    $scope.goTo('/setup/account');
+                };
+
+
                 // isDesktop or App or none apps are available for device
                 if(cmDevice.isDesktop('cmWidgetDownload') || cmDevice.isApp() || $scope.appLinks.length == 0){
                     //$scope.goToWelcome();

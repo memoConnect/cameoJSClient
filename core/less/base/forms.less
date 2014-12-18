@@ -3,6 +3,9 @@
   display: block;
   padding: 0.8rem 1.5rem;
   margin: 0.5em 0;
+  i{
+    margin-right: 0.5rem;
+  }
   input{
     color: @cm-black;
     background-color: @cm-dark-white;
@@ -44,6 +47,11 @@
 
   &.with-inside-icon{
     .default-one-icon;
+    cm-loader{
+      .pos-tr;
+      height: @cm-unit - 1;
+      width: 10%;
+    }
   }
   &.with-inside-icons{
     .default-one-icon;
@@ -93,6 +101,9 @@ form, .cm-form-style {
   label {
     font-weight: 400;
     margin-bottom: 0;
+    i {
+      margin-left: 0.2rem
+    }
   }
 
   .cm-input-error,

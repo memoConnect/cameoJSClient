@@ -12,10 +12,10 @@
 angular.module('cmContacts')
 .directive('cmContactEdit', [
     'cmIdentityFactory', 'cmUtil', 'cmNotify', 'cmUserModel',
-    'cmContactsModel', 'cmLogger', 'cmLoader', 
+    'cmContactsModel', 'cmLogger', 'cmLoader', 'cmPristine',
     '$rootScope', '$q', '$timeout',
     function(cmIdentityFactory, cmUtil, cmNotify, cmUserModel,
-             cmContactsModel, cmLogger, cmLoader,
+             cmContactsModel, cmLogger, cmLoader, cmPristine,
              $rootScope, $q, $timeout){
 
         return {
@@ -33,11 +33,6 @@ angular.module('cmContacts')
 
                 $scope.isTrusted = undefined;
                 $scope.hasKeys = undefined;
-
-                $scope.isPristine = true;
-                $rootScope.$on('pristine:false', function () {
-                    $scope.isPristine = false;
-                });
 
                 function reset(){
                     $scope.formData = {
@@ -174,6 +169,19 @@ angular.module('cmContacts')
                         }
                     )
                 };
+
+                /**
+                 * Pristine Service Handling
+                 */
+                $scope.isPristine = true;
+                function pristine_callback(){
+                    $scope.isPristine = cmPristine.is();
+                }
+                cmPristine.on('updated',pristine_callback);
+
+                $scope.$on('$destroy', function(){
+                    cmPristine.off('updated',pristine_callback);
+                })
             }
         }
     }

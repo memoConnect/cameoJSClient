@@ -8,7 +8,8 @@ describe('Avatar Upload: ', function () {
         avatarStyle = '',
         newAvatar = path.resolve(__dirname, '../data/avatar-upload.jpg'),
         newAvatarStyle = '',
-        isIE = false
+        isIE = false,
+        testUser
 
     it('check if is ie', function(){
         util.isInternetExplorer().then(function(bool) {
@@ -18,12 +19,17 @@ describe('Avatar Upload: ', function () {
         })
     })
 
-    it('login & got to identity list', function () {
+    it('should create user1', function(){
         if(isIE)
             return false
 
-        util.login()
-        util.waitForPageLoad('/start')
+        testUser = util.createTestUser(undefined, 'avatar upload')
+        util.expectCurrentUrl('/setup/account')
+    })
+
+    it('login & got to identity list', function () {
+        if(isIE)
+            return false
 
         util.get('/settings/identity/list')
         util.waitForPageLoad('/settings/identity/list')
@@ -63,5 +69,13 @@ describe('Avatar Upload: ', function () {
         $('cm-identity-tag cm-avatar i').getAttribute('style').then(function(src){
             expect(src).not.toBe(avatarStyle)
         })
+    })
+
+    it('should logout', function(){
+        util.logout();
+    })
+
+    it('should delete testUser', function(){
+        util.deleteTestUser(testUser)
     })
 })

@@ -1,5 +1,5 @@
-var config = require("../config/specs.js")
-var util = require("../../lib/e2e/cmTestUtil.js")
+var config = require("../../config/specs.js")
+var util = require("../../../lib/e2e/cmTestUtil.js")
 
 var loginName = "Z" + Date.now();
 var password = "PWD_Z" + Date.now();
@@ -7,14 +7,14 @@ var password = "PWD_Z" + Date.now();
 describe('Registration: ', function () {
     var ptor = util.getPtorInstance()
 
-    it('should contain 7 input fields', function () {
+    it('should contain 4 input fields', function () {
         util.logout()
 
         util.get("/registration");
         util.waitForPageLoad('/registration')
 
         $$("input").then(function (elements) {
-            expect(elements.length).toBe(7)
+            expect(elements.length).toBe(4)
         })
     })
 
@@ -89,9 +89,10 @@ describe('Registration: ', function () {
         util.waitForPageLoad("/terms")
     })
 
+
     it('should create account with valid credentials and have a support talk', function() {
         var loginName = util.createTestUser()
-        util.waitForPageLoad('/start/welcome')
+        util.waitForPageLoad('/setup/account')
 
         util.get('/talks')
         util.waitForPageLoad('/talks')

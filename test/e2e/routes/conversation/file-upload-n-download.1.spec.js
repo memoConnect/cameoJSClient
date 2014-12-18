@@ -86,9 +86,9 @@ function chooseFileAndUpload(file, selector, index) {
         if(isIE)
             return false
 
-        $("[data-qa='btn-send-answer']").click()
+        util.click('btn-send-answer')
 
-        util.waitForElements('cm-message', index+1)
+        util.waitForElements('cm-message cm-message-file', index)
 
         // preview should be empty
         $$('cm-files-preview ' + selector).then(function (elements) {
@@ -174,7 +174,7 @@ describe('FileUpload create TestUser', function(){
                 return false
 
             util.login(testUser, 'password')
-            util.waitForPageLoad('/start/keyinfo')
+            util.waitForPageLoad('/setup/keyinfo')
 
             util.get('/talks')
             util.waitForPageLoad('/talks')
