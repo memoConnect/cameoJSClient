@@ -48,12 +48,10 @@ describe('Authentication requests -', function () {
     }
 
     function checkKeyTrust (keyName, isTrusted) {
-        ptor.getCurrentUrl().then(function(url){
-            if(!url.match("/settings/identity/key/list"))
-                util.get("/settings/identity/key/list")
-        })
-
-
+        //ptor.getCurrentUrl().then(function(url){
+        //    if(!url.match("/settings/identity/key/list"))
+        //        util.get("/settings/identity/key/list")
+        //})
         ptor.wait(function(){
            return $$("[data-qa='key-list-item']")
             .map(function(key){
@@ -153,12 +151,14 @@ describe('Authentication requests -', function () {
             })
 
             it('should generateKey', function(){
-                util.generateKey(4, keyName1)
+                util.generateKey(1, keyName1)
+                util.get('/settings/identity/key/list')
             })
 
-            it('key should be trustet', function(){
+            it('key should be trusted', function(){
                 util.get('/settings/identity/key/list')
 
+                util.expectCurrentUrl('/settings/identity/key/list')
                 checkKeyTrust(keyName1, true)
             })
         })
@@ -351,7 +351,6 @@ describe('Authentication requests -', function () {
         })
 
         it("both keys should now be trusted", function () {
-            //util.get("/settings/identity/key/list")
             util.waitForElements("[data-qa='key-list-item']", 2)
 
             checkKeyTrust(keyName1, true)
@@ -374,7 +373,7 @@ describe('Authentication requests -', function () {
         it("generate key2", function () {
             util.login(testUser1, "password")
 
-            util.generateKey(5, keyName2)
+            util.generateKey(2, keyName2)
 
             util.waitForPageLoad("/authentication")
 
