@@ -102,8 +102,9 @@ this.get = function (path) {
     }
 
     var url = config.wwwUrl + '#' + path
+    //console.log('util.get', path)
     ptor.get(url)
-    self.waitForPageLoad(path)
+    self.waitForPageLoad()
 
     return this
 }
@@ -343,6 +344,8 @@ this.getIdentityId = function(token){
 }
 
 this.waitForPageLoad = function (expectedRoute) {
+    //console.log('waitForPageLoad', expectedRoute)
+
     ptor.wait(function () {
         return ptor.executeScript('return window != undefined && window._route').then(function (route) {
             if (route) {
@@ -783,4 +786,10 @@ this.setKeygenerationTimeout = function(jasmine){
         jasmine.getEnv().defaultTimeoutInterval = 30000
     })
     return expectedTimeout;
+}
+
+this.logCurrentUrl = function(){
+    ptor.getCurrentUrl().then(function(url){
+        console.log('logCurrentUrl:', url)
+    })
 }
