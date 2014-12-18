@@ -153,6 +153,7 @@ describe('Authentication requests -', function () {
 
             it('should generateKey', function(){
                 util.generateKey(1, keyName1)
+                util.waitForPageLoad('/talks')
             })
 
             it('key should be trustet', function(){
