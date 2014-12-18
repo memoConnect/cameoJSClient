@@ -1,3 +1,6 @@
+##AP 18.12.
+* added authenticate some key button to key list
+
 ## Dev
 # BS 12.12.2014
 * add new setup routes
