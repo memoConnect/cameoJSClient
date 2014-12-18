@@ -409,7 +409,6 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
                                                 */
                                             }
 
-                                            console.log('before send')
                                             //Send a request in return:
                                             self.send(
                                                 data.fromIdentity.id,    //Sender of the initial requests
