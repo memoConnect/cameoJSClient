@@ -170,8 +170,8 @@ this.createTestUser = function (testUserId, from){
 
     this.setVal('input-cameoId',loginName,true)
     this.setVal('input-password',password)
-    //this.waitAndClickQa('icon-toggle-password');
-    this.setVal('input-passwordConfirm',password)
+    this.waitAndClickQa('icon-toggle-password');
+    //this.setVal('input-passwordConfirm',password)
 
     this.scrollToBottom()
 
