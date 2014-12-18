@@ -152,12 +152,13 @@ describe('Authentication requests -', function () {
 
             it('should generateKey', function(){
                 util.generateKey(1, keyName1)
+                util.get('/settings/identity/key/list')
             })
 
-            it('key should be trustet', function(){
+            it('key should be trusted', function(){
                 util.get('/settings/identity/key/list')
-                util.waitForPageLoad('/settings/identity/key/list')
 
+                util.expectCurrentUrl('/settings/identity/key/list')
                 checkKeyTrust(keyName1, true)
             })
         })
@@ -251,7 +252,6 @@ describe('Authentication requests -', function () {
     describe("key1 again -", function () {
 
         it("import key", function () {
-            util.get('/login')
             util.setLocalStorage(localStorage1.key, localStorage1.value)
             util.login(testUser1, "password")
 
@@ -323,7 +323,6 @@ describe('Authentication requests -', function () {
     describe("key3 again -", function () {
 
         it("import key3", function () {
-            util.get('/login')
             util.setLocalStorage(localStorage3.key, localStorage3.value)
             util.login(testUser1, "password")
 
@@ -352,7 +351,6 @@ describe('Authentication requests -', function () {
         })
 
         it("both keys should now be trusted", function () {
-            //util.get("/settings/identity/key/list")
             util.waitForElements("[data-qa='key-list-item']", 2)
 
             checkKeyTrust(keyName1, true)
@@ -468,7 +466,6 @@ describe('Authentication requests -', function () {
     describe("key1 yet again -", function () {
 
         it("import key1", function () {
-            util.get('/login')
             util.setLocalStorage(localStorage1.key, localStorage1.value)
             util.login(testUser1, "password")
 
