@@ -49,7 +49,8 @@ angular.module('cmWidgets').directive('cmWidgetRegistration', [
                  */
                 $scope.validateForm = function () {
                     var deferred = $q.defer(),
-                        valid = true;
+                        valid = true,
+                        reservationCheck = false;
 
                     $scope.formValidation = true;
 
@@ -96,7 +97,7 @@ angular.module('cmWidgets').directive('cmWidgetRegistration', [
                         }
                     }
 
-                    if ($scope.registrationForm.$valid !== false && valid == true) {
+                    if ($scope.registrationForm.$valid !== false && reservationCheck == true) {
                         deferred.resolve(data);
                     } else {
                         deferred.reject();
