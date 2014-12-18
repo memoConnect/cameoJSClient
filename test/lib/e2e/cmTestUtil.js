@@ -159,7 +159,7 @@ this.login = function (username, password, expectedRoute) {
 this.createTestUser = function (testUserId, from){
     //console.log('from ->' + from)
 
-    console.log('apiUrl', config.apiUrl)
+    console.log('createTestUser apiUrl', config.apiUrl)
 
     this.logout()
 
