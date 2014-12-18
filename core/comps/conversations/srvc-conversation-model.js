@@ -248,8 +248,10 @@ angular.module('cmConversations')
                 if(data.sePassphrase || data.aePassphraseList){
                     passphraseVault =   cmPassphraseVault.create({
                         sePassphrase:       data.sePassphrase,
-                        aePassphraseList:   data.aePassphraseList
-                    });
+                        aePassphraseList:   data.aePassphraseList,
+                        signatures:         data.conversationSignatures,
+                        recipientKeyList:   data.recipients
+                    })
                 }
 
                 //if(passphraseVault.getKeyTransmission() != this.keyTransmission)
@@ -666,7 +668,21 @@ angular.module('cmConversations')
                     return $q.reject('passphrase vault missing.')
 
                 return passphraseVault.get(this.password)
-            };
+            }
+
+            /**
+             * @ngdoc method
+             * @methodOf cmConversationModel
+             *
+             * @name verifyAuthenticity
+             * @description
+             * Tries to verify the authenticity of the recipient list an the key transmission type.
+             *
+             * @returns {Promise} Returns a promise resolved if successful and rejected on failure
+             */
+            this.verifyAuthenticity = function(){
+                return passphraseVault.verifyAuthenticity()
+            }
 
             /**
              * @ngdoc method

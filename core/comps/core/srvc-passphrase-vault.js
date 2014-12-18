@@ -86,8 +86,6 @@ angular.module('cmCore').service('cmPassphraseVault',[
                 cache_passphrase        = true,
                 cached_passphrase       = undefined
 
-            console.log('data:')
-            console.dir(data)
 
             /**
              * @ngdoc method
@@ -267,7 +265,7 @@ angular.module('cmCore').service('cmPassphraseVault',[
                                                                     
                                                             })
                                                 })
-                                    },$q.reject())
+                                    },$q.reject('cmPassphraseVault: .verifyAuthenticity(): signatures invalid'))
 
                         })
             }
@@ -411,7 +409,6 @@ angular.module('cmCore').service('cmPassphraseVault',[
                     })
                     .then(
                         function(result){
-                            console.dir(result)
                             return  self.create({
                                         sePassphrase:       result.sym,
                                         aePassphraseList:   result.asym,

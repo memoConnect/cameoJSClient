@@ -91,10 +91,16 @@ angular.module('cmConversations')
                     }
                 })
                 .addAspect({
-                    id: 'TRUSTING_ALL_RECIPIENTS',
+                    id: 'AUTHENTIC_RECIPIENTS',
                     dependencies: ['ENCRYPTED', 'NO_SYMMETRIC_KEY_TRANSMISSION'],
                     value: 1,
                     check: function(conversation){
+                        var self = this
+                        
+                        return  conversation.verifyAuthenticity()
+                                .then(function(){
+                                    
+                                })
 
                         //temporary solution, AP
                         return  conversation.recipients.length < 3
