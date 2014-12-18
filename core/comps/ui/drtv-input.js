@@ -53,7 +53,7 @@ angular.module('cmUi').directive('input', [
                             apply();
                         },attrs.cmAdaptiveChange || 1000);
                     } else {
-                        apply();
+                        setValue();
                     }
                 }
 
