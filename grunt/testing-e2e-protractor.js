@@ -63,7 +63,7 @@ module.exports = function (grunt, options) {
                     options: {
                         "args": {
                             "specs": [
-                                "test/e2e/**/*.spec.js"
+                                "test/e2e/**/registration.1.spec.js"
                             ]
                         }
                     }
