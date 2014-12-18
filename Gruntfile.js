@@ -159,6 +159,8 @@ module.exports = function (grunt) {
         else
             testConfig = grunt.file.readJSON('./config/cameoTestConfig.json');
 
+        console.log('currentTarget', currentTarget)
+
         switch (currentTarget) {
             case "test" :
                 testConfig = grunt.file.readJSON('./config/cameoTestConfig-test.json');
