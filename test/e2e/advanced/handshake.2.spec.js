@@ -156,6 +156,9 @@ describe('Authentication requests -', function () {
             })
 
             it('key should be trustet', function(){
+                util.get('/settings/identity/key/list')
+                util.waitForPageLoad('/settings/identity/key/list')
+
                 checkKeyTrust(keyName1, true)
             })
         })
@@ -315,6 +318,7 @@ describe('Authentication requests -', function () {
             util.setLocalStorage(localStorage3.key, localStorage3.value)
             util.login(testUser1, "password")
             util.get("/settings/identity/key/list")
+            util.waitForPageLoad('/settings/identity/key/list')
             util.waitForElements("[data-qa='key-list-item']", 2)
             checkKeyTrust(keyName1, false)
             checkKeyTrust(keyName3, true)
