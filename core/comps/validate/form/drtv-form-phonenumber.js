@@ -2,8 +2,8 @@
 
 angular.module('cmValidate')
 .directive('cmFormPhonenumber', [
-    'cmVerify',
-    function (cmVerify) {
+    'cmCountryPrefix', 'cmVerify',
+    function (cmCountryPrefix, cmVerify) {
         return {
             restrict: 'E',
             scope: {
@@ -17,6 +17,8 @@ angular.module('cmValidate')
             },
             templateUrl: 'comps/validate/form/drtv-form-phonenumber.html',
             controller: function($scope){
+
+                cmCountryPrefix.handleView($scope);
                 cmVerify.handleInput('phoneNumber',$scope);
 
                 $scope.showPhoneInfo = false;

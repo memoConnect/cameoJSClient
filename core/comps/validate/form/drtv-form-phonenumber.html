@@ -6,13 +6,13 @@
        {{::toggleInfo|cmTranslate}}
     </cm-info-bubble>
 
-    <div class="cm-input-ctn with-phone-prefix-chooser" ng-class="{
-
+    <div class="cm-input-ctn" ng-class="{
         'cm-input-disabled':disabled,
         'with-inside-icon':!disabled && !verification.isVisible,
-        'with-inside-icons':!disabled && verification.isVisible
+        'with-inside-icons':!disabled && verification.isVisible,
+        'with-inside-left-icon with-prefix-handler':!disabled && prefixHandler.isVisible
     }">
-        <cm-country-phone-prefix-chooser ng-model=""></cm-country-phone-prefix-chooser>
+        <cm-country-prefix-handler ng-model="ngModel"></cm-country-prefix-handler>
         <input
             type="tel"
             tabindex="{{::tabIndex}}" data-qa="input-phoneNumber"
@@ -27,9 +27,8 @@
                 'cm-checkbox-wrong': !verification.isVerified
             }"></i>
         <i class="fa cm-write" ng-show="!disabled"></i>
-
-        <cm-country-phone-prefix ng-show=""></cm-country-phone-prefix>
     </div>
+    <cm-country-prefix-list></cm-country-prefix-list>
     <cm-info-bubble class="cm-alert" ng-show="cmInnerForm.phoneNumber.$dirty && cmInnerForm.phoneNumber.$invalid" data-qa="form-error-phoneNumber-invalid">
         <div ng-show="cmInnerForm.phoneNumber.$invalid">
             <i class="fa cm-info"></i> {{::info|cmTranslate}}

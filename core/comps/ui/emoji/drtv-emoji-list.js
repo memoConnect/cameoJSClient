@@ -19,10 +19,10 @@ angular.module('cmUi')
         return{
             restrict: 'E',
             template: '<div ng-show="showList">' +
-                        '<div ng-repeat="emoji in emojis" class="emoji-wrapper" ng-click="insertEmoji(emoji)" cm-reactive>' +
-                            '<i class="emoji emoji_{{emoji}}" title=":{{emoji}}:">{{emoji}}</i>' +
-                        '</div>' +
-                      '<div>',
+            '<div ng-repeat="emoji in emojis" class="emoji-wrapper" ng-click="insertEmoji(emoji)" cm-reactive>' +
+            '<i class="emoji emoji_{{emoji}}" title=":{{emoji}}:">{{emoji}}</i>' +
+            '</div>' +
+            '<div>',
             scope: {
                 ngModel: '=ngModel'
             },
@@ -48,8 +48,8 @@ angular.module('cmUi')
 
                 function clickOutside(e){
                     if(e.target != element[0] && // target not emojilist
-                       !findParent('CM-EMOJI-LIST',e.target) && // emojilist isnt parent
-                       !findParent('CM-EMOJI-HANDLER',e.target) // isnt handler
+                        !findParent('CM-EMOJI-LIST',e.target) && // emojilist isnt parent
+                        !findParent('CM-EMOJI-HANDLER',e.target) // isnt handler
                     ) {
                         scope.toggleList('close',true);
                     }
@@ -133,19 +133,4 @@ angular.module('cmUi')
             }
         }
     }
-])
-.directive('cmEmojiHandler',[
-   '$rootScope',
-   function($rootScope){
-       return{
-           restrict: 'E',
-           template: '<i class="fa cm-smile-negative with-cursor" ng-click="toggleList()" cm-reactive></i>',
-           scope: true,
-           controller: function($scope){
-               $scope.toggleList = function(){
-                   $rootScope.$broadcast('cmEmojiList:toggle');
-               }
-           }
-       }
-   }
 ]);

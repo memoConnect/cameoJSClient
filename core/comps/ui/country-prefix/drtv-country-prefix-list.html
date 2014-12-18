@@ -1,0 +1,7 @@
+<div ng-show="listVisible">
+    <div class="country" ng-repeat="country in countries|orderBy:'numberPrefix':false" cm-reactive ng-click="chooseCountry(country)">
+        <span class="flag-icon" ng-bind-html="::':'+country.shortcut+':'|flags"></span>
+        <strong>{{::country.shortcut|uppercase}}</strong>
+        {{::country.numberPrefix}}
+    </div>
+</div>
