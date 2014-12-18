@@ -103,7 +103,7 @@ this.get = function (path) {
 
     var url = config.wwwUrl + '#' + path
     ptor.get(url)
-    this.waitForPageLoad()
+    self.waitForPageLoad(path)
 
     return this
 }
@@ -612,6 +612,7 @@ this.generateKey = function (keyNum, keyName) {
             self.clearInput("input-key-name")
             self.setVal("input-key-name", keyName)
         }
+
         self.click("btn-save-key")
     })
 }
