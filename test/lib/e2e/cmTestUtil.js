@@ -159,8 +159,6 @@ this.login = function (username, password, expectedRoute) {
 this.createTestUser = function (testUserId, from){
     //console.log('from ->' + from)
 
-    console.log('createTestUser apiUrl', config.apiUrl)
-
     this.logout()
 
     var prefix = 'testUser23_'
