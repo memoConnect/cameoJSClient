@@ -108,10 +108,13 @@ module.exports = function (grunt) {
             buildConfig.config.apiUrl = buildConfig.config[jsonPath[0]][jsonPath[1]];
         }
 
-        var defaultApiVersion = grunt.option('defaultApiVersion');
-        if(defaultApiVersion){
-            buildConfig.config.defaultApiVersion = defaultApiVersion;
-        }
+        /**
+         * not important
+         */
+        //var defaultApiVersion = grunt.option('defaultApiVersion');
+        //if(defaultApiVersion){
+        //    buildConfig.config.defaultApiVersion = defaultApiVersion;
+        //}
 
         var version = grunt.option('appVersion');
         if (version) {
