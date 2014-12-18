@@ -94,6 +94,7 @@ angular.module('cmWidgets').directive('cmWidgetRegistration', [
                             valid = false;
                         } else {
                             data.reservationSecret = $scope.reservationSecrets[data.loginName];
+                            reservationCheck = true;
                         }
                     }
 
