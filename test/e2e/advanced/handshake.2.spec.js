@@ -146,10 +146,18 @@ describe('Authentication requests -', function () {
             util.clearLocalStorage()
         })
 
-        it("create test user, generate key and check keytrust", function () {
-            util.createTestUser(testUser1Id)
-            util.generateKey(1, keyName1)
-            checkKeyTrust(keyName1, true)
+        describe("create test user, generate key and check keytrust", function () {
+            it('should create TestUser', function(){
+                util.createTestUser(testUser1Id)
+            })
+
+            it('should generateKey', function(){
+                util.generateKey(1, keyName1)
+            })
+
+            it('key should be trustet', function(){
+                checkKeyTrust(keyName1, true)
+            })
         })
 
         it("create encrypted conversation", function () {
