@@ -302,7 +302,7 @@ angular.module('cmConfig',[])
                 'settings/identity/key/list': {i18n:'MENU.OWN_KEYS', icon:'cm-key'},
                 'contact/request/list': {'data-qa':'btn-menu-contact-requests', i18n:'MENU.REQUESTS', icon:'cm-new-contact-query', css:'cm-menu-notify qa-btn-request-notify', drtv:'cm-friend-request-counter'},
                 'settings': {i18n:'MENU.SETTINGS', icon:'cm-settings'},
-                'help': {i18n:'MENU.HELP', icon:'cm-info'}
+                'help': {i18n:'MENU.HELP', icon:'cm-info', 'data-qa':'btn-menu-help'}
 			},
 
             footer: {
@@ -322,8 +322,8 @@ angular.module('cmConfig',[])
             },
 
             routeHelp: {
-                'start/quickstart': {i18n:'START.QUICKSTART.HEADLINE', icon:'cm-info'},
-                'support': {i18n:'HELP.LABEL.SUPPORT',icon:'cm-rhino-bubble-glyph',externLink:'http://support.cameonet.de'}
+                'start/quickstart': {i18n:'START.QUICKSTART.HEADLINE', icon:'cm-info', 'data-qa':'btn-help-quickstart'},
+                'support': {i18n:'HELP.LABEL.SUPPORT',icon:'cm-rhino-bubble-glyph',externLink:'http://support.cameonet.de', 'data-qa':'btn-help-support'}
             }
         };
         // performance page

@@ -12,7 +12,12 @@ angular.module('cmWidgets').directive('cmWidgetHelpList', [
                 $scope.overview = cmConfig.routeHelp;
                 $scope.overviewKeys = Object.keys($scope.overview);
 
-                $scope.goToHelpPage = function($event, pageUrl, isDisabled, route){
+                $scope.handleLink = function($event, pageUrl, isDisabled, route){
+
+                    if('externLink' in route){
+                        $window.open(route.externLink);
+                        return false;
+                    }
 
                     if('link' in route){
                         // file:///android_asset/www/index.html#/login
@@ -27,14 +32,10 @@ angular.module('cmWidgets').directive('cmWidgetHelpList', [
                         return false;
                     }
 
-                    if('externLink' in route){
-                        $window.open(route.externLink);
-                    }
-
                     if(typeof pageUrl !== 'undefined' && isDisabled == undefined){
                         $event.stopPropagation();
                         $event.preventDefault();
-                        $scope.goTo('/settings/'+pageUrl);
+                        $scope.goTo(pageUrl);
                     }
                 };
 
