@@ -8,6 +8,8 @@ describe('Registration: ', function () {
     var ptor = util.getPtorInstance()
 
     it('should contain 4 input fields', function () {
+        console.log('Registration apiUrl', config.apiUrl)
+
         util.logout()
 
         util.get("/registration");
