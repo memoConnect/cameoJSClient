@@ -126,7 +126,7 @@ describe('Route Password Lost/Reset:', function(){
             })
 
             it('check info bubble',function(){
-                util.checkWarning('info-confirmationSended',true)
+                util.checkWarning('info-confirmationSended')
                 util.checkWarning('info-codeEmpty',true)
                 util.checkWarning('info-expired',true)
             })
