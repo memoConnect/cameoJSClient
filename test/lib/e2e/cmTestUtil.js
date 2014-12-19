@@ -620,7 +620,8 @@ this.generateKey = function (keyNum, keyName) {
 
         self.click("btn-save-key")
 
-        //self.checkWarning('info-key-error', true);
+        // for first key land on talks, if second key land on keylist or auth:request
+        self.waitForPageLoad()
     })
 }
 

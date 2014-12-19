@@ -2,7 +2,7 @@ var config = require("../config/specs.js")
 var util = require("../../lib/e2e/cmTestUtil.js")
 
 console.log('remove handshake test @ todo!!!!')
-xdescribe('Authentication requests -', function () {
+describe('Authentication requests -', function () {
     var ptor = util.getPtorInstance(),
         date = Date().now
 
@@ -166,7 +166,6 @@ xdescribe('Authentication requests -', function () {
 
                 ptor.wait(function(){
                     return ptor.getCurrentUrl().then(function(url){
-                        console.log('url: '+url)
                         if(url.match('/talks')){
                             util.get('/settings/identity/key/list')
                             return true;

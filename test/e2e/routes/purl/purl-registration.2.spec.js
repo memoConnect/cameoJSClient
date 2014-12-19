@@ -80,7 +80,7 @@ describe('Purl Registration: ', function () {
         })
     })
 
-    it('open purl as external user purlId:"'+purl+'"', function () {
+    it('open purl as external user', function () {
         util.logout()
         util.get("/purl/" + purl)
         util.waitForPageLoad('/purl/' + purl)
@@ -113,9 +113,6 @@ describe('Purl Registration: ', function () {
         $("[data-qa='input-password']").sendKeys(password)
         $("[data-qa='input-passwordConfirm']").sendKeys(password)
 
-        //$("[data-qa='input-displayName']").sendKeys(externalLogin)
-        //$("[data-qa='link-terms']").sendKeys(protractor.Key.END)
-
         $("[data-qa='icon-checkbox-agb']").click()
 
         $("[data-qa='btn-createUser']").click()
@@ -124,14 +121,6 @@ describe('Purl Registration: ', function () {
     it('first url should be "/setup/account" ', function () {
         util.waitForPageLoad('/setup/account')
     })
-
-    /**
-     * @deprecated
-     */
-    //it("next step should be the /start/quickstart", function () {
-    //    util.waitAndClickQa("btn-next-step")
-    //    util.waitForPageLoad('/start/quickstart')
-    //})
 
     it("the next step should be setup/identity ", function () {
         util.waitAndClickQa("btn-next-step")
@@ -168,7 +157,6 @@ describe('Purl Registration: ', function () {
             expect(elements[0].$(".text").getText()).toContain(msgText)
             expect(elements[1].$(".text").getText()).toContain(msgText2)
             expect(elements[0].$("[data-qa='message-author']").getText()).toBe(internalLogin)
-//            expect(elements[1].$("[data-qa='message-author']").getText()).toBe(externalLogin)
         })
     })
 
