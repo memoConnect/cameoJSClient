@@ -29,8 +29,11 @@
         <i class="fa cm-checker"></i>
     </button>
     <button ng-click="store()" class="cm-btn-grey" data-qa="btn-save-key" ng-if="isValid && !isError" cm-reactive>
-        {{'SETTINGS.PAGES.IDENTITY.KEYS.STORE_KEYPAIR'|cmTranslate}}
-        <i class="fa cm-checker"></i>
+        <span ng-show="!showLoader">
+            {{'SETTINGS.PAGES.IDENTITY.KEYS.STORE_KEYPAIR'|cmTranslate}}
+            <i class="fa cm-checker"></i>
+        </span>
+        <cm-loader ng-show="showLoader" cm-color="ci-color"></cm-loader>
     </button>
     <button ng-click="goTo('/settings/identity/key/list')" class="cm-btn-grey" data-qa="btn-import-error" ng-if="isError" cm-reactive>
         {{'NAVIGATION.TABS.BACK'|cmTranslate}}

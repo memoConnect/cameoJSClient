@@ -48,6 +48,11 @@ describe('Authentication requests -', function () {
     }
 
     function checkKeyTrust (keyName, isTrusted) {
+        ptor.getCurrentUrl().then(function(url){
+            if(!url.match("/settings/identity/key/list"))
+                util.get("/settings/identity/key/list")
+        })
+
         ptor.wait(function(){
             return $$("[data-qa='key-list-item']")
                 .map(function(key){
@@ -158,7 +163,6 @@ describe('Authentication requests -', function () {
             it('should generate Key', function(){
                 util.generateKey(1, keyName1)
 
-
                 ptor.wait(function(){
                     return ptor.getCurrentUrl().then(function(url){
                         console.log('url: '+url)
@@ -168,7 +172,7 @@ describe('Authentication requests -', function () {
                         }
                         return false;
                     })
-                },30000)
+                },config.waitForTimeout)
             })
 
             it('should check Key Trust', function(){

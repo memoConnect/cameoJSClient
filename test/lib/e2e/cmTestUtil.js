@@ -619,7 +619,9 @@ this.generateKey = function (keyNum, keyName) {
         }
 
         self.click("btn-save-key")
-        self.waitForPageLoad();
+
+        self.waitForLoader(1, 'cm-footer')
+
     })
 }
 
