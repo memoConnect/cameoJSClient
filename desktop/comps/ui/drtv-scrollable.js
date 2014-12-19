@@ -19,7 +19,7 @@ angular.module('cmDesktopUi').directive('cmScrollable',[
                 }
 
                 function resize(){
-                    var offset = getOffsetSum(element[0])
+                    var offset = getOffsetSum(element[0]);
                     var newHeight = ($window.innerHeight - offset.top - $window.document.querySelector('cm-footer').offsetHeight) - 20; // scrollbar
                     element.css({'height':newHeight + 'px'})
                 }

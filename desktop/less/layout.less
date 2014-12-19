@@ -38,7 +38,6 @@ cm-scrollable {
 cm-column , cm-scrollable{
   .pos-rel;
   .vat;
-  //min-width:@cm-app-width;
   overflow-x:hidden;
   overflow-y:auto;
 }
@@ -63,9 +62,6 @@ cm-column , cm-scrollable{
     width:@cm-column-first-size;
     z-index:1;
 
-//    cm-footer {
-//      width:@cm-column-first-size;
-//    }
     cm-loader.spinner.fullscreen{
       width:@cm-column-first-size;
     }
@@ -75,10 +71,6 @@ cm-column , cm-scrollable{
     left:@cm-column-first-size;
     z-index:2;
 
-//    cm-footer {
-//      width:@cm-column-second-size;
-//      left:@cm-column-first-size;
-//    }
     cm-loader.spinner.fullscreen{
       width:@cm-column-second-size;
       left:@cm-column-first-size;
@@ -89,10 +81,6 @@ cm-column , cm-scrollable{
     left:@cm-column-first-size + @cm-column-second-size;
     z-index:3;
 
-//    cm-footer {
-//      width:@cm-column-third-size;
-//      left:@cm-column-first-size + @cm-column-second-size;
-//    }
     cm-loader.spinner.fullscreen{
       width:@cm-column-second-size;
       left:@cm-column-first-size + @cm-column-second-size;
@@ -100,30 +88,18 @@ cm-column , cm-scrollable{
   }
   // all same columns 33 33 34 %
   &.equal-cols {
-//    cm-footer{
-//      width:@cm-column-equal-size;
-//    }
     cm-loader.spinner.fullscreen{
       width:@cm-column-equal-size;
     }
     cm-column{
       width:@cm-column-equal-size;
-//      cm-footer {
-//        left: 0;
-//      }
     }
     cm-column + cm-column{
       left: @cm-column-equal-size;
-//      cm-footer {
-//        left: @cm-column-equal-size;
-//      }
     }
     cm-column + cm-column + cm-column{
       left: @cm-column-equal-size * 2;
       width: @cm-column-equal-size + 1;
-//      cm-footer {
-//        left: @cm-column-equal-size * 2;
-//      }
     }
   }
 }
