@@ -1,7 +1,7 @@
 .cm-input-ctn{
   &.with-prefix-handler {
     padding-left:@cm-unit * 2;
-    margin-bottom:0;
+    //margin-bottom:0;
     cm-country-prefix-handler {
       .dib;
     }
@@ -43,13 +43,13 @@ cm-country-prefix-handler{
 }
 
 cm-country-prefix-list{
-  .dbl;
-  max-height:@cm-unit*3;
+  .dpn;
+  max-height:@cm-unit*4;
   overflow:auto;
   margin-bottom: 0.5em;
   background:@cm-dark-white;
-  > div{
-    padding:@cm-horizontal-padding;
+  &.is-visible{
+    .dbl;
   }
   .country{
     .dib;
@@ -57,6 +57,9 @@ cm-country-prefix-list{
     height:@cm-inside-input-size;
     line-height:@cm-inside-input-size;
     padding:0 @cm-horizontal-padding;
+    &.is-active{
+      background:@cm-white;
+    }
     .flag-icon{
       font-size:@cm-unit / 2;
       margin-right:@cm-horizontal-padding;
