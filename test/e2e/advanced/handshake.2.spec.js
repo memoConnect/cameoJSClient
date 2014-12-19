@@ -157,7 +157,7 @@ describe('Authentication requests -', function () {
                 util.waitForPageLoad('settings/identity/key/list')
 
                 util.waitForElement("[data-qa='message-no-keys']")
-                expect($("[data-qa='btn-encryption']").isDisplayed()).toBe(true);
+                expect($("[data-qa='message-no-keys']").isDisplayed()).toBe(true);
                 expect($("[data-qa='key-list-item']").isPresent()).toBe(false);
             })
 
