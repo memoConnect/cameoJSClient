@@ -206,7 +206,6 @@ this.deleteTestUser = function (loginName) {
     }, testUserId, config.apiUrl)
 
     self.clearLocalStorage();
-    ptor.sleep(250);
 }
 
 this.deleteKeys = function(){
