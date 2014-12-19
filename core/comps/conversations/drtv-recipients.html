@@ -1,29 +1,33 @@
-<ul ng-if="(conversation.recipients.length > 1)" ng-class="{'mb15': conversation.state.is('new') && (conversation.recipients.length > 1)}">
-    <li ng-repeat="identity in conversation.recipients|cmHideAppOwner|orderBy:'getDisplayName()':false">
-        <cm-recipient-tag cm-data-selected="selected" cm-data="identity" cm-data-conversation="conversation"></cm-recipient-tag>
-    </li>
-</ul>
+<cm-scrollable>
 
-<!--<hr ng-if="conversation.state.is('new') && (conversation.recipients.length > 1)">-->
+    <ul ng-if="(conversation.recipients.length > 1)" ng-class="{'mb15': conversation.state.is('new') && (conversation.recipients.length > 1)}">
+        <li ng-repeat="identity in conversation.recipients|cmHideAppOwner|orderBy:'getDisplayName()':false">
+            <cm-recipient-tag cm-data-selected="selected" cm-data="identity" cm-data-conversation="conversation"></cm-recipient-tag>
+        </li>
+    </ul>
 
-<div id="possible-recipient-list" cm-scroll-to="{anchor:'#possible-recipient-list',onEvent:true,timeout:50,addElementsHeight:'cm-header'}"></div>
+    <!--<hr ng-if="conversation.state.is('new') && (conversation.recipients.length > 1)">-->
 
-<ul ng-if="conversation.state.is('new')" class="contact-list">
-    <li
-        ng-repeat = "contact in contacts|cmRecipients:false:selected|cmSearch:'contacts':search"
-        ng-if     = "contact.contactType != 'pending'"
-    >
-        <cm-recipient-tag cm-data-selected="selected" cm-data="contact.identity" cm-data-conversation="conversation"></cm-recipient-tag>
-    </li>
-    <li>
-        <cm-contact-quick 
-            cm-input                = "{{search}}" 
-            cm-identity-model       = "identity"
-            cm-data-selected        = "selected"
-            cm-data-conversation    = "conversation"
-        ></cm-contact-quick>
-    </li> 
-</ul>
+    <div id="possible-recipient-list" cm-scroll-to="{anchor:'#possible-recipient-list',onEvent:true,timeout:50,addElementsHeight:'cm-header'}"></div>
+
+    <ul ng-if="conversation.state.is('new')" class="contact-list">
+        <li
+            ng-repeat = "contact in contacts|cmRecipients:false:selected|cmSearch:'contacts':search"
+            ng-if     = "contact.contactType != 'pending'"
+        >
+            <cm-recipient-tag cm-data-selected="selected" cm-data="contact.identity" cm-data-conversation="conversation"></cm-recipient-tag>
+        </li>
+        <li>
+            <cm-contact-quick
+                cm-input                = "{{search}}"
+                cm-identity-model       = "identity"
+                cm-data-selected        = "selected"
+                cm-data-conversation    = "conversation"
+            ></cm-contact-quick>
+        </li>
+    </ul>
+
+</cm-scrollable>
 
 <cm-footer cm-always-on-top>
     <button ng-click="goBack()" class="cm-btn-grey" data-qa="btn-done" cm-weight="1" cm-reactive>
