@@ -153,9 +153,12 @@ describe('Authentication requests -', function () {
             })
             it('should generate Key', function(){
                 util.generateKey(1, keyName1)
-                ptor.sleep(2000)
+                ptor.waitForPageLoad();
             })
             it('should check Key Trust', function(){
+                util.get('settings/identity/key/list')
+                util.waitForPageLoad('settings/identity/key/list')
+
                 checkKeyTrust(keyName1, true)
             })
         })
