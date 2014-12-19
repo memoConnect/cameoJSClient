@@ -28,6 +28,6 @@ fi
 ./setup.sh
 
 echo -e "\e[33m[ CameoClient - running unit/e2e tests ]\033[0m"
-./node_modules/grunt-cli/bin/grunt tests-unit ${target} ${wwwUrlArg} ${apiUrlArg}
-./node_modules/grunt-cli/bin/grunt tests-e2e  ${target} ${wwwUrlArg} ${apiUrlArg}
+#./node_modules/grunt-cli/bin/grunt tests-unit ${target} ${wwwUrlArg} ${apiUrlArg}
+./node_modules/grunt-cli/bin/grunt tests-e2e:tier2  ${target} ${wwwUrlArg} ${apiUrlArg}
 
