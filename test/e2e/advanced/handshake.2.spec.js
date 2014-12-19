@@ -153,6 +153,7 @@ describe('Authentication requests -', function () {
             })
             it('should generate Key', function(){
                 util.generateKey(1, keyName1)
+                ptor.sleep(2000)
             })
             it('should check Key Trust', function(){
                 checkKeyTrust(keyName1, true)
@@ -247,7 +248,10 @@ describe('Authentication requests -', function () {
         it("import key", function () {
             util.setLocalStorage(localStorage1.key, localStorage1.value)
             util.login(testUser1, "password")
+
             util.get("/settings/identity/key/list")
+
+
             util.waitForElements("[data-qa='key-list-item']", 2)
             checkKeyTrust(keyName1, true)
             checkKeyTrust(keyName3, false)
@@ -291,10 +295,15 @@ describe('Authentication requests -', function () {
         })
 
         it("both keys should now be trusted", function () {
-            util.get("/settings/identity/key/list")
+            util.get('/settings/identity/key/list')
+            util.waitForPageLoad('/settings/identity/key/list')
+
             util.waitForElements("[data-qa='key-list-item']", 2)
+
             checkKeyTrust(keyName1, true)
             checkKeyTrust(keyName3, true)
+
+            ptor.sleep(1000)
         })
 
         it("should not be able to read conversation from key3", function () {
@@ -312,12 +321,16 @@ describe('Authentication requests -', function () {
 
         it("import key3", function () {
             util.setLocalStorage(localStorage3.key, localStorage3.value)
+
             util.login(testUser1, "password")
+            util.waitForEventSubscription()
+
             util.get("/settings/identity/key/list")
+
             util.waitForElements("[data-qa='key-list-item']", 2)
             checkKeyTrust(keyName1, false)
             checkKeyTrust(keyName3, true)
-            util.waitForEventSubscription()
+            ptor.sleep(1000)
         })
 
         it("send authentication:start event from key1", function () {
@@ -332,6 +345,7 @@ describe('Authentication requests -', function () {
             util.setVal("inp-transactSecret", transactionSecret)
             util.waitAndClick("cm-modal.active [data-qa='btn-acceptIncomingRequest']")
             util.waitForElementDisappear("cm-modal.active [data-qa='inp-transactSecret']")
+            ptor.sleep(5000)
         })
 
         it("both keys should now be trusted", function () {
@@ -340,6 +354,8 @@ describe('Authentication requests -', function () {
 
             checkKeyTrust(keyName1, true)
             checkKeyTrust(keyName3, true)
+
+            ptor.sleep(1000)
         })
 
         it("should be able to read conversation from key1", function () {
@@ -365,6 +381,9 @@ describe('Authentication requests -', function () {
             checkKeyTrust(keyName1, false)
             checkKeyTrust(keyName2, true)
             checkKeyTrust(keyName3, false)
+
+            ptor.sleep(1000)
+
             util.getLocalStorage().then(function (lsexport) {
                 localStorage2 = lsexport
             })
