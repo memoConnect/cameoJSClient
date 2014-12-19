@@ -51,6 +51,7 @@ describe('Authentication requests -', function () {
         ptor.getCurrentUrl().then(function(url){
             if(!url.match("/settings/identity/key/list"))
                 util.get("/settings/identity/key/list")
+                util.waitForPageLoad('settings/identity/key/list')
         })
 
         ptor.wait(function(){

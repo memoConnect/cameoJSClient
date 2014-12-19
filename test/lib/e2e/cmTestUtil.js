@@ -619,6 +619,7 @@ this.generateKey = function (keyNum, keyName) {
         }
 
         self.click("btn-save-key")
+        self.waitForPageLoad();
     })
 }
 
