@@ -54,6 +54,8 @@ describe('Authentication requests -', function () {
                 util.waitForPageLoad('settings/identity/key/list')
         })
 
+        util.waitForElements("[data-qa='key-list-item']")
+
         ptor.wait(function(){
             return $$("[data-qa='key-list-item']")
                 .map(function(key){
@@ -163,17 +165,12 @@ describe('Authentication requests -', function () {
 
             it('should generate Key', function(){
                 util.generateKey(1, keyName1)
-
-                util.waitForPageLoad();
-                util.logCurrentUrl();
-                ptor.sleep(2000)
             })
+
             it('should check Key Trust', function(){
-                util.logCurrentUrl();
                 util.get('settings/identity/key/list')
                 util.waitForPageLoad('settings/identity/key/list')
 
-                util.logCurrentUrl();
                 checkKeyTrust(keyName1, true)
             })
         })
