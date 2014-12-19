@@ -216,6 +216,8 @@ describe('Authentication requests -', function () {
 
         it("generate key3", function () {
             util.login(testUser1, "password")
+
+
             util.get("/settings/identity/key/list")
             util.waitForElements("[data-qa='key-list-item']", 1)
             util.generateKey(3, keyName3)

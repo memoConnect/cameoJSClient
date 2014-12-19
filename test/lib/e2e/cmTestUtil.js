@@ -620,8 +620,7 @@ this.generateKey = function (keyNum, keyName) {
 
         self.click("btn-save-key")
 
-        self.waitForLoader(1, 'cm-footer')
-
+        self.checkWarning('info-key-error', true);
     })
 }
 
