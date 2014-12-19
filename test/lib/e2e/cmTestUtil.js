@@ -620,7 +620,7 @@ this.generateKey = function (keyNum, keyName) {
 
         self.click("btn-save-key")
 
-        self.checkWarning('info-key-error', true);
+        //self.checkWarning('info-key-error', true);
     })
 }
 
