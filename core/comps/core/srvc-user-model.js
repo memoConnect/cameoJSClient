@@ -550,7 +550,7 @@ angular.module('cmCore')
         }
 
         this.signPublicKey = function(keyToSign, keyToSignFingerprint, identity){
-            cmLogger.debug('cmUserModel.signPublicKey');
+            //cmLogger.debug('cmUserModel.signPublicKey');
 
             identity = identity || self.data.identity
 
@@ -580,9 +580,6 @@ angular.module('cmCore')
 
                         return signingKey.sign(self.getTrustToken(keyToSign, identity.cameoId))
                                 .then(function(signature){
-
-                                    console.log(signingKey.id, keyToSign.id, signature)
-
                                     return cmAuth.savePublicKeySignature(signingKey.id, keyToSign.id, signature)
                                 })
                                 .then(
