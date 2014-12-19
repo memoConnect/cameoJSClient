@@ -151,6 +151,16 @@ describe('Authentication requests -', function () {
             it('should create testUser', function(){
                 util.createTestUser(testUser1Id)
             })
+
+            it('there should be no key', function(){
+                util.get('settings/identity/key/list')
+                util.waitForPageLoad('settings/identity/key/list')
+
+                util.waitForElement("[data-qa='message-no-keys']")
+                expect($("[data-qa='btn-encryption']").isDisplayed()).toBe(true);
+                expect($("[data-qa='key-list-item']").isPresent()).toBe(false);
+            })
+
             it('should generate Key', function(){
                 util.generateKey(1, keyName1)
 
