@@ -102,8 +102,9 @@ this.get = function (path) {
     }
 
     var url = config.wwwUrl + '#' + path
+    //console.log('util.get', path)
     ptor.get(url)
-    this.waitForPageLoad()
+    self.waitForPageLoad()
 
     return this
 }
@@ -203,6 +204,8 @@ this.deleteTestUser = function (loginName) {
         xhr.send('');
 
     }, testUserId, config.apiUrl)
+
+    self.clearLocalStorage();
 }
 
 this.deleteKeys = function(){
@@ -343,6 +346,8 @@ this.getIdentityId = function(token){
 }
 
 this.waitForPageLoad = function (expectedRoute) {
+    //console.log('waitForPageLoad', expectedRoute)
+
     ptor.wait(function () {
         return ptor.executeScript('return window != undefined && window._route').then(function (route) {
             if (route) {
@@ -612,7 +617,10 @@ this.generateKey = function (keyNum, keyName) {
             self.clearInput("input-key-name")
             self.setVal("input-key-name", keyName)
         }
+
         self.click("btn-save-key")
+
+        //self.checkWarning('info-key-error', true);
     })
 }
 
@@ -782,4 +790,10 @@ this.setKeygenerationTimeout = function(jasmine){
         jasmine.getEnv().defaultTimeoutInterval = 30000
     })
     return expectedTimeout;
+}
+
+this.logCurrentUrl = function(){
+    ptor.getCurrentUrl().then(function(url){
+        console.log('logCurrentUrl:', url)
+    })
 }

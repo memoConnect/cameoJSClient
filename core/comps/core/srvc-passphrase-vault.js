@@ -181,23 +181,25 @@ angular.module('cmCore').service('cmPassphraseVault',[
              * @ngdoc method
              * @methodOf PassphraseVault
              *
-             * @name verifySignature
+             * @name verifyAuthenticity
              * @description
              * Verifies a authentication of vault data
              *
              * @returns {Promise} Returns a promise resolved on success and rejected on failure
              */
-            this.verifyAuthenticity = function(signatures){
+            this.verifyAuthenticity = function(){
 
                 // the original signee ought to be among the original recipients, so get them first:
                 recipientKeyList
                 .map(function(item){
-                    return cmIdentityFactory.find(item.id)
+                    return cmIdentityFactory.find(item.identityId)
                 })
                 .forEach(function(recipient){
+                    if(!recipient) return null
+
                     //add matching key/identity to signature object for later use
                     signatures.forEach(function(signature){
-                        var key = recipient.keys.find(signatures.keyId)
+                        var key = recipient.keys.find(signature.keyId)
                         if(key){
                             signature.identity  = recipient
                             signature.key       = key
@@ -214,6 +216,7 @@ angular.module('cmCore').service('cmPassphraseVault',[
                                     }
                         })
                         .then(function(data){
+                            console.log(data)
                             return  cmCrypt.hashObject(data) || $q.reject('cmPassphraseVault.verifyAuthenticity: cmCrypt.hashObject() failed.')
                         })
                         .then(function(token){
@@ -221,27 +224,26 @@ angular.module('cmCore').service('cmPassphraseVault',[
                             var valid_signatures= [],
                                 bad_signatures  = [] 
 
+                            console.log(signatures)
+
                             return  $q.all(signatures.map(function(signature){
                                         var key = signature.key
 
-                                        if(key){
-                                            var deferred = $q.defer()
-
-                                            key.verify(token, signature.content)
-                                            .then(
-                                                function(result){
-                                                    valid_signatures.push(signature)
-                                                },
-                                                function(reason){
-                                                    bad_signatures.push(signature)
-                                                }
-                                            )
-                                            .finally(function(){
-                                                deferred.resolve()
-                                            })
-
-                                            return deferred.promise
-                                        }
+                                        console.log(key)
+                                        return  key
+                                                ?   key.verify(token, signature.content)
+                                                    .then(
+                                                        function(result){
+                                                            valid_signatures.push(signature)
+                                                        },
+                                                        function(reason){
+                                                            bad_signatures.push(signature)
+                                                        }
+                                                    )
+                                                    .finally(function(){
+                                                        return $q.when()
+                                                    })
+                                                :   $q.when()
                                     }))
                                     .then(function(){
                                         return  valid_signatures.length > 0

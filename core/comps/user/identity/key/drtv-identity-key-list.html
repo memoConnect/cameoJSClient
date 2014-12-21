@@ -16,8 +16,28 @@
 </article>
 
 <ul ng-if="(publicKeys.length > 0)">
-    <li class="key-list-item" ng-repeat="key in publicKeys | orderBy:sortByPrivKeys" data-qa="key-list-item">
-        <section ng-click="goTo('settings/identity/key/edit/'+key.id)" class="item tal clearfix" cm-reactive>
+    <li 
+        ng-if       = "!canCreate && someKeyNeedsAuthentication()" 
+        ng-click    = "goTo('/authentication')"
+        data-qa     = "li-some-key-needs-authentication"
+        cm-reactive
+    >
+        <span class="item clearfix">
+            <span class="title">
+                <i class="fa cm-handshake" ng-class="overview[page].icon"></i>
+                <span>{{'IDENTITY.KEYS.AUTHENTICATION.HEADLINE'|cmTranslate }}</span>
+            </span>
+
+            <section class="icon-list">
+                <i class="fa cm-right"></i>
+            </section>
+        </span>
+    </li>
+    <li class="key-list-item clearfix" ng-repeat="key in publicKeys | orderBy:sortByPrivKeys" data-qa="key-list-item">
+        <section ng-click="goTo('settings/identity/key/edit/'+key.id)" 
+            class="item tal"
+            cm-reactive
+        >
             <strong>{{key.name}}</strong>
             <span class="second-row">
                 {{privateKeys.find(key).getSize() || key.getSize() || key.size}}

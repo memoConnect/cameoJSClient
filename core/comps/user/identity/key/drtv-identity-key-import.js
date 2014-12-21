@@ -8,9 +8,10 @@ angular.module('cmRouteSettings')
     'cmUserModel',
     'cmModal',
     'cmDevice',
+    'cmLoader',
     '$window',
     '$rootScope',
-    function(cmNotify, cmKey, cmUtil, cmUserModel, cmModal, cmDevice,
+    function(cmNotify, cmKey, cmUtil, cmUserModel, cmModal, cmDevice, cmLoader,
              $window, $rootScope){
         return {
             restrict: 'E',
@@ -21,6 +22,8 @@ angular.module('cmRouteSettings')
                     $rootScope.goTo('/settings/identity/key/list', true);
                     return false;
                 }
+
+                var loader = new cmLoader($scope);
 
                 $scope.isValid = false;
                 $scope.isError = false;
@@ -46,6 +49,9 @@ angular.module('cmRouteSettings')
                 $scope.store = function(){
                     var error = false;
 
+                    if (loader.isIdle())
+                        return false;
+
                     if($scope.privKey == ''){
                         error = true;
                         cmNotify.warn('SETTINGS.PAGES.IDENTITY.KEYS.WARN.CHECK_PRIVKEY');
@@ -62,6 +68,8 @@ angular.module('cmRouteSettings')
                     }
 
                     if(error !== true){
+                        loader.start();
+
                         var key = new   cmKey({
                                             name: $scope.keyName,
                                             privKey: $scope.privKey
@@ -75,6 +83,8 @@ angular.module('cmRouteSettings')
                             .when('key:saved', null, 5000)
                             .then(
                                 function(result){
+                                    loader.stop();
+
                                     if(cmUserModel.data.identity.keys.some(function(key){
                                         return key.id != result.data.keyId
                                     })){

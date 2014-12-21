@@ -1,5 +1,14 @@
 ## Dev
-# BS 12.12.2014
+# BS 19.12.2014
+* fix CAM-1509, footer in desktop modus will not scroll
+
+# AP 18.12.2014
+* added authenticate some key button to key list
+
+# BS 18.12.2014
+* finish CAM-1501, add 4096 Bit info to key generation lang keys
+
+# BS 17.12.2014
 * add new setup routes
     * update registration, now it is possible to turn off confirmPW and show pw input
     * add setup account route

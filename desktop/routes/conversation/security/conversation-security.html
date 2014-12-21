@@ -3,6 +3,7 @@
         <cm-back back-to="conversation/{{conversationId}}"></cm-back>
         <cm-logo></cm-logo>
         <section class="icons-list">
+            <cm-header-list-search ng-model="search"></cm-header-list-search>
             <cm-security-indicator
                 cm-data         = "conversation"
                 ng-click        = "gotoConversation(conversation.id,'security')"

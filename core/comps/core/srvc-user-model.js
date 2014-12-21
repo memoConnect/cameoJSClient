@@ -548,24 +548,26 @@ angular.module('cmCore')
         }
 
         this.signPublicKey = function(keyToSign, keyToSignFingerprint, identity){
-            // cmLogger.debug('cmUserModel.signPublicKey');
+            //cmLogger.debug('cmUserModel.signPublicKey');
 
             identity = identity || self.data.identity
 
             if(!(keyToSign instanceof cmKey) || (keyToSign.getFingerprint() !== keyToSignFingerprint)){
                 self.trigger('signatures:cancel');
-                return $q.reject()
+                return $q.reject();
             }
 
-            return  $q.all(this.loadLocalKeys().map(function(signingKey){
-                        //Keys should not sign themselves
-                        if(signingKey.id == keyToSign.id && (signingKey.getFingerprint() == keyToSign.getFingerprint())){
+            var localKeys = this.loadLocalKeys();
+
+            return  $q.all(localKeys.map(function(signingKey){
+                        // Keys should not sign themselves
+                        if(!signingKey.id || signingKey.id == keyToSign.id || (signingKey.getFingerprint() == keyToSign.getFingerprint())){
                             self.trigger('signatures:cancel');
                             //cmLogger.debug('cmUserModel.signPublicKey() failed; key tried to sign itself.')
                             return $q.when(false);
                         }
 
-                        //Dont sign twice:
+                        // Dont sign twice:
                         if(keyToSign.signatures.some(function(signature){ return signature.keyId == signingKey.id })){
                             self.trigger('signatures:cancel');
                             //cmLogger.debug('cmUserModel.signPublicKey() failed; dublicate signature.')
@@ -574,7 +576,7 @@ angular.module('cmCore')
 
                         cmLogger.debug('cmUserModel.signPublicKey: signing...')
 
-                        return  signingKey.sign(self.getTrustToken(keyToSign, identity.cameoId))
+                        return signingKey.sign(self.getTrustToken(keyToSign, identity.cameoId))
                                 .then(function(signature){
                                     return cmAuth.savePublicKeySignature(signingKey.id, keyToSign.id, signature)
                                 })

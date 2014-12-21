@@ -161,57 +161,25 @@ describe('cmPassphraseVault', function () {
         })
 
         it('should be able to sign and verify recipient key lists and key transmission type.', function(){
-            var signatures1, signatures2,
-                result11, result12, result21, result22
+            var result1, result2
 
-            vault1.getSignatures()
-            .then(function(signatures){
-                signatures1 = signatures
-            })
-            .catch(function(reason){
-                console.log(reason)
-            })
-
-            vault2.getSignatures()
-            .then(function(signatures){
-                signatures2 = signatures
-                console.log(signatures)
-            })
-            .catch(function(reason){
-                console.log(reason)
-            })
-
-            $rootScope.$apply()
-
-            vault1.verifyAuthenticity(signatures1)
+            vault1.verifyAuthenticity()
             .then(function(){
-                result11 = true
+                result1 = true
             })
             .catch(function(reason){
                 console.log(reason)
             })         
 
-            vault1.verifyAuthenticity(signatures2)
+            vault2.verifyAuthenticity()
             .then(function(){
-                result12 = true
-            })
-
-            vault2.verifyAuthenticity(signatures1)
-            .then(function(){
-                result21 = true
-            })
-
-            vault2.verifyAuthenticity(signatures2)
-            .then(function(){
-                result22 = true
+                result2 = true
             })
 
             $rootScope.$apply()
 
-            expect(result11).toBe(true)
-            expect(result12).toBe(true)
-            expect(result21).toBe(true)
-            expect(result22).toBe(true)
+            expect(result1).toBe(true)
+            expect(result2).toBe(true)
         })
 
   

@@ -91,7 +91,7 @@ describe('Identity key settings: ', function () {
 
     it('there should be no info and no footer bubble concerning keys needing authentication.', function(){
         expect($('[data-qa="bubble-some-key-needs-authentication"').isPresent()).toBe(false)
-        expect($('[data-qa="footer-some-key-needs-authentication"').isPresent()).toBe(false)
+        expect($('[data-qa="li-some-key-needs-authentication"').isPresent()).toBe(false)
     })
 
     it('the key should still be there after logout/login', function () {
@@ -158,7 +158,7 @@ describe('Identity key settings: ', function () {
 
     it('should display info and authenticate footer button, if some key needs authentication.', function(){
         util.waitForQa('bubble-some-key-needs-authentication')
-        util.waitForQa('footer-some-key-needs-authentication')
+        util.waitForQa('li-some-key-needs-authentication')
     })
 
     it('delete test user', function () {

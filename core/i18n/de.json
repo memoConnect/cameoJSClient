@@ -449,7 +449,7 @@
                 },
                 "GENERATING": {
                     "HEADLINE": "cameoKey Generierung läuft!",
-                    "EXPLANATION": "Bitte haben Sie einen Moment Geduld. Dieser Prozess kann je nach Gerät und Schlüssellänge einige Zeit in Anspruch nehmen.<br> Bei Wartenzeiten von über 5 Minuten sollten Sie den Prozess abbrechen und erneut starten.",
+                    "EXPLANATION": "Bitte haben Sie einen Moment Geduld. Dieser Prozess kann je nach Gerät und Schlüssellänge einige Zeit in Anspruch nehmen.<br> Bei Wartenzeiten von über 5 Minuten  sollten Sie den Prozess abbrechen und erneut starten.<br>Bei einer Schlüssellänge von 4096 Bit, kann die Wartezeit bis zu 15 Minuten betragen.",
                     "TIME_PASSED": "Verbrauchte Zeit:",
                     "GENERATION_TIMER": " {{time}}",
                     "STOP_BUTTON": "Generierung abbrechen"
@@ -809,7 +809,15 @@
         "REQUESTS": "Kontaktanfragen",
         "OWN_KEYS": "Eigene Schlüssel",
         "SETTINGS": "@:SETTINGS.LABEL",
+        "HELP": "@:HELP.HEADING",
         "LOGOUT": "Abmelden"
+    },
+
+    "HELP":{
+        "HEADING":"@todo Hilfe",
+        "LABEL": {
+            "SUPPORT": "@todo Support"
+        }
     },
 
     "NOTIFICATIONS": {

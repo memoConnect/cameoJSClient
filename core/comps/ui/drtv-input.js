@@ -14,12 +14,6 @@ angular.module('cmUi').directive('input', [
                 var initValue = '',
                     timeout;
 
-                function apply(){
-                    scope.$apply(function(){
-                        setValue();
-                    });
-                }
-
                 function broadcastPristine(bool){
                     if(bool){
                         cmPristine.set(ngModel, true);
@@ -50,7 +44,7 @@ angular.module('cmUi').directive('input', [
 
                     if('cmAdaptiveChange' in attrs){
                         timeout = $timeout(function(){
-                            apply();
+                            setValue()
                         },attrs.cmAdaptiveChange || 1000);
                     } else {
                         setValue();
