@@ -171,18 +171,17 @@ this.createTestUser = function (testUserId, from){
             .then(function(){
                 self.setVal('input-cameoId',loginName,true)
                 self.setVal('input-password',password)
-                self.waitAndClickQa('icon-toggle-password');
-                //self.setVal('input-passwordConfirm',password)
-
-                self.scrollToBottom()
-
-                self.click('icon-checkbox-agb')
-
-                //ptor.pause()
-
-                self.click('btn-createUser')
-
-                return self.waitForPageLoad("/setup/account")
+                return  self.waitAndClickQa('icon-toggle-password')
+                        .then(function(){
+                            self.scrollToBottom()
+                            return self.waitAndClickQa('icon-checkbox-agb')
+                        })
+                        .then(function(){
+                            return self.waitAndClickQa('btn-createUser')                    
+                        })
+                        .then(function(){
+                            return self.waitForPageLoad("/setup/account")            
+                        })
                         .then(function(){
                             return loginName
                         })
@@ -544,7 +543,7 @@ this.getFileExtension = function (file) {
 this.headerSearchInList = function (searchString) {
     return  self.waitAndClickQa('btn-header-list-search')
             .then(function(){
-                self.setVal('inp-list-search',searchString,true)
+                return self.setVal('inp-list-search',searchString,true)
             })
 }
 
@@ -724,7 +723,7 @@ this.setVal = function (dataQa, text, withClear){
     if(withClear)
         this.clearInput(dataQa)
 
-    $("[data-qa='" + dataQa + "']").sendKeys(text)
+    return $("[data-qa='" + dataQa + "']").sendKeys(text)
 }
 
 this.sendEnter = function(dataQa, withClear){

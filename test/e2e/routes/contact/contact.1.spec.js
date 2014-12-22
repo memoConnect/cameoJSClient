@@ -68,15 +68,13 @@ describe('Route Contact: ', function () {
     describe('create external contact', function(){
 
         it('open modal and click create new contact',function(){
-            util.expectCurrentUrl('#/contact/list')
-
-            //$("[data-qa='add-contact-btn']").click()
-            util.waitAndClickQa('add-contact-btn');
-
-            //$$('cm-modal.active .content a').last().click()
-            util.waitAndClickQa('btn-modal-contact-create');
-
-            util.expectCurrentUrl('#/contact/create')
+            util.waitAndClickQa('add-contact-btn')
+            .then(function(){
+                return util.waitAndClickQa('btn-modal-contact-create')
+            })
+            .then(function(){
+                return util.waitForPageLoad('/contact/create')
+            })
         })
 
         it('all inputs should be enabled',function(){
@@ -89,7 +87,7 @@ describe('Route Contact: ', function () {
             })
         })
 
-        it('create external contact', function(){
+        it('should create external contact', function(){
             util.setVal('input-displayname', extUserName)
             util.setVal('input-phoneNumber', extUserTel)
             util.setVal('input-email', extUserMail1)
@@ -102,39 +100,55 @@ describe('Route Contact: ', function () {
 
         it('search and click to detail',function(){
             util.waitForPageLoad('/contact/list')
-            util.waitForElement('cm-contact-tag')
-
-            util.headerSearchInList(extUserName)
-
-            //expect($$('cm-contact-list cm-contact-tag cm-avatar').count()).toBe(1)
-            ptor.sleep(50)
-            expect($$('cm-contact-tag').count()).toBe(1)
+            .then(function(){
+                return  util.waitForElement('cm-contact-tag')
+            })
+            .then(function(){
+                return util.headerSearchInList(extUserName)
+            })
+            .then(function(){
+                return  ptor.wait(function(){
+                            return $$('cm-contact-tag').then(function(elements){ return elements.length == 1})
+                        })
+            })
         })
 
         it('should find external user after logout/login (1)', function(){
-            util.login(testUser, 'password');
+            util.login(testUser, 'password')
+            .then(function(){
+                util.get('/contact')
+                return util.waitForPageLoad('/contact')
+            })
+            .then(function(){
+                util.headerSearchInList(extUserName)
+                return $$('cm-contact-list cm-contact-tag cm-avatar').first().click()
+            })
+            .then(function(){
+                return util.waitForPageLoad('/contact/.*')
+            })
 
-            util.get('/contact')
-            util.waitForPageLoad('/contact')
-
-            util.headerSearchInList(extUserName)
-            $$('cm-contact-list cm-contact-tag cm-avatar').first().click()
-            util.expectCurrentUrl('#/contact/.*')
         })
 
         it('should be the same details in contact (1)', function(){
-            util.waitForQa('input-displayname');
-            util.getVal('input-displayname').then(function(value){
+            util.waitForQa('input-displayname')
+            .then(function(){
+                return util.getVal('input-displayname')
+            })
+            .then(function(value){
                 expect(value).toBe(extUserName)
+                return util.waitForQa('input-phoneNumber');
             })
-
-            util.waitForQa('input-phoneNumber');
-            util.getVal('input-phoneNumber').then(function(value){
+            .then(function(){
+                return util.getVal('input-phoneNumber')    
+            })
+            .then(function(value){
                 expect(value).toBe(extUserTel)
+                return util.waitForQa('input-email');
             })
-
-            util.waitForQa('input-email');
-            util.getVal('input-email').then(function(value){
+            .then(function(){
+                return util.getVal('input-email')
+            })
+            .then(function(value){
                 expect(value).toBe(extUserMail1)
             })
         })
