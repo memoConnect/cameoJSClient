@@ -150,12 +150,10 @@ this.login = function (username, password, expectedRoute) {
     $("[data-qa='login-submit-btn']").click();
 
     if (typeof expectedRoute == 'string' && expectedRoute.length > 0) {
-        self.waitForPageLoad(expectedRoute)
+        return self.waitForPageLoad(expectedRoute)
     } else {
-        self.waitForPageLoad(['/start', '/talks', '/setup'])
+        return self.waitForPageLoad(['/start', '/talks', '/setup'])
     }
-
-    return this
 }
 
 this.createTestUser = function (testUserId, from){
