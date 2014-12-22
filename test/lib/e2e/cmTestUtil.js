@@ -466,24 +466,22 @@ this.waitForLoader = function (count, parentSelector) {
     count = count || 1,
     parentSelector = parentSelector ? parentSelector+' ' : '' // that used for more then one loader on page
     // wait for loader appear
-    ptor.wait(function() {
-        return  $(parentSelector+'cm-loader').getAttribute('cm-count')
-                .then(function(value){
-                    return value >= count
-                })
-    }, config.routeTimeout, 'waitForLoader start timeout reached')
-    .then(function () {
-        // wait for loader disappear
-        ptor.wait(function () {
-            return $(parentSelector+'cm-loader').isDisplayed()
-            .then(function (isDisplayed) {
-                return !isDisplayed
+    return  ptor.wait(function() {
+                return  $(parentSelector+'cm-loader').getAttribute('cm-count')
+                        .then(function(value){
+                            return value >= count
+                        })
+            }, config.routeTimeout, 'waitForLoader start timeout reached')
+            .then(function () {
+                // wait for loader disappear
+                ptor.wait(function () {
+                    return $(parentSelector+'cm-loader').isDisplayed()
+                    .then(function (isDisplayed) {
+                        return !isDisplayed
+                    })
+                }, config.routeTimeout, 'waitForLoader stop timeout reached')
+
             })
-        }, config.routeTimeout, 'waitForLoader stop timeout reached')
-
-    })
-
-    return this
 }
 
 this.waitForProgressbar = function (timeout) {
