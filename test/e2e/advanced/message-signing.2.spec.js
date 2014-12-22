@@ -24,13 +24,19 @@ describe('Message signing -', function () {
 
         it("create test user 2, generate key and send friend request", function () {
             util.createTestUser(testUserId2)
-            util.generateKey(8)
-            util.sendFriendRequest(testUser1)
+            .then(function(){
+                return  util.generateKey(8)
+            })
+            .then(function(){
+                return  util.sendFriendRequest(testUser1)
+            })
         })
 
         it("user 1 accept friend request", function () {
             util.login(testUser1, "password")
-            util.acceptFriendRequests()
+            .then(function(){
+                return  util.acceptFriendRequests()
+            })
         })
     })
 
@@ -38,7 +44,9 @@ describe('Message signing -', function () {
 
         it("create new conversation", function () {
             util.login(testUser1, "password")
-            util.get("/conversation/new")
+            .then(function(){
+                return  util.get("/conversation/new")
+            })
         })
 
         it("add subject", function () {
@@ -54,11 +62,13 @@ describe('Message signing -', function () {
 
             $("[data-qa='inp-list-search']").sendKeys(testUser2)
             util.waitForElement(".contact-list [data-qa='btn-select-contact']")
-            $(".contact-list [data-qa='btn-select-contact']").click()
-            $("[data-qa='btn-list-search-clear']").click()
+            .then(function(){
+                $(".contact-list [data-qa='btn-select-contact']").click()
+                $("[data-qa='btn-list-search-clear']").click()
 
-            $("[data-qa='btn-done']").click()
-            util.expectCurrentUrl('/conversation/new')
+                $("[data-qa='btn-done']").click()
+                util.expectCurrentUrl('/conversation/new')
+            })
         })
 
         it("submit message", function () {
@@ -69,14 +79,16 @@ describe('Message signing -', function () {
             .then(function(){
                 return util.getConversation(subject)
             })
+            .then(function(){
+                // get conversation Id
+                return  ptor.wait(function () {
+                            return ptor.getCurrentUrl().then(function (url) {
+                                conversationId = url.split("/").pop()
+                                return conversationId != "new"
+                            })
+                        }, 5000, 'unable to get conversation id')
+            })
 
-            // get conversation Id
-            ptor.wait(function () {
-                return ptor.getCurrentUrl().then(function (url) {
-                    conversationId = url.split("/").pop()
-                    return conversationId != "new"
-                })
-            }, 5000, 'unable to get conversation id')
         })
 
     })
@@ -86,7 +98,7 @@ describe('Message signing -', function () {
             util.login(testUser2, "password")
             .then(function(){
                 util.get('/conversation/'+conversationId)
-                return waitForPageLoad('/conversation/'+conversationId)
+                return util.waitForPageLoad('/conversation/'+conversationId)
             })
         })
 
@@ -95,7 +107,10 @@ describe('Message signing -', function () {
             var message
 
             ptor.wait(function(){
-                return  $$('cm-message')
+                return  util.waitForElement('cm-message')
+                        .then(function(){
+                            return $('cm-message')
+                        })
                         .then(function(el){
                             message = el
                             return  el.$("[data-qa='message-author']")

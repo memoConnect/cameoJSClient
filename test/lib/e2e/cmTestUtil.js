@@ -651,10 +651,16 @@ this.clickBackBtn = function () {
 
 this.sendFriendRequest = function (displayName) {
     self.get("/contact/search")
-    $("[data-qa='inp-search-cameo-ids']").sendKeys(displayName)
-    self.waitForElement("[data-qa='btn-openModal']")
-    $("[data-qa='btn-openModal']").click()
-    $("[data-qa='btn-sendRequest']").click()
+    self.waitForPageLoad("/contact/search")
+    .then(function(){
+        $("[data-qa='inp-search-cameo-ids']").sendKeys(displayName)
+        return  self.waitForElement("[data-qa='btn-openModal']")
+    })
+    .then(function(){
+        $("[data-qa='btn-openModal']").click()
+        $("[data-qa='btn-sendRequest']").click()
+    })
+
 }
 
 this.acceptFriendRequests = function () {
