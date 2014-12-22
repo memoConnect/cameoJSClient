@@ -8,8 +8,10 @@ describe('Check CreateNewConversation Buttons', function () {
 
     describe('create test users: ', function(){
         it('should create user', function(){
-            testUser = util.createTestUser(undefined, 'check-create-new-conversation-btns')
-            util.expectCurrentUrl('/setup/account')
+            util.createTestUser(undefined, 'check-create-new-conversation-btns')
+            .then(function(loginName){
+                testUser = loginName
+            })
         })
     })
 

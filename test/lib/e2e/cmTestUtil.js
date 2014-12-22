@@ -102,7 +102,7 @@ this.get = function (path) {
     }
 
     var url = config.wwwUrl + '#' + path
-    //console.log('util.get', path)
+    // console.log('util.get', path)
     ptor.get(url)
     self.waitForPageLoad()
 
@@ -120,14 +120,15 @@ this.expectCurrentUrl = function (match) {
 this.logout = function () {
     self.get('/login')
 
-    $$("cm-menu").then(function (elements) {
-        if (elements.length > 0) {
-            $("cm-menu .cm-handler").click()
-            self.waitForElement(".cm-menu-list")
-            $("[data-qa='logout-btn']").click()
-        }
-    })
-    return this
+    return  $$("cm-menu").then(function (elements) {
+                if (elements.length > 0) {
+                    $("cm-menu .cm-handler").click()
+                    self.waitForElement(".cm-menu-list")
+                    $("[data-qa='logout-btn']").click()
+                }
+                return self.waitForPageLoad('/login')
+            })
+    
 }
 
 this.login = function (username, password, expectedRoute) {
@@ -151,7 +152,7 @@ this.login = function (username, password, expectedRoute) {
     if (typeof expectedRoute == 'string' && expectedRoute.length > 0) {
         self.waitForPageLoad(expectedRoute)
     } else {
-        self.waitForPageLoad('(start|talks|setup)')
+        self.waitForPageLoad(['/start', '/talks', '/setup'])
     }
 
     return this
@@ -182,9 +183,10 @@ this.createTestUser = function (testUserId, from){
 
     this.click('btn-createUser')
 
-    this.waitForPageLoad("/setup/account")
-
-    return loginName
+    return this.waitForPageLoad("/setup/account")
+            .then(function(){
+                return loginName
+            })
 }
 
 this.deleteTestUser = function (loginName) {
@@ -345,27 +347,33 @@ this.getIdentityId = function(token){
     }, token, config.apiUrl)
 }
 
-this.waitForPageLoad = function (expectedRoute) {
-    //console.log('waitForPageLoad', expectedRoute)
 
-    ptor.wait(function () {
+this.waitForPageLoad = function (expectedRoutes) {
+
+    expectedRoutes = !Array.isArray(expectedRoutes) ? [expectedRoutes] : expectedRoutes
+    // console.log('waitForPageLoad', expectedRoutes.join(', '))
+
+    return ptor.wait(function () {
         return ptor.executeScript('return window != undefined && window._route').then(function (route) {
             if (route) {
                 // get current route
-                if (expectedRoute == undefined || route.path.search(expectedRoute) != -1) {
+                if (        
+                        expectedRoutes.length == 0 
+                    ||  expectedRoutes.some(function(expected_route){
+                            return route.path.search(expected_route) != -1
+                        })
+                ) {
                     return route.status == "success"
                 } else {
 //                        console.log("Error: unexpected route: " + route.path)
                 }
             }
         })
-
-    }, config.routeTimeout, 'waitForPage ' + (expectedRoute || 'any page') + ' timeout reached')
-    return this
+    }, config.routeTimeout, 'waitForPage ' + (expectedRoutes || 'any page') + ' timeout reached')
 }
 
 this.waitForEventSubscription = function () {
-    ptor.wait(function(){
+    return ptor.wait(function(){
         return ptor.executeScript('return window != undefined && window._eventSubscriptionId')
             .then(function (subscriptionId) {
                 if (subscriptionId) {
@@ -373,18 +381,15 @@ this.waitForEventSubscription = function () {
                 }
             })
     }, config.waitForTimeout, 'waitForEventSubscription timeout reached')
-    return this
 }
 
 this.waitForElement = function (selector, timeout) {
 
-    ptor.wait(function () {
+    return ptor.wait(function () {
         return $$(selector).then(function (elements) {
             return elements.length > 0
         })
     }, timeout || config.waitForTimeout, 'waitForElement ' + selector + ' timeout is reached')
-
-    return this
 }
 
 this.waitForElements = function (selector, count) {
@@ -423,13 +428,11 @@ this.waitForElementHidden = function (selector, timeout) {
 }
 
 this.waitForElementDisappear = function (selector, timeout) {
-    ptor.wait(function () {
+    return ptor.wait(function () {
         return ptor.isElementPresent(by.css(selector)).then(function (isPresent) {
             return !isPresent
         })
     }, timeout || config.waitForTimeout, 'waitForElementDisappear ' + selector + ' timeout is reached')
-
-    return this
 }
 
 this.waitForModalOpen = function () {
@@ -539,8 +542,10 @@ this.getFileExtension = function (file) {
 }
 
 this.headerSearchInList = function (searchString) {
-    self.waitAndClickQa('btn-header-list-search')
-    self.setVal('inp-list-search',searchString,true)
+    return  self.waitAndClickQa('btn-header-list-search')
+            .then(function(){
+                self.setVal('inp-list-search',searchString,true)
+            })
 }
 
 this.clearLocalStorage = function () {
@@ -605,14 +610,19 @@ this.generateKey = function (keyNum, keyName) {
 
     ptor.wait(function () {
         return key != undefined
-    }, config.waitForTimeout , 'wait for file timeout reached').then(function(){
+    }, config.waitForTimeout , 'wait for file timeout reached')
+    .then(function(){
         self.get('/settings/identity/key/import')
-        self.waitForPageLoad('/settings/identity/key/import')
+        return self.waitForPageLoad('/settings/identity/key/import')
+    })
+    .then(function(){
         self.waitForElement("[data-qa='display-private-key']")
         self.setValQuick("display-private-key", key)
         self.setVal("display-private-key", " ")
         self.click("btn-import-key")
-        self.waitForElement("[data-qa='btn-save-key']")
+        return self.waitForElement("[data-qa='btn-save-key']")
+    })
+    .then(function(){
         if (keyName != undefined) {
             self.clearInput("input-key-name")
             self.setVal("input-key-name", keyName)
@@ -620,8 +630,8 @@ this.generateKey = function (keyNum, keyName) {
 
         self.click("btn-save-key")
 
-        // for first key land on talks, if second key land on keylist or auth:request
-        self.waitForPageLoad()
+        //self.checkWarning('info-key-error', true);
+        return self.waitForPageLoad(['/talks', '/authentication'])
     })
 }
 
@@ -693,13 +703,15 @@ this.click = function (dataQa) {
 }
 
 this.waitForQa = function(dataQa){
-    self.waitForElement("[data-qa='" + dataQa + "']")
+    return self.waitForElement("[data-qa='" + dataQa + "']")
 }
 
 this.waitAndClickQa = function (dataQa, preSelector) {
     var preSelector = preSelector ? preSelector+' ' : '';
-    self.waitForElement(preSelector+"[data-qa='" + dataQa + "']")
-    $(preSelector+"[data-qa='" + dataQa + "']").click()
+    return  self.waitForElement(preSelector+"[data-qa='" + dataQa + "']")
+            .then(function(){
+                $(preSelector+"[data-qa='" + dataQa + "']").click()
+            })
 }
 
 this.waitAndClick = function (selector) {

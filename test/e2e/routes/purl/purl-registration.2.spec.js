@@ -21,7 +21,10 @@ describe('Purl Registration: ', function () {
 
     it('create new test user', function(){
         util.logout()
-        internalLogin = util.createTestUser()
+        util.createTestUser()
+        .then(function(loginName){
+            internalLogin = loginName
+        })
     })
 
     it('add external contact to test user', function () {

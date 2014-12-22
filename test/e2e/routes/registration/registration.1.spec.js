@@ -1,7 +1,6 @@
 var config = require("../../config/specs.js")
 var util = require("../../../lib/e2e/cmTestUtil.js")
 
-var loginName = "Z" + Date.now();
 var password = "PWD_Z" + Date.now();
 
 describe('Registration: ', function () {
@@ -91,7 +90,10 @@ describe('Registration: ', function () {
 
 
     it('should create account with valid credentials and have a support talk', function() {
-        var loginName = util.createTestUser()
+        testUser = util.createTestUser()
+        .then(function(loginName){
+            testUser = loginName
+        })
         util.waitForPageLoad('/setup/account')
 
         util.get('/talks')
@@ -102,6 +104,6 @@ describe('Registration: ', function () {
             expect(elements.length).toBe(1)
         })
 
-        util.deleteTestUser(loginName)
+        util.deleteTestUser(testUser)
     })
 })

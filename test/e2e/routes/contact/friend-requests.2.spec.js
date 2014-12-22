@@ -3,10 +3,17 @@ var util = require("../../../lib/e2e/cmTestUtil.js")
 
 describe('Friendrequests: ', function () {
     var ptor = util.getPtorInstance()
-    var user1ToAccept = util.createTestUser()
+    var user1ToAccept
     var password = 'password'
     var requestMessage = 'moep moep mooooeeeppp?'
     afterEach(function() { util.stopOnError() });
+
+    it('should get a login name for user 1', function(){
+        util.createTestUser(undefined,'password reset')
+            .then(function(loginName){
+                user1ToAccept = loginName
+            })
+    })
 
     it('user2', function(){
 

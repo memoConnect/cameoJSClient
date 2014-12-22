@@ -153,31 +153,25 @@ describe('Authentication requests -', function () {
             })
 
             it('there should be no key', function(){
-                util.get('settings/identity/key/list')
-                util.waitForPageLoad('settings/identity/key/list')
+                util.get('/settings/identity/key/list')
+                util.waitForPageLoad('/settings/identity/key/list')
+                .then(function(){
+                    return util.waitForElement("[data-qa='message-no-keys']")
+                })
+                .then(function(){
+                    expect($("[data-qa='message-no-keys']").isDisplayed()).toBe(true);
+                    expect($("[data-qa='key-list-item']").isPresent()).toBe(false);
+                })
 
-                util.waitForElement("[data-qa='message-no-keys']")
-                expect($("[data-qa='message-no-keys']").isDisplayed()).toBe(true);
-                expect($("[data-qa='key-list-item']").isPresent()).toBe(false);
             })
 
             it('should generate Key', function(){
                 util.generateKey(1, keyName1)
-
-                ptor.wait(function(){
-                    return ptor.getCurrentUrl().then(function(url){
-                        if(url.match('/talks')){
-                            util.get('/settings/identity/key/list')
-                            return true;
-                        }
-                        return false;
-                    })
-                },config.waitForTimeout)
             })
 
             it('should check Key Trust', function(){
-                util.get('settings/identity/key/list')
-                util.waitForPageLoad('settings/identity/key/list')
+                util.get('/settings/identity/key/list')
+                util.waitForPageLoad('/settings/identity/key/list')
 
                 checkKeyTrust(keyName1, true)
             })

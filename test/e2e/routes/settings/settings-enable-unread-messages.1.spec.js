@@ -18,13 +18,17 @@ describe('Test Settings enableUnreadMessages: ', function(){
 
     describe('create test users: ', function(){
         it('should create user1', function(){
-            user1 = util.createTestUser(undefined, 'setttings enableUnreadMessages#1')
-            util.expectCurrentUrl('/setup/account')
+            util.createTestUser(undefined, 'setttings enableUnreadMessages#1')        
+            .then(function(loginName){
+                user1 = loginName
+            })
         })
 
         it('should create user2', function(){
-            user2 = util.createTestUser(undefined, 'setttings enableUnreadMessages#2')
-            util.expectCurrentUrl('/setup/account')
+            util.createTestUser(undefined, 'setttings enableUnreadMessages#2')
+            .then(function(loginName){
+                user2 = loginName
+            })
         })
     })
 

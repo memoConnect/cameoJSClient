@@ -10,7 +10,10 @@ describe('Route Contact: ', function () {
         testUser
 
     it('should create a test user', function(){
-        testUser = util.createTestUser(undefined,'route contact')
+        util.createTestUser(undefined,'route contact')
+        .then(function(loginName){
+            testUser = loginName
+        })
     })
 
     it('at first goto "#/contact/list".', function(){

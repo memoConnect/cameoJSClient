@@ -8,11 +8,14 @@ describe('Identity key settings: ', function () {
     var keyName = "Moeps key"
 
     it('create new user and open identity settings', function () {
-        login = util.createTestUser(undefined, 'identity key settings')
-        util.get('/settings/identity/edit')
+        util.createTestUser(undefined, 'identity key settings')
+        .then(function(loginName){
+            login = loginName
+        })
     })
 
     it('key settings should open when clicked on the according button', function () {
+        util.get('/settings/identity/edit')
         $("[data-qa='btn-identity-keys']").click()
         util.waitForPageLoad('/settings/identity/key/list')
     })

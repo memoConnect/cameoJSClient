@@ -63,29 +63,29 @@ describe('Route conversation:', function () {
 
     it('should add an external contact on the fly', function(){
         util.waitForQa('input-on-the-fly-displayname')
-        util.setVal('input-on-the-fly-displayname', 'On-the-fly Contact')
-
-        util.waitForQa('input-on-the-fly-mixed')
-        util.clearInput('input-on-the-fly-mixed')
-        util.setVal('input-on-the-fly-mixed', 'devnull@cameo.io')
-
-        ptor.sleep(2000)
-        util.blurQa('input-on-the-fly-mixed')
-        ptor.sleep(2000)
-        util.blurQa('input-on-the-fly-mixed')
-
-        util.waitAndClickQa('btn-submit-on-the-fly-contact')
-
-        ptor.wait(function(){
-            return $$('cm-recipient-tag .displayName').then(function(elements){
-                return elements.some(function(element){
-                    return element.getText().then(function(value){
-                        return value == "On-the-fly Contact"
-                    })
-                })
-            })
+        .then(function(){
+            util.setVal('input-on-the-fly-displayname', 'On-the-fly Contact')
+            return util.waitForQa('input-on-the-fly-mixed')
         })
-
+        .then(function(){
+            util.setVal('input-on-the-fly-mixed', 'devnull@cameo.io', true)
+            ptor.sleep(2000)
+            util.blurQa('input-on-the-fly-mixed')
+            ptor.sleep(2000)
+            util.blurQa('input-on-the-fly-mixed')
+            return util.waitAndClickQa('btn-submit-on-the-fly-contact')
+        })
+        .then(function(){
+            return  ptor.wait(function(){
+                        return $$('cm-recipient-tag .displayName').then(function(elements){
+                            return elements.some(function(element){
+                                return element.getText().then(function(value){
+                                    return value == "On-the-fly Contact"
+                                })
+                            })
+                        })
+                    })
+        })
     })
 
     it('go back to conversation on click on "done"', function () {

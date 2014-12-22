@@ -103,7 +103,10 @@ describe('Route Settings Account Verification: ', function(){
 
     describe('Check Form', function() {
         it('should create a test user', function(){
-            testUser = util.createTestUser(undefined,'account verification')
+            util.createTestUser(undefined,'account verification')
+            .then(function(loginName){
+                testUser = loginName
+            })
         })
 
         it('should be load at "#/settings/" after registration and btn exists.', function () {

@@ -10,8 +10,10 @@ describe('Registration-Setup : ', function () {
 
     describe('After registration with key generation - ', function () {
         it('register user, first url should be "/setup/account" ', function () {
-            testUserWithKey = util.createTestUser(undefined, 'reg-setup - 1')
-            util.waitForPageLoad('/setup/account')
+            util.createTestUser(undefined, 'reg-setup - 1')
+            .then(function(loginName){
+                testUserWithKey = loginName
+            })
         })
 
         it("the next step should be setup identity", function () {
@@ -49,8 +51,10 @@ describe('Registration-Setup : ', function () {
 
     describe('After registration with canceled key generation - ', function () {
         it('register user, first url should be "/setup/account" ', function () {
-            testUserWithoutKey = util.createTestUser(undefined, 'reg-setup - 2')
-            util.waitForPageLoad('/setup/account')
+            util.createTestUser(undefined, 'reg-setup - 2')
+            .then(function(loginName){
+                testUserWithoutKey = loginName
+            })
         })
 
         it("the next step should be setup identity", function () {

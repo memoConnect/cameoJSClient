@@ -8,8 +8,10 @@ describe('Route Talks:', function () {
     afterEach(function() { util.stopOnError() });
 
     it('should create testUser', function(){
-        testUser = util.createTestUser(undefined, 'route talks')
-        util.expectCurrentUrl('/setup/account')
+        util.createTestUser(undefined, 'route talks')
+        .then(function(loginName){
+            testUser = loginName
+        })
     })
 
     it('should go to talks', function(){

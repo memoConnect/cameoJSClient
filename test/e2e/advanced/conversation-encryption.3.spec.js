@@ -356,7 +356,9 @@ describe('Conversation encryption -', function () {
 
         it("create test user 3 and send friend request", function () {
             util.createTestUser(testUserId3)
-            util.sendFriendRequest(testUser1)
+            .then(function(){
+                return util.sendFriendRequest(testUser1)
+            })
         })
 
         it("user 1 accept friend request", function () {
