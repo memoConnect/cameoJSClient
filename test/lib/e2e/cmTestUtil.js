@@ -55,9 +55,9 @@ this.stopOnError = function () {
 }
 
 this.checkErrorLogs = function(){
-    if(!config.showConsoleError) {
-        return false;
-    }
+    //if(!config.showConsoleError) {
+    //    return false;
+    //}
 
     ptor.manage().logs().get('browser').then(function(browserLog) {
         var errors = [];
@@ -347,13 +347,16 @@ this.getIdentityId = function(token){
 }
 
 
-this.waitForPageLoad = function (expectedRoutes) {
+this.waitForPageLoad = function (expectedRoutes, printOutWaiting) {
 
     expectedRoutes = !Array.isArray(expectedRoutes) ? [expectedRoutes] : expectedRoutes
     // console.log('waitForPageLoad', expectedRoutes.join(', '))
 
     return ptor.wait(function () {
         return ptor.executeScript('return window != undefined && window._route').then(function (route) {
+            if(printOutWaiting)
+                console.log(route)
+
             if (route) {
                 // get current route
                 if (        
@@ -628,7 +631,7 @@ this.generateKey = function (keyNum, keyName) {
         self.click("btn-save-key")
 
         //self.checkWarning('info-key-error', true);
-        return self.waitForPageLoad(['/talks', '/authentication'])
+        return self.waitForPageLoad(['/talks', '/authentication'], true)
     })
 }
 
