@@ -5,10 +5,11 @@ describe('Route: Contact/List', function () {
     var ptor = util.getPtorInstance()
 
     it('should be found at "#/contact/list".', function(){
-        util
-        .login()
-        .get('/contact/list')
-        .expectCurrentUrl('#/contact/list')
+        util.login()
+        .then(function(){
+            util.get('/contact/list')
+            return util.waitForPageLoad('/contact/list')
+        })
     })
 
     it('should have a header.', function(){

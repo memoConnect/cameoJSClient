@@ -10,9 +10,9 @@ describe('Friendrequests: ', function () {
 
     it('should get a login name for user 1', function(){
         util.createTestUser(undefined,'password reset')
-            .then(function(loginName){
-                user1ToAccept = loginName
-            })
+        .then(function(loginName){
+            user1ToAccept = loginName
+        })
     })
 
     it('user2', function(){
