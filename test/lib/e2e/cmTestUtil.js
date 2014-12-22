@@ -397,14 +397,14 @@ this.waitForElement = function (selector, timeout) {
 this.waitForElements = function (selector, count) {
 
     if (count) {
-        ptor.wait(function () {
-            return $$(selector).then(function (elements) {
-                return elements.length == count
-            })
-        }, config.waitForTimeout, 'waitForElements ' + selector + ' count: ' + count + ' timeout is reached')
+        return  ptor.wait(function () {
+                    return $$(selector).then(function (elements) {
+                        return elements.length == count
+                    })
+                }, config.waitForTimeout, 'waitForElements ' + selector + ' count: ' + count + ' timeout is reached')
     }
 
-    return this
+    return this.waitForElement(selector)
 }
 
 this.waitForElementVisible = function (selector, timeout) {

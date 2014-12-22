@@ -2,7 +2,8 @@
 
 window.Worker = undefined
 
-describe('cmPassphraseVault', function () {
+console.log('x: cmPASSPHRASE VAULT')
+xdescribe('cmPassphraseVault', function () {
     var cmPassphraseVault,
         cmUserModel,
         cmIdentityFactory,

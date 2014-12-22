@@ -66,11 +66,14 @@ describe('Route Settings Account Verification: ', function(){
 
                 util.setVal('inp-'+type+'CodeVerify','moep',true)
                 util.sendEnter('inp-'+type+'CodeVerify')
-                util.checkWarning('info-'+type+'VerificationCodeInvalid')
-
-                util.setVal('inp-'+type+'CodeVerify',verifySecret,true)
-                util.sendEnter('inp-'+type+'CodeVerify')
                 util.waitForLoader(1,'.'+type+'Verification')
+                .then(function(){
+                    util.checkWarning('info-'+type+'VerificationCodeInvalid')
+
+                    util.setVal('inp-'+type+'CodeVerify',verifySecret,true)
+                    util.sendEnter('inp-'+type+'CodeVerify')
+                    return  util.waitForLoader(2,'.'+type+'Verification')
+                })
                 .then(function(){
                     // phone info bubble for verification is appear
                     expect($("[data-qa='btn-"+type+"ManuallyVerification']").getAttribute('class')).toContain('cm-checkbox-right')

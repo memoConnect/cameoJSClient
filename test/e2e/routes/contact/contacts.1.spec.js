@@ -27,14 +27,14 @@ describe('Route: Contact/List', function () {
         util.waitForElement('cm-contact-list')
     })
 
-    describe('contact list', function(){
-        it('should have an avatar.', function(){
-            util.waitForElement('cm-contact-list cm-contact-tag:not(.cm-disabled)')
+    describe('contacts list', function(){
+        it('should have clickable first element linking to details', function(){
+            util.waitForElements('cm-contact-list cm-contact-tag:not(.cm-disabled)')
             .then(function(){
-                return  $('cm-contact-list cm-contact-tag:not(.cm-disabled)').click()
+                return  $$('cm-contact-list cm-contact-tag:not(.cm-disabled)').get(0).click()
             })
             .then(function(){
-                return  util.waitForPageLoad(/\/contact\/edit\/[a-zA-Z0-9]+$/, true)
+                return  util.waitForPageLoad(/\/contact\/edit\/[a-zA-Z0-9]+$/)
             })
         })
 
