@@ -16,14 +16,14 @@ describe('Route Settings Account Verification: ', function(){
     function getVerificationSecret() {
         verifySecret = undefined
 
-        ptor.wait(function () {
-            return util.getTestUserNotifications(testUser).then(function (response) {
-                if(response['data'].length > 0 && 'content' in response['data'][0])
-                    verifySecret = response['data'][0]['content'].split("\"")[1]
+        return  ptor.wait(function () {
+                    return util.getTestUserNotifications(testUser).then(function (response) {
+                        if(response['data'].length > 0 && 'content' in response['data'][0])
+                            verifySecret = response['data'][0]['content'].split("\"")[1]
 
-                return verifySecret != undefined
-            })
-        }, 5000, 'unable to getVerificationSecret')
+                        return verifySecret != undefined
+                    })
+                }, 5000, 'unable to getVerificationSecret')
     }
 
     function createDescribesAndItsForVerification(type, value, extraValue){
@@ -37,15 +37,18 @@ describe('Route Settings Account Verification: ', function(){
 
                 util.click('btn-saveAccount')
                 util.waitForLoader(1,'cm-footer')
+                .then(function(){
+                    // phone info bubble for do verification
+                    expect($("[data-qa='btn-"+type+"ManuallyVerification']").getAttribute('class')).toContain('cm-checkbox-wrong')
+                    util.checkWarning('info-'+type+'NotVerified')
 
-                // phone info bubble for do verification
-                expect($("[data-qa='btn-"+type+"ManuallyVerification']").getAttribute('class')).toContain('cm-checkbox-wrong')
-                util.checkWarning('info-'+type+'NotVerified')
+                    return util.waitForElement("[data-qa='inp-"+type+"CodeVerify']")
+                })
+                .then(function(){
+                    // get secret
+                    return getVerificationSecret()
+                })
 
-                util.waitForElement("[data-qa='inp-"+type+"CodeVerify']")
-
-                // get secret
-                getVerificationSecret()
             })
 
             it('check verification form', function(){
@@ -68,10 +71,12 @@ describe('Route Settings Account Verification: ', function(){
                 util.setVal('inp-'+type+'CodeVerify',verifySecret,true)
                 util.sendEnter('inp-'+type+'CodeVerify')
                 util.waitForLoader(1,'.'+type+'Verification')
+                .then(function(){
+                    // phone info bubble for verification is appear
+                    expect($("[data-qa='btn-"+type+"ManuallyVerification']").getAttribute('class')).toContain('cm-checkbox-right')
+                    util.checkWarning('info-'+type+'NotVerified',true)
+                })
 
-                // phone info bubble for verification is appear
-                expect($("[data-qa='btn-"+type+"ManuallyVerification']").getAttribute('class')).toContain('cm-checkbox-right')
-                util.checkWarning('info-'+type+'NotVerified',true)
             })
         })
 
@@ -81,29 +86,37 @@ describe('Route Settings Account Verification: ', function(){
 
                 util.click('btn-saveAccount')
                 util.waitForLoader(1,'cm-footer')
+                .then(function(){
+                    // clear secret
+                    return  getVerificationSecret()
+                })
+                .then(function(){
+                    util.click('btn-'+type+'ManuallyVerification')
+                    // get secret
+                    return  getVerificationSecret()
+                })
 
-                // clear secret
-                getVerificationSecret()
-
-                util.click('btn-'+type+'ManuallyVerification')
-                // get secret
-                getVerificationSecret()
             })
 
             it('test manually verification secret', function(){
                 util.setVal('inp-'+type+'CodeVerify',verifySecret,true)
                 util.sendEnter('inp-'+type+'CodeVerify')
                 util.waitForLoader(1,'.'+type+'Verification')
-                // phone info bubble for verification is appear
-                expect($("[data-qa='btn-"+type+"ManuallyVerification']").getAttribute('class')).toContain('cm-checkbox-right')
-                util.checkWarning('info-'+type+'NotVerified',true)
+                .then(function(){
+                    // phone info bubble for verification is appear
+                    expect($("[data-qa='btn-"+type+"ManuallyVerification']").getAttribute('class')).toContain('cm-checkbox-right')
+                    util.checkWarning('info-'+type+'NotVerified',true)
+                })
             })
         })
     }
 
     describe('Check Form', function() {
         it('should create a test user', function(){
-            testUser = util.createTestUser(undefined,'account verification')
+            util.createTestUser(undefined,'account verification')
+            .then(function(loginName){
+                testUser = loginName
+            })
         })
 
         it('should be load at "#/settings/" after registration and btn exists.', function () {

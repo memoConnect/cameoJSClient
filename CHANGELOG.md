@@ -1,5 +1,8 @@
 ## Dev
-##AP 18.12.
+# BS 19.12.2014
+* fix CAM-1509, footer in desktop modus will not scroll
+
+# AP 18.12.2014
 * added authenticate some key button to key list
 
 # BS 18.12.2014

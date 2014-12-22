@@ -11,15 +11,16 @@ describe('Multi Identity: ', function () {
         email: 'devnull@cameo.io'
     }
 
-    it('create new user and open identity settings', function () {
-        login = util.createTestUser(undefined, 'multi identity')
-        util.expectCurrentUrl('/setup/account')
-
-        util.get('settings/identity/list')
-        util.expectCurrentUrl('/settings/identity/list')
+    it('create new user', function () {
+        util.createTestUser(undefined, 'multi identity')
+        .then(function(loginName){
+            login = loginName
+        })
+        
     })
 
     it('should be displayed one identity', function(){
+        util.get('/settings/identity/list')
         util.waitForElement("[data-qa='create-identity-btn']")
         expect($("[data-qa='create-identity-btn']").isDisplayed()).toBe(true)
 

@@ -238,13 +238,12 @@ describe('Route: Purl - ', function () {
             util.logout();
 
             util.login(config.loginUser2, config.passwordUser2);
-            util.expectCurrentUrl("#/setup/keyinfo")
+            util.waitForPageLoad("/setup/keyinfo")
+            .then(function(){
+                util.get('/purl/' + config.purlUser1)
+                return util.waitForPageLoad('/purl/' + config.purlUser1)                
+            })
 
-            // TODO: async trust checks
-            ptor.sleep(5000)
-
-            util.get('/purl/' + config.purlUser1)
-            util.expectCurrentUrl('#/purl/' + config.purlUser1)
         })
 
 
@@ -282,13 +281,20 @@ describe('Route: Purl - ', function () {
     describe("Test 7 - Internal user opens Purl that does not exists:", function(){
         it('should be 404 path', function(){
             util.login()
-            util.waitForPageLoad('/setup')
-            util.get('/purl/moep')
-            ptor.wait(function () {
-                    return ptor.getCurrentUrl().then(function(url){
-                        return url.match(/#\/404$/)
-                    })
-            }, 5000, 'unable to load 404 page.')
+            .then(function(){
+                return  util.waitForPageLoad('/setup')
+            })
+            .then(function(){
+                return util.get('/purl/moep')
+            })
+            .then(function(){
+                return  ptor.wait(function () {
+                                return ptor.getCurrentUrl().then(function(url){
+                                    return url.match(/#\/404$/)
+                                })
+                        }, 5000, 'unable to load 404 page.')
+                
+            })
         })
     })
 

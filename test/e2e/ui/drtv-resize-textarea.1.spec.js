@@ -7,8 +7,10 @@ describe('Textarea Resize', function () {
         testUser
 
     it('should create user1', function(){
-        testUser = util.createTestUser(undefined, 'route talks')
-        util.expectCurrentUrl('/setup/account')
+        util.createTestUser(undefined, 'route talks')
+        .then(function(loginName){
+            testUser = loginName
+        })
     })
 
     it('open new conversation', function () {

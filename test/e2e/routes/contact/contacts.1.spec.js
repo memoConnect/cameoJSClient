@@ -5,10 +5,11 @@ describe('Route: Contact/List', function () {
     var ptor = util.getPtorInstance()
 
     it('should be found at "#/contact/list".', function(){
-        util
-        .login()
-        .get('/contact/list')
-        .expectCurrentUrl('#/contact/list')
+        util.login()
+        .then(function(){
+            util.get('/contact/list')
+            return util.waitForPageLoad('/contact/list')
+        })
     })
 
     it('should have a header.', function(){
@@ -28,25 +29,13 @@ describe('Route: Contact/List', function () {
 
     describe('contact list', function(){
         it('should have an avatar.', function(){
-            util.waitForElement('cm-contact-list cm-avatar')            
-            $$('cm-contact-list cm-avatar:not(.disabled)').get(0).click()
-            util.waitForPageLoad(/\/contact\/edit\/[a-zA-Z0-9]+$/)
-        })
-
-        console.log('test removed.')
-        xit('should have key security indicator.', function(){
-            util.get('/contact/list')
-            util.waitForElement('cm-contact-list cm-key-level')
-        })
-
-        /**
-         * @deprecated
-         */
-        xit('should have brief contact details.', function(){
-            util.get('/contact/list')
-            util.waitForElement('cm-contact-list cm-contact-brief')
-            $$('cm-contact-list cm-contact-brief').get(0).click()
-            util.waitForPageLoad(/\/contact\/[a-zA-Z0-9]+$/)
+            util.waitForElement('cm-contact-list cm-contact-tag:not(.cm-disabled)')
+            .then(function(){
+                return  $('cm-contact-list cm-contact-tag:not(.cm-disabled)').click()
+            })
+            .then(function(){
+                return  util.waitForPageLoad(/\/contact\/edit\/[a-zA-Z0-9]+$/, true)
+            })
         })
 
         it('should have contact type indicator.', function(){
