@@ -84,7 +84,10 @@ describe('Message signing -', function () {
     describe("user 2 reads signed message:", function(){
         it("open conversation", function(){
             util.login(testUser2, "password")
-            util.get(/conversation/+conversationId)
+            .then(function(){
+                util.get(/conversation/+conversationId)
+                return waitForPageLoad('/conversation/+conversationId')
+            })
         })
 
         it("read message from user 1", function(){
@@ -92,8 +95,7 @@ describe('Message signing -', function () {
             var message
 
             ptor.wait(function(){
-
-                return  $('cm-message')
+                return  $$('cm-message')
                         .then(function(el){
                             message = el
                             return  el.$("[data-qa='message-author']")
@@ -125,14 +127,18 @@ describe('Message signing -', function () {
     describe("user1 breaks signatures:", function(){
         it('delete keys', function(){
             util.login(testUser1, "password")
-            util.deleteKeys()
+            .then(function(){
+                return util.deleteKeys()
+            })
         })
     })
 
     describe("user2 tries to read message with broken signature", function(){
         it("open conversation", function(){
             util.login(testUser2, "password")
-            util.get(/conversation/+conversationId)
+            .then(function(){
+                return util.get(/conversation/+conversationId)
+            })
         })
 
         it("read message from user 1", function(){
