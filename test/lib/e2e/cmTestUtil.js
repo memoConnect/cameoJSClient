@@ -55,9 +55,9 @@ this.stopOnError = function () {
 }
 
 this.checkErrorLogs = function(){
-    //if(!config.showConsoleError) {
-    //    return false;
-    //}
+    if(!config.showConsoleError) {
+        return false;
+    }
 
     ptor.manage().logs().get('browser').then(function(browserLog) {
         var errors = [];
@@ -631,7 +631,7 @@ this.generateKey = function (keyNum, keyName) {
         self.click("btn-save-key")
 
         //self.checkWarning('info-key-error', true);
-        return self.waitForPageLoad(['/talks', '/authentication'], true)
+        return self.waitForPageLoad(['/talks', '/authentication'])
     })
 }
 
