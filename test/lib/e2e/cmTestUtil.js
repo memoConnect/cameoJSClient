@@ -168,24 +168,26 @@ this.createTestUser = function (testUserId, from){
     var loginName = prefix + id
     var password = 'password'
 
-    this.get('/registration');
-
-    this.setVal('input-cameoId',loginName,true)
-    this.setVal('input-password',password)
-    this.waitAndClickQa('icon-toggle-password');
-    //this.setVal('input-passwordConfirm',password)
-
-    this.scrollToBottom()
-
-    this.click('icon-checkbox-agb')
-
-    //ptor.pause()
-
-    this.click('btn-createUser')
-
-    return this.waitForPageLoad("/setup/account")
+    this.get('/registration')
+    return  this.waitForPageLoad('/registration')
             .then(function(){
-                return loginName
+                self.setVal('input-cameoId',loginName,true)
+                self.setVal('input-password',password)
+                self.waitAndClickQa('icon-toggle-password');
+                //self.setVal('input-passwordConfirm',password)
+
+                self.scrollToBottom()
+
+                self.click('icon-checkbox-agb')
+
+                //ptor.pause()
+
+                self.click('btn-createUser')
+
+                return self.waitForPageLoad("/setup/account")
+                        .then(function(){
+                            return loginName
+                        })
             })
 }
 

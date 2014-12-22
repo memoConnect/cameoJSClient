@@ -90,20 +90,26 @@ describe('Registration: ', function () {
 
 
     it('should create account with valid credentials and have a support talk', function() {
-        testUser = util.createTestUser()
+        util.createTestUser()
         .then(function(loginName){
             testUser = loginName
+            util.get('/talks')
+            return util.waitForPageLoad('/talks')
         })
-        util.waitForPageLoad('/setup/account')
-
-        util.get('/talks')
-        util.waitForPageLoad('/talks')
-        // support talks should be present
-        util.waitForElement("[data-qa='conversation-list-element']")
-        $$("[data-qa='conversation-list-element']").then(function (elements) {
-            expect(elements.length).toBe(1)
+        .then(function(){
+            // support talks should be present
+            return  util.waitForElement("[data-qa='conversation-list-element']")
+                    .then(function(){
+                        return $$("[data-qa='conversation-list-element']").then(function (elements) {
+                            expect(elements.length).toBe(1)
+                        })
+                    })
+            
         })
+    
+    })
 
+    it('should delete Testuser', function(){
         util.deleteTestUser(testUser)
     })
 })
