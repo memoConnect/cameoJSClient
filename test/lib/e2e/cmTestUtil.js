@@ -196,7 +196,7 @@ this.deleteTestUser = function (loginName) {
         var callback = arguments[arguments.length - 1];
 
         var xhr = new XMLHttpRequest();
-        xhr.open("DELETE", apiUrl + "/v1/testUser/\n" + testUserId, true);
+        xhr.open("DELETE", apiUrl + "v1/testUser/" + testUserId, true);
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4) {
                 callback(xhr.responseText);
