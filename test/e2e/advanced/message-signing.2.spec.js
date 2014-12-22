@@ -87,7 +87,7 @@ describe('Message signing -', function () {
             .then(function(){
                 util.get('/conversation/'+conversationId)
                 return waitForPageLoad('/conversation/'+conversationId)
-            }
+            })
         })
 
         it("read message from user 1", function(){
