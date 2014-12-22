@@ -85,9 +85,9 @@ describe('Message signing -', function () {
         it("open conversation", function(){
             util.login(testUser2, "password")
             .then(function(){
-                util.get(/conversation/+conversationId)
-                return waitForPageLoad('/conversation/+conversationId')
-            })
+                util.get('/conversation/'+conversationId)
+                return waitForPageLoad('/conversation/'+conversationId)
+            }
         })
 
         it("read message from user 1", function(){
