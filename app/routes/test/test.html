@@ -2,21 +2,27 @@
 
     <cm-form-phonenumber
         ng-model="phoneNumberUndefiend"
+        ng-model-out="phoneNumberUndefinedOut"
         cm-tabindex="1"
         cm-label="phoneNumber model undefined"
     ></cm-form-phonenumber>
+    {{'phoneNumberUndefined: '+phoneNumberUndefinedOut}}
 
     <cm-form-phonenumber
         ng-model="phoneNumberEmpty"
+        ng-model-out="phoneNumberEmptyOut"
         cm-tabindex="2"
         cm-label="phoneNumber model empty"
     ></cm-form-phonenumber>
+    {{'phoneNumberEmpty: '+phoneNumberEmptyOut}}
 
     <cm-form-phonenumber
         ng-model="phoneNumberFull"
+        ng-model-out="phoneNumberFullOut"
         cm-tabindex="3"
         cm-label="phoneNumber model data"
     ></cm-form-phonenumber>
+    {{'phoneNumberFull: '+phoneNumberFullOut}}
 
     <h2>test cm-input-ctn</h2>
 

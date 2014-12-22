@@ -15,12 +15,32 @@ angular.module('cmUi')
                     isVisible: false
                 };
 
+                // add to ngModelOut the prefix
+                scope.$on('cmCountryPrefixHandler:set',function(event, country){
+                    if(country && scope.ngModel && scope.ngModel != '') {
+                        scope.ngModelOut = country.numberPrefix + scope.ngModel;
+                    } else {
+                        scope.ngModelOut = '';
+                    }
+                });
+
                 // check if already have a prefix
                 scope.$watch('ngModel', function(data){
+                    // check if country chooser is visible
+                    // if phoneNumber hasn't +00
+                    // or undefined
+                    // after choose and enter merge country and number together
                     if(!data || data && (data != '' && data.indexOf('+') == -1 || data == '')){
                         scope.prefixHandler.isVisible = true;
+                        if(data && data != '') {
+                            scope.ngModelOut = scope.activeCountry.numberPrefix + data;
+                        } else {
+                            scope.ngModelOut = '';
+                        }
+                    // phoneNumber already has +00 inside
                     } else {
                         scope.prefixHandler.isVisible = false;
+                        scope.ngModelOut = data;
                     }
                 });
 
@@ -56,6 +76,16 @@ angular.module('cmUi')
 
                     }
                 );
+            },
+            getDefaultCountry: function(){
+                var deferered = $q.defer();
+
+                deferered.resolve({
+                    shortcut: 'de',
+                    numberPrefix: '+49'
+                });
+
+                return deferered.promise;
             },
             getCountries: function(){
                 var deferered = $q.defer();

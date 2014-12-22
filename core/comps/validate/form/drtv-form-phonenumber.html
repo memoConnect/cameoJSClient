@@ -16,7 +16,7 @@
         <input
             type="tel"
             tabindex="{{::tabIndex}}" data-qa="input-phoneNumber"
-            name="phoneNumber" ng-model="ngModel"
+            name="phoneNumberDisp" ng-model="ngModel"
             ng-disabled="disabled" />
         <i class="fa"
             data-qa="btn-phoneNumberManuallyVerification"
@@ -27,6 +27,7 @@
                 'cm-checkbox-wrong': !verification.isVerified
             }"></i>
         <i class="fa cm-write" ng-show="!disabled"></i>
+        <input type="hidden" name="phoneNumber" ng-model="ngModelOut" />
     </div>
     <cm-country-prefix-list></cm-country-prefix-list>
     <cm-info-bubble class="cm-alert" ng-show="cmInnerForm.phoneNumber.$dirty && cmInnerForm.phoneNumber.$invalid" data-qa="form-error-phoneNumber-invalid">

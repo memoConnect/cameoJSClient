@@ -8,15 +8,14 @@ angular.module('cmUi')
         return{
             restrict: 'E',
             templateUrl: 'comps/ui/country-prefix/drtv-country-prefix-handler.html',
-            controller: function($scope, $element){
+            controller: function($scope){
+                $scope.activeCountry = {};
 
-                $scope.activeCountry = {
-                    shortcut: 'de',
-                    numberPrefix: '+49'
-                };
+                cmCountryPrefix.getDefaultCountry().then(function(country){
+                    $scope.activeCountry = country
+                });
 
                 $scope.listVisible = false;
-
                 $scope.toggleList = function(forceClose){
                     $scope.listVisible  = !forceClose && $scope.listVisible || forceClose ? false : true;
                     $scope.$broadcast('cmCountryPrefixList:toggle', $scope.listVisible, $scope.activeCountry);

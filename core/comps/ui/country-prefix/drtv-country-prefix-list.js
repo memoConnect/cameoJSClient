@@ -26,11 +26,12 @@ angular.module('cmUi')
             link: function(scope, element){
                 // scroll into mask
                 function scrollTo(elementTo){
-                    var elementToScroll = elementTo || element[0].querySelector('.is-active'),
-                        wrapOffsetTop = element[0].offsetTop,
-                        middleOfWrap = (element[0].offsetHeight / 2) - (elementToScroll.offsetHeight / 2);
+                    var elementToScroll = elementTo || element[0].querySelector('.is-active')
 
                     if(elementToScroll){
+                        var wrapOffsetTop = element[0].offsetTop,
+                            middleOfWrap = (element[0].offsetHeight / 2) - (elementToScroll.offsetHeight / 2);
+
                         var newTop = elementToScroll.offsetTop - wrapOffsetTop - middleOfWrap;
                         element[0].scrollTop = newTop;
                     }
@@ -40,9 +41,16 @@ angular.module('cmUi')
                 var searchValue = '',
                     timer = null;
                 function searchForCountry(event){
+                    // on esc close
+                    if(event.keyCode == 27){
+                        scope.$apply(function(){
+                            scope.chooseCountry();
+                        });
+                        return false;
+                    }
                     // on return confirm search
                     if(event.keyCode == 13){
-                        scope.$apply(function() {
+                        scope.$apply(function(){
                             scope.chooseCountry(scope.foundCountry);
                         });
                         return false;

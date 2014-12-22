@@ -17,6 +17,7 @@ angular.module('cmUser').directive('cmIdentityCreate', [
                         cameoId: '',
                         email: '',
                         phoneNumber: '',
+                        mergedPhoneNumber: '',
                         displayName: ''
                     };
                 }
@@ -53,7 +54,7 @@ angular.module('cmUser').directive('cmIdentityCreate', [
                     }
 
                     function checkPhoneNumber() {
-                        var value = $scope.formData.phoneNumber;
+                        var value = $scope.formData.mergedPhoneNumber;
                         if (value != undefined
                          && value != '') {
                             objectChange.phoneNumber = value;
