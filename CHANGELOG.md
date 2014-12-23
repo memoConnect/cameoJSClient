@@ -1,8 +1,11 @@
 ## Dev
 # WW 23.12.2014
 * desktop
-    * changed desktop menu
-    * new message width for desktop
+    * changed order in menu
+    * new message width in conversation detail
+* international phonenumber prefixes CAM-1150
+    * 212 countries in list for phonenumber merging
+    * on desktop inlist search for shortcut or phoneNumber
 
 # BS 19.12.2014
 * fix CAM-1509, footer in desktop modus will not scroll
