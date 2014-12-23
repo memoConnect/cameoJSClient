@@ -1,4 +1,4 @@
-<div ng-click="toggleList()">
+<div ng-click="toggleList()" data-qa="btn-toggleCountries">
     <i class="fa" ng-class="{'cm-down':!listVisible,'cm-up':listVisible}"></i>
     <span class="flag-icon" ng-bind-html="':'+activeCountry.shortcut+':'|flags"></span>
     <span class="number-prefix">{{activeCountry.numberPrefix}}</span>

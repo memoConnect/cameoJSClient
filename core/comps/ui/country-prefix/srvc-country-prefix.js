@@ -6,6 +6,7 @@ angular.module('cmUi')
     '$http', '$q',
     function(cmObject, cmConfig,
              $http, $q){
+
         var self = {
             countries: [],
             ready: false,
@@ -69,7 +70,6 @@ angular.module('cmUi')
                             });
 
                             self.ready = true;
-                            self.trigger('cmCountryPrefix:loaded');
                         }
                     },
                     function(response){
@@ -90,10 +90,11 @@ angular.module('cmUi')
             getCountries: function(){
                 var deferered = $q.defer();
 
-                if(self.ready){
-                    self.on('cmCountryPrefix:loaded', function(){
+                if(!self.ready){
+                    self.loadPrefixes()
+                    .then(function(){
                         deferered.resolve(self.countries);
-                    });
+                    })
                 } else {
                     deferered.resolve(self.countries);
                 }
@@ -101,20 +102,25 @@ angular.module('cmUi')
                 return deferered.promise;
             },
             getOneByShortcut: function(shortcut){
+                if(typeof shortcut != 'string')
+                    return [];
+
                 return self.countries.filter(function(country){
                     return shortcut && country.shortcut == shortcut;
                 });
             },
             getOneByNumberPrefix: function(numberPrefix){
+                if(typeof numberPrefix != 'string' && typeof numberPrefix != 'number')
+                    return [];
+
                 return self.countries.filter(function(country){
-                    return numberPrefix && country.numberPrefix == numberPrefix;
+                    return numberPrefix && country.numberPrefix == numberPrefix
+                        || numberPrefix && country.numberPrefixRaw == numberPrefix;
                 });
             }
         };
 
         cmObject.addEventHandlingTo(self);
-
-        self.loadPrefixes();
 
         return self;
     }
