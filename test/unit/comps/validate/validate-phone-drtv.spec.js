@@ -43,26 +43,12 @@ describe("Directive cmValidatePhone", function(){
 
     it('should be valid', function(){
         scope.phone = '123456'
-        $httpBackend.expectPOST('/services/checkPhoneNumber', {phoneNumber:scope.phone}).respond(200, {
-            res: "OK",
-            data: {phoneNumber:'+'+scope.phone}
-        })
-        scope.$apply()
-        $httpBackend.flush()
-
         expect(form.phone.$valid).toBe(true)
         expect(form.phone.$invalid).toBe(false)
     })
 
     it('should be invalid', function(){
         scope.phone = 'asd'
-        $httpBackend.expectPOST('/services/checkPhoneNumber', {phoneNumber:scope.phone}).respond(400, {
-            "res":"KO",
-            "data":{"phoneNumber":"+4912312"}
-        })
-        scope.$apply()
-        $httpBackend.flush()
-
         expect(form.phone.$valid).toBe(false)
         expect(form.phone.$invalid).toBe(true)
     })
