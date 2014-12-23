@@ -162,10 +162,10 @@
       "HEADER": "@IDENTITY.LABEL.IDENTITIES"
     },
       "CREATE": {
-          "HEADLINE_SMALL": "@todo IDENTITY.INFO.CREATE.HEADLINE_SMALL",
+          "HEADLINE_SMALL": "%todo IDENTITY.INFO.CREATE.HEADLINE_SMALL",
           "HEADLINE": "In your identity you define, what information other users can see. If you accept a contact request from another user, he can see all the fields that you enter in your identity profile.\nYour identity can be found by searching for the cameoID or its display name. ",
           "CAMEOID": "Every identity has a unique cameoID, with which you can be found in cameoNet.",
-          "AVATAR": "@todo IDENTITY.INFO.CREATE.AVATAR",
+          "AVATAR": "%todo IDENTITY.INFO.CREATE.AVATAR",
           "DISPLAYNAME": "If you enter a display name, this will be displayed instead of the cameoID. Your identity in cameoNet can be found by searching for the display name. The display name does not need to be unique.",
           "EMAIL": "You can enter an e-mail address here. It will be displayed to other users in your identity profile, but it will not be verified or used for any purpose. Notifications for this identity will be sent to the e-mail address entered in your account.",
           "PHONE": "You can enter a mobile phone number here. It will be displayed to other users in your identity profile, but it will not be verified or used for any purpose. Notifications for this identity will be sent to the mobile phone number entered in your account."
@@ -184,7 +184,7 @@
         "EMPTY_CODE": "Please enter the code from the verification sms.",
         "INVALID_CODE": "The code you have entered is wrong or has expired."
       },
-      "LABEL_VERIFICATION_CODE": "@todo Verficationscode",
+      "LABEL_VERIFICATION_CODE": "%todo Verficationscode",
       "PLACEHOLDER": "Mobile number",
       "LABEL": "Mobile number"
     },
@@ -212,7 +212,7 @@
         "EMPTY_CODE": "Please enter the code from the verification e-mail.",
         "INVALID_CODE": "The code you have entered is wrong or has expired."
       },
-      "LABEL_VERIFICATION_CODE": "@todo Verficationscode",
+      "LABEL_VERIFICATION_CODE": "%todo Verficationscode",
       "PLACEHOLDER": "e-mail",
       "LABEL": "e-mail"
     },
@@ -482,12 +482,12 @@
   "PASSWORD_LOST": {
     "HEADING": "Reset password",
     "INFO": {
-      "TITLE_TEXT": "You can reset your password here if you have added and verified an e-mail address or phone number to your account.<br> To identify yourself please enter either your username or cameoID or e-mail address or phone number. You will then receive a message containing the link to reset your password.",
-      "EMPTY": "Please enter an identification (username, cameoID, e-mail address or phone number).",
+      "TITLE_TEXT": "You can reset your password here if you have added and verified an e-mail address or phone number to your account.<br> To identify yourself please enter either your username or e-mail address or phone number. You will then receive a message containing the link to reset your password.",
+      "EMPTY": "Please enter an identification (username, e-mail address or phone number).",
       "LOGIN_NOT_FOUND": "Username could not be found.",
       "PHONENUMBER_NOT_FOUND": "Phone number could not be found.",
       "EMAIL_NOT_FOUND": "e-mail address could not be found.",
-      "NO_EMAIL_PHONENUMBER": "@todo You haven't a verified email or phonenumber."
+      "NO_EMAIL_PHONENUMBER": "%todo You have no verified e-mail address or phone number."
     },
     "LABEL": {
       "MIXED": "Username, cameoID, e-mail address or phone number",
@@ -497,14 +497,14 @@
   "PASSWORD_CODE": {
     "HEADING": "Password reset code",
     "INFO": {
-      "CONFIRMATION_SENDED": "@todo We have sent you a message. This contains a code that you can insert here and a link that redirect you to the reset password.",
-      "EMPTY": "@todo Please enter a code",
+      "CONFIRMATION_SENDED": "%todo We have sent you a message. This contains a code that you can insert here and a link that redirect you to the reset password.",
+      "EMPTY": "%todo Please enter a code",
       "EXPIRED": "@:PASSWORD_RESET.INFO.EXPIRED"
     },
     "LABEL": {
-      "CODE": "@todo Code out of the message",
-      "CANCEL": "@todo Cancel",
-      "SUBMIT": "@todo Check code"
+      "CODE": "%todo Code out of the message",
+      "CANCEL": "%todo Cancel",
+      "SUBMIT": "%todo Check code"
     }
   },
   "PASSWORD_RESET": {
@@ -619,9 +619,9 @@
     "NEW_TALK": "New talk"
   },
   "HELP":{
-    "HEADING":"@todo Help",
+    "HEADING":"%todo Help",
     "LABEL": {
-      "SUPPORT": "@todo Support"
+      "SUPPORT": "%todo Support"
     }
   },
   "CONTACTS": {
@@ -684,7 +684,7 @@
       "HEAD_LOGIN": "Login information"
     },
     "INFO": {
-      "LOGIN_INFORMATION": "@todo Here you will define your account data that you use for the login at cameoNet.<br/><br/>The choosen user name will become your (first) cameoID automatically. The cameoID can be find by other users to connect with you.",
+      "LOGIN_INFORMATION": "%todo Here you will define your account data that you use for the login at cameoNet.<br/><br/>The choosen user name will become your (first) cameoID automatically. The cameoID can be find by other users to connect with you.",
       "EMPTY": {
         "PASSWORD": "Please enter a password."
       },
@@ -845,8 +845,8 @@
         "OLD_PASSWORD": "Please enter your previous password."
       },
       "LOGINAME": "The login name cannot be changed.",
-      "PHONENUMBER": "@todo ACCOUNT.INFO.PHONENUMBER",
-      "EMAIL": "@todo ACCOUNT.INFO.EMAIL"
+      "PHONENUMBER": "%todo ACCOUNT.INFO.PHONENUMBER",
+      "EMAIL": "%todo ACCOUNT.INFO.EMAIL"
     },
     "PLACEHOLDER": {
       "PASSWORD_CHANGE": "Change password",
