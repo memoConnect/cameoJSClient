@@ -2,9 +2,9 @@
 
 angular.module('cmUi')
 .service('cmCountryPrefix', [
-    'cmObject',
+    'cmObject', 'cmConfig',
     '$http', '$q',
-    function(cmObject,
+    function(cmObject, cmConfig,
              $http, $q){
         var self = {
             countries: [],
@@ -27,7 +27,7 @@ angular.module('cmUi')
                 // check if already have a prefix
                 scope.$watch('ngModel', function(data){
                     // check if country chooser is visible
-                    // if phoneNumber hasn't +00
+                    // if phoneNumber hasn't +49
                     // or undefined
                     // after choose and enter merge country and number together
                     if(!data || data && (data != '' && data.indexOf('+') == -1 || data == '')){
@@ -37,7 +37,7 @@ angular.module('cmUi')
                         } else {
                             scope.ngModelOut = '';
                         }
-                    // phoneNumber already has +00 inside
+                    // phoneNumber already has +49 inside
                     } else {
                         scope.prefixHandler.isVisible = false;
                         scope.ngModelOut = data;
@@ -52,8 +52,8 @@ angular.module('cmUi')
 
                 // load
                 return $http({
-                    url:'i18n/countryprefix.json',
-                    method:'GET'
+                    url: cmConfig.pathToLanguages+'/countryprefix.json',
+                    method: 'GET'
                 }).then(
                     function(response){
                         if(typeof response.data == 'object') {
@@ -103,6 +103,11 @@ angular.module('cmUi')
             getOneByShortcut: function(shortcut){
                 return self.countries.filter(function(country){
                     return shortcut && country.shortcut == shortcut;
+                });
+            },
+            getOneByNumberPrefix: function(numberPrefix){
+                return self.countries.filter(function(country){
+                    return numberPrefix && country.numberPrefix == numberPrefix;
                 });
             }
         };
