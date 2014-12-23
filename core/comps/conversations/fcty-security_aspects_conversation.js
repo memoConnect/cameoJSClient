@@ -19,13 +19,6 @@ angular.module('cmConversations')
 
             self
                 .addAspect({
-                    id: 'NEW',
-                    value: 0,
-                    check: function(conversation){
-                        return conversation.state.is('new')
-                    }
-                })
-                .addAspect({
                     id: 'NOT_ENCRYPTED',
                     value: -3,
                     check: function(conversation){
@@ -100,10 +93,12 @@ angular.module('cmConversations')
                 })
                 .addAspect({
                     id: 'AUTHENTIC_RECIPIENTS',
-                    dependencies: ['NEW', 'ENCRYPTED', 'NO_SYMMETRIC_KEY_TRANSMISSION'],
+                    dependencies: ['ENCRYPTED', 'NO_SYMMETRIC_KEY_TRANSMISSION'],
                     value: 1,
                     check: function(){
-                        return  conversation.recipients.reduce(function(so_far, recipient){
+                        return  conversation.state.is('new')
+                                &&
+                                conversation.recipients.reduce(function(so_far, recipient){
                                     return  so_far
                                             .then(function(){
                                                 return  cmUserModel.verifyIdentityKeys(recipient, true)

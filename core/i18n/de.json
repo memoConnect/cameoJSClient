@@ -908,6 +908,10 @@
                 "NAME": "Die Empfängerliste ist signiert und authentisch.",
                 "DESCRIPTION": "%todo Der ursprüngliche Erzeuger dieses Talks hat die Empfängerliste signiert. Alle Empfänger sind verifiziert. Um ganz sicherzugehen, hier die Liste der Empfänger mit cameoId; die cameoId wurde Ihnen beim authentifizieren angezeigt, so dass Sie sicher sein können, dass ihr gegenüber tatsächlich die Person ist, die sie vorgibt zu sein."
             },
+            "AUTHENTIC_RECIPIENTS": {
+                "NAME": "Empfänger sind authentisch.",
+                "DESCRIPTION": "%todo Sie haben alle Empfänger verifiziert."
+            },
             "MISSING_DATA": "Sicherheitsaspekte fehlen!"
         }
     },

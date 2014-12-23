@@ -537,6 +537,10 @@
           "NAME": "List of recipients is signed and authentic",
           "DESCRIPTION": "%todo The original creator of this talk signed the list of recipients. You have verified the authenticity of every recipient's. Here's a list of all recipients including their cameoIds. The cameoId was displayed when you verfied the authenticiy and uniquely idendifies an identity."
       },
+      "AUTHENTIC_RECIPIENTS": {
+          "NAME": "Every recipient is authentic.",
+          "DESCRIPTION": "%todo You verified all recipients."
+      },
       "HAS_PASSCAPTCHA": {
         "TOGGLE": "Disable passCaptcha",
         "DESCRIPTION": "Using the passCaptcha method makes it difficult to decrypt your messages automatically.",
