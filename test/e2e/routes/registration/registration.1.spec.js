@@ -1,7 +1,6 @@
 var config = require("../../config/specs.js")
 var util = require("../../../lib/e2e/cmTestUtil.js")
 
-var loginName = "Z" + Date.now();
 var password = "PWD_Z" + Date.now();
 
 describe('Registration: ', function () {
@@ -91,17 +90,26 @@ describe('Registration: ', function () {
 
 
     it('should create account with valid credentials and have a support talk', function() {
-        var loginName = util.createTestUser()
-        util.waitForPageLoad('/setup/account')
-
-        util.get('/talks')
-        util.waitForPageLoad('/talks')
-        // support talks should be present
-        util.waitForElement("[data-qa='conversation-list-element']")
-        $$("[data-qa='conversation-list-element']").then(function (elements) {
-            expect(elements.length).toBe(1)
+        util.createTestUser()
+        .then(function(loginName){
+            testUser = loginName
+            util.get('/talks')
+            return util.waitForPageLoad('/talks')
         })
+        .then(function(){
+            // support talks should be present
+            return  util.waitForElement("[data-qa='conversation-list-element']")
+                    .then(function(){
+                        return $$("[data-qa='conversation-list-element']").then(function (elements) {
+                            expect(elements.length).toBe(1)
+                        })
+                    })
+            
+        })
+    
+    })
 
-        util.deleteTestUser(loginName)
+    it('should delete Testuser', function(){
+        util.deleteTestUser(testUser)
     })
 })

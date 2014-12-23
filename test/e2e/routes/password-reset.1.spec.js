@@ -172,10 +172,10 @@ describe('Route Password Lost/Reset:', function(){
         describe('reset - should display expired', function(){
             it('got to route', function(){
                 util.get('/password/reset/'+resetDataExpired.id)
-                util.expectCurrentUrl('#/password/reset/'+resetDataExpired.id)
+                util.waitForPageLoad('/password/reset/'+resetDataExpired.id)
             })
 
-            it('check inof bubble expired', function(){
+            it('check info bubble expired', function(){
                 util.checkWarning('info-requestExpired')
             })
         })
@@ -183,19 +183,20 @@ describe('Route Password Lost/Reset:', function(){
 
     describe('testuser with unverified phonenumber', function(){
         it('should create a test user', function(){
-            testUser1 = util.createTestUser(undefined,'password reset')
+            util.createTestUser(undefined,'password reset')
+            .then(function(loginName){
+                testUser1 = loginName
+            })
         })
 
         it('save phoneNumber', function(){
             util.get('/settings/account')
             util.waitForPageLoad('/settings/account')
-            util.expectCurrentUrl('#/settings/account')
-
-            util.setVal('input-phoneNumber',phoneNumber)
-
-            util.click('btn-saveAccount')
-
-            util.logout()
+            .then(function(){
+                util.setVal('input-phoneNumber',phoneNumber)
+                util.click('btn-saveAccount')
+                return util.logout()
+            })
         })
 
         it('check form password/lost should display not verified phonenumber', function(){
@@ -216,20 +217,24 @@ describe('Route Password Lost/Reset:', function(){
 
     describe('testuser with verified phonenumber', function() {
         it('should create a test user', function(){
-            testUser2 = util.createTestUser(undefined,'password reset')
-            util.waitForEventSubscription()
+            util.createTestUser(undefined,'password reset')
+            .then(function(loginName){
+                testUser2 = loginName
+                return util.waitForEventSubscription()
+            })
         })
 
         it('save phoneNumber', function(){
             util.get('/settings/account')
             util.waitForPageLoad('/settings/account')
-            util.expectCurrentUrl('#/settings/account')
+            .then(function(){
+                util.setVal('input-phoneNumber',phoneNumber)
+                util.click('btn-saveAccount')
+                // get secret
+                getVerificationSecret(testUser2)
+            })
 
-            util.setVal('input-phoneNumber',phoneNumber)
 
-            util.click('btn-saveAccount')
-            // get secret
-            getVerificationSecret(testUser2)
         })
 
         it('verify phoneNumber and logout', function(){
@@ -258,23 +263,23 @@ describe('Route Password Lost/Reset:', function(){
 
         it('enter valid code and check form', function(){
             util.waitForElement("[data-qa='inp-codeResetPassword']")
+            .then(function(){
+                util.setVal('inp-codeResetPassword',resetData.code,true)
+                util.sendEnter('inp-codeResetPassword')
+                return util.waitForPageLoad('/password/reset/'+resetData.id)
+            })
+            .then(function(){
+                // isnt expired
+                util.checkWarning('info-requestExpired',true)
 
-            util.setVal('inp-codeResetPassword',resetData.code,true)
-            util.sendEnter('inp-codeResetPassword')
+                util.setVal('input-password',password)
+                util.setVal('input-passwordConfirm',password)
 
-            util.expectCurrentUrl('#/password/reset/'+resetData.id)
+                util.click('btn-resetPassword')
 
-            // isnt expired
-            util.checkWarning('info-requestExpired',true)
-
-            util.setVal('input-password',password)
-            util.setVal('input-passwordConfirm',password)
-
-            util.click('btn-resetPassword')
-
-            // after success on login route
-            util.waitForPageLoad('/login')
-            util.expectCurrentUrl('#/login')
+                // after success on login route
+                return util.waitForPageLoad('/login')
+            })
         })
 
         it('login with new password', function(){

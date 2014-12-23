@@ -114,7 +114,10 @@ describe('FileUpload create TestUser', function(){
     })
 
     it('should create a test user', function(){
-        testUser = util.createTestUser(undefined,'file upload')
+        util.createTestUser(undefined,'file upload')
+        .then(function(loginName){
+            testUser = loginName
+        })
     })
 
     // start init tests

@@ -288,10 +288,24 @@ angular.module('cmConfig',[])
             },
 
             menu: {
-                'conversation/new': {i18n:'MENU.NEW_TALK', icon:'cm-new-talk', rootScopeCallback:'createNewConversation'},
+                'talks': {
+                    i18n:'MENU.TALKS', icon:'cm-talk',
+                    activeOn:'talks,conversation', ignoreOn:'conversation/new'
+                },
+                'conversation/new': {
+                    i18n:'MENU.NEW_TALK', icon:'cm-new-talk', rootScopeCallback:'createNewConversation'},
+                'contacts': {
+                    i18n:'MENU.CONTACTS', icon:'cm-person',
+                    activeOn:'contact',
+                    ignoreOn:'contact/request/list,contact/create'
+                },
                 'contact/create': {i18n:'MENU.NEW_CONTACT', icon:'cm-new-contact'},
                 //'settings/identity/key/list': {i18n:'MENU.OWN_KEYS', icon:'cm-key'},
-                'contact/request/list': {'data-qa':'btn-menu-contact-requests', i18n:'MENU.REQUESTS', icon:'cm-new-contact-query', css:'cm-menu-notify qa-btn-request-notify', drtv:'cm-friend-request-counter'},
+                'contact/request/list': {
+                    'data-qa':'btn-menu-contact-requests', i18n:'MENU.REQUESTS',
+                    icon:'cm-new-contact-query', css:'cm-menu-notify qa-btn-request-notify',
+                    drtv:'cm-friend-request-counter'
+                },
                 'settings': {i18n:'MENU.SETTINGS', icon:'cm-settings'},
                 'help': {i18n:'MENU.HELP', icon:'cm-info', 'data-qa':'btn-menu-help'}
 			},

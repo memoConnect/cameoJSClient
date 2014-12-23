@@ -46,11 +46,10 @@ describe('Route Identity Settings: ', function(){
     describe('Test 2 - new Test User', function(){
         it('should be created', function(){
             util.logout()
-            newTestUser = util.createTestUser(undefined, 'identity settings')
-        })
-
-        it('should be logged in', function(){
-            util.expectCurrentUrl('/setup/account')
+            util.createTestUser(undefined, 'identity settings')
+            .then(function(loginName){
+                newTestUser = loginName
+            })
         })
 
         it('should go to identity settings', function(){
