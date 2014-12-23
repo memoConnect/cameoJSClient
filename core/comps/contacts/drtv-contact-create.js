@@ -33,6 +33,7 @@ angular.module('cmContacts')
                     $scope.formData = {
                         displayName: '',
                         phoneNumber: '',
+                        mergedPhoneNumber: '',
                         email: ''
                     };
                 }
@@ -51,7 +52,7 @@ angular.module('cmContacts')
                     }
 
                     function checkPhoneNumber() {
-                        var value = $scope.formData.phoneNumber;
+                        var value = $scope.formData.mergedPhoneNumber;
                         if (value != undefined && value != '') {
                             objectChange.phoneNumber = value;
                         }

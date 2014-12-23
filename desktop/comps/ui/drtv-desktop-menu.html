@@ -5,7 +5,7 @@
         data-qa="{{menu[route]['data-qa']}}"
         ng-class="{
         'is-active':checkActive(route, menu[route].activeOn, menu[route].ignoreOn),
-        'info':(menu[route].name == 'help' && markQuickstart)}"
+        'info':(route == 'help' && markQuickstart)}"
         cm-reactive>
         <span class="item clearfix">
             <span class="title">

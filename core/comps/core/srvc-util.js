@@ -256,26 +256,42 @@ angular.module('cmCore')
         };
 
         this.scrollToInputError = function() {
-
-            function getOffsetSum(elem) {
-                var top=0, left=0;
-                while(elem) {
-                    top = top + parseInt(elem.offsetTop);
-                    left = left + parseInt(elem.offsetLeft);
-                    elem = elem.offsetParent;
-                }
-                return {top: top, left: left};
-            }
-
             var el          = document.querySelector(".cm-input-error:not(.ng-hide)") || document.querySelector("form .ng-invalid:not(.ng-hide)") || document.querySelector(".cm-alert:not(.ng-hide)"),
-                offset      = getOffsetSum(el),
+                offset      = this.getOffsetToBody(el),
                 bodyAndHtml = angular.element($document[0].querySelectorAll('body,html')),
-                cmHeader    = angular.element($document[0].querySelector('cm-header'))
-
+                cmHeader    = angular.element($document[0].querySelector('cm-header'));
 
             angular.forEach(bodyAndHtml, function (tag) {
                 tag.scrollTop = offset.top - cmHeader[0].offsetHeight - 10; //-10 for the looks
-            })
+            });
+        };
+
+        /**
+         * Function returns a reference of requested parent element.
+         * @param {String} tag_name Tag name of requested parent element.
+         * @param {HTMLElement} el Initial element (from which search begins).
+         */
+        this.findParent = function(tag_name, el) {
+            // loop up until parent element is found
+            while (el && el.nodeName.toLowerCase() !== this.camelCaseToDash(tag_name)) {
+                el = el.parentNode;
+            }
+            // return found element
+            return el;
+        };
+
+        this.getOffsetToBody = function(el){
+            var top=0, left=0;
+            while(el) {
+                top = top + parseInt(el.offsetTop);
+                left = left + parseInt(el.offsetLeft);
+                el = el.offsetParent;
+            }
+            return {top: top, left: left};
+        };
+
+        this.camelCaseToDash = function(str){
+            return str && typeof str == 'string' ? str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase() : false;
         }
     }
 );

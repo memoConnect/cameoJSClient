@@ -280,6 +280,11 @@ angular.module('cmConfig',[])
                     routes: ['/setup/keyinfo'],
                     guests: false,
                     resolveUserModel: true
+                },
+                'test': {
+                    hasCtrl: true,
+                    guests: false,
+                    routes: ['/test']
                 }
             },
 
