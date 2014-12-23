@@ -16,6 +16,7 @@ describe('Country Prefix at phoneNumber', function () {
         }
         return util.waitForPageLoad(options.route)
         .then(function() {
+            util.scrollToBottom()
             // list is hidden
             expect($('cm-country-prefix-list.is-visible').isPresent()).toBeFalsy()
             // input isnt empty

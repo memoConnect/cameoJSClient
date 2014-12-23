@@ -291,7 +291,9 @@ angular.module('cmCore')
         };
 
         this.camelCaseToDash = function(str){
-            return str && typeof str == 'string' ? str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase() : false;
+            return typeof str == 'string'
+                  ? str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()
+                  : false;
         }
     }
 );

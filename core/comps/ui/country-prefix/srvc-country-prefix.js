@@ -33,8 +33,16 @@ angular.module('cmUi')
                     // after choose and enter merge country and number together
                     if(!data || data && (data != '' && data.indexOf('+') == -1 || data == '')){
                         scope.prefixHandler.isVisible = true;
-                        if(data && data != '') {
-                            scope.ngModelOut = scope.activeCountry.numberPrefix + data;
+
+                        var correctData = data;
+                        // clear leading zero
+                        if (correctData && correctData.indexOf('0') == 0) {
+                            while (correctData.charAt(0) === '0')
+                                correctData = correctData.substr(1);
+                        }
+                        // set to model or let it blank
+                        if(correctData && correctData != '') {
+                            scope.ngModelOut = scope.activeCountry.numberPrefix + correctData;
                         } else {
                             scope.ngModelOut = '';
                         }

@@ -53,7 +53,6 @@ describe('Route Settings Account: ', function(){
 
         it('test cm-info-bubble', function(){
             util.setVal('input-phoneNumber','moep')
-
             util.waitForElementVisible("[data-qa='form-error-phoneNumber-invalid']")
             expect($("[data-qa='form-error-phoneNumber-invalid']").isDisplayed()).toBeTruthy()
 

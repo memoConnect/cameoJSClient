@@ -17,6 +17,7 @@
             type="tel"
             tabindex="{{::tabIndex}}" data-qa="input-phoneNumber"
             name="phoneNumberDisp" ng-model="ngModel"
+            cm-validate-phone
             ng-disabled="disabled" />
         <i class="fa"
             data-qa="btn-phoneNumberManuallyVerification"
@@ -30,8 +31,8 @@
         <input type="hidden" name="phoneNumber" ng-model="ngModelOut" />
     </div>
     <cm-country-prefix-list></cm-country-prefix-list>
-    <cm-info-bubble class="cm-alert" ng-show="cmInnerForm.phoneNumber.$dirty && cmInnerForm.phoneNumber.$invalid" data-qa="form-error-phoneNumber-invalid">
-        <div ng-show="cmInnerForm.phoneNumber.$invalid">
+    <cm-info-bubble class="cm-alert" ng-show="cmInnerForm.phoneNumberDisp.$dirty && cmInnerForm.phoneNumberDisp.$invalid" data-qa="form-error-phoneNumber-invalid">
+        <div ng-show="cmInnerForm.phoneNumberDisp.$invalid">
             <i class="fa cm-info"></i> {{::info|cmTranslate}}
         </div>
     </cm-info-bubble>
