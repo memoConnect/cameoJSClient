@@ -21,7 +21,6 @@ cm-conversation{
             right:0;
         }
 
-
         .wrap {
             padding-bottom: @cm-unit !important;
             .message {
@@ -37,9 +36,24 @@ cm-conversation{
             }
         }
 
-
         textarea{
             height:4.8*@cm-unit;
+        }
+    }
+}
+
+cm-message{
+    article{
+        .dbl!important;
+        div.message{
+            &.right{
+                max-width:100%;
+                margin-left:2rem;
+                float: right;
+            }
+            &.left{
+                max-width:90%;
+            }
         }
     }
 }
