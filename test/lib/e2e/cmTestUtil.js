@@ -799,6 +799,12 @@ this.scrollToBottom = function(){
     $("body").sendKeys(protractor.Key.END)
 }
 
+this.scrollToElement = function(cssSelector){
+    return $(cssSelector).getLocation().then(function(positions){
+        ptor.executeScript('window.scrollTo(0,'+positions.y+');')
+    })
+}
+
 this.setKeygenerationTimeout = function(jasmine){
     var expectedTimeout = 180000;
     beforeEach(function () {

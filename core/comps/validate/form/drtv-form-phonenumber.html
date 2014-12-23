@@ -1,4 +1,5 @@
 <article class="content" ng-form="cmInnerForm">
+
     <label data-qa="ctn-toggle-phone-info" ng-click="togglePhoneInfo()" cm-reactive>{{::label|cmTranslate}}<i class="fa cm-ci-color cm-info" ng-show="toggleInfo"></i></label>
 
     <cm-info-bubble ng-click="togglePhoneInfo()" ng-show="showPhoneInfo" data-qa="ctn-phone-info" nose-x="25%">
@@ -8,13 +9,16 @@
     <div class="cm-input-ctn" ng-class="{
         'cm-input-disabled':disabled,
         'with-inside-icon':!disabled && !verification.isVisible,
-        'with-inside-icons':!disabled && verification.isVisible
+        'with-inside-icons':!disabled && verification.isVisible,
+        'with-inside-left-icon with-prefix-handler':!disabled && prefixHandler.isVisible
     }">
+        <cm-country-prefix-handler ng-model="ngModel"></cm-country-prefix-handler>
         <input
             type="tel"
             tabindex="{{::tabIndex}}" data-qa="input-phoneNumber"
-            name="phoneNumber" ng-model="ngModel"
-            ng-disabled="disabled" cm-validate-phone cm-adaptive-change="3000" />
+            name="phoneNumberDisp" ng-model="ngModel"
+            cm-validate-phone
+            ng-disabled="disabled" />
         <i class="fa"
             data-qa="btn-phoneNumberManuallyVerification"
             ng-show="!disabled && verification.isVisible"
@@ -24,9 +28,11 @@
                 'cm-checkbox-wrong': !verification.isVerified
             }"></i>
         <i class="fa cm-write" ng-show="!disabled"></i>
+        <input type="hidden" name="phoneNumber" ng-model="ngModelOut" />
     </div>
-    <cm-info-bubble class="cm-alert" ng-show="cmInnerForm.phoneNumber.$dirty && cmInnerForm.phoneNumber.$invalid" data-qa="form-error-phoneNumber-invalid">
-        <div ng-show="cmInnerForm.phoneNumber.$invalid">
+    <cm-country-prefix-list></cm-country-prefix-list>
+    <cm-info-bubble class="cm-alert" ng-show="cmInnerForm.phoneNumberDisp.$dirty && cmInnerForm.phoneNumberDisp.$invalid" data-qa="form-error-phoneNumber-invalid">
+        <div ng-show="cmInnerForm.phoneNumberDisp.$invalid">
             <i class="fa cm-info"></i> {{::info|cmTranslate}}
         </div>
     </cm-info-bubble>

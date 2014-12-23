@@ -1,0 +1,14 @@
+<div class="country"
+     ng-repeat="country in countries|orderBy:'numberPrefix':false"
+     cm-reactive
+     cm-country-prefix-shortcut="{{::country.shortcut}}"
+     cm-country-prefix-number="{{::country.numberPrefixRaw}}"
+     ng-click="chooseCountry(country)"
+     ng-class="{
+        'is-active':activeListCountry.shortcut == country.shortcut
+        || foundCountry.shortcut == country.shortcut
+        }">
+    <span class="flag-icon" ng-bind-html="::':'+country.shortcut+':'|flags"></span>
+    <strong>{{::country.shortcut|uppercase}}</strong>
+    {{::country.numberPrefix}}
+</div>

@@ -1,4 +1,12 @@
 ## Dev
+# WW 23.12.2014
+* desktop
+    * changed order in menu
+    * new message width in conversation detail
+* international phonenumber prefixes CAM-1150
+    * 212 countries in list for phonenumber merging
+    * on desktop inlist search for shortcut or phoneNumber
+
 # BS 19.12.2014
 * fix CAM-1509, footer in desktop modus will not scroll
 
@@ -87,27 +95,27 @@
 ## Dev
 # WW 08.12.2014
 * password reset (desktop and app)
-** new routes #/password/lost & #/password/reset
-** password lost starts a request send message to mail/sms
-** password reset handle the new password with the requestId
+    * new routes #/password/lost & #/password/reset
+    * password lost starts a request send message to mail/sms
+    * password reset handle the new password with the requestId
 
 # WW 06.12.2014
 * account email & phoneNumber verification
-** on edit email or phoneNumber automatically notfication via mail or sms
-** on inputs are manually buttons for new verricationSecret and modal for confirm verification
+    * on edit email or phoneNumber automatically notfication via mail or sms
+    * on inputs are manually buttons for new verricationSecret and modal for confirm verification
 
 # WW 05.12.2014
 * ssl certificat checker
-** plugin for ios and android
-** checks on dev/stage against *.cameo.io certificate
-** checks on prod against cameonet.de certificate
-** if fingerprint doesn't match the cmConnectionHandler shows a modal and blocked the app
+    * plugin for ios and android
+    * checks on dev/stage against *.cameo.io certificate
+    * checks on prod against cameonet.de certificate
+    * if fingerprint doesn't match the cmConnectionHandler shows a modal and blocked the app
 
 # BS 03.12.2014
 * update Event Handling CAM-1422 
-** add "contact:update" in FE
-** add "friendRequest:rejected" in FE
-** add "identity:new" in FE
+    * add "contact:update" in FE
+    * add "friendRequest:rejected" in FE
+    * add "identity:new" in FE
 
 # WW 02.12.2014
 * internet explorer 11 & iemobile 11 solved
@@ -137,9 +145,9 @@
 
 # BS 25.11.2014
 * finish Story unread Messages CAM-1321
-** add button to settings to show or not the quantity of unread messages
-** if it is off, the client will not post the last message, the user reads, to the server, or show the quantity in talks view
-** somme settings will now synced with server
+    * add button to settings to show or not the quantity of unread messages
+    * if it is off, the client will not post the last message, the user reads, to the server, or show the quantity in talks view
+    * somme settings will now synced with server
 
 # WW 21.11.2014
 * fix menu button CAM-1384
@@ -156,23 +164,23 @@
 
 0.4.2.
 * framework major update
-** angularjs 1.2.15 upgraded to 1.3.2
-** removed fastclick (ngTouch handle the 300ms click delay)
+    * angularjs 1.2.15 upgraded to 1.3.2
+    * removed fastclick (ngTouch handle the 300ms click delay)
 * cm-reactive elements on mobile and desktop integrated (demo in icons.html)
-** desktop has 3 tiers (normal, hover and active=clicked)
-** mobile has 2 tiers (normal and active=touched)
+    * desktop has 3 tiers (normal, hover and active=clicked)
+    * mobile has 2 tiers (normal and active=touched)
 * after registration in mobile browser
-** everybody got a attention on our apps but it can be skipped
-** store and also direct links are served
+    * everybody got a attention on our apps but it can be skipped
+    * store and also direct links are served
 * purl addations
-** new subheader for in app opener about new cameonet:// app protocol
+    * new subheader for in app opener about new cameonet:// app protocol
 * form validation
-** phonenumbers now have on mobile numberpad
-** phone and email validation now accors after 3 secs. (before 1 secs.)
+    * phonenumbers now have on mobile numberpad
+    * phone and email validation now accors after 3 secs. (before 1 secs.)
 * phonegap
-** new exit modal for leaving app on back button
-** device menubutton toggle the menu in app
+    * new exit modal for leaving app on back button
+    * device menubutton toggle the menu in app
 * performance
-** webworker for verify now cache the results
-** through major framework update route changes raised up 50%
-** cm-rubber-space tighten was optimized (now only once per digest and drtv)
+    * webworker for verify now cache the results
+    * through major framework update route changes raised up 50%
+    * cm-rubber-space tighten was optimized (now only once per digest and drtv)

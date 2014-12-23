@@ -50,6 +50,7 @@ angular.module('cmSetup')
                         $scope.formData = {
                             displayName: $scope.identity.displayName,
                             phoneNumber: $scope.identity.phoneNumber ? $scope.identity.phoneNumber.value : '',
+                            mergedPhoneNumber: '',
                             email: $scope.identity.email ? $scope.identity.email.value : ''
                         };
                     }
@@ -79,7 +80,7 @@ angular.module('cmSetup')
                         }
 
                         function checkPhoneNumber() {
-                            var value = $scope.formData.phoneNumber;
+                            var value = $scope.formData.mergedPhoneNumber;
                             if (value != undefined
                                 && value != '') {
                                 objectChange.phoneNumber = value;

@@ -133,7 +133,7 @@ angular.module('cmValidate').directive('cmCameoId',[
                     return deferred.promise;
                 }
 
-                $rootScope.$on('cm-login-name:invalid', function(){
+                var killWatcher = $rootScope.$on('cm-login-name:invalid', function(){
                     $scope.parentForm.cameoId.$invalid = true;
                     $scope.parentForm.cameoId.$dirty = true;
 
@@ -165,7 +165,7 @@ angular.module('cmValidate').directive('cmCameoId',[
                     checkAccountName(newValue);
                 });
 
-                $rootScope.$on('registration:checkAccountName', function(){
+                var killWatcher2 = $rootScope.$on('registration:checkAccountName', function(){
                     setDefault();
 
                     $scope.$parent.reservationSecrets = {};
@@ -179,6 +179,11 @@ angular.module('cmValidate').directive('cmCameoId',[
 
                     );
                 });
+
+                $scope.$on('$destroy', function(){
+                    killWatcher();
+                    killWatcher2()
+                })
             }
         }
     }

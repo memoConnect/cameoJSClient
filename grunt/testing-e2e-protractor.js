@@ -77,15 +77,6 @@ module.exports = function (grunt, options) {
                         }
                     }
                 },
-                "perf": {
-                    options: {
-                        "args": {
-                            "specs": [
-                                "test/e2e/performance/perf.spec.js"
-                            ]
-                        }
-                    }
-                },
                 "tier2": {
                     options: {
                         "args": {
@@ -100,6 +91,15 @@ module.exports = function (grunt, options) {
                         "args": {
                             "specs": [
                                 "test/e2e/**/*.3.spec.js"
+                            ]
+                        }
+                    }
+                },
+                "perf": {
+                    options: {
+                        "args": {
+                            "specs": [
+                                "test/e2e/performance/perf.spec.js"
                             ]
                         }
                     }

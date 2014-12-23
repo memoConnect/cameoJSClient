@@ -33,6 +33,7 @@ angular.module('cmUser')
                 function reset(){
                     $scope.formData = {
                         phoneNumber: $scope.account.phoneNumber ? $scope.account.phoneNumber.value : '',
+                        mergedPhoneNumber: '',
                         email: $scope.account.email ? $scope.account.email.value : '',
                         oldPassword: '',
                         password: ''
@@ -49,7 +50,8 @@ angular.module('cmUser')
 
                     function checkPhoneNumber() {
                         var defValue = $scope.account.phoneNumber,
-                            value = $scope.formData.phoneNumber;
+                            value = $scope.formData.mergedPhoneNumber;
+
                         if (value != undefined
                          && (!defValue || (defValue && value != defValue.value))) {
                             objectChange.phoneNumber = value;
