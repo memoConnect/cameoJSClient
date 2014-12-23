@@ -11,8 +11,12 @@ describe('cmPassphraseVault', function () {
         passphrase = 'akjdshfiu3z97zaweoun83w78nrwz4d97qt4wr9aw7f4wfsa876fo87as6fontma97femta97ftewmf97tm',
         identity1,
         identity2,
+        identity3,
         vault1, 
         vault2,
+        vault3,
+        vault4,
+        vault5,
         key1_plain =   ['-----BEGIN RSA PRIVATE KEY-----'
                         ,'MIIEowIBAAKCAQEAm2NqiVoqfxXZiYVRMLCUXqnqlMLyce2ZPubTVeLau3MqN5k6'
                         ,'DOY4h8AnI1nfukp7L0ehkM24l+kaQp0s8rwe301BpnlwaMd72oTeHH/bwIlPZS5K'
@@ -76,11 +80,11 @@ describe('cmPassphraseVault', function () {
 
 
         inject(function(_cmPassphraseVault_, _cmUserModel_, _cmKey_, _cmIdentityFactory_, _$rootScope_){
-            cmPassphraseVault   =   _cmPassphraseVault_
-            cmUserModel         =   _cmUserModel_
-            cmKey               =   _cmKey_
-            cmIdentityFactory   =   _cmIdentityFactory_
-            $rootScope          =   _$rootScope_
+            cmPassphraseVault   =   cmPassphraseVault   || _cmPassphraseVault_
+            cmUserModel         =   cmUserModel         || _cmUserModel_
+            cmKey               =   cmKey               || _cmKey_
+            cmIdentityFactory   =   cmIdentityFactory   || _cmIdentityFactory_
+            $rootScope          =   $rootScope          || _$rootScope_
         })
     })
 
@@ -94,9 +98,16 @@ describe('cmPassphraseVault', function () {
 
     describe('vault instance', function(){
 
+        var setup
+
         beforeEach(function(){
+            if(setup) return false
+
+            setup = true
+
             identity1 = cmIdentityFactory.create('id1')
             identity2 = cmIdentityFactory.create('id2')
+            identity3 = cmIdentityFactory.create('id3')
 
             identity1.userKey = 'my_user_key'
 
@@ -138,15 +149,129 @@ describe('cmPassphraseVault', function () {
                 console.log(reason)
             })
 
+
+
+            /** Bad vaults: **/
+            
+            //wrong keys for one recipient:
+            vault3 =    cmPassphraseVault.create({
+                            "sePassphrase":null,
+                            "aePassphraseList":[
+                                {
+                                    "keyId":"key1",
+                                    "encryptedPassphrase":"iATvMjTUMc8ffQkl3B7vnO4WUlnzlmYQwAiyKUjrMtsg/92lrA8nVC5jXcRLkTRDe+Mf10D/YwgM1Wuw8uAWgl8c6ay8/8HsrR0+5xro1ZE1VaXh4Ek3f+MnAAJmGVsmh0g+Q6pbcqGnA+eHwXL56xvKu41refTqwuotIQODe9jwsCew6JCllXiTeuC0n8y9gAN6Q+hlHtRJnStPH+Q6Qe1v9tOyd6eA08j2lIUxRcCejV7NPVANfKlSzBtGyeKp1Nv5B/mJAqEQb0ZEygDCgVIwAmzkUbJHCaZSYxPpiego5HkyoPyDL2WS6MmP+igfZYJeCO+Bt8BtrKXiJ79bUw=="
+                                },
+                                {
+                                    "keyId":"key2",
+                                    "encryptedPassphrase":"QKJjjKNmKxPQmOTZY3AV/VfpfnUroaTzcxdt0wojpZb03b1M2/Bm6q3blDjbVbKMquT6ZWsYZ+5XRTX+poXNNCnXK1FgQyQQX1BXbWZRcGc4tWGKiUQz3ujsJxLSV77ACTr6bZpo3F8G+f07fQXHOC+P0URfqCLVk9tQ/EHm32IB72d8vz3tKtr7TiBSpxZ09QRlCAsmC8F2R5rr64ZUlPLur/4Be9b8b4QCFmBgvEMUzsmRlRFBGR5SVASJdqC7bTECPIDVVGy0KFwtLkiArMEo4SZIUVeKwNEhCZ48yCv9wYYuRLJ2o1mhcvTMP68+PLiK1CSvMlJq0vxHaSSyQw=="
+                                }
+                            ],
+                            "keyTransmission":"asymmetric",
+                            "recipientKeyList":[
+                                {
+                                    "identityId":"id1",
+                                    "keys":[
+                                        {"id":"key1"},
+                                        {"id":"key2"}   //surplus key!
+                                    ]
+                                },
+                                {
+                                    "identityId":"id2",
+                                    "keys":[
+                                        {"id":"key2"}
+                                    ]
+                                }
+                            ],
+                            "signatures":[
+                                {
+                                    "keyId":"key1",
+                                    "content":"754cb44e8475c3686927d19eb59d968465dd439158e24a62910d0756f3cd8c0cd2f25a1dcaa030702656f2fc486dc9a7251c55b4fa9a2e9319538e1129546d3444c199189faa95c82fc1ff22725643d24f03edf42ab27f616159ee246d3161bd0029336f88e2b8f3725d43f9a16723e6a326e0ab4fd8cb887041c7cdf5531aaf513e279635017e36caab7974a04dfdf393088db53acbdc02c53216e2b11bd9705c0dc757c6690e4184871dce9bcb7801630f93d5cc0eaf424608678bf866ef4bc858be5c29b3896643f0a69e4379df68653a6eccfb67b8a368c0d0361446d0976131ae5ae6b175f86f91f0ad3a385c022b2bc4409f75012f53b1858896bd83c8"
+                                }
+                            ]
+                        })
+
+            //missing recipient recipient:
+            vault4 =    cmPassphraseVault.create({
+                            "sePassphrase":null,
+                            "aePassphraseList":[
+                                {
+                                    "keyId":"key1",
+                                    "encryptedPassphrase":"iATvMjTUMc8ffQkl3B7vnO4WUlnzlmYQwAiyKUjrMtsg/92lrA8nVC5jXcRLkTRDe+Mf10D/YwgM1Wuw8uAWgl8c6ay8/8HsrR0+5xro1ZE1VaXh4Ek3f+MnAAJmGVsmh0g+Q6pbcqGnA+eHwXL56xvKu41refTqwuotIQODe9jwsCew6JCllXiTeuC0n8y9gAN6Q+hlHtRJnStPH+Q6Qe1v9tOyd6eA08j2lIUxRcCejV7NPVANfKlSzBtGyeKp1Nv5B/mJAqEQb0ZEygDCgVIwAmzkUbJHCaZSYxPpiego5HkyoPyDL2WS6MmP+igfZYJeCO+Bt8BtrKXiJ79bUw=="
+                                },
+                                {
+                                    "keyId":"key2",
+                                    "encryptedPassphrase":"QKJjjKNmKxPQmOTZY3AV/VfpfnUroaTzcxdt0wojpZb03b1M2/Bm6q3blDjbVbKMquT6ZWsYZ+5XRTX+poXNNCnXK1FgQyQQX1BXbWZRcGc4tWGKiUQz3ujsJxLSV77ACTr6bZpo3F8G+f07fQXHOC+P0URfqCLVk9tQ/EHm32IB72d8vz3tKtr7TiBSpxZ09QRlCAsmC8F2R5rr64ZUlPLur/4Be9b8b4QCFmBgvEMUzsmRlRFBGR5SVASJdqC7bTECPIDVVGy0KFwtLkiArMEo4SZIUVeKwNEhCZ48yCv9wYYuRLJ2o1mhcvTMP68+PLiK1CSvMlJq0vxHaSSyQw=="
+                                }
+                            ],
+                            "keyTransmission":"asymmetric",
+                            "recipientKeyList":[
+                                {
+                                    "identityId":"id1",
+                                    "keys":[
+                                        {"id":"key1"}
+                                    ]
+                                    //missing recipient
+                                }
+                            ],
+                            "signatures":[
+                                {
+                                    "keyId":"key1",
+                                    "content":"754cb44e8475c3686927d19eb59d968465dd439158e24a62910d0756f3cd8c0cd2f25a1dcaa030702656f2fc486dc9a7251c55b4fa9a2e9319538e1129546d3444c199189faa95c82fc1ff22725643d24f03edf42ab27f616159ee246d3161bd0029336f88e2b8f3725d43f9a16723e6a326e0ab4fd8cb887041c7cdf5531aaf513e279635017e36caab7974a04dfdf393088db53acbdc02c53216e2b11bd9705c0dc757c6690e4184871dce9bcb7801630f93d5cc0eaf424608678bf866ef4bc858be5c29b3896643f0a69e4379df68653a6eccfb67b8a368c0d0361446d0976131ae5ae6b175f86f91f0ad3a385c022b2bc4409f75012f53b1858896bd83c8"
+                                }
+                            ]
+                        })
+
+            //bad signature:
+            vault5 =    cmPassphraseVault.create({
+                            "sePassphrase":null,
+                            "aePassphraseList":[
+                                {
+                                    "keyId":"key1",
+                                    "encryptedPassphrase":"iATvMjTUMc8ffQkl3B7vnO4WUlnzlmYQwAiyKUjrMtsg/92lrA8nVC5jXcRLkTRDe+Mf10D/YwgM1Wuw8uAWgl8c6ay8/8HsrR0+5xro1ZE1VaXh4Ek3f+MnAAJmGVsmh0g+Q6pbcqGnA+eHwXL56xvKu41refTqwuotIQODe9jwsCew6JCllXiTeuC0n8y9gAN6Q+hlHtRJnStPH+Q6Qe1v9tOyd6eA08j2lIUxRcCejV7NPVANfKlSzBtGyeKp1Nv5B/mJAqEQb0ZEygDCgVIwAmzkUbJHCaZSYxPpiego5HkyoPyDL2WS6MmP+igfZYJeCO+Bt8BtrKXiJ79bUw=="
+                                },
+                                {
+                                    "keyId":"key2",
+                                    "encryptedPassphrase":"QKJjjKNmKxPQmOTZY3AV/VfpfnUroaTzcxdt0wojpZb03b1M2/Bm6q3blDjbVbKMquT6ZWsYZ+5XRTX+poXNNCnXK1FgQyQQX1BXbWZRcGc4tWGKiUQz3ujsJxLSV77ACTr6bZpo3F8G+f07fQXHOC+P0URfqCLVk9tQ/EHm32IB72d8vz3tKtr7TiBSpxZ09QRlCAsmC8F2R5rr64ZUlPLur/4Be9b8b4QCFmBgvEMUzsmRlRFBGR5SVASJdqC7bTECPIDVVGy0KFwtLkiArMEo4SZIUVeKwNEhCZ48yCv9wYYuRLJ2o1mhcvTMP68+PLiK1CSvMlJq0vxHaSSyQw=="
+                                }
+                            ],
+                            "keyTransmission":"asymmetric",
+                            "recipientKeyList":[
+                                {
+                                    "identityId":"id1",
+                                    "keys":[
+                                        {"id":"key1"},
+                                    ]
+                                },
+                                {
+                                    "identityId":"id2",
+                                    "keys":[
+                                        {"id":"key2"}
+                                    ]
+                                }
+                            ],
+                            "signatures":[
+                                {
+                                    //wrong key for signature:
+                                    "keyId":"key2",
+                                    "content":"754cb44e8475c3686927d19eb59d968465dd439158e24a62910d0756f3cd8c0cd2f25a1dcaa030702656f2fc486dc9a7251c55b4fa9a2e9319538e1129546d3444c199189faa95c82fc1ff22725643d24f03edf42ab27f616159ee246d3161bd0029336f88e2b8f3725d43f9a16723e6a326e0ab4fd8cb887041c7cdf5531aaf513e279635017e36caab7974a04dfdf393088db53acbdc02c53216e2b11bd9705c0dc757c6690e4184871dce9bcb7801630f93d5cc0eaf424608678bf866ef4bc858be5c29b3896643f0a69e4379df68653a6eccfb67b8a368c0d0361446d0976131ae5ae6b175f86f91f0ad3a385c022b2bc4409f75012f53b1858896bd83c8"
+                                }
+                            ]
+                        })
+
             $rootScope.$apply()
         })
 
 
         it('should be able to en- and decrypt a passphrase.', function(){
-            var result1, result2
+            var result1, result2, result1_cached
+
             vault1.get()
             .then(function(result){
                 result1 = result
+                return vault1.get() //get a second time to test caching:
+            })
+            .then(function(result){
+                result1_cached = result
             })
 
             vault2.get()
@@ -156,12 +281,15 @@ describe('cmPassphraseVault', function () {
 
             $rootScope.$apply()
             
+
             expect(result1).toBe(passphrase)
             expect(result2).toBe(passphrase)
+            expect(result1_cached).toBe(passphrase)
         })
 
         it('should be able to sign and verify recipient key lists and key transmission type.', function(){
             var result1, result2
+
 
             vault1.verifyAuthenticity()
             .then(function(){
@@ -180,40 +308,33 @@ describe('cmPassphraseVault', function () {
 
             expect(result1).toBe(true)
             expect(result2).toBe(true)
+
         })
 
   
-        it('should ...', function(){
+        it('should expose unauthentic vaults', function(){
+            var bad4, bad5, bad6
 
+            vault3.verifyAuthenticity()
+            .catch(function(){
+                bad4 = true
+            })
+
+            vault4.verifyAuthenticity()
+            .catch(function(){
+                bad5 = true
+            })
+
+            vault5.verifyAuthenticity()
+            .catch(function(){
+                bad6 = true
+            })
+
+            $rootScope.$apply()
+
+            expect(bad4).toBe(true)
+            expect(bad5).toBe(true)
+            expect(bad6).toBe(true)
         })
-
-        it('should ...', function(){
-
-        })
-
-        it('should ...', function(){
-
-        })
-
-        it('should ...', function(){
-
-        })
-
-        it('should ...', function(){
-
-        })
-
-        it('should ...', function(){
-
-        })
-
-        it('should ...', function(){
-
-        })
-
-        it('should ...', function(){
-
-        })
-
     })
 })

@@ -114,9 +114,11 @@ angular.module('cmCore').service('cmPassphraseVault',[
 
             this.get = function(password){
 
+
+
                 //@Todo disable caching if not neccessary
                 if(cache_passphrase && couldBeAPassphrase(cached_passphrase))
-                    return $q.when(cached_passphrase)
+                    return  $q.when(cached_passphrase)
 
 
                 return  $q.reject('unknown.')
@@ -216,7 +218,6 @@ angular.module('cmCore').service('cmPassphraseVault',[
                                     }
                         })
                         .then(function(data){
-                            console.log(data)
                             return  cmCrypt.hashObject(data) || $q.reject('cmPassphraseVault.verifyAuthenticity: cmCrypt.hashObject() failed.')
                         })
                         .then(function(token){
@@ -224,12 +225,10 @@ angular.module('cmCore').service('cmPassphraseVault',[
                             var valid_signatures= [],
                                 bad_signatures  = [] 
 
-                            console.log(signatures)
 
                             return  $q.all(signatures.map(function(signature){
                                         var key = signature.key
 
-                                        console.log(key)
                                         return  key
                                                 ?   key.verify(token, signature.content)
                                                     .then(
