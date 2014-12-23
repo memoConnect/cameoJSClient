@@ -105,9 +105,9 @@ describe('cmPassphraseVault', function () {
 
             setup = true
 
-            identity1 = cmIdentityFactory.create('id1')
-            identity2 = cmIdentityFactory.create('id2')
-            identity3 = cmIdentityFactory.create('id3')
+            identity1 = cmIdentityFactory.create({id:'id1', cameoId: 'id1@cameo.io'})
+            identity2 = cmIdentityFactory.create({id:'id2', cameoId: 'id2@cameo.io'})
+            identity3 = cmIdentityFactory.create({id:'id2', cameoId: 'id3@cameo.io'})
 
             identity1.userKey = 'my_user_key'
 
@@ -127,7 +127,9 @@ describe('cmPassphraseVault', function () {
             identity1.keys.register(key1)
             identity2.keys.register(key2)
 
-            cmUserModel.importData(identity1, [identity1])
+            cmUserModel
+            .importData(identity1, [identity1])
+            .signPublicKey(key1, key1.id, identity1)
 
             cmUserModel
             .importData(identity1, [identity1])

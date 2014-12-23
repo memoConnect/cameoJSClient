@@ -334,7 +334,7 @@ angular.module('cmConversations')
                 data.recipients             =       passphrase_data.recipientKeyList 
                                                 ||  this.recipients.map(function(recipient){ 
                                                         return  {
-                                                                    dentityId:     recipient.id ,
+                                                                    identityId:     recipient.id ,
                                                                     keys:          []
                                                                 }
                                                     });
@@ -681,7 +681,9 @@ angular.module('cmConversations')
              * @returns {Promise} Returns a promise resolved if successful and rejected on failure
              */
             this.verifyAuthenticity = function(){
-                return passphraseVault.verifyAuthenticity()
+                return  passphraseVault
+                        ?   passphraseVault.verifyAuthenticity()
+                        :   $q.reject('cmConversationModel: missing passphraseVault')
             }
 
             /**

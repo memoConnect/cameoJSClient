@@ -191,6 +191,9 @@ angular.module('cmCore').service('cmPassphraseVault',[
              */
             this.verifyAuthenticity = function(){
 
+                if(!signatures || signatures.length == 0)
+                    return $q.reject('missing signature')
+
                 // the original signee ought to be among the original recipients, so get them first:
                 recipientKeyList
                 .map(function(item){
@@ -224,7 +227,6 @@ angular.module('cmCore').service('cmPassphraseVault',[
 
                             var valid_signatures= [],
                                 bad_signatures  = [] 
-
 
                             return  $q.all(signatures.map(function(signature){
                                         var key = signature.key
@@ -260,7 +262,7 @@ angular.module('cmCore').service('cmPassphraseVault',[
                                                 .catch(function(){
                                                     return  cmUserModel.verifyIdentityKeys(signature.identity, false, true)
                                                             .then(function(ttrusted_keys){
-                                                                return  ttrusted_keys.indexOf(signature.key)
+                                                                return  ttrusted_keys.indexOf(signature.key) != -1
                                                                         ?   $q.when()
                                                                         :   $q.reject('no authenticated key found for signature.')
                                                                     
@@ -268,6 +270,9 @@ angular.module('cmCore').service('cmPassphraseVault',[
                                                 })
                                     },$q.reject('cmPassphraseVault: .verifyAuthenticity(): signatures invalid'))
 
+                        })
+                        .then(function(){
+                            return $q.when(recipientKeyList)
                         })
             }
 

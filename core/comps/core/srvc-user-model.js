@@ -617,7 +617,6 @@ angular.module('cmCore')
          * @return {cmKeyFactory}   cmKeyFactory returning all transitively trusted keys of identity. Users local keys are assumed to be trusted.
          */
 
-        // TODO: purl.2.spec.js test 6 login and logut failed right here
         this.verifyIdentityKeys = function(identity, sign, use_cache){
             //cmLogger.debug('cmUserModel.verifyIdentityKeys');
 
@@ -650,6 +649,7 @@ angular.module('cmCore')
                     })
                     .then(function(ttrusted_keys){
 
+
                         //looks for keys that are transitively trusted but not yet signed by all local keys:
                         var unsigned_ttrusted_keys  =   ttrusted_keys.filter(function(ttrusted_key){
                                                             return  local_keys.some(function(local_key){
@@ -658,6 +658,7 @@ angular.module('cmCore')
                                                                                 })
                                                                     })
                                                         })
+
 
                         if(sign != true || unsigned_ttrusted_keys.length == 0)
                             return $q.when(ttrusted_keys)
