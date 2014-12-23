@@ -1,4 +1,7 @@
 ## Dev
+# AP 23.12.2014
+* every talk ( and its recipients) will be signed by its creator, if he has a key
+* a new security aspect (third plus symbol) will indicate, wether the recipient list is authentic (complete and having no surplus recipients) and that all keys are verified.
 # WW 23.12.2014
 * desktop
     * changed order in menu
