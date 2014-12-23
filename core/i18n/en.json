@@ -497,7 +497,7 @@
   "PASSWORD_CODE": {
     "HEADING": "Password reset code",
     "INFO": {
-      "CONFIRMATION_SENDED": "@todo We have sent you a message. This contains a code taht you can insert here and a link that redirect you to the reset password.",
+      "CONFIRMATION_SENDED": "@todo We have sent you a message. This contains a code that you can insert here and a link that redirect you to the reset password.",
       "EMPTY": "@todo Please enter a code",
       "EXPIRED": "@:PASSWORD_RESET.INFO.EXPIRED"
     },
