@@ -621,7 +621,8 @@ angular.module('cmCore')
         this.verifyIdentityKeys = function(identity, sign, use_cache){
             //cmLogger.debug('cmUserModel.verifyIdentityKeys');
 
-            identity = identity || self.data.identity
+            identity            = identity || self.data.identity
+            var own_identity    = self.data.identity
 
             if(sign && use_cache){
                 cmLogger.error('Tried to sign keys relying on cache.')
@@ -629,14 +630,17 @@ angular.module('cmCore')
             }
 
             if(!identity.keys)
-                return $q.when([]);
+                return $q.when([])
+
+            if(!own_identity.keys)
+                return $q.when([])
 
             var local_keys = this.loadLocalKeys()
 
             return  $q.when()
                     .then(function(){
-                        return  self.data.identity.keys.getTransitivelyTrustedKeys(local_keys, function trust(trusted_key, key){
-                                    return trusted_key.verifyKey(key, self.getTrustToken(key, self.data.identity.cameoId), use_cache)
+                        return  own_identity.keys.getTransitivelyTrustedKeys(local_keys, function trust(trusted_key, key){
+                                    return trusted_key.verifyKey(key, self.getTrustToken(key, own_identity.cameoId), use_cache)
                                 })
                     })
                     .then(function(own_ttrusted_keys){
@@ -663,7 +667,9 @@ angular.module('cmCore')
                         $q.all(
                             unsigned_ttrusted_keys.map(function(ttrusted_key){
                                 //console.info('signing: '+ttrusted_key.name)
-                                return self.signPublicKey(ttrusted_key, ttrusted_key.getFingerprint(), identity)
+                                return  self.data.identity == own_identity
+                                        ?   self.signPublicKey(ttrusted_key, ttrusted_key.getFingerprint(), identity)
+                                        :   $q.reject('cmUserModel: wrong identity tries to sign verified keys!')
                             })
                         )
                         .finally(function(){

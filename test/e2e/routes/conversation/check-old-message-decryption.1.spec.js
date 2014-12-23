@@ -28,7 +28,10 @@ xdescribe('Route Conversation - Check Old Message Decryption: ', function() {
     }
 
     it('should create a test user', function(){
-       testUser = util.createTestUser(undefined,'check-old-message-decryption')
+       util.createTestUser(undefined,'check-old-message-decryption')
+        .then(function(loginName){
+            testUser = loginName
+        })
     })
 
 

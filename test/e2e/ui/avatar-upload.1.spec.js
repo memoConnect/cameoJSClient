@@ -23,8 +23,10 @@ describe('Avatar Upload: ', function () {
         if(isIE)
             return false
 
-        testUser = util.createTestUser(undefined, 'avatar upload')
-        util.expectCurrentUrl('/setup/account')
+        util.createTestUser(undefined, 'avatar upload')
+        .then(function(loginName){
+            testUser = loginName
+        })
     })
 
     it('login & got to identity list', function () {

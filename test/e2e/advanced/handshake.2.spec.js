@@ -2,7 +2,7 @@ var config = require("../config/specs.js")
 var util = require("../../lib/e2e/cmTestUtil.js")
 
 console.log('remove handshake test @ todo!!!!')
-xdescribe('Authentication requests -', function () {
+describe('Authentication requests -', function () {
     var ptor = util.getPtorInstance(),
         date = Date().now
 
@@ -153,33 +153,23 @@ xdescribe('Authentication requests -', function () {
             })
 
             it('there should be no key', function(){
-                util.get('settings/identity/key/list')
-                util.waitForPageLoad('settings/identity/key/list')
+                util.get('/settings/identity/key/list')
+                util.waitForPageLoad('/settings/identity/key/list')
+                .then(function(){
+                    return util.waitForElement("[data-qa='message-no-keys']")
+                })
+                .then(function(){
+                    expect($("[data-qa='message-no-keys']").isDisplayed()).toBe(true);
+                    expect($("[data-qa='key-list-item']").isPresent()).toBe(false);
+                })
 
-                util.waitForElement("[data-qa='message-no-keys']")
-                expect($("[data-qa='message-no-keys']").isDisplayed()).toBe(true);
-                expect($("[data-qa='key-list-item']").isPresent()).toBe(false);
             })
 
             it('should generate Key', function(){
                 util.generateKey(1, keyName1)
-
-                ptor.wait(function(){
-                    return ptor.getCurrentUrl().then(function(url){
-                        console.log('url: '+url)
-                        if(url.match('/talks')){
-                            util.get('/settings/identity/key/list')
-                            return true;
-                        }
-                        return false;
-                    })
-                },config.waitForTimeout)
             })
 
             it('should check Key Trust', function(){
-                util.get('settings/identity/key/list')
-                util.waitForPageLoad('settings/identity/key/list')
-
                 checkKeyTrust(keyName1, true)
             })
         })
@@ -217,13 +207,16 @@ xdescribe('Authentication requests -', function () {
 
         it("generate key3", function () {
             util.login(testUser1, "password")
+            .then(function(){
+                util.get("/settings/identity/key/list")
+                util.waitForElements("[data-qa='key-list-item']", 1)
 
-
-            util.get("/settings/identity/key/list")
-            util.waitForElements("[data-qa='key-list-item']", 1)
-            util.generateKey(3, keyName3)
-            util.getLocalStorage().then(function (lsexport) {
-                localStorage3 = lsexport
+                return util.generateKey(3, keyName3)
+            })
+            .then(function(){
+                util.getLocalStorage().then(function (lsexport) {
+                    localStorage3 = lsexport
+                })
             })
         })
 
@@ -274,14 +267,18 @@ xdescribe('Authentication requests -', function () {
         it("import key", function () {
             util.setLocalStorage(localStorage1.key, localStorage1.value)
             util.login(testUser1, "password")
+            .then(function(){
+                util.waitForEventSubscription()
 
-            util.get("/settings/identity/key/list")
+                util.get("/settings/identity/key/list")
+                return util.waitForPageLoad('/settings/identity/key/list')
+            })
+            .then(function(){
+                util.waitForElements("[data-qa='key-list-item']", 2)
 
-
-            util.waitForElements("[data-qa='key-list-item']", 2)
-            checkKeyTrust(keyName1, true)
-            checkKeyTrust(keyName3, false)
-            util.waitForEventSubscription()
+                checkKeyTrust(keyName1, true)
+                checkKeyTrust(keyName3, false)
+            })
         })
 
         it("send authentication:start event", function () {
@@ -322,14 +319,12 @@ xdescribe('Authentication requests -', function () {
 
         it("both keys should now be trusted", function () {
             util.get('/settings/identity/key/list')
-            util.waitForPageLoad('/settings/identity/key/list')
+            util.waitForPageLoad('/settings/identity/key/list').then(function(){
+                util.waitForElements("[data-qa='key-list-item']", 2)
 
-            util.waitForElements("[data-qa='key-list-item']", 2)
-
-            checkKeyTrust(keyName1, true)
-            checkKeyTrust(keyName3, true)
-
-            ptor.sleep(1000)
+                checkKeyTrust(keyName1, true)
+                checkKeyTrust(keyName3, true)
+            })
         })
 
         it("should not be able to read conversation from key3", function () {

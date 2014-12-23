@@ -19,7 +19,10 @@ describe('Setup Routes: ', function () {
     describe('create testUser', function(){
 
         it('should create testUser', function(){
-            testUser = util.createTestUser(undefined, 'setup routes')
+            util.createTestUser(undefined, 'setup routes')
+            .then(function(loginName){
+                testUser = loginName
+            })
         })
     })
 

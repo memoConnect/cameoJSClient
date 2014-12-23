@@ -7,7 +7,10 @@ describe('Check key maximum: ',function(){
     afterEach(function() { util.stopOnError() });
 
     it('should create a test user', function(){
-        testUser = util.createTestUser(undefined,'check-key-maximum')
+        util.createTestUser(undefined,'check-key-maximum')        
+        .then(function(loginName){
+            testUser = loginName
+        })
     })
 
     it('open key overview and a message should be present',function(){
