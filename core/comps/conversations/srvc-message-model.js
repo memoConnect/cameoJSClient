@@ -127,7 +127,7 @@ angular.module('cmConversations')
                                                 .then(function(token){
 
                                                     var promises                = [],
-                                                        valid_signatures         = [],
+                                                        valid_signatures        = [],
                                                         bad_signatures          = []
 
                                                     self.signatures.forEach(function(signature){
