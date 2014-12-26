@@ -668,6 +668,13 @@
             "PASSWORD_CHANGE": "Passwort ändern",
             "OLD_PASSWORD": "Bisheriges Passwort"
         },
+        "CREATE": {
+            "HEADER": "Benutzerkontodaten",
+            "INFO": {
+                "NOTE_ABOUT_THIS_DATA_SMALL": "E-Mail-Adresse oder Telefonnummer hinterlegen..",
+                "NOTE_ABOUT_THIS_DATA": "In ihrem Benutzerkonto können Sie eine Mobilfunknummer oder E-Mail-Adresse hinterlegen. Sie können diese durch eine Prüfnachricht verifizieren lassen. Wenn Sie ihr Passwort vergessen, können Sie über eine verifizierte E-Mail-Adresse oder Telefonnummer ein neues Passwort erstellen.\n\nIhre Benutzerdaten sind für andere Nutzer nicht sichtbar."
+            }
+        },
         "INFO": {
             "EMPTY": {
                 "LOGINAME": "Bitte geben Sie einen Loginname ein.",
@@ -678,10 +685,11 @@
                 "PHONENUMBER": "@:DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER",
                 "OLD_PASSWORD": "Das von Ihnen eingegebene Passwort ist ungültig."
             },
-            "NOTE_ABOUT_THIS_DATA": "Hier können Sie die Daten ihres Benutzerkontos ändern. Dies betrifft insbesondere Ihre Zugansdaten, mit denen Sie sich anmelden.\nIhre Benutzerdaten sind für andere Nutzer nicht sichtbar - im Gegensatz zu den Daten Ihrer Identitäten. Die Telefonnummer oder E-Mail-Adresse wird nur zur Passwortrücksetzung verwendet und auf Wunsch für Benachrichtigungen, wenn Sie abgemeldet sind.",
+            "NOTE_ABOUT_THIS_DATA_SMALL": "Daten ihres Benutzerkontos bearbeiten..",
+            "NOTE_ABOUT_THIS_DATA": "Hier können Sie die Daten ihres Benutzerkontos bearbeiten. Dies betrifft insbesondere Ihre Zugansdaten, mit denen Sie sich anmelden.\nIhre Benutzerdaten sind für andere Nutzer nicht sichtbar. Die Telefonnummer oder E-Mail-Adresse wird nur zur Passwortrücksetzung verwendet und auf Wunsch für Benachrichtigungen, wenn Sie abgemeldet sind.",
             "LOGINAME": "Der Loginname kann nicht geändert werden.",
-            "PHONENUMBER": "%todo ACCOUNT.INFO.PHONENUMBER",
-            "EMAIL": "%todo ACCOUNT.INFO.EMAIL"
+            "PHONENUMBER": "Hier können Sie eine Mobilfunknummer hinterlegen. Sie erhalten eine Verifizierungs-SMS mit der Sie die Nummer für die Passwortrücksetzung aktivieren können.",
+            "EMAIL": "Hier können Sie eine E-Mail-Adresse hinterlegen. Sie erhalten eine Verifizierungs-E-Mail mit der Sie die Adresse für die Passwortrücksetzung aktivieren können."
         },
         "FOOTER": {
             "BACK": "Fertig",

@@ -833,12 +833,20 @@
     }
   },
   "ACCOUNT": {
+      "CREATE": {
+          "HEADER": "%todo Account data",
+          "INFO": {
+              "NOTE_ABOUT_THIS_DATA_SMALL": "%todo E-Mail-Adresse oder Telefonnummer hinterlegen..",
+              "NOTE_ABOUT_THIS_DATA": "%todo In ihrem Benutzerkonto können Sie eine Mobilfunknummer oder E-Mail-Adresse hinterlegen. Sie können diese durch eine Prüfnachricht verifizieren lassen. Wenn Sie ihr Passwort vergessen, können Sie über eine verifizierte E-Mail-Adresse oder Telefonnummer ein neues Passwort erstellen.\n\nIhre Benutzerdaten sind für andere Nutzer nicht sichtbar."
+          }
+      },
     "INFO": {
       "INVALID": {
         "EMAIL": "@:DRTV.VALIDATE_EMAIL.INFO.INVALID",
         "PHONENUMBER": "@:DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER",
         "OLD_PASSWORD": "Your password is invalid."
       },
+      "NOTE_ABOUT_THIS_DATA_SMALL": "Edit your account data..",
       "NOTE_ABOUT_THIS_DATA": "Here you can edit your account data. This data is not public. E-mail and/or phone number are needed for notifications and password reset.",
       "EMPTY": {
         "LOGINAME": "Please enter a login name.",
