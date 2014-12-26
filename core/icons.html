@@ -71,6 +71,7 @@
     <a ng-click="setActive('cameofont')" ng-class="{'is-active':active=='cameofont'}">cameofont</a> |
     <a ng-click="setActive('filetypes')" ng-class="{'is-active':active=='filetypes'}">filetypes</a> |
     <a ng-click="setActive('emojis')" ng-class="{'is-active':active=='emojis'}">emojis</a> |
+    <a ng-click="setActive('flags')" ng-class="{'is-active':active=='flags'}">flags</a> |
     <a ng-click="setActive('reactive')" ng-class="{'is-active':active=='reactive'}">reactive elements</a>
 </header>
 
@@ -143,6 +144,14 @@
             </figure>
         </div>
     </div>
+</section>
+
+<section ng-if="active == 'flags'">
+    <h1><span class="anchor"></span>flags</h1>
+
+    <figure ng-repeat="icon in flags" class="flag-figure">
+        <i class="flag flag_{{icon | clearClassName}}"></i><figcaption class="is-selectable">{{icon | clearClassName}}</figcaption>
+    </figure>
 </section>
 
 <section ng-if="active == 'reactive'">
@@ -225,7 +234,7 @@
     angular
     .module('icons',['ngTouch','cmConfig','cmUi'])
 
-    .controller('ctrl',function ($scope, emoji){
+    .controller('ctrl',function ($scope, emoji, flags){
         var clearHash = location.hash.replace('#/','');
         $scope.active = clearHash != '' ? clearHash : 'cameofont';
 
@@ -261,6 +270,8 @@
         ];
 
         $scope.emojis = emoji.items;
+
+        $scope.flags = flags.items;
 
         $scope.setActive = function(section){
             $scope.active = section;

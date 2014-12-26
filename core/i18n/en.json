@@ -533,9 +533,13 @@
         "NAME": "This talk is exclusively encrypted by cameoKeys.",
         "DESCRIPTION": "The encryption is working with cameoKeys only; no password was set up; the quality of encyption is not dependent of the password quality; no password must be transferred."
       },
-      "TRUSTING_ALL_RECIPIENTS": {
-        "DESCRIPTION": "",
-        "NAME": "You trust all recipients."
+      "AUTHENTIC_RECIPIENT_LIST": {
+          "NAME": "List of recipients is signed and authentic",
+          "DESCRIPTION": "%todo The original creator of this talk signed the list of recipients. You have verified the authenticity of every recipient's. Here's a list of all recipients including their cameoIds. The cameoId was displayed when you verfied the authenticiy and uniquely idendifies an identity."
+      },
+      "AUTHENTIC_RECIPIENTS": {
+          "NAME": "Every recipient is authentic.",
+          "DESCRIPTION": "%todo You verified all recipients."
       },
       "HAS_PASSCAPTCHA": {
         "TOGGLE": "Disable passCaptcha",

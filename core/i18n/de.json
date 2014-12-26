@@ -912,9 +912,13 @@
                 "DESCRIPTION": "Das PassCaptcha-Verfahren erschwert es, Nachrichten - die bei der Übertragung durch das Internet abgefangen oder auf dem cameoNet-Server gespeichert werden - in großem Umfang automatisiert zu entschlüsseln. Sicher verschlüsselt ist die Nachricht aber hiermit nicht, da Entschlüsselungsmethoden für Captchas  immer leistungsfähiger werden und eine Person die Nachricht direkt entschlüsseln könnte.",
                 "TOGGLE": "PassCaptcha deaktivieren."
             },
-            "TRUSTING_ALL_RECIPIENTS": {
-                "NAME": "Allen Empfängern wird vertraut.",
-                "DESCRIPTION": "Sie haben für jeden Empfänger dieses Talks sichergestellt, dass die Identität einer bestimmten Person gehört (Vertrauens-Prozess durchgeführt)."
+            "AUTHENTIC_RECIPIENT_LIST": {
+                "NAME": "Die Empfängerliste ist signiert und authentisch.",
+                "DESCRIPTION": "%todo Der ursprüngliche Erzeuger dieses Talks hat die Empfängerliste signiert. Alle Empfänger sind verifiziert. Um ganz sicherzugehen, hier die Liste der Empfänger mit cameoId; die cameoId wurde Ihnen beim authentifizieren angezeigt, so dass Sie sicher sein können, dass ihr gegenüber tatsächlich die Person ist, die sie vorgibt zu sein."
+            },
+            "AUTHENTIC_RECIPIENTS": {
+                "NAME": "Empfänger sind authentisch.",
+                "DESCRIPTION": "%todo Sie haben alle Empfänger verifiziert."
             },
             "MISSING_DATA": "Sicherheitsaspekte fehlen!"
         }

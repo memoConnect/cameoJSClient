@@ -1,15 +1,17 @@
 <article ng-if="showNoLocalKeysOnThisDevice" data-qa="message-no-keys" class="content mb15">
     <cm-info-bubble nose-x="50%">
     <div
-        class="page in-screen-message"
-        ng-bind-html="'SETTINGS.PAGES.IDENTITY.KEYS.NO_LOCALKEYS_ON_THIS_DEVICE'|cmTranslate"></div>
+            class="page in-screen-message"
+            data-qa="message-no-keys"
+            ng-bind-html="'SETTINGS.PAGES.IDENTITY.KEYS.NO_LOCALKEYS_ON_THIS_DEVICE'|cmTranslate"></div>
     </cm-info-bubble>
 </article>
-<article ng-if="showUntrustedPublickeysExists" class="content mb15" data-qa="message-untrusted-keys">
+<article ng-if="showUntrustedPublickeysExists" class="content mb15">
     <cm-info-bubble nose-x="50%">
     <div
-        class="page in-screen-message"
-        ng-bind-html="'SETTINGS.PAGES.IDENTITY.KEYS.UNTRUSTED_PUBLICKEYS_EXISTS'|cmTranslate"></div>
+            class="page in-screen-message"
+            data-qa="message-untrusted-keys"
+            ng-bind-html="'SETTINGS.PAGES.IDENTITY.KEYS.UNTRUSTED_PUBLICKEYS_EXISTS'|cmTranslate"></div>
     </cm-info-bubble>
 </article>
 
@@ -32,9 +34,8 @@
         </span>
     </li>
     <li class="key-list-item clearfix" ng-repeat="key in publicKeys | orderBy:sortByPrivKeys" data-qa="key-list-item">
-        <section 
-            ng-click="goTo('settings/identity/key/edit/'+key.id)" 
-            class="item tal" 
+        <section ng-click="goTo('settings/identity/key/edit/'+key.id)" 
+            class="item tal"
             cm-reactive
         >
             <strong>{{key.name}}</strong>
@@ -72,14 +73,21 @@
 
 <!-- Some Key needs authentications -->
 
-    <article class="content" ng-if = "!canCreate && someKeyNeedsAuthentication()" data-qa = "bubble-some-key-needs-authentication">
+<article class="content" ng-if = "!canCreate && someKeyNeedsAuthentication()" data-qa = "bubble-some-key-needs-authentication">
         <cm-info-bubble nose-x="18%">
             <span ng-bind-html="'IDENTITY.KEYS.KEYLIST.EXPLANATION.UNTRUSTED_KEYS' | cmParse"></span>
         </cm-info-bubble>
     </article>
 
-<!-- End: Some Key needs authentications -->
 
+<cm-footer ng-if = "!canCreate && someKeyNeedsAuthentication()" data-qa = "footer-some-key-needs-authentication">
+    <button class="cm-btn-grey dib" data-qa="btn-create-key" ng-click="goTo('/authentication')" cm-reactive>
+        {{'IDENTITY.KEYS.AUTHENTICATION.START.START_BUTTON'|cmTranslate }}
+        <i class="fa cm-handshake"></i>
+    </button>
+</cm-footer>
+
+<!-- End: Some Key needs authentications -->
 
 <cm-footer ng-if="canCreate" data-qa="canCreate">
     <button class="cm-btn-grey dib w50" data-qa="btn-create-key" ng-click="goTo('/settings/identity/key/create')" cm-reactive>

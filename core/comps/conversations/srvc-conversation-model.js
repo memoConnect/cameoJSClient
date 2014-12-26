@@ -248,8 +248,10 @@ angular.module('cmConversations')
                 if(data.sePassphrase || data.aePassphraseList){
                     passphraseVault =   cmPassphraseVault.create({
                         sePassphrase:       data.sePassphrase,
-                        aePassphraseList:   data.aePassphraseList
-                    });
+                        aePassphraseList:   data.aePassphraseList,
+                        signatures:         data.conversationSignatures,
+                        recipientKeyList:   data.recipients
+                    })
                 }
 
                 //if(passphraseVault.getKeyTransmission() != this.keyTransmission)
@@ -321,11 +323,21 @@ angular.module('cmConversations')
                                         ?   passphraseVault.exportData()
                                         :   { keyTransmission: 'none' }
 
-                data.sePassphrase       =   passphrase_data.sePassphrase        || undefined;
-                data.aePassphraseList   =   passphrase_data.aePassphraseList    || undefined;
-                data.keyTransmission    =   passphrase_data.keyTransmission;
+                console.log('exportData')
+                console.dir(passphrase_data)
 
-                data.recipients         =   this.recipients.map(function(recipient){ return recipient.id });
+                data.sePassphrase           =   passphrase_data.sePassphrase        || undefined;
+                data.aePassphraseList       =   passphrase_data.aePassphraseList    || undefined;
+                data.keyTransmission        =   passphrase_data.keyTransmission
+                data.conversationSignatures =   passphrase_data.signatures
+
+                data.recipients             =       passphrase_data.recipientKeyList 
+                                                ||  this.recipients.map(function(recipient){ 
+                                                        return  {
+                                                                    identityId:     recipient.id ,
+                                                                    keys:          []
+                                                                }
+                                                    });
 
                 return data;
             };
@@ -656,7 +668,23 @@ angular.module('cmConversations')
                     return $q.reject('passphrase vault missing.')
 
                 return passphraseVault.get(this.password)
-            };
+            }
+
+            /**
+             * @ngdoc method
+             * @methodOf cmConversationModel
+             *
+             * @name verifyAuthenticity
+             * @description
+             * Tries to verify the authenticity of the recipient list an the key transmission type.
+             *
+             * @returns {Promise} Returns a promise resolved if successful and rejected on failure
+             */
+            this.verifyAuthenticity = function(){
+                return  passphraseVault
+                        ?   passphraseVault.verifyAuthenticity()
+                        :   $q.reject('cmConversationModel: missing passphraseVault')
+            }
 
             /**
              * @ngdoc method

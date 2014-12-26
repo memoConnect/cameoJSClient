@@ -78,7 +78,11 @@ angular.module('cmFiles').service('cmAnswerFiles', [
                         self.reset();
                     },
                     function (result) {
-                        deferred.reject(result.data.errorCode, result.data.error, result.config.headers);
+                        deferred.reject({
+                            errorCode: result.data.errorCode,
+                            error: result.data.data,
+                            headers: result.config.headers
+                        });
                     }
                 );
 

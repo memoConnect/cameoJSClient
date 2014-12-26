@@ -1,8 +1,14 @@
 ## Dev
+# AP 23.12.2014
+* every talk ( and its recipients) will be signed by its creator, if he has a key
+* a new security aspect (third plus symbol) will indicate, wether the recipient list is authentic (complete and having no surplus recipients) and that all keys are verified.
 # WW 23.12.2014
 * desktop
-    * changed desktop menu
-    * new message width for desktop
+    * changed order in menu
+    * new message width in conversation detail
+* international phonenumber prefixes CAM-1150
+    * 212 countries in list for phonenumber merging
+    * on desktop inlist search for shortcut or phoneNumber
 
 # BS 19.12.2014
 * fix CAM-1509, footer in desktop modus will not scroll

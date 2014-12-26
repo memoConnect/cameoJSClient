@@ -128,24 +128,24 @@ angular.module('cmConversations')
                                 filesForMessage = files;
                             deferred.resolve()
                         },
-                        function(errorCode, error, header){
+                        function(data){
                             $scope.isSending = false;
                             $scope.isSendingAbort = true;
 
-                            if(!errorCode){
-                                deferred.reject('problem with prepare file upload');
+                            if(!data.errorCode){
+                                deferred.reject('problem with file and none errorCode is give');
                             } else {
                                 deferred.reject('problem with prepare file upload');
 
-                                cmNotify.warn(errorCode, {
+                                cmNotify.warn(data.errorCode, {
                                     ttl: 0,
-                                    i18n: cmErrorCodes.toI18n(errorCode, {
-                                        error: error,
-                                        header: header
+                                    i18n: cmErrorCodes.toI18n(data.errorCode, {
+                                        error: data.error,
+                                        header: data.headers
                                     })
                                 });
 
-                                deferred.reject(errorCode);
+                                deferred.reject(data.errorCode);
                             }
                         }
                     );

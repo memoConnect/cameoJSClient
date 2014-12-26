@@ -1,4 +1,4 @@
-describe('cmVisibility', function(){
+describe('service cmVisibility', function(){
 
     var cmVisibility, $rootScope, $window, $document = angular.element(document)
 

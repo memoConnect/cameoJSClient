@@ -100,44 +100,48 @@ describe('Authentication requests -', function () {
 
     function checkContactTrust(userName, trustState){
         util.get('/contact/list')
-        util.expectCurrentUrl('/contact/list')
+        util.waitForPageLoad('/contact/list')
+        .then(function() {
+            util.headerSearchInList(userName)
 
-        util.headerSearchInList(userName)
-
-        switch(trustState){
-            case 'no-key':
-                $$("cm-contact-trust [data-qa='no-key'] .cm-checkbox").then(function(elements){
-                    expect(elements.length).toEqual(2)
-                })
-                break;
-            case 'untrusted-key':
-                // check list
-                var trustDrtv = $("cm-contact-trust [data-qa='untrusted-key']")
-                trustDrtv.$$('.cm-checkbox-bg').then(function(elements){
-                    expect(elements.length).toEqual(1)
-                })
-                trustDrtv.$$('.cm-checkbox').then(function(elements){
-                    expect(elements.length).toEqual(1)
-                })
-                // check detail
-                util.waitAndClick("cm-contact-tag")
-                expect($("[data-qa='start-trust-handshake-btn']").isElementPresent(by.css(".cm-checkbox-right"))).toBe(false)
-                break;
-            case 'trusted-key':
-                // check list
-                util.waitForElements("cm-contact-trust [data-qa='trusted-key'] .cm-checkbox-bg",2)
-                $$("cm-contact-trust [data-qa='trusted-key'] .cm-checkbox-bg").then(function(elements){
-                    expect(elements.length).toEqual(2)
-                })
-                // check detail
-                util.waitAndClick("cm-contact-tag")
-                ptor.wait(function(){
-                    return $$("[data-qa='trusted-key']").then(function(items){
-                        return items.length > 0
+            switch (trustState) {
+                case 'no-key':
+                    $$("cm-contact-trust [data-qa='no-key'] .cm-checkbox").then(function (elements) {
+                        expect(elements.length).toEqual(2)
                     })
-                }, config.waitForTimeout, '[data-qa="trusted-key"]')
                 break;
-        }
+                case 'untrusted-key':
+                    // check list
+                    var trustDrtv = $("cm-contact-trust [data-qa='untrusted-key']")
+                    trustDrtv.$$('.cm-checkbox-bg').then(function (elements) {
+                        expect(elements.length).toEqual(1)
+                    })
+                    trustDrtv.$$('.cm-checkbox').then(function (elements) {
+                        expect(elements.length).toEqual(1)
+                    })
+                    // check detail
+                    util.waitAndClick("cm-contact-tag")
+                    expect($("[data-qa='start-trust-handshake-btn']").isElementPresent(by.css(".cm-checkbox-right"))).toBe(false)
+                break;
+                case 'trusted-key':
+                    // check list
+                    util.waitForElements("cm-contact-trust [data-qa='trusted-key'] .cm-checkbox-bg", 2)
+                    .then(function(){
+                        return $$("cm-contact-trust [data-qa='trusted-key'] .cm-checkbox-bg")
+                    })
+                    .then(function(elements) {
+                        expect(elements.length).toEqual(2)
+                    })
+                    // check detail
+                    util.waitAndClick("cm-contact-tag")
+                    ptor.wait(function () {
+                        return $$("[data-qa='trusted-key']").then(function (items) {
+                            return items.length > 0
+                        })
+                    }, config.waitForTimeout, '[data-qa="trusted-key"]')
+                break;
+            }
+        })
     }
 
     describe("key1 -", function () {
@@ -605,7 +609,9 @@ describe('Authentication requests -', function () {
 
             it("create testuser2 and generate key", function () {
                 util.createTestUser(testUser2Id)
-                util.generateKey(4, keyName4)
+                .then(function(){
+                    return util.generateKey(4, keyName4)
+                })
             })
 
             it("send friendrequest to testuser1", function () {

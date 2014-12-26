@@ -189,7 +189,6 @@ angular.module('cmSecurityAspects')
             var refresh_scheduled = false
 
             this.scheduleRefresh = function(){
-
                 //prevent more than 1 refresh call per second
                 if(!refresh_scheduled){
                     self.reset()

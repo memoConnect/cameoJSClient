@@ -1,18 +1,26 @@
+@cm-inside-input-size: @cm-unit - 1;
+
+.show-input-width{
+  input {
+    background-color: @cm-white !important;
+  }
+}
+
 .cm-input-ctn {
   background-color: @cm-dark-white;
   display: block;
-  padding: 0.8rem 1.5rem;
+  padding: 0 1.5rem;
   margin: 0.5em 0;
-  i{
-    margin-right: 0.5rem;
-  }
-  input{
+  input, .without-input{
     color: @cm-black;
     background-color: @cm-dark-white;
-    width: 21rem;
-    padding:0;
+    width:100%;
+    padding:0.8rem 0;
     margin:0;
     border:none;
+  }
+  .without-input{
+    .dbl;
   }
   &~.pw-progress {
     .pos-rel;
@@ -25,45 +33,86 @@
   .default-one-icon{
     .pos-rel;
     white-space:nowrap;
-    input{
-      width:90%;
-    }
     i{
       .with-cursor;
       .pos-abs;
       color: @cm-grey;
       top:0;
       bottom:0;
-      right:0;
       font-size:@cm-mega-font;
-      width:10%;
+      width:@cm-inside-input-size;
       text-align:center;
-      line-height:@cm-unit - 1;
+      line-height:@cm-inside-input-size;
       &.cm-write{
         .without-cursor;
       }
     }
   }
 
-  &.with-inside-icon{
-    .default-one-icon;
-    cm-loader{
-      .pos-tr;
-      height: @cm-unit - 1;
-      width: 10%;
+  .right-icons-to-his-positions{
+    &.with-inside-icon{
+      input + i, input + i.ng-hide + i{
+        right:0!important;
+        left:auto;
+      }
+    }
+    &.with-inside-icons{
+      input + i, input + i.ng-hide + i{
+        right:@cm-inside-input-size!important;
+        left:auto;
+      }
+      input + i + i{
+        right:0!important;
+        left:auto;
+      }
     }
   }
-  &.with-inside-icons{
+
+  &.with-inside-left-icon {
+    padding-left:@cm-inside-input-size;
     .default-one-icon;
-    input{
-      width:80%;
-    }
     i{
-      right:10%;
+      left:0;
+    }
+    .right-icons-to-his-positions;
+  }
+  &.with-inside-left-icons {
+    padding-left:@cm-inside-input-size * 2;
+    .default-one-icon;
+    i{
+      left:0;
     }
     i + i{
+      left:@cm-inside-input-size;
+    }
+    .right-icons-to-his-positions;
+  }
+  // right one icon
+  &.with-inside-icon{
+    padding-right:@cm-inside-input-size;
+    .default-one-icon;
+    input + i{
       right:0;
     }
+    cm-loader{
+      .pos-tr;
+      height: @cm-inside-input-size;
+      width: @cm-inside-input-size;
+    }
+  }
+  // right two icons
+  &.with-inside-icons{
+    padding-right:@cm-inside-input-size * 2;
+    .default-one-icon;
+    input + i{
+      right:@cm-inside-input-size;
+    }
+    input + i + i{
+      right:0;
+    }
+  }
+  &.with-phone-prefix-chooser{
+
   }
 }
 
@@ -79,17 +128,6 @@ textarea {
   resize:vertical;
   /* bootstrap */
   padding: 6px 12px;
-}
-
-.theme-b, .theme-a {
-  form, .cm-form-style {
-    input {
-      width: 21rem;
-      padding:0;
-      margin:0;
-      border:none;
-    }
-  }
 }
 
 /* clear ie10 automatic input icons  */

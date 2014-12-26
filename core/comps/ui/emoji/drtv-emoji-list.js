@@ -1,11 +1,11 @@
 'use strict';
 
-angular.module('cmUi').directive('cmEmojiList',[
-    'emoji',
-    'cmUtil',
-    '$document',
-    '$rootScope',
-    function (emoji, cmUtil, $document, $rootScope) {
+angular.module('cmUi')
+.directive('cmEmojiList',[
+    'cmUtil', 'emoji',
+    '$window', '$rootScope',
+    function (cmUtil, emoji,
+              $window, $rootScope) {
 
         var blacklist = ['poop', 'shit', '\\-1', '\\+1', 'facepunch', 'shipit'],
             sortCategories = {
@@ -18,37 +18,21 @@ angular.module('cmUi').directive('cmEmojiList',[
         return{
             restrict: 'E',
             template: '<div ng-show="showList">' +
-                        '<div ng-repeat="emoji in emojis" class="emoji-wrapper" ng-click="insertEmoji(emoji)" cm-reactive>' +
-                            '<i class="emoji emoji_{{emoji}}" title=":{{emoji}}:">{{emoji}}</i>' +
-                        '</div>' +
-                      '<div>',
+            '<div ng-repeat="emoji in emojis" class="emoji-wrapper" ng-click="insertEmoji(emoji)" cm-reactive>' +
+            '<i class="emoji emoji_{{emoji}}" title=":{{emoji}}:">{{emoji}}</i>' +
+            '</div>' +
+            '<div>',
             scope: {
                 ngModel: '=ngModel'
             },
             link: function(scope, element, attrs){
 
-                var textarea = undefined,
-                    textareaModel = undefined,
-                    body = angular.element($document[0].querySelector('body'));
-
-                /**
-                 * Function returns a reference of requested parent element.
-                 * @param {String} tag_name Tag name of requested parent element.
-                 * @param {HTMLElement} el Initial element (from which search begins).
-                 */
-                function findParent (tag_name, el) {
-                    // loop up until parent element is found
-                    while (el && el.nodeName !== tag_name) {
-                        el = el.parentNode;
-                    }
-                    // return found element
-                    return el;
-                }
+                var textarea;
 
                 function clickOutside(e){
                     if(e.target != element[0] && // target not emojilist
-                       !findParent('CM-EMOJI-LIST',e.target) && // emojilist isnt parent
-                       !findParent('CM-EMOJI-HANDLER',e.target) // isnt handler
+                        !cmUtil.findParent('cmEmojiList',e.target) && // isnt list
+                        !cmUtil.findParent('cmEmojiHandler',e.target) // isnt handler
                     ) {
                         scope.toggleList('close',true);
                     }
@@ -67,12 +51,12 @@ angular.module('cmUi').directive('cmEmojiList',[
 
                     if(scope.showList){
                         element.addClass('is-visible');
-                        body.on('click',clickOutside);
-                        body.on('touchstart',clickOutside);
+                        angular.element($window).on('click',clickOutside);
+                        angular.element($window).on('touchstart',clickOutside);
                     } else {
                         element.removeClass('is-visible');
-                        body.off('click',clickOutside);
-                        body.off('touchstart',clickOutside);
+                        angular.element($window).off('click',clickOutside);
+                        angular.element($window).off('touchstart',clickOutside);
                     }
 
                     if(withApply != undefined && withApply)
@@ -121,7 +105,7 @@ angular.module('cmUi').directive('cmEmojiList',[
                 scope.toggleList('close');
 
                 // emoji-list-handler watcher
-                $rootScope.$on('cmEmojiList:toggle',function(){
+                var killWatcher = $rootScope.$on('cmEmojiList:toggle',function(){
                     scope.toggleList();
                 });
 
@@ -129,22 +113,13 @@ angular.module('cmUi').directive('cmEmojiList',[
                 if(attrs.cmTextarea){
                     textarea = angular.element(document.getElementById(attrs.cmTextarea));
                 }
+
+                scope.$on('$destroy', function(){
+                    killWatcher();
+                    angular.element($window).off('click',clickOutside);
+                    angular.element($window).off('touchstart',clickOutside);
+                });
             }
         }
     }
-])
-.directive('cmEmojiHandler',[
-   '$rootScope',
-   function($rootScope){
-       return{
-           restrict: 'E',
-           template: '<i class="fa cm-smile-negative with-cursor" ng-click="toggleList()" cm-reactive></i>',
-           scope: true,
-           controller: function($scope){
-               $scope.toggleList = function(){
-                   $rootScope.$broadcast('cmEmojiList:toggle');
-               }
-           }
-       }
-   }
 ]);

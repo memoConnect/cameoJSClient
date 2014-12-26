@@ -29,5 +29,7 @@ describe('cmIdentityModel', function(){
         expect(obj.load).toBeDefined()
     })
 
+    //Todo: more tests :)
+
 })
 

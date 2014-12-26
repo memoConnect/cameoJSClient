@@ -106,7 +106,7 @@ describe('Route conversation:', function () {
     })
 
     it('there should be only one message, and it should contain the message text', function () {
-       util.waitForElements('cm-message',1)
+       util.waitForElement('cm-message')
        expect($('cm-message').getText()).toContain(messageText)
     })
 

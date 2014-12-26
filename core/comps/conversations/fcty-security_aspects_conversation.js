@@ -5,9 +5,10 @@ angular.module('cmConversations')
 
     'cmSecurityAspects',
     'cmUserModel',
+    'cmIdentityFactory',
     '$q',
 
-    function(cmSecurityAspects, cmUserModel, $q){
+    function(cmSecurityAspects, cmUserModel, cmIdentityFactory, $q){
 //        var securityAspectsConversation = new cmSecurityAspects()
 
         function securityAspectsConversation(conversation){
@@ -91,10 +92,66 @@ angular.module('cmConversations')
                     }
                 })
                 .addAspect({
-                    id: 'TRUSTING_ALL_RECIPIENTS',
+                    id: 'AUTHENTIC_RECIPIENTS',
                     dependencies: ['ENCRYPTED', 'NO_SYMMETRIC_KEY_TRANSMISSION'],
                     value: 1,
+                    check: function(){
+                        return  conversation.state.is('new')
+                                &&
+                                conversation.recipients.reduce(function(so_far, recipient){
+                                    return  so_far
+                                            .then(function(){
+                                                return  cmUserModel.verifyIdentityKeys(recipient, true)
+                                            })
+                                            .then(function(ttrusted_keys){
+                                                return  ttrusted_keys.length == recipient.keys.length
+                                                        ?   $q.when(true)
+                                                        :   $q.reject()
+                                            })
+                                }, $q.when())
+                                .then(
+                                    function(){ return true },
+                                    function(){ return false }
+                                )
+                    }
+                })
+                .addAspect({
+                    id: 'AUTHENTIC_RECIPIENT_LIST',
+                    dependencies: ['ENCRYPTED', 'NO_SYMMETRIC_KEY_TRANSMISSION'],
+                    value: 1,
+                    template:    '<div>{{aspect.description|cmTranslate}}</div><br/>'
+                                +'<div ng-repeat ="recipient in aspect.recipients">{{recipient.displayName}} ({{recipient.cameoId}})</div>',
                     check: function(conversation){
+                        var self = this
+                        
+                        return  !conversation.state.is('new')
+                                &&
+                                conversation.verifyAuthenticity()
+                                .then(function(recipientKeyList){
+                                    self.recipients =   recipientKeyList.map(function(item){
+                                                            return cmIdentityFactory.find(item.identityId)
+                                                        })
+                                    return  recipientKeyList.reduce(function(so_far, item){
+                                                return  so_far
+                                                        .then(function(reason){
+                                                            var identity = cmIdentityFactory.create(item.identityId)
+                                                            return  cmUserModel.verifyIdentityKeys(identity, false, true)                                                                         
+                                                        })                                                            
+                                                        .then(function(ttrusted_keys){
+                                                            return  item.keys.every(function(key){ 
+                                                                        return ttrusted_keys.some(function(tt_key){
+                                                                            return tt_key.id == key.id
+                                                                        })
+                                                                    })
+                                                                    ?   $q.when(true)
+                                                                    :   $q.reject('unauthentic key in recipient key list')
+                                                        })   
+                                            }, $q.when(false))
+                                })
+                                .then(
+                                    function(){ return true },
+                                    function(){ return false }
+                                )
 
                         //temporary solution, AP
                         return  conversation.recipients.length < 3
@@ -120,7 +177,7 @@ angular.module('cmConversations')
 
             
 
-            conversation.on('update:finished encryption:enabled encryption:disabled captcha:enabled captcha:disabled aspects:added', self.scheduleRefresh);
+            conversation.on('update:finished encryption:enabled encryption:disabled captcha:enabled captcha:disabled aspects:added decrypt:success', self.scheduleRefresh);
             conversation.recipients.on('register update:finished deregister', self.scheduleRefresh);
             cmUserModel.on('key:stored key:removed cache:updated', self.scheduleRefresh);
 
