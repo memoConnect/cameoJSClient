@@ -161,14 +161,16 @@
     "MODAL": {
       "HEADER": "@IDENTITY.LABEL.IDENTITIES"
     },
-      "CREATE": {
-          "HEADLINE_SMALL": "%todo IDENTITY.INFO.CREATE.HEADLINE_SMALL",
+      "INFO": {
+        "CREATE": {
+          "HEADLINE_SMALL": "Define your first identity..",
           "HEADLINE": "In your identity you define, what information other users can see. If you accept a contact request from another user, he can see all the fields that you enter in your identity profile.\nYour identity can be found by searching for the cameoID or its display name. ",
           "CAMEOID": "Every identity has a unique cameoID, with which you can be found in cameoNet.",
-          "AVATAR": "%todo IDENTITY.INFO.CREATE.AVATAR",
+          "AVATAR": "Upload your own picture by the gear-wheel in the lower left corner.",
           "DISPLAYNAME": "If you enter a display name, this will be displayed instead of the cameoID. Your identity in cameoNet can be found by searching for the display name. The display name does not need to be unique.",
           "EMAIL": "You can enter an e-mail address here. It will be displayed to other users in your identity profile, but it will not be verified or used for any purpose. Notifications for this identity will be sent to the e-mail address entered in your account.",
           "PHONE": "You can enter a mobile phone number here. It will be displayed to other users in your identity profile, but it will not be verified or used for any purpose. Notifications for this identity will be sent to the mobile phone number entered in your account."
+        }
       }
   },
   "DRTV": {
@@ -184,7 +186,7 @@
         "EMPTY_CODE": "Please enter the code from the verification sms.",
         "INVALID_CODE": "The code you have entered is wrong or has expired."
       },
-      "LABEL_VERIFICATION_CODE": "%todo Verficationscode",
+      "LABEL_VERIFICATION_CODE": "Verfication code",
       "PLACEHOLDER": "Mobile number",
       "LABEL": "Mobile number"
     },
@@ -212,7 +214,7 @@
         "EMPTY_CODE": "Please enter the code from the verification e-mail.",
         "INVALID_CODE": "The code you have entered is wrong or has expired."
       },
-      "LABEL_VERIFICATION_CODE": "%todo Verficationscode",
+      "LABEL_VERIFICATION_CODE": "Verfication code",
       "PLACEHOLDER": "e-mail",
       "LABEL": "e-mail"
     },
@@ -487,7 +489,7 @@
       "LOGIN_NOT_FOUND": "Username could not be found.",
       "PHONENUMBER_NOT_FOUND": "Phone number could not be found.",
       "EMAIL_NOT_FOUND": "e-mail address could not be found.",
-      "NO_EMAIL_PHONENUMBER": "%todo You have no verified e-mail address or phone number."
+      "NO_EMAIL_PHONENUMBER": "You have no verified e-mail address or phone number."
     },
     "LABEL": {
       "MIXED": "Username, cameoID, e-mail address or phone number",
@@ -497,14 +499,14 @@
   "PASSWORD_CODE": {
     "HEADING": "Password reset code",
     "INFO": {
-      "CONFIRMATION_SENDED": "%todo We have sent you a message. This contains a code that you can insert here and a link that redirect you to the reset password.",
-      "EMPTY": "%todo Please enter a code",
+      "CONFIRMATION_SENDED": "We have sent you a message. This contains a code that you can insert here and a link that redirect you to the reset password.",
+      "EMPTY": "Enter a code please",
       "EXPIRED": "@:PASSWORD_RESET.INFO.EXPIRED"
     },
     "LABEL": {
-      "CODE": "%todo Code out of the message",
-      "CANCEL": "%todo Cancel",
-      "SUBMIT": "%todo Check code"
+      "CODE": "Code",
+      "CANCEL": "Cancel",
+      "SUBMIT": "Check"
     }
   },
   "PASSWORD_RESET": {
@@ -535,11 +537,11 @@
       },
       "AUTHENTIC_RECIPIENT_LIST": {
           "NAME": "List of recipients is signed and authentic",
-          "DESCRIPTION": "%todo The original creator of this talk signed the list of recipients. You have verified the authenticity of every recipient's. Here's a list of all recipients including their cameoIds. The cameoId was displayed when you verfied the authenticiy and uniquely idendifies an identity."
+          "DESCRIPTION": "The original creator of this talk signed the list of recipients. You have verified the authenticity of every recipient's. Here's a list of all recipients including their cameoIds. The cameoId was displayed when you verfied the authenticiy and uniquely idendifies an identity."
       },
       "AUTHENTIC_RECIPIENTS": {
           "NAME": "Every recipient is authentic.",
-          "DESCRIPTION": "%todo You verified all recipients."
+          "DESCRIPTION": "You verified all recipients."
       },
       "HAS_PASSCAPTCHA": {
         "TOGGLE": "Disable passCaptcha",
@@ -623,9 +625,9 @@
     "NEW_TALK": "New talk"
   },
   "HELP":{
-    "HEADING":"%todo Help",
+    "HEADING":"Help",
     "LABEL": {
-      "SUPPORT": "%todo Support"
+      "SUPPORT": "cameoNet Support"
     }
   },
   "CONTACTS": {
@@ -688,7 +690,7 @@
       "HEAD_LOGIN": "Login information"
     },
     "INFO": {
-      "LOGIN_INFORMATION": "%todo Here you will define your account data that you use for the login at cameoNet.<br/><br/>The choosen user name will become your (first) cameoID automatically. The cameoID can be find by other users to connect with you.",
+      "LOGIN_INFORMATION": "Here you will define your account data that you use for the login at cameoNet.<br/><br/>The choosen user name will become your (first) cameoID automatically. The cameoID can be find by other users to connect with you.",
       "EMPTY": {
         "PASSWORD": "Please enter a password."
       },
@@ -838,10 +840,10 @@
   },
   "ACCOUNT": {
       "CREATE": {
-          "HEADER": "%todo Account data",
+          "HEADER": "Account data",
           "INFO": {
-              "NOTE_ABOUT_THIS_DATA_SMALL": "%todo E-Mail-Adresse oder Telefonnummer hinterlegen..",
-              "NOTE_ABOUT_THIS_DATA": "%todo In ihrem Benutzerkonto können Sie eine Mobilfunknummer oder E-Mail-Adresse hinterlegen. Sie können diese durch eine Prüfnachricht verifizieren lassen. Wenn Sie ihr Passwort vergessen, können Sie über eine verifizierte E-Mail-Adresse oder Telefonnummer ein neues Passwort erstellen.\n\nIhre Benutzerdaten sind für andere Nutzer nicht sichtbar."
+              "NOTE_ABOUT_THIS_DATA_SMALL": "Insert email address or telephone number..",
+              "NOTE_ABOUT_THIS_DATA": "Here you can insert an email address or phone number. You can verify this address or number by answering a check message. If you will forget your password, you can reset it by a verified phone number or email address. <br> This data is not public."
           }
       },
     "INFO": {
@@ -857,8 +859,8 @@
         "OLD_PASSWORD": "Please enter your previous password."
       },
       "LOGINAME": "The login name cannot be changed.",
-      "PHONENUMBER": "%todo ACCOUNT.INFO.PHONENUMBER",
-      "EMAIL": "%todo ACCOUNT.INFO.EMAIL"
+      "PHONENUMBER": "Here you can insert a phone number. After that we will send you a verification message.",
+      "EMAIL": "Here you can insert an email address. After that we will send you a verification message."
     },
     "PLACEHOLDER": {
       "PASSWORD_CHANGE": "Change password",

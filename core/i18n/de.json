@@ -57,14 +57,14 @@
     "PASSWORD_CODE": {
         "HEADING": "Passwort zurücksetzen Code",
         "INFO": {
-            "CONFIRMATION_SENDED": "%todo Wir haben Ihnen eine Nachricht gesendet. Darin finden Sie einen Code den Sie hier eingeben können oder einen Link der Sie direkt zur Passwortrücksetzung weiterleitet.",
-            "EMPTY": "%todo Bitte geben Sie einen Code ein",
+            "CONFIRMATION_SENDED": "Es wurde eine Nachricht an Ihre verifizierte E-Mail-Adresse oder Telefonnummer gesendet. Darin finden Sie einen Link, der Sie direkt zur Passwortrücksetzung weiterleitet.<br>Oder geben Sie den Code aus der Nachricht hier ein, um ein neues Passwort zu wählen:",
+            "EMPTY": "Bitte geben Sie einen Code ein",
             "EXPIRED": "@:PASSWORD_RESET.INFO.EXPIRED"
         },
         "LABEL": {
-            "CODE": "%todo Code aus der empfangenen Nachricht",
-            "CANCEL": "%todo Abbrechen",
-            "SUBMIT": "%todo Code überprüfen"
+            "CODE": "Code",
+            "CANCEL": "Abbrechen",
+            "SUBMIT": "Prüfen"
         }
     },
 
@@ -103,13 +103,13 @@
             },
             "INVALID_EMAIL": "@:DRTV.VALIDATE_EMAIL.INFO.INVALID",
             "INVALID_PHONENUMBER": "@:DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER",
-            "LOGIN_INFORMATION": "%todo Hier legen Sie Ihre Zugangsdaten fest, mit denen Sie sich anschließend im cameoNet anmelden können.<br/><br/>Der Nutzername wird automatisch zu Ihrer (ersten) cameoID, über die andere Nutzer Sie im cameoNet finden können.",
+            "LOGIN_INFORMATION": "Hier legen Sie Ihre Zugangsdaten fest, mit denen Sie sich anschließend im cameoNet anmelden können.<br/><br/>Der Nutzername wird automatisch zu Ihrer (ersten) cameoID, über die andere Nutzer Sie im cameoNet finden können.",
             "USER_INFORMATION": "Die folgenden Felder sind optional:<br/><br/>Wenn Sie einen Anzeigenamen eingeben, wird Ihre Identität überall im cameoNet mit diesem Namen angezeigt. Er muss nicht eindeutig sein. Andere Nutzer können Sie im cameoNet auch über Ihren Anzeigenamen finden.<br/><br/>Wenn Sie eine E-Mail-Adresse und/oder eine Mobilfunknummer eingeben, können Sie sich über neue Nachrichten und Kontaktanfragen informieren lassen und bei Bedarf Ihr Passwort zurücksetzen. Diese Daten sind für andere Nutzer nicht sichtbar und werden nicht in Ihre Identität übertragen."
         },
         "TITLE": {
             "HEAD_LOGIN": "Login Informationen",
             "HEAD_IDENTITY": "Benutzer Informationen",
-            "MANDATORY_INFO": "Nur mit * gekennzeichnete Felder, müssen ausgefüllt werden."
+            "MANDATORY_INFO": "Mit * gekennzeichnete Felder müssen ausgefüllt werden."
         },
         "WARN": {
             "REGISTRATION_FAILED": "Bei der Registrierung ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut."
@@ -412,10 +412,10 @@
         },
         "INFO":{
             "CREATE": {
-                "HEADLINE_SMALL": "%todo IDENTITY.INFO.CREATE.HEADLINE_SMALL",
-                "HEADLINE": "In Ihrer Identität legen Sie fest, was andere Nutzer von Ihnen sehen. Wenn Sie eine Kontaktanfrage eines anderen Nutzers akzeptieren, sieht dieser in seinen Kontakten anschließend alle Daten, die Sie in Ihr Identitätsprofil eingegeben haben.\nIhre Identität kann über die cameoID oder den Anzeigenamen gefunden werden.",
+                "HEADLINE_SMALL": "Anlegen Ihrer ersten Identität..",
+                "HEADLINE": "In Ihrer Identität legen Sie fest, wie Sie sich anderen Nutzern präsentieren. Wenn Sie eine Kontaktanfrage eines anderen Nutzers akzeptieren, sieht dieser in seinen Kontakten anschließend alle Daten, die Sie in Ihr Identitätsprofil eingegeben haben.\nIhre Identität kann über die cameoID oder den Anzeigenamen gefunden werden.",
                 "CAMEOID": "Jede Identität besitzt eine eindeutige cameoID, über die sie im cameoNet gefunden werden kann.",
-                "AVATAR": "%todo IDENTITY.INFO.CREATE.AVATAR",
+                "AVATAR": "cameoNet erzeugt ein zufälliges Profilbild. Zum Hochladen eines eigenen Bildes klicken Sie auf das Zahnrad in der unteren linken Ecke.",
                 "DISPLAYNAME": "Wenn Sie Ihrer Identität einen Anzeigenamen geben, wird dieser überall anstatt der cameoID angezeigt. Ihre Identität kann im cameoNet auch über den Anzeigenamen gefunden werden. Der Anzeigename muss aber nicht eindeutig sein.",
                 "PHONE": "Hier können Sie eine Mobilfunknummer eingeben. Sie wird anderen Nutzern in Ihrem Identitätsprofil angezeigt aber weder verifiziert noch weiter verwendet. Sie erhalten Benachrichtigungen für diese Identität an die in Ihrem Benutzerkonto eingetragenen Mobilfunknummer.",
                 "EMAIL": "Hier können Sie eine E-Mail-Adresse eingeben. Sie wird anderen Nutzern in Ihrem Identitätsprofil angezeigt aber weder verifiziert noch weiter verwendet. Sie erhalten Benachrichtigungen für diese Identität an die in Ihrem Benutzerkonto eingetragenen E-Mail-Adresse."
@@ -554,7 +554,7 @@
     "SETTINGS": {
         "WELCOME": "Einstellungen",
         "LABEL": "Einstellungen",
-        "ACCOUNT": "Account Einstellungen",
+        "ACCOUNT": "Benutzerkonto Einstellungen",
         "IDENTITY": "Identität Einstellungen",
         "NOTIFY": "Benachrichtigungen",
         "CONTACTS": "Kontakte Einstellungen",
@@ -662,7 +662,7 @@
 
     "ACCOUNT": {
         "PLACEHOLDER": {
-            "LOGINNAME": "Loginname",
+            "LOGINNAME": "Benutzername (Login)",
             "PHONENUMBER": "Telefonnummer",
             "EMAIL": "E-Mail",
             "PASSWORD_CHANGE": "Passwort ändern",
@@ -672,7 +672,7 @@
             "HEADER": "Benutzerkontodaten",
             "INFO": {
                 "NOTE_ABOUT_THIS_DATA_SMALL": "E-Mail-Adresse oder Telefonnummer hinterlegen..",
-                "NOTE_ABOUT_THIS_DATA": "In ihrem Benutzerkonto können Sie eine Mobilfunknummer oder E-Mail-Adresse hinterlegen. Sie können diese durch eine Prüfnachricht verifizieren lassen. Wenn Sie ihr Passwort vergessen, können Sie über eine verifizierte E-Mail-Adresse oder Telefonnummer ein neues Passwort erstellen.\n\nIhre Benutzerdaten sind für andere Nutzer nicht sichtbar."
+                "NOTE_ABOUT_THIS_DATA": "In Ihrem Benutzerkonto können Sie eine Mobilfunknummer oder E-Mail-Adresse hinterlegen und anschließend durch eine Prüfnachricht verifizieren lassen. Wenn Sie ihr Passwort vergessen, können Sie über eine verifizierte E-Mail-Adresse oder Telefonnummer ein neues Passwort erstellen.<br><br>Ihre Benutzerdaten sind für andere Nutzer nicht sichtbar."
             }
         },
         "INFO": {
@@ -686,7 +686,7 @@
                 "OLD_PASSWORD": "Das von Ihnen eingegebene Passwort ist ungültig."
             },
             "NOTE_ABOUT_THIS_DATA_SMALL": "Daten ihres Benutzerkontos bearbeiten..",
-            "NOTE_ABOUT_THIS_DATA": "Hier können Sie die Daten ihres Benutzerkontos bearbeiten. Dies betrifft insbesondere Ihre Zugansdaten, mit denen Sie sich anmelden.\nIhre Benutzerdaten sind für andere Nutzer nicht sichtbar. Die Telefonnummer oder E-Mail-Adresse wird nur zur Passwortrücksetzung verwendet und auf Wunsch für Benachrichtigungen, wenn Sie abgemeldet sind.",
+            "NOTE_ABOUT_THIS_DATA": "Hier können Sie ihre Benutzerdaten bearbeiten. Dies umfasst:<br>- Ihre Zugangsdaten, mit denen Sie sich anmelden<br>- Telefonnummer oder E-Mail-Adresse für die Passwortrücksetzung und Offline-Benachrichtigungen.<br><br>Ihre Benutzerdaten sind für andere Nutzer nicht sichtbar.",
             "LOGINAME": "Der Loginname kann nicht geändert werden.",
             "PHONENUMBER": "Hier können Sie eine Mobilfunknummer hinterlegen. Sie erhalten eine Verifizierungs-SMS mit der Sie die Nummer für die Passwortrücksetzung aktivieren können.",
             "EMAIL": "Hier können Sie eine E-Mail-Adresse hinterlegen. Sie erhalten eine Verifizierungs-E-Mail mit der Sie die Adresse für die Passwortrücksetzung aktivieren können."
@@ -722,11 +722,11 @@
         "VALIDATE_PHONE": {
             "LABEL": "Mobilfunknummer",
             "PLACEHOLDER": "Mobilfunknummer",
-            "LABEL_VERIFICATION_CODE": "%todo Verfikationscode",
+            "LABEL_VERIFICATION_CODE": "Verfizierungscode",
             "INFO": {
                 "INVALID_PHONE_NUMBER": "Die Nummer scheint keine gültige Mobilfunknummer zu sein.",
                 "EMPTY": "Sie haben keine Mobilfunknummer eingegeben.",
-                "ISNT_VERIFIED": "%todo Diese Telefonnummer ist noch nicht verifiziert.\nIhnen wurde eine SMS zugeschickt. Diese beinhaltet einen Verfikationscode den Sie hier eingeben können oder Sie klicken auf den Link in der SMS. Haben Sie keine SMS bekommen, klicken Sie auf das {{icon}}-Icon um eine neue SMS zugenerieren.",
+                "ISNT_VERIFIED": "Diese Telefonnummer wurde noch nicht verifiziert!\nEs wurde eine SMS mit einem Verfizierungscode an diese Nummer gesendet. Tragen Sie den Code hier ein oder klicken Sie auf den Link in der SMS. Um erneut eine SMS an diese Nummer zu senden, klicken Sie auf das {{icon}}-Icon.",
                 "EMPTY_CODE": "Bitte tragen Sie hier den Code ein, der Ihnen in der Verifizierungs-SMS mitgeteilt wurde.",
                 "INVALID_CODE": "Der Code den Sie eingegeben haben ist falsch oder abgelaufen."
             }
@@ -734,11 +734,11 @@
         "VALIDATE_EMAIL": {
             "LABEL": "E-Mail",
             "PLACEHOLDER": "E-Mail",
-            "LABEL_VERIFICATION_CODE": "%todo Verfikationscode",
+            "LABEL_VERIFICATION_CODE": "Verfizierungscode",
             "INFO": {
                 "INVALID": "Bitte geben Sie eine korrekte E-Mail-Adresse ein!",
                 "EMPTY": "Sie haben keine E-Mail-Adresse eingegeben.",
-                "ISNT_VERIFIED": "%todo Diese E-Mail-Adresse ist noch nicht verifiziert.\nIhnen wurde eine E-Mail zugeschickt. Diese beinhaltet einen Verfikationscode den Sie hier eingeben können oder Sie klicken auf den Link in der E-Mail. Haben Sie keine E-Mail bekommen, klicken Sie auf das {{icon}}-Icon um eine neue E-Mail zugenerieren.",
+                "ISNT_VERIFIED": "Diese E-Mail-Adresse wurde noch nicht verifiziert!\nEs wurde eine E-Mail mit einem Verfizierungscode an diese Adresse gesendet. Tragen Sie den Code hier ein oder klicken Sie auf den Link in der E-Mail. Um erneut eine E-Mail an diese Adresse zu senden, klicken Sie auf das {{icon}}-Icon.",
                 "EMPTY_CODE": "Bitte tragen Sie hier den Code ein, der Ihnen in der Verifizierungs-E-Mail mitgeteilt wurde.",
                 "INVALID_CODE": "Der Code den Sie eingegeben haben ist falsch oder abgelaufen."
             }
@@ -822,9 +822,9 @@
     },
 
     "HELP":{
-        "HEADING":"%todo Hilfe",
+        "HEADING":"Hilfe",
         "LABEL": {
-            "SUPPORT": "%todo Support"
+            "SUPPORT": "cameoNet Support"
         }
     },
 
@@ -914,11 +914,11 @@
             },
             "AUTHENTIC_RECIPIENT_LIST": {
                 "NAME": "Die Empfängerliste ist signiert und authentisch.",
-                "DESCRIPTION": "%todo Der ursprüngliche Erzeuger dieses Talks hat die Empfängerliste signiert. Alle Empfänger sind verifiziert. Um ganz sicherzugehen, hier die Liste der Empfänger mit cameoId; die cameoId wurde Ihnen beim authentifizieren angezeigt, so dass Sie sicher sein können, dass ihr gegenüber tatsächlich die Person ist, die sie vorgibt zu sein."
+                "DESCRIPTION": "Der Nutzer der diesen Talk gestartet hat, hat die Empfängerliste signiert. Sie vertrauen allen Empfängern dieses Talks. Zur Überprüfung hier die Liste der Empfänger mit cameoIDs:"
             },
             "AUTHENTIC_RECIPIENTS": {
                 "NAME": "Empfänger sind authentisch.",
-                "DESCRIPTION": "%todo Sie haben alle Empfänger verifiziert."
+                "DESCRIPTION": "Sie vertrauen allen Empfängern dieses Talks."
             },
             "MISSING_DATA": "Sicherheitsaspekte fehlen!"
         }
@@ -991,7 +991,7 @@
             "MAIL": {
                 "SENDER": "cameoNet",
                 "MESSAGE": "Willkommen bei cameoNet,\nder Code zur Passwortrücksetzung lautet \"{{code}}\". Alternativ können Sie auch auf folgenden Link klicken:\n{{link}}",
-                "SUBJECT": "Passwortrücksetzung für Ihren cameoNet-Account"
+                "SUBJECT": "Passwortrücksetzung für Ihr cameoNet-Benutzerkonto"
             }
         }
     }
