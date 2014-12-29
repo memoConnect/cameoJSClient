@@ -9,6 +9,7 @@ angular.module('cmWidgets').directive('cmWidgetQuickstart', [
             },
             templateUrl: 'widgets/start/wdgt-quickstart.html',
             controller: function ($scope) {
+                
             }
         }
     }

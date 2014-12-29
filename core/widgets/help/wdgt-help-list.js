@@ -2,15 +2,17 @@
 
 angular.module('cmWidgets').directive('cmWidgetHelpList', [
     'cmUserModel', 'cmConfig', 'cmUtil',
-    '$window', '$location',
+    '$window', '$location', '$rootScope',
     function(cmUserModel, cmConfig, cmUtil,
-             $window, $location){
+             $window, $location, $rootScope){
         return {
             restrict: 'E',
             templateUrl: 'widgets/help/wdgt-help-list.html',
             controller: function ($scope) {
                 $scope.overview = cmConfig.routeHelp;
                 $scope.overviewKeys = Object.keys($scope.overview);
+
+                $scope.markQuickstart = $rootScope.markQuickstart || false;
 
                 $scope.handleLink = function($event, pageUrl, isDisabled, route){
 

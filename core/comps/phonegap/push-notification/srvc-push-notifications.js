@@ -5,9 +5,9 @@
 
 angular.module('cmPhonegap')
 .service('cmPushNotifications', [
-    'cmPhonegap', 'cmUtil', 'cmDevice', 'cmLogger',
+    'cmPhonegap', 'cmUtil', 'cmDevice', 'cmLogger', 'cmNotify',
     '$q', '$rootScope', '$phonegapCameoConfig',
-    function (cmPhonegap, cmUtil, cmDevice, cmLogger,
+    function (cmPhonegap, cmUtil, cmDevice, cmLogger, cmNotify,
               $q, $rootScope, $phonegapCameoConfig) {
 
         var self = {
@@ -197,6 +197,7 @@ angular.module('cmPhonegap')
                     break;
                     case 'friendRequest':
                         $rootScope.goTo('contact/request/list', true);
+                        cmNotify.trigger('bell:unring');
                     break;
                 }
             }

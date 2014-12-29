@@ -30,6 +30,7 @@ angular.module('cmFiles').directive('cmUploadAvatar',[
                                         $timeout(function(){
                                             cmUserModel.data.identity.one('avatar:loaded',function(){
                                                 scope.imageUpload = false;
+                                                $rootScope.$broadcast('cmUploadAvatar:success');
                                             });
                                         });
                                     });

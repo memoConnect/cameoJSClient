@@ -6,7 +6,10 @@
 <ul>
     <li ng-repeat="page in overviewKeys"
         ng-click="handleLink($event, page, overview[page].disabled, overview[page])"
-        ng-class="{'is-disabled':overview[page].disabled,'is-active':checkActive(page)}"
+        ng-class="{
+            'is-disabled':overview[page].disabled,'is-active':checkActive(page),
+            'cm-info-btn':(page == 'start/quickstart' && markQuickstart)
+            }"
         data-qa="{{overview[page]['data-qa']}}"
         cm-reactive>
         <span class="item clearfix">

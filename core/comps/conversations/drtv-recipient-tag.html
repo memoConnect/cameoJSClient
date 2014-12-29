@@ -1,14 +1,14 @@
 <div class="wrap" cm-reactive ng-click="goToContactWithIdentity(identity)">
-    <cm-avatar cm-data="identity" cm-weight="1" cm-stop-download></cm-avatar>
+    <cm-avatar cm-data="identity" class="without-wrap-margin"></cm-avatar>
     <cm-contact-trust cm-data="identity"></cm-contact-trust>
-    <section cm-weight="4" class="identityName">
-        <div class="displayName no-margin-bottom" data-qa="contact-display-name">{{identity.getDisplayName()}}</div>
+    <section class="displayName" data-qa="contact-display-name">
+        {{identity.getDisplayName()}}
     </section>
     <cm-contact-type cm-data="identity"></cm-contact-type>
 </div>
 <section class="icon-list" data-qa="btn-select-contact" ng-click="toggleRecipient()" cm-reactive>
     <i class="fa"
        ng-class="{'cm-checkbox':!selected[identity.id],
-               'cm-checkbox-right':selected[identity.id]}">
+           'cm-checkbox-right':selected[identity.id]}">
     </i>
 </section>

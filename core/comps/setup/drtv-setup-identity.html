@@ -13,8 +13,6 @@
     </cm-info-bubble>
 </article>
 
-</cm-info-bubble>
-
 <hr class="margin-small" />
 
 <form name="cmForm" novalidate autocomplete="off">
@@ -105,10 +103,10 @@
 
 <cm-footer>
     <button class="cm-btn-grey" ng-click="updateIdentity()" data-qa="btn-next-step" cm-reactive>
-        <span ng-show="!showLoader && !isPristine">
+        <span ng-show="!showLoader && !isPristine || !showLoader && !isFakePristineBecauseOfAvatar">
             {{'SETTINGS.PAGES.IDENTITY.CREATE.FOOTER'|cmTranslate}} <i class="fa cm-checker"></i>
         </span>
-        <span ng-show="isPristine" data-qa="btn-pristineSkip">
+        <span ng-show="isPristine && isFakePristineBecauseOfAvatar" data-qa="btn-pristineSkip">
             {{'ACCOUNT.FOOTER.SKIP'|cmTranslate}}
             <i class="fa cm-right"></i>
         </span>
