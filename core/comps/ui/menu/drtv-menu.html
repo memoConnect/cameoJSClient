@@ -1,7 +1,7 @@
 <div class="cm-handler" ng-click="handleMenu()" data-qa="btn-open-menu" cm-reactive>
     <cm-notify-signal></cm-notify-signal>
 </div>
-<div class="cm-menu-layer" ng-show="menuVisible">
+<div class="cm-menu-layer" ng-class="{'is-active':menuVisible}">
     <div cm-transparent-bg ng-click="handleMenu()"></div>
     <div class="cm-menu-list">
         <ul class="no-border-bottom">

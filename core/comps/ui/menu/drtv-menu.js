@@ -8,7 +8,7 @@ angular.module('cmUi').directive('cmMenu',[
         return {
             restrict: 'AE',
             scope: true,
-            templateUrl: 'comps/ui/drtv-menu.html',
+            templateUrl: 'comps/ui/menu/drtv-menu.html',
             controller: function($scope){
                 $scope.menu = cmConfig.menu;
                 $scope.menuKeys = Object.keys($scope.menu);
