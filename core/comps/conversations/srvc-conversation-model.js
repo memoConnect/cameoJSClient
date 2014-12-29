@@ -1042,7 +1042,19 @@ angular.module('cmConversations')
             });
 
             this.messages.on('last-message:read', function(event, message){
-                if(message.from.id != cmUserModel.data.identity.id && (!message.isEncrypted() || message.state.is('decrypted') || message.state.is('incomplete')) && self.unreadMessages > 0 && cmSettings.get('enableUnreadMessages')){
+                // TODO: if last my own unread will never set back
+                /*
+                * message.from.id != cmUserModel.data.identity.id
+                 &&
+                 */
+                if((
+                  !message.isEncrypted()
+                || message.state.is('decrypted')
+                || message.state.is('incomplete')
+                )
+                && self.unreadMessages > 0
+                && cmSettings.get('enableUnreadMessages')
+                ){
                     self.unreadMessages = 0;
                     cmConversationsAdapter.sendReadStatus(self.id, message.id)
                 }
