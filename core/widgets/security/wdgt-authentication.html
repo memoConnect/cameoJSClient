@@ -56,17 +56,7 @@
         <br/>
         <br/>
 
-        <strong>
-            {{
-            [
-            BASE+"START.INSTRUCTIONS",
-            BASE+"WAIT.INSTRUCTIONS",
-            BASE+"WAIT.INSTRUCTIONS",
-            BASE+"DONE.INSTRUCTIONS"
-            ] [step]
-
-            | cmTranslate }}
-        </strong>
+        <strong ng-bind-html="[BASE+'START.INSTRUCTIONS',BASE+'WAIT.INSTRUCTIONS',BASE+'WAIT.INSTRUCTIONS',BASE+'DONE.INSTRUCTIONS'] [step] | cmParse"></strong>
     </cm-info-bubble>
 </article>
 
