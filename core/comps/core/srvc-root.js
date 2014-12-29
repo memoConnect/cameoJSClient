@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('cmCore').service('cmRootService', [
-    '$rootScope', '$window', '$location',
     'cmLogger', 'cmJob', 'cmModal', 'cmConfig', 'cmTransferScopeData',
-    function($rootScope, $window, $location,
-             cmLogger, cmJob, cmModal, cmConfig, cmTransferScopeData){
+    '$rootScope', '$window', '$location', '$route',
+    function(cmLogger, cmJob, cmModal, cmConfig, cmTransferScopeData,
+             $rootScope, $window, $location, $route){
 
         $rootScope.goBack = function(){
             $window.history.back();
@@ -16,7 +16,6 @@ angular.module('cmCore').service('cmRootService', [
          */
         $rootScope.goTo = function(path, replace){
             //cmLogger.debug('cmRootService.goTo ' + path);
-
             path = path[0] == '/' ? path : '/'+path;
             if(cmJob.isActive() !== false){
                 cmJob.setPendingUrl(path, replace);
@@ -41,14 +40,16 @@ angular.module('cmCore').service('cmRootService', [
         };
 
         $rootScope.createNewConversation = function(){
-            //cmLogger.debug('cmRootService.createNewConversation');
+            cmLogger.debug('cmRootService.createNewConversation');
 
             $rootScope.pendingConversation = null;
             $rootScope.pendingRecipients = [];
 
-            cmTransferScopeData.clear({id:'conversation-new'});
+            cmTransferScopeData.keepClear({id:'conversation-new'});
 
             $rootScope.goTo('/conversation/new');
+
+            $route.reload();
         };
 
         $rootScope.startConversationWithContact = function($event, contact){
