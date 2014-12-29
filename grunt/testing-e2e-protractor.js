@@ -131,6 +131,7 @@ module.exports = function (grunt, options) {
                 'config-tests': {
                     'options': {
                         'data': {
+                            'currentTarget': options.globalCameoBuildConfig.target,
                             'currentApiUrl': options.globalCameoBuildConfig.config.apiUrl,
                             'defaultApiVersion': options.globalCameoBuildConfig.config.defaultApiVersion,
                             'currentWwwUrl': options.globalCameoTestConfig.config.wwwUrl,
