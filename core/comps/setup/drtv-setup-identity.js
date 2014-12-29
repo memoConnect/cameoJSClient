@@ -2,8 +2,10 @@
 
 angular.module('cmSetup')
     .directive('cmSetupIdentity', [
-        'cmUserModel', 'cmAuth', 'cmIdentityFactory', 'cmUtil', 'cmPristine', 'cmNotify', 'cmLoader', 'cmLogger', '$rootScope', '$q',
-        function(cmUserModel, cmAuth, cmIdentityFactory, cmUtil, cmPristine, cmNotify, cmLoader, cmLogger, $rootScope, $q){
+        'cmUserModel', 'cmAuth', 'cmIdentityFactory', 'cmUtil', 'cmPristine', 'cmNotify', 'cmLoader', 'cmLogger',
+        '$rootScope', '$q',
+        function(cmUserModel, cmAuth, cmIdentityFactory, cmUtil, cmPristine, cmNotify, cmLoader, cmLogger,
+                 $rootScope, $q){
             return {
                 restrict: 'E',
                 templateUrl: 'comps/setup/drtv-setup-identity.html',
@@ -11,7 +13,7 @@ angular.module('cmSetup')
                     var loader = new cmLoader($scope);
 
                     $rootScope.generateAutomatic = {
-                        generate:true,
+                        generate: true,
                         keySize: 2048
                     };
 
@@ -132,7 +134,7 @@ angular.module('cmSetup')
                             function () {
                                 loader.stop();
                             }
-                        )
+                        );
                     };
 
                     $scope.goToNextStep = function(){
@@ -155,7 +157,7 @@ angular.module('cmSetup')
 
                     $scope.$on('$destroy', function(){
                         cmPristine.off('updated',pristine_callback);
-                    })
+                    });
                 }
             }
         }

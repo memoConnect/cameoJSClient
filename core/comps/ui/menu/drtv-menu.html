@@ -18,7 +18,7 @@
                 </button>
             </li>
 
-            <li ng-class="{'info':(btn == 'help' && markQuickstart)}"
+            <li ng-class="{'cm-info-btn':(btn == 'help' && markHelp)}"
                 class="{{menu[btn].css}}"
                 ng-repeat="btn in menuKeys"
                 ng-click="goTo(menu[btn], btn)"
