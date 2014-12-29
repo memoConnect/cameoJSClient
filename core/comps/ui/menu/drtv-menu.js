@@ -25,8 +25,6 @@ angular.module('cmUi').directive('cmMenu',[
                         cmNotify.trigger('bell:unring');
                 };
 
-
-
                 $scope.checkActive = function(url){
                     if(cmUtil.startsWith($location.$$url,'/' + url)){
                         return true;
