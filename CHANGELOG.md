@@ -4,6 +4,14 @@
 ## RC 0.4.7 - 29.12.2014
 #########
 
+# WW 29.12.2014
+* account setup has other info bubbles as account settings
+* CAM-1559 identity setup form can save if only a avatar is uploaded
+* after registration ring is orange at menu. the reason therefore is to show the quickstart guid under help
+* CAM-1546 contact and recipient tags (single contacts in a list) has now a better displayName viewport. if name is too long it get's '...' at the end
+* CAM-1298 after a pushnotification with context of a friend request, now the bel gets a unring
+* CAM-1491 menu gets a display:none on default so at a route change the menu can't be visibe with raw template. only visible on toggle an route is ready
+
 # AP 23.12.2014
 * every talk ( and its recipients) will be signed by its creator, if he has a key
 * a new security aspect (third plus symbol) will indicate, wether the recipient list is authentic (complete and having no surplus recipients) and that all keys are verified.
