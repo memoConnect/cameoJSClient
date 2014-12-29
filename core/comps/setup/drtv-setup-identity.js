@@ -155,8 +155,14 @@ angular.module('cmSetup')
                     }
                     cmPristine.on('updated',pristine_callback);
 
+                    $scope.isFakePristineBecauseOfAvatar = true;
+                    var killWatcher = $rootScope.$on('cmUploadAvatar:success',function(){
+                        $scope.isFakePristineBecauseOfAvatar = false;
+                    });
+
                     $scope.$on('$destroy', function(){
                         cmPristine.off('updated',pristine_callback);
+                        killWatcher();
                     });
                 }
             }
