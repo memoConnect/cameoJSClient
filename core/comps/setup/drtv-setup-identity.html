@@ -106,7 +106,7 @@
         <span ng-show="!showLoader && !isPristine || !showLoader && !isFakePristineBecauseOfAvatar">
             {{'SETTINGS.PAGES.IDENTITY.CREATE.FOOTER'|cmTranslate}} <i class="fa cm-checker"></i>
         </span>
-        <span ng-show="isPristine && !isFakePristineBecauseOfAvatar" data-qa="btn-pristineSkip">
+        <span ng-show="isPristine && isFakePristineBecauseOfAvatar" data-qa="btn-pristineSkip">
             {{'ACCOUNT.FOOTER.SKIP'|cmTranslate}}
             <i class="fa cm-right"></i>
         </span>
