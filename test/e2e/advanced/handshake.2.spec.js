@@ -1,7 +1,6 @@
 var config = require("../config/specs.js")
 var util = require("../../lib/e2e/cmTestUtil.js")
 
-console.log('remove handshake test @ todo!!!!')
 describe('Authentication requests -', function () {
     var ptor = util.getPtorInstance(),
         date = Date().now
@@ -619,7 +618,10 @@ describe('Authentication requests -', function () {
             })
 
             it("check support no key and untrusted 'oo!", function(){
-                checkContactTrust('support','no-key')
+                if(config.target == 'stage' || config.target == 'prod')
+                    checkContactTrust('support','untrusted-key')
+                else
+                    checkContactTrust('support','no-key')
             })
 
             it("get token", function () {

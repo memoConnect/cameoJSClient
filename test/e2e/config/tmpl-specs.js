@@ -1,3 +1,4 @@
+this.target             = '<%= currentTarget %>';
 this.wwwUrl             = '<%= currentWwwUrl %>';
 this.apiUrl             = '<%= currentApiUrl %>';
 this.routeTimeout       = 30000;
