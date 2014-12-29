@@ -35,8 +35,18 @@ cm-identity-edit, cm-widget-contact-edit, cm-contact-create {
   }
 }
 
-/* new */
-/* contact list item, recipient list item */
+cm-contact-tag, cm-recipient-tag{
+  .displayName{
+    .dib;
+    .vat;
+    height:@cm-unit;
+    line-height:@cm-unit;
+    width:(@cm-unit * 4) - 1;
+    font-weight:bold;
+    .single-line;
+  }
+}
+
 cm-contact-tag, cm-recipient-tag, .contact-search-item, cm-identity-tag {
   padding: 0;
   height: @cm-unit;
@@ -59,3 +69,4 @@ cm-contact-tag, cm-recipient-tag, .contact-search-item, cm-identity-tag {
     }
   }
 }
+

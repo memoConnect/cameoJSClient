@@ -5,15 +5,13 @@
 </span>
 <span ng-if="noKey" data-qa="no-key">
     <span class="aspect-icons negative">
-        <i class="fa cm-checkbox"></i><i class="fa cm-checkbox"></i>
-        !
+        <i class="fa cm-checkbox"></i><i class="fa cm-checkbox with-exclamation-mark"></i><i class="exclamation-mark">!</i>
     </span>
     <span class="aspect-text" ng-if="withText">{{'CONTACT.TRUST.NO_CAMEOKEYS'|cmTranslate}}</span>
 </span>
 <span ng-if="hasKey && !hasAuthenticatedKey" data-qa="untrusted-key">
     <span class="aspect-icons positive">
-        <i class="fa cm-checkbox-bg"></i><i class="fa cm-checkbox"></i>
-        !
+        <i class="fa cm-checkbox-bg"></i><i class="fa cm-checkbox with-exclamation-mark"></i><i class="exclamation-mark">!</i>
     </span>
     <span class="aspect-text" ng-if="withText">{{'CONTACT.TRUST.HAS_CAMEOKEYS'|cmTranslate}}</span>
 </span>
