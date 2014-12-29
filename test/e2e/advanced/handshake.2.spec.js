@@ -1,7 +1,6 @@
 var config = require("../config/specs.js")
 var util = require("../../lib/e2e/cmTestUtil.js")
 
-console.log('remove handshake test @ todo!!!!')
 describe('Authentication requests -', function () {
     var ptor = util.getPtorInstance(),
         date = Date().now

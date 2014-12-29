@@ -1,4 +1,9 @@
 ## Dev
+
+#########
+## RC 0.4.7 - 29.12.2014
+#########
+
 # AP 23.12.2014
 * every talk ( and its recipients) will be signed by its creator, if he has a key
 * a new security aspect (third plus symbol) will indicate, wether the recipient list is authentic (complete and having no surplus recipients) and that all keys are verified.
@@ -86,7 +91,9 @@
 * fixxed desktop identity-list and menu without word break CAM-1414
 * added cm-enter on password-input to react on "Öffnen" on android keyboard CAM-1335
 
+#########
 ## RC 0.4.6 - 08.12.2014
+#########
 
 ## Hotfix 0.4.4.2
 * check CAM-1496
@@ -126,7 +133,10 @@
 # AP 02.12.2014
 * message signing and verify
 
+#########
 ## RC 0.4.4.
+#########
+
 # BS 05.12.2014
 * fix CAM-1398, error will now shown, if key saving failed
 # BS 0..12.2014
@@ -165,7 +175,9 @@
 * fix invite service after importing a local contact
 * fix pending contacts in contacts-list CAM-1378
 
-0.4.2.
+#########
+## RC 0.4.2.
+#########
 * framework major update
     * angularjs 1.2.15 upgraded to 1.3.2
     * removed fastclick (ngTouch handle the 300ms click delay)
