@@ -103,8 +103,10 @@ angular.module('cmUser')
                 };
 
                 $scope.saveAccount = function(){
-                    if($scope.isPristine)
+                    if($scope.isPristine){
                         $scope.goTo('/settings');
+                        return false;
+                    }
 
                     if(loader.isIdle())
                         return false;
@@ -113,6 +115,12 @@ angular.module('cmUser')
 
                     $scope.validateForm().then(
                         function(objectChange){
+
+                            console.log(objectChange)
+
+                            //loader.stop();
+                            //$scope.isPristine = true;
+                            //return false;
 
                             cmUserModel.updateAccount(objectChange)
                             .then(

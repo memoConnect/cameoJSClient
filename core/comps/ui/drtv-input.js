@@ -9,13 +9,14 @@ angular.module('cmUi').directive('input', [
             restrict: 'EA',
             require: '?ngModel',
             link: function (scope, element, attrs, ngModel) {
-                if (!ngModel) return; // do nothing if no ng-model #https://docs.angularjs.org/api/ng/type/ngModel.NgModelController
+                if (!ngModel || 'cmPristineIgnore' in attrs)
+                    return; // do nothing if no ng-model
 
                 var initValue = '',
                     timeout;
 
-                function broadcastPristine(bool){
-                    if(bool){
+                function broadcastPristine(){
+                    if(ngModel.$pristine){
                         cmPristine.set(ngModel, true);
                     } else {
                         cmPristine.set(ngModel, false);
@@ -36,11 +37,7 @@ angular.module('cmUi').directive('input', [
                         $timeout.cancel(timeout);
                     }
 
-                    if(initValue != getValue()){
-                        broadcastPristine();
-                    } else if(initValue == getValue()){
-                        broadcastPristine(true);
-                    }
+                    broadcastPristine();
 
                     if('cmAdaptiveChange' in attrs){
                         timeout = $timeout(function(){
@@ -59,13 +56,9 @@ angular.module('cmUi').directive('input', [
                 init();
 
                 element
-                    .unbind('input')
-                    .unbind('keydown')
                     .on('focus', handleChange)
-                    //.on('keydown', handleChange)
                     .on('keyup', handleChange)
                     .on('blur', handleChange);
-
 
                 scope.$on('$destroy', function(){
                     element
