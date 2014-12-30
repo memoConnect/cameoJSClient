@@ -118,7 +118,7 @@ angular.module('cmCore')
                             '{{\'NOTIFICATIONS.MODAL_HEADER.'+this.severity.toUpperCase()+'\'|cmTranslate}}'+
                         '</div>'+
                         '<div class="body">'+
-                            '<div ng-bind-html="\''+this.label+'\'|cmTranslate:i18n"></div>'+
+                            '<div ng-bind-html="\''+this.label+'\'|cmParse:{data:i18n}"></div>'+
                             (this.template || '')+
                         '</div>',
                     null,

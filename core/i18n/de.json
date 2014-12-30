@@ -33,7 +33,7 @@
             "401": "Benutzername oder Passwort falsch.",
             "404": "Ein Login ist zur Zeit nicht möglich. 404",
             "500": "Server Error. 500",
-            "X": "Es ist ein Problem aufgetreten.<br>Versuchen Sie es bitte erneut.",
+            "X": "Es ist ein Problem aufgetreten.\nVersuchen Sie es bitte erneut.",
             "PW": "@:LOGIN.INFO.401"
         }
     },
@@ -41,7 +41,7 @@
     "PASSWORD_LOST": {
         "HEADING": "Passwort zurücksetzen",
         "INFO": {
-            "TITLE_TEXT": "Hier können Sie Ihr Passwort zurücksetzen, wenn Sie für Ihr Benutzerkonto eine E-Mail-Adresse oder Telefonnummer hinterlegt und verifiziert haben.<br> Bitte geben Sie zur Identifikation Ihren Benutzernamen oder Ihre hinterlegte E-Mail-Adresse oder Telefonnummer ein. Sie erhalten dann eine Nachricht. Darin finden Sie einen Link zur Passwortrücksetzung.",
+            "TITLE_TEXT": "Hier können Sie Ihr Passwort zurücksetzen, wenn Sie für Ihr Benutzerkonto eine E-Mail-Adresse oder Telefonnummer hinterlegt und verifiziert haben.\n Bitte geben Sie zur Identifikation Ihren Benutzernamen oder Ihre hinterlegte E-Mail-Adresse oder Telefonnummer ein. Sie erhalten dann eine Nachricht. Darin finden Sie einen Link zur Passwortrücksetzung.",
             "EMPTY": "Bitte geben Sie eine Identifikation ein (Benutzername, E-Mail-Adresse oder Telefonnummer).",
             "LOGIN_NOT_FOUND": "Der Benutzername kann nicht gefunden werden.",
             "PHONENUMBER_NOT_FOUND": "Die Telefonnummer kann nicht gefunden werden.",
@@ -57,7 +57,7 @@
     "PASSWORD_CODE": {
         "HEADING": "Passwort zurücksetzen Code",
         "INFO": {
-            "CONFIRMATION_SENDED": "Es wurde eine Nachricht an Ihre verifizierte E-Mail-Adresse oder Telefonnummer gesendet. Darin finden Sie einen Link, der Sie direkt zur Passwortrücksetzung weiterleitet.<br>Oder geben Sie den Code aus der Nachricht hier ein, um ein neues Passwort zu wählen:",
+            "CONFIRMATION_SENDED": "Es wurde eine Nachricht an Ihre verifizierte E-Mail-Adresse oder Telefonnummer gesendet. Darin finden Sie einen Link, der Sie direkt zur Passwortrücksetzung weiterleitet.\n Oder geben Sie den Code aus der Nachricht hier ein, um ein neues Passwort zu wählen:",
             "EMPTY": "Bitte geben Sie einen Code ein",
             "EXPIRED": "@:PASSWORD_RESET.INFO.EXPIRED"
         },
@@ -135,13 +135,13 @@
             "HEADLINE_2": "2. Freunde finden",
             "TEXT_2": "Drücken Sie auf 'Kontakt hinzufügen' im Header und wählen 'cameoNet durchsuchen'. Ihre Freunde finden Sie über deren cameoIDs oder Anzeigenamen. Senden Sie ihnen eine Kontaktanfrage. Sobald diese angenommen wurde, sind die Kontakte miteinander verknüpft, um sicher zu kommunizieren.",
             "HEADLINE_3": "3. Nachricht schreiben",
-            "TEXT_3": "An verknüpfte Kontakte können Sie direkt aus der Kontakt-Übersicht über das Brief-Symbol Nachrichten senden. Es öffnet sich ein neuer Talk (=Unterhaltung). Geben Sie eine Nachricht ein und drücken Sie auf den Senden-Button.<br><br>Herzlichen Glückwunsch! Sie haben Ihren ersten verschlüsselten Talk geführt!",
+            "TEXT_3": "An verknüpfte Kontakte können Sie direkt aus der Kontakt-Übersicht über das Brief-Symbol Nachrichten senden. Es öffnet sich ein neuer Talk (=Unterhaltung). Geben Sie eine Nachricht ein und drücken Sie auf den Senden-Button.\n\nHerzlichen Glückwunsch! Sie haben Ihren ersten verschlüsselten Talk geführt!",
             "TEXT_4": "Wenn Sie Fragen oder Verbesserungsvorschläge zu cameoNet haben, nutzen Sie unsere Support- und Hilfeseiten unter http://support.cameonet.de,\n oder schreiben Sie eine Mail an <a href=\"mailto:support@cameonet.de\">support@cameonet.de</a>",
             "BTN_TEXT": "Und los..."
         },
         "DOWNLOAD": {
             "HEADER": "App herunter laden",
-            "SUB_TEXT": "Willkommen im cameoNet!<br>. Für Ihr Gerät steht cameoNet auch als App zur Verfügung. Wir empfehlen Ihnen, diese herunterzuladen und dort fortzufahren.",
+            "SUB_TEXT": "Willkommen im cameoNet!\n. Für Ihr Gerät steht cameoNet auch als App zur Verfügung. Wir empfehlen Ihnen, diese herunterzuladen und dort fortzufahren.",
             "SKIP_TEXT": "Nein danke, ich möchte im Browser fortfahren..."
         },
         "KEYINFO": {
@@ -226,11 +226,9 @@
             "RECIPIENTS_MISSING": "Keine Empfänger angegeben.",
             "PASSPHRASE_INVALID": "Ungültiges Passwort.",
             "PASSWORD_WRONG": "Das eingegebene Passwort ist falsch.",
-            "NO_PASSWORD": "Sie müssen ein Passwort setzen oder die Verschlüsselung deaktivieren, weil nicht alle Empfänger einen cameoKey besitzen.<br><br> <a href=\"#/{{type}}/{{typeId}}/security\">Hier Verschlüsselung einstellen</a>",
-            "PASSWORD_NEEDED": "Zum Entschlüsseln des Talks geben Sie bitte ein Passwort ein.<br> <a href=\"#/{{type}}/{{typeId}}/security\">Hier ein Passwort eingeben!</a>",
-            "ASYMMETRIC_DECRYPT_ERROR": "Der cameoKey fehlt.",
-            "CHECK_ENCRYPTION_ERROR": "CHECK_ENCRYPTION_ERROR",
-            "FILESIZE_REACHED": "Die maximale Dateigröße von <strong>{{maxFileSize | cmBytesHumanReadable}}</strong> wurde überschritten. Ihre Datei '<strong>{{fileName}}</strong>' ist <strong>{{fileSize | cmBytesHumanReadable}}</strong> groß."
+            "NO_PASSWORD": "Sie müssen ein Passwort setzen oder die Verschlüsselung deaktivieren, weil nicht alle Empfänger einen cameoKey besitzen.\n <a href=\"#/{{type}}/{{typeId}}/security\">Hier Verschlüsselung einstellen</a>",
+            "PASSWORD_NEEDED": "Zum Entschlüsseln des Talks geben Sie bitte ein Passwort ein.\n <a href=\"#/{{type}}/{{typeId}}/security\">Hier ein Passwort eingeben!</a>",
+            "ASYMMETRIC_DECRYPT_ERROR": "Der cameoKey fehlt."
         },
         "CONFIRM": {
             "RECIPIENTS_MISSING": "Möchten Sie die Nachricht ohne weitere Empfänger abschicken? Sie werden die einzige Person sein, die diese Nachricht lesen kann."
@@ -380,12 +378,12 @@
         "LOCALSTORAGE": {
             "HEADLINE" : "LocalStorage",
             "TEXT_OK": "Alles in Ordnung!",
-            "TEXT_ERROR": "Auf den LocalStorage kann nicht zugegriffen werden!<br> Schalten die den Zugriff bitte frei, oder öffnen Sie die App nicht mehr einer privaten Browser Session."
+            "TEXT_ERROR": "Auf den LocalStorage kann nicht zugegriffen werden!\nSchalten die den Zugriff bitte frei, oder öffnen Sie die App nicht mehr einer privaten Browser Session."
         },
         "CLIENTVERSION": {
             "HEADLINE": "App Version",
             "TEXT_OK": "Version: {{version}}",
-            "TEXT_ERROR": "Bitte aktualisieren Sie die App!<br> Die Version wird nicht mehr unterstützt!<br>Version: {{version}}"
+            "TEXT_ERROR": "Bitte aktualisieren Sie die App!\n Die Version wird nicht mehr unterstützt!\nVersion: {{version}}"
         }
     },
 
@@ -425,7 +423,7 @@
             "HEADER": "cameoKeys",
             "KEYLIST": {
                 "EXPLANATION": {
-                    "UNTRUSTED_KEYS": "Sie haben für diese Identität auf anderen Geräten cameoKeys, die sich gegenseitig nicht kennen.<br>Um verschlüsselte Nachrichten auf allen Geräten lesen zu können, müssen Sie die cameoKeys miteinander verknüpfen.",
+                    "UNTRUSTED_KEYS": "Sie haben für diese Identität auf anderen Geräten cameoKeys, die sich gegenseitig nicht kennen.\nUm verschlüsselte Nachrichten auf allen Geräten lesen zu können, müssen Sie die cameoKeys miteinander verknüpfen.",
                     "ALL_KEYS_TRUSTED": "Für '{{Identity}}' haben Sie einen cameoKey auf Ihrem Gerät, mit dem Sie alle Talks lesen können."
                 },
                 "LABEL_LOCALKEY": "lokaler cameoKey",
@@ -439,7 +437,7 @@
             "GENERATE": {
                 "START": {
                     "HEADLINE": "cameoKey erzeugen",
-                    "EXPLANATION": "Sie haben noch keinen cameoKey für Ihre Identität auf diesem Gerät.<br>Um sicher zu kommunizieren, müssen Sie zuerst einen cameoKey für diese Identität erzeugen oder importieren.",
+                    "EXPLANATION": "Sie haben noch keinen cameoKey für Ihre Identität auf diesem Gerät.\nUm sicher zu kommunizieren, müssen Sie zuerst einen cameoKey für diese Identität erzeugen oder importieren.",
                     "KEY_LENGTH": {
                         "BUTTON_LABEL": "Schlüsselstärke",
                         "LENGTH_2048": "2048Bit (default)",
@@ -449,7 +447,7 @@
                 },
                 "GENERATING": {
                     "HEADLINE": "cameoKey Generierung läuft!",
-                    "EXPLANATION": "Bitte haben Sie einen Moment Geduld. Dieser Prozess kann je nach Gerät und Schlüssellänge einige Zeit in Anspruch nehmen.<br> Bei Wartenzeiten von über 5 Minuten  sollten Sie den Prozess abbrechen und erneut starten.<br>Bei einer Schlüssellänge von 4096 Bit, kann die Wartezeit bis zu 15 Minuten betragen.",
+                    "EXPLANATION": "Bitte haben Sie einen Moment Geduld. Dieser Prozess kann je nach Gerät und Schlüssellänge einige Zeit in Anspruch nehmen.\n Bei Wartenzeiten von über 5 Minuten  sollten Sie den Prozess abbrechen und erneut starten.\nBei einer Schlüssellänge von 4096 Bit, kann die Wartezeit bis zu 15 Minuten betragen.",
                     "TIME_PASSED": "Verbrauchte Zeit:",
                     "GENERATION_TIMER": " {{time}}",
                     "STOP_BUTTON": "Generierung abbrechen"
@@ -525,7 +523,7 @@
                     "LABEL_CODE": "Code"
                 },
                 "SUCCESSFUL": {
-                    "INSTRUCTIONS": "Der Vertrauensprozess wurde erfogreich durchgeführt!<br>Sie und '{{identity}} vertrauen sich jetzt gegenseitig.",
+                    "INSTRUCTIONS": "Der Vertrauensprozess wurde erfogreich durchgeführt!\nSie und '{{identity}} vertrauen sich jetzt gegenseitig.",
                     "NOTE": "Sie können den Dialog nun schließen.",
                     "DONE_BUTTON": "Schließen"
                 },
@@ -535,7 +533,7 @@
                 },
                 "ENTER_TRANSACTION_SECRET": {
                     "HEADER": "Vertrauensanfrage",
-                    "INSTRUCTIONS": "'{{identity}}' hat soeben den Prozess gestartet, mit Ihnen eine Vertrauensbasis einzugehen.<br>Mit dem Vertrauensprozess stellen Sie sicher, dass eine Identität einer Person gehört, die Sie persönlich kennen.",
+                    "INSTRUCTIONS": "'{{identity}}' hat soeben den Prozess gestartet, mit Ihnen eine Vertrauensbasis einzugehen.\nMit dem Vertrauensprozess stellen Sie sicher, dass eine Identität einer Person gehört, die Sie persönlich kennen.",
                     "NOTE": "Wenn Sie '{{identity}}' vertrauen wollen, geben Sie hier den Code ein, der auf dem Gerät von '{{identity}}' angezeigt wird:",
                     "SUBMIT_BUTTON": "Übertragen"
                 },
@@ -609,8 +607,8 @@
                     "FINGERPRINT": "Fingerprint",
                     "IS_LOCAL": "lokal",
                     "IS_LOCAL_ON_THIS_DEVICE": "lokal auf diesem Gerät",
-                    "NO_LOCALKEYS_ON_THIS_DEVICE": "Sie haben noch keinen cameoKey für Ihre Identität auf diesem Gerät.<br>Um sicher zu kommunizieren, müssen Sie zuerst einen cameoKey für diese Identität erzeugen oder importieren.",
-                    "UNTRUSTED_PUBLICKEYS_EXISTS": "Sie haben für diese Identität auf mehreren Geräten cameoKeys, die Sie noch nicht gegeneinander authentifiziert haben. Dadurch können Sie Nachrichten, die Sie auf einem anderen Gerät geschrieben und verschlüsselt haben, hier nicht lesen und umgekehrt.<br>Um dieses Gerät gegen ein anderes zu authentifizieren, klicken sie in der Liste unten auf <ICON>.",
+                    "NO_LOCALKEYS_ON_THIS_DEVICE": "Sie haben noch keinen cameoKey für Ihre Identität auf diesem Gerät.\nUm sicher zu kommunizieren, müssen Sie zuerst einen cameoKey für diese Identität erzeugen oder importieren.",
+                    "UNTRUSTED_PUBLICKEYS_EXISTS": "Sie haben für diese Identität auf mehreren Geräten cameoKeys, die Sie noch nicht gegeneinander authentifiziert haben. Dadurch können Sie Nachrichten, die Sie auf einem anderen Gerät geschrieben und verschlüsselt haben, hier nicht lesen und umgekehrt.\nUm dieses Gerät gegen ein anderes zu authentifizieren, klicken sie in der Liste unten auf Handshake-Icon.",
                     "TRUSTING": "Authentifikation",
                     "IS_TRUSTED": "ist authentifiziert",
                     "IS_UNTRUSTED": "ist nicht authentifiziert",
@@ -672,7 +670,7 @@
             "HEADER": "Benutzerkontodaten",
             "INFO": {
                 "NOTE_ABOUT_THIS_DATA_SMALL": "E-Mail-Adresse oder Telefonnummer hinterlegen..",
-                "NOTE_ABOUT_THIS_DATA": "In Ihrem Benutzerkonto können Sie eine Mobilfunknummer oder E-Mail-Adresse hinterlegen und anschließend durch eine Prüfnachricht verifizieren lassen. Wenn Sie ihr Passwort vergessen, können Sie über eine verifizierte E-Mail-Adresse oder Telefonnummer ein neues Passwort erstellen.<br><br>Ihre Benutzerdaten sind für andere Nutzer nicht sichtbar."
+                "NOTE_ABOUT_THIS_DATA": "In Ihrem Benutzerkonto können Sie eine Mobilfunknummer oder E-Mail-Adresse hinterlegen und anschließend durch eine Prüfnachricht verifizieren lassen. Wenn Sie ihr Passwort vergessen, können Sie über eine verifizierte E-Mail-Adresse oder Telefonnummer ein neues Passwort erstellen.\n\nIhre Benutzerdaten sind für andere Nutzer nicht sichtbar."
             }
         },
         "INFO": {
@@ -686,7 +684,7 @@
                 "OLD_PASSWORD": "Das von Ihnen eingegebene Passwort ist ungültig."
             },
             "NOTE_ABOUT_THIS_DATA_SMALL": "Daten ihres Benutzerkontos bearbeiten..",
-            "NOTE_ABOUT_THIS_DATA": "Hier können Sie ihre Benutzerdaten bearbeiten. Dies umfasst:<br>- Ihre Zugangsdaten, mit denen Sie sich anmelden<br>- Telefonnummer oder E-Mail-Adresse für die Passwortrücksetzung und Offline-Benachrichtigungen.<br><br>Ihre Benutzerdaten sind für andere Nutzer nicht sichtbar.",
+            "NOTE_ABOUT_THIS_DATA": "Hier können Sie ihre Benutzerdaten bearbeiten. Dies umfasst:\n- Ihre Zugangsdaten, mit denen Sie sich anmelden\n- Telefonnummer oder E-Mail-Adresse für die Passwortrücksetzung und Offline-Benachrichtigungen.\n\nIhre Benutzerdaten sind für andere Nutzer nicht sichtbar.",
             "LOGINAME": "Der Loginname kann nicht geändert werden.",
             "PHONENUMBER": "Hier können Sie eine Mobilfunknummer hinterlegen. Sie erhalten eine Verifizierungs-SMS mit der Sie die Nummer für die Passwortrücksetzung aktivieren können.",
             "EMAIL": "Hier können Sie eine E-Mail-Adresse hinterlegen. Sie erhalten eine Verifizierungs-E-Mail mit der Sie die Adresse für die Passwortrücksetzung aktivieren können."
@@ -797,7 +795,7 @@
         },
         "IMPRINT": {
             "HEADLINE": "Impressum",
-            "CONTENT": "cameoNet ein Dienst der:<br>memo Connect GmbH<br>Große Nikolaistraße 7 06108 Halle (Saale) Germany<br>Fon: +49 345 213 79 66 5<br>Fax: +49 345 213 79 66 59<br>Amtsgericht Stendal HRB 20018<br>Geschäftsführer: Michael Merz, Dr. Holger Haedrich"
+            "CONTENT": "cameoNet ein Dienst der:\nmemo Connect GmbH\nGroße Nikolaistraße 7 06108 Halle (Saale) Germany\nFon: +49 345 213 79 66 5\nFax: +49 345 213 79 66 59\nAmtsgericht Stendal HRB 20018\nGeschäftsführer: Michael Merz, Dr. Holger Haedrich"
         },
         "CONFIRM": {
             "HEADER": "Bitte bestätigen!",
@@ -841,7 +839,7 @@
                 "STORE_NEW": "cameoKey erfolgreich gespeichert!"
             },
             "SAVE_AS": {
-                "IOS_NOT_SUPPORT": "Leider unterstützt iOS das Herunterladen von Dateien für viele Formate nicht.<br>Unterstützte Formate: .pdf<br> Um andere Dateiformate herunterladen zu können, öffnen Sie den Talk auf einem anderen Gerät, das kein iOS verwendet. "
+                "IOS_NOT_SUPPORT": "Leider unterstützt iOS das Herunterladen von Dateien für viele Formate nicht.\nUnterstützte Formate: .pdf\n Um andere Dateiformate herunterladen zu können, öffnen Sie den Talk auf einem anderen Gerät, das kein iOS verwendet. "
             },
             "FRIEND_REQUEST": "Neue Kontaktanfrage"
         }
@@ -865,7 +863,7 @@
         },
         "CONNECTION_HANDLER": {
             "FAILED": {
-                "TEXT": "Es konnte keine Verbindung zu cameoNet hergestellt werden.<br>Bitte versuchen Sie es später noch einmal oder überprüfen Sie ihre Internet Verbindung und drücken 'Neu verbinden'",
+                "TEXT": "Es konnte keine Verbindung zu cameoNet hergestellt werden.\nBitte versuchen Sie es später noch einmal oder überprüfen Sie ihre Internet Verbindung und drücken 'Neu verbinden'",
                 "FOOTER": "Neu verbinden"
             },
             "NOTSECURE": {
@@ -948,10 +946,10 @@
     "FILE": {
         "UPLOAD": {
             "QUOTA": {
-                "EXCEEDED": "Sie haben nicht mehr genug Speicherplatz! <br> Die Datei die Sie hochladen möchten hat {{fileSize | cmBytesHumanReadable}}.<br>Sie haben nur noch {{quotaLeft | cmBytesHumanReadable}} freien Speicherplatz (von {{totalQuota | cmBytesHumanReadable}})."
+                "EXCEEDED": "Sie haben nicht mehr genug Speicherplatz!\n Die Datei die Sie hochladen möchten hat {{fileSize | cmBytesHumanReadable}}.\nSie haben nur noch {{quotaLeft | cmBytesHumanReadable}} freien Speicherplatz (von {{totalQuota | cmBytesHumanReadable}})."
             },
             "FILESIZE": {
-                "EXCEEDED": "Die maximale Dateigröße wurde überschritten. <br>Die Datei die Sie hochladen möchten ist {{fileSize | cmBytesHumanReadable}} groß. <br>Die maximale Dateigröße beträgt <strong>{{maxFileSize | cmBytesHumanReadable}}</strong>."
+                "EXCEEDED": "Die maximale Dateigröße wurde überschritten.\nDie Datei die Sie hochladen möchten ist {{fileSize | cmBytesHumanReadable}} groß. Die maximale Dateigröße beträgt {{maxFileSize | cmBytesHumanReadable}}."
             }
         }
     } ,

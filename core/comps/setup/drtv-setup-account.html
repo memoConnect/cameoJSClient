@@ -1,12 +1,12 @@
 <article class="content" ng-click="toggleHeadlineInfo()" data-qa="ctn-toggle-headline">
     <cm-info-bubble nose-x="45%">
         <div ng-show="!showHeadlineInfo" data-qa="info-headline-small">
-            <i class="fa cm-info cm-ci-color"></i> {{'ACCOUNT.CREATE.INFO.NOTE_ABOUT_THIS_DATA_SMALL'|cmTranslate}}
+            <i class="fa cm-info cm-ci-color"></i> {{::'ACCOUNT.CREATE.INFO.NOTE_ABOUT_THIS_DATA_SMALL'|cmTranslate}}
         </div>
         <div ng-show="showHeadlineInfo" data-qa="info-headline">
-            <i class="fa cm-info cm-ci-color"></i> {{'ACCOUNT.CREATE.INFO.NOTE_ABOUT_THIS_DATA_SMALL'|cmTranslate}}
+            <i class="fa cm-info cm-ci-color"></i> {{::'ACCOUNT.CREATE.INFO.NOTE_ABOUT_THIS_DATA_SMALL'|cmTranslate}}
             <hr class="margin-small" />
-            <span ng-bind-html="'ACCOUNT.CREATE.INFO.NOTE_ABOUT_THIS_DATA'|cmParse"></span>
+            <span ng-bind-html="::'ACCOUNT.CREATE.INFO.NOTE_ABOUT_THIS_DATA'|cmParse"></span>
         </div>
     </cm-info-bubble>
 </article>
@@ -41,11 +41,11 @@
 <cm-footer>
     <button class="cm-btn-grey" ng-click="saveAccount()" data-qa="btn-next-step" cm-reactive>
         <span ng-show="!showLoader && !isPristine" data-qa="btn-saveAccount">
-            {{'ACCOUNT.FOOTER.SAVE'|cmTranslate}}
+            {{::'ACCOUNT.FOOTER.SAVE'|cmTranslate}}
             <i class="fa cm-checker"></i>
         </span>
         <span ng-show="isPristine" data-qa="btn-pristineSkip">
-            {{'ACCOUNT.FOOTER.SKIP'|cmTranslate}}
+            {{::'ACCOUNT.FOOTER.SKIP'|cmTranslate}}
             <i class="fa cm-right"></i>
         </span>
         <cm-loader ng-show="showLoader" cm-color="ci-color"></cm-loader>

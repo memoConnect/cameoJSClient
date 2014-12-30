@@ -32,7 +32,8 @@
 
     <article class="content mb15" ng-hide="alertState==''" data-qa="login-info">
         <cm-info-bubble class="cm-alert">
-            <div><i class="fa cm-info"></i><span ng-bind-html="'LOGIN.INFO.'+alertState|cmParse"></span></div>
+            <i class="fa cm-info"></i>
+            <span ng-bind-html="'LOGIN.INFO.'+alertState|cmParse"></span>
         </cm-info-bubble>
     </article>
 

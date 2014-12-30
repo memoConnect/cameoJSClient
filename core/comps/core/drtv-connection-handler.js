@@ -46,7 +46,7 @@ angular.module('cmCore').directive('cmConnectionHandler',[
                         },
                         '<div class="attention">' +
                             '<i class="fa cm-attention cm-orange"></i> '+
-                            '<span ng-bind-html="\'MODAL.CONNECTION_HANDLER.'+eventId+'.TEXT\'|cmTranslate"></span>' +
+                            '<span ng-bind-html="\'MODAL.CONNECTION_HANDLER.'+eventId+'.TEXT\'|cmParse"></span>' +
                         '</div>',
                         'body',
                         scope

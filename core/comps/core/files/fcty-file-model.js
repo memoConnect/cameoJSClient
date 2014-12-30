@@ -406,7 +406,7 @@ angular.module('cmCore')
                     cmModal.create({
                         id:'saveas',
                         type: 'alert'
-                    },'<span>{{\'NOTIFICATIONS.TYPES.SAVE_AS.IOS_NOT_SUPPORT\'|cmTranslate}}</span>');
+                    },'<span ng-bind-html="::\'NOTIFICATIONS.TYPES.SAVE_AS.IOS_NOT_SUPPORT\'|cmParse"></span>');
                     cmModal.open('saveas');
                 } else {
                     // phonegap download
