@@ -89,7 +89,7 @@ module.exports = function(grunt, options){
                 var resourceXml = [];
 
                 resourceXml.push('<icon');
-                if(!isLocal)
+                if(!isLocal && resource.platform != 'default')
                     resourceXml.push('gap:platform="'+resource.platform+'"');
 
                 if(resource.platform != 'default')
@@ -122,7 +122,8 @@ module.exports = function(grunt, options){
 
                 if(!isLocal) {
                     resourceXml.push('<gap:splash');
-                    resourceXml.push('gap:platform="' + resource.platform + '"');
+                    if(resource.platform != 'default')
+                        resourceXml.push('gap:platform="' + resource.platform + '"');
                 } else {
                     resourceXml.push('<splash');
                 }

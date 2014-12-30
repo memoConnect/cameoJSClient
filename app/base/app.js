@@ -165,13 +165,19 @@ angular.module('cameoClient', [
                     return cmBoot.isReady.i18n();
                 };
 
-                if (angular.isDefined(_settings_['resolveUserModel']) && _settings_['resolveUserModel'] == true){
+                if (angular.isDefined(_settings_['waitForFirstBoot']) && _settings_['waitForFirstBoot'] == true){
+                    routeParams.resolve.firstBoot = function(cmBoot) {
+                        return cmBoot.isReady.firstBoot();
+                    }
+                }
+
+                if (angular.isDefined(_settings_['waitForUserModel']) && _settings_['waitForUserModel'] == true){
                     routeParams.resolve.userModel = function(cmBoot) {
                         return cmBoot.isReady.userModel();
                     }
                 }
 
-                if (angular.isDefined(_settings_['resolvePurl']) && _settings_['resolvePurl'] == true){
+                if (angular.isDefined(_settings_['waitForPurl']) && _settings_['waitForPurl'] == true){
                     routeParams.resolve.resolveData = function(cmBoot, $route) {
                         return cmBoot.isReady.purl($route.current.params.purlId);
                     }
