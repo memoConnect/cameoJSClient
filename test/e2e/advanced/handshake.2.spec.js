@@ -617,7 +617,7 @@ describe('Authentication requests -', function () {
                 util.sendFriendRequest(testUser1)
             })
 
-            it("check support no key and untrusted 'oo!", function(){
+            xit("check support no key and untrusted 'oo!", function(){
                 if(config.target == 'stage' || config.target == 'prod')
                     checkContactTrust('support','untrusted-key')
                 else

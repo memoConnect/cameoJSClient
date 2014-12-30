@@ -78,8 +78,10 @@ describe('performance cleanup', function () {
 
     it("delete key", function () {
         util.get("/settings/identity/key/list")
-        util.waitAndClickQa("btn-remove-modal")
-        util.waitAndClickQa('btn-confirm','cm-modal.active')
+        util.waitForPageLoad('/settings/identity/key/list').then(function(){
+            $$("[data-qa='btn-remove-modal']").get(0).click()
+            util.waitAndClickQa('btn-confirm','cm-modal.active')
+        })
     })
 })
 
