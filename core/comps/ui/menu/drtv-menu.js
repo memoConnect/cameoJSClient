@@ -32,7 +32,7 @@ angular.module('cmUi').directive('cmMenu',[
                     return false;
                 };
 
-                $scope.goTo = function(parentBtn, url, isSub){
+                $scope.goTo = function(parentBtn, url){
 
                     /**
                      * if current location == url, then only close menu

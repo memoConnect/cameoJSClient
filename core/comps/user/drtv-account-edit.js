@@ -31,9 +31,11 @@ angular.module('cmUser')
                 };
 
                 function reset(){
+                    var phoneNumber = $scope.account.phoneNumber ? $scope.account.phoneNumber.value : '';
+
                     $scope.formData = {
-                        phoneNumber: $scope.account.phoneNumber ? $scope.account.phoneNumber.value : '',
-                        mergedPhoneNumber: '',
+                        phoneNumber: phoneNumber,
+                        mergedPhoneNumber: phoneNumber,
                         email: $scope.account.email ? $scope.account.email.value : '',
                         oldPassword: '',
                         password: ''
@@ -115,18 +117,11 @@ angular.module('cmUser')
 
                     $scope.validateForm().then(
                         function(objectChange){
-
-                            console.log(objectChange)
-
-                            //loader.stop();
-                            //$scope.isPristine = true;
-                            //return false;
-
                             cmUserModel.updateAccount(objectChange)
                             .then(
                                 function(){
                                     loader.stop();
-                                    $scope.isPristine = true;
+                                    cmPristine.resetView($scope);
                                     $scope.togglePasswordChange('close');
                                 },
                                 function(result){
@@ -154,15 +149,7 @@ angular.module('cmUser')
                 /**
                  * Pristine Service Handling
                  */
-                $scope.isPristine = true;
-                function pristine_callback(){
-                    $scope.isPristine = cmPristine.is();
-                }
-                cmPristine.on('updated',pristine_callback);
-
-                $scope.$on('$destroy', function(){
-                    cmPristine.off('updated',pristine_callback);
-                })
+                cmPristine.initView($scope);
             }
         }
     }

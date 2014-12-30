@@ -100,7 +100,7 @@ angular.module('cmUser').directive('cmIdentityEdit', [
                         function(objectChange){
                             cmUserModel.data.identity.one('update:finished',function(){
                                 loader.stop();
-                                $scope.isPristine = true;
+                                cmPristine.resetView($scope);
                                 reset();
                             });
 
@@ -116,15 +116,7 @@ angular.module('cmUser').directive('cmIdentityEdit', [
                 /**
                  * Pristine Service Handling
                  */
-                $scope.isPristine = true;
-                function pristine_callback(){
-                    $scope.isPristine = cmPristine.is();
-                }
-                cmPristine.on('updated',pristine_callback);
-
-                $scope.$on('$destroy', function(){
-                    cmPristine.off('updated',pristine_callback);
-                })
+                cmPristine.initView($scope);
             }
         }
     }

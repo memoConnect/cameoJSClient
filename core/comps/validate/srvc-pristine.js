@@ -48,6 +48,24 @@ angular.module('cmValidate')
              * add Element
              * @param element ngModel
              */
+            this.initView = function(scope){
+                scope.isPristine = true;
+                function pristine_callback(){
+                    console.log('updated of ngModel biatsch',self.is())
+                    scope.isPristine = self.is();
+                }
+                self.on('updated',pristine_callback);
+
+                scope.$on('$destroy', function(){
+                    self.off('updated',pristine_callback);
+                })
+            };
+
+            this.resetView = function(scope){
+                scope.isPristine = true;
+                self.trigger('reinit');
+            };
+
             this.add = function(element){
                 //cmLogger.debug('cmPristine.add');
 
@@ -67,8 +85,9 @@ angular.module('cmValidate')
 
             this.is = function(){
                 //cmLogger.debug('cmPristine.is');
-
-                return !elements.some(function (e){ return (e.isPristine == false)})
+                return !elements.some(function (e){
+                    return (e.isPristine == false);
+                })
             };
 
             this.set = function(element, bool){

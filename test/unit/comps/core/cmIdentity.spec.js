@@ -8,16 +8,12 @@ describe('cmIdentityModel', function(){
     }
 
     beforeEach(function(){
-        module(function($provide){
-            $provide.constant('cmEnv',{});
+        module('cmConfig')
+        module('cmCore')
+        inject(function(_cmIdentityModel_){
+            cmIdentityModel = _cmIdentityModel_
         })
     })
-
-    beforeEach(module('cmCore'))
-
-    beforeEach(inject(function(_cmIdentityModel_){
-        cmIdentityModel = _cmIdentityModel_
-    }));
 
     it('should exists', function(){
         expect(cmIdentityModel).toBeDefined()

@@ -21,6 +21,10 @@ angular.module('cmValidate')
                 cmCountryPrefix.handleView($scope);
                 cmVerify.handleInput('phoneNumber',$scope);
 
+                $scope.typeof = function(variable){
+                    return typeof variable;
+                }
+
                 $scope.showPhoneInfo = false;
                 $scope.togglePhoneInfo = function(){
                     if(typeof $scope.toggleInfo == 'string'){

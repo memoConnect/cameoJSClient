@@ -1,6 +1,7 @@
 'use strict';
 
-angular.module('cmCore').service('cmRootService', [
+angular.module('cmCore')
+.service('cmRootService', [
     'cmLogger', 'cmJob', 'cmModal', 'cmConfig', 'cmTransferScopeData',
     '$rootScope', '$window', '$location', '$route',
     function(cmLogger, cmJob, cmModal, cmConfig, cmTransferScopeData,

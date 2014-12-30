@@ -5,14 +5,17 @@ var cmUtil;
 describe('cmRootService ', function() {
     var cmRootService, $rootScope
 
-    beforeEach(module("cmCore"))
-
-    beforeEach(module("cmConfig"))
-
-    beforeEach(inject(function (_cmRootService_, _$rootScope_) {
-        cmRootService = _cmRootService_
-        $rootScope = _$rootScope_
-    }))
+    beforeEach(function(){
+        module("cmCore")
+        module(function($provide){
+            $provide.constant('$route',{reload:function(){}});
+        })
+        module("cmConfig")
+        inject(function (_cmRootService_, _$rootScope_) {
+            cmRootService = _cmRootService_
+            $rootScope = _$rootScope_
+        })
+    })
 
     describe('check service and $rootScope methods', function(){
         it('service should exists', function(){

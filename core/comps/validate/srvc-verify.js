@@ -1,6 +1,7 @@
 'use strict';
 
-angular.module('cmValidate').service('cmVerify',[
+angular.module('cmValidate')
+.service('cmVerify',[
     'cmAuth', 'cmUtil', 'cmLoader',
     function (cmAuth, cmUtil, cmLoader){
 

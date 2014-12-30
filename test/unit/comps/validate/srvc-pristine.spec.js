@@ -22,6 +22,14 @@ describe("cmPristine combine with input drtv", function(){
     })
 
     describe('check service api', function(){
+        it('should exists a "initView" method', function(){
+            expect(typeof cmPristine.initView).toBe('function')
+        })
+
+        it('should exists a "resetView" method', function(){
+            expect(typeof cmPristine.resetView).toBe('function')
+        })
+
         it('should exists a "add" method', function(){
             expect(typeof cmPristine.add).toBe('function')
         })
@@ -103,8 +111,6 @@ describe("cmPristine combine with input drtv", function(){
         }))
 
         it('there should be no element and cmPristine should return true', function(){
-            scope.$apply()
-
             var items = cmPristine.getAll()
 
             expect(items.length).toBe(0)
@@ -125,8 +131,6 @@ describe("cmPristine combine with input drtv", function(){
         }))
 
         it('there should be no element and cmPristine should return true', function(){
-            scope.$apply()
-
             var items = cmPristine.getAll()
 
             expect(items.length).toBe(1)
@@ -139,7 +143,7 @@ describe("cmPristine combine with input drtv", function(){
 
     describe('check "is" method, with one "valid" element', function(){
         beforeEach(inject(function(_$compile_, _$rootScope_){
-            scope = _$rootScope_
+            scope = _$rootScope_.$new()
             element = angular.element('<input name="email" ng-model="email" />')
 
             element = _$compile_(element)(scope)
@@ -147,45 +151,37 @@ describe("cmPristine combine with input drtv", function(){
         }))
 
         it('pristine should be false, after changing input value', function(){
-            scope.$apply()
-
-            var input = element[0];
-
-            $(input).focus()
-            $(input).val('moep')
-            $(input).blur()
+            element.triggerHandler('focus')
+            element.val('moep')
+            element.triggerHandler('blur')
 
             expect(cmPristine.is()).toBe(false)
 
-            expect(count_event_added).toBe(1)
-            expect(count_event_updated).toBe(1)
+            expect('count_event_added: '+count_event_added).toBe('count_event_added: 1')
+            expect('count_event_updated: '+count_event_updated).toBe('count_event_updated: 2')
         })
 
         it('pristine should be true, after changing value to init value', function(){
-            scope.$apply()
-
-            var input = element[0];
-
-            $(input).focus()
-            $(input).val('moep')
-            $(input).blur()
+            element.triggerHandler('focus')
+            element.val('moep')
+            element.triggerHandler('blur')
 
             expect(cmPristine.is()).toBe(false)
 
-            $(input).focus()
-            $(input).val('')
-            $(input).blur()
+            element.triggerHandler('focus')
+            element.val('')
+            element.triggerHandler('blur')
 
             expect(cmPristine.is()).toBe(true)
 
-            expect(count_event_added).toBe(1)
-            expect(count_event_updated).toBe(2)
+            expect('count_event_added: '+count_event_added).toBe('count_event_added: 1')
+            expect('count_event_updated: '+count_event_updated).toBe('count_event_updated: 4')
         })
     })
 
-    describe('check "is"" method, with two "valid" element', function(){
+    describe('check "is" method, with two "valid" element', function(){
         beforeEach(inject(function(_$compile_, _$rootScope_){
-            scope = _$rootScope_
+            scope = _$rootScope_.$new()
             element = angular.element('<form><input name="email" ng-model="email" /><input name="text" ng-model="text" /></form>')
 
             element = _$compile_(element)(scope)
@@ -193,41 +189,39 @@ describe("cmPristine combine with input drtv", function(){
         }))
 
         it('pristine should be false, if minimum one element change value', function(){
-            scope.$apply()
-
-            var input_email = element.find('input')[0]
-            var input_text = element.find('input')[1]
+            var input_email = angular.element(element.find('input')[0])
+            var input_text = angular.element(element.find('input')[1])
 
             // change email value
-            $(input_email).focus()
-            $(input_email).val('moep')
-            $(input_email).blur()
+            input_email.triggerHandler('focus')
+            input_email.val('moep')
+            input_email.triggerHandler('blur')
 
             expect(cmPristine.is()).toBe(false)
 
             // change text value
-            $(input_text).focus()
-            $(input_text).val('moep')
-            $(input_text).blur()
+            input_text.triggerHandler('focus')
+            input_text.val('moep')
+            input_text.triggerHandler('blur')
 
             expect(cmPristine.is()).toBe(false)
 
             // remove email value
-            $(input_email).focus()
-            $(input_email).val('')
-            $(input_email).blur()
+            input_email.triggerHandler('focus')
+            input_email.val('')
+            input_email.triggerHandler('blur')
 
             expect(cmPristine.is()).toBe(false)
 
             // remove text value
-            $(input_text).focus()
-            $(input_text).val('')
-            $(input_text).blur()
+            input_text.triggerHandler('focus')
+            input_text.val('')
+            input_text.triggerHandler('blur')
 
             expect(cmPristine.is()).toBe(true)
 
-            expect(count_event_added).toBe(2)
-            expect(count_event_updated).toBe(4)
+            expect('count_event_added: '+count_event_added).toBe('count_event_added: 2')
+            expect('count_event_updated: '+count_event_updated).toBe('count_event_updated: 8')
         })
     })
 
@@ -241,8 +235,6 @@ describe("cmPristine combine with input drtv", function(){
         }))
 
         it('there should be no element after scope destroy', function(){
-            scope.$apply()
-
             var items = cmPristine.getAll()
 
             expect(items.length).toBe(1)
@@ -267,8 +259,6 @@ describe("cmPristine combine with input drtv", function(){
         }))
 
         it('there should be no element after scope destroy', function(){
-            scope.$apply()
-
             var items = cmPristine.getAll()
 
             expect(items.length).toBe(2)
@@ -293,8 +283,6 @@ describe("cmPristine combine with input drtv", function(){
         }))
 
         it('there should be no element after reset cmPristine', function(){
-            scope.$apply()
-
             var items = cmPristine.getAll()
 
             expect(items.length).toBe(2)
