@@ -1,6 +1,7 @@
 'use strict';
 
-angular.module('cmUi').directive('input', [
+angular.module('cmUi')
+.directive('input', [
     'cmPristine',
     '$rootScope', '$timeout',
     function (cmPristine,
