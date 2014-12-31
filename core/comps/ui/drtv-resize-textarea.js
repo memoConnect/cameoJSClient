@@ -182,6 +182,7 @@ angular.module('cmUi')
                     textAreaRowHeight = element[0].offsetHeight;
 
                 // event binding
+                element.on('keyup', update);
                 element.on('keydown', function(e){
                     // on tab
                     if (e.keyCode == 9) {
@@ -195,6 +196,7 @@ angular.module('cmUi')
 
                 scope.$on('$destroy', function(){
                     element.off('keydown');
+                    element.off('keyup',update);
                 });
 
                 // watch on ngModel for extern changes
