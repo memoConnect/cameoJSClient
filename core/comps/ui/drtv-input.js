@@ -1,5 +1,78 @@
 'use strict';
 
+/**
+ * @ngdoc directive
+ * @name cmUi.directive:input
+ * @description
+ * a drtv for all input-tags
+ * every input with attr name and ng-model get registred at cmPristine service
+ *
+ * @restrict A
+ * @requires cmPristine
+ * @requires $rootScope
+ * @requires $timeout
+ *
+ * @example
+ <example module="cmDemo">
+ <file name="index.html">
+ <article class="content">
+     <div class="cm-input-ctn">
+        <input type="text" value="whoop whoop" />
+     </div>
+ </article>
+
+ <article class="content">
+     <div class="cm-input-ctn with-inside-icon">
+         <input type="text" value="whoop whoop" />
+         <i class="fa cm-write"></i>
+     </div>
+ </article>
+
+ <article class="content">
+     <div class="cm-input-ctn with-inside-icons">
+         <input type="text" value="whoop whoop" />
+         <i class="fa cm-rhino-bubble-glyph"></i>
+         <i class="fa cm-write"></i>
+     </div>
+ </article>
+
+ <article class="content">
+     <div class="cm-input-ctn with-inside-left-icon">
+         <i class="fa cm-checker"></i>
+         <input type="text" value="whoop whoop" />
+     </div>
+ </article>
+
+ <article class="content">
+     <div class="cm-input-ctn with-inside-left-icons">
+         <i class="fa cm-checker"></i>
+         <i class="fa cm-checkbox-wrong"></i>
+         <input type="text" value="whoop whoop" />
+     </div>
+ </article>
+
+ <article class="content">
+     <div class="cm-input-ctn with-inside-left-icon with-inside-icon">
+         <i class="fa cm-checker"></i>
+         <input type="text" value="whoop whoop" />
+         <i class="fa cm-checkbox-wrong"></i>
+     </div>
+ </article>
+
+ <article class="content">
+     <div class="cm-input-ctn with-inside-left-icons with-inside-icons">
+         <i class="fa cm-checker"></i>
+         <i class="fa cm-checker"></i>
+         <input type="text" value="whoop whoop" />
+         <i class="fa cm-checkbox-wrong"></i>
+         <i class="fa cm-checkbox-wrong"></i>
+     </div>
+ </article>
+
+ </file>
+ </example>
+ */
+
 angular.module('cmUi')
 .directive('input', [
     'cmPristine',

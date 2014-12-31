@@ -8,18 +8,17 @@
  *
  * @requires cmUserModel
  * @requires cmCrypt
+ * @requires cmIdentityFactory
+ * @requires cmKeyFactory
+ * @requires cmLogger
  * @requires $q
  */
-angular.module('cmCore').service('cmPassphraseVault',[
-
-    'cmUserModel',
-    'cmCrypt',
-    'cmIdentityFactory',
-    'cmKeyFactory',
-    'cmLogger',
+angular.module('cmCore')
+.service('cmPassphraseVault',[
+    'cmUserModel', 'cmCrypt', 'cmIdentityFactory', 'cmKeyFactory','cmLogger',
     '$q',
-
-    function(cmUserModel, cmCrypt, cmIdentityFactory, cmKeyFactory, cmLogger, $q){
+    function(cmUserModel, cmCrypt, cmIdentityFactory, cmKeyFactory, cmLogger,
+             $q){
         var self = this
 
         /** utility functions **/
@@ -33,7 +32,7 @@ angular.module('cmCore').service('cmPassphraseVault',[
          * private function to check minimal requirements for a password.
          *
          * @param {String} pw Anything to be checked wether it could be a password.
-         * @return {Boolean} result Wheter the suggested password seems okay or not
+         * @returns {Boolean} result Wheter the suggested password seems okay or not
          */
         function couldBeAPassword(pw){
             return ((typeof pw == "string") && pw.length >= 1); //Todo, require better passwords.
@@ -89,7 +88,7 @@ angular.module('cmCore').service('cmPassphraseVault',[
 
             /**
              * @ngdoc method
-             * @methodOf PassphraseVault
+             * @methodOf cmPassphraseVault
              *
              * @name getKeyTransmission
              * @description
@@ -99,12 +98,11 @@ angular.module('cmCore').service('cmPassphraseVault',[
              */
             this.getKeyTransmission = function(){
                 return getKeyTransmission(sePassphrase, aePassphraseList)
-            }
-
+            };
 
             /**
              * @ngdoc mehtod
-             * @methodOf PassphraseVault
+             * @methodOf cmPassphraseVault
              *
              * @name get
              * 
@@ -161,7 +159,7 @@ angular.module('cmCore').service('cmPassphraseVault',[
 
             /**
              * @ngdoc method
-             * @methodOf PassphraseVault
+             * @methodOf cmPassphraseVault
              *
              * @name userHasAccess
              * @description
@@ -181,7 +179,7 @@ angular.module('cmCore').service('cmPassphraseVault',[
 
             /**
              * @ngdoc method
-             * @methodOf PassphraseVault
+             * @methodOf cmPassphraseVault
              *
              * @name verifyAuthenticity
              * @description
@@ -278,11 +276,10 @@ angular.module('cmCore').service('cmPassphraseVault',[
 
             /**
              * @ngdoc method
-             * @methodOf PassphraseVault
+             * @methodOf cmPassphraseVault
              *
              * @name exportData
              * 
-             *
              * @return {Object} returns encryption data ready to be submitted to the API.
              */
             this.exportData = function(){
@@ -294,17 +291,7 @@ angular.module('cmCore').service('cmPassphraseVault',[
                             signatures              : signatures
                         }
             }
-        }
-
-
-
-
-
-
-
-
-
-
+        };
 
         /**
          * @ngdoc method
@@ -315,7 +302,7 @@ angular.module('cmCore').service('cmPassphraseVault',[
          * @discription
          * Creates a new PassphraseVault 
          *
-         * @return {PassphraseVault}
+         * @returns {Object} PassphraseVault
          */
         this.create = function(data){
             data = data || {}
@@ -325,7 +312,7 @@ angular.module('cmCore').service('cmPassphraseVault',[
             data.signatures         = data.signatures         || []
 
             return new PassphraseVault(data)
-        }
+        };
 
         /**
          * @ngdoc method
@@ -336,14 +323,14 @@ angular.module('cmCore').service('cmPassphraseVault',[
          * @description
          * Creates a new PassphraseVault 
          *
-         * @params {Object} config
+         * @param {Object} config
          * config =    {
          *                  passphrase:         config.passphrase       || cmCrypt.generatePassphrase(),
          *                  password:           config.password         || null,
          *                  identities:         config.identities       || [],
          *              }
          *
-         * @return {PassphraseVault}
+         * @returns {Object} PassphraseVault
          */
         this.encryptPassphrase = function(config){
             config =    {
@@ -428,24 +415,17 @@ angular.module('cmCore').service('cmPassphraseVault',[
                             return $q.reject(reason)
                         }
                     )
-        }
+        };
 
-
-
-
-
-
-
-            /**
-             * @TODO mit AP klären, BS!!!
-             * @returns {*|number}
-             */
-            this.getWeakestKeySize = function(){
-                return  conversation.recipients.reduce(function(size, recipient){
+        /**
+         * @TODO mit AP klären, BS!!!
+         * @returns {*|number}
+         */
+        this.getWeakestKeySize = function(){
+            return  conversation.recipients.reduce(function(size, recipient){
 //                            return size != undefined ? Math.min(recipient.getWeakestKeySize(), size) : recipient.getWeakestKeySize()
-                            return size != undefined ? Math.min(recipient.getWeakestKeySize(), size.getWeakestKeySize()) : recipient.getWeakestKeySize()
-                        }) || 0
-            }
-
+                        return size != undefined ? Math.min(recipient.getWeakestKeySize(), size.getWeakestKeySize()) : recipient.getWeakestKeySize()
+                    }) || 0
+        }
     }
 ]);
