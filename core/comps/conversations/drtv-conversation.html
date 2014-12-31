@@ -25,7 +25,7 @@
                 ng-click="goto('conversation/'+(conversation.id||'new')+'/recipients')"
                 cm-reactive
                 ng-if="conversation.recipients.length == 1 && conversation.state.is('new')">
-                <cm-avatar cm-view="unknown"></cm-avatar>
+                <cm-avatar cm-avatar-view="unknown"></cm-avatar>
                 <span>{{'CONVERSATION.PLACEHOLDER.ADD_RECIPIENTS'|cmTranslate}}</span>
             </div>
             <cm-avatar

@@ -3,7 +3,7 @@
 /**
  * @ngdoc object
  * @name cmConversationModel
- * @constructor
+ *
  * @description
  * Represents a Conversation.
  * # Events
@@ -18,8 +18,6 @@
  *  - new
  *  - loading
  *  - decrypted
- *
- * @param {Object} [data] The conversation data as received from the backend.
  */
 
 angular.module('cmConversations')
@@ -96,6 +94,7 @@ angular.module('cmConversations')
              * GUI Variable
              * @type {{level: string, class: string}}
              */
+
             this.lockStatus = {
                 'level': 2,
                 'class': 'safer'
@@ -147,7 +146,6 @@ angular.module('cmConversations')
             };
 
             /**
-             * @todo: what is todo??
              * @ngdoc method
              * @methodOf cmConversationModel
              *
@@ -156,6 +154,8 @@ angular.module('cmConversations')
              * Checks Conversation Settings and User Opinions
              *
              * @param {Boolean} bool Return true or false
+             *
+             * @todo: what is todo??
              */
             this.checkConsistency = function (){
                 if(this.passwordRequired() && !this.password){
@@ -309,7 +309,7 @@ angular.module('cmConversations')
              * @description
              * get Conversation Data from API
              *
-             * @returns {ConversationModel} this Returns ConversationModel
+             * @returns {Object} this Returns ConversationModel
              */
             this.load = function(){
 //                cmLogger.debug('cmConversationModel:load');
@@ -446,9 +446,9 @@ angular.module('cmConversations')
             };
 
             /**
-             * @param limit
-             * @param offset
-             * @param clearMessages
+             * @param {Number} limit
+             * @param {Number} offset
+             * @param {Boolean} clearMessages
              */
             this._updateConversation = function(limit, offset, clearMessages){
                 cmConversationsAdapter.getConversationMessages(this.id, limit, offset).then(
@@ -472,11 +472,11 @@ angular.module('cmConversations')
              * @ngdoc method
              * @methodOf cmConversationModel
              *
-             * @name  disableEncryption
+             * @name disableEncryption
              * @description
              * Disables the encryption for the conversation. Works only if the conversation is new (state).
              *
-             * @returns {cmConversationModel} this  Returns itself for chaining.
+             * @returns {Object} this Returns itself for chaining.
              */
             this.disableEncryption = function(){
 //                cmLogger.debug('cmConversationModel:disableEncryption');
@@ -494,11 +494,11 @@ angular.module('cmConversations')
              * @ngdoc method
              * @methodOf cmConversationModel
              *
-             * @name  EnableEncryption
+             * @name enableEncryption
              * @description
              * Enables the encryption for the conversation. Works only if the conversation is new (state) and no proper passphrase is set.
              *
-             * @returns {cmConversationModel} this  Returns itself for chaining.
+             * @returns {Object} this Returns itself for chaining.
              */
             this.enableEncryption = function(){
 //                cmLogger.debug('cmConversationModel:enableEncryption');
@@ -514,12 +514,14 @@ angular.module('cmConversations')
             /**
              * @ngdoc method
              * @methodOf cmConversationModel
-             * @todo
-             * @name  isEncrypted
+             *
+             * @name isEncrypted
              * @description
              * Returns encryption state of passphrase object which is similar of the encryption state of the conversation
              *
-             * @returns {boolean} bool Returns true if Conversation is encrypted.
+             * @returns {Boolean} bool Returns true if Conversation is encrypted.
+             *
+             * @todo
              */
             this.isEncrypted = function(){
 //                cmLogger.debug('cmConversationModel.isEncrypted');
@@ -536,8 +538,6 @@ angular.module('cmConversations')
              * @name decrypt
              * @description
              * starts decrypting oh messages
-             *
-             * @returns {Boolean} succees Returns Boolean
              */
             this.decrypt = function () {
                 //cmLogger.debug('cmConversationModel.decrypt', + this.subject);
@@ -578,11 +578,11 @@ angular.module('cmConversations')
              * @ngdoc method
              * @methodOf cmConversationModel
              *
-             * @name getEncryptionType
+             * @name getKeyTransmission
              * @description
-             * return encryption type from conversation
              *
-             * @returns {String} encryptionType look at encryptedPassphraseList
+             *
+             * @returns {String} getKeyTransmissionType
              */
             this.getKeyTransmission = function(){
                 //If the conversation is not new:
@@ -601,8 +601,6 @@ angular.module('cmConversations')
 
                 //Conversation is new, encrypted and there is no need for password:
                 return 'asymmetric';
-
-
             };
 
             /**
@@ -627,7 +625,7 @@ angular.module('cmConversations')
                     return $q.reject('passphrase vault missing.')
 
                 return passphraseVault.get(this.password)
-            }
+            };
 
             /**
              * @ngdoc method
@@ -649,11 +647,11 @@ angular.module('cmConversations')
              * @ngdoc method
              * @methodOf cmConversationModel
              *
-             * name passwordRequired
+             * @name passwordRequired
              * @description
              * Checks if the conversation requires a password
              *
-             * @return {Boolean} returns true or false
+             * @returns {Boolean} returns true or false
              */
             this.passwordRequired = function(){
 //                cmLogger.debug('cmConversationModel:passwordRequired');
@@ -666,7 +664,7 @@ angular.module('cmConversations')
                     || this.hasPassword()
                     )
 
-                }else{
+                } else {
                     return this.hasPassword() && (!this.userHasPrivateKey() || !this.userHasAccess())
                 }
             }

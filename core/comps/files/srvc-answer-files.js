@@ -9,7 +9,6 @@ angular.module('cmFiles').service('cmAnswerFiles', [
         var self = {
             files: [],
             set: function (blob) {
-//             TODO: Android name=content fix file plugin!!!
 //                console.log(blob)
 
                 if (!blob)

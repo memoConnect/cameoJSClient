@@ -3,7 +3,7 @@ module.exports = function(grunt, options){
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-ngdocs');
 
-    grunt.registerTask('build:create-docs', [
+    grunt.registerTask('docs:to-dist', [
         'clean:docs',
         'app:packages',
         'ngdocs'
