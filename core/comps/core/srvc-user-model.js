@@ -34,7 +34,6 @@ angular.module('cmCore')
             isAuth = false,
             initialize = ''; // empty, run, done ! important for isAuth check
 
-
         cmObject.addEventHandlingTo(this);
 
         this.reset = function(){
@@ -607,9 +606,9 @@ angular.module('cmCore')
         };
 
         this.signOwnKeys = function(){
-            cmLogger.debug('cmUserModel.signOwnKeys');
+            //cmLogger.debug('cmUserModel.signOwnKeys');
             return this.verifyIdentityKeys(this.data.identity, true)
-        }
+        };
 
         /**
          * [verifyIdentityKeys Checks for keys that are either signed by a local key or keys that are signed by a key of the former kind and have the same owner as the signing key]
@@ -712,7 +711,7 @@ angular.module('cmCore')
         };
 
         this.bulkReKeying = function(localKeyId, newKeyId){
-            cmLogger.debug('cmUserModel.startBulkReKeying');
+            //cmLogger.debug('cmUserModel.startBulkReKeying');
 
             if(!this.state.is('rekeying')){
                 this.state.set('rekeying');
@@ -951,6 +950,10 @@ angular.module('cmCore')
 
         this.on('update:finished', function(){
             cmBoot.ready.userModel();
+        });
+
+        this.on('account:updated', function(){
+            cmBoot.ready.account();
         });
 
         var signOwnKeys_scheduled = false;

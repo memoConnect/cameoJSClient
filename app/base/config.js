@@ -32,7 +32,7 @@ angular.module('cmConfig',[])
                 'start': {
                     guests: false,
                     routes: ['/start'],
-                    resolveUserModel: true
+                    waitForUserModel: true
                 },
                 'start-download': {
                     guests: false,
@@ -41,7 +41,7 @@ angular.module('cmConfig',[])
                 'start-welcome': {
                     guests: false,
                     routes: ['/start/welcome'],
-                    resolveUserModel: true
+                    waitForUserModel: true
                 },
                 'start-quickstart': {
                     hasCtrl: true,
@@ -51,7 +51,8 @@ angular.module('cmConfig',[])
                 'login': {
                     isDefault: true,
                     css: 'no-header no-footer',
-                    guests: true
+                    guests: true,
+                    waitForFirstBoot: true
                 },
                 'help': {
                     routes: ['/help'],
@@ -112,14 +113,12 @@ angular.module('cmConfig',[])
                         '/authentication/:keyId?',
                         '/authentication/identity/:identityId?'
                     ],
-                    resolveUserModel: true,
+                    waitForUserModel: true,
                     guests: false
                 },
                 'talks': {
-                    resolveUserModel: true
-                },
-                'mediawall': {
-
+                    waitForUserModel: true,
+                    waitForFirstBoot: true
                 },
                 'conversation': {
                     routes:[
@@ -127,21 +126,22 @@ angular.module('cmConfig',[])
                         '/conversation/:conversationId?'
                     ],
                     hasCtrl: true,
-                    resolveUserModel: true
+                    waitForUserModel: true,
+                    waitForFirstBoot: true
                 },
                 'conversation-security': {
                     routes:[
                         '/conversation/:conversationId/security'
                     ],
                     hasCtrl: true,
-                    resolveUserModel: true
+                    waitForUserModel: true
                 },
                 'conversation-recipients': {
                     routes:[
                         '/conversation/:conversationId/recipients'
                     ],
                     hasCtrl: true,
-                    resolveUserModel: true
+                    waitForUserModel: true
                 },
                 'purl': {
                     routes:[
@@ -149,7 +149,7 @@ angular.module('cmConfig',[])
                     ],
                     hasCtrl: true,
                     guests: true,
-                    resolvePurl: true
+                    waitForPurl: true
                 },
                 'purl-security': {
                     routes:[
@@ -157,7 +157,7 @@ angular.module('cmConfig',[])
                     ],
                     hasCtrl: true,
                     guests: true,
-                    resolvePurl: true
+                    waitForPurl: true
                 },
                 'purl-recipients': {
                     routes:[
@@ -165,7 +165,7 @@ angular.module('cmConfig',[])
                     ],
                     hasCtrl: true,
                     guests: true,
-                    resolvePurl: true
+                    waitForPurl: true
                 },
                 'password-lost': {
                     templateUrl: 'routes/password/lost/password-lost.html',
@@ -178,7 +178,7 @@ angular.module('cmConfig',[])
                 'password-code': {
                     templateUrl: 'routes/password/code/password-code.html',
                     routes:[
-                        '/password/code',
+                        '/password/code'
                     ],
                     guests: true
                 },
@@ -209,7 +209,7 @@ angular.module('cmConfig',[])
                         '/contact',
                         '/contacts'
                     ],
-                    resolveUserModel: true
+                    waitForUserModel: true
                 },
                 'contact-request-list': {
                     routes:[
@@ -217,7 +217,8 @@ angular.module('cmConfig',[])
                         '/contact/request'
                     ],
                     hasCtrl: true,
-                    resolveUserModel: true
+                    waitForUserModel: true,
+                    waitForFirstBoot: true
                 },
                 'contact-search':  {
                     routes:['/contact/search']
@@ -267,19 +268,19 @@ angular.module('cmConfig',[])
                     hasCtrl: true,
                     routes: ['/setup/account'],
                     guests: false,
-                    resolveUserModel: true
+                    waitForUserModel: true
                 },
                 'setup-identity':{
                     hasCtrl: true,
                     routes: ['/setup/identity'],
                     guests: false,
-                    resolveUserModel: true
+                    waitForUserModel: true
                 },
                 'setup-keyinfo': {
                     hasCtrl: true,
                     routes: ['/setup/keyinfo'],
                     guests: false,
-                    resolveUserModel: true
+                    waitForUserModel: true
                 },
                 'test': {
                     hasCtrl: true,

@@ -1,5 +1,10 @@
 ## Dev
 
+# WW 31.12.2014
+* app splashscreen + app spinner now visible till routeChangeSuccess /login | /talks & /conversation/:id | /contact/requests
+* fixxed emoji insertion now textarea resize if one full row and emoji insertion
+
+
 #########
 ## RC 0.4.7 - 29.12.2014
 #########
