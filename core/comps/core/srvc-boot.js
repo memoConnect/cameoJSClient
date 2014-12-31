@@ -3,9 +3,9 @@
 angular.module('cmCore')
 .service('cmBoot', [
     'cmObject', 'cmLogger',
-    '$q', '$rootScope', '$document', '$injector', '$route', '$timeout',
+    '$q', '$rootScope', '$document', '$injector', '$timeout',
     function(cmObject, cmLogger,
-             $q, $rootScope, $document, $injector, $route, $timeout) {
+             $q, $rootScope, $document, $injector, $timeout) {
         var promises = {};
 
         function reset(){
@@ -27,7 +27,7 @@ angular.module('cmCore')
         });
 
         $rootScope.$on('$routeChangeSuccess',function(){
-            var currentRoute = $route.current.$$route;
+            var currentRoute = $injector.get('$route').current.$$route;
             if(currentRoute)
                 $rootScope.$broadcast('cmBoot:appSpinner','hide','routeSuccess');
         });
