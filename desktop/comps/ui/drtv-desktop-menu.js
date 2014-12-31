@@ -2,9 +2,9 @@
 
 angular.module('cmDesktopUi').directive('cmDesktopMenu',[
     'cmUserModel', 'cmConfig', 'cmNotify', 'cmUtil',
-    '$location', '$window',
+    '$location', '$window', '$rootScope',
     function (cmUserModel, cmConfig, cmNotify, cmUtil,
-              $location, $window){
+              $location, $window, $rootScope){
         return {
             restrict: 'AE',
             scope: true,
@@ -12,12 +12,14 @@ angular.module('cmDesktopUi').directive('cmDesktopMenu',[
             controller: function($scope){
 
                 $scope.menu = cmConfig.menu;
-                $scope.menuKeys = Object.keys($scope.menu);
+                $scope.menuKeys = Object.keys(cmConfig.menu);
                 $scope.version = cmConfig.version;
                 $scope.menuVisible = false;
 
-                $scope.checkActive = function(urls, ignore){
-                    var arrUrl = urls.split(','),
+                $scope.markQuickstart = $rootScope.markQuickstart || false;
+
+                $scope.checkActive = function(route, urls, ignore){
+                    var arrUrl = !urls ? [route] : urls.split(','),
                         isActive = false,
                         foundIgnore = ignore ? ignore.split(',').some(function(item){
                             return $location.$$url.indexOf(item) >= 0
@@ -33,6 +35,12 @@ angular.module('cmDesktopUi').directive('cmDesktopMenu',[
                 };
 
                 $scope.goTo = function(parentBtn, url, isSub){
+
+                    if(typeof parentBtn.rootScopeCallback == 'string' && typeof $rootScope[parentBtn.rootScopeCallback] == 'function'){
+                        $rootScope[parentBtn.rootScopeCallback]();
+                        return false;
+                    }
+
                     // for extern and performance
                     if('link' in parentBtn){
                         // file:///android_asset/www/index.html#/login

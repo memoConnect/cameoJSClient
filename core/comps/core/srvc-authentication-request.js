@@ -147,14 +147,13 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
                     return false
                 }
                 
-                self.trigger('canceled')
-                delete this.transactionSecret
-
+                self.trigger('canceled');
+                delete this.transactionSecret;
 
                 return  cmApi.broadcast({
                             name:   'authenticationRequest:cancel',
                             data:   {}
-                        }, toIdentityId)
+                        }, toIdentityId);
             },
 
 
@@ -177,7 +176,7 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
                                             cameoId:            fromIdentity.cameoId,
                                             salt:               request.salt
                                         }),
-                    fromKey         =   fromIdentity.keys.find(request.fromKeyId)
+                    fromKey         =   fromIdentity.keys.find(request.fromKeyId);
 
 
                 return  fromKey.verify(hashed_data, request.signature)
@@ -186,13 +185,13 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
                                 self.trigger('verification:successful', {
                                         identity:           fromIdentity,
                                         key:                fromKey,
-                                        transactionSecret:  secret,
-                                })
-                                return $q.when(result)
+                                        transactionSecret:  secret
+                                });
+                                return $q.when(result);
                             },
                             function(reason){
-                                self.trigger('verification:failed')
-                                return $q.reject(reason)
+                                self.trigger('verification:failed');
+                                return $q.reject(reason);
                             }
                         )
             },
@@ -201,7 +200,7 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
             openBulkRequest: function(data){
 
                 if(typeof data == 'object' && 'key1' in data && 'key2' in data){
-                    var scope = $rootScope.$new();l
+                    var scope = $rootScope.$new();
                     scope.data = data;
 
                     var modalId = 'bulk-rekeying-modal';
@@ -215,13 +214,13 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
                     cmModal.open(modalId);
 
                     cmUserModel.one('bulkrekeying:finished',function(){
-                        $rootScope.closeModal('bulk-rekeying-modal');
-                    })
+                        $rootScope.closeModal(modalId);
+                    });
                 }
             }
-        }
+        };
 
-        cmObject.addEventHandlingTo(self)
+        cmObject.addEventHandlingTo(self);
 
 
         /**
@@ -231,12 +230,12 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
 
         cmApi.on('authenticationRequest:start', function(event, request){
 
-            var local_keys = cmUserModel.loadLocalKeys()
+            var local_keys = cmUserModel.loadLocalKeys();
 
             // If there are no local keys, there's nothing to authenticate with:
             if(local_keys.length == 0 ){
-                cmLogger.debug('cmAuthenticationRequest: received request, but no local keys present.')
-                return false // do not remove event binding
+                cmLogger.debug('cmAuthenticationRequest: received request, but no local keys present.');
+                return false; // do not remove event binding
             }
 
 
@@ -410,7 +409,6 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
                                                 */
                                             }
 
-                                            console.log('before send')
                                             //Send a request in return:
                                             self.send(
                                                 data.fromIdentity.id,    //Sender of the initial requests
@@ -452,7 +450,7 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
                     cmModal.create({
                         id:             'authentication-request-canceled',
                         type:           'alert',
-                        'cm-close-btn': false,
+                        'cm-close-btn': false
                     },  is3rdParty
                         ?   '{{"IDENTITY.KEYS.TRUST.MODAL.CANCELED"|cmTranslate}}'
                         :   '{{"IDENTITY.KEYS.AUTHENTICATION.MODAL.CANCELED"|cmTranslate}}')

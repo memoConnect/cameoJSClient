@@ -1,5 +1,7 @@
 'use strict';
 
+// http://fgnass.github.io/spin.js/
+
 angular.module('cmUi').directive('cmLoader',[
     function (){
         return {
@@ -22,18 +24,27 @@ angular.module('cmUi').directive('cmLoader',[
                 $element.addClass(type);
 
                 var opts = {};
-                if($attrs.cmLength)
-                    opts.length = $attrs.cmLength;
-                if($attrs.cmRadius)
-                    opts.radius = $attrs.cmRadius;
                 if($attrs.cmColor) {
-                    if($attrs.cmColor == 'ci-color')
-                        opts.color = '#02BED2';
-                    else
-                        opts.color = $attrs.cmColor;
+
+                    switch($attrs.cmColor){
+                        case 'ci-color':
+                            opts.color = '#02BED2';
+                        break;
+                        case 'inp-grey':
+                            opts.color = '#666666';
+                        break;
+                        default:
+                            opts.color = $attrs.cmColor;
+                    }
                 }
-                if($attrs.cmWidth)
-                    opts.width = $attrs.cmWidth;
+
+                // spinner size
+                if($attrs.cmSize == 'small') {
+                    opts.lines = 10;
+                    opts.length = 4;
+                    opts.width = 4;
+                    opts.radius = 6;
+                }
 
                 if(type =='spinner'){
                     var spinner = new Spinner(opts);

@@ -21,7 +21,7 @@
         </span>
     </li>
     <li ng-click="handleBrowserNotifications()"
-        ng-class="{'is-disabled':isApp()}">
+        ng-class="{'is-disabled':isApp() || !enabledBrowserNotification}">
         <span class="item clearfix">
             <span class="title">
                 <span>{{'SETTINGS.PAGES.NOTIFY.BROWSER_NOTIFICATIONS' | cmTranslate}}</span>

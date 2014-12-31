@@ -41,8 +41,10 @@ cm-modal.modal-image-fullscreen{
 
 .file {
   display: inline-block;
-  background:~"url(gfx/filetype_map_small.png) transparent 0 -@{unknown-default}em";
+  background-image:url('gfx/filetype_map_small.png');
+  background-repeat:no-repeat;
   background-size:~"1em @{filesnum}em";
+  background-position:~"0 -@{unknown-default}em";
   height:1em !important;
   width:1em !important;
   border:0;

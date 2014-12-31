@@ -5,19 +5,13 @@
  * @name cmSystemCheck
  * @description
  */
-angular.module('cmCore').service('cmSystemCheck', [
-    'cmUserModel',
-    'cmObject',
-    'cmApi',
-    'cmVersion',
-    'cmLanguage',
-    'LocalStorageAdapter',
-    'cmLogger',
-    'cmDevice',
-    '$rootScope',
-    '$q',
+angular.module('cmCore')
+.service('cmSystemCheck', [
+    'cmUserModel', 'cmObject', 'cmApi', 'cmVersion', 'cmLanguage',
+    'LocalStorageAdapter', 'cmLogger', 'cmDevice', 'cmBoot',
+    '$rootScope', '$q',
     function(cmUserModel, cmObject, cmApi, cmVersion, cmLanguage,
-             LocalStorageAdapter, cmLogger, cmDevice,
+             LocalStorageAdapter, cmLogger, cmDevice, cmBoot,
              $rootScope, $q){
         var self = this;
 
@@ -25,7 +19,6 @@ angular.module('cmCore').service('cmSystemCheck', [
 
         this.getBrowserInfo = function(){
             //cmLogger.debug('cmSystemCheck.getBrowserInfo');
-
             var deferred = $q.defer();
 
             cmApi.post({
@@ -38,7 +31,7 @@ angular.module('cmCore').service('cmSystemCheck', [
                     // without token
                     if(!cmUserModel.isAuth()){
                         var language = data.languageCode.substr(0,2),
-                            lc       = language == 'de' ? 'de_DE' : 'en_US';
+                            lc       = language == 'de' ? 'de' : 'en';
                         cmLanguage.switchLanguage(lc);
                     }
                     // flag handling
@@ -51,6 +44,8 @@ angular.module('cmCore').service('cmSystemCheck', [
                     } else {
                         $rootScope.clientVersionCheck = true;
                     }
+
+                    cmBoot.ready.browserInfo();
 
                     deferred.resolve();
                 },

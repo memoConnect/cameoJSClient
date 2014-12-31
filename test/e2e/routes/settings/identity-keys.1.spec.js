@@ -1,4 +1,4 @@
-var config = require("../../config-e2e-tests.js")
+var config = require("../../config/specs.js")
 var util = require("../../../lib/e2e/cmTestUtil.js")
 
 describe('Identity key settings: ', function () {
@@ -8,11 +8,14 @@ describe('Identity key settings: ', function () {
     var keyName = "Moeps key"
 
     it('create new user and open identity settings', function () {
-        login = util.createTestUser(undefined, 'identity key settings')
-        util.get('/settings/identity/edit')
+        util.createTestUser(undefined, 'identity key settings')
+        .then(function(loginName){
+            login = loginName
+        })
     })
 
     it('key settings should open when clicked on the according button', function () {
+        util.get('/settings/identity/edit')
         $("[data-qa='btn-identity-keys']").click()
         util.waitForPageLoad('/settings/identity/key/list')
     })
@@ -55,27 +58,15 @@ describe('Identity key settings: ', function () {
     })
 
     describe('with increased timeout', function () {
-        beforeEach(function () {
-            jasmine.getEnv().defaultTimeoutInterval = 30000
-        })
-
-        afterEach(function () {
-            jasmine.getEnv().defaultTimeoutInterval = 30000
-        })
-
+        var expectedTimeout = util.setKeygenerationTimeout(jasmine);
         it('wait for key generation and display key', function () {
-            util.waitForElementVisible("[data-qa='page-save-key']",30000)
+            util.waitForElementVisible("[data-qa='page-save-key']",expectedTimeout)
             expect($("[data-qa='input-key-name']").getAttribute('value')).toBeTruthy()
             util.clearInput("input-key-name")
             $("[data-qa='input-key-name']").sendKeys(keyName)
 
-            /**
-             * test
-             */
             $("body").click();
-
             util.waitAndClickQa("btn-save-key")
-
         })
     })
 
@@ -98,6 +89,12 @@ describe('Identity key settings: ', function () {
             // should contain date
             expect(elements[0].getText()).toMatch(/\d\d\.\d\d\.\d\d\s-\s\d\d:\d\d/)
         })
+
+    })
+
+    it('there should be no info and no footer bubble concerning keys needing authentication.', function(){
+        expect($('[data-qa="bubble-some-key-needs-authentication"').isPresent()).toBe(false)
+        expect($('[data-qa="li-some-key-needs-authentication"').isPresent()).toBe(false)
     })
 
     it('the key should still be there after logout/login', function () {
@@ -119,7 +116,7 @@ describe('Identity key settings: ', function () {
     it('delete key and confirm that it is deleted after logout/login', function () {
 
         util.waitAndClickQa('btn-remove-modal')
-        util.waitAndClickQa('btn-confirm')
+        util.waitAndClickQa('btn-confirm','cm-modal.active')
 
         util.logout()
 
@@ -153,9 +150,18 @@ describe('Identity key settings: ', function () {
 
     it('generate yet another local key', function () {
         util.generateKey(2)
+
+        util.waitForPageLoad('/authentication/*')
+        util.click('btn-cancel-authentication')
+
         util.get('/settings/identity/key/list')
         util.waitForPageLoad('/settings/identity/key/list')
         util.waitForElements("[data-qa='key-list-item']", 2)
+    })
+
+    it('should display info and authenticate footer button, if some key needs authentication.', function(){
+        util.waitForQa('bubble-some-key-needs-authentication')
+        util.waitForQa('li-some-key-needs-authentication')
     })
 
     it('delete test user', function () {

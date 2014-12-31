@@ -16,13 +16,8 @@ cm-footer {
   .w100;
 }
 
-cm-column{
-  .pos-rel;
+cm-column {
   .dib;
-  .vat;
-  //min-width:@cm-app-width;
-  overflow-x:hidden;
-  overflow-y:auto;
   border-right:@cm-border-width @cm-border-grey solid;
 
   &:last-child{
@@ -33,15 +28,32 @@ cm-column{
   }
 }
 
+cm-scrollable {
+  .dbl;
+  height: 100%;
+  overflow-x:hidden;
+  overflow-y:auto;
+}
+
+cm-column , cm-scrollable{
+  .pos-rel;
+  .vat;
+  overflow-x:hidden;
+  overflow-y:auto;
+}
+
 .fixed-layout{
   cm-column{
     .pos-fxd;
     left:0;
     top:@cm-header-height;
-    bottom:0;
+    bottom: 0; //@cm-footer-height;
 
     &.without-header{
       top:0;
+    }
+    &.without-footer {
+      bottom: 0;
     }
   }
 

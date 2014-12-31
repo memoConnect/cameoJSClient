@@ -182,6 +182,7 @@ angular.module('cmCore')
                         })
             };
 
+            // returns a promise, resolved on succes and rejected on failure:
             this.verify = function(data, signature, use_cache){
                 if( 
                         use_cache
@@ -213,7 +214,7 @@ angular.module('cmCore')
                                                     .then(function(result){
                                                         return  result
                                                                 ?   $q.when(result)
-                                                                :   $q.reject('webWorker substitute failed.')
+                                                                :   $q.reject('webWorker substitute failed, result: '+result)
                                                     })
                                         }
                                     )
@@ -255,11 +256,12 @@ angular.module('cmCore')
                                         .then(function(result){
                                             return  result
                                                     ?   $q.when(result)
-                                                    :   $q.reject('webWorker substitute failed.')
+                                                    :   $q.reject('webWorker substitute failed, result: '+result)
                                         })
                             }
                         )
                         .catch(function(reason){
+                            console.log(crypt.encrypt(secret))
                             cmLogger.warn('keyModel.encrypt() failed:'+ reason)
                             return $q.reject(reason)
                         })

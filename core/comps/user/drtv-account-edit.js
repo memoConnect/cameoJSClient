@@ -2,9 +2,9 @@
 
 angular.module('cmUser')
 .directive('cmAccountEdit', [
-    'cmUserModel', 'cmNotify', 'cmCrypt', 'cmLoader', 'cmUtil', 
+    'cmUserModel', 'cmNotify', 'cmCrypt', 'cmLoader', 'cmUtil', 'cmPristine',
     '$q', '$rootScope',
-    function(cmUserModel, cmNotify, cmCrypt, cmLoader, cmUtil, 
+    function(cmUserModel, cmNotify, cmCrypt, cmLoader, cmUtil, cmPristine,
              $q, $rootScope){
         return {
             restrict: 'E',
@@ -16,10 +16,6 @@ angular.module('cmUser')
 
                 $scope.showPasswordChange = false;
                 $scope.showReadOnly = false;
-                $scope.isPristine = true;
-                $rootScope.$on('pristine:false', function(){
-                    $scope.isPristine = false;
-                });
 
                 $scope.togglePasswordChange = function(action){
                     $scope.showPasswordChange = action && action == 'close' || $scope.showPasswordChange ? false : true;
@@ -35,8 +31,11 @@ angular.module('cmUser')
                 };
 
                 function reset(){
+                    var phoneNumber = $scope.account.phoneNumber ? $scope.account.phoneNumber.value : '';
+
                     $scope.formData = {
-                        phoneNumber: $scope.account.phoneNumber ? $scope.account.phoneNumber.value : '',
+                        phoneNumber: phoneNumber,
+                        mergedPhoneNumber: phoneNumber,
                         email: $scope.account.email ? $scope.account.email.value : '',
                         oldPassword: '',
                         password: ''
@@ -53,7 +52,8 @@ angular.module('cmUser')
 
                     function checkPhoneNumber() {
                         var defValue = $scope.account.phoneNumber,
-                            value = $scope.formData.phoneNumber;
+                            value = $scope.formData.mergedPhoneNumber;
+
                         if (value != undefined
                          && (!defValue || (defValue && value != defValue.value))) {
                             objectChange.phoneNumber = value;
@@ -95,8 +95,6 @@ angular.module('cmUser')
                     checkEmail();
                     checkPassword();
 
-                    console.log(objectChange)
-
                     if($scope.cmForm.$valid !== false && Object.keys(objectChange).length > 0){
                         deferred.resolve(objectChange);
                     } else {
@@ -107,8 +105,10 @@ angular.module('cmUser')
                 };
 
                 $scope.saveAccount = function(){
-                    if($scope.isPristine)
+                    if($scope.isPristine){
                         $scope.goTo('/settings');
+                        return false;
+                    }
 
                     if(loader.isIdle())
                         return false;
@@ -117,12 +117,11 @@ angular.module('cmUser')
 
                     $scope.validateForm().then(
                         function(objectChange){
-
                             cmUserModel.updateAccount(objectChange)
                             .then(
                                 function(){
                                     loader.stop();
-                                    $scope.isPristine = true;
+                                    cmPristine.resetView($scope);
                                     $scope.togglePasswordChange('close');
                                 },
                                 function(result){
@@ -146,6 +145,11 @@ angular.module('cmUser')
                         }
                     )
                 };
+
+                /**
+                 * Pristine Service Handling
+                 */
+                cmPristine.initView($scope);
             }
         }
     }

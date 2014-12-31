@@ -17,13 +17,19 @@ module.exports = function(grunt, options){
                     }
                 },
 
-                iOS: {
+                'ios': {
                     options: {
                         file: 'dist/dl/' + options.globalCameoBuildConfig.phonegap.phonegapBaseFilename + '.ipa'
                     }
                 },
 
-                android: {
+                'ios-manually': {
+                    options: {
+                        file: 'dist/dl/cameoNet-stage-0.4.6.224.ipa'
+                    }
+                },
+
+                'android': {
                     options: {
                         file: 'dist/dl/' + options.globalCameoBuildConfig.phonegap.phonegapBaseFilename + '.apk'
                     }

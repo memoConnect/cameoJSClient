@@ -12,6 +12,7 @@ angular.module('cameoClient', [
     'cmCore',
     'cmPhonegap',
     'cmUi',
+    'cmSetup',
     'cmUser',
     'cmAppUser',
     'cmAppConversations',
@@ -50,7 +51,7 @@ angular.module('cameoClient', [
             .cacheLangFiles( cmConfigProvider.get('cacheLangFiles') )
             .supportedLanguages( cmConfigProvider.get('supportedLanguages') )
             .pathToLanguages( cmConfigProvider.get('pathToLanguages') )
-            .preferredLanguage('en_US')   //for now
+            .preferredLanguage('en')
             .useLocalStorage()
 
         cmCallbackQueueProvider
@@ -164,13 +165,19 @@ angular.module('cameoClient', [
                     return cmBoot.isReady.i18n();
                 };
 
-                if (angular.isDefined(_settings_['resolveUserModel']) && _settings_['resolveUserModel'] == true){
+                if (angular.isDefined(_settings_['waitForFirstBoot']) && _settings_['waitForFirstBoot'] == true){
+                    routeParams.resolve.firstBoot = function(cmBoot) {
+                        return cmBoot.isReady.firstBoot();
+                    }
+                }
+
+                if (angular.isDefined(_settings_['waitForUserModel']) && _settings_['waitForUserModel'] == true){
                     routeParams.resolve.userModel = function(cmBoot) {
                         return cmBoot.isReady.userModel();
                     }
                 }
 
-                if (angular.isDefined(_settings_['resolvePurl']) && _settings_['resolvePurl'] == true){
+                if (angular.isDefined(_settings_['waitForPurl']) && _settings_['waitForPurl'] == true){
                     routeParams.resolve.resolveData = function(cmBoot, $route) {
                         return cmBoot.isReady.purl($route.current.params.purlId);
                     }
@@ -209,9 +216,14 @@ angular.module('cameoClient', [
 ])
 // app run handling
 .run([
-    'cmNetworkInformation', 'cmPushNotificationAdapter', 'cmPhonegap', 'cmLauncher',
-    function(cmNetworkInformation, cmPushNotificationAdapter, cmPhonegap, cmLauncher){
+    'cmSslCertificateChecker', 'cmNetworkInformation', 'cmPushNotificationAdapter',
+    'cmPhonegap', 'cmLauncher',
+    function(cmSslCertificateChecker, cmNetworkInformation, cmPushNotificationAdapter,
+             cmPhonegap, cmLauncher){
+
         cmPhonegap.isReady(function(){
+            // check ssl certificate
+            cmSslCertificateChecker.init();
             // check internet connection
             cmNetworkInformation.init();
             // register device for pushnotification
@@ -239,27 +251,40 @@ angular.module('cameoClient', [
 }])
 // router passing wrong route calls
 .run([
-    '$rootScope', '$location',
+    '$rootScope', '$location', '$route',
     'cmUserModel',
-    function($rootScope, $location,
+    function($rootScope, $location, $route,
              cmUserModel){
-        $rootScope.$on('$routeChangeSuccess', function(){
 
-            // expections
-            var path_regex = /^(\/login|\/registration|\/systemcheck|\/terms|\/disclaimer|\/404|\/version|\/purl\/[a-zA-Z0-9]{1,})$/;
-            var path = $location.$$path;
-            // exists none token then otherwise to login
-            if (cmUserModel.isAuth() === false){
-                if (!path_regex.test(path)) {
-                    $rootScope.goTo('/login',true);
-                }
-            // when token exists
-            } else if ((path == '/login' || path == '/registration') && cmUserModel.isGuest() !== true) {
-                $rootScope.goTo('/talks',true);
-            // logout route
-            } else if (path == '/logout'){
-                cmUserModel.doLogout(true,'app.js logout-route');
+        function checkAccess(){
+            var route = $route.current.$$route,
+                guestVisibility =
+                    route
+                    && 'guests' in route
+                    ? route.guests
+                    : false,
+                path = $location.$$path;
+
+            switch(true){
+                // exists none token then otherwise to login
+                case cmUserModel.isAuth() === false:
+                    if (!guestVisibility){
+                        $rootScope.goTo('/login',true);
+                    }
+                break;
+                // when token exists
+                case ((path == '/login' || path == '/registration') && cmUserModel.isGuest() !== true):
+                    $rootScope.goTo('/talks',true);
+                break;
+                // logout route
+                case (path == '/logout'):
+                    cmUserModel.doLogout(true,'app.js logout-route');
+                break;
             }
+        }
+
+        $rootScope.$on('$locationChangeSuccess', function(event){
+            checkAccess();
         });
     }
 ])

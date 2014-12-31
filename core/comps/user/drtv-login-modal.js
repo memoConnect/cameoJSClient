@@ -20,7 +20,7 @@ angular.module('cmUser').directive('cmLoginModal', [
                 var loader = new cmLoader($scope);
                 $scope.alertState = '';
                 $scope.passwordType = 'password';
-                $scope.loginData = cmConfig.autologin;
+                $scope.loginData = cmConfig.autoLoginData;
 
                 $scope.formData = {
                     autologin:'none'

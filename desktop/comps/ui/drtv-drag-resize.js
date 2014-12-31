@@ -51,9 +51,6 @@ angular.module('cmDesktopUi')
                 var dragged = false;
                 var startY = 0;
 
-
-                console.log(target,minHeight,maxHeight)
-
                 // just toogle
 
                 function callback_dblclick(){

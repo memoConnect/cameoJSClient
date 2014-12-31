@@ -32,11 +32,11 @@
 <form name="cmForm" novalidate autocomplete="off">
     <article class="content">
         <label>{{'CONTACT.PLACEHOLDER.CAMEOID'|cmTranslate}}</label>
-        <div class="cm-input-ctn cm-input-readonly">
+        <div class="cm-input-ctn is-selectable-all with-inside-left-icon" data-qa="ctn-cameoid">
             <i class="fa cm-rhino-positive"></i>
-            <input
-                tabindex="1" data-qa="input-cameoId" disabled
-                type="text" name="cameoId" ng-model="identity.cameoId" />
+            <span class="without-input">
+                {{identity.cameoId}}
+            </span>
         </div>
     </article>
 
@@ -61,6 +61,7 @@
 
     <cm-form-phonenumber
         ng-model="formData.phoneNumber"
+        ng-model-out="formData.mergedPhoneNumber"
         cm-tabindex="3"
         cm-label="CONTACT.PLACEHOLDER.PHONENUMBER"
         cm-info="CONTACT.INFO.INVALID.PHONENUMBER"

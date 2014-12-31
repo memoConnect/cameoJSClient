@@ -1,15 +1,17 @@
-var config = require("../../config-e2e-tests.js")
+var config = require("../../config/specs.js")
 var util = require("../../../lib/e2e/cmTestUtil.js")
 
 describe('Route Talks:', function () {
-    var ptor = util.getPtorInstance()
+    var ptor = util.getPtorInstance(),
+        testUser
 
     afterEach(function() { util.stopOnError() });
 
-    it('should be at "#/start".', function () {
-        util.login()
-        util.expectCurrentUrl('#/start')
-
+    it('should create testUser', function(){
+        util.createTestUser(undefined, 'route talks')
+        .then(function(loginName){
+            testUser = loginName
+        })
     })
 
     it('should go to talks', function(){
@@ -49,5 +51,13 @@ describe('Route Talks:', function () {
         // wait for browser to scroll, todo: find a better way to do this
         $("[data-qa='new-conversation-btn']").click()
         util.waitForPageLoad("/conversation/new")
+    })
+
+    it('should logout', function(){
+        util.logout();
+    })
+
+    it('should delete testUser', function(){
+        util.deleteTestUser(testUser)
     })
 })

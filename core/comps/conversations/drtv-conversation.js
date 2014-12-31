@@ -128,24 +128,24 @@ angular.module('cmConversations')
                                 filesForMessage = files;
                             deferred.resolve()
                         },
-                        function(errorCode, error, header){
+                        function(data){
                             $scope.isSending = false;
                             $scope.isSendingAbort = true;
 
-                            if(!errorCode){
-                                deferred.reject('problem with prepare file upload');
+                            if(!data.errorCode){
+                                deferred.reject('problem with file and none errorCode is give');
                             } else {
                                 deferred.reject('problem with prepare file upload');
 
-                                cmNotify.warn(errorCode, {
+                                cmNotify.warn(data.errorCode, {
                                     ttl: 0,
-                                    i18n: cmErrorCodes.toI18n(errorCode, {
-                                        error: error,
-                                        header: header
+                                    i18n: cmErrorCodes.toI18n(data.errorCode, {
+                                        error: data.error,
+                                        header: data.headers
                                     })
                                 });
 
-                                deferred.reject(errorCode);
+                                deferred.reject(data.errorCode);
                             }
                         }
                     );
@@ -208,14 +208,23 @@ angular.module('cmConversations')
                                                                 ?   new_message
                                                                     .setText($scope.newMessageText)
                                                                     .addFiles(filesForMessage)
-                                                                    .encrypt(passphrase)
-                                                                    .save()
+                                                                    .getSignatures()
+                                                                    .then(function(){
+                                                                        return new_message.encrypt(passphrase)
+                                                                    })
+                                                                    .then(function(){
+                                                                        return new_message.save()
+                                                                    })
 
                                                                 :   new_message
                                                                     .setText($scope.newMessageText)
                                                                     .addFiles(filesForMessage)
                                                                     .setPublicData(['text','fileIds'])
-                                                                    .save()  
+                                                                    .revealSignatures()
+                                                                    .getSignatures()
+                                                                    .then(function(){
+                                                                        return new_message.save()
+                                                                    })
                                                     })
 
                                         })
@@ -308,7 +317,7 @@ angular.module('cmConversations')
                     }
 
                     function callback_password_missing(){
-                        // switcher for purl and conversation, @Todo: vereinheitlichen
+                        // switcher for purl and conversation
                         var settingsLinker = {type:'',typeId:''};
                         if('purlId' in $routeParams){
                             settingsLinker.type = 'purl';

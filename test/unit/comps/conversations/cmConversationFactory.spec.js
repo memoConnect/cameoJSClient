@@ -9,28 +9,29 @@ describe('cmConversationFactory', function(){
         tmpInstance_1 = {id:'moep_1',data:{}},
         tmpInstance_2 = {id:'moep_2',data:{}};
 
-    beforeEach(module('cmConfig'))
-    beforeEach(module('cmPhonegap'))
-    beforeEach(module('cmConversations'))
-    beforeEach(module('cmCore',[
-        'cmApiProvider',
-        function(cmApiProvider){
-            cmApiProvider
-                .setWithoutApiUrl()
-        }
-    ]))
-    beforeEach(inject(function(_cmConversationFactory_, _$q_, _$httpBackend_, _$rootScope_, _$timeout_){
-        cmConversationFactory   = _cmConversationFactory_
-        $q                      = _$q_
-        $httpBackend            = _$httpBackend_
-        $rootScope              = _$rootScope_
-        $timeout                = _$timeout_
-    }))
+    beforeEach(function(){
+        module('cmConfig')
+        module('cmPhonegap')
+        module('cmConversations')
+        module('cmCore',[
+            'cmApiProvider',
+            function(cmApiProvider){
+                cmApiProvider
+                    .setWithoutApiUrl()
+            }
+        ])
+        inject(function(_cmConversationFactory_, _$q_, _$httpBackend_, _$rootScope_, _$timeout_){
+            cmConversationFactory   = _cmConversationFactory_
+            $q                      = _$q_
+            $httpBackend            = _$httpBackend_
+            $rootScope              = _$rootScope_
+            $timeout                = _$timeout_
+        })
+    })
 
     it('should exist', function(){
         expect(cmConversationFactory).toBeDefined()
     })
-
 
     it('should have a state.', function(){
         expect(cmConversationFactory.state).toBeDefined()
@@ -50,9 +51,11 @@ describe('cmConversationFactory', function(){
         })
 
         cmConversationFactory.getList(7, 0)
+
         expect(cmConversationFactory.state.is('loading')).toBe(true)
 
         $httpBackend.flush()
+
         //Resolve callbackQueue:
         $timeout.flush(10000)
         $timeout.flush(10000)
@@ -61,8 +64,6 @@ describe('cmConversationFactory', function(){
         $timeout.flush(10000)
         $timeout.flush(10000)
         $timeout.flush(10000)
-
-
 
         expect(cmConversationFactory.state.is('loading')).toBe(false)
         expect(cmConversationFactory.length).toBe(7)
@@ -88,10 +89,7 @@ describe('cmConversationFactory', function(){
         $timeout.flush(10000)
         $timeout.flush(10000)
 
-        
+
         expect(cmConversationFactory.length).toBe(12)
-
     })
-
-
 })

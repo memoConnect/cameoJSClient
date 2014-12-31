@@ -10,5 +10,7 @@ angular.module('cmRoutes').controller('StartQuickstartCtrl', [
         if(cmHistory.comesFrom('/start')){
             $scope.startRoute = true;
         }
+
+        $rootScope.markQuickstart = false;
     }
 ]);

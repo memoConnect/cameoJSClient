@@ -2,7 +2,9 @@ angular.module('cmConfig',[])
 .provider('cmConfig', [
     function(){
         var self = {
+            target: '<%= currentTarget %>',
             restApi: '<%= currentApiUrl %>',
+            defaultApiVersion: '<%= defaultApiVersion %>',
             version: '<%= currentVersion %>',
 
             commitSize: 50,
@@ -21,7 +23,7 @@ angular.module('cmConfig',[])
             browserNotificationTimeout: 5000,
             
             token: null,
-            supportedLanguages: ['de_DE', 'en_US'],
+            supportedLanguages: ['de', 'en'],
             pathToLanguages: 'i18n',
             cacheLangFiles: false,
             errorOnTodoInI18n: ('<%= errorOnTodoInI18n %>' == 'true'),
@@ -30,7 +32,7 @@ angular.module('cmConfig',[])
                 'start': {
                     guests: false,
                     routes: ['/start'],
-                    resolveUserModel: true
+                    waitForUserModel: true
                 },
                 'start-download': {
                     guests: false,
@@ -39,22 +41,21 @@ angular.module('cmConfig',[])
                 'start-welcome': {
                     guests: false,
                     routes: ['/start/welcome'],
-                    resolveUserModel: true
+                    waitForUserModel: true
                 },
                 'start-quickstart': {
                     hasCtrl: true,
                     guests: false,
                     routes: ['/start/quickstart']
                 },
-                'start-keyinfo': {
-                    guests: false,
-                    hasCtrl: true,
-                    routes: ['/start/keyinfo'],
-                    resolveUserModel: true
-                },
                 'login': {
                     isDefault: true,
                     css: 'no-header no-footer',
+                    guests: true,
+                    waitForFirstBoot: true
+                },
+                'help': {
+                    routes: ['/help'],
                     guests: false
                 },
                 'settings': {
@@ -112,14 +113,12 @@ angular.module('cmConfig',[])
                         '/authentication/:keyId?',
                         '/authentication/identity/:identityId?'
                     ],
-                    resolveUserModel: true,
+                    waitForUserModel: true,
                     guests: false
                 },
                 'talks': {
-                    resolveUserModel: true
-                },
-                'mediawall': {
-
+                    waitForUserModel: true,
+                    waitForFirstBoot: true
                 },
                 'conversation': {
                     routes:[
@@ -127,21 +126,22 @@ angular.module('cmConfig',[])
                         '/conversation/:conversationId?'
                     ],
                     hasCtrl: true,
-                    resolveUserModel: true
+                    waitForUserModel: true,
+                    waitForFirstBoot: true
                 },
                 'conversation-security': {
                     routes:[
                         '/conversation/:conversationId/security'
                     ],
                     hasCtrl: true,
-                    resolveUserModel: true
+                    waitForUserModel: true
                 },
                 'conversation-recipients': {
                     routes:[
                         '/conversation/:conversationId/recipients'
                     ],
                     hasCtrl: true,
-                    resolveUserModel: true
+                    waitForUserModel: true
                 },
                 'purl': {
                     routes:[
@@ -149,7 +149,7 @@ angular.module('cmConfig',[])
                     ],
                     hasCtrl: true,
                     guests: true,
-                    resolvePurl: true
+                    waitForPurl: true
                 },
                 'purl-security': {
                     routes:[
@@ -157,7 +157,7 @@ angular.module('cmConfig',[])
                     ],
                     hasCtrl: true,
                     guests: true,
-                    resolvePurl: true
+                    waitForPurl: true
                 },
                 'purl-recipients': {
                     routes:[
@@ -165,7 +165,31 @@ angular.module('cmConfig',[])
                     ],
                     hasCtrl: true,
                     guests: true,
-                    resolvePurl: true
+                    waitForPurl: true
+                },
+                'password-lost': {
+                    templateUrl: 'routes/password/lost/password-lost.html',
+                    routes:[
+                        '/password/lost',
+                        '/password'
+                    ],
+                    guests: true
+                },
+                'password-code': {
+                    templateUrl: 'routes/password/code/password-code.html',
+                    routes:[
+                        '/password/code'
+                    ],
+                    guests: true
+                },
+                'password-reset': {
+                    templateUrl: 'routes/password/reset/password-reset.html',
+                    routes:[
+                        '/password/reset/:resetId',
+                        '/passwordReset/:resetId'
+                    ],
+                    hasCtrl: true,
+                    guests: true
                 },
                 'registration': {
                     guests: true
@@ -185,7 +209,7 @@ angular.module('cmConfig',[])
                         '/contact',
                         '/contacts'
                     ],
-                    resolveUserModel: true
+                    waitForUserModel: true
                 },
                 'contact-request-list': {
                     routes:[
@@ -193,7 +217,8 @@ angular.module('cmConfig',[])
                         '/contact/request'
                     ],
                     hasCtrl: true,
-                    resolveUserModel: true
+                    waitForUserModel: true,
+                    waitForFirstBoot: true
                 },
                 'contact-search':  {
                     routes:['/contact/search']
@@ -209,7 +234,8 @@ angular.module('cmConfig',[])
                     hasCtrl: true
                 },
                 'verification': {
-                    routes:['/verification/:secret']
+                    routes:['/verification/:secret'],
+                    hasCtrl: true
                 },
                 'server_down' : {
                     templateUrl: 'routes/landingpages/server_down.html'
@@ -237,12 +263,33 @@ angular.module('cmConfig',[])
                     hasCtrl: true,
                     templateUrl: 'routes/error/error.html',
                     guests: true
+                },
+                'setup-account':{
+                    hasCtrl: true,
+                    routes: ['/setup/account'],
+                    guests: false,
+                    waitForUserModel: true
+                },
+                'setup-identity':{
+                    hasCtrl: true,
+                    routes: ['/setup/identity'],
+                    guests: false,
+                    waitForUserModel: true
+                },
+                'setup-keyinfo': {
+                    hasCtrl: true,
+                    routes: ['/setup/keyinfo'],
+                    guests: false,
+                    waitForUserModel: true
+                },
+                'test': {
+                    hasCtrl: true,
+                    guests: false,
+                    routes: ['/test']
                 }
             },
 
-            appLinks: JSON.parse('<%= appLinks %>'),
-            appProtocol: '<%= appProtocol %>',
-            appIcon: '<%= appIcon %>',
+            static: JSON.parse('<%= static %>'),
 
             autoLoginData: {
                 'Dumpuser local': {
@@ -256,13 +303,13 @@ angular.module('cmConfig',[])
             },
 
             menu: {
-                'conversation/new': {i18n:'MENU.NEW_TALK', icon:'cm-new-talk'},
+                'conversation/new': {i18n:'MENU.NEW_TALK', icon:'cm-new-talk', rootScopeCallback:'createNewConversation', 'data-qa':'menu-btn-new-conversation'},
                 'contact/create': {i18n:'MENU.NEW_CONTACT', icon:'cm-new-contact'},
                 'settings/identity/key/list': {i18n:'MENU.OWN_KEYS', icon:'cm-key'},
                 'contact/request/list': {'data-qa':'btn-menu-contact-requests', i18n:'MENU.REQUESTS', icon:'cm-new-contact-query', css:'cm-menu-notify qa-btn-request-notify', drtv:'cm-friend-request-counter'},
                 'settings': {i18n:'MENU.SETTINGS', icon:'cm-settings'},
-                'start/quickstart': {i18n:'START.QUICKSTART.HEADLINE', icon:'cm-info'}
-            },
+                'help': {i18n:'MENU.HELP', icon:'cm-info', 'data-qa':'btn-menu-help'}
+			},
 
             footer: {
                 'talks': {i18n:'DRTV.FOOTER.TALKS', icon:'cm-talk'},
@@ -278,6 +325,11 @@ angular.module('cmConfig',[])
                 'app': {i18n:'SETTINGS.APP', icon:'cm-fix'},
                 'contracts': {i18n:'SETTINGS.CONTRACTS', icon:'cm-clipboard', disabled:true},
                 'about': {i18n:'SETTINGS.PAGES.ABOUT_US.TITLE', icon:'cm-rhino-positive'}
+            },
+
+            routeHelp: {
+                'start/quickstart': {i18n:'START.QUICKSTART.HEADLINE', icon:'cm-info', 'data-qa':'btn-help-quickstart'},
+                'support': {i18n:'HELP.LABEL.SUPPORT',icon:'cm-rhino-bubble-glyph',externLink:'http://support.cameonet.de', 'data-qa':'btn-help-support'}
             }
         };
         // performance page
@@ -305,7 +357,7 @@ angular.module('cmConfig',[])
             autoLogin: ('<%= autoLogin %>' == 'true'),
             loadingBar: ('<%= loadingBar %>' == 'true'),
             enableDebug: ('<%= enableDebug %>' == 'true')
-        }
+        };
 
         this.get = function(key){
             return self[key];
@@ -313,7 +365,7 @@ angular.module('cmConfig',[])
 
         this.$get = function () {
             return self;
-        }
+        };
     }
 ])
 

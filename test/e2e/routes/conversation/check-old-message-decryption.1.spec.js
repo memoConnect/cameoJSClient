@@ -1,4 +1,4 @@
-var config = require("../../config-e2e-tests.js")
+var config = require("../../config/specs.js")
 var util = require("../../../lib/e2e/cmTestUtil.js")
 
 console.log('test removed - check old message decryption')
@@ -28,7 +28,10 @@ xdescribe('Route Conversation - Check Old Message Decryption: ', function() {
     }
 
     it('should create a test user', function(){
-       testUser = util.createTestUser(undefined,'check-old-message-decryption')
+       util.createTestUser(undefined,'check-old-message-decryption')
+        .then(function(loginName){
+            testUser = loginName
+        })
     })
 
 

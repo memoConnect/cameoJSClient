@@ -2,10 +2,10 @@
 // TODO: doku and tests
 angular.module('cmCore')
 .service('cmBoot', [
-    'cmObject',
-    '$q', '$rootScope', '$document', '$injector',
-    function(cmObject,
-             $q, $rootScope, $document, $injector) {
+    'cmObject', 'cmLogger',
+    '$q', '$rootScope', '$document', '$injector', '$timeout',
+    function(cmObject, cmLogger,
+             $q, $rootScope, $document, $injector, $timeout) {
         var promises = {};
 
         function reset(){
@@ -21,29 +21,22 @@ angular.module('cmCore')
             reset();
         });
 
-        $rootScope.$on('appSpinner', function(event, action){
-            // hide app spinner
+        $rootScope.$on('cmBoot:appSpinner', function(event, action, where){
             angular.element($document[0].querySelector('.app-spinner'))
                 .css('display',action == 'hide'?'none':null);
         });
 
-        function onAllPromises(){
-            var allPromises = Object.getOwnPropertyNames(promises).map(function(key) {
-                return promises[key].promise;
-            });
-
-            $q.all(allPromises)
-            .then(function(){
-                $rootScope.$broadcast('appSpinner','hide');
-            });
-        }
+        $rootScope.$on('$routeChangeSuccess',function(){
+            var currentRoute = $injector.get('$route').current.$$route;
+            if(currentRoute)
+                $rootScope.$broadcast('cmBoot:appSpinner','hide','routeSuccess');
+        });
 
         var self = {
             init: {
                 userModel: function(){
                     if(!('userModel' in promises)){
                         promises.userModel = $q.defer();
-                        onAllPromises();
 
                         self.on('userModel:ready',function(){
                             promises.userModel.resolve();
@@ -56,7 +49,6 @@ angular.module('cmCore')
                 i18n: function(){
                     if(!('i18n' in promises)){
                         promises.i18n = $q.defer();
-                        onAllPromises();
 
                         $rootScope.$on('$translateLoadingSuccess', function(){
                             promises.i18n.resolve();
@@ -64,6 +56,17 @@ angular.module('cmCore')
                     }
 
                     return promises.i18n.promise;
+                },
+                firstBoot: function(){
+                    promises.firstBoot = $q.when();
+                    // propably waiting for account, browserinfo etc.
+
+                    //$timeout(function(){
+                    //    console.log('firstboot ready')
+                    //    promises.firstBoot.resolve();
+                    //},2000);
+
+                    return promises.firstBoot.promise;
                 },
                 userModel: function(){
                     self.init.userModel();
@@ -77,9 +80,17 @@ angular.module('cmCore')
 
             ready: {
                 userModel: function(){
+                    //cmLogger.debug('usermodel ready')
+
                     self.init.userModel();
 
                     self.trigger('userModel:ready');
+                },
+                account: function(){
+                    //cmLogger.debug('account ready')
+                },
+                browserInfo: function(){
+                    //cmLogger.debug('browserinfo ready')
                 }
             }
         };

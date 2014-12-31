@@ -34,7 +34,6 @@ angular.module('cmCore')
             isAuth = false,
             initialize = ''; // empty, run, done ! important for isAuth check
 
-
         cmObject.addEventHandlingTo(this);
 
         this.reset = function(){
@@ -150,7 +149,7 @@ angular.module('cmCore')
 
                     self.importData(identity, accountData.identities);
                     self.importAccount(accountData);
-                    self.setAppSettings(accountData)
+                    self.setAppSettings(accountData);
 
                     // check device for pushing
                     cmPushNotificationAdapter.checkRegisteredDevice();
@@ -224,7 +223,7 @@ angular.module('cmCore')
                                     switch(response.status){
                                         case 0:
                                             cmLogger.debug('cmUserModel:init:failed:0');
-                                            $rootScope.$broadcast('connection:failed', function(){
+                                            $rootScope.$broadcast('cmConnectionHandler:failed', function(){
                                                 self.loadIdentity(accountData);
                                             });
                                             return false;
@@ -263,19 +262,25 @@ angular.module('cmCore')
             return this;
         };
 
+        this.getAccount = function(){
+            return this.data.account;
+        };
+
         this.importAccount = function(data){
+            //cmLogger.debug('cmUserModel.importAccount');
+
             this.data.account.loginName = data.loginName || this.data.account.loginName;
 
             if(typeof data.email != 'string') {
                 this.data.account.email = data.email || this.data.account.email;
             } else {
-                this.data.account.email = {value:data.email};
+                this.data.account.email = {value:data.email,isVerified:false};
             }
 
             if(typeof data.phoneNumber != 'string') {
                 this.data.account.phoneNumber = data.phoneNumber || this.data.account.phoneNumber;
             } else {
-                this.data.account.phoneNumber = {value:data.phoneNumber};
+                this.data.account.phoneNumber = {value:data.phoneNumber,isVerified:false};
             }
 
             this.trigger('account:updated');
@@ -284,8 +289,7 @@ angular.module('cmCore')
         this.updateAccount = function(newAccountData){
             //cmLogger.debug('cmUserModel.updateAccount');
 
-            return cmAuth.putAccount(newAccountData)
-            .then(
+            return cmAuth.putAccount(newAccountData).then(
                 function(){
                     self.importAccount(newAccountData);
                 }
@@ -410,8 +414,7 @@ angular.module('cmCore')
          * @returns {*}
          */
         this.storeKey = function(key){
-            var local_keys      = this.loadLocalKeys() || new cmKeyFactory(),
-                matching_key    = local_keys.find(key);
+            var local_keys      = this.loadLocalKeys() || new cmKeyFactory()
 
             local_keys.create(key.exportData(), true);
 
@@ -531,25 +534,39 @@ angular.module('cmCore')
             return  cmCrypt.hashObject(dataObject)
         };
 
+        this.signData = function(data){
+            return  $q.all(this.loadLocalKeys().map(function(signingKey){                
+                        return  signingKey.sign(data)
+                                .then(function(signature){
+                                    return  $q.when({
+                                                keyId   : signingKey.id,
+                                                content : signature 
+                                            })
+                                })
+                    }))
+        }
+
         this.signPublicKey = function(keyToSign, keyToSignFingerprint, identity){
-            // cmLogger.debug('cmUserModel.signPublicKey');
+            //cmLogger.debug('cmUserModel.signPublicKey');
 
             identity = identity || self.data.identity
 
             if(!(keyToSign instanceof cmKey) || (keyToSign.getFingerprint() !== keyToSignFingerprint)){
                 self.trigger('signatures:cancel');
-                return $q.reject()
+                return $q.reject();
             }
 
-            return  $q.all(this.loadLocalKeys().map(function(signingKey){
-                        //Keys should not sign themselves
-                        if(signingKey.id == keyToSign.id && (signingKey.getFingerprint() == keyToSign.getFingerprint())){
+            var localKeys = this.loadLocalKeys();
+
+            return  $q.all(localKeys.map(function(signingKey){
+                        // Keys should not sign themselves
+                        if(!signingKey.id || signingKey.id == keyToSign.id || (signingKey.getFingerprint() == keyToSign.getFingerprint())){
                             self.trigger('signatures:cancel');
                             //cmLogger.debug('cmUserModel.signPublicKey() failed; key tried to sign itself.')
                             return $q.when(false);
                         }
 
-                        //Dont sign twice:
+                        // Dont sign twice:
                         if(keyToSign.signatures.some(function(signature){ return signature.keyId == signingKey.id })){
                             self.trigger('signatures:cancel');
                             //cmLogger.debug('cmUserModel.signPublicKey() failed; dublicate signature.')
@@ -558,7 +575,7 @@ angular.module('cmCore')
 
                         cmLogger.debug('cmUserModel.signPublicKey: signing...')
 
-                        return  signingKey.sign(self.getTrustToken(keyToSign, identity.cameoId))
+                        return signingKey.sign(self.getTrustToken(keyToSign, identity.cameoId))
                                 .then(function(signature){
                                     return cmAuth.savePublicKeySignature(signingKey.id, keyToSign.id, signature)
                                 })
@@ -589,19 +606,21 @@ angular.module('cmCore')
         };
 
         this.signOwnKeys = function(){
-            cmLogger.debug('cmUserModel.signOwnKeys');
+            //cmLogger.debug('cmUserModel.signOwnKeys');
             return this.verifyIdentityKeys(this.data.identity, true)
-        }
+        };
 
         /**
          * [verifyIdentityKeys Checks for keys that are either signed by a local key or keys that are signed by a key of the former kind and have the same owner as the signing key]
          * @param  {cmIdentitymodel} identity [description]
          * @return {cmKeyFactory}   cmKeyFactory returning all transitively trusted keys of identity. Users local keys are assumed to be trusted.
          */
+
         this.verifyIdentityKeys = function(identity, sign, use_cache){
             //cmLogger.debug('cmUserModel.verifyIdentityKeys');
 
-            identity = identity || self.data.identity
+            identity            = identity || self.data.identity
+            var own_identity    = self.data.identity
 
             if(sign && use_cache){
                 cmLogger.error('Tried to sign keys relying on cache.')
@@ -609,14 +628,17 @@ angular.module('cmCore')
             }
 
             if(!identity.keys)
-                return $q.when([]);
+                return $q.when([])
+
+            if(!own_identity.keys)
+                return $q.when([])
 
             var local_keys = this.loadLocalKeys()
 
             return  $q.when()
                     .then(function(){
-                        return  self.data.identity.keys.getTransitivelyTrustedKeys(local_keys, function trust(trusted_key, key){
-                                    return trusted_key.verifyKey(key, self.getTrustToken(key, self.data.identity.cameoId), use_cache)
+                        return  own_identity.keys.getTransitivelyTrustedKeys(local_keys, function trust(trusted_key, key){
+                                    return trusted_key.verifyKey(key, self.getTrustToken(key, own_identity.cameoId), use_cache)
                                 })
                     })
                     .then(function(own_ttrusted_keys){
@@ -625,6 +647,7 @@ angular.module('cmCore')
                                 });
                     })
                     .then(function(ttrusted_keys){
+
 
                         //looks for keys that are transitively trusted but not yet signed by all local keys:
                         var unsigned_ttrusted_keys  =   ttrusted_keys.filter(function(ttrusted_key){
@@ -635,6 +658,7 @@ angular.module('cmCore')
                                                                     })
                                                         })
 
+
                         if(sign != true || unsigned_ttrusted_keys.length == 0)
                             return $q.when(ttrusted_keys)
 
@@ -643,7 +667,9 @@ angular.module('cmCore')
                         $q.all(
                             unsigned_ttrusted_keys.map(function(ttrusted_key){
                                 //console.info('signing: '+ttrusted_key.name)
-                                return self.signPublicKey(ttrusted_key, ttrusted_key.getFingerprint(), identity)
+                                return  self.data.identity == own_identity
+                                        ?   self.signPublicKey(ttrusted_key, ttrusted_key.getFingerprint(), identity)
+                                        :   $q.reject('cmUserModel: wrong identity tries to sign verified keys!')
                             })
                         )
                         .finally(function(){
@@ -680,12 +706,12 @@ angular.module('cmCore')
                         .catch(function(){
                                 return  key.decrypt(encrypted_passphrase)
                         })
-            }, $q.reject())
+            }, $q.reject('cmUserModel.decrypt(): missing local keys.'))
 
         };
 
         this.bulkReKeying = function(localKeyId, newKeyId){
-            cmLogger.debug('cmUserModel.startBulkReKeying');
+            //cmLogger.debug('cmUserModel.startBulkReKeying');
 
             if(!this.state.is('rekeying')){
                 this.state.set('rekeying');
@@ -915,7 +941,7 @@ angular.module('cmCore')
             init();
             self.one('update:finished', function(){
                 if(!self.hasLocalKeys()){
-                    $rootScope.goTo('/start/keyinfo');
+                    $rootScope.goTo('/setup/keyinfo');
                 } else {
                     $rootScope.goTo('/talks');
                 }
@@ -926,7 +952,11 @@ angular.module('cmCore')
             cmBoot.ready.userModel();
         });
 
-        var signOwnKeys_scheduled = false
+        this.on('account:updated', function(){
+            cmBoot.ready.account();
+        });
+
+        var signOwnKeys_scheduled = false;
 
         cmAuth.on('identity:updated', function(event, data){
             if(typeof data.id != 'undefined' && data.id == self.data.identity.id) {
@@ -942,6 +972,17 @@ angular.module('cmCore')
                     }, 20000, false)
                 }
             }
+        });
+
+        cmAuth.on('identity:new', function(event, data){
+            if(typeof data.id != 'undefined' && data.id != self.data.identity.id) {
+                var tmpIdentity = cmIdentityFactory.clear(data).create(data);
+                self.data.identities.push(tmpIdentity);
+            }
+        });
+
+        cmAuth.on('account:update', function(event, data){
+            self.importAccount(data);
         });
 
     }

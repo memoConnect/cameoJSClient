@@ -1,4 +1,4 @@
-var config = require("../../config-e2e-tests.js")
+var config = require("../../config/specs.js")
 var util = require("../../../lib/e2e/cmTestUtil.js")
 
 describe('Test Settings enableUnreadMessages: ', function(){
@@ -18,13 +18,17 @@ describe('Test Settings enableUnreadMessages: ', function(){
 
     describe('create test users: ', function(){
         it('should create user1', function(){
-            user1 = util.createTestUser(undefined, 'setttings enableUnreadMessages#1')
-            util.expectCurrentUrl('/start/welcome')
+            util.createTestUser(undefined, 'setttings enableUnreadMessages#1')        
+            .then(function(loginName){
+                user1 = loginName
+            })
         })
 
         it('should create user2', function(){
-            user2 = util.createTestUser(undefined, 'setttings enableUnreadMessages#2')
-            util.expectCurrentUrl('/start/welcome')
+            util.createTestUser(undefined, 'setttings enableUnreadMessages#2')
+            .then(function(loginName){
+                user2 = loginName
+            })
         })
     })
 
@@ -128,7 +132,7 @@ describe('Test Settings enableUnreadMessages: ', function(){
             util.waitAndClickQa('btn-add-recipients')
             util.waitForPageLoad("/conversation/new/recipients")
 
-            util.searchInList(user2)
+            util.headerSearchInList(user2)
             util.waitForElement("[data-qa='contact-display-name']")
 
             util.waitAndClickQa('btn-select-contact')

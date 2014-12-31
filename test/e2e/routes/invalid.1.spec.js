@@ -1,4 +1,4 @@
-var config = require("../config-e2e-tests.js")
+var config = require("../config/specs.js")
 var util = require("../../lib/e2e/cmTestUtil.js")
 
 describe('invalid route', function () {
@@ -6,7 +6,7 @@ describe('invalid route', function () {
 
     it("should go to login route", function() {
         util.logout()
-        util.get("/foo")
+        util.get('/foo')
         util.expectCurrentUrl('#/login$')
     })
 })

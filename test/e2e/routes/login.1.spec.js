@@ -1,4 +1,4 @@
-var config = require("../config-e2e-tests.js")
+var config = require("../config/specs.js")
 var util = require("../../lib/e2e/cmTestUtil.js")
 
 describe('login screen', function () {
@@ -58,11 +58,13 @@ describe('login screen', function () {
 
         $("[data-qa='login-submit-btn']").click();
 
-        util.waitForPageLoad("/start")
+        util.waitForPageLoad("/setup")
     })
 
     it('dont show login page when already logged in', function () {
-        util.get("");
+        util.get('');
         util.expectCurrentUrl('#/talks')
+
+        util.logout()
     })
 })

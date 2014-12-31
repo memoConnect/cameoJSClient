@@ -1,8 +1,7 @@
 <form class="form-signin" role="form" autocomplete="off" data-qa="login" ng-submit="doLogin()">
-
     <article class="content" ng-if="cmEnv.autoLogin">
         <select ng-model="formData.autologin" class="cm-form-control btn-block autologin" ng-change="changeAutologin()">
-            <option value="none">{{'LOGIN.LABEL.AUTO'|cmTranslate}}</option>
+            <option value="none">{{'LOGIN.PLACEHOLDER.AUTOLOGIN'|cmTranslate}}</option>
             <option ng-repeat="(user,prop) in loginData">{{user}}</option>
         </select>
     </article>
@@ -25,15 +24,21 @@
                 tabindex="2"
                 type="{{passwordType}}" ng-model="formData.pass" ng-class="{'cm-input-error':alertState!=''}"
                 id="pw" name="pw" value="" required
-                placeholder="{{'LOGIN.PLACEHOLDER.PASSWORD'|cmTranslate}}" />
-            <i class="fa cm-icon-grey" ng-class="{'cm-visible':passwordType=='password','cm-hidden':passwordType=='text'}" ng-click="handlePassword()"></i>
+                placeholder="{{'LOGIN.PLACEHOLDER.PASSWORD'|cmTranslate}}"
+                cm-enter="doLogin()" />
+            <i class="fa cm-icon-grey" ng-class="{'cm-visible':passwordType=='password','cm-hidden':passwordType=='text'}" ng-click="handlePassword()" cm-reactive></i>
         </div>
     </article>
 
     <article class="content mb15" ng-hide="alertState==''" data-qa="login-info">
         <cm-info-bubble class="cm-alert">
-            <div><i class="fa cm-info"></i><span ng-bind-html="'LOGIN.INFO.'+alertState|cmParse"></span></div>
+            <i class="fa cm-info"></i>
+            <span ng-bind-html="'LOGIN.INFO.'+alertState|cmParse"></span>
         </cm-info-bubble>
+    </article>
+
+    <article class="content mb15 tar">
+        <a href="#/password/lost" class="classic-link" data-qa="btn-passwordLost">{{'LOGIN.LABEL.PASSWORD_LOST'|cmTranslate}}</a>
     </article>
 
     <hr class="no-margin-top no-margin-bottom">

@@ -9,28 +9,10 @@ angular.module('cmValidate').directive('cmPassword', [
             templateUrl: 'comps/validate/drtv-password.html',
             scope: {
                 password: '=ngModel',
-                tabindex: '@cmTabindex',
-                withStars: '@cmWithStars'
+                tabindex: '@cmTabindex'
             },
-
-            link: function(scope, attrs, element, ngModel){
-
-                // scope.$watch('showPasswordLengthError', function(error){
-                //     ngModel.$setValidity('password', !error);
-                // })
-
-                // scope.$watch('showPasswordEmptyError', function(error){
-                //     ngModel.$setValidity('password', !error);
-                // })
-
-                // scope.$watch('showConfirmPWStatus', function(cstatus){
-                //     ngModel.$setValidity('password', cstatus);
-                // })
-            },
-
-            controller: function($scope){
-
-                $scope.withStars = $scope.withStars || true;
+            controller: function($scope, $element, $attrs){
+                $scope.required = ('cmDisableRequired' in $attrs) ? false : true;
 
                 $scope.nextTabIndex = parseInt($scope.tabindex) + 1;
 
@@ -66,6 +48,8 @@ angular.module('cmValidate').directive('cmPassword', [
                         $scope.showPassword = true;
                         $scope.passwordType = 'text';
                     }
+
+                    $scope.confirmPW();
                 };
 
                 $scope.checkPWStrength = function(){
@@ -108,12 +92,14 @@ angular.module('cmValidate').directive('cmPassword', [
                  * validates both password inputs
                  */
                 $scope.confirmPW = function(){
+                    $scope.copyPW();
+
                     if(!$scope.pw || !$scope.pwConfirm){
                         $scope.showConfirmPWStatus = false
                         return false;
                     }
 
-                    if($scope.pw == $scope.pwConfirm){
+                    if(($scope.pw == $scope.pwConfirm)){
                         $scope.showConfirmPWStatus = true;
                         $scope.showPasswordEmptyError = false;
                         setPassword(cmCrypt.hash($scope.pw));
@@ -121,6 +107,11 @@ angular.module('cmValidate').directive('cmPassword', [
                         $scope.showConfirmPWStatus = false;
                         setPassword('none');
                     }
+                };
+
+                $scope.copyPW = function(){
+                    if($scope.showPassword)
+                        $scope.pwConfirm = $scope.pw;
                 };
 
                 /**

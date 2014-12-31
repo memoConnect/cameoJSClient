@@ -1,8 +1,7 @@
 'use strict';
 
 angular.module('cmValidate').directive('cmValidatePhone',[
-    'cmAuth',
-    function (cmAuth){
+    function (){
         return {
             require: 'ngModel',
             scope: {
@@ -11,26 +10,14 @@ angular.module('cmValidate').directive('cmValidatePhone',[
             link: function(scope, element, attrs, ngModel){
 
                 function checkPhoneNumber(newValue){
-                    if(newValue && newValue != "" && correctValue == undefined || // value isnt empty and first-check
-                        newValue && newValue != "" && correctValue != undefined && newValue != correctValue // value isnt the correct value from BE
+                    if(newValue && newValue != "" && correctValue == undefined
+                    || newValue && newValue != "" && correctValue != undefined && newValue != correctValue
                     ){
-                        cmAuth.checkPhoneNumber(''+newValue).
-                            then(
-                            //success
-                            function (phoneNumber){
-                                //if()
-
-                                correctValue = phoneNumber;
-                                ngModel.$setValidity('phone', true);
-                                ngModel.$setViewValue(phoneNumber);
-                                ngModel.$commitViewValue();
-                                ngModel.$render();
-                            },
-                            //error
-                            function (){
-                                ngModel.$setValidity('phone', false);
-                            }
-                        );
+                        if(newValue.search(/^[+]*[0-9]*$/) == 0){
+                            ngModel.$setValidity('phone', true);
+                        } else {
+                            ngModel.$setValidity('phone', false);
+                        }
                     } else {
                         ngModel.$setValidity('phone', true);
                         ngModel.$setPristine();

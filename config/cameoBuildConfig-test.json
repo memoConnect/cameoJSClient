@@ -1,6 +1,7 @@
 {
     "config": {
-        "apiUrl": "http://localhost:9000/a/v1",
+        "apiUrl": "http://localhost:9000/a/",
+        "defaultApiVersion": "v1",
         "autoLogin": false,
         "loadingBar": false,
         "enableDebug": true,

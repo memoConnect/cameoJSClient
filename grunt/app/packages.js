@@ -118,6 +118,7 @@ module.exports = function(grunt, options){
                         'core': 'core/comps/core',
                         'conversations': 'core/comps/conversations',
                         'contacts': 'core/comps/contacts',
+                        'setup': 'core/comps/setup',
                         'user': 'core/comps/user',
                         'validate': 'core/comps/validate',
                         'files': 'core/comps/files',

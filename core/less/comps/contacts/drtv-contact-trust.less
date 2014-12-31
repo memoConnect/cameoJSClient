@@ -1,0 +1,51 @@
+.createContactTrustColor(@color){
+  i {
+    .vatb;
+    margin-right:0 !important;
+    color: @color !important;
+    font-size: @cm-large-font !important;
+    letter-spacing:-0.5rem;
+    &.with-exclamation-mark{
+      letter-spacing:-0.2rem;
+    }
+    &.exclamation-mark{
+      font-style:normal;
+    }
+  }
+  color: @color !important;
+  font-size: @cm-large-font !important;
+}
+
+cm-contact-trust{
+  .vat;
+  .single-line;
+  .aspect-icons{
+    &.loading{
+      .createContactTrustColor(@cm-border-grey);
+    }
+    &.positive{
+      .createContactTrustColor(@cm-ci-color);
+    }
+    &.negative{
+      .createContactTrustColor(@cm-red);
+    }
+  }
+  .aspect-text{
+    padding-left:1rem;
+  }
+}
+
+/* drtv in parent drtv's */
+cm-contact-tag, cm-recipient-tag{
+  cm-contact-trust{
+    margin-right:1rem;
+    .cm-unit-btn;
+    line-height:@cm-unit;
+  }
+}
+
+cm-contact-edit{
+  cm-contact-trust{
+
+  }
+}

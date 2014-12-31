@@ -86,7 +86,7 @@ angular.module('cmUi').directive('cmAvatar',[
                         size = attrs.cmSize;
                     }
 
-                    var imgSrc = cmConfig.restApi + '/file/' + scope.identity.avatarId + '/scale/' + size + '?token=' + cmUserModel.getToken(),
+                    var imgSrc = cmConfig.restApi + cmConfig.defaultApiVersion + '/file/' + scope.identity.avatarId + '/scale/' + size + '?token=' + cmUserModel.getToken(),
                         bgImg = new Image();
                     // preload for update avatar
                     bgImg.onload = function(){
