@@ -4,9 +4,9 @@
 
 angular.module('cmPhonegap')
 .service('cmSslCertificateChecker', [
-    'cmPhonegap', 'cmConfig', 'cmLogger',
+    'cmPhonegap', 'cmConfig', 'cmLogger', 'cmUtil',
     '$rootScope', '$window', '$document',
-    function (cmPhonegap, cmConfig, cmLogger,
+    function (cmPhonegap, cmConfig, cmLogger, cmUtil,
               $rootScope, $window, $document) {
 
         var self = {
@@ -33,11 +33,12 @@ angular.module('cmPhonegap')
             },
 
             control: function(){
-                var target = (function(){
-                    if(cmConfig.target != 'prod')
-                        return 'stage';
-                    return cmConfig.target;
-                })(),
+                var target = 'prod',
+                //    target = (function(){
+                //    if(cmConfig.target != 'prod')
+                //        return 'stage';
+                //    return cmConfig.target;
+                //})(),
                     certificate = ('certificates' in cmConfig.static && target in cmConfig.static.certificates)
                                    ? cmConfig.static.certificates[target]
                                    : null,
@@ -49,6 +50,7 @@ angular.module('cmPhonegap')
                     server: server,
                     fingerprint: fingerprint
                 };
+
                 //cmLogger.info('cmSslCertificateChecker '+cmConfig.target+'/'+target+' '+server+' '+fingerprint);
 
                 if(server != '' && fingerprint != '') {
@@ -65,11 +67,11 @@ angular.module('cmPhonegap')
 
             handler: {
                 success: function(){
-                    //cmLogger.info('cmSslCertificateChecker secure');
+                    cmLogger.info('cmSslCertificateChecker secure',cmUtil.prettify(self.data));
                     self.isSecure = true;
                 },
                 error: function(message){
-                    cmLogger.error('cmSslCertificateChecker insecure '+message, self.data);
+                    cmLogger.error('cmSslCertificateChecker insecure '+message,cmUtil.prettify(self.data));
 
                     switch(true){
                         case message == 'CONNECTION_NOT_SECURE':
