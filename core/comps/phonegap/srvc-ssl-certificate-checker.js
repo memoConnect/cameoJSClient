@@ -67,11 +67,11 @@ angular.module('cmPhonegap')
 
             handler: {
                 success: function(){
-                    cmLogger.info('cmSslCertificateChecker secure '+cmUtil.prettify(self.data));
+                    cmLogger.info('cmSslCertificateChecker secure',cmUtil.prettify(self.data));
                     self.isSecure = true;
                 },
                 error: function(message){
-                    cmLogger.error('cmSslCertificateChecker insecure '+message+' '+cmUtil.prettify(self.data));
+                    cmLogger.error('cmSslCertificateChecker insecure '+message,cmUtil.prettify(self.data));
 
                     switch(true){
                         case message == 'CONNECTION_NOT_SECURE':
