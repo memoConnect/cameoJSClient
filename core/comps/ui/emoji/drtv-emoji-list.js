@@ -68,7 +68,7 @@ angular.module('cmUi')
                 };
 
                 scope.insertAt = function(text){
-                    var oldValue = ngModel.$viewValue,
+                    var oldValue = ngModel.$viewValue || '',
                         textStart = textarea[0].selectionStart,
                         textEnd = textarea[0].selectionEnd,
                         insertSymbol = text+' ',
