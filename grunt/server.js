@@ -25,11 +25,6 @@ module.exports = function(grunt, options){
                     cmd: 'node resource/web-server.js',
                     bg: false
                 },
-                'python': {
-                    cmd: 'python -m SimpleHTTPServer 8000',
-                    bg: false,
-                    stdout: false
-                },
                 'cameo': {
                     cmd: 'sbt run',
                     bg: false,
