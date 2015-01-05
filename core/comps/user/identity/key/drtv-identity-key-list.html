@@ -79,14 +79,6 @@
         </cm-info-bubble>
     </article>
 
-
-<cm-footer ng-if = "!canCreate && someKeyNeedsAuthentication()" data-qa = "footer-some-key-needs-authentication">
-    <button class="cm-btn-grey dib" data-qa="btn-create-key" ng-click="goTo('/authentication')" cm-reactive>
-        {{::'IDENTITY.KEYS.AUTHENTICATION.START.START_BUTTON'|cmTranslate }}
-        <i class="fa cm-handshake"></i>
-    </button>
-</cm-footer>
-
 <!-- End: Some Key needs authentications -->
 
 <cm-footer ng-if="canCreate" data-qa="canCreate">
