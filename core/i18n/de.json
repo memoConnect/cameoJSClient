@@ -672,7 +672,7 @@
                 "NOTE_ABOUT_THIS_DATA_SMALL": "E-Mail-Adresse oder Telefonnummer hinterlegen..",
                 "NOTE_ABOUT_THIS_DATA": "In Ihrem Benutzerkonto können Sie eine Mobilfunknummer oder E-Mail-Adresse hinterlegen und anschließend durch eine Prüfnachricht verifizieren lassen. Wenn Sie ihr Passwort vergessen, können Sie über eine verifizierte E-Mail-Adresse oder Telefonnummer ein neues Passwort erstellen.\n\nIhre Benutzerdaten sind für andere Nutzer nicht sichtbar."
             },
-            "ERROR": "@todo Es ist ein Fehler aufgetreten!\nÜberprüfen Sie bitte Ihre Angaben."
+            "ERROR": "Es ist ein Fehler aufgetreten!\nBitte überprüfen Sie Ihre Eingaben."
         },
         "INFO": {
             "EMPTY": {
