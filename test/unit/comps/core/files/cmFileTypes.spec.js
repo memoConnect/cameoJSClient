@@ -98,12 +98,13 @@ describe('cmFileTypes', function() {
             }
         ]
 
-    beforeEach(module('cmPhonegap'))
-    beforeEach(module('cmCore'))
-
-    beforeEach(inject(function (_cmFileTypes_) {
-        cmFileTypes = _cmFileTypes_
-    }))
+    beforeEach(function(){
+        module('cmCore')
+        module('cmPhonegap')
+        inject(function (_cmFileTypes_) {
+            cmFileTypes = _cmFileTypes_
+        })
+    })
 
     it('should exists', function () {
         expect(cmFileTypes).toBeDefined()

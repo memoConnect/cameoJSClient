@@ -4,20 +4,21 @@
 
 angular.module('cmPhonegap')
 .service('cmSslCertificateChecker', [
-    'cmPhonegap', 'cmConfig', 'cmLogger',
+    'cmPhonegap', 'cmConfig', 'cmLogger', 'cmUtil',
     '$rootScope', '$window', '$document',
-    function (cmPhonegap, cmConfig, cmLogger,
+    function (cmPhonegap, cmConfig, cmLogger, cmUtil,
               $rootScope, $window, $document) {
 
         var self = {
             plugin: null,
             isSecure: false,
+            data: {},
 
             init: function(){
                 cmPhonegap.isReady(function(){
                     if(!('plugins' in $window)
                         || !('sslCertificateChecker' in $window.plugins)) {
-                        //cmLogger.info('NETWORK-INFORMATION PLUGIN IS MISSING');
+                        //cmLogger.info('SSL_CERTIFICATE PLUGIN IS MISSING');
                         return false;
                     }
 
@@ -32,18 +33,25 @@ angular.module('cmPhonegap')
             },
 
             control: function(){
-                var target = (function(){
-                    if(cmConfig.target != 'prod')
-                        return 'stage';
-                    return cmConfig.target;
-                })(),
+                var target = 'prod',
+                //    target = (function(){
+                //    if(cmConfig.target != 'prod')
+                //        return 'stage';
+                //    return cmConfig.target;
+                //})(),
                     certificate = ('certificates' in cmConfig.static && target in cmConfig.static.certificates)
                                    ? cmConfig.static.certificates[target]
                                    : null,
                     server = certificate != null ? certificate.server : '',
                     fingerprint = certificate != null ? certificate.fingerprint : '';
 
-                cmLogger.info('cmSslCertificateChecker '+cmConfig.target+'/'+target+' '+server+' '+fingerprint);
+                this.data = {
+                    target: cmConfig.target+'/'+target,
+                    server: server,
+                    fingerprint: fingerprint
+                };
+
+                //cmLogger.info('cmSslCertificateChecker '+cmConfig.target+'/'+target+' '+server+' '+fingerprint);
 
                 if(server != '' && fingerprint != '') {
                     self.plugin.check(
@@ -59,11 +67,12 @@ angular.module('cmPhonegap')
 
             handler: {
                 success: function(){
-                    cmLogger.info('cmSslCertificateChecker secure');
+                    cmLogger.info('cmSslCertificateChecker secure',cmUtil.prettify(self.data));
                     self.isSecure = true;
                 },
                 error: function(message){
-                    cmLogger.error('cmSslCertificateChecker insecure '+message);
+                    cmLogger.error('cmSslCertificateChecker insecure '+message,cmUtil.prettify(self.data));
+
                     switch(true){
                         case message == 'CONNECTION_NOT_SECURE':
                         case message == 'NO_CREDENTIALS':

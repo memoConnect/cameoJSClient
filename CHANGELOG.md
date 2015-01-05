@@ -1,5 +1,13 @@
 ## Dev
 
+# WW 31.12.2014
+* app splashscreen + app spinner now visible till routeChangeSuccess /login | /talks & /conversation/:id | /contact/requests
+* fixxed emoji insertion now textarea resize if one full row and emoji insertion
+* fixxed ng-docs
+* cmCamera
+    * names choosen files from "content" to "cmFile_20141231(actual date).jpg(any extension)" on app/phonegap
+    * names taken image to "cmPicture_20141231(actual date).jpg"
+
 #########
 ## RC 0.4.7 - 29.12.2014
 #########
@@ -11,6 +19,10 @@
 * CAM-1546 contact and recipient tags (single contacts in a list) has now a better displayName viewport. if name is too long it get's '...' at the end
 * CAM-1298 after a pushnotification with context of a friend request, now the bel gets a unring
 * CAM-1491 menu gets a display:none on default so at a route change the menu can't be visibe with raw template. only visible on toggle an route is ready
+* CAM-1564 fixxed pristine at account settings
+* CAM-1560 fixxed new talk on new talk
+* CAM-1563 removed <br> out of i18n files, only use of /n (newline)
+* CAM-1565 unread message counter call on last message if unread counter is > 0
 
 # AP 23.12.2014
 * every talk ( and its recipients) will be signed by its creator, if he has a key

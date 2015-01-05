@@ -27,11 +27,11 @@
     </file>
     <file name="index.html">
         <div ng-controller="Ctrl">
-            <cm-date-seperator>{{timestamp-timestamp | date:'dd.MM.yyyy'}}</cm-date-seperator>
+            <cm-date-seperator cm-timestamp="timestamp-timestamp+1"></cm-date-seperator>
             message 1234
-            <cm-date-seperator>{{timestamp | date:'dd.MM.yyyy'}}</cm-date-seperator>
+            <cm-date-seperator cm-timestamp="timestamp"></cm-date-seperator>
             message 5678
-            <cm-date-seperator>{{timestamp+timestamp | date:'dd.MM.yyyy'}}</cm-date-seperator>
+            <cm-date-seperator cm-timestamp="timestamp+timestamp"></cm-date-seperator>
         </div>
     </file>
  </example>

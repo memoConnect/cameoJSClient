@@ -25,8 +25,6 @@ angular.module('cmUi').directive('cmMenu',[
                         cmNotify.trigger('bell:unring');
                 };
 
-
-
                 $scope.checkActive = function(url){
                     if(cmUtil.startsWith($location.$$url,'/' + url)){
                         return true;
@@ -34,7 +32,14 @@ angular.module('cmUi').directive('cmMenu',[
                     return false;
                 };
 
-                $scope.goTo = function(parentBtn, url, isSub){
+                $scope.goTo = function(parentBtn, url){
+
+                    /**
+                     * if current location == url, then only close menu
+                     */
+                    if('/' + url == $location.$$url){
+                        $scope.handleMenu();
+                    }
 
                     if(typeof parentBtn.rootScopeCallback == 'string' && typeof $rootScope[parentBtn.rootScopeCallback] == 'function'){
                         $rootScope[parentBtn.rootScopeCallback]();
@@ -56,14 +61,6 @@ angular.module('cmUi').directive('cmMenu',[
                             location.href = arr_location[0] + '/' + parentBtn.link;
                         }
 
-                        return false;
-                    }
-
-                    /**
-                     * if current location == url, then only close menu
-                     */
-                    if('/' + url == $location.$$url){
-                        $scope.handleMenu();
                         return false;
                     }
 

@@ -18,15 +18,12 @@ angular.module('cmUi')
         return{
             restrict: 'E',
             template: '<div ng-show="showList">' +
-            '<div ng-repeat="emoji in emojis" class="emoji-wrapper" ng-click="insertEmoji(emoji)" cm-reactive>' +
-            '<i class="emoji emoji_{{emoji}}" title=":{{emoji}}:">{{emoji}}</i>' +
-            '</div>' +
-            '<div>',
-            scope: {
-                ngModel: '=ngModel'
-            },
-            link: function(scope, element, attrs){
-
+                        '<div ng-repeat="emoji in emojis" class="emoji-wrapper" ng-click="insertEmoji(emoji)" cm-reactive>' +
+                            '<i class="emoji emoji_{{emoji}}" title=":{{emoji}}:">{{emoji}}</i>' +
+                        '</div>' +
+                    '<div>',
+            require: '?ngModel',
+            link: function(scope, element, attrs, ngModel){
                 var textarea;
 
                 function clickOutside(e){
@@ -71,7 +68,7 @@ angular.module('cmUi')
                 };
 
                 scope.insertAt = function(text){
-                    var oldValue = textarea.val(),
+                    var oldValue = ngModel.$viewValue || '',
                         textStart = textarea[0].selectionStart,
                         textEnd = textarea[0].selectionEnd,
                         insertSymbol = text+' ',
@@ -81,8 +78,9 @@ angular.module('cmUi')
 
                     scope.toggleList('close');
 
-                    //textarea.val(strWithEmoticon);
-                    scope.ngModel = strWithEmoticon;
+                    ngModel.$setViewValue(strWithEmoticon);
+                    ngModel.$commitViewValue();
+                    ngModel.$render();
 
                     textarea[0].focus();
                     textarea[0].selectionStart = textEnd+insertSymbol.length;
@@ -97,10 +95,6 @@ angular.module('cmUi')
                         });
                     });
                 });
-
-//                emoji.getAllAsString().split(',').forEach(function(emoji){
-//                    createEmoji(emoji);
-//                });
 
                 scope.toggleList('close');
 

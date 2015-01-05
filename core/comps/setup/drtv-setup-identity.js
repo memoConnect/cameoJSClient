@@ -111,8 +111,10 @@ angular.module('cmSetup')
                     };
 
                     $scope.updateIdentity = function () {
-                        if($scope.isPristine)
+                        if($scope.isPristine) {
                             $scope.goTo('/settings/identity/key/create');
+                            return false;
+                        }
 
                         if (loader.isIdle())
                             return false;
@@ -149,21 +151,15 @@ angular.module('cmSetup')
                     /**
                      * Pristine Service Handling
                      */
-                    $scope.isPristine = true;
-                    function pristine_callback(){
-                        $scope.isPristine = cmPristine.is();
-                    }
-                    cmPristine.on('updated',pristine_callback);
-
                     $scope.isFakePristineBecauseOfAvatar = true;
                     var killWatcher = $rootScope.$on('cmUploadAvatar:success',function(){
                         $scope.isFakePristineBecauseOfAvatar = false;
                     });
-
                     $scope.$on('$destroy', function(){
-                        cmPristine.off('updated',pristine_callback);
                         killWatcher();
                     });
+
+                    cmPristine.initView($scope);
                 }
             }
         }

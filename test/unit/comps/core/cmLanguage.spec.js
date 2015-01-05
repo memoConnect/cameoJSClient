@@ -150,9 +150,19 @@ describe("cmLanguage", function() {
                 })
             })
 
-            it('should have none @todo inside', function(){
-                var needle = '@todo',
-                    countTodos = []
+            var needles = '@todo,<br>'
+            it('should have none of this '+needles+' inside', function(){
+                var foundPosition = [],
+                    arrNeedles = needles.split(',');
+
+                function foundItem(needle, i18nKey){
+                    if(!(needle in foundPosition)){
+                        foundPosition[needle] = [];
+                    }
+
+                    foundPosition[needle].push(i18nKey)
+                }
+
                 function scan(obj, key){
                     var k;
                     if (obj instanceof Object) {
@@ -164,18 +174,20 @@ describe("cmLanguage", function() {
                         }
                     } else {
                         //not an Object so obj[k] here is a value
-                        if(obj.indexOf(needle) >= 0)
-                            countTodos.push(key)
-                    };
-                };
+                        arrNeedles.forEach(function(needle){
+                            if(obj.indexOf(needle) >= 0)
+                                foundItem(needle,key)
+                        })
+                    }
+                }
 
                 scan(language_tables);
 
                 if(cmConfig.errorOnTodoInI18n)
-                    expect(countTodos.length).toEqual(0)
+                    expect(foundPosition.length).toEqual(0)
 
-                if(countTodos.length > 0){
-                    console.log(needle + '\'s found at: ' + JSON.stringify(countTodos, null, 2) + '\n')
+                if(foundPosition.length > 0){
+                    console.log(needles + '\'s found at: ' + JSON.stringify(foundPosition, null, 2) + '\n')
                 }
             })
         })

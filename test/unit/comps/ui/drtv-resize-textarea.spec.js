@@ -11,17 +11,13 @@ describe('Directive cmResizeTextarea', function () {
     // <textarea cm-resize-textarea cm-max-rows="number" ng-model="any"></textarea>
 
     beforeEach(function(){
-        module(function($provide){
-            $provide.constant('cmEnv',{});
+        module('cmUi')
+        module('cmConfig')
+        inject(function(_$httpBackend_){
+            $httpBackend = _$httpBackend_;
+            $httpBackend.whenGET('/account').respond({});
         })
     })
-
-    beforeEach(module('cmUi'))
-
-    beforeEach(inject(function(_$httpBackend_){
-        $httpBackend = _$httpBackend_;
-        $httpBackend.whenGET('/account').respond({});
-    }))
 
     function createDrtv(html, _scope_){
         inject(function ($rootScope, $compile) {
@@ -50,20 +46,23 @@ describe('Directive cmResizeTextarea', function () {
 
     // in unit tests only can check one row
     it('check cm-rows calculation',function(){
-        createDrtv('<textarea cm-resize-textarea style="width:100px"></textarea>')
+        createDrtv('<textarea cm-resize-textarea style="width:100px" ng-model="moep"></textarea>')
 
-        expect(area.val(oneLine).trigger('change').attr('rows')).toBe('1')
+        scope.moep = oneLine
+        scope.$apply()
+
+        expect(area.attr('rows')).toBe('1')
         expect(shadow.html()).toBe(oneLine)
     })
 
     it('check ng-model handling',inject(function ($rootScope) {
-        scope = $rootScope.$new();
+        scope = $rootScope.$new()
         createDrtv('<textarea cm-resize-textarea ng-model="moep" style="width:100px"></textarea>', scope)
 
         expect(area.val()).toBe('')
 
         scope.moep = oneLine
-        scope.$digest();
+        scope.$apply()
 
         expect(area.val()).toBe(oneLine)
 

@@ -3,7 +3,7 @@
     <div
         class="page in-screen-message"
         data-qa="message-no-keys"
-        ng-bind-html="'SETTINGS.PAGES.IDENTITY.KEYS.NO_LOCALKEYS_ON_THIS_DEVICE'|cmTranslate"></div>
+        ng-bind-html="::'SETTINGS.PAGES.IDENTITY.KEYS.NO_LOCALKEYS_ON_THIS_DEVICE'|cmParse"></div>
     </cm-info-bubble>
 </article>
 <article ng-if="showUntrustedPublickeysExists" class="content mb15">
@@ -11,7 +11,7 @@
     <div
         class="page in-screen-message"
         data-qa="message-untrusted-keys"
-        ng-bind-html="'SETTINGS.PAGES.IDENTITY.KEYS.UNTRUSTED_PUBLICKEYS_EXISTS'|cmTranslate"></div>
+        ng-bind-html="::'SETTINGS.PAGES.IDENTITY.KEYS.UNTRUSTED_PUBLICKEYS_EXISTS'|cmParse"></div>
     </cm-info-bubble>
 </article>
 
@@ -25,7 +25,7 @@
         <span class="item clearfix">
             <span class="title">
                 <i class="fa cm-handshake" ng-class="overview[page].icon"></i>
-                <span>{{'IDENTITY.KEYS.AUTHENTICATION.HEADLINE'|cmTranslate }}</span>
+                <span>{{::'IDENTITY.KEYS.AUTHENTICATION.HEADLINE'|cmTranslate}}</span>
             </span>
 
             <section class="icon-list">
@@ -38,27 +38,27 @@
             class="item tal"
             cm-reactive
         >
-            <strong>{{key.name}}</strong>
+            <strong>{{::key.name}}</strong>
             <span class="second-row">
-                {{privateKeys.find(key).getSize() || key.getSize() || key.size}}
+                {{:: privateKeys.find(key).getSize() || key.getSize() || key.size}}
                 <span class="seperator">|</span>
-                <strong ng-if="privateKeys.find(key)" data-qa="key-is-local" class="is-local">{{'SETTINGS.PAGES.IDENTITY.KEYS.IS_LOCAL'|cmTranslate}}
+                <strong ng-if="privateKeys.find(key)" data-qa="key-is-local" class="is-local">{{::'SETTINGS.PAGES.IDENTITY.KEYS.IS_LOCAL'|cmTranslate}}
                     <span class="seperator">|</span>
                 </strong>
 
-                <span ng-if="stillChecking(key)" class = "is-checking">
+                <span ng-if="stillChecking(key)" class="is-checking">
                     ???
                     <span class="seperator">|</span>
                 </span>
 
-                <span ng-if="!stillChecking(key) && isTrustedKey(key)" class="is-trusted">{{'SETTINGS.PAGES.IDENTITY.KEYS.IS_TRUSTED'|cmTranslate}}
+                <span ng-if="!stillChecking(key) && isTrustedKey(key)" class="is-trusted">{{::'SETTINGS.PAGES.IDENTITY.KEYS.IS_TRUSTED'|cmTranslate}}
                     <span class="seperator">|</span>
                 </span>
 
-                <span ng-if="!stillChecking(key) && !isTrustedKey(key)" class="is-untrusted">{{'SETTINGS.PAGES.IDENTITY.KEYS.IS_UNTRUSTED'|cmTranslate}}
+                <span ng-if="!stillChecking(key) && !isTrustedKey(key)" class="is-untrusted">{{::'SETTINGS.PAGES.IDENTITY.KEYS.IS_UNTRUSTED'|cmTranslate}}
                     <span class="seperator">|</span>
                 </span>
-                {{key.created | date:'dd.MM.yy - HH:mm'}}
+                {{:: key.created | date:'dd.MM.yy - HH:mm'}}
             </span>
         </section>
         <section class="icon-list">
@@ -75,14 +75,14 @@
 
 <article class="content" ng-if = "!canCreate && someKeyNeedsAuthentication()" data-qa = "bubble-some-key-needs-authentication">
         <cm-info-bubble nose-x="18%">
-            <span ng-bind-html="'IDENTITY.KEYS.KEYLIST.EXPLANATION.UNTRUSTED_KEYS' | cmParse"></span>
+            <span ng-bind-html="::'IDENTITY.KEYS.KEYLIST.EXPLANATION.UNTRUSTED_KEYS' | cmParse"></span>
         </cm-info-bubble>
     </article>
 
 
 <cm-footer ng-if = "!canCreate && someKeyNeedsAuthentication()" data-qa = "footer-some-key-needs-authentication">
     <button class="cm-btn-grey dib" data-qa="btn-create-key" ng-click="goTo('/authentication')" cm-reactive>
-        {{'IDENTITY.KEYS.AUTHENTICATION.START.START_BUTTON'|cmTranslate }}
+        {{::'IDENTITY.KEYS.AUTHENTICATION.START.START_BUTTON'|cmTranslate }}
         <i class="fa cm-handshake"></i>
     </button>
 </cm-footer>
@@ -91,11 +91,11 @@
 
 <cm-footer ng-if="canCreate" data-qa="canCreate">
     <button class="cm-btn-grey dib w50" data-qa="btn-create-key" ng-click="goTo('/settings/identity/key/create')" cm-reactive>
-        {{'SETTINGS.PAGES.IDENTITY.KEYS.CREATE.BUTTON'|cmTranslate}}
+        {{::'SETTINGS.PAGES.IDENTITY.KEYS.CREATE.BUTTON'|cmTranslate}}
         <i class="fa cm-create-key"></i>
     </button>
     <button class="cm-btn-grey dib w50" data-qa="btn-import-key" ng-click="goTo('/settings/identity/key/import')" cm-reactive>
-        {{'SETTINGS.PAGES.IDENTITY.KEYS.IMPORT.BUTTON'|cmTranslate}}
+        {{::'SETTINGS.PAGES.IDENTITY.KEYS.IMPORT.BUTTON'|cmTranslate}}
         <i class="fa cm-import-key n"></i>
     </button>
 </cm-footer>

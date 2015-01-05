@@ -7,23 +7,25 @@
  * Handels authentication requests
  *
  * @requires cmApi
- * @requires localStorage TODO: implement ServiceLocalStorage
+ * @requires cmObject
+ * @requires cmLogger
+ * @requires cmCrypt
+ * @requires cmUserModel
+ * @requires cmIdentityFactory
+ * @requires cmModal
+ * @requires cmCallbackQueue
+ * @requires $rootScope
+ * @requires $q
  */
 
-angular.module('cmCore').service('cmAuthenticationRequest', [
-
-    'cmApi',
-    'cmObject', 
-    'cmLogger', 
-    'cmCrypt', 
-    'cmUserModel',
-    'cmIdentityFactory',
-    'cmModal',
-    'cmCallbackQueue',
-    '$rootScope',
-    '$q',
-
-    function(cmApi, cmObject, cmLogger, cmCrypt, cmUserModel, cmIdentityFactory, cmModal, cmCallbackQueue, $rootScope, $q){
+angular.module('cmCore')
+.service('cmAuthenticationRequest', [
+    'cmApi', 'cmObject', 'cmLogger', 'cmCrypt', 'cmUserModel',
+    'cmIdentityFactory', 'cmModal', 'cmCallbackQueue',
+    '$rootScope', '$q',
+    function(cmApi, cmObject, cmLogger, cmCrypt, cmUserModel,
+             cmIdentityFactory, cmModal, cmCallbackQueue,
+             $rootScope, $q){
 
         var self = {
             /**
@@ -50,7 +52,7 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
              * @description
              * Retrieves the transaction secret or null if expired
              *
-             *  @return {* | null} transaction secret or null if expired
+             *  @returns {String} transaction secret or null if expired
              */
             
             getTransactionSecret: function(){
@@ -67,7 +69,7 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
              * @description
              * Retrieves time to the expireation of the transaction secret
              *
-             *  @return {Number} Time to expiration of transaction secret in milliseconds or 0, whatever ist greater
+             *  @returns {Number} Time to expiration of transaction secret in milliseconds or 0, whatever ist greater
              */
             getTTL: function(){
                   return    (
@@ -84,9 +86,11 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
              * @description
              * Sends an Authentication Request to all devices of an identity
              *
-             * @param {toIdentity} 
-             * @param {secret} 
-             * @param {fromkey} 
+             * @param {Number} toIdentityId id to sending
+             * @param {String} secret for handshake
+             * @param {Number} toKeyId id of key to sending
+             * @param {Number} fromKeyId id it was send
+             *
              * @returns {Promise} for async handling
              */
             send: function(toIdentityId, secret, toKeyId, fromKeyId){
@@ -165,7 +169,9 @@ angular.module('cmCore').service('cmAuthenticationRequest', [
              * @description
              * Verifies an Authentication Request
              *
-             * @param {request} 
+             * @param {Object} request response from server
+             * @param {String} secret for verfication
+             *
              * @returns {Boolean} wether or not the request is valid
              */
             verify: function(request, secret){

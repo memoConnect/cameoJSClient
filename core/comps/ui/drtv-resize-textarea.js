@@ -43,9 +43,9 @@
  </example>
  */
 
-angular.module('cmUi').directive('cmResizeTextarea',[
-    '$timeout',
-    '$rootScope',
+angular.module('cmUi')
+.directive('cmResizeTextarea',[
+    '$timeout', '$rootScope',
     function ($timeout, $rootScope) {
         return {
             restrict: 'A',
@@ -75,8 +75,8 @@ angular.module('cmUi').directive('cmResizeTextarea',[
                         position: 'fixed',
                         top: -10000+unit,
                         left: -10000+unit,
-//                        top: 0,
-//                        left: 0,
+                        //top: 0,
+                        //left: 0,
                         width: width - parseInt(paddingLeft || 0) - parseInt(paddingRight || 0)+unit,
                         'font-size': element.css('fontSize'),
                         'font-family': element.css('fontFamily'),
@@ -183,10 +183,6 @@ angular.module('cmUi').directive('cmResizeTextarea',[
 
                 // event binding
                 element.on('keyup', update);
-                element.on('redo', update);
-                element.on('undo', update);
-                element.on('keypress', update);
-                element.on('change', update);
                 element.on('keydown', function(e){
                     // on tab
                     if (e.keyCode == 9) {
@@ -198,16 +194,15 @@ angular.module('cmUi').directive('cmResizeTextarea',[
                     return true;
                 });
 
+                scope.$on('$destroy', function(){
+                    element.off('keydown');
+                    element.off('keyup',update);
+                });
+
                 // watch on ngModel for extern changes
-                var timeoutWatch = null;
                 scope.$watch(attrs.ngModel,function(newValue){
-                    if(newValue == ''){
-                        if(timeoutWatch != null)
-                            $timeout.remove(timeoutWatch);
-                        timeoutWatch = $timeout(function(){
-                            update();
-                            timeoutWatch = null;
-                        },50);
+                    if(newValue != undefined){
+                        update();
                     }
                 });
 

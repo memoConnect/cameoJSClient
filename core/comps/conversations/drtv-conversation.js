@@ -317,7 +317,7 @@ angular.module('cmConversations')
                     }
 
                     function callback_password_missing(){
-                        // switcher for purl and conversation, @Todo: vereinheitlichen
+                        // switcher for purl and conversation
                         var settingsLinker = {type:'',typeId:''};
                         if('purlId' in $routeParams){
                             settingsLinker.type = 'purl';

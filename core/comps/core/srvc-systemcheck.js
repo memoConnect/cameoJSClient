@@ -5,19 +5,13 @@
  * @name cmSystemCheck
  * @description
  */
-angular.module('cmCore').service('cmSystemCheck', [
-    'cmUserModel',
-    'cmObject',
-    'cmApi',
-    'cmVersion',
-    'cmLanguage',
-    'LocalStorageAdapter',
-    'cmLogger',
-    'cmDevice',
-    '$rootScope',
-    '$q',
+angular.module('cmCore')
+.service('cmSystemCheck', [
+    'cmUserModel', 'cmObject', 'cmApi', 'cmVersion', 'cmLanguage',
+    'LocalStorageAdapter', 'cmLogger', 'cmDevice', 'cmBoot',
+    '$rootScope', '$q',
     function(cmUserModel, cmObject, cmApi, cmVersion, cmLanguage,
-             LocalStorageAdapter, cmLogger, cmDevice,
+             LocalStorageAdapter, cmLogger, cmDevice, cmBoot,
              $rootScope, $q){
         var self = this;
 
@@ -25,7 +19,6 @@ angular.module('cmCore').service('cmSystemCheck', [
 
         this.getBrowserInfo = function(){
             //cmLogger.debug('cmSystemCheck.getBrowserInfo');
-
             var deferred = $q.defer();
 
             cmApi.post({
@@ -51,6 +44,8 @@ angular.module('cmCore').service('cmSystemCheck', [
                     } else {
                         $rootScope.clientVersionCheck = true;
                     }
+
+                    cmBoot.ready.browserInfo();
 
                     deferred.resolve();
                 },
