@@ -2,7 +2,8 @@
 
 angular.module('cmValidate')
 .directive('cmFormEmail', [
-    function () {
+    'cmVerify',
+    function (cmVerify) {
         return {
             restrict: 'E',
             scope: {
@@ -10,9 +11,21 @@ angular.module('cmValidate')
                 tabIndex: '@cmTabindex',
                 label: '@cmLabel',
                 info: '@cmInfo',
-                disabled: '=cmDisable'
+                toggleInfo: '@cmToggleInfo',
+                disabled: '=cmDisable',
+                verificationData: '=cmVerify'
             },
-            templateUrl: 'comps/validate/form/drtv-form-email.html'
+            templateUrl: 'comps/validate/form/drtv-form-email.html',
+            controller: function($scope) {
+                cmVerify.handleInput('email',$scope);
+
+                $scope.showEmailInfo = false;
+                $scope.toggleEmailInfo = function(){
+                    if(typeof $scope.toggleInfo == 'string'){
+                        $scope.showEmailInfo = !$scope.showEmailInfo ? true : false;
+                    }
+                }
+            }
         }
     }
 ]);

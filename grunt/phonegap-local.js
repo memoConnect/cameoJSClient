@@ -4,15 +4,36 @@ module.exports = function(grunt, options){
 
     grunt.registerTask('phonegap:build-only', [
         'phonegap:app-prepare',
+        'phonegap:app-config-local',
         'phonegap:build'
-    ])
+    ]);
 
     grunt.registerTask('phonegap:build-n-run', [
         'phonegap:app-prepare',
+        'phonegap:app-config-local',
         'phonegap:build',
         'phonegap:run'
     ]);
 
+    function genPlugins(useRepo){
+        var plugins = options.globalCameoPhonegapConfig.plugins,
+            array = [];
+
+        plugins.forEach(function(plugin){
+            if('repo' in plugin) {
+                var repo = grunt.template.process(plugin.repo, {
+                    data: {
+                        'appProtocol': options.globalCameoBuildConfig.static.appProtocol
+                    }
+                });
+                array.push(repo);
+            } else {
+                array.push(plugin.name);
+            }
+        });
+
+        return array;
+    }
 
     return {
         tasks:{
@@ -33,20 +54,9 @@ module.exports = function(grunt, options){
                 config: {
                     root: 'build/phonegap/www',
                     config: 'build/phonegap/www/config.xml',
-                    cordova: '.cordova',
+                    cordova: 'resource/phonegap/.cordova',
                     path: 'build/phonegap-tmp',
-                    plugins: [
-                        'org.apache.cordova.device',
-                        'org.apache.cordova.camera',
-                        'org.apache.cordova.file',
-                        'org.apache.cordova.file-transfer',
-                        'org.apache.cordova.network-information',
-                        'com.phonegap.plugins.pushplugin',
-                        'https://github.com/memoConnect/cordova-plugin-contacts.git',
-                        'de.appplant.cordova.plugin.hidden-statusbar-overlay',
-                        'com.jamiestarke.webviewdebug',
-                        'https://github.com/memoConnect/de.cameonet.cordova.crypto.git'
-                    ],
+                    plugins: genPlugins(true),
                     platforms: [
                         'android'
 //                        'ios'

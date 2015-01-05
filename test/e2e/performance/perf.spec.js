@@ -1,4 +1,4 @@
-var config = require("../config-e2e-tests.js")
+var config = require("../config/specs.js")
 var util = require("../../lib/e2e/cmTestUtil.js")
 
 describe('performance prepare', function () {
@@ -51,7 +51,7 @@ describe('performance tests', function () {
     it("send message", function () {
         util.setVal("input-answer", "the best test message in the world!")
         util.click("btn-send-answer")
-        util.waitAndClick("cm-modal.active [data-qa='btn-confirm']")
+        util.waitAndClickQa('btn-confirm','cm-modal.active')
         util.waitForElements("cm-message", 1)
     })
 
@@ -78,8 +78,10 @@ describe('performance cleanup', function () {
 
     it("delete key", function () {
         util.get("/settings/identity/key/list")
-        util.waitAndClickQa("btn-remove-modal")
-        util.waitAndClick("cm-modal.active [data-qa='btn-confirm']")
+        util.waitForPageLoad('/settings/identity/key/list').then(function(){
+            $$("[data-qa='btn-remove-modal']").get(0).click()
+            util.waitAndClickQa('btn-confirm','cm-modal.active')
+        })
     })
 })
 

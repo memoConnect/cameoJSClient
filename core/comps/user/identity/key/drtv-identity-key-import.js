@@ -8,20 +8,25 @@ angular.module('cmRouteSettings')
     'cmUserModel',
     'cmModal',
     'cmDevice',
+    'cmLoader',
     '$window',
-    function(cmNotify, cmKey, cmUtil, cmUserModel, cmModal, cmDevice,
-             $window){
+    '$rootScope',
+    function(cmNotify, cmKey, cmUtil, cmUserModel, cmModal, cmDevice, cmLoader,
+             $window, $rootScope){
         return {
             restrict: 'E',
             templateUrl: 'comps/user/identity/key/drtv-identity-key-import.html',
             controller: function ($scope) {
                 // only one privKey!!!
                 if(cmUserModel.hasPrivateKey()){
-                    $scope.goTo('/settings/identity/key/list', true);
+                    $rootScope.goTo('/settings/identity/key/list', true);
                     return false;
                 }
 
+                var loader = new cmLoader($scope);
+
                 $scope.isValid = false;
+                $scope.isError = false;
 
                 var detect = cmDevice.detectOSAndBrowser();
 
@@ -44,6 +49,9 @@ angular.module('cmRouteSettings')
                 $scope.store = function(){
                     var error = false;
 
+                    if (loader.isIdle())
+                        return false;
+
                     if($scope.privKey == ''){
                         error = true;
                         cmNotify.warn('SETTINGS.PAGES.IDENTITY.KEYS.WARN.CHECK_PRIVKEY');
@@ -60,6 +68,8 @@ angular.module('cmRouteSettings')
                     }
 
                     if(error !== true){
+                        loader.start();
+
                         var key = new   cmKey({
                                             name: $scope.keyName,
                                             privKey: $scope.privKey
@@ -73,17 +83,29 @@ angular.module('cmRouteSettings')
                             .when('key:saved', null, 5000)
                             .then(
                                 function(result){
+                                    loader.stop();
+
                                     if(cmUserModel.data.identity.keys.some(function(key){
                                         return key.id != result.data.keyId
                                     })){
-                                        $scope.goto('/authentication')
+                                        $scope.goTo('/authentication')
                                     } else {
                                         $scope.goTo('/talks');
                                     }
                                 }
-                            )
+                            );
                     }
                 };
+
+                function callback_key_saving_failed(){
+                    $scope.isError = true;
+                }
+
+                cmUserModel.on('key:removed', callback_key_saving_failed);
+
+                $scope.$on('$destroy', function(){
+                    cmUserModel.off('key:removed', callback_key_saving_failed);
+                });
             }
         }
     }

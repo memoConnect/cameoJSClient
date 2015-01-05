@@ -303,6 +303,8 @@
 .cm-export-key:before{content:'\f071'}
 .cm-import-key:before{content:'\f072'}
 .cm-handshake:before{content:'\f073'}
+.cm-connection-trusted:before{content:'\f092'}
+.cm-connection-untrusted:before{content:'\f104'}
 .cm-beta:before{content:'\f074'}
 .cm-key-request:before{content:'\f075'}
 .cm-key-response:before{content:'\f076'}
@@ -321,7 +323,6 @@
 .cm-trash:before{content:'\f089'}
 .cm-connected:before{content:'\f090'}
 .cm-not-connected:before{content:'\f091'}
-.cm-connection-trusted:before{content:'\f092'}
 .cm-tag:before{content:'\f093'}
 .cm-avatar-add:before{content:'\f094'}
 .cm-radio-0:before{content:'\f095'}

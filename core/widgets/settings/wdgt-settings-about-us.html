@@ -1,25 +1,25 @@
 <h2 class="border-bottom">
     <i class="fa cm-rhino-bubble-glyph"></i>
-    {{'SETTINGS.PAGES.ABOUT_US.TITLE'|cmTranslate}}
+    {{::'SETTINGS.PAGES.ABOUT_US.TITLE'|cmTranslate}}
 </h2>
 
 <article class="about-us content tac">
     <i class="fa cm-rhino-bubble-glyph"></i><br />
     {{version}}<br />
-    {{'SETTINGS.PAGES.ABOUT_US.TEXT'|cmTranslate}}
+    {{::'SETTINGS.PAGES.ABOUT_US.TEXT'|cmTranslate}}
 </article>
 
 <hr>
 
-<h4 ng-bind-html="'DRTV.IMPRINT.HEADLINE'| cmParse" cm-html-compile class="content"></h4>
+<h4 ng-bind-html="::'DRTV.IMPRINT.HEADLINE'|cmParse" cm-html-compile class="content"></h4>
 
-<article ng-bind-html="'DRTV.IMPRINT.CONTENT'| cmParse" cm-html-compile class="content"></article>
+<article ng-bind-html="::'DRTV.IMPRINT.CONTENT'|cmParse" cm-html-compile class="content"></article>
 
 <hr>
 
 <h3 class="content">
-    {{'SETTINGS.PAGES.ABOUT_US.3RD_PARTY.TITLE'|cmTranslate}}&nbsp;
-    (<cm-time-converter cm-timestamp="'SETTINGS.PAGES.ABOUT_US.3RD_PARTY.DATE'|cmTranslate" cm-special-type="date-seperator"></cm-time-converter>)
+    {{::'SETTINGS.PAGES.ABOUT_US.3RD_PARTY.TITLE'|cmTranslate}}&nbsp;
+    (<cm-time-converter cm-timestamp="::'SETTINGS.PAGES.ABOUT_US.3RD_PARTY.DATE'|cmTranslate" cm-special-type="date-seperator"></cm-time-converter>)
 </h3>
 
 <ul>

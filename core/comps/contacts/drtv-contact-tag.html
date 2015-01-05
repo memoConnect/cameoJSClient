@@ -1,5 +1,6 @@
-<cm-avatar cm-data="contact.identity"></cm-avatar>
-<section class="identityName" >
-    <div class="displayName" data-qa="contact-display-name">{{contact.identity.getDisplayName()}}</div>
+<cm-avatar cm-data="contact.identity" class="without-wrap-margin"></cm-avatar>
+<cm-contact-trust cm-data="contact"></cm-contact-trust>
+<section class="displayName" data-qa="contact-display-name">
+    {{contact.identity.getDisplayName()}}
 </section>
 <cm-contact-type cm-data="contact"></cm-contact-type>

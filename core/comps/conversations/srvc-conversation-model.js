@@ -3,7 +3,7 @@
 /**
  * @ngdoc object
  * @name cmConversationModel
- * @constructor
+ *
  * @description
  * Represents a Conversation.
  * # Events
@@ -18,8 +18,6 @@
  *  - new
  *  - loading
  *  - decrypted
- *
- * @param {Object} [data] The conversation data as received from the backend.
  */
 
 angular.module('cmConversations')
@@ -61,6 +59,8 @@ angular.module('cmConversations')
                 moep                = undefined;
 
 
+            cmObject.addEventHandlingTo(self);
+
             this.id                 = undefined;
             
             this.recipients         = new cmFactory(cmIdentityModel);      //list of cmIdentityModel objects
@@ -94,6 +94,7 @@ angular.module('cmConversations')
              * GUI Variable
              * @type {{level: string, class: string}}
              */
+
             this.lockStatus = {
                 'level': 2,
                 'class': 'safer'
@@ -103,7 +104,6 @@ angular.module('cmConversations')
             this.passCaptcha = undefined;
             this.tmpPassCaptcha = '';
 
-            cmObject.addEventHandlingTo(this);
 
             this.localPWHandler = new cmKeyStorageService('pw');
 
@@ -146,7 +146,6 @@ angular.module('cmConversations')
             };
 
             /**
-             * @todo !!!!
              * @ngdoc method
              * @methodOf cmConversationModel
              *
@@ -155,6 +154,8 @@ angular.module('cmConversations')
              * Checks Conversation Settings and User Opinions
              *
              * @param {Boolean} bool Return true or false
+             *
+             * @todo: what is todo??
              */
             this.checkConsistency = function (){
                 if(this.passwordRequired() && !this.password){
@@ -166,47 +167,6 @@ angular.module('cmConversations')
                     self.trigger('recipients:missing')
                     return false
                 }
-
-                /*
-                if(self.isEncrypted() === true){
-                */
-                    /**
-                     * es wird überprüft on alle recipeinten 1-n keys haben
-                     */
-                    /*
-                    var key_check = false;
-                    self.recipients.forEach(function(recipient){
-                        if(recipient.hasKeys() === false){
-                            key_check = true;
-                        }
-                    });
-                    */
-
-                    /**
-                     * checkt ob alle recipienten keys haben,
-                     * wenn nicht, wird überprüft ob ein passwort vergeben wurde
-                     */
-                    /*
-                    if(key_check == true && (self.password == undefined || (typeof self.password != 'string') || (self.password.length == 0))){
-                        self.trigger('show:passwordModal');
-                        return false;
-                    }
-                    */
-
-                    /**
-                     * checkt ob alle User einen Key habe und ob der lokale User einen Key local hat,
-                     * wenn nicht, dann wird überprüpft ob das Passwort an ist und ob es gesetzt wurde
-                    */
-                    /*
-                    if(key_check == false && cmUserModel.hasLocalKeys() === false){
-                        if(self.password == undefined || (typeof self.password != 'string') || (self.password.length == 0)){
-                            cmNotify.warn('CONVERSATION.WARN.NO_PASSWORD');
-                            return false;
-                        }
-                    }
-                    */
-                //}
-                   
 
                 return true;
             };
@@ -247,13 +207,15 @@ angular.module('cmConversations')
                 if(data.sePassphrase || data.aePassphraseList){
                     passphraseVault =   cmPassphraseVault.create({
                         sePassphrase:       data.sePassphrase,
-                        aePassphraseList:   data.aePassphraseList
-                    });
+                        aePassphraseList:   data.aePassphraseList,
+                        signatures:         data.conversationSignatures,
+                        recipientKeyList:   data.recipients
+                    })
                 }
 
                 //if(passphraseVault.getKeyTransmission() != this.keyTransmission)
                 //    cmLogger.debug('cmConversationModel: inconsistent data: keyTransmission')
-                //    //TODO
+                //    //TODO what is todo???
                 
                 //this.keyTransmission = passphraseVault.getKeyTransmission()
 
@@ -320,11 +282,21 @@ angular.module('cmConversations')
                                         ?   passphraseVault.exportData()
                                         :   { keyTransmission: 'none' }
 
-                data.sePassphrase       =   passphrase_data.sePassphrase        || undefined;
-                data.aePassphraseList   =   passphrase_data.aePassphraseList    || undefined;
-                data.keyTransmission    =   passphrase_data.keyTransmission;
+                console.log('exportData')
+                console.dir(passphrase_data)
 
-                data.recipients         =   this.recipients.map(function(recipient){ return recipient.id });
+                data.sePassphrase           =   passphrase_data.sePassphrase        || undefined;
+                data.aePassphraseList       =   passphrase_data.aePassphraseList    || undefined;
+                data.keyTransmission        =   passphrase_data.keyTransmission
+                data.conversationSignatures =   passphrase_data.signatures
+
+                data.recipients             =       passphrase_data.recipientKeyList 
+                                                ||  this.recipients.map(function(recipient){ 
+                                                        return  {
+                                                                    identityId:     recipient.id ,
+                                                                    keys:          []
+                                                                }
+                                                    });
 
                 return data;
             };
@@ -337,7 +309,7 @@ angular.module('cmConversations')
              * @description
              * get Conversation Data from API
              *
-             * @returns {ConversationModel} this Returns ConversationModel
+             * @returns {Object} this Returns ConversationModel
              */
             this.load = function(){
 //                cmLogger.debug('cmConversationModel:load');
@@ -474,9 +446,9 @@ angular.module('cmConversations')
             };
 
             /**
-             * @param limit
-             * @param offset
-             * @param clearMessages
+             * @param {Number} limit
+             * @param {Number} offset
+             * @param {Boolean} clearMessages
              */
             this._updateConversation = function(limit, offset, clearMessages){
                 cmConversationsAdapter.getConversationMessages(this.id, limit, offset).then(
@@ -500,11 +472,11 @@ angular.module('cmConversations')
              * @ngdoc method
              * @methodOf cmConversationModel
              *
-             * @name  disableEncryption
+             * @name disableEncryption
              * @description
              * Disables the encryption for the conversation. Works only if the conversation is new (state).
              *
-             * @returns {cmConversationModel} this  Returns itself for chaining.
+             * @returns {Object} this Returns itself for chaining.
              */
             this.disableEncryption = function(){
 //                cmLogger.debug('cmConversationModel:disableEncryption');
@@ -522,11 +494,11 @@ angular.module('cmConversations')
              * @ngdoc method
              * @methodOf cmConversationModel
              *
-             * @name  EnableEncryption
+             * @name enableEncryption
              * @description
              * Enables the encryption for the conversation. Works only if the conversation is new (state) and no proper passphrase is set.
              *
-             * @returns {cmConversationModel} this  Returns itself for chaining.
+             * @returns {Object} this Returns itself for chaining.
              */
             this.enableEncryption = function(){
 //                cmLogger.debug('cmConversationModel:enableEncryption');
@@ -542,12 +514,14 @@ angular.module('cmConversations')
             /**
              * @ngdoc method
              * @methodOf cmConversationModel
-             * @todo
-             * @name  isEncrypted
+             *
+             * @name isEncrypted
              * @description
              * Returns encryption state of passphrase object which is similar of the encryption state of the conversation
              *
-             * @returns {boolean} bool Returns true if Conversation is encrypted.
+             * @returns {Boolean} bool Returns true if Conversation is encrypted.
+             *
+             * @todo
              */
             this.isEncrypted = function(){
 //                cmLogger.debug('cmConversationModel.isEncrypted');
@@ -564,8 +538,6 @@ angular.module('cmConversations')
              * @name decrypt
              * @description
              * starts decrypting oh messages
-             *
-             * @returns {Boolean} succees Returns Boolean
              */
             this.decrypt = function () {
                 //cmLogger.debug('cmConversationModel.decrypt', + this.subject);
@@ -606,11 +578,11 @@ angular.module('cmConversations')
              * @ngdoc method
              * @methodOf cmConversationModel
              *
-             * @name getEncryptionType
+             * @name getKeyTransmission
              * @description
-             * return encryption type from conversation
              *
-             * @returns {String} encryptionType look at encryptedPassphraseList
+             *
+             * @returns {String} getKeyTransmissionType
              */
             this.getKeyTransmission = function(){
                 //If the conversation is not new:
@@ -629,8 +601,6 @@ angular.module('cmConversations')
 
                 //Conversation is new, encrypted and there is no need for password:
                 return 'asymmetric';
-
-
             };
 
             /**
@@ -661,11 +631,27 @@ angular.module('cmConversations')
              * @ngdoc method
              * @methodOf cmConversationModel
              *
-             * name passwordRequired
+             * @name verifyAuthenticity
+             * @description
+             * Tries to verify the authenticity of the recipient list an the key transmission type.
+             *
+             * @returns {Promise} Returns a promise resolved if successful and rejected on failure
+             */
+            this.verifyAuthenticity = function(){
+                return  passphraseVault
+                        ?   passphraseVault.verifyAuthenticity()
+                        :   $q.reject('cmConversationModel: missing passphraseVault')
+            }
+
+            /**
+             * @ngdoc method
+             * @methodOf cmConversationModel
+             *
+             * @name passwordRequired
              * @description
              * Checks if the conversation requires a password
              *
-             * @return {Boolean} returns true or false
+             * @returns {Boolean} returns true or false
              */
             this.passwordRequired = function(){
 //                cmLogger.debug('cmConversationModel:passwordRequired');
@@ -678,7 +664,7 @@ angular.module('cmConversations')
                     || this.hasPassword()
                     )
 
-                }else{
+                } else {
                     return this.hasPassword() && (!this.userHasPrivateKey() || !this.userHasAccess())
                 }
             }
@@ -955,6 +941,7 @@ angular.module('cmConversations')
 //                cmLogger.debug('cmConversationModel.setLastMessage!');
 
                 if(this.messages.length > 0){
+
                     this.lastMessage = this.messages.reduce(function(value, message){
                         return value != undefined ? ( (value.created > message.created) ? value : message) : message;
                     });
@@ -1017,7 +1004,12 @@ angular.module('cmConversations')
                         self.decrypt();
                         self.setLastMessage();
 
-                        cmBrowserNotifications.showNewMessage(message.from, self.id);
+                        if(!message.state.is('notified')){
+                            message.state.set('notified');
+
+                            cmBrowserNotifications.showNewMessage(message.from, self.id);
+                        }
+
 
                         self.trigger('message:reInitFiles');
                     }
@@ -1048,7 +1040,19 @@ angular.module('cmConversations')
             });
 
             this.messages.on('last-message:read', function(event, message){
-                if(message.from.id != cmUserModel.data.identity.id && self.unreadMessages > 0 && cmSettings.get('enableUnreadMessages')){
+                // TODO: if last my own unread will never set back
+                /*
+                * message.from.id != cmUserModel.data.identity.id
+                 &&
+                 */
+                if((
+                  !message.isEncrypted()
+                || message.state.is('decrypted')
+                || message.state.is('incomplete')
+                )
+                && self.unreadMessages > 0
+                && cmSettings.get('enableUnreadMessages')
+                ){
                     self.unreadMessages = 0;
                     cmConversationsAdapter.sendReadStatus(self.id, message.id)
                 }

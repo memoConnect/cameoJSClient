@@ -1,8 +1,8 @@
 <h2 ng-if="conversation.state.is('new')" class="border-bottom no-margin">
     <i class="fa cm-talk"></i>
-    neuer Talk
+    {{::'CONVERSATION.HEADING'|cmTranslate}}
 </h2>
-<h2 ng-if="!conversation.state.is('new') && conversation.subject" class="border-bottom no-margin">
+<h2 ng-if="!conversation.state.is('new') && conversation.subject" class="border-bottom no-margin single-line">
     <i class="fa cm-talk is-selectable"></i>
     <span ng-bind-html="conversation.subject|cmParse" data-qa="text-subject" class="is-selectable"></span>
 </h2>
@@ -25,7 +25,7 @@
                 ng-click="goto('conversation/'+(conversation.id||'new')+'/recipients')"
                 cm-reactive
                 ng-if="conversation.recipients.length == 1 && conversation.state.is('new')">
-                <cm-avatar cm-view="unknown"></cm-avatar>
+                <cm-avatar cm-avatar-view="unknown"></cm-avatar>
                 <span>{{'CONVERSATION.PLACEHOLDER.ADD_RECIPIENTS'|cmTranslate}}</span>
             </div>
             <cm-avatar
@@ -61,6 +61,7 @@
         <label>{{'CONVERSATION.PLACEHOLDER.SUBJECT' | cmTranslate}}</label>
         <div class="cm-input-ctn with-inside-icon">
             <input
+                    name="subject"
                     type="text"
                     data-qa="input-subject"
                     ng-model="conversation.subject"

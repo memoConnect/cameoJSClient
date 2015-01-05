@@ -71,6 +71,7 @@
     <a ng-click="setActive('cameofont')" ng-class="{'is-active':active=='cameofont'}">cameofont</a> |
     <a ng-click="setActive('filetypes')" ng-class="{'is-active':active=='filetypes'}">filetypes</a> |
     <a ng-click="setActive('emojis')" ng-class="{'is-active':active=='emojis'}">emojis</a> |
+    <a ng-click="setActive('flags')" ng-class="{'is-active':active=='flags'}">flags</a> |
     <a ng-click="setActive('reactive')" ng-class="{'is-active':active=='reactive'}">reactive elements</a>
 </header>
 
@@ -143,6 +144,14 @@
             </figure>
         </div>
     </div>
+</section>
+
+<section ng-if="active == 'flags'">
+    <h1><span class="anchor"></span>flags</h1>
+
+    <figure ng-repeat="icon in flags" class="flag-figure">
+        <i class="flag flag_{{icon | clearClassName}}"></i><figcaption class="is-selectable">{{icon | clearClassName}}</figcaption>
+    </figure>
 </section>
 
 <section ng-if="active == 'reactive'">
@@ -225,7 +234,7 @@
     angular
     .module('icons',['ngTouch','cmConfig','cmUi'])
 
-    .controller('ctrl',function ($scope, emoji){
+    .controller('ctrl',function ($scope, emoji, flags){
         var clearHash = location.hash.replace('#/','');
         $scope.active = clearHash != '' ? clearHash : 'cameofont';
 
@@ -247,7 +256,7 @@
             {title:'contacts & identity',css:'cm-contacts cm-new-contact cm-new-contact-query cm-avatar cm-avatar-add cm-add-recipient cm-group cm-person cm-client-add cm-address-book-positive cm-address-book cm-load-to-rhino cm-load-to'},
             {title:'answer',css:'cm-plus cm-smile-negative cm-smile-positive cm-post cm-post-attention cm-post-idle cm-attachment'},
             {title:'media',css:'cm-video cm-file cm-sound cm-location cm-pictures cm-camera cm-mobile cm-contract'},
-            {title:'security',css:'cm-key cm-no-key cm-import-key cm-export-key cm-create-key cm-cancel-key cm-handshake cm-key-request cm-key-response cm-trust cm-connection-trusted cm-qr-code'}
+            {title:'security',css:'cm-key cm-no-key cm-import-key cm-export-key cm-create-key cm-cancel-key cm-handshake cm-connection-trusted cm-connection-untrusted cm-key-request cm-key-response cm-trust cm-qr-code'}
         ];
 
         $scope.types = [
@@ -261,6 +270,8 @@
         ];
 
         $scope.emojis = emoji.items;
+
+        $scope.flags = flags.items;
 
         $scope.setActive = function(section){
             $scope.active = section;

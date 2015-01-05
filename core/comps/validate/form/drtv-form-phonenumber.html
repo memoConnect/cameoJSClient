@@ -1,16 +1,75 @@
 <article class="content" ng-form="cmInnerForm">
-    <label>{{label|cmTranslate}}</label>
-    <div class="cm-input-ctn with-chooser" ng-class="{'cm-input-disabled':disabled,'with-inside-icon':!disabled}">
+
+    <label data-qa="ctn-toggle-phone-info" ng-click="togglePhoneInfo()" cm-reactive>{{::label|cmTranslate}}<i class="fa cm-ci-color cm-info" ng-show="toggleInfo"></i></label>
+
+    <cm-info-bubble ng-click="togglePhoneInfo()" ng-show="showPhoneInfo" data-qa="ctn-phone-info" nose-x="25%">
+       {{::toggleInfo|cmTranslate}}
+    </cm-info-bubble>
+
+    <div class="cm-input-ctn" ng-class="{
+        'cm-input-disabled':disabled,
+        'with-inside-icon':!disabled && !verification.isVisible,
+        'with-inside-icons':!disabled && verification.isVisible,
+        'with-inside-left-icon with-prefix-handler':!disabled && prefixHandler.isVisible
+    }">
+        <cm-country-prefix-handler ng-model="ngModel"></cm-country-prefix-handler>
         <input
-                type="tel"
-                tabindex="{{tabIndex}}" data-qa="input-phoneNumber"
-                name="phoneNumber" ng-model="ngModel"
-                ng-disabled="disabled" cm-validate-phone cm-adaptive-change="3000" />
+            type="tel"
+            tabindex="{{::tabIndex}}" data-qa="input-phoneNumber"
+            name="phoneNumberDisp" ng-model="ngModel"
+            cm-validate-phone
+            ng-disabled="disabled" />
+        <i class="fa"
+            data-qa="btn-phoneNumberManuallyVerification"
+            ng-show="!disabled && verification.isVisible"
+            ng-click="sendVerification()" cm-reactive="{{verification.isVerified}}"
+            ng-class="{
+                'cm-checkbox-right': verification.isVerified,
+                'cm-checkbox-wrong': !verification.isVerified
+            }"></i>
         <i class="fa cm-write" ng-show="!disabled"></i>
+        <input type="hidden" name="phoneNumber" ng-model="ngModelOut" />
     </div>
-    <cm-info-bubble class="cm-alert" ng-show="cmInnerForm.phoneNumber.$dirty && cmInnerForm.phoneNumber.$invalid" data-qa="form-error-phoneNumber-invalid">
-        <div ng-show="cmInnerForm.phoneNumber.$invalid">
-            <i class="fa cm-info"></i> {{info|cmTranslate}}
+    <cm-country-prefix-list></cm-country-prefix-list>
+    <cm-info-bubble class="cm-alert" ng-show="cmInnerForm.phoneNumberDisp.$dirty && cmInnerForm.phoneNumberDisp.$invalid" data-qa="form-error-phoneNumber-invalid">
+        <div ng-show="cmInnerForm.phoneNumberDisp.$invalid">
+            <i class="fa cm-info"></i> {{::info|cmTranslate}}
+        </div>
+    </cm-info-bubble>
+</article>
+
+<article class="content phoneNumberVerification" ng-show="verification.isVisible && !verification.isVerified">
+    <cm-info-bubble nose-x="85%" data-qa="info-phoneNumberNotVerified">
+        <i class="fa cm-attention cm-orange"></i>
+        <span ng-bind-html="::'DRTV.VALIDATE_PHONE.INFO.ISNT_VERIFIED'|cmTranslate:{ 'icon':verificationManuallyIcon}"></span>
+    </cm-info-bubble>
+
+    <label class="dbl mt15">{{::'DRTV.VALIDATE_PHONE.LABEL_VERIFICATION_CODE'|cmTranslate}}</label>
+    <div class="cm-input-ctn with-inside-icon">
+        <input
+            type="text"
+            data-qa="inp-phoneNumberCodeVerify"
+            name="phoneNumberCodeVerify"
+            cm-enter="checkVerificationCode()"
+            ng-model="code"
+            cm-pristine-ignore
+            />
+        <i class="fa cm-right"
+           data-qa="btn-phoneNumberCodeVerify"
+           ng-click="checkVerificationCode()"
+           ng-show="!showLoader"
+           cm-reactive></i>
+        <cm-loader cm-color="inp-grey" cm-size="small" ng-show="showLoader"></cm-loader>
+    </div>
+
+    <cm-info-bubble ng-show="cmUtil.objLen(infoBubble) > 0">
+        <div data-qa="info-phoneNumberVerificationCodeEmpty" ng-show="infoBubble.empty">
+            <i class="fa cm-attention cm-orange"></i>
+            <span ng-bind-html="::'DRTV.VALIDATE_PHONE.INFO.EMPTY_CODE'|cmTranslate"></span>
+        </div>
+        <div data-qa="info-phoneNumberVerificationCodeInvalid" ng-show="infoBubble.invalid">
+            <i class="fa cm-attention cm-orange"></i>
+            <span ng-bind-html="::'DRTV.VALIDATE_PHONE.INFO.INVALID_CODE'|cmTranslate"></span>
         </div>
     </cm-info-bubble>
 </article>

@@ -74,6 +74,10 @@ angular.module('cmUser').directive('cmIdentityKeyList', [
                     refresh();
                 };
 
+                $scope.someKeyNeedsAuthentication = function(){
+                    return $scope.trustedKeys.length < $scope.publicKeys.length
+                }
+
                 $scope.isTrustedKey = function(key){
                     return $scope.trustedKeys.indexOf(key) != -1
                 };
@@ -94,8 +98,11 @@ angular.module('cmUser').directive('cmIdentityKeyList', [
                 cmUserModel.state.on('change', schedule_refresh);
                 cmUserModel.on('key:stored key:removed signatures:saved identity:updated update:finished cache:updated', schedule_refresh);
 
+                $scope.$on('$destroy',function(){
+                    cmUserModel.off('key:stored key:removed signatures:saved identity:updated update:finished cache:updated', schedule_refresh);
+                });
 
-                refresh()
+                refresh();
             }
         }
     }

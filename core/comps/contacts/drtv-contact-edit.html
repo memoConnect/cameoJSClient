@@ -1,34 +1,13 @@
 <article class="content edit-identity-head clearfix">
     <div class="cm-fl mr5">
-        <cm-avatar cm-data="contact.identity" cm-view="{{chooseAvatar?'unknown':''}}" ng-show="contact.identity" class="big"></cm-avatar>
+        <cm-avatar cm-data="contact.identity" cm-avatar-view="{{chooseAvatar?'unknown':''}}" ng-show="contact.identity" class="big"></cm-avatar>
     </div>
     <div class="cm-fl w72">
         <ul class="no-border">
             <li>
-                <section ng-if="!isTrusted && (!hasKeys || !hasLocalKey)" class="cm-disabled">
+                <section>
                      <span class="item clearfix">
-                        <i  class="fa cm-no-key cm-ci-color"></i>
-                         {{'CONTACT.TRUST.NO_CAMEOKEYS'|cmTranslate}}
-                     </span>
-                    <section class="icon-list">
-                        <i class="fa cm-info"></i>
-                    </section>
-                </section>
-
-                <section ng-if="!isTrusted && hasKeys && hasLocalKey">
-                     <span class="item clearfix">
-                        <i  class="fa cm-key cm-ci-color"></i>
-                         {{'CONTACT.TRUST.HAS_CAMEOKEYS'|cmTranslate}}
-                     </span>
-                    <section class="icon-list">
-                        <i class="fa cm-info"></i>
-                    </section>
-                </section>
-
-                <section ng-if="isTrusted" data-qa="trust-confirmed">
-                     <span class="item clearfix">
-                        <i  class="fa cm-connection-trusted cm-ci-color"></i>
-                        {{'CONTACT.TRUST.OK'|cmTranslate}}
+                        <cm-contact-trust cm-data="contact" cm-with-text></cm-contact-trust>
                      </span>
                     <section class="icon-list">
                         <i class="fa cm-info"></i>
@@ -69,9 +48,9 @@
     <article class="content" ng-if="!showCameoId" data-qa="internal-user">
         <label>{{'CONTACT.PLACEHOLDER.CAMEOID'|cmTranslate}}</label>
         <div class="cm-input-ctn with-inside-icon cm-icon-grey" ng-class="{'cm-input-disabled':disabled}">
-            <i class="fa cm-rhino-positive"></i>
             <input data-qa="input-cameoId" disabled
                    type="text" name="cameoId" ng-model="contact.identity.cameoId" />
+            <i class="fa cm-rhino-positive without-cursor"></i>
         </div>
     </article>
 
@@ -98,6 +77,7 @@
 
     <cm-form-phonenumber
         ng-model="formData.phoneNumber"
+        ng-model-out="formData.mergedPhoneNumber"
         cm-tabindex="2"
         cm-label="CONTACT.PLACEHOLDER.PHONENUMBER"
         cm-info="CONTACT.INFO.INVALID.PHONENUMBER"

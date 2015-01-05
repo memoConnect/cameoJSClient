@@ -2,5 +2,6 @@
 
 angular.module('cmUser',[
     'cmCore',
-    'cmFiles'
+    'cmFiles',
+    'cmUi'
 ]);

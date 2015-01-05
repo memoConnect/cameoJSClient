@@ -1,12 +1,19 @@
-var config = require("../../config-e2e-tests.js")
+var config = require("../../config/specs.js")
 var util = require("../../../lib/e2e/cmTestUtil.js")
 
 describe('Friendrequests: ', function () {
     var ptor = util.getPtorInstance()
-    var user1ToAccept = util.createTestUser()
+    var user1ToAccept
     var password = 'password'
     var requestMessage = 'moep moep mooooeeeppp?'
     afterEach(function() { util.stopOnError() });
+
+    it('should get a login name for user 1', function(){
+        util.createTestUser(undefined,'password reset')
+        .then(function(loginName){
+            user1ToAccept = loginName
+        })
+    })
 
     it('user2', function(){
 
@@ -67,7 +74,6 @@ describe('Friendrequests: ', function () {
         describe('Friendrequests again "'+ user1ToAccept + '"', function(){
             it('login and accept', function() {
                 util.login(user1ToAccept, password)
-                util.waitForPageLoad("/start")
             })
 
             it('accept request', function(){

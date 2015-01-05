@@ -10,7 +10,8 @@
  * @requires localStorage TODO: implement ServiceLocalStorage
  */
 
-angular.module('cmCore').service('cmAuth', [
+angular.module('cmCore')
+    .service('cmAuth', [
     'cmApi','LocalStorageAdapter', 'cmObject', 'cmUtil', 'cmLogger', 'cmCrypt' ,'$rootScope',
     function(cmApi, LocalStorageAdapter, cmObject, cmUtil, cmLogger, cmCrypt, $rootScope){
         var _TOKEN_ = undefined;
@@ -165,16 +166,15 @@ angular.module('cmCore').service('cmAuth', [
              * @param {String} reservationSecret From api given token for Username
              * @returns {Promise} for async handling
              */
-            checkAccountName: function(name, reservationSecret){
-                return cmApi.post({
+            checkAccountName: function(name){
+                var apiCall = {
                     path: '/account/check',
                     data: {
-                        loginName: name,
-                        reservationSecret: reservationSecret
+                        loginName: name
                     }
-    //                exp_ok: 'reservationSecret',
-    //                exp_ko: 'alternative'
-                })
+                };
+
+                return cmApi.post(apiCall);
             },
             /**
              * @ngdoc method
@@ -221,10 +221,12 @@ angular.module('cmCore').service('cmAuth', [
             },
 
             putAccount: function(data){
-                return cmApi.put({
+                var apiCall = {
                     path: '/account',
                     data: data
-                })
+                };
+
+                return cmApi.put(apiCall)
             },
 
             /**
@@ -266,6 +268,15 @@ angular.module('cmCore').service('cmAuth', [
                     path: '/identity',
                     data: data
                 })
+            },
+
+            initialIdentity: function(data){
+                var apiCall = {
+                    path: '/identity/initial',
+                    data: data
+                };
+
+                return cmApi.post(apiCall)
             },
 
             /**
@@ -445,20 +456,73 @@ angular.module('cmCore').service('cmAuth', [
              */
             getTwoFactorToken: function(){
                 return localStorage.getItem('twoFactorToken');
+            },
+
+            sendPasswordLost: function(data){
+                return cmApi.post({
+                    path: '/resetPassword',
+                    data: data
+                });
+            },
+
+            checkResetPassword: function(resetId){
+                return cmApi.get({
+                    path: '/resetPassword/'+resetId
+                });
+            },
+
+            resetPassword: function(data, resetId){
+                return cmApi.post({
+                    path: '/resetPassword/'+resetId,
+                    data: data
+                });
+            },
+
+            sendVerification: function(type){
+                var data = {};
+
+                switch(type){
+                    case 'phoneNumber':
+                        data.verifyPhoneNumber = true;
+                    break;
+                    case 'email':
+                        data.verifyEmail = true;
+                    break;
+                }
+
+                cmApi.post({
+                    path: '/verify',
+                    data: data
+                })
+            },
+
+            confirmVerification: function(secret){
+                return cmApi.post({
+                    path: '/verify/'+secret
+                });
             }
         };
 
         cmObject.addEventHandlingTo(auth);
 
         cmApi.on('identity:update', function (event, data){
-//            cmLogger.debug('cmAuth.on:identity:update')
-            auth.trigger('identity:updated', data)
+            //cmLogger.debug('cmAuth.on:identity:update')
+            auth.trigger('identity:updated', data);
         });
 
+        cmApi.on('identity:new', function (event, data){
+            //cmLogger.debug('cmAuth.on:identity:new')
+            auth.trigger('identity:new', data);
+        });
 
         cmApi.on('conversation:new-aePassphrase', function(event, data){
-           //cmLogger.debug('conversation:new-aePassphrase');
-            auth.trigger('conversation:update', data)
+            //cmLogger.debug('cmAuth.on:conversation:new-aePassphrase');
+            auth.trigger('conversation:update', data);
+        });
+
+        cmApi.on('account:update', function (event, data){
+            //cmLogger.debug('cmAuth.on:account:update')
+            auth.trigger('account:update', data);
         });
 
         return auth;

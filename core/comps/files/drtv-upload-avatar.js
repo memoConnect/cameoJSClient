@@ -30,6 +30,7 @@ angular.module('cmFiles').directive('cmUploadAvatar',[
                                         $timeout(function(){
                                             cmUserModel.data.identity.one('avatar:loaded',function(){
                                                 scope.imageUpload = false;
+                                                $rootScope.$broadcast('cmUploadAvatar:success');
                                             });
                                         });
                                     });
@@ -53,7 +54,7 @@ angular.module('cmFiles').directive('cmUploadAvatar',[
                 cmAnswerFiles.on('file:setted', callback_file_setted);
 
                 scope.$on('$destroy',function(){
-                    cmAnswerFiles.off('save:aborted', callback_file_setted);
+                    cmAnswerFiles.off('file:setted', callback_file_setted);
                 });
             }
         }

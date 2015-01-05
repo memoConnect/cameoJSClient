@@ -128,24 +128,24 @@ angular.module('cmConversations')
                                 filesForMessage = files;
                             deferred.resolve()
                         },
-                        function(errorCode, error, header){
+                        function(data){
                             $scope.isSending = false;
                             $scope.isSendingAbort = true;
 
-                            if(!errorCode){
-                                deferred.reject('problem with prepare file upload');
+                            if(!data.errorCode){
+                                deferred.reject('problem with file and none errorCode is give');
                             } else {
                                 deferred.reject('problem with prepare file upload');
 
-                                cmNotify.warn(errorCode, {
+                                cmNotify.warn(data.errorCode, {
                                     ttl: 0,
-                                    i18n: cmErrorCodes.toI18n(errorCode, {
-                                        error: error,
-                                        header: header
+                                    i18n: cmErrorCodes.toI18n(data.errorCode, {
+                                        error: data.error,
+                                        header: data.headers
                                     })
                                 });
 
-                                deferred.reject(errorCode);
+                                deferred.reject(data.errorCode);
                             }
                         }
                     );
@@ -208,14 +208,23 @@ angular.module('cmConversations')
                                                                 ?   new_message
                                                                     .setText($scope.newMessageText)
                                                                     .addFiles(filesForMessage)
-                                                                    .encrypt(passphrase)
-                                                                    .save()
+                                                                    .getSignatures()
+                                                                    .then(function(){
+                                                                        return new_message.encrypt(passphrase)
+                                                                    })
+                                                                    .then(function(){
+                                                                        return new_message.save()
+                                                                    })
 
                                                                 :   new_message
                                                                     .setText($scope.newMessageText)
                                                                     .addFiles(filesForMessage)
                                                                     .setPublicData(['text','fileIds'])
-                                                                    .save()  
+                                                                    .revealSignatures()
+                                                                    .getSignatures()
+                                                                    .then(function(){
+                                                                        return new_message.save()
+                                                                    })
                                                     })
 
                                         })
@@ -226,6 +235,7 @@ angular.module('cmConversations')
                                     clearTransferScopeData();
                                     $scope.newMessageText = '';
                                     filesForMessage = [];
+                                    cmAnswerFiles.reset();
                                     $rootScope.$broadcast('cmAnswer:reset');
                                     
                                     //Todo: This is not the right place to count messages:
@@ -297,11 +307,8 @@ angular.module('cmConversations')
                     $scope.conversation.update(undefined, true);
 
                     self.addPendingRecipients();
-                    // $scope.showAsymmetricKeyError();
 
                     $scope.show_contacts  = false;
-
-    //                $scope.showGoToSettingsModal(); 18.07.2014 BS can be removed because on updated:finished event do this check
 
                     /** Event callbacks **/
                     function callback_update_finished(){
@@ -310,7 +317,7 @@ angular.module('cmConversations')
                     }
 
                     function callback_password_missing(){
-                        // switcher for purl and conversation, @Todo: vereinheitlichen
+                        // switcher for purl and conversation
                         var settingsLinker = {type:'',typeId:''};
                         if('purlId' in $routeParams){
                             settingsLinker.type = 'purl';
@@ -331,7 +338,6 @@ angular.module('cmConversations')
                             $scope.conversation.solitary = true;
                             $scope.send();
                         })
-                    
                     }
 
                     function callback_save_aborted(){
@@ -373,11 +379,11 @@ angular.module('cmConversations')
                     id:'conversation-'+($scope.conversation.id||'new'),
                     scopeVar:'newMessageText',
                     onSet: function(){
-                        this.noneScopeData = cmAnswerFiles.files;
+                        this.noneScopeData = cmAnswerFiles.getFilesForTransfer();
                     },
                     onGet: function(formData, noneScopeData){
                         if(noneScopeData != null)
-                            cmAnswerFiles.files = noneScopeData;
+                            cmAnswerFiles.setFiles(noneScopeData);
                     }
                 });
 

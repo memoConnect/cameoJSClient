@@ -3,7 +3,7 @@ module.exports = function(grunt, options){
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-ngdocs');
 
-    grunt.registerTask('build:create-docs', [
+    grunt.registerTask('docs:to-dist', [
         'clean:docs',
         'app:packages',
         'ngdocs'
@@ -12,35 +12,42 @@ module.exports = function(grunt, options){
     return {
         tasks:{
             clean: {
-                'docs': ['docs']
+                'docs': ['docs','dist/docs']
             },
             ngdocs: {
                 options: {
-                    dest: 'docs',
+                    dest: 'dist/docs',
                     scripts: [
-                        'app/vendor.'+options.globalCameoBuildConfig.config.version+'.js',
-                        'app/cameo.'+options.globalCameoBuildConfig.config.version+'.js'
+                        'dist/app/vendor.'+options.globalCameoBuildConfig.config.version+'.js',
+                        'dist/app/cameo.'+options.globalCameoBuildConfig.config.version+'.js'
                     ],
+                    /*styles: [
+                        'dist/app/style.'+options.globalCameoBuildConfig.config.version+'.css'
+                    ],*/
                     deferLoad: false,
                     html5Mode: false,
                     startPage: '/core',
-                    title: 'CameoNET QS',
-                    image: 'app/favicon.ico',
-                    imageLink: 'https://www.cameo.io',
+                    title: 'cameoNet Docs',
+                    image: 'dist/app/favicon.ico',
+                    imageLink: 'https://www.cameonet.de',
                     titleLink: '/docs/index.html',
                     bestMatch: true
                 },
-                core: {
-                    src: ['app/comps/core/*.js'],
+                'core': {
+                    src: ['core/comps/core/*.js'],
                     title: 'cmCore'
                 },
-                ui: {
-                    src: ['app/comps/ui/*.js'],
+                'ui': {
+                    src: ['core/comps/ui/*.js'],
                     title: 'cmUi'
                 },
-                conversations: {
-                    src: ['app/comps/conversations/*.js'],
+                'conversations': {
+                    src: ['core/comps/conversations/*.js'],
                     title: 'cmConversations'
+                },
+                'contacts': {
+                    src: ['core/comps/contacts/*.js'],
+                    title: 'cmContacts'
                 },
                 '1-api': {
                     src: ['resource/docs/api/*.ngdoc'],

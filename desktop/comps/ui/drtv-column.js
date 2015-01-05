@@ -1,11 +1,11 @@
 'use strict';
 
 angular.module('cmDesktopUi').directive('cmColumn',[
-    '$rootScope', '$timeout',
-    function ($rootScope, $timeout) {
+    '$rootScope',
+    function ($rootScope) {
         return {
             restrict: 'E',
-            link: function(scope, element, attrs){
+            link: function(scope, element){
                 function addGrabber(){
                     if(element.find('cm-desktop-widget-menu').length == 1)
                         element.append('<div class="grabber"></div>');
@@ -13,26 +13,16 @@ angular.module('cmDesktopUi').directive('cmColumn',[
 
                 addGrabber();
 
-                if('cmWithoutFooterCheck' in attrs)
-                    return false;
-
-                function checkFooter(){
-                    if(element.find('cm-footer').length == 0)
-                        element.addClass('without-footer');
-                    else
-                        element.removeClass('without-footer');
+                function handleScrollable(){
+                    if(element.find('cm-scrollable').length == 1){
+                        element.css({'overflow':'hidden'});
+                    }
                 }
 
-                checkFooter();
-
-                var watchersEnd = $rootScope.$on('cmFooter:stateChanged',function(){
-                    $timeout(function(){
-                        checkFooter();
-                    },50);
-                });
+                var listen_to_scrollable = $rootScope.$on('cm-scrollable:loaded', handleScrollable);
 
                 scope.$on('$destroy', function(){
-                    watchersEnd();
+                    listen_to_scrollable();
                 });
             }
         }

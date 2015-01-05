@@ -3,10 +3,11 @@ module.exports = function(grunt, options){
     grunt.loadNpmTasks('grunt-shell');
     grunt.loadNpmTasks('grunt-bg-shell');
 
-    grunt.registerTask('server:fe:node', ['bgShell:node']);
-    grunt.registerTask('server:fe:python', ['shell:python']);
+    grunt.registerTask('server:node', ['bgShell:node']);
+    grunt.registerTask('server:python', ['shell:python']);
     grunt.registerTask('server:weinre', ['bgShell:weinre']);
-    grunt.registerTask('server:be:cameo', ['bgShell:cameo']);
+    grunt.registerTask('server:cameo', ['bgShell:cameo']);
+    grunt.registerTask('server:cameo:update', ['bgShell:cameo-update']);
 
     return {
         tasks:{
@@ -31,6 +32,13 @@ module.exports = function(grunt, options){
                 },
                 'cameo': {
                     cmd: 'sbt run',
+                    bg: false,
+                    execOpts: {
+                        cwd: '../cameoServer'
+                    }
+                },
+                'cameo-update': {
+                    cmd: 'git pull',
                     bg: false,
                     execOpts: {
                         cwd: '../cameoServer'

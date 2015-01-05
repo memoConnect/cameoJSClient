@@ -1,6 +1,9 @@
 'use strict';
 
 angular.module('cmContacts',[
+    'cmConfig',
     'cmCore',
-    'cmPhonegap'
+    'cmPhonegap',
+    'cmValidate',
+    'cmSecurityAspects'
 ]);

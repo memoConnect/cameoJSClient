@@ -32,16 +32,17 @@ describe("cmLanguage", function() {
 
     describe("setup", function(){
 
-        beforeEach(module('cmConfig'))
-
-        beforeEach(inject(function(_cmConfig_){
-            cmConfig = _cmConfig_
-        }))
+        beforeEach(function(){
+            module('cmConfig')
+            inject(function(_cmConfig_){
+                cmConfig = _cmConfig_
+            })
+        })
 
         it('should find an array of correctly formatted keys for supported languages at cameo.supported_languages', function() {
             expect(Object.prototype.toString.call( cmConfig.supportedLanguages )).toEqual('[object Array]')
             cmConfig.supportedLanguages.forEach(function(lang_key){
-                expect(lang_key.match(/^[a-z]{2}_[A-Z]{2}$/)).not.toEqual(null) // e.g. de_DE
+                expect(lang_key.match(/^[a-z]{2}$/)).not.toEqual(null) // e.g. de / en
             })
         })
 
@@ -149,9 +150,19 @@ describe("cmLanguage", function() {
                 })
             })
 
-            it('should have none @todo inside', function(){
-                var needle = '@todo',
-                    countTodos = []
+            var needles = '@todo,<br>'
+            it('should have none of this '+needles+' inside', function(){
+                var foundPosition = [],
+                    arrNeedles = needles.split(',');
+
+                function foundItem(needle, i18nKey){
+                    if(!(needle in foundPosition)){
+                        foundPosition[needle] = [];
+                    }
+
+                    foundPosition[needle].push(i18nKey)
+                }
+
                 function scan(obj, key){
                     var k;
                     if (obj instanceof Object) {
@@ -163,18 +174,20 @@ describe("cmLanguage", function() {
                         }
                     } else {
                         //not an Object so obj[k] here is a value
-                        if(obj.indexOf(needle) >= 0)
-                            countTodos.push(key)
-                    };
-                };
+                        arrNeedles.forEach(function(needle){
+                            if(obj.indexOf(needle) >= 0)
+                                foundItem(needle,key)
+                        })
+                    }
+                }
 
                 scan(language_tables);
 
                 if(cmConfig.errorOnTodoInI18n)
-                    expect(countTodos.length).toEqual(0)
+                    expect(foundPosition.length).toEqual(0)
 
-                if(countTodos.length > 0){
-                    console.log(needle + '\'s found at: ' + JSON.stringify(countTodos, null, 2) + '\n')
+                if(foundPosition.length > 0){
+                    console.log(needles + '\'s found at: ' + JSON.stringify(foundPosition, null, 2) + '\n')
                 }
             })
         })
@@ -188,10 +201,10 @@ describe("cmLanguage", function() {
             'cmLanguageProvider',
             function(cmLanguageProvider){
                 cmLanguageProvider
-                .preferredLanguage( 'en_US' )
-                .supportedLanguages(['en_US, de_DE'])
+                .preferredLanguage( 'en' )
+                .supportedLanguages(['en, de'])
                 .pathToLanguages('i18n')
-                .translations('en_US', {
+                .translations('en', {
                     'LANG.EN_US' : 'english',
                     'TEST': 'works'
                 })
@@ -217,19 +230,19 @@ describe("cmLanguage", function() {
         describe("cmLanguage filter", function(){
 
             it('should provide a function "getLanguageName" to get the translation of a languages\'s name by its key.', function(){
-                cmLanguage.getLanguageName('en_US').then(function(langName){
+                cmLanguage.getLanguageName('en').then(function(langName){
                     expect(langName).toEqual('english')
                 })
             })
 
 
             it('should provide a function "getCurrentLanguage" to return the currently active languages\'s key.', function(){
-                expect(cmLanguage.getCurrentLanguage()).toEqual('en_US')
+                expect(cmLanguage.getCurrentLanguage()).toEqual('en')
             })
 
 
             it('should provide a function "getSupportedLanguages" to return the keys of supported languages\'.', function(){
-                expect(cmLanguage.getSupportedLanguages()).toEqual(['en_US, de_DE'])
+                expect(cmLanguage.getSupportedLanguages()).toEqual(['en, de'])
             })
 
             it('should provide a function "getPathToLanguage" to return the path to language files.', function(){
@@ -239,16 +252,16 @@ describe("cmLanguage", function() {
             it('should provide a function "switchLanguage" to switch between supported languages.', function(){
                 expect(typeof cmLanguage.switchLanguage).toEqual('function')
 
-                $httpBackend.whenGET('i18n/de_DE.json')
-                .respond('{"LANG": {"FR_FR":"Französisch"} }')
+                $httpBackend.whenGET('i18n/de.json')
+                .respond('{"LANG": {"FR":"Französisch"} }')
 
                 //return a promise
-                cmLanguage.switchLanguage('de_DE')
+                cmLanguage.switchLanguage('de')
 
                 //resolves all promises
                 $httpBackend.flush();
 
-                cmLanguage.getLanguageName('fr_FR').then(function(langName){
+                cmLanguage.getLanguageName('fr').then(function(langName){
                     expect(langName).toBe('Französisch')
                 })
                 $httpBackend.verifyNoOutstandingExpectation()

@@ -9,7 +9,6 @@ angular.module('cmFiles').service('cmAnswerFiles', [
         var self = {
             files: [],
             set: function (blob) {
-//             TODO: Android name=content fix file plugin!!!
 //                console.log(blob)
 
                 if (!blob)
@@ -42,9 +41,18 @@ angular.module('cmFiles').service('cmAnswerFiles', [
                 return false;
             },
             reset: function () {
-                console.log('reset files')
                 this.files = [];
                 this.trigger('files:resetted');
+            },
+
+            getFilesForTransfer: function(){
+                var files = this.files;
+                this.reset();
+                return files;
+            },
+
+            setFiles: function(filesArray){
+                this.files = filesArray;
             },
 
             validateChoosenFiles: function (options) {
@@ -69,7 +77,11 @@ angular.module('cmFiles').service('cmAnswerFiles', [
                         self.reset();
                     },
                     function (result) {
-                        deferred.reject(result.data.errorCode, result.data.error, result.config.headers);
+                        deferred.reject({
+                            errorCode: result.data.errorCode,
+                            error: result.data.data,
+                            headers: result.config.headers
+                        });
                     }
                 );
 

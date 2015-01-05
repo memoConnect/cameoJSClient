@@ -1,14 +1,19 @@
-var config = require("../config-e2e-tests.js")
+var config = require("../config/specs.js")
 var util = require("../../lib/e2e/cmTestUtil.js")
 
 // start init tests
 describe('Textarea Resize', function () {
-    var ptor = util.getPtorInstance()
+    var ptor = util.getPtorInstance(),
+        testUser
 
-    it('login & open new conversation', function () {
-        util.login()
-        util.waitForPageLoad('/start')
+    it('should create user1', function(){
+        util.createTestUser(undefined, 'route talks')
+        .then(function(loginName){
+            testUser = loginName
+        })
+    })
 
+    it('open new conversation', function () {
         util.get('/conversation/new')
         util.waitForPageLoad('/conversation/new')
     })
@@ -57,16 +62,23 @@ describe('Textarea Resize', function () {
         expect(textarea.getAttribute('rows')).toBe('1')
     })
 
-    /**
-     * @todo
-     */
-    console.log('test removed.')
-    xit('check input without newlines', function(){
+    it('check input without newlines', function(){
         var textarea = $("[data-qa='input-answer']"),
-            longText = 'mmmmmmmmeeeeeeeeooooooooooppppppppppppppppppppppppppppppppppppppp'
+            longText = 'mmmmmmmmooooooooooeeeeeeeeeepppppppppppppppppppppppppppppppppp'
 
         textarea.sendKeys(longText)
         expect(textarea.getAttribute('value')).toBe(longText)
-        expect(textarea.getAttribute('rows')).toBe('3')
+        textarea.getAttribute('rows').then(function(rows){
+            var r = parseInt(rows)
+            expect(r >= 3 || r <= 4).toBeTruthy()
+        })
+    })
+
+    it('should logout', function(){
+        util.logout();
+    })
+
+    it('should delete testUser', function(){
+        util.deleteTestUser(testUser)
     })
 })

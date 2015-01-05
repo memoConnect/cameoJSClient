@@ -2,7 +2,9 @@ angular.module('cmConfig',[])
 .provider('cmConfig', [
     function(){
         var self = {
+            target: '<%= currentTarget %>',
             restApi: '<%= currentApiUrl %>',
+            defaultApiVersion: '<%= defaultApiVersion %>',
             version: '<%= currentVersion %>',
 
             commitSize: 50,
@@ -18,8 +20,10 @@ angular.module('cmConfig',[])
             WebworkerDefaultLimitApp: 2,
             WebworkerDefaultLimitDesktop: 2,
 
+            browserNotificationTimeout: 5000,
+
             token: null,
-            supportedLanguages: ['de_DE', 'en_US'],
+            supportedLanguages: ['de', 'en'],
             pathToLanguages: 'i18n',
             cacheLangFiles: false,
             errorOnTodoInI18n: ('<%= errorOnTodoInI18n %>' == 'true'),
@@ -40,15 +44,13 @@ angular.module('cmConfig',[])
                     guests: false,
                     routes: ['/start/quickstart']
                 },
-                'start-keyinfo': {
-                    guests: false,
-                    hasCtrl: true,
-                    routes: ['/start/keyinfo'],
-                    resolveUserModel: true
-                },
                 'login': {
                     isDefault: true,
                     css: 'no-header no-footer',
+                    guests: true
+                },
+                'help': {
+                    routes: ['/help'],
                     guests: false
                 },
                 'settings': {
@@ -161,6 +163,30 @@ angular.module('cmConfig',[])
                     guests: true,
                     resolvePurl: true
                 },
+                'password-lost': {
+                    templateUrl: 'routes/password/lost/password-lost.html',
+                    routes:[
+                        '/password/lost',
+                        '/password'
+                    ],
+                    guests: true
+                },
+                'password-code': {
+                    templateUrl: 'routes/password/code/password-code.html',
+                    routes:[
+                        '/password/code',
+                    ],
+                    guests: true
+                },
+                'password-reset': {
+                    templateUrl: 'routes/password/reset/password-reset.html',
+                    routes:[
+                        '/password/reset/:resetId',
+                        '/passwordReset/:resetId'
+                    ],
+                    hasCtrl: true,
+                    guests: true
+                },
                 'registration': {
                     guests: true
                 },
@@ -227,12 +253,30 @@ angular.module('cmConfig',[])
                     hasCtrl: true,
                     templateUrl: 'routes/error/error.html',
                     guests: true
+                },
+                'setup-account':{
+                    hasCtrl: true,
+                    routes: ['/setup/account'],
+                    guests: false,
+                    resolveUserModel: true
+                },
+                'setup-identity':{
+                    hasCtrl: true,
+                    routes: ['/setup/identity'],
+                    guests: false,
+                    resolveUserModel: true
+                },
+                'setup-keyinfo': {
+                    guests: false,
+                    hasCtrl: true,
+                    routes: ['/setup/keyinfo'],
+                    resolveUserModel: true
                 }
             },
 
-            appIcon: '<%= appIcon %>',
+            static: JSON.parse('<%= static %>'),
 
-            autologin: {
+            autoLoginData: {
                 'Dumpuser local': {
                     user: '2VqTftqh',
                     pass: 'password'
@@ -244,13 +288,27 @@ angular.module('cmConfig',[])
             },
 
             menu: {
-                'conversation/new': {i18n:'MENU.NEW_TALK', icon:'cm-new-talk'},
+                'talks': {
+                    i18n:'MENU.TALKS', icon:'cm-talk',
+                    activeOn:'talks,conversation', ignoreOn:'conversation/new'
+                },
+                'conversation/new': {
+                    i18n:'MENU.NEW_TALK', icon:'cm-new-talk', rootScopeCallback:'createNewConversation'},
+                'contacts': {
+                    i18n:'MENU.CONTACTS', icon:'cm-person',
+                    activeOn:'contact',
+                    ignoreOn:'contact/request/list,contact/create'
+                },
                 'contact/create': {i18n:'MENU.NEW_CONTACT', icon:'cm-new-contact'},
                 //'settings/identity/key/list': {i18n:'MENU.OWN_KEYS', icon:'cm-key'},
-                'contact/request/list': {'data-qa':'btn-menu-contact-requests', i18n:'MENU.REQUESTS', icon:'cm-new-contact-query', css:'cm-menu-notify qa-btn-request-notify', drtv:'cm-friend-request-counter'},
+                'contact/request/list': {
+                    'data-qa':'btn-menu-contact-requests', i18n:'MENU.REQUESTS',
+                    icon:'cm-new-contact-query', css:'cm-menu-notify qa-btn-request-notify',
+                    drtv:'cm-friend-request-counter'
+                },
                 'settings': {i18n:'MENU.SETTINGS', icon:'cm-settings'},
-                'start/quickstart': {i18n:'START.QUICKSTART.HEADLINE', icon:'cm-info'}
-            },
+                'help': {i18n:'MENU.HELP', icon:'cm-info', 'data-qa':'btn-menu-help'}
+			},
 
             footer: {
                 'talks': {i18n:'DRTV.FOOTER.TALKS', icon:'cm-talk'},
@@ -266,11 +324,20 @@ angular.module('cmConfig',[])
                 'app': {i18n:'SETTINGS.APP', icon:'cm-fix'},
                 'contracts': {i18n:'SETTINGS.CONTRACTS', icon:'cm-clipboard', disabled:true},
                 'about': {i18n:'SETTINGS.PAGES.ABOUT_US.TITLE', icon:'cm-rhino-positive'}
+            },
+
+            routeHelp: {
+                'start/quickstart': {i18n:'START.QUICKSTART.HEADLINE', icon:'cm-info', 'data-qa':'btn-help-quickstart'},
+                'support': {i18n:'HELP.LABEL.SUPPORT',icon:'cm-rhino-bubble-glyph',externLink:'http://support.cameonet.de', 'data-qa':'btn-help-support'}
             }
         };
         // performance page
         if('<%= performancePage %>' == 'true') {
-            self.menu['performance'] = {i18n: 'SETTINGS.PAGES.PERFORMANCE.TITLE', icon: 'cm-not-connected', link: 'performance.html'};
+            self.menu['performance'] = {
+                i18n: 'SETTINGS.PAGES.PERFORMANCE.TITLE',
+                icon: 'cm-not-connected',
+                link: 'performance.html'
+            };
         }
 
         this.get = function(key){

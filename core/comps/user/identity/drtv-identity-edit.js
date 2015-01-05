@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('cmUser').directive('cmIdentityEdit', [
-    'cmUserModel', 'cmNotify', 'cmLoader', 'cmUtil', 
+    'cmUserModel', 'cmNotify', 'cmLoader', 'cmUtil', 'cmPristine',
     '$q', '$rootScope',
-    function(cmUserModel, cmNotify, cmLoader, cmUtil,
+    function(cmUserModel, cmNotify, cmLoader, cmUtil, cmPristine,
              $q, $rootScope){
         return {
             restrict: 'E',
@@ -13,15 +13,12 @@ angular.module('cmUser').directive('cmIdentityEdit', [
                 var loader = new cmLoader($scope);
 
                 $scope.identity = cmUserModel.data.identity;
-                $scope.isPristine = true;
-                $rootScope.$on('pristine:false', function(){
-                    $scope.isPristine = false;
-                });
 
                 function reset(){
                     $scope.formData = {
                         displayName: $scope.identity.displayName,
                         phoneNumber: $scope.identity.phoneNumber ? $scope.identity.phoneNumber.value : '',
+                        mergedPhoneNumber: '',
                         email: $scope.identity.email ? $scope.identity.email.value : ''
                     };
                 }
@@ -61,7 +58,7 @@ angular.module('cmUser').directive('cmIdentityEdit', [
                     }
 
                     function checkPhoneNumber() {
-                        var value = $scope.formData.phoneNumber;
+                        var value = $scope.formData.mergedPhoneNumber;
                         if (value != undefined
                          && value != $scope.identity.phoneNumber.value) {
                             objectChange.phoneNumber = value;
@@ -101,12 +98,13 @@ angular.module('cmUser').directive('cmIdentityEdit', [
                     $scope.validateForm()
                     .then(
                         function(objectChange){
-                            cmUserModel.data.identity.update(objectChange);
                             cmUserModel.data.identity.one('update:finished',function(){
                                 loader.stop();
-                                $scope.isPristine = true;
+                                cmPristine.resetView($scope);
                                 reset();
                             });
+
+                            cmUserModel.data.identity.update(objectChange);
                         },
                         function(){
                             loader.stop();
@@ -114,6 +112,11 @@ angular.module('cmUser').directive('cmIdentityEdit', [
                         }
                     )
                 };
+
+                /**
+                 * Pristine Service Handling
+                 */
+                cmPristine.initView($scope);
             }
         }
     }

@@ -1,0 +1,104 @@
+{
+  "@url-to-versions": "http://de.wikipedia.org/wiki/Liste_von_Android-Versionen",
+  "build": {
+    "android_minSdkVersion": 15,
+    "android_maxSdkVersion": 21,
+    "android_targetSdkVersion": 15
+  },
+  "plugins": [
+    {"name":"de.cameonet.cordova.contacts.readonly","version":"0.2.13","repo":"https://github.com/memoConnect/cordova-plugin-contacts.git"},
+    {"name":"de.cameonet.cordova.crypto","version":"0.1","repo":"https://github.com/memoConnect/de.cameonet.cordova.crypto.git"},
+
+    {"name":"org.apache.cordova.splashscreen","version":"0.3.4"},
+    {"name":"org.apache.cordova.device","version":"0.2.12"},
+    {"name":"org.apache.cordova.camera","version":"0.3.2"},
+    {"name":"org.apache.cordova.file","version":"1.3.1"},
+    {"name":"org.apache.cordova.file-transfer","version":"0.4.6"},
+    {"name":"org.apache.cordova.network-information","version":"0.2.12"},
+    {"name":"org.apache.cordova.inappbrowser","version":"0.5.2"},
+
+    {"name":"com.phonegap.plugins.pushplugin","version":"2.1.1"},
+    {"name":"nl.x-services.plugins.launchmyapp","version":"3.2.0","inner":"<param name=\"URL_SCHEME\" value=\"<%= appProtocol %>\" />","repo":"https://github.com/EddyVerbruggen/LaunchMyApp-PhoneGap-Plugin.git --variable URL_SCHEME=<%= appProtocol %>"},
+    {"name":"nl.x-services.plugins.sslcertificatechecker","version":"3.3.1","repo":"https://github.com/EddyVerbruggen/SSLCertificateChecker-PhoneGap-Plugin.git "},
+
+    {"name":"de.appplant.cordova.plugin.hidden-statusbar-overlay","version":"1.2.0"},
+    {"name":"com.jamiestarke.webviewdebug","version":"1.0.8"},
+    {"name":"com.telerik.plugins.wkwebview","version":"0.2.5","repo":"https://github.com/Telerik-Verified-Plugins/WKWebView.git "}
+  ],
+
+  "unused-plugins": [
+    {"name":"com.verso.cordova.clipboard","version":"0.1.0"},
+    {"name":"net.tunts.webintent","version":"0.2.1"},
+    {"name":"uk.co.ibcomputing.phonegapbuild.plugins.receivesendintents","version":"0.2.1","inner":"<param name=\"LAUNCHMODE\" value=\"singleTop\" />"}
+  ],
+  "@url-to-icons-screens": "http://docs.build.phonegap.com/en_US/configuring_icons_and_splash.md.html#Icons%20and%20Splash%20Screens",
+  "resources": [
+    {
+      "platform": "default",
+      "icons": [
+        {"src":"default.png"}
+      ],
+      "screens": [
+        {"src":"splash.png"}
+      ]
+    },
+    {
+      "platform": "android",
+      "icons": [
+        {"src":"icon-36-ldpi.png","xdensity":"port-ldpi","qualifier":"ldpi"},
+        {"src":"icon-72-hdpi.png","xdensity":"port-hdpi","qualifier":"hdpi"},
+        {"src":"icon-96-xhdpi.png","xdensity":"port-xhdpi","qualifier":"xhdpi"},
+        {"src":"icon-144-xhdpi.png","xdensity":"port-xxhdpi","qualifier":"xxhdpi"}
+      ],
+      "screens": [
+        {"src":"drawable-ldpi/screen.9.png","xdensity":"port-ldpi","qualifier":"ldpi"},
+        {"src":"drawable-mdpi/screen.9.png","xdensity":"port-mdpi","qualifier":"mdpi"},
+        {"src":"drawable-hdpi/screen.9.png","xdensity":"port-hdpi","qualifier":"hdpi"},
+        {"src":"drawable-xhdpi/screen.9.png","xdensity":"port-xhdpi","qualifier":"xhdpi"},
+        {"src":"drawable-xxhdpi/screen.9.png","xdensity":"port-xxhdpi","qualifier":"xxhdpi"}
+      ]
+    },
+    {
+      "platform": "ios",
+      "icons": [
+        {"@":"iPhone / iPod Touch","src":"icon-60.png","dim":"60x60"},
+        {"src":"icon-60@2x.png","dim":"120x120"},
+
+        {"@":"iPad","src":"icon-76.png","dim":"76x76"},
+        {"src":"icon-76@2x.png","dim":"152x152"},
+
+        {"@":"iOS 6.1 Spotlight Icon","src":"icon-40.png","dim":"40x40"},
+        {"src":"icon-40@2x.png","dim":"80x80"},
+
+        {"@":"iPhone / iPod Touch","src":"icon-57.png","dim":"57x57"},
+        {"src":"icon-57@2x.png","dim":"114x114"},
+
+        {"@":"iPad","src":"icon-72.png","dim":"72x72"},
+        {"src":"icon-72@2x.png","dim":"144x144"},
+
+        {"@":"iPhone Spotlight and Settings Icon","src":"icon-small-29.png","dim":"29x29"},
+        {"src":"icon-small-29@2x.png","dim":"58x58"},
+
+        {"@":"iPad Spotlight and Settings Icon","src":"icon-50.png","dim":"50x50"},
+        {"src":"icon-50@2x.png","dim":"100x100"}
+      ],
+      "screens": [
+        {"src":"Default~iphone.png","dim":"320x480"},
+        {"src":"Default@2x~iphone.png","dim":"640x960"},
+        {"src":"Default-568h@2x~iphone.png","dim":"640x1136"},
+        {"src":"Default-Portrait~ipad.png","dim":"768x1024"},
+        {"src":"Default-Portrait@2x~ipad.png","dim":"1536x2048"}
+      ]
+    },
+    {
+      "platform": "winphone",
+      "icons": [
+        {"src":"icon-62.png","dim":"99x99"},
+        {"src":"tile-173.png","dim":"159x159","role":"background"}
+      ],
+      "screens": [
+        {"src":"screen-portrait.png"}
+      ]
+    }
+  ]
+}

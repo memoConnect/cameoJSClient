@@ -39,9 +39,9 @@
 
 angular.module('cmPhonegap')
 .service('cmCamera', [
-    'cmPhonegap', 'cmFilesAdapter',
+    'cmPhonegap', 'cmFilesAdapter', 'cmFileTypes',
     '$navigator', '$window', '$phonegapCameoConfig',
-    function (cmPhonegap, cmFilesAdapter,
+    function (cmPhonegap, cmFilesAdapter, cmFileTypes,
               $navigator, $window, $phonegapCameoConfig) {
 
         function FileError(e){
@@ -148,6 +148,11 @@ angular.module('cmPhonegap')
                 return this.plugin != null;
             },
 
+            getDateForName: function(){
+                var date = new Date();
+                return date.getFullYear()+''+(date.getMonth()+1)+''+date.getDate();
+            },
+
             takePhoto: function (callback, useFrontCamera) {
                 if (!this.existsPlugin()) {
                     return false;
@@ -160,7 +165,8 @@ angular.module('cmPhonegap')
                 this.plugin.getPicture(
                     function (base64) {
                         var blob = cmFilesAdapter.base64ToBlob(base64, 'image/jpeg');
-                        blob.name = 'NewCameoPicture.jpg';
+
+                        blob.name = 'cmPicture_'+self.getDateForName()+'.jpg';
                         callback(blob);
                     },
                     null,
@@ -207,6 +213,12 @@ angular.module('cmPhonegap')
 //                            }, FileError)
 
                             fileEntry.file(function (blob) {
+
+                                if(blob.name == 'content') {
+                                    var extension = cmFileTypes.find(blob.type);
+                                    blob.name = 'cmFile_' + self.getDateForName() + '.'+extension;
+                                }
+
                                 callback(blob);
                             }, FileError);
                         });
