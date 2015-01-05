@@ -11,6 +11,7 @@ angular.module('cmSetup')
                     var loader = new cmLoader($scope);
 
                     $scope.account = cmUserModel.data.account;
+                    $scope.saveError = false;
 
                     /**
                      * Toogle HeadlineInfo
@@ -58,6 +59,8 @@ angular.module('cmSetup')
                     };
 
                     $scope.saveAccount = function(){
+                        $scope.saveError = false;
+
                         if($scope.isPristine){
                             $scope.goToNextStep();
                             return false;
@@ -76,6 +79,7 @@ angular.module('cmSetup')
                                         loader.stop();
                                     },
                                     function(){
+                                        $scope.saveError = true;
                                         loader.stop();
                                     }
                                 );

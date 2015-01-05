@@ -842,7 +842,8 @@
           "INFO": {
               "NOTE_ABOUT_THIS_DATA_SMALL": "Insert email address or telephone number..",
               "NOTE_ABOUT_THIS_DATA": "Here you can insert an email address or phone number. You can verify this address or number by answering a check message. If you will forget your password, you can reset it by a verified phone number or email address.\n\n This data is not public."
-          }
+          },
+          "ERROR": "An error has occurred!\nPlease check your data."
       },
     "INFO": {
       "INVALID": {
@@ -881,7 +882,7 @@
   "PASSWORD": {
     "LABEL_CONFIRM": "Confirm password",
     "ERROR": {
-      "EMPTY": "Please enter a password and confim."
+      "EMPTY": "Please enter a password and confirm."
     },
     "LABEL_PW": "Password"
   },
