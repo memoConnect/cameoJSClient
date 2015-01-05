@@ -299,8 +299,8 @@ angular.module('cmCore')
                     self.importAccount(newAccountData);
                     deferred.resolve();
                 },
-               function(){
-                    deferred.reject();
+               function(result){
+                    deferred.reject(result);
                }
             );
 
