@@ -35,8 +35,15 @@
     ></cm-form-email>
 
     <hr class="margin-small" />
-
 </form>
+
+<article class="content" ng-show="saveError" data-qa="ctn-save-error">
+    <cm-info-bubble class="cm-alert">
+        <i class="fa cm-info"></i>
+        <span ng-bind-html="::'ACCOUNT.CREATE.ERROR' | cmParse"></span>
+    </cm-info-bubble>
+</article>
+
 
 <cm-footer>
     <button class="cm-btn-grey" ng-click="saveAccount()" data-qa="btn-next-step" cm-reactive>

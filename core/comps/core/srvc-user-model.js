@@ -286,14 +286,25 @@ angular.module('cmCore')
             this.trigger('account:updated');
         };
 
+        /**
+         * @TODO add Error Codes in BE
+         * - invalid phoneNumber
+         */
         this.updateAccount = function(newAccountData){
             //cmLogger.debug('cmUserModel.updateAccount');
+            var deferred = $q.defer();
 
-            return cmAuth.putAccount(newAccountData).then(
+           cmAuth.putAccount(newAccountData).then(
                 function(){
                     self.importAccount(newAccountData);
-                }
-            )
+                    deferred.resolve();
+                },
+               function(){
+                    deferred.reject();
+               }
+            );
+
+            return deferred.promise;
         };
 
         /**
