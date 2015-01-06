@@ -276,6 +276,12 @@ angular.module('cmConfig',[])
                     guests: false,
                     waitForUserModel: true
                 },
+                'setup-cameoid':{
+                    hasCtrl: true,
+                    routes: ['/setup/cameoid'],
+                    guests: false,
+                    waitForUserModel: true
+                },
                 'setup-keyinfo': {
                     hasCtrl: true,
                     routes: ['/setup/keyinfo'],

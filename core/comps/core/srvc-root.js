@@ -71,7 +71,7 @@ angular.module('cmCore')
         };
 
         $rootScope.createNewIdentity = function(){
-            $rootScope.goTo('/settings/identity/create');
+            $rootScope.goTo('/setup/cameoid');
         };
 
         $rootScope.gotoContactList = function(){
