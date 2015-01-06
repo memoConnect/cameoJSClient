@@ -13,9 +13,17 @@ angular.module('cmValidate').directive('cmCameoId',[
                 cameoId: '=ngModel',
                 formName: '@formName',
                 tabindex: '@cmTabindex',
-                placeholder: '@placeholder'
+                placeholder: '@placeholder',
+                toggleInfo: '@cmToggleInfo'
             },
             controller: function($scope){
+
+                $scope.showCameoIdInfo = false;
+                $scope.toggleCameoIdInfo = function(){
+                    if(typeof $scope.toggleInfo == 'string'){
+                        $scope.showCameoIdInfo = !$scope.showCameoIdInfo ? true : false;
+                    }
+                };
 
                 $scope.min = 3;
                 $scope.max = 20;

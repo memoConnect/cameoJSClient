@@ -1,4 +1,9 @@
-<label>{{placeholder|cmTranslate}} *</label>
+<label data-qa="ctn-toggle-cameoid-info" ng-click="toggleCameoIdInfo()" cm-reactive>{{placeholder|cmTranslate}} * <i class="fa cm-ci-color cm-info" ng-show="toggleInfo"></i></label>
+
+<cm-info-bubble ng-click="toggleCameoIdInfo()" ng-show="showCameoIdInfo" data-qa="ctn-cameoid-info" nose-x="25%">
+    {{::toggleInfo|cmTranslate}}
+</cm-info-bubble>
+
 <div
     data-qa="form-input"
     class="cm-input-ctn with-inside-icon"
