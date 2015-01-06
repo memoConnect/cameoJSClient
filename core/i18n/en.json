@@ -843,7 +843,7 @@
               "NOTE_ABOUT_THIS_DATA_SMALL": "Insert email address or telephone number..",
               "NOTE_ABOUT_THIS_DATA": "Here you can insert an email address or phone number. You can verify this address or number by answering a check message. If you will forget your password, you can reset it by a verified phone number or email address.\n\n This data is not public."
           },
-          "ERROR": "An error has occurred!\nPlease check your data."
+          "ERROR": "An error has occurred!\nPlease check your entries."
       },
     "INFO": {
       "INVALID": {
