@@ -480,7 +480,8 @@ angular.module('cmCore').provider('cmApi',[
                                     api.getEvents();
                                 },
                                 function(){
-                                    api.stopListeningToEvents();
+                                    // test failed...
+                                    //api.stopListeningToEvents();
                                 }
                             )
 
