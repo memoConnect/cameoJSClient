@@ -1,11 +1,12 @@
 /**
  * Created by reimerei on 15.04.14.
+ * http://angular.github.io/protractor/#/api
  */
 var fs = require('fs'),
     config = require("../../e2e/config/specs.js"),
     clc = require('cli-color'),
     self = this,
-    ptor
+    ptor = browser.driver
 
 this.getBrowserName = function(){
     return browser.getCapabilities().then(function(cap) {
@@ -22,14 +23,8 @@ this.isInternetExplorer = function(){
     });
 }
 
-this.setPtorInstance = function (newPtor) {
-    ptor = newPtor
-    return this
-}
-
 this.getPtorInstance = function () {
-    ptor = protractor.getInstance()
-    ptor.ignoreSynchronization = true
+    protractor.ignoreSynchronization = true
 
     // for every it in describe check error logs and
     // stop on error if config is on true
@@ -96,14 +91,9 @@ this.checkErrorLogs = function(){
 }
 
 this.get = function (path) {
-
-    if (ptor == undefined) {
-        console.error("please set ptor = util.getPtorInstance()")
-    }
-
     var url = config.wwwUrl + '#' + path
     // console.log('util.get', path)
-    ptor.get(url)
+    browser.get(url)
     self.waitForPageLoad()
 
     return this
@@ -213,7 +203,7 @@ this.deleteKeys = function(){
     this.get("/settings/identity/key/list")
     ptor.sleep(1000)
     .then(function(){
-        return  ptor.wait(function(){      
+        return  ptor.wait(function(){
                     return  $('[data-qa="btn-remove-modal"]').isPresent()
                             .then(function(bool){
                                 return  bool

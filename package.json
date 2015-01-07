@@ -83,7 +83,7 @@
     "phantomjs": "~1.9.7-1 > 1.9.13",
     "jasmine-reporters": "~0.4.0 > 1.0.1",
 
-    "karma": "~0.10.9 > ~0.10.10",
+    "karma": "~0.10.9 > 0.12.31",
     "grunt-karma": "~0.6.2 > 0.9.0",
     "!!!karma-jasmine": "~0.1.5 possible update to 0.3.4",
     "karma-ng-json2js-preprocessor": "~0.1.1 > 1.0.0",
