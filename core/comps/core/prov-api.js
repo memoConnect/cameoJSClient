@@ -429,7 +429,8 @@ angular.module('cmCore').provider('cmApi',[
 
                 }
 
-                if(!call_stack_disabled && commit_interval) $interval(function(){ api.commit() }, commit_interval, false)
+                if(!call_stack_disabled && commit_interval)
+                    $interval(function(){ api.commit() }, commit_interval, false)
 
                 //API EVENTS:
 
@@ -539,7 +540,15 @@ angular.module('cmCore').provider('cmApi',[
                         api.stopListeningToEvents();
                         api.resetSubscriptionId();
                     });
-                };
+                }
+
+                $rootScope.$on('device:goesToBackground', function(){
+                    api.stopListeningToEvents();
+                });
+
+                $rootScope.$on('device:goesToForeground', function(){
+                    api.listenToEvents();
+                });
 
                 /**
                  * @ngdoc method
