@@ -120,9 +120,7 @@ describe('Conversation encryption -', function () {
             it("check security aspects", function () {
                 util.waitForElement('cm-header:not(.ng-hide)')
 
-                ptor.debugger()
-
-                var p,n 
+                var p,n
 
                 ptor.wait(function(){
 
