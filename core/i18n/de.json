@@ -302,7 +302,7 @@
             "SEARCH_IDENTITY": "CameoNet durchsuchen",
             "ADD_EXTERN": "Externen Kontakt hinzufügen",
             "SEND_REQUEST": "Senden",
-            "IMPORT_LOCAL": "Lokalen Kontakt importieren"
+            "IMPORT_LOCAL": "Telefonbuch durchsuchen"
         },
         "BUTTON": {
             "RESET": "Zurücksetzen",
