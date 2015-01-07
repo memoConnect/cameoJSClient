@@ -351,7 +351,7 @@ angular.module('cmConversations')
             this.save = function(){
 
                 if(!this.state.is('new'))
-                    return $q.reject()
+                    return $q.reject();
 
                 var whitelist = [];
 
@@ -386,7 +386,7 @@ angular.module('cmConversations')
                             :   undefined 
                         )
                         .then(function(pv){
-                            passphraseVault = pv
+                            passphraseVault = pv;
                             return cmConversationsAdapter.newConversation(self.exportData())
                         })                            
                         .then(
@@ -402,12 +402,12 @@ angular.module('cmConversations')
                                 self.state.unset('new');
                                 self.trigger('save:finished');
 
-                                return conversation_data
+                                return conversation_data;
                             },
 
                             function(){
                                 self.trigger('save:failed');
-                                return $q.reject()
+                                return $q.reject();
                             }
                         )
             };
