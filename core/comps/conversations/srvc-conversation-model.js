@@ -367,11 +367,11 @@ angular.module('cmConversations')
                     ))
                 });
 
-                $q.all(whitelist).then(function(){
-                   console.log(arguments)
-                });
-
-
+                $q.all(whitelist).then(
+                    function(recipientsWithTrustedKeys){
+                       console.log(recipientsWithTrustedKeys)
+                    }
+                );
 
                 return $q.reject();
 
