@@ -645,10 +645,10 @@
       "DISPLAYNAME": "Display name",
       "SORT": "Sort",
       "ADD_EXTERN": "Create new external contact",
-      "SEARCH_IDENTITY": "Search CameoNet indentity",
+      "SEARCH_IDENTITY": "Search CameoNet",
       "SURNAME": "Surname",
       "SEND_REQUEST": "Send",
-      "IMPORT_LOCAL": "Import local contact",
+      "IMPORT_LOCAL": "Local Contacts",
       "FILTER": "Filter"
     },
     "INFO": {
