@@ -4,7 +4,7 @@
     </div>
     <div class="cm-fl w72">
         <ul class="no-border">
-            <li ng-click="goToSearch()" data-qa="btn-identity-trust" cm-reactive>
+            <li ng-click="goToSearch()" data-qa="btn-identity-search" cm-reactive>
                 <span class="item clearfix">
                     <i class="fa cm-search fa-2x"></i>
                     {{'CONTACTS.LABEL.SEARCH_IDENTITY'|cmTranslate}}
@@ -13,7 +13,7 @@
                     <i class="fa cm-right position-exception"></i>
                 </section>
             </li>
-            <li ng-click="goTo('/contact/import')" data-qa="btn-identity-keys" cm-reactive ng-if="canReadLocalContacts()">
+            <li ng-click="goTo('/contact/import')" data-qa="btn-local-import" cm-reactive ng-if="canReadLocalContacts()">
                  <span class="item clearfix">
                      <i class="fa cm-new-contact fa-2x"></i>
                     {{'CONTACTS.LABEL.ADD_EXTERN'|cmTranslate}}
