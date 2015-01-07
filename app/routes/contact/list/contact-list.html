@@ -3,23 +3,12 @@
     <cm-header cm-rubber-space>
         <cm-identity cm-weight="4"></cm-identity>
         <cm-add-button cm-weight="1" ng-click="createNewConversation()" data-qa="new-conversation-btn" cm-icon="new-talk" cm-reactive></cm-add-button>
-        <cm-add-button cm-weight="1" ng-click="openModal('add-contact')" data-qa="add-contact-btn" cm-icon="new-contact" cm-reactive></cm-add-button>
+        <cm-add-button cm-weight="1" ng-click="createNewContact()" data-qa="add-contact-btn" cm-icon="new-contact" cm-reactive></cm-add-button>
         <cm-header-list-search cm-weight="1" ng-model="search"></cm-header-list-search>
         <cm-menu cm-weight="1"></cm-menu>
     </cm-header>
 
     <cm-default-pages></cm-default-pages>
 
-    <cm-modal-add-contact id="add-contact" nose-position="6rem"></cm-modal-add-contact>
     <cm-widget-contact-list></cm-widget-contact-list>
 </section>
-
-<!--
-<div ng-controller="ContactsCtrl">
-    <section ng-switch="route">
-        <cm-overview-contacts class="theme-a" ng-switch-default></cm-overview-contacts>
-        <cm-request-list ng-switch-when="requests"></cm-request-list>
-        <cm-search ng-switch-when="search"></cm-search>
-    </section>
-</div>
--->

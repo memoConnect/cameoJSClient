@@ -13,6 +13,8 @@ angular.module('cmValidate').directive('cmValidatePhone',[
                     if(newValue && newValue != "" && correctValue == undefined
                     || newValue && newValue != "" && correctValue != undefined && newValue != correctValue
                     ){
+                        ngModel.$setViewValue(newValue.replace(/ /g,''));
+
                         if(newValue.search(/^[+]*[0-9]*$/) == 0){
                             ngModel.$setValidity('phone', true);
                         } else {
