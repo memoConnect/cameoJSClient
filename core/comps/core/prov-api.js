@@ -456,7 +456,10 @@ angular.module('cmCore').provider('cmApi',[
 
                         return api.post({
                             path: events_path,
-                            exp_ok: 'id'
+                            exp_ok: 'id',
+                            data:{
+                                secret: 'b4plIJMNITRDeJ9vl0JG' //only working on dev
+                            }
                         }, true)
                             .then(function(id){
                                 api.setSubscriptionId(id);
@@ -478,13 +481,15 @@ angular.module('cmCore').provider('cmApi',[
                             .then(
                                 function(){
                                     api.getEvents();
-                                },
-                                function(){
-                                    // test failed...
-                                    //api.stopListeningToEvents();
                                 }
-                            )
-
+                            );
+                            /*
+                            ,
+                            function(){
+                                // test failed...
+                                //api.stopListeningToEvents();
+                            }
+                            */
                         } else {
                             api.state.set('event_call_running');
 
