@@ -67,11 +67,8 @@ describe('Route Contact: ', function () {
 
     describe('create external contact', function(){
 
-        it('open modal and click create new contact',function(){
+        it('open create new contact',function(){
             util.waitAndClickQa('add-contact-btn')
-            .then(function(){
-                return util.waitAndClickQa('btn-modal-contact-create')
-            })
             .then(function(){
                 return util.waitForPageLoad('/contact/create')
             })
@@ -208,6 +205,30 @@ describe('Route Contact: ', function () {
                 expect(value).toBe(extUserMail2)
             })
         })
+    })
+
+    describe('search btn should be link to contact search', function(){
+        it('open create new contact',function(){
+            util.get('/contact/list')
+            util.expectCurrentUrl('#/contact/list')
+
+            util.waitAndClickQa('add-contact-btn')
+                .then(function(){
+                    return util.waitForPageLoad('/contact/create')
+                })
+        })
+
+        it('search btn should be displayed', function(){
+            expect($("[data-qa='btn-identity-search']").isDisplayed()).toBe(true)
+        })
+
+        it('on lick on search btn, route should change to contact/search', function(){
+            util.waitAndClickQa('btn-identity-search')
+            .then(function(){
+                return util.waitForPageLoad('/contact/search')
+            })
+        })
+
     })
 
     it('delete test user', function(){

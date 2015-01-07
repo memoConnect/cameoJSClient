@@ -40,8 +40,14 @@ angular.module('cmCore')
             this.goTo('/registration');
         };
 
+        $rootScope.createNewContact = function(){
+            cmLogger.debug('cmRootService.createNewContact');
+
+            $rootScope.goTo('/contact/create');
+        };
+
         $rootScope.createNewConversation = function(){
-            cmLogger.debug('cmRootService.createNewConversation');
+            //cmLogger.debug('cmRootService.createNewConversation');
 
             $rootScope.pendingConversation = null;
             $rootScope.pendingRecipients = [];
