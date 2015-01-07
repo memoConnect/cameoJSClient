@@ -216,7 +216,7 @@ angular.module('cmCore')
             };
 
             this.getTrustedKeys = function(){
-                return $injector('cmUserModel').verifyIdentityKeys(this, true).then(
+                return $injector.get('cmUserModel').verifyIdentityKeys(this, true).then(
                     function(trusted_keys){
                         return trusted_keys;
                     }

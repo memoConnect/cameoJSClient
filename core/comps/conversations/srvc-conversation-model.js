@@ -353,13 +353,25 @@ angular.module('cmConversations')
                 if(!this.state.is('new'))
                     return $q.reject()
 
+                var whitelist = [];
+
                 this.recipients.forEach(function(recipient){
-                    recipient.getTrustedKeys().then(
+                    whitelist.push(recipient.getTrustedKeys().then(
                         function(keys){
-                            console.log(keys.length)
+                            var m = [];
+                            keys.forEach(function(key){
+                                m.push(key.id);
+                            });
+                            return m;
                         }
-                    )
-                })
+                    ))
+                });
+
+                $q.all(whitelist).then(function(){
+                   console.log(arguments)
+                });
+
+
 
                 return $q.reject();
 
