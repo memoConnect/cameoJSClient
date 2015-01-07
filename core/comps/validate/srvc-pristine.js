@@ -51,7 +51,6 @@ angular.module('cmValidate')
             this.initView = function(scope){
                 scope.isPristine = true;
                 function pristine_callback(){
-                    console.log('updated of ngModel biatsch',self.is())
                     scope.isPristine = self.is();
                 }
                 self.on('updated',pristine_callback);

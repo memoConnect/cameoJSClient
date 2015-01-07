@@ -74,10 +74,10 @@
 <!-- Some Key needs authentications -->
 
 <article class="content" ng-if = "!canCreate && someKeyNeedsAuthentication()" data-qa = "bubble-some-key-needs-authentication">
-        <cm-info-bubble nose-x="18%">
-            <span ng-bind-html="::'IDENTITY.KEYS.KEYLIST.EXPLANATION.UNTRUSTED_KEYS' | cmParse"></span>
-        </cm-info-bubble>
-    </article>
+    <cm-info-bubble nose-x="18%">
+        <span ng-bind-html="::'IDENTITY.KEYS.KEYLIST.EXPLANATION.UNTRUSTED_KEYS' | cmParse"></span>
+    </cm-info-bubble>
+</article>
 
 <!-- End: Some Key needs authentications -->
 
