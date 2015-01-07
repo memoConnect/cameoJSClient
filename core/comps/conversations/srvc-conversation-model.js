@@ -353,6 +353,16 @@ angular.module('cmConversations')
                 if(!this.state.is('new'))
                     return $q.reject()
 
+                this.recipients.forEach(function(recipient){
+                    recipient.getTrustedKeys().then(
+                        function(keys){
+                            console.log(keys.length)
+                        }
+                    )
+                })
+
+                return $q.reject();
+
                 return  $q.when(
                             this.isEncrypted()
                             ?   cmPassphraseVault.encryptPassphrase({
