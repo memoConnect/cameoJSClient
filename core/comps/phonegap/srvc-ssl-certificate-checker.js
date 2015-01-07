@@ -67,7 +67,7 @@ angular.module('cmPhonegap')
 
             handler: {
                 success: function(){
-                    cmLogger.info('cmSslCertificateChecker secure',cmUtil.prettify(self.data));
+                    cmLogger.info('cmSslCertificateChecker secure '+cmUtil.prettify(self.data));
                     self.isSecure = true;
                 },
                 error: function(message){

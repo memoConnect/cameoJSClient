@@ -4,7 +4,7 @@
 angular.module('cmCore').provider('cmApi',[
 
 //Service to handle all api calls
-
+    '$injector',
     function($injector){
         var rest_api            = "",
             without_api_url   = false,
@@ -454,12 +454,9 @@ angular.module('cmCore').provider('cmApi',[
                     if(!api.state.is('event_call_running')){
                         api.state.set('event_call_running');
 
-                        return  api.post({
+                        return api.post({
                             path: events_path,
-                            exp_ok: 'id',
-                            data:{
-                                secret: 'b4plIJMNITRDeJ9vl0JG' //only working on dev
-                            }
+                            exp_ok: 'id'
                         }, true)
                             .then(function(id){
                                 api.setSubscriptionId(id);
@@ -478,9 +475,14 @@ angular.module('cmCore').provider('cmApi',[
                         if (!api.subscriptionId) {
                             //if no subscriptionId is present, get one and try again later:
                             api.subscribeToEventStream()
-                                .then(function () {
+                            .then(
+                                function(){
                                     api.getEvents();
-                                })
+                                },
+                                function(){
+                                    api.stopListeningToEvents();
+                                }
+                            )
 
                         } else {
                             api.state.set('event_call_running');
@@ -547,7 +549,10 @@ angular.module('cmCore').provider('cmApi',[
                 });
 
                 $rootScope.$on('device:goesToForeground', function(){
-                    api.listenToEvents();
+                    var token = $injector.has('cmAuth') ? $injector.get('cmAuth').getToken() : undefined;
+                    if(token){
+                        api.listenToEvents();
+                    }
                 });
 
                 /**
