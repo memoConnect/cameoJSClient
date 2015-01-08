@@ -351,6 +351,19 @@ angular.module('cmCore')
                                 ?   $q.all(
                                         config.identities.map(function(identity){
                                             // hier müssen wa rin!!!
+
+                                            /*
+                                             whitelist.push(recipient.getTrustedKeys().then(
+                                                 function(keys){
+                                                     var m = [];
+                                                     keys.forEach(function(key){
+                                                        m.push(key.id);
+                                                     });
+                                                     return m;
+                                                 }
+                                             ))
+
+                                             */
                                             return identity.keys.encryptPassphrase(config.passphrase, config.restrict_to_keys)
                                         })
                                     )
