@@ -353,7 +353,8 @@ angular.module('cmCore')
                                             // hier müssen wa rin!!!
 
                                             /*
-                                             whitelist.push(recipient.getTrustedKeys().then(
+                                            var whiltelist = []
+                                             whitelist.push(identity.getTrustedKeys().then(
                                                  function(keys){
                                                      var m = [];
                                                      keys.forEach(function(key){
@@ -362,6 +363,12 @@ angular.module('cmCore')
                                                      return m;
                                                  }
                                              ))
+
+                                             $q.all(whitelist).then(
+                                                function(recipientsWithTrustedKeys){
+                                                    console.log(recipientsWithTrustedKeys)
+                                                }
+                                             );
 
                                              */
                                             return identity.keys.encryptPassphrase(config.passphrase, config.restrict_to_keys)
