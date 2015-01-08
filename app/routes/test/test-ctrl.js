@@ -1,10 +1,8 @@
 'use strict';
 
-angular.module('cmRoutes').controller('TestCtrl', [
-    '$scope',
-    function ($scope) {
-
+angular.module('cmRoutes').controller('TestCtrl',
+    function () {
 
 
     }
-]);
+);

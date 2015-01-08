@@ -282,9 +282,6 @@ angular.module('cmConversations')
                                         ?   passphraseVault.exportData()
                                         :   { keyTransmission: 'none' }
 
-                console.log('exportData')
-                console.dir(passphrase_data)
-
                 data.sePassphrase           =   passphrase_data.sePassphrase        || undefined;
                 data.aePassphraseList       =   passphrase_data.aePassphraseList    || undefined;
                 data.keyTransmission        =   passphrase_data.keyTransmission
@@ -352,28 +349,6 @@ angular.module('cmConversations')
 
                 if(!this.state.is('new'))
                     return $q.reject();
-
-                var whitelist = [];
-
-                this.recipients.forEach(function(recipient){
-                    whitelist.push(recipient.getTrustedKeys().then(
-                        function(keys){
-                            var m = [];
-                            keys.forEach(function(key){
-                                m.push(key.id);
-                            });
-                            return m;
-                        }
-                    ))
-                });
-
-                $q.all(whitelist).then(
-                    function(recipientsWithTrustedKeys){
-                       console.log(recipientsWithTrustedKeys)
-                    }
-                );
-
-                return $q.reject();
 
                 return  $q.when(
                             this.isEncrypted()

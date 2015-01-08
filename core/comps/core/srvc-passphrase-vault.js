@@ -350,24 +350,29 @@ angular.module('cmCore')
                         asym:   couldBeAPassphrase(config.passphrase)
                                 ?   $q.all(
                                         config.identities.map(function(identity){
-                                            /*
-                                            var whitelist = []
-                                             whitelist.push(identity.getTrustedKeys().then(
-                                                 function(keys){
-                                                     var m = [];
-                                                     keys.forEach(function(key){
+                                            var deferred = $q.defer();
+
+                                            // TODO: for own untrustedkey a exception?
+
+                                            identity.getTrustedKeys().then(
+                                                function(keys){
+                                                    var m = [];
+                                                    keys.forEach(function(key){
                                                         m.push(key.id);
-                                                     });
-                                                     return m;
-                                                 }
-                                             ))
+                                                    });
+                                                    return m;
+                                                }
+                                            ).then(function(trustedKeys) {
+                                                var whitelist = undefined;
+                                                // when identity has trusted keys do a whitelist for this keys
+                                                if(trustedKeys.length > 0){
+                                                    whitelist = trustedKeys;
+                                                }
 
-                                             $q.all(whitelist).then(
-                                                return identity.keys.encryptPassphrase(config.passphrase, whitelist)
-                                             );
+                                                deferred.resolve(identity.keys.encryptPassphrase(config.passphrase, whitelist));
+                                            });
 
-                                             */
-                                            return identity.keys.encryptPassphrase(config.passphrase, config.restrict_to_keys)
+                                            return deferred.promise;
                                         })
                                     )
                                     .then(function(results){
@@ -379,7 +384,6 @@ angular.module('cmCore')
                     .then(function(result){
 
                         console.log(result)
-                        console.log(config.identities)
 
                         result.recipientKeyList = config.identities.map(function(identity){
                             return  {
