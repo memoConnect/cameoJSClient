@@ -383,10 +383,5 @@ angular.module('cameoClient', [
 
         // Systemcheck
         cmSystemCheck.run(true);
-
-
-        $rootScope.$watch(function(){
-            console.log('$digest')
-        })
     }
 ]);

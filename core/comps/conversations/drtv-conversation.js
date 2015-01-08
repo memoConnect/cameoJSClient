@@ -253,6 +253,19 @@ angular.module('cmConversations')
                   
                 };
 
+                $scope.showTrustError = function(){
+                    //cmLogger.debug('cmConversationDRTV.showTrustError');
+
+                    if(!$scope.conversation.state.is('new')
+                        && !$scope.conversation.userHasAccess()){
+
+                        cmNotify.warn('CONVERSATION.WARN.ASYMMETRIC_KEY_TRUST_ERROR',{ttl:0});
+                        return true;
+                    }
+
+                    return false;
+                };
+
                 $scope.showAsymmetricKeyError = function(){
 //                    cmLogger.debug('cmConversationDRTV.showAsymmetricKeyError')
 
@@ -311,6 +324,7 @@ angular.module('cmConversations')
 
                     /** Event callbacks **/
                     function callback_update_finished(){
+                        $scope.showTrustError();
                         $scope.showAsymmetricKeyError();
                         $scope.showGoToSettingsModal();
                     }

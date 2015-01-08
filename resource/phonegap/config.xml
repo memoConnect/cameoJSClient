@@ -29,7 +29,7 @@
     <preference name="HideKeyboardFormAccessoryBar" value="true" />
 
     <!-- android -->
-    <preference name="keepRunning" value="false"/>
+    <preference name="KeepRunning" value="false"/>
     <preference name="LoadUrlTimeoutValue" value="5000" />
     <preference name="ErrorUrl" value=""/>
     <preference name="AndroidPersistentFileLocation" value="Internal" />
