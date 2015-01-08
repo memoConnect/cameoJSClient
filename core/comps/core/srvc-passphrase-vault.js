@@ -350,10 +350,8 @@ angular.module('cmCore')
                         asym:   couldBeAPassphrase(config.passphrase)
                                 ?   $q.all(
                                         config.identities.map(function(identity){
-                                            // hier müssen wa rin!!!
-
                                             /*
-                                            var whiltelist = []
+                                            var whitelist = []
                                              whitelist.push(identity.getTrustedKeys().then(
                                                  function(keys){
                                                      var m = [];
@@ -365,9 +363,7 @@ angular.module('cmCore')
                                              ))
 
                                              $q.all(whitelist).then(
-                                                function(recipientsWithTrustedKeys){
-                                                    console.log(recipientsWithTrustedKeys)
-                                                }
+                                                return identity.keys.encryptPassphrase(config.passphrase, whitelist)
                                              );
 
                                              */
