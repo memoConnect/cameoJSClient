@@ -350,6 +350,7 @@ angular.module('cmCore')
                         asym:   couldBeAPassphrase(config.passphrase)
                                 ?   $q.all(
                                         config.identities.map(function(identity){
+                                            // hier müssen wa rin!!!
                                             return identity.keys.encryptPassphrase(config.passphrase, config.restrict_to_keys)
                                         })
                                     )
