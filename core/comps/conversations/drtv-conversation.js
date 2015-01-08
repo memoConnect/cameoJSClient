@@ -257,6 +257,8 @@ angular.module('cmConversations')
                     //cmLogger.debug('cmConversationDRTV.showTrustError');
 
                     if(!$scope.conversation.state.is('new')
+                        && $scope.conversation.getKeyTransmission() == 'asymmetric'
+                        && $scope.conversation.userHasPrivateKey() == true
                         && !$scope.conversation.userHasAccess()){
 
                         cmNotify.warn('CONVERSATION.WARN.ASYMMETRIC_KEY_TRUST_ERROR',{ttl:0});

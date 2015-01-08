@@ -331,7 +331,8 @@ describe('Authentication requests -', function () {
         })
 
         it("should not be able to read conversation from key3", function () {
-            util.readConversation(subject3, encryptedMessage3)
+            //util.readConversation(subject3, encryptedMessage3)
+            util.readConversation(subject3, "- encrypted -")
         })
 
         it("delete localstorage", function () {
@@ -391,6 +392,34 @@ describe('Authentication requests -', function () {
             util.clearLocalStorage()
         })
 
+    })
+
+    describe("key1 again check conversation from key3 -", function(){
+        it("import key", function () {
+            util.setLocalStorage(localStorage1.key, localStorage1.value)
+            util.login(testUser1, "password")
+                .then(function(){
+                    util.waitForEventSubscription()
+
+                    util.get("/settings/identity/key/list")
+                    return util.waitForPageLoad('/settings/identity/key/list')
+                })
+                .then(function(){
+                    util.waitForElements("[data-qa='key-list-item']", 2)
+
+                    checkKeyTrust(keyName1, true)
+                    checkKeyTrust(keyName3, true)
+                })
+        })
+
+        it("should be able to read conversation from key3", function () {
+            util.readConversation(subject3, encryptedMessage3)
+        })
+
+        it("delete localstorage", function () {
+            util.logout()
+            util.clearLocalStorage()
+        })
     })
 
     describe("key2 -", function () {
