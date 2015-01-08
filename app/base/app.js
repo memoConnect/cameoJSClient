@@ -2,7 +2,6 @@
 
 angular.module('cameoClient', [
     'ngRoute',
-    'ngCookies',
     'ngTouch',
     'angular-loading-bar',
     // cameo dependencies
@@ -384,5 +383,10 @@ angular.module('cameoClient', [
 
         // Systemcheck
         cmSystemCheck.run(true);
+
+
+        $rootScope.$watch(function(){
+            console.log('$digest')
+        })
     }
 ]);
