@@ -164,6 +164,10 @@ angular.module('cameoClient', [
                     return cmBoot.isReady.i18n();
                 };
 
+                routeParams.resolve.font = function(cmBoot){
+                    return cmBoot.isReady.font();
+                };
+
                 if (angular.isDefined(_settings_['waitForFirstBoot']) && _settings_['waitForFirstBoot'] == true){
                     routeParams.resolve.firstBoot = function(cmBoot) {
                         return cmBoot.isReady.firstBoot();

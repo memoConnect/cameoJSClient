@@ -8,6 +8,7 @@ angular.module('cmWidgets').directive('cmWidgetSettingsAboutUs', [
             templateUrl: 'widgets/settings/wdgt-settings-about-us.html',
             controller: function ($scope) {
                 $scope.version = cmConfig.version;
+                $scope.thirdPartyLibraries = cmConfig.static.thirdPartyLibraries;
             }
         }
     }

@@ -640,11 +640,9 @@
             },
             "ABOUT_US": {
                 "TITLE": "Über uns",
-                "TEXT": "cameoNet 2014",
+                "TEXT": "cameoNet 2015",
                 "3RD_PARTY": {
-                    "TITLE": "Eingebundene Projekte",
-                    "DATE": "1412842948000",
-                    "LIBRARIES": "AngularJS\nhttps://angularjs.org/;AngularJS translate\nhttps://github.com/angular-translate;AngularJS loading bar\nhttps://chieffancypants.github.io/angular-loading-bar;AngularJS emoji filter\nhttps://github.com/globaldev/angular-emoji-filter;captchagen\nhttps://github.com/wearefractal/captchagen;JSEncrypt\nhttps://github.com/travist/jsencrypt;Stanford Javascript Crypto Library (SJCL)\nhttps://crypto.stanford.edu/sjcl;CryptoJS\nhttps://www.code.google.com/p/crypto-js;FileSaver.js\n https://github.com/eligrey/FileSaver.js;Blob.js\nhttps://github.com/eligrey/Blob.js;passchk.js\nhttps://rumkin.com/tools/password/passchk.php;spin.js\nhttp://fgnass.github.io/spin.js;FastClick\nhttps://github.com/ftlabs/fastclick"
+                    "TITLE": "Eingebundene Projekte"
                 }
             },
 
