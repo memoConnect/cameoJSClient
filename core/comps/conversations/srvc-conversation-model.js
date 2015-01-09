@@ -73,7 +73,7 @@ angular.module('cmConversations')
             this.securityAspects    = new cmSecurityAspectsConversation(this);
             this.meta               = {};         //stores meta data, not yet implemented, TODO
             this.password           = undefined;
-            this.state              = new cmStateManagement(['new','loading']);
+            this.state              = new cmStateManagement(['new','loading','decrypted','missingTrustedKeysChecked']);
             this.keyTransmission    = '';
 
             this.lastMessage        = this.messages.new(); //fallback
@@ -947,6 +947,13 @@ angular.module('cmConversations')
                 return this;
             };
 
+            this.checkMissingTrustedKeys = function(){
+                if(this.state.is('decrypted')){
+                    // check ob trusted keys in pasephraselist fehlen
+                    // special call ans BE?
+                }
+            };
+
             /**
              * Event Handling
              */
@@ -1034,6 +1041,8 @@ angular.module('cmConversations')
             this.messages.on('decrypt:success', function(){
                 self.state.set('decrypted');
                 self.setLastMessage();
+
+                //self.checkMissingTrustedKeys();
             });
 
             this.messages.on('last-message:read', function(event, message){

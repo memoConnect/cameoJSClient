@@ -383,8 +383,6 @@ angular.module('cmCore')
                     // get list of all recipients an their keys used to encrypt the passphrase
                     .then(function(result){
 
-                        console.log(result)
-
                         result.recipientKeyList = config.identities.map(function(identity){
                             return  {
                                         identityId: identity.id,
