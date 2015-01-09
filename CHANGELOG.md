@@ -3,6 +3,10 @@
 # BS 07.01.2015
 * finish CAM-1420 remove add contact modal, put links to search and local import in create contact route
 
+#########
+## RC 0.4.8 - 03.01.2015
+#########
+
 # WW 31.12.2014
 * app splashscreen + app spinner now visible till routeChangeSuccess /login | /talks & /conversation/:id | /contact/requests
 * fixxed emoji insertion now textarea resize if one full row and emoji insertion

@@ -256,7 +256,7 @@ describe('Authentication requests -', function () {
         })
 
         it("should not be able to read conversation from key1", function () {
-            util.readConversation(subject1, "- encrypted -")
+            util.readConversation(subject1, "- encrypted -", true)
         })
 
         it("delete localstorage", function () {
@@ -331,8 +331,7 @@ describe('Authentication requests -', function () {
         })
 
         it("should not be able to read conversation from key3", function () {
-            //util.readConversation(subject3, encryptedMessage3)
-            util.readConversation(subject3, "- encrypted -")
+            util.readConversation(subject3, "- encrypted -", true)
         })
 
         it("delete localstorage", function () {
@@ -374,7 +373,6 @@ describe('Authentication requests -', function () {
         })
 
         it("both keys should now be trusted", function () {
-            //util.get("/settings/identity/key/list")
             util.waitForElements("[data-qa='key-list-item']", 2)
 
             checkKeyTrust(keyName1, true)
@@ -502,11 +500,11 @@ describe('Authentication requests -', function () {
         })
 
         it("should not be able to read conversation from key1", function () {
-            util.readConversation(subject1 , "- encrypted -")
+            util.readConversation(subject1 , "- encrypted -", true)
         })
 
-        it("should be not able to read conversation from key3", function () {
-            util.readConversation(subject3, "- encrypted -")
+        it("should not be able to read conversation from key3", function () {
+            util.readConversation(subject3, "- encrypted -", true)
         })
 
         it("delete localstorage", function () {
