@@ -1,5 +1,10 @@
 ## Dev
 
+# BS 09.01.2015
+* finish CAM-1315, story contains new trust aspect in conversations, "transtive rekeying"
+# WW 09.01.2015
+* add "pause check", when app goes to background, event subscribtion will be stopped and reactived on resume
+
 # BS 07.01.2015
 * finish CAM-1420 remove add contact modal, put links to search and local import in create contact route
 
