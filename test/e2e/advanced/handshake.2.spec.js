@@ -580,11 +580,6 @@ describe('Authentication requests -', function () {
         })
 
         it("all three keys should now be trusted", function () {
-            // ptor.wait(function () {
-            //     return $("cm-identity-key-list").getText().then(function (text) {
-            //         return text.indexOf("untrusted") == -1
-            //     })
-            // })
 
             checkKeyTrust(keyName1, true)
             checkKeyTrust(keyName2, true)
