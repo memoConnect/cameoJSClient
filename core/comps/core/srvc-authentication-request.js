@@ -394,7 +394,7 @@ angular.module('cmCore')
                                                 })
                                                 */
 
-                                                cmUserModel.bulkReKeying(data.toKey.id, data.fromKey.id)
+                                                cmUserModel.bulkReKeying(data.toKey.id)
 
                                                 
                                             }else{
