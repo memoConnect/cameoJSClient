@@ -228,7 +228,8 @@
             "PASSWORD_WRONG": "Das eingegebene Passwort ist falsch.",
             "NO_PASSWORD": "Sie müssen ein Passwort setzen oder die Verschlüsselung deaktivieren, weil nicht alle Empfänger einen cameoKey besitzen.\n <a href=\"#/{{type}}/{{typeId}}/security\">Hier Verschlüsselung einstellen</a>",
             "PASSWORD_NEEDED": "Zum Entschlüsseln des Talks geben Sie bitte ein Passwort ein.\n <a href=\"#/{{type}}/{{typeId}}/security\">Hier ein Passwort eingeben!</a>",
-            "ASYMMETRIC_DECRYPT_ERROR": "Der cameoKey fehlt."
+            "ASYMMETRIC_DECRYPT_ERROR": "Der cameoKey fehlt.",
+            "ASYMMETRIC_KEY_TRUST_ERROR": "@todo CONVERSATION.WARN.ASYMMETRIC_KEY_TRUST_ERROR"
         },
         "CONFIRM": {
             "RECIPIENTS_MISSING": "Möchten Sie die Nachricht ohne weitere Empfänger abschicken? Sie werden die einzige Person sein, die diese Nachricht lesen kann."

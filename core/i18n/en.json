@@ -742,7 +742,8 @@
       "NO_PASSWORD": "As not all of the recipients are in the cameoNetwork please set a password or disable the encryption first.\n <a href=\"#/{{type}}/{{typeId}}/security\">Configure your encryption settings here</a>",
       "PASSWORD_NEEDED": "Please enter a password to decode the talk.\n <a href=\"#/{{type}}/{{typeId}}/security\">Please enter here</a>",
       "PASSWORD_WRONG": "Wrong password",
-      "PASSPHRASE_INVALID": "Invalid password"
+      "PASSPHRASE_INVALID": "Invalid password",
+      "ASYMMETRIC_KEY_TRUST_ERROR": "@todo CONVERSATION.WARN.ASYMMETRIC_KEY_TRUST_ERROR"
     },
     "CONFIRM": {
       "RECIPIENTS_MISSING": "Would you like to send this message without further recipients. You will be the only one to read it."
