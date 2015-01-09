@@ -5,17 +5,22 @@ cm-message-file{
   .tac;
   margin-bottom: 0.5em;
 
+  width:20rem;
+  height:10rem;
+  overflow:hidden;
+
   .file-image, .file-html5{
     .pos-rel;
     img{
+      .pos-rel;
       .with-cursor;
       .dbl;
       .margin-hr-auto;
-      max-width:@cm-message-min-width;
-      min-height:@cm-unit * 2;
+      min-height:10rem;
+      max-width:20rem;
 
       &.is-fullscreen{
-        max-width:100%!important;
+        max-width:inherit;
       }
 
     }
@@ -36,7 +41,7 @@ cm-message-file{
 
   .file{
     .margin-hr-auto;
-    font-size:@cm-unit*1.5;
+    font-size:@cm-unit + 1.5;
     i{
 
     }
@@ -48,21 +53,39 @@ cm-message-file{
   .file-download {
     .dtb;
     font-size:@cm-small-font;
-    height: @cm-unit;
-    > * {
-      .vam;
-      .dtbc;
-      .pos-rel;
+    .file-state {
+      white-space:nowrap;
+      .file{
+        .vam;
+      }
+      cm-progressbar {
+        .dib;
+        .vam;
+        width:14rem!important;
+      }
     }
-    span.file-informations{
-      .dbl;
-      width:@cm-unit*2;
-      word-wrap:break-word;
+    .file-informations{
+      white-space:nowrap;
+      .file-size {
+        .dib;
+        .cm-ci-color;
+        .vam;
+        line-height:1rem;
+        font-weight:bold;
+        margin-right:0.5rem;
+        i.cm-download-blanc {
+          font-size:@cm-unit / 2;
+        }
+      }
+      .file-name {
+        .dib;
+        .vam;
+        .tal;
+        max-width:15rem;
+        white-space:normal;
+        word-wrap:break-word;
+      }
     }
-    i.cm-download-blanc{
-      .pos-br;
-      .cm-ci-color;
-      font-size:@cm-unit;
-    }
+
   }
 }

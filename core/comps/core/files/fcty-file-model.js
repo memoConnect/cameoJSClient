@@ -373,8 +373,11 @@ angular.module('cmCore')
             };
 
             this.startDownloadChunks = function(){
-                self.state.unset('readyForDownload');
-                self._downloadChunk(0);
+                if(self.state.is('onDownload')) {
+                    self.state.unset('readyForDownload');
+                    self.state.set('onDownload');
+                    self._downloadChunk(0);
+                }
             };
 
             this.downloadStart = function(autoDownload){
@@ -494,6 +497,8 @@ angular.module('cmCore')
                 } else if(index.error) {
                     //cmLogger.warn('chunk not found');
                     self.state.set('cached');
+                    cmLogger.error('TODO: check state onDownload')
+                    self.state.unset('onDownload');
                 }
             });
 

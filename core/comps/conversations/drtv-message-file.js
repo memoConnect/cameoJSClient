@@ -1,6 +1,7 @@
 'use strict';
 
-angular.module('cmConversations').directive('cmMessageFile', [
+angular.module('cmConversations')
+    .directive('cmMessageFile', [
     'cmModal', 'cmUtil', 'cmFullscreen',
     function (cmModal, cmUtil, cmFullscreen) {
         return {
@@ -43,4 +44,4 @@ angular.module('cmConversations').directive('cmMessageFile', [
             }
         }
     }
-])
+]);

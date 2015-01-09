@@ -4,9 +4,9 @@
 
 angular.module('cmUi')
 .factory('cmFullscreen',[
-    'cmLogger',
+    'cmLogger', 'cmObject',
     '$document', '$rootScope',
-    function(cmLogger,
+    function(cmLogger, cmObject,
              $document, $rootScope) {
 
         function detectBrowserForTabApi() {
@@ -83,15 +83,17 @@ angular.module('cmUi')
 
         if(detectBrowserForTabApi()){
             $document.on(eventChange, function (event) {
-                if(!self.isOpen()){
-                    angular.element(event.target).removeClass('is-fullscreen');
-                } else {
+                self.trigger('change',self.isOpen());
+
+                if(self.isOpen()){
                     angular.element(event.target).addClass('is-fullscreen');
+                } else {
+                    angular.element(event.target).removeClass('is-fullscreen');
                 }
             });
 
             $document.on(eventError, function () {
-
+                self.trigger('error',arguments);
             });
 
             // workarround for device backbutton clicked if fullscreen open
@@ -101,6 +103,8 @@ angular.module('cmUi')
                     event.preventDefault();
                 }
             });
+
+            cmObject.addEventHandlingTo(self);
         }
 
     return self;
