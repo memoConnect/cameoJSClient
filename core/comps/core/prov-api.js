@@ -492,7 +492,6 @@ angular.module('cmCore').provider('cmApi',[
                             */
                         } else {
                             api.state.set('event_call_running');
-
                             api.get({
                                 path: events_path + '/' + api.subscriptionId,
                                 exp_ok: 'events'
@@ -551,12 +550,14 @@ angular.module('cmCore').provider('cmApi',[
                 }
 
                 $rootScope.$on('device:goesToBackground', function(){
+                    console.log('device:goesToBackground api.stopListeningToEvents')
                     api.stopListeningToEvents();
                 });
 
                 $rootScope.$on('device:goesToForeground', function(){
                     var token = $injector.has('cmAuth') ? $injector.get('cmAuth').getToken() : undefined;
                     if(token){
+                        console.log('device:goesToForeground api.listenToEvents')
                         api.listenToEvents();
                     }
                 });

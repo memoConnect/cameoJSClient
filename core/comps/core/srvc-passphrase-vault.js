@@ -334,72 +334,88 @@ angular.module('cmCore')
          */
         this.encryptPassphrase = function(config){
             config =    {
-                            passphrase:         config.passphrase       || cmCrypt.generatePassphrase(),
-                            password:           config.password         || null,
-                            identities:         config.identities       || []                            
-                        }
-
+                passphrase:         config.passphrase       || cmCrypt.generatePassphrase(),
+                password:           config.password         || null,
+                identities:         config.identities       || [],
+                restrict_to_keys:   config.restrict_to_keys || undefined
+            };
 
             return $q.all({
-                        //symmetrical encryption:
+                        // symmetrical encryption
                         sym:    couldBeAPassword(config.password) && couldBeAPassphrase(config.passphrase)
                                 ?   cmCrypt.base64Encode(cmCrypt.encryptWithShortKey(config.password, config.passphrase))
                                 :   $q.when(undefined)
                         ,
-                        //asymmetrically encrypt:
+                        // asymmetrically encrypt
                         asym:   couldBeAPassphrase(config.passphrase)
                                 ?   $q.all(
                                         config.identities.map(function(identity){
-                                            return identity.keys.encryptPassphrase(config.passphrase, config.restrict_to_keys)
+                                            var deferred = $q.defer();
+
+                                            // TODO: for own untrustedkey a exception?
+
+                                            identity.getTrustedKeys().then(
+                                                function(keys){
+                                                    var m = [];
+                                                    keys.forEach(function(key){
+                                                        m.push(key.id);
+                                                    });
+                                                    return m;
+                                                }
+                                            ).then(function(trustedKeys) {
+                                                var whitelist = undefined;
+                                                // when identity has trusted keys do a whitelist for this keys
+                                                if(trustedKeys.length > 0){
+                                                    whitelist = trustedKeys;
+                                                }
+
+                                                deferred.resolve(identity.keys.encryptPassphrase(config.passphrase, whitelist));
+                                            });
+
+                                            return deferred.promise;
                                         })
                                     )
                                     .then(function(results){
                                         return Array.prototype.concat.apply([], results)
                                     })
                                 :   $q.when([])                              
-
-
-
                     })
+                    // get list of all recipients an their keys used to encrypt the passphrase
                     .then(function(result){
-                        //get list of all recipients an their keys used to encrypt the passphrase:
-                        result.recipientKeyList =   config.identities.map(function(identity){
-                                                        return  {
-                                                                    identityId: identity.id,
-                                                                    keys:       result.asym.filter(function(item){
-                                                                                    return identity.keys.find(item.keyId) != null
-                                                                                })
-                                                                                .map(function(item){
-                                                                                    return {id : item.keyId}
-                                                                                })
-                                                                }                                                        
-                                                    })
 
-                        var double_check =  result.asym.length ==   result.recipientKeyList.reduce(function(number_of_keys, item){
-                                                                        return number_of_keys + item.keys.length
-                                                                    },0)
+                        result.recipientKeyList = config.identities.map(function(identity){
+                            return  {
+                                        identityId: identity.id,
+                                        keys:       result.asym.filter(function(item){
+                                                        return identity.keys.find(item.keyId) != null
+                                                    })
+                                                    .map(function(item){
+                                                        return {id : item.keyId}
+                                                    })
+                                    }
+                        });
+
+                        var double_check =  result.asym.length == result.recipientKeyList.reduce(function(number_of_keys, item){
+                                return number_of_keys + item.keys.length
+                            },0);
 
                         return  double_check
                                 ?   result
                                 :   $q.reject('cmPassphraseVault.encryptPassphrase(): double check failed.')
-
-
-
                     })
+                    // get signatures
                     .then(function(result){
-                        //get signatures:
                         return  cmUserModel.signData(cmCrypt.hashObject({
                                     passphrase              : config.passphrase,
                                     keyTransmission         : getKeyTransmission(result.sym, result.asym),
                                     recipientKeyList        : result.recipientKeyList
                                 }))
                                 .then(function(signatures){
-                                    result.signatures = signatures
+                                    result.signatures = signatures;
                                     return $q.when(result)
-                                })
-
-
+                                });
                     })
+                    // finsih and return results
                     .then(
                         function(result){
                             return  self.create({
@@ -407,11 +423,11 @@ angular.module('cmCore')
                                         aePassphraseList:   result.asym,
                                         recipientKeyList:   result.recipientKeyList,
                                         signatures:         result.signatures
-                                    })
+                                    });
                                 
                         },
                         function(reason){
-                            cmLogger.debug('cmPassphraseVault: encryption failed.')
+                            cmLogger.debug('cmPassphraseVault: encryption failed.');
                             return $q.reject(reason)
                         }
                     )

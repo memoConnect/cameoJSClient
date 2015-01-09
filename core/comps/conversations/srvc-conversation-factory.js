@@ -151,9 +151,6 @@ angular.module('cmConversations').service('cmConversationFactory', [
                     }
                 }
             }
-            //cmCallbackQueue.push(
-            //    // iterate over conversations and decrypt
-            //);
         });
 
         cmConversationsAdapter.on('subscriptionId:changed', function(){
