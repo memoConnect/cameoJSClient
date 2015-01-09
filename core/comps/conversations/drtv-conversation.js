@@ -261,7 +261,8 @@ angular.module('cmConversations')
                         && $scope.conversation.userHasPrivateKey() == true
                         && !$scope.conversation.userHasAccess()){
 
-                        cmNotify.warn('CONVERSATION.WARN.ASYMMETRIC_KEY_TRUST_ERROR',{ttl:0});
+                        cmModal.open('handshake-info');
+
                         return true;
                     }
 
