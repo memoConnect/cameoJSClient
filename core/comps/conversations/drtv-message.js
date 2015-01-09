@@ -39,7 +39,6 @@ angular.module('cmConversations').directive('cmMessage', [
                             function(passphrase){
                                 scope.message.decryptFiles(passphrase);
                             },
-
                             function(passphrase){
                                 if(!scope.message.isEncrypted())
                                     scope.message.decryptFiles(null)

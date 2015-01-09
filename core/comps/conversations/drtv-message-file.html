@@ -13,7 +13,7 @@
     <div ng-if="file.state.is('cached')">
         <div class="file-image" ng-if="file.isEmbed('image')">
             <cm-loader cm-color="ci-color" class="full-inline" ng-show="!file.loaded"></cm-loader>
-            <img cm-blob-image="file" ng-click="showFullscreen()" />
+            <img cm-blob-image="file" ng-click="openFullscreen($event)" />
         </div>
         <div class="file-html5" ng-if="file.isEmbed('video')">
             <cm-loader cm-color="ci-color" ng-show="!file.loaded"></cm-loader>

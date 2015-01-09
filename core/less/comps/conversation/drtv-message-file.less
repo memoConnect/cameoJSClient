@@ -13,11 +13,27 @@ cm-message-file{
       .margin-hr-auto;
       max-width:@cm-message-min-width;
       min-height:@cm-unit * 2;
+
+      &.is-fullscreen{
+        max-width:100%!important;
+      }
+
     }
     video, audio{
       .w100;
     }
   }
+
+  .file-image img {
+    &.is-fullscreen, &:fullscreen, &:-moz-full-screen, &:-ms-fullscreen, &:-webkit-full-screen{
+      max-width:100%!important;
+    }
+
+    &:fullscreen::backdrop, &:-ms-fullscreen::-ms-backdrop {
+
+    }
+  }
+
   .file{
     .margin-hr-auto;
     font-size:@cm-unit*1.5;

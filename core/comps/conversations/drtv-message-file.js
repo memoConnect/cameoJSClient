@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('cmConversations').directive('cmMessageFile', [
-    'cmModal', 'cmUtil',
-    function (cmModal, cmUtil) {
+    'cmModal', 'cmUtil', 'cmFullscreen',
+    function (cmModal, cmUtil, cmFullscreen) {
         return {
             restrict: 'E',
             require: '^cmMessage',
@@ -11,7 +11,12 @@ angular.module('cmConversations').directive('cmMessageFile', [
                 $scope.cmUtil = cmUtil;
                 $scope.progress = 0;
 
-                $scope.showFullscreen = function(){
+                $scope.openFullscreen = function($event){
+
+                    cmFullscreen.open($event.target);
+
+                    return false;
+
                     // open modal
                     cmModal.create({
                         id: 'image-view',
