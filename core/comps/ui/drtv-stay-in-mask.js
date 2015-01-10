@@ -2,9 +2,9 @@
 
 angular.module('cmUi').directive('cmStayInMask',[
     'cmUtil', 'cmFullscreen',
-    '$window',
+    '$window', '$screen',
     function (cmUtil, cmFullscreen,
-              $window){
+              $window, $screen){
         return {
             restrict: 'A',
             link: function(scope, element, attrs){
@@ -44,11 +44,11 @@ angular.module('cmUi').directive('cmStayInMask',[
                     }
                 }
 
-                function resize(event,init){
-                    win.width = $window.innerWidth;
-                    win.height = $window.innerHeight;
+                function resize(event, init){
+                    win.width = $screen.availWidth;
+                    win.height = $screen.availHeight;
 
-                    if(init)
+                    if(!init)
                         calcDim();
                 }
 
@@ -85,7 +85,6 @@ angular.module('cmUi').directive('cmStayInMask',[
                     });
 
                     cmFullscreen.on('change', function(event, isFullscreenOpen){
-                        console.log(isFullscreenOpen)
                         if(isFullscreenOpen){
                             // in window
                             setDim({

@@ -39,6 +39,14 @@ cm-info-bubble, input, textarea{
   -moz-transition:@values;
   -o-transition:@values;
 }
+.transitions(@1; @2){
+/* [transition-property] [transition-duration] [transition-timing-function] [transition-delay] */
+  @values:@1 250ms ease, @2 250ms ease;
+  transition:@values;
+  -webkit-transition:@values;
+  -moz-transition:@values;
+  -o-transition:@values;
+}
 
 .text-shadow{
   text-shadow:0 0 @cm-horizontal-padding @cm-overlay-dark;
