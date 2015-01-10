@@ -5,9 +5,9 @@
 angular.module('cmUi')
 .factory('cmFullscreen',[
     'cmLogger', 'cmObject',
-    '$document', '$rootScope',
+    '$document', '$rootScope', '$window', '$timeout',
     function(cmLogger, cmObject,
-             $document, $rootScope) {
+             $document, $rootScope, $window, $timeout) {
 
         function detectBrowserForTabApi() {
             if (typeof doc.fullscreenEnabled !== 'undefined') {
@@ -53,12 +53,16 @@ angular.module('cmUi')
             eventChange,
             eventError,
             doc = $document[0],
+            scrollTop = 0,
             self = {
             isAvailable: function(){
                 return doc[isEnabled] ? true : false;
             },
             open: function(element){
-                if(!this.isOpen() && element && requestOpen in element) {
+                if(!this.isOpen() && element && requestOpen in element){
+                    // cache top
+                    self.scrollTop = $window.scrollY;
+                    // open fullscreen
                     element[requestOpen]();
                 } else {
                     this.close();
@@ -68,8 +72,9 @@ angular.module('cmUi')
                 return doc[isOpen] ? true : false;
             },
             close: function(){
-                if(doc[exit])
+                if(doc[exit]) {
                     doc[exit]();
+                }
             },
             handler: {
                 change: function(){
@@ -89,6 +94,10 @@ angular.module('cmUi')
                     angular.element(event.target).addClass('is-fullscreen');
                 } else {
                     angular.element(event.target).removeClass('is-fullscreen');
+                    // rejump to last top position
+                    $timeout(function(){
+                        $window.scrollTo(0,self.scrollTop);
+                    },50);
                 }
             });
 
