@@ -35,6 +35,10 @@ angular.module('cmUi')
                     if($scope.visible) {
                         var input = $document[0].querySelector('#inp-list-search');
                         input.focus();
+                    } else {
+                        /* if visibility is hidden, filter will be cleared */
+                        $scope.ngModel = '';
+                        cmFilter.clear();
                     }
                 };
 
