@@ -56,6 +56,10 @@ angular.module('cmWidgets')
                     return true;
                 };
 
+                $scope.searchInContacts = function(){
+
+                }
+
             }
         }
     }
