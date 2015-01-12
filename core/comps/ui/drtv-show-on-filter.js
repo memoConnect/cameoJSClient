@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('cmUi').directive('cmSearchInContactsBtn',[
+angular.module('cmUi').directive('cmShowOnFilter',[
     function (){
         return {
             restrict: 'A',
