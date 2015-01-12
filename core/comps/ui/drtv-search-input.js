@@ -1,9 +1,10 @@
 'use strict';
 
 angular.module('cmUi').directive('cmSearchInput',[
+    'cmFilter',
     '$document',
     '$rootScope',
-    function($document, $rootScope){
+    function(cmFilter, $document, $rootScope){
         return {
             restrict: 'E',
             scope: {
@@ -24,6 +25,8 @@ angular.module('cmUi').directive('cmSearchInput',[
                     scope.counterKeydown++;
                 })
                 .on('keyup', function(){
+                    cmFilter.set(scope.search);
+
                     if(scope.search == ''){
                         scope.counterKeydown = 0;
                         scope.$apply();
@@ -66,6 +69,7 @@ angular.module('cmUi').directive('cmSearchInput',[
                 $scope.clear = function(){
                     $scope.search = '';
                     $scope.counterKeydown = 0;
+                    cmFilter.clear();
                 }
             }
         }

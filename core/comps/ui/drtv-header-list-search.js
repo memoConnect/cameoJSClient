@@ -2,10 +2,11 @@
 
 angular.module('cmUi')
 .directive('cmHeaderListSearch',[
+    'cmFilter',
     '$rootScope',
     '$timeout',
     '$document',
-    function ($rootScope, $timeout, $document){
+    function (cmFilter, $rootScope, $timeout, $document){
         return {
             restrict: 'E',
             scope: {
@@ -37,11 +38,11 @@ angular.module('cmUi')
                     }
                 };
 
-                if(typeof $rootScope.defaultFilterString == 'string' && $rootScope.defaultFilterString != ''){
-                    $scope.visible = true;
-                    $scope.ngModel = $rootScope.defaultFilterString;
 
-                    $rootScope.defaultFilterString = '';
+                var filter = cmFilter.get();
+                if(typeof filter == 'string' && filter != ''){
+                    $scope.visible = true;
+                    $scope.ngModel = filter;
                 }
             }
         }
