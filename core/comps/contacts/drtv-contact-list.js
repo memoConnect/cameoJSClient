@@ -27,7 +27,7 @@ angular.module('cmContacts').directive('cmContactList',[
                 /**
                  * contact server search
                  */
-
+                var activateSearch = false;
                 $scope.searchCameoId = {};
                 $scope.results = [];
 
@@ -36,6 +36,8 @@ angular.module('cmContacts').directive('cmContactList',[
                     if(typeof search != 'string' || search.length < 3){
                         return false;
                     }
+
+                    activateSearch = true;
 
                     if($scope.timeout != null) $timeout.cancel($scope.timeout);
 
@@ -61,7 +63,9 @@ angular.module('cmContacts').directive('cmContactList',[
                 }
 
                 var filterListener = $scope.$watch('search', function(newValue){
-                    $scope.sendSearch(newValue);
+                    if(activateSearch){
+                        $scope.sendSearch(newValue);
+                    }
                 });
 
                 $scope.$on('$destroy', function(){
