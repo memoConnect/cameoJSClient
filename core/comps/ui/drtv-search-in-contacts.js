@@ -5,15 +5,15 @@ angular.module('cmUi').directive('cmSearchInContactsBtn',[
         return {
             restrict: 'A',
             scope: {
-              filter: "@cmFilter"
+              filter: "=cmFilter"
             },
             link: function(scope, element){
 
                 function updateElement(filter){
                     if(typeof filter == 'string' && filter != ''){
-                        element.css({'display':'block'});
+                        element.addClass('cm-show');
                     } else {
-                        element.css({'display':'none'});
+                        element.removeClass('cm-show');
                     }
                 }
 
