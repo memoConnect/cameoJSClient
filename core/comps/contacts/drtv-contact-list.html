@@ -13,6 +13,23 @@
             <i class="fa cm-new-talk" ng-hide="contact.contactType == 'pending'"></i>
         </section>
     </li>
+    <li ng-if="(search.length == 0)">
+        @todo keine lokalen kontakte gefunden
+    </li>
+    <li cm-show-on-filter="search" cm-show-on-min-length="3">
+        <button class="cm-btn-grey" ng-click="sendSearch(search)" data-qa="btn-search" cm-reactive>
+            @todo Search at Server
+        </button>
+    </li>
+    <li class="contact-search-item" ng-repeat="item in results">
+        <cm-avatar cm-data="item"></cm-avatar>
+        <section class="identityName" cm-weight="1">
+            <strong>{{item.getDisplayName()}}</strong>
+        </section>
+        <section class="icon-list">
+            <i class="fa cm-contacts"></i>
+        </section>
+    </li>
     <li cm-show-on-filter="search" cm-show-on-empty-list>
         <button class="cm-btn-grey" ng-click="goTo('/talks')" data-qa="btn-search-in-talks" cm-reactive>
             @todo Search in Talks
