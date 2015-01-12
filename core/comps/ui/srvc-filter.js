@@ -5,12 +5,14 @@ angular.module('cmUi')
     'cmLogger',
     function(cmLogger){
         var self = this,
-            currentFilter = '';
+            currentFilter = '',
+            currentResults = 0;
 
         this.clear = function(){
             //cmLogger.debug('cmFilter.clear');
 
             currentFilter = '';
+            currentResults = 0;
         };
 
         this.get = function(){
@@ -24,6 +26,20 @@ angular.module('cmUi')
 
             if(typeof f == 'string' && f != ''){
                 currentFilter = f;
+            }
+        };
+
+        this.getResultLength = function(){
+            //cmLogger.debug('cmFilter.getResultLength');
+
+            return currentResults;
+        }
+
+        this.setResultLength = function(l){
+            //cmLogger.debug('cmFilter.setResultLength');
+
+            if(typeof l == 'number'){
+                currentResults = l;
             }
         }
     }
