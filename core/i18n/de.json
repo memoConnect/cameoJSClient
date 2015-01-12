@@ -228,7 +228,8 @@
             "PASSWORD_WRONG": "Das eingegebene Passwort ist falsch.",
             "NO_PASSWORD": "Sie müssen ein Passwort setzen oder die Verschlüsselung deaktivieren, weil nicht alle Empfänger einen cameoKey besitzen.\n <a href=\"#/{{type}}/{{typeId}}/security\">Hier Verschlüsselung einstellen</a>",
             "PASSWORD_NEEDED": "Zum Entschlüsseln des Talks geben Sie bitte ein Passwort ein.\n <a href=\"#/{{type}}/{{typeId}}/security\">Hier ein Passwort eingeben!</a>",
-            "ASYMMETRIC_DECRYPT_ERROR": "Der cameoKey fehlt."
+            "ASYMMETRIC_DECRYPT_ERROR": "Der cameoKey fehlt.",
+            "ASYMMETRIC_KEY_TRUST_ERROR": "@todo CONVERSATION.WARN.ASYMMETRIC_KEY_TRUST_ERROR"
         },
         "CONFIRM": {
             "RECIPIENTS_MISSING": "Möchten Sie die Nachricht ohne weitere Empfänger abschicken? Sie werden die einzige Person sein, die diese Nachricht lesen kann."
@@ -302,7 +303,7 @@
             "SEARCH_IDENTITY": "CameoNet durchsuchen",
             "ADD_EXTERN": "Externen Kontakt hinzufügen",
             "SEND_REQUEST": "Senden",
-            "IMPORT_LOCAL": "Lokalen Kontakt importieren"
+            "IMPORT_LOCAL": "Telefonbuch durchsuchen"
         },
         "BUTTON": {
             "RESET": "Zurücksetzen",
@@ -670,7 +671,7 @@
             "HEADER": "Benutzerkontodaten",
             "INFO": {
                 "NOTE_ABOUT_THIS_DATA_SMALL": "E-Mail-Adresse oder Telefonnummer hinterlegen..",
-                "NOTE_ABOUT_THIS_DATA": "In Ihrem Benutzerkonto können Sie eine Mobilfunknummer oder E-Mail-Adresse hinterlegen und anschließend durch eine Prüfnachricht verifizieren lassen. Wenn Sie ihr Passwort vergessen, können Sie über eine verifizierte E-Mail-Adresse oder Telefonnummer ein neues Passwort erstellen.\n\nIhre Benutzerdaten sind für andere Nutzer nicht sichtbar."
+                "NOTE_ABOUT_THIS_DATA": "In Ihrem Benutzerkonto können Sie eine Mobilfunknummer oder E-Mail-Adresse hinterlegen und anschließend durch eine Prüfnachricht verifizieren lassen. Wenn Sie ihr Passwort vergessen, können Sie über eine verifizierte E-Mail-Adresse oder Telefonnummer ein neues Passwort erstellen.\n\nIhre E-Mail-Adresse und Telefonnummer sind für andere Nutzer nicht sichtbar."
             },
             "ERROR": "Es ist ein Fehler aufgetreten!\nBitte überprüfen Sie Ihre Eingaben."
         },
@@ -913,7 +914,7 @@
             },
             "AUTHENTIC_RECIPIENT_LIST": {
                 "NAME": "Die Empfängerliste ist signiert und authentisch.",
-                "DESCRIPTION": "Der Nutzer der diesen Talk gestartet hat, hat die Empfängerliste signiert. Sie vertrauen allen Empfängern dieses Talks. Zur Überprüfung hier die Liste der Empfänger mit cameoIDs:"
+                "DESCRIPTION": "Der Nutzer der diesen Talk gestartet hat, hat die Empfängerliste signiert. Sie vertrauen allen Empfängern dieses Talks. Zur Überprüfung die Liste der Empfänger mit cameoIDs:"
             },
             "AUTHENTIC_RECIPIENTS": {
                 "NAME": "Empfänger sind authentisch.",

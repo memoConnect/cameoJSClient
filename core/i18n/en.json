@@ -161,12 +161,12 @@
     "MODAL": {
       "HEADER": "@IDENTITY.LABEL.IDENTITIES"
     },
-      "INFO": {
+    "INFO": {
         "CREATE": {
-          "HEADLINE_SMALL": "Define your first identity..",
+          "HEADLINE_SMALL": "Create your initial identity..",
           "HEADLINE": "In your identity you define, what information other users can see. If you accept a contact request from another user, he can see all the fields that you enter in your identity profile.\nYour identity can be found by searching for the cameoID or its display name. ",
           "CAMEOID": "Every identity has a unique cameoID, with which you can be found in cameoNet.",
-          "AVATAR": "Upload your own picture by the gear-wheel in the lower left corner.",
+          "AVATAR": "cameoNet generates a random profile picture. To upload an individual picture please click on the rack-wheel in the bottom left corner.",
           "DISPLAYNAME": "If you enter a display name, this will be displayed instead of the cameoID. Your identity in cameoNet can be found by searching for the display name. The display name does not need to be unique.",
           "EMAIL": "You can enter an e-mail address here. It will be displayed to other users in your identity profile, but it will not be verified or used for any purpose. Notifications for this identity will be sent to the e-mail address entered in your account.",
           "PHONE": "You can enter a mobile phone number here. It will be displayed to other users in your identity profile, but it will not be verified or used for any purpose. Notifications for this identity will be sent to the mobile phone number entered in your account."
@@ -182,7 +182,7 @@
       "INFO": {
         "INVALID_PHONE_NUMBER": "The entered value does not seem to be a vaild mobile number.",
         "EMPTY": "You have not entered a valid mobile number",
-        "ISNT_VERIFIED":  "This phone number has not been verified yet. Please click on the {{icon}}-Icon to send a text message to this phone number. This text message will contain a link and a code needed to finalize the verification.",
+        "ISNT_VERIFIED":  "This mobile phone number has not been validated yet. A text message with a validation code has been sent to this number. Please enter this code here or follow the link in your text message. To re-send a text message to this number please click on the {{icon}} icon.",
         "EMPTY_CODE": "Please enter the code from the verification sms.",
         "INVALID_CODE": "The code you have entered is wrong or has expired."
       },
@@ -210,7 +210,7 @@
       "INFO": {
         "INVALID": "Please enter a correct e-mail.",
         "EMPTY": "You have not entered an e-mail.",
-        "ISNT_VERIFIED": "This e-mail address has not been verified yet. Please click on the {{icon}}-Icon to send an e-mail to this e-mail address. This e-mail will contain a link and a code needed to finalize the verification.",
+        "ISNT_VERIFIED": "This e-mail address has not been validated yet. An e-mail with a validation code has been sent to this e-mail address. Please enter this code here or follow the link in your e-mail. To re-send an e-mail to this e-mail address please click on the {{icon}} icon.",
         "EMPTY_CODE": "Please enter the code from the verification e-mail.",
         "INVALID_CODE": "The code you have entered is wrong or has expired."
       },
@@ -499,7 +499,7 @@
   "PASSWORD_CODE": {
     "HEADING": "Password reset code",
     "INFO": {
-      "CONFIRMATION_SENDED": "We have sent you a message. This contains a code that you can insert here and a link that redirect you to the reset password.",
+      "CONFIRMATION_SENDED": "A message has been sent to your validated e-mail address or mobile phone number. It contains a link to reset your password. Alternatively you can enter the code in the message here to enter a new password.",
       "EMPTY": "Enter a code please",
       "EXPIRED": "@:PASSWORD_RESET.INFO.EXPIRED"
     },
@@ -537,11 +537,11 @@
       },
       "AUTHENTIC_RECIPIENT_LIST": {
           "NAME": "List of recipients is signed and authentic",
-          "DESCRIPTION": "The original creator of this talk signed the list of recipients. You have verified the authenticity of every recipient's. Here's a list of all recipients including their cameoIds. The cameoId was displayed when you verfied the authenticiy and uniquely idendifies an identity."
+          "DESCRIPTION": "The user who has started this talk has signed the recipient list. You trust all recipients of this talk. To verify this here the list of all cameoIDs of the recipients:"
       },
       "AUTHENTIC_RECIPIENTS": {
           "NAME": "Every recipient is authentic.",
-          "DESCRIPTION": "You verified all recipients."
+          "DESCRIPTION": "You trust all recipients of this talk."
       },
       "HAS_PASSCAPTCHA": {
         "TOGGLE": "Disable passCaptcha",
@@ -627,7 +627,7 @@
   "HELP":{
     "HEADING":"Help",
     "LABEL": {
-      "SUPPORT": "cameoNet Support"
+      "SUPPORT": "cameoNet support"
     }
   },
   "CONTACTS": {
@@ -645,10 +645,10 @@
       "DISPLAYNAME": "Display name",
       "SORT": "Sort",
       "ADD_EXTERN": "Create new external contact",
-      "SEARCH_IDENTITY": "Search CameoNet indentity",
+      "SEARCH_IDENTITY": "Search CameoNet",
       "SURNAME": "Surname",
       "SEND_REQUEST": "Send",
-      "IMPORT_LOCAL": "Import local contact",
+      "IMPORT_LOCAL": "Local Contacts",
       "FILTER": "Filter"
     },
     "INFO": {
@@ -690,7 +690,7 @@
       "HEAD_LOGIN": "Login information"
     },
     "INFO": {
-      "LOGIN_INFORMATION": "Here you will define your account data that you use for the login at cameoNet.<br/><br/>The choosen user name will become your (first) cameoID automatically. The cameoID can be find by other users to connect with you.",
+      "LOGIN_INFORMATION": "Here you can enter your login data, which will be used to login to cameoNet. The user name will automatically be set as your (initial) cameoID. This will be used by other users to identify you in cameoNet.",
       "EMPTY": {
         "PASSWORD": "Please enter a password."
       },
@@ -742,7 +742,8 @@
       "NO_PASSWORD": "As not all of the recipients are in the cameoNetwork please set a password or disable the encryption first.\n <a href=\"#/{{type}}/{{typeId}}/security\">Configure your encryption settings here</a>",
       "PASSWORD_NEEDED": "Please enter a password to decode the talk.\n <a href=\"#/{{type}}/{{typeId}}/security\">Please enter here</a>",
       "PASSWORD_WRONG": "Wrong password",
-      "PASSPHRASE_INVALID": "Invalid password"
+      "PASSPHRASE_INVALID": "Invalid password",
+      "ASYMMETRIC_KEY_TRUST_ERROR": "@todo CONVERSATION.WARN.ASYMMETRIC_KEY_TRUST_ERROR"
     },
     "CONFIRM": {
       "RECIPIENTS_MISSING": "Would you like to send this message without further recipients. You will be the only one to read it."
@@ -838,12 +839,12 @@
   },
   "ACCOUNT": {
       "CREATE": {
-          "HEADER": "Account data",
+          "HEADER": "User account data",
           "INFO": {
-              "NOTE_ABOUT_THIS_DATA_SMALL": "Insert email address or telephone number..",
-              "NOTE_ABOUT_THIS_DATA": "Here you can insert an email address or phone number. You can verify this address or number by answering a check message. If you will forget your password, you can reset it by a verified phone number or email address.\n\n This data is not public."
+              "NOTE_ABOUT_THIS_DATA_SMALL": "Enter e-mail address or telephone number..",
+              "NOTE_ABOUT_THIS_DATA": "You can add your mobile phone number or e-mail address to your user account. You can validate them by generating a verification message. If you forget your password you can generate a new password and send it to a validated e-mail address or mobile phone number.\n\n Your e-mail address or mobile phone number cannot be seen by any other user."
           },
-          "ERROR": "An error has occurred!\nPlease check your data."
+          "ERROR": "An error has occurred!\nPlease check your entries."
       },
     "INFO": {
       "INVALID": {
@@ -858,8 +859,8 @@
         "OLD_PASSWORD": "Please enter your previous password."
       },
       "LOGINAME": "The login name cannot be changed.",
-      "PHONENUMBER": "Here you can insert a phone number. After that we will send you a verification message.",
-      "EMAIL": "Here you can insert an email address. After that we will send you a verification message."
+      "PHONENUMBER": "Here you can add your mobile phone number. You will receive a validation text message to activate this number. Once activated it can be used to receive a reset password.",
+      "EMAIL": "Here you can add your e-mail address. You will receive a validation e-mail to activate this e-mail address.  Once activated it can be used to receive a new password."
     },
     "PLACEHOLDER": {
       "PASSWORD_CHANGE": "Change password",

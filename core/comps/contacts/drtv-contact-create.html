@@ -2,6 +2,28 @@
     <div class="cm-fl mr5">
         <cm-avatar cm-data="identity" cm-avatar-view="{{chooseAvatar?'unknown':''}}" class="big"></cm-avatar>
     </div>
+    <div class="cm-fl w72">
+        <ul class="no-border">
+            <li ng-click="goToSearch()" data-qa="btn-identity-search" cm-reactive>
+                <span class="item clearfix">
+                    <i class="fa cm-search fa-2x"></i>
+                    {{'CONTACTS.LABEL.SEARCH_IDENTITY'|cmTranslate}}
+                </span>
+                <section class="icon-list">
+                    <i class="fa cm-right position-exception"></i>
+                </section>
+            </li>
+            <li ng-click="goTo('/contact/import')" data-qa="btn-local-import" cm-reactive ng-if="canReadLocalContacts()">
+                 <span class="item clearfix">
+                     <i class="fa cm-mobile fa-2x"></i>
+                    {{'CONTACTS.LABEL.IMPORT_LOCAL'|cmTranslate}}
+                 </span>
+                <section class="icon-list">
+                    <i class="fa cm-right position-exception"></i>
+                </section>
+            </li>
+        </ul>
+    </div>
 </article>
 
 <hr class="margin-small" />

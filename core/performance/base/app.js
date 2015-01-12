@@ -1,6 +1,5 @@
 angular.module('cameoClientPerformance',[
     'ngRoute',
-    'ngCookies',
     'ngSanitize',
     // cameo dependencies
     'cmRoutes',

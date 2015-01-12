@@ -96,13 +96,12 @@ angular.module('cmConversations')
                         return $q.reject('conversation unreliable.')
                     }
 
-                    //Is the conversation newly created and has not been saved to the backend yet?                  
-                    
+                    // Is the conversation newly created and has not been saved to the backend yet?
                     return  $scope.conversation.state.is('new')
-                                //The conversations has not been saved to the Backend, do it now:
+                                // the conversations has not been saved to the Backend, do it now:
                             ?   $scope.conversation.save()
-                                //When that is done try again to send the message:
-                                .then( function(conversation_data){ 
+                                // when that is done try again to send the message:
+                                .then(function(conversation_data){
                                     $scope.conversation.importData(conversation_data)
                                     cmConversationFactory.register($scope.conversation);
                                     //$rootScope.$broadcast('new-conversation:ready')
@@ -150,7 +149,7 @@ angular.module('cmConversations')
                         }
                     );
 
-                    return deferred.promise
+                    return deferred.promise;
                 }
 
                 /**
@@ -177,7 +176,7 @@ angular.module('cmConversations')
                                             id:'#new_message',
                                             fromIdentity:cmUserModel.data.identity
                                         })
-                                        .setText($scope.newMessageText)
+                                        .setText($scope.newMessageText);
 
                     new_message.state.set('sending');
 
@@ -254,6 +253,22 @@ angular.module('cmConversations')
                   
                 };
 
+                $scope.showTrustError = function(){
+                    //cmLogger.debug('cmConversationDRTV.showTrustError');
+
+                    if(!$scope.conversation.state.is('new')
+                        && $scope.conversation.getKeyTransmission() == 'asymmetric'
+                        && $scope.conversation.userHasPrivateKey() == true
+                        && !$scope.conversation.userHasAccess()){
+
+                        cmModal.open('handshake-info');
+
+                        return true;
+                    }
+
+                    return false;
+                };
+
                 $scope.showAsymmetricKeyError = function(){
 //                    cmLogger.debug('cmConversationDRTV.showAsymmetricKeyError')
 
@@ -312,6 +327,7 @@ angular.module('cmConversations')
 
                     /** Event callbacks **/
                     function callback_update_finished(){
+                        $scope.showTrustError();
                         $scope.showAsymmetricKeyError();
                         $scope.showGoToSettingsModal();
                     }
