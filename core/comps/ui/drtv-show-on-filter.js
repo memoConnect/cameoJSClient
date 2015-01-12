@@ -5,13 +5,8 @@ angular.module('cmUi').directive('cmShowOnFilter',[
     function (cmFilter){
         return {
             restrict: 'A',
-            scope: {
-                filter: "=cmFilter"
-            },
             link: function(scope, element, attrs){
-
                 function updateElement(filter){
-
                     if(typeof attrs.cmShowOnEmptyList != 'undefined' && cmFilter.getResultLength() > 0){
                         if(element.hasClass('cm-show')){
                             element.removeClass('cm-show');
@@ -31,10 +26,8 @@ angular.module('cmUi').directive('cmShowOnFilter',[
                     }
                 }
 
-                updateElement(scope.filter);
-
-                var filterListener = scope.$watch('filter', function(){
-                    updateElement(scope.filter);
+                var filterListener = scope.$watch(attrs.cmShowOnFilter, function(filter){
+                    updateElement(filter);
                 });
 
                 scope.$on('$destroy', function(){

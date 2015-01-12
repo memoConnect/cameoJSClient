@@ -12,10 +12,14 @@
             {{'TALKS.MORE'|cmTranslate}}
         </button>
     </li>
-    <li cm-show-on-filter cm-filter="search" cm-show-on-empty-list>
+    <li cm-show-on-filter="search">
+        <button class="cm-btn-grey" ng-click="loadMoreTalks()" data-qa="btn-search-at-server" cm-reactive>
+            @todo Search at Server
+        </button>
+    </li>
+    <li cm-show-on-filter="search" cm-show-on-empty-list>
         <button class="cm-btn-grey" ng-click="goTo('/contact/list')" data-qa="btn-search-in-contacts" cm-reactive>
-            Search at Contacts
+            @todo Search in Contacts
         </button>
     </li>
 </ul>
-{{results.length}}

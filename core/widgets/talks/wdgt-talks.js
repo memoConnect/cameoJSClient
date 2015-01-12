@@ -55,6 +55,11 @@ angular.module('cmWidgets')
 
                     return true;
                 };
+
+                /**
+                 * @todo
+                 * add ServerSideSearch for filter
+                 */
             }
         }
     }
