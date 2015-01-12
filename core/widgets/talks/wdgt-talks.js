@@ -57,8 +57,8 @@ angular.module('cmWidgets')
                 };
 
                 $scope.searchInContacts = function(){
-
-                }
+                    console.log('filter', $scope.search)
+                };
 
             }
         }

@@ -35,6 +35,13 @@ angular.module('cmUi')
                         var input = $document[0].querySelector('#inp-list-search');
                         input.focus();
                     }
+                };
+
+                if(typeof $rootScope.defaultFilterString == 'string' && $rootScope.defaultFilterString != ''){
+                    $scope.visible = true;
+                    $scope.ngModel = $rootScope.defaultFilterString;
+
+                    $rootScope.defaultFilterString = '';
                 }
             }
         }
