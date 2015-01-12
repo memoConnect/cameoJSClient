@@ -1,5 +1,9 @@
 # Dev
 
+#########
+# RC 0.5.0 - 12.01.2015
+#########
+
 ## BS 09.01.2015
 * finish CAM-1315, story contains new trust aspect in conversations, "transtive rekeying"
 
