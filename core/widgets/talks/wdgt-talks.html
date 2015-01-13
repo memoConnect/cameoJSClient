@@ -17,9 +17,12 @@
             {{'TALKS.SEARCH_ARCHIVE'|cmTranslate}}
         </button>
     </li>
-    <li cm-show-on-filter="search" cm-show-on-empty-list>
-        <button class="cm-btn-grey" ng-click="goTo('/contact/list')" data-qa="btn-search-in-contacts" cm-reactive>
-            {{'CONTACTS.SEARCH'|cmTranslate}}
-        </button>
+    <li cm-show-on-filter="search" cm-show-on-empty-list ng-click="goTo('/contact/list')" data-qa="btn-search-in-contacts" cm-reactive>
+         <span class="item is-selectable">
+            {{'CONTACTS.SEARCH'|cmTranslate}} <span ng-if="search">({{search}})</span>
+        </span>
+        <div class="short-links without-bg" ng-click="goTo('/contact/list')">
+            <i class="fa cm-right"></i>
+        </div>
     </li>
 </ul>
