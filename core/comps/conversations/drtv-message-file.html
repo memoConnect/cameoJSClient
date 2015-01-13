@@ -14,17 +14,31 @@
     </div>
 </div>
 <div ng-if="file.state.is('cached')">
+
     <div class="file-image" ng-if="file.isEmbed('image')" cm-fullscreen>
         <cm-loader cm-color="ci-color" class="full-inline" ng-show="!file.loaded"></cm-loader>
-        <img cm-blob-image="file" cm-stay-in-mask="cm-message-file" cm-pinchpan-and-zoom />
+        <img cm-blob-image="file" cm-stay-in-mask="cm-message-file" cm-pinch-and-pan />
     </div>
     <div class="file-html5" ng-if="file.isEmbed('video')">
         <cm-loader cm-color="ci-color" ng-show="!file.loaded"></cm-loader>
         <video controls="true" cm-blob-video-audio="file"></video>
     </div>
-    <div class="file-html5" ng-if="file.isEmbed('audio')">
-        <cm-loader cm-color="ci-color" ng-show="!file.loaded"></cm-loader>
-        <audio controls="true" cm-blob-video-audio="file"></audio>
+
+    <div class="file-detail" ng-if="file.isEmbed('audio') || !file.isEmbed()" ng-click="file.promptSaveAs()">
+        <div class="file-state">
+            <div class="file {{file.detectedExtension}}"></div>
+            <div class="file-html5" ng-if="file.isEmbed('audio')">
+                <audio controls="true" cm-blob-video-audio="file"></audio>
+            </div>
+        </div>
+        <div class="file-informations">
+            <span class="file-size">
+                <i class="fa cm-save"></i><br />
+                {{cmUtil.bytesToStr(file.size)}}
+            </span>
+            <span class="file-name">
+                {{file.name}}
+            </span>
+        </div>
     </div>
-    <div ng-if="!file.isEmbed()" class="file {{file.detectedExtension}}" ng-click="file.promptSaveAs()"></div>
 </div>

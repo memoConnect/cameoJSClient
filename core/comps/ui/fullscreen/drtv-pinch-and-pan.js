@@ -1,16 +1,16 @@
 'use strict';
 
 angular.module('cmUi')
-.directive('cmPinchpanAndZoom',[
-    'cmPinchpanAndZoom',
-    function (cmPinchpanAndZoom){
+.directive('cmPinchAndPan',[
+    'cmPinchAndPan',
+    function (cmPinchAndPan){
         return {
             restrict: 'A',
             link: function(scope, element, attrs) {
-                cmPinchpanAndZoom.init({initOnFullscreen:true},element);
+                cmPinchAndPan.init({initOnFullscreen:true},element);
 
                 scope.$on('$destroy',function(){
-                    cmPinchpanAndZoom.destroy(element);
+                    cmPinchAndPan.destroy(element);
                 });
             }
         }

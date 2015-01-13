@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('cmUi')
-    .factory('cmPinchpanAndZoom',[
+    .factory('cmPinchAndPan',[
         'cmFullscreen', 'cmUtil',
         '$window', '$timeout', '$document',
         function(cmFullscreen, cmUtil,

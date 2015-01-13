@@ -25,6 +25,10 @@ cm-message-file{
     video, audio{
       .w100;
     }
+    video{
+      background: @cm-black;
+      height: 10rem;
+    }
     &.is-fullscreen{
       img {
         max-width:inherit;
@@ -53,7 +57,7 @@ cm-message-file{
     margin-bottom:0;
   }
 
-  .file-download {
+  .file-download, .file-detail {
     .dtb;
     font-size:@cm-small-font;
     .file-state {
@@ -61,7 +65,7 @@ cm-message-file{
       .file{
         .vam;
       }
-      cm-progressbar {
+      cm-progressbar, .file-html5 {
         .dib;
         .vam;
         width:14rem!important;
