@@ -16,6 +16,10 @@ angular.module('cmUi').directive('cmShowOnFilter',[
                     }
 
                     if(typeof attrs.cmShowOnMinLength != 'undefined' && typeof filter == 'string' && filter.length < attrs.cmShowOnMinLength){
+                        if(element.hasClass('cm-show')){
+                            element.removeClass('cm-show');
+                        }
+
                         return false;
                     }
 

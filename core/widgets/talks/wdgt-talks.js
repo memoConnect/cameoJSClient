@@ -87,7 +87,14 @@ angular.module('cmWidgets')
                     }
 
                     return true;
+                };
+
+                function onClearFilter(){
+                    searchOffset = 0;
+                    searchNumberOfMatches = 0;
                 }
+
+                cmFilter.onClear('wdgt-talks', onClearFilter);
             }
         }
     }
