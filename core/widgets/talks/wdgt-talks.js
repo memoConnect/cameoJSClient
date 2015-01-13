@@ -13,11 +13,8 @@
 
 angular.module('cmWidgets')
 .directive('cmWidgetTalks', [
-
-    'cmUserModel',
-    'cmConversationFactory',
-
-    function(cmUserModel, cmConversationFactory){
+    'cmUserModel', 'cmConversationFactory', 'cmFilter',
+    function(cmUserModel, cmConversationFactory, cmFilter){
         return {
             restrict:       'AE',
             scope:          true,   
@@ -60,6 +57,20 @@ angular.module('cmWidgets')
                  * @todo
                  * add ServerSideSearch for filter
                  */
+                $scope.searchArchive = function(){
+                    var s = cmFilter.get();
+
+                    if(typeof s == 'string' && s != '' && s.length >= 3){
+                        cmConversationFactory.search(s).then(
+                            function(data){
+                                console.log('success', data)
+                            },
+                            function(data){
+                                console.log('error', data)
+                            }
+                        )
+                    }
+                };
             }
         }
     }

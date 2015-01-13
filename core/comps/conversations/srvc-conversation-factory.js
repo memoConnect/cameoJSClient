@@ -23,8 +23,9 @@ angular.module('cmConversations').service('cmConversationFactory', [
     'cmStateManagement',
     'cmConversationModel',
     'cmLogger',
+    '$q',
 
-    function($rootScope, cmUserModel, cmConversationsAdapter, cmFactory, cmStateManagement, cmConversationModel, cmLogger) {
+    function($rootScope, cmUserModel, cmConversationsAdapter, cmFactory, cmStateManagement, cmConversationModel, cmLogger, $q) {
         var self = cmFactory(cmConversationModel);
 
         var _quantity   = 0,
@@ -73,6 +74,35 @@ angular.module('cmConversations').service('cmConversationFactory', [
 
         self.getLimit = function(){
             return _limit;
+        };
+
+        self.search = function(search, limit, offset){
+            if(cmUserModel.isGuest() || self.state.is('loading'))
+                return false;
+
+            var deferred = $q.defer();
+
+            self.state.set('loading');
+
+            cmConversationsAdapter.searchConversations(search,limit, offset).then(
+                function(data) {
+
+                    data.conversations.forEach(function (conversation_data) {
+                        self.create(conversation_data);
+                    });
+
+                    deferred.resolve(data.numberOfMatches);
+                },
+                function(){
+                    deferred.reject('search errror');
+                }
+            ).finally(
+                function(){
+                    self.state.unset('loading');
+                }
+            );
+
+            return deferred.promise;
         };
 
         /**
