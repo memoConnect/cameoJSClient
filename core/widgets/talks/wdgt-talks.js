@@ -74,8 +74,8 @@ angular.module('cmWidgets')
                                     searchNumberOfMatches = data.numberOfMatches;
                                 }
                             },
-                            function(data){
-                                console.log('error', data)
+                            function(result){
+                                //console.log('error', rtesult)
                             }
                         )
                     }
