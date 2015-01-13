@@ -18,17 +18,7 @@
             @todo keine Conversations gefunden
         </div>
     </li>
-    <li class="with-inside-icon" cm-show-on-filter="search" cm-show-on-min-length="3" ng-click="searchArchive()" data-qa="btn-search-at-server" cm-reactive>
-        <div class="item">
-            {{'TALKS.SEARCH_ARCHIVE'|cmTranslate}}
-        </div>
-        <i class="fa cm-right"></i>
-    </li>
-    <li class="with-inside-left-icon with-inside-icon" cm-show-on-filter="search" cm-show-on-empty-list ng-click="goTo('/contact/list')" data-qa="btn-search-in-contacts" cm-reactive>
-        <i class="fa cm-search"></i>
-        <div class="item">
-            {{'CONTACTS.SEARCH'|cmTranslate}} <strong ng-if="search">({{search}})</strong>
-        </div>
-        <i class="fa cm-right"></i>
+    <li cm-show-on-filter="search" cm-show-on-min-length="3" data-qa="btn-search-at-server">
+        <cm-search-conversations></cm-search-conversations>
     </li>
 </ul>

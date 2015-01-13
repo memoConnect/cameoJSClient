@@ -13,13 +13,13 @@
 
 angular.module('cmWidgets')
 .directive('cmWidgetTalks', [
-    'cmUserModel', 'cmConversationFactory', 'cmFilter',
-    function(cmUserModel, cmConversationFactory, cmFilter){
+    'cmUserModel', 'cmConversationFactory',
+    function(cmUserModel, cmConversationFactory){
         return {
             restrict:       'AE',
             scope:          true,   
             templateUrl:    'widgets/talks/wdgt-talks.html',
-            controller: function($scope, $element, $attrs){
+            controller: function($scope){
                 /**
                  * init conversations to scope
                  */
@@ -52,49 +52,6 @@ angular.module('cmWidgets')
 
                     return true;
                 };
-
-                /**
-                 * add ServerSideSearch for filter
-                 */
-                var searchLimit = 10,
-                    searchOffset = 0,
-                    searchNumberOfMatches = 0;
-
-                $scope.searchArchive = function(){
-                    var s = cmFilter.get();
-
-                    if(typeof s == 'string' && s != '' && s.length >= 3){
-                        cmConversationFactory.search(s, searchLimit, searchOffset).then(
-                            function(data){
-                                if(typeof data.conversations != 'undefined'){
-                                    searchOffset = data.conversations.length;
-                                }
-
-                                if(typeof data.numberOfMatches == 'number'){
-                                    searchNumberOfMatches = data.numberOfMatches;
-                                }
-                            },
-                            function(result){
-                                //console.log('error', rtesult)
-                            }
-                        )
-                    }
-                };
-
-                $scope.moreArchiveTalksAvailable = function(){
-                    if(searchOffset > 0 && searchNumberOfMatches > 0 && (searchOffset >= searchNumberOfMatches)){
-                        return false;
-                    }
-
-                    return true;
-                };
-
-                function onClearFilter(){
-                    searchOffset = 0;
-                    searchNumberOfMatches = 0;
-                }
-
-                cmFilter.onClear('wdgt-talks', onClearFilter);
             }
         }
     }
