@@ -54,16 +54,25 @@ angular.module('cmWidgets')
                 };
 
                 /**
-                 * @todo
                  * add ServerSideSearch for filter
                  */
+                var searchLimit = 10,
+                    searchOffset = 0,
+                    searchNumberOfMatches = 0;
+
                 $scope.searchArchive = function(){
                     var s = cmFilter.get();
 
                     if(typeof s == 'string' && s != '' && s.length >= 3){
-                        cmConversationFactory.search(s).then(
+                        cmConversationFactory.search(s, searchLimit, searchOffset).then(
                             function(data){
-                                console.log('success', data)
+                                if(typeof data.conversations != 'undefined'){
+                                    searchOffset = data.conversations.length;
+                                }
+
+                                if(typeof data.numberOfMatches == 'number'){
+                                    searchNumberOfMatches = data.numberOfMatches;
+                                }
                             },
                             function(data){
                                 console.log('error', data)
@@ -71,6 +80,14 @@ angular.module('cmWidgets')
                         )
                     }
                 };
+
+                $scope.moreArchiveTalksAvailable = function(){
+                    if(searchOffset > 0 && searchNumberOfMatches > 0 && (searchOffset >= searchNumberOfMatches)){
+                        return false;
+                    }
+
+                    return true;
+                }
             }
         }
     }

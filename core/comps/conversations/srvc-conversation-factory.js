@@ -86,12 +86,16 @@ angular.module('cmConversations').service('cmConversationFactory', [
 
             cmConversationsAdapter.searchConversations(search,limit, offset).then(
                 function(data) {
+                    /**
+                     * @todo
+                     * _quantity = data.numberOfConversations;
+                     */
 
                     data.conversations.forEach(function (conversation_data) {
                         self.create(conversation_data);
                     });
 
-                    deferred.resolve(data.numberOfMatches);
+                    deferred.resolve(data);
                 },
                 function(){
                     deferred.reject('search errror');

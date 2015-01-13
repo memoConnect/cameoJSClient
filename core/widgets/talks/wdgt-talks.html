@@ -7,12 +7,12 @@
     <li ng-repeat="conversation in conversations | orderBy:'timeOfLastUpdate':true | cmSearch:'talks':search" ng-click="goto('/conversation/'+conversation.id)" cm-reactive data-qa="conversation-list-element">
         <cm-conversation-tag cm-data="conversation" cm-rubber-space></cm-conversation-tag>
     </li>
-    <li ng-if="moreTalksAvailable()">
+    <li cm-hide-on-filter="search" ng-if="moreTalksAvailable()">
         <button class="cm-btn-grey" ng-click="loadMoreTalks()" data-qa="load-more-btn" cm-reactive>
             {{'TALKS.MORE'|cmTranslate}}
         </button>
     </li>
-    <li cm-show-on-filter="search">
+    <li cm-show-on-filter="search" cm-show-on-min-length="3" ng-if="moreArchiveTalksAvailable()">
         <button class="cm-btn-grey" ng-click="searchArchive()" data-qa="btn-search-at-server" cm-reactive>
             @todo Search at Server
         </button>
