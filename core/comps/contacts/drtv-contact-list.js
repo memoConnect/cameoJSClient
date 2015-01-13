@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('cmContacts').directive('cmContactList',[
-    'cmContactsModel', 'cmIdentityFactory', 'cmFilter', 'cmLogger',
+    'cmContactsModel', 'cmIdentityFactory', 'cmFilter', 'cmLoader', 'cmLogger',
     '$rootScope','$timeout',
-    function (cmContactsModel, cmIdentityFactory, cmFilter, cmLogger,
+    function (cmContactsModel, cmIdentityFactory, cmFilter, cmLoader, cmLogger,
               $rootScope, $timeout) {
         return {
             restrict: 'AE',
@@ -27,6 +27,8 @@ angular.module('cmContacts').directive('cmContactList',[
                 /**
                  * contact server search
                  */
+                var loader = new cmLoader($scope);
+
                 $scope.activateSearch = false;
                 $scope.searchCameoId = {};
                 $scope.results = [];
@@ -48,17 +50,22 @@ angular.module('cmContacts').directive('cmContactList',[
                         return false;
                     }
 
+                    loader.start();
+
                     if($scope.timeout != null) $timeout.cancel($scope.timeout);
 
                     $scope.timeout = $timeout(function(){
-                        cmContactsModel.searchCameoIdentity(search)
-                            .then(
+                        cmContactsModel.searchCameoIdentity(search).then(
                             function(data){
                                 var tmp = [];
                                 angular.forEach(data, function(value){
                                     tmp.push(cmIdentityFactory.create(value, true));
                                 });
                                 $scope.results = tmp;
+                            }
+                        ).finally(
+                            function(){
+                                loader.stop();
                             }
                         );
                     },500);

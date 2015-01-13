@@ -1,20 +1,16 @@
 <cm-loader ng-show="isLoading" class="fullscreen"></cm-loader>
 
-<article class="content" ng-if="!contacts.length && !isLoading">
-    <cm-info-bubble class="cm-alert">
-        <i class="fa cm-info"></i> {{"CONTACTS.LIST_EMPTY"|cmTranslate}}
-    </cm-info-bubble>
-</article>
-
 <ul>
-    <li ng-repeat="contact in contacts | cmSearch:'contacts':search | cmPendingFirst">
+    <li ng-repeat="contact in contacts | cmSearch:'contacts':search | cmPendingFirst as localResults">
         <cm-contact-tag cm-contact="contact" ng-class="{'cm-disabled':contact.contactType == 'pending'}" ng-click="gotoContact(contact)" cm-reactive></cm-contact-tag>
         <section class="icon-list" ng-click="startConversationWithContact($event,contact)" data-qa="start-new-conversation-btn" cm-reactive>
             <i class="fa cm-new-talk" ng-hide="contact.contactType == 'pending'"></i>
         </section>
     </li>
-    <li>
-        @todo keine lokalen kontakte gefunden
+    <li ng-show="(localResults.length == 0)">
+        <span class="item is-selectable">
+            {{"CONTACTS.LIST_EMPTY"|cmTranslate}}
+        </span>
     </li>
     <li cm-show-on-filter="search" cm-show-on-min-length="3" ng-click="toogleSearch(search)" data-qa="btn-search" cm-reactive>
         <span class="item is-selectable">
@@ -23,6 +19,14 @@
         <div class="short-links without-bg" ng-click="toogleSearch(search)">
             <i class="fa" ng-class="{'cm-down':!activateSearch,'cm-up':activateSearch}"></i>
         </div>
+    </li>
+    <li ng-show="showLoader">
+        <cm-loader cm-color="ci-color"></cm-loader>
+    </li>
+    <li ng-show="(activateSearch && !showLoader && results.length == 0)">
+        <span class="item is-selectable">
+            @todo keine server results
+        </span>
     </li>
     <li class="contact-search-item" ng-repeat="item in results">
         <cm-avatar cm-data="item"></cm-avatar>
