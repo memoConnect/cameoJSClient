@@ -64,12 +64,10 @@ angular.module('cmUi')
                     self.scrollTop = $window.scrollY;
                     // open fullscreen
                     element[requestOpen]();
-                } else {
-                    this.close();
                 }
             },
             isOpen: function(){
-                return doc[isOpen] ? true : false;
+                return isOpen && isOpen in doc && doc[isOpen] ? true : false;
             },
             close: function(){
                 if(doc[exit]) {
@@ -88,7 +86,10 @@ angular.module('cmUi')
 
         if(detectBrowserForTabApi()){
             $document.on(eventChange, function (event) {
-                self.trigger('change',self.isOpen());
+                self.trigger('change', {
+                    element: event.target,
+                    isOpen: self.isOpen()
+                });
 
                 if(self.isOpen()){
                     angular.element(event.target).addClass('is-fullscreen');

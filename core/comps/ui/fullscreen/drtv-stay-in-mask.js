@@ -1,10 +1,11 @@
 'use strict';
 
-angular.module('cmUi').directive('cmStayInMask',[
-    'cmUtil', 'cmFullscreen',
-    '$window', '$screen',
-    function (cmUtil, cmFullscreen,
-              $window, $screen){
+angular.module('cmUi')
+.directive('cmStayInMask',[
+    'cmUtil', 'cmFullscreen', 'cmObject',
+    '$window',
+    function (cmUtil, cmFullscreen, cmObject,
+              $window){
         return {
             restrict: 'A',
             link: function(scope, element, attrs){
@@ -23,15 +24,16 @@ angular.module('cmUi').directive('cmStayInMask',[
 
                 function calcDim(){
                     // width to big for mask
-                    if(image.width > mask.width){
+                    if(image.isLandscape){
                         image.newWidth = mask.width;
                         image.newHeight = Math.round(image.newWidth / image.ratio);
 
                         if(image.newHeight > mask.height) {
                             image.top = Math.round((mask.height - image.newHeight)/2);
                         }
-                    } else if(image.height > mask.height) {
-
+                    } else if(image.isPortrait || image.isSquare) {
+                        image.newHeight = mask.height;
+                        image.newWidth = Math.round(image.newHeight * image.ratio);
                     }
 
                     // width to big for window
@@ -44,12 +46,36 @@ angular.module('cmUi').directive('cmStayInMask',[
                     }
                 }
 
-                function resize(event, init){
-                    win.width = $screen.availWidth;
-                    win.height = $screen.availHeight;
+                function browserResize(event, init){
+                    win.width = $window.innerWidth;
+                    win.height = $window.innerHeight;
 
                     if(!init)
                         calcDim();
+                }
+
+                function imageDimensions(event, data){
+                    
+                    if(!cmUtil.isInParent(data.element, element[0])){
+                        return false;
+                    }
+
+                    if(data.isOpen){
+                        browserResize();
+                        // in window
+                        setDim({
+                            top:0,
+                            width:image.maxWidth,
+                            height:image.maxHeight
+                        });
+                    } else {
+                        // in mask
+                        setDim({
+                            top:image.top,
+                            width:image.newWidth,
+                            height:image.newHeight
+                        });
+                    }
                 }
 
                 function setDim(dim){
@@ -58,9 +84,11 @@ angular.module('cmUi').directive('cmStayInMask',[
                         width:dim.width+'px',
                         height:dim.height+'px'
                     });
+
+                    element.triggerHandler('dimensionsChanged',dim);
                 }
 
-                resize({},true);
+                browserResize({},true);
 
                 element.on('load', function () {
                     mask = {
@@ -84,29 +112,16 @@ angular.module('cmUi').directive('cmStayInMask',[
                         height:image.newHeight
                     });
 
-                    cmFullscreen.on('change', function(event, isFullscreenOpen){
-                        if(isFullscreenOpen){
-                            // in window
-                            setDim({
-                                top:0,
-                                width:image.maxWidth,
-                                height:image.maxHeight
-                            });
-                        } else {
-                            // in mask
-                            setDim({
-                                top:image.top,
-                                width:image.newWidth,
-                                height:image.newHeight
-                            });
-                        }
-                    });
+                    cmFullscreen.on('change', imageDimensions);
                 });
 
-                angular.element($window).on('resize',resize);
+                angular.element($window).on('resize',browserResize);
+                angular.element($window).on('orientationchange',browserResize);
 
                 scope.$on('$destroy', function(){
-                    angular.element($window).off('resize',resize);
+                    angular.element($window).off('resize',browserResize);
+                    angular.element($window).off('orientationchange',browserResize);
+                    cmFullscreen.off('change', imageDimensions);
                 })
             }
         }

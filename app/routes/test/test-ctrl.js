@@ -70,53 +70,55 @@ angular.module('cmRoutes').controller('TestCtrl',
             }
         }
 
+        //http://player.mixmag.net.s3.amazonaws.com/media/Marek%20Hemmann%20in%20the%20mix.mp3
+
         $scope.messages = [
-            {
-                from: {
-                    state: state,
-                    avatarId: 'eQhldI981mHiZdOyPD2z',
-                    getDisplayName:function(){return 'Author'},
-                    on: on(),
-                    trigger: trigger
-                },
-                id: 1,
-                text: '',
-                textOnly: false,
-                fileIds: [1],
-                files:[createFile({id:1,type:'image',state:'readyForDownload'})],
-                state: state(''),
-                on: on(),
-                trigger: trigger,
-                isOwn:function(){return true},
-                isEncrypted: isEncrypted,
-                decryptFiles: decryptFiles
-            },
-            {
-                id: 3,
-                text: '',
-                textOnly: false,
-                fileIds: [2],
-                files:[createFile({id:2,size:(1024*1024)*340,type:'audio',state:'onDownload',name:'AlbumArt_{5FA05D35-A682-4AF6-96F7-0773E42D4D16-123231-312312345234534-dasd asda sdasd asd-asd}_Small.mp3',extension:'mp3',on:'progress'})],
-                state: state(''),
-                on: on(),
-                trigger: trigger,
-                isOwn:function(){return true},
-                isEncrypted: isEncrypted,
-                decryptFiles: decryptFiles
-            },
-            {
-                id: 3,
-                text: '',
-                textOnly: false,
-                fileIds: [2],
-                files:[createFile({id:2,type:'image',state:'cached',src:' '})],
-                state: state(''),
-                on: on(),
-                trigger: trigger,
-                isOwn:function(){return true},
-                isEncrypted: isEncrypted,
-                decryptFiles: decryptFiles
-            },
+            //{
+            //    from: {
+            //        state: state,
+            //        avatarId: 'eQhldI981mHiZdOyPD2z',
+            //        getDisplayName:function(){return 'Author'},
+            //        on: on(),
+            //        trigger: trigger
+            //    },
+            //    id: 1,
+            //    text: '',
+            //    textOnly: false,
+            //    fileIds: [1],
+            //    files:[createFile({id:1,type:'image',state:'readyForDownload'})],
+            //    state: state(''),
+            //    on: on(),
+            //    trigger: trigger,
+            //    isOwn:function(){return true},
+            //    isEncrypted: isEncrypted,
+            //    decryptFiles: decryptFiles
+            //},
+            //{
+            //    id: 3,
+            //    text: '',
+            //    textOnly: false,
+            //    fileIds: [2],
+            //    files:[createFile({id:2,size:(1024*1024)*340,type:'audio',state:'onDownload',name:'AlbumArt_{5FA05D35-A682-4AF6-96F7-0773E42D4D16-123231-312312345234534-dasd asda sdasd asd-asd}_Small.mp3',extension:'mp3',on:'progress'})],
+            //    state: state(''),
+            //    on: on(),
+            //    trigger: trigger,
+            //    isOwn:function(){return true},
+            //    isEncrypted: isEncrypted,
+            //    decryptFiles: decryptFiles
+            //},
+            //{
+            //    id: 3,
+            //    text: '',
+            //    textOnly: false,
+            //    fileIds: [2],
+            //    files:[createFile({id:2,type:'image',state:'cached',src:' '})],
+            //    state: state(''),
+            //    on: on(),
+            //    trigger: trigger,
+            //    isOwn:function(){return true},
+            //    isEncrypted: isEncrypted,
+            //    decryptFiles: decryptFiles
+            //},
             {
                 id: 2,
                 text: '',
@@ -142,7 +144,20 @@ angular.module('cmRoutes').controller('TestCtrl',
                 isOwn:function(){return true},
                 isEncrypted: isEncrypted,
                 decryptFiles: decryptFiles
-            }
+            },
+            //{
+            //    id: 2,
+            //    text: '',
+            //    textOnly: false,
+            //    fileIds: [2],
+            //    files:[createFile({id:3,type:'audio',state:'cached',src:'http://player.mixmag.net.s3.amazonaws.com/media/Marek%20Hemmann%20in%20the%20mix.mp3',extension:'mp3'})],
+            //    state: state(''),
+            //    on: on,
+            //    trigger: trigger,
+            //    isOwn:function(){return true},
+            //    isEncrypted: isEncrypted,
+            //    decryptFiles: decryptFiles
+            //}
         ];
 
     }

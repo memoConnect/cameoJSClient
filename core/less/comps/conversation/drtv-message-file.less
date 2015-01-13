@@ -11,27 +11,28 @@ cm-message-file{
 
   .file-image, .file-html5{
     .pos-rel;
+    .with-cursor;
     img{
       //.transitions(width, height);
 
       .pos-rel;
-      .with-cursor;
       .dbl;
       .margin-hr-auto;
       min-height:10rem;
       max-width:20rem;
 
-      &.is-fullscreen{
-        max-width:inherit;
-      }
-
     }
     video, audio{
       .w100;
     }
+    &.is-fullscreen{
+      img {
+        max-width:inherit;
+      }
+    }
   }
 
-  .file-image img {
+  .file-image {
     &.is-fullscreen, &:fullscreen, &:-moz-full-screen, &:-ms-fullscreen, &:-webkit-full-screen{
       max-width:100%!important;
     }

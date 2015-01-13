@@ -9,7 +9,7 @@ angular.module('cmCore')
         var self = {
             showOnPage: function(error){
 
-                console.error('reset error page')
+                console.error('reset error page',error)
                 return false;
 
                 $rootScope.errorThrown = error;
