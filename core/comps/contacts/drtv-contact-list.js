@@ -27,17 +27,26 @@ angular.module('cmContacts').directive('cmContactList',[
                 /**
                  * contact server search
                  */
-                var activateSearch = false;
+                $scope.activateSearch = false;
                 $scope.searchCameoId = {};
                 $scope.results = [];
 
                 $scope.timeout = null;
+
+                $scope.toogleSearch = function(){
+                    if($scope.activateSearch){
+                        $scope.activateSearch = false;
+                        $scope.results = [];
+                    } else {
+                        $scope.activateSearch = true;
+                        $scope.sendSearch(cmFilter.get());
+                    }
+                };
+
                 $scope.sendSearch = function(search){
                     if(typeof search != 'string' || search.length < 3){
                         return false;
                     }
-
-                    activateSearch = true;
 
                     if($scope.timeout != null) $timeout.cancel($scope.timeout);
 
@@ -59,17 +68,25 @@ angular.module('cmContacts').directive('cmContactList',[
 
                 var filter = cmFilter.get();
                 if(typeof filter == 'string' && filter != ''){
-                    $scope.sendSearch(filter);
+                    $scope.toogleSearch();
                 }
 
+                function onClearFilter(){
+                    $scope.activateSearch = false;
+                    $scope.results = [];
+                }
+
+                cmFilter.onClear('contact-list',onClearFilter);
+
                 var filterListener = $scope.$watch('search', function(newValue){
-                    if(activateSearch){
+                    if($scope.activateSearch){
                         $scope.sendSearch(newValue);
                     }
                 });
 
                 $scope.$on('$destroy', function(){
                     filterListener();
+                    onClearFilter();
                 });
             }
         }

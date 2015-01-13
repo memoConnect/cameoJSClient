@@ -18,6 +18,14 @@ angular.module('cmUi').directive('cmHideOnFilter',[
                     }
                 }
 
+                function onClearFilter(){
+                    if(element.hasClass('cm-hide')){
+                        element.removeClass('cm-hide');
+                    }
+                }
+
+                cmFilter.onClear('hideOnFilter',onClearFilter);
+
                 var filterListener = scope.$watch(attrs.cmHideOnFilter, function(filter){
                     updateElement(filter);
                 });

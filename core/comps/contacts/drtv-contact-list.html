@@ -6,20 +6,23 @@
     </cm-info-bubble>
 </article>
 
-<ul ng-if="contacts.length > 0">
+<ul>
     <li ng-repeat="contact in contacts | cmSearch:'contacts':search | cmPendingFirst">
         <cm-contact-tag cm-contact="contact" ng-class="{'cm-disabled':contact.contactType == 'pending'}" ng-click="gotoContact(contact)" cm-reactive></cm-contact-tag>
         <section class="icon-list" ng-click="startConversationWithContact($event,contact)" data-qa="start-new-conversation-btn" cm-reactive>
             <i class="fa cm-new-talk" ng-hide="contact.contactType == 'pending'"></i>
         </section>
     </li>
-    <li ng-if="(search.length == 0)">
+    <li>
         @todo keine lokalen kontakte gefunden
     </li>
-    <li cm-show-on-filter="search" cm-show-on-min-length="3">
-        <button class="cm-btn-grey" ng-click="sendSearch(search)" data-qa="btn-search" cm-reactive>
-            {{'CONTACTS.SEARCH'|cmTranslate}}
-        </button>
+    <li cm-show-on-filter="search" cm-show-on-min-length="3" ng-click="toogleSearch(search)" data-qa="btn-search" cm-reactive>
+        <span class="item is-selectable">
+            {{'CONTACTS.SEARCH'|cmTranslate}} <span ng-if="search">({{search}})</span>
+        </span>
+        <div class="short-links without-bg" ng-click="toogleSearch(search)">
+            <i class="fa" ng-class="{'cm-down':!activateSearch,'cm-up':activateSearch}"></i>
+        </div>
     </li>
     <li class="contact-search-item" ng-repeat="item in results">
         <cm-avatar cm-data="item"></cm-avatar>
@@ -29,10 +32,5 @@
         <section class="icon-list">
             <i class="fa cm-contacts"></i>
         </section>
-    </li>
-    <li cm-show-on-filter="search" cm-show-on-empty-list>
-        <button class="cm-btn-grey" ng-click="goTo('/talks')" data-qa="btn-search-in-talks" cm-reactive>
-            {{'TALKS.SEARCH'|cmTranslate}}
-        </button>
     </li>
 </ul>

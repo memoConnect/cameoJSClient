@@ -30,6 +30,14 @@ angular.module('cmUi').directive('cmShowOnFilter',[
                     }
                 }
 
+                function onClearFilter(){
+                    if(element.hasClass('cm-show')){
+                        element.removeClass('cm-show');
+                    }
+                }
+
+                cmFilter.onClear('showOnFilter',onClearFilter);
+
                 var filterListener = scope.$watch(attrs.cmShowOnFilter, function(filter){
                     updateElement(filter);
                 });
