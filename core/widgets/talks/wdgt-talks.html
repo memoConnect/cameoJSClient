@@ -14,12 +14,12 @@
     </li>
     <li cm-show-on-filter="search" cm-show-on-min-length="3" ng-if="moreArchiveTalksAvailable()">
         <button class="cm-btn-grey" ng-click="searchArchive()" data-qa="btn-search-at-server" cm-reactive>
-            @todo Search at Server
+            {{'TALKS.SEARCH_ARCHIVE'|cmTranslate}}
         </button>
     </li>
     <li cm-show-on-filter="search" cm-show-on-empty-list>
         <button class="cm-btn-grey" ng-click="goTo('/contact/list')" data-qa="btn-search-in-contacts" cm-reactive>
-            @todo Search in Contacts
+            {{'CONTACTS.SEARCH'|cmTranslate}}
         </button>
     </li>
 </ul>

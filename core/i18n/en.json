@@ -681,7 +681,8 @@
     "TAG": {
       "FILTER": "Filter"
     },
-    "LIST_EMPTY": "No contacts yet!"
+    "LIST_EMPTY": "No contacts yet!",
+    "SEARCH": "@todo CONTACTS.SEARCH"
   },
   "REGISTER": {
     "TITLE": {
@@ -805,7 +806,9 @@
   "TALKS": {
     "HEADING": "Talks",
     "MORE": "List more talks.",
-    "LIST_EMPTY": "No talks yet!"
+    "LIST_EMPTY": "No talks yet!",
+    "SEARCH": "@todo TALKS.SEARCH",
+    "SEARCH_ARCHIVE": "@todo SEARCH.ARCHIVE"
   },
   "LANG": {
     "EN": "English",

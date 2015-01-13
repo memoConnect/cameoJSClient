@@ -18,7 +18,7 @@
     </li>
     <li cm-show-on-filter="search" cm-show-on-min-length="3">
         <button class="cm-btn-grey" ng-click="sendSearch(search)" data-qa="btn-search" cm-reactive>
-            @todo Search at Server
+            {{'CONTACTS.SEARCH'|cmTranslate}}
         </button>
     </li>
     <li class="contact-search-item" ng-repeat="item in results">
@@ -32,7 +32,7 @@
     </li>
     <li cm-show-on-filter="search" cm-show-on-empty-list>
         <button class="cm-btn-grey" ng-click="goTo('/talks')" data-qa="btn-search-in-talks" cm-reactive>
-            @todo Search in Talks
+            {{'TALKS.SEARCH'|cmTranslate}}
         </button>
     </li>
 </ul>
