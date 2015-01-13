@@ -4,7 +4,7 @@
     <li ng-if="!conversations.length && !conversations.state.is('loading')" class="empty-list">
         <i class="fa cm-info"></i>  {{'TALKS.LIST_EMPTY'|cmTranslate}}
     </li>
-    <li ng-repeat="conversation in conversations | orderBy:'timeOfLastUpdate':true | cmSearch:'talks':search" ng-click="goto('/conversation/'+conversation.id)" cm-reactive data-qa="conversation-list-element">
+    <li ng-repeat="conversation in conversations | orderBy:'timeOfLastUpdate':true | cmSearch:'talks':search as results" ng-click="goto('/conversation/'+conversation.id)" cm-reactive data-qa="conversation-list-element">
         <cm-conversation-tag cm-data="conversation" cm-rubber-space></cm-conversation-tag>
     </li>
     <li cm-hide-on-filter="search" ng-if="moreTalksAvailable()">
@@ -12,17 +12,23 @@
             {{'TALKS.MORE'|cmTranslate}}
         </button>
     </li>
-    <li cm-show-on-filter="search" cm-show-on-min-length="3" ng-if="moreArchiveTalksAvailable()">
-        <button class="cm-btn-grey" ng-click="searchArchive()" data-qa="btn-search-at-server" cm-reactive>
-            {{'TALKS.SEARCH_ARCHIVE'|cmTranslate}}
-        </button>
-    </li>
-    <li cm-show-on-filter="search" cm-show-on-empty-list ng-click="goTo('/contact/list')" data-qa="btn-search-in-contacts" cm-reactive>
-         <span class="item is-selectable">
-            {{'CONTACTS.SEARCH'|cmTranslate}} <span ng-if="search">({{search}})</span>
-        </span>
-        <div class="short-links without-bg" ng-click="goTo('/contact/list')">
-            <i class="fa cm-right"></i>
+    <li class="with-inside-left-icon" ng-show="(results.length == 0)">
+        <i class="fa cm-attention"></i>
+        <div class="item">
+            @todo keine Conversations gefunden
         </div>
+    </li>
+    <li class="with-inside-icon" cm-show-on-filter="search" cm-show-on-min-length="3" ng-if="moreArchiveTalksAvailable()" ng-click="searchArchive()" data-qa="btn-search-at-server" cm-reactive>
+        <div class="item">
+            {{'TALKS.SEARCH_ARCHIVE'|cmTranslate}}
+        </div>
+        <i class="fa cm-right"></i>
+    </li>
+    <li class="with-inside-left-icon with-inside-icon" cm-show-on-filter="search" cm-show-on-empty-list ng-click="goTo('/contact/list')" data-qa="btn-search-in-contacts" cm-reactive>
+        <i class="fa cm-search"></i>
+        <div class="item">
+            {{'CONTACTS.SEARCH'|cmTranslate}} <strong ng-if="search">({{search}})</strong>
+        </div>
+        <i class="fa cm-right"></i>
     </li>
 </ul>

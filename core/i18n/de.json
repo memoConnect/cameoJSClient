@@ -197,7 +197,7 @@
         "MORE": "Weitere Talks laden",
         "LIST_EMPTY": "Bisher keine Talks vorhanden.",
         "SEARCH": "@todo TALKS.SEARCH",
-        "SEARCH_ARCHIVE": "@todo SEARCH.ARCHIVE"
+        "SEARCH_ARCHIVE": "@todo TALKS.SEARCH_ARCHIVE"
     },
 
     "CONVERSATION": {

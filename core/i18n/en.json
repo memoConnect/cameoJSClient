@@ -808,7 +808,7 @@
     "MORE": "List more talks.",
     "LIST_EMPTY": "No talks yet!",
     "SEARCH": "@todo TALKS.SEARCH",
-    "SEARCH_ARCHIVE": "@todo SEARCH.ARCHIVE"
+    "SEARCH_ARCHIVE": "@todo TALKS.SEARCH_ARCHIVE"
   },
   "LANG": {
     "EN": "English",
