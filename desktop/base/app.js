@@ -318,11 +318,12 @@ angular.module('cameoClient', [
             var height          = $window.innerHeight,
                 width           = $window.innerWidth,
                 landscape       = width > minDim[0] || width > height,
-                effective_width = landscape ? Math.min(height, 420) : width;
+                effective_width = landscape ? Math.min(height, 420) : width,
+                fontSizePx      = (effective_width/cmConfig.static.remSize),
+                minWidthRem     = ((minDim[0]/fontSizePx)/cmConfig.static.remSize);
 
-            html.style.fontSize = (effective_width/cmConfig.static.remSize) +'px';
-            app.style.minWidth  = (cmConfig.static.remSize*3)+'rem';
-            app.style.minHeight = minDim[1]+'px';
+            html.style.fontSize = fontSizePx+'px';
+            app.style.minWidth  = minWidthRem+'rem';
             angular.element(app).toggleClass('landscape', landscape);
         }
 
