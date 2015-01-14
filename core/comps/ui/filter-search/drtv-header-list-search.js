@@ -18,7 +18,8 @@ angular.module('cmUi')
                         ' data-qa="btn-header-list-search" cm-reactive></i>' +
                       '<cm-search-input' +
                         ' ng-model="ngModel"' +
-                        ' cm-options="{withoutSearchIcon:true,hideElements:\'cm-footer\',scrollTo:options.scrollTo}"' +
+                        ' cm-visible="visible"' +
+                        ' cm-options="{hideElements:\'cm-footer\',scrollTo:options.scrollTo}"' +
                         ' ng-class="{visible:visible}"></cm-search-input>',
             controller: function($scope, $element, $attrs){
                 // option for drtv
