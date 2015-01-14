@@ -15,7 +15,7 @@
         </div>
     </li>
     <li class="with-inside-left-icon with-inside-icon" cm-show-on-filter="search" cm-show-on-min-length="3" ng-click="toogleSearch(search)" data-qa="btn-search" cm-reactive>
-        <i class="fa cm-search"></i>
+        <i class="fa cm-group"></i>
         <div class="item">
             {{'CONTACTS.SEARCH'|cmTranslate}} <strong ng-if="search">({{search}})</strong>
         </div>
@@ -27,7 +27,7 @@
     <li class="with-inside-left-icon" ng-show="(activateSearch && !showLoader && results.length == 0)">
         <i class="fa cm-attention"></i>
         <div class="item">
-            todo keine server results
+            @todo keine server results
         </div>
     </li>
     <li ng-repeat="item in results" ng-click="openModal('modalSendRequest',item)" cm-reactive>
