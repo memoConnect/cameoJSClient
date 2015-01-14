@@ -21,7 +21,7 @@ describe('Directive showOnFilter', function(){
             cmFilter = _cmFilter_
 
             scope.$digest()
-        }));
+        }))
 
         it('element should not have class "cm-show" on empty filter', function(){
 
@@ -67,7 +67,7 @@ describe('Directive showOnFilter', function(){
             cmFilter = _cmFilter_
 
             scope.$digest()
-        }));
+        }))
 
         it('element should not have class "cm-show" on empty filter', function(){
 
@@ -122,7 +122,7 @@ describe('Directive showOnFilter', function(){
             cmFilter = _cmFilter_
 
             scope.$digest()
-        }));
+        }))
 
         it('element should not have class "cm-show" on empty filter', function(){
 

@@ -21,7 +21,7 @@ describe('Directive hideOnFilter', function(){
             cmFilter = _cmFilter_
 
             scope.$digest()
-        }));
+        }))
 
         it('element should not have class "cm-hide" on empty filter', function(){
             scope.filterVar = ''
