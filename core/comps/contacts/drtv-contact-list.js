@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('cmContacts').directive('cmContactList',[
-    'cmContactsModel', 'cmIdentityFactory', 'cmFilter', 'cmLoader', 'cmLogger',
+    'cmContactsModel', 'cmIdentityFactory', 'cmFilter', 'cmLoader', 'cmLogger','cmModal','cmNotify',
     '$rootScope','$timeout',
-    function (cmContactsModel, cmIdentityFactory, cmFilter, cmLoader, cmLogger,
+    function (cmContactsModel, cmIdentityFactory, cmFilter, cmLoader, cmLogger, cmModal, cmNotify,
               $rootScope, $timeout) {
         return {
             restrict: 'AE',
@@ -95,6 +95,31 @@ angular.module('cmContacts').directive('cmContactList',[
                     filterListener();
                     onClearFilter();
                 });
+
+                /**
+                 * Send friendship via model to api
+                 * @param id
+                 */
+                $scope.sendRequest = function(contact){
+                    if(angular.isDefined(contact.id)){
+                        cmContactsModel
+                            .sendFriendRequest(contact.id, contact.message)
+                            .then(
+                            function(){
+                                // clear from list
+                                var index = $scope.results.indexOf(contact);
+                                $scope.results.splice(index,1);
+                                // notify
+//                                cmNotify.success('CONTACTS.INFO.REQUEST.SENDED', {displayType:'modal', ttl:3000});
+                                cmContactsModel.trigger('friendRequest:sent');
+                                cmModal.closeAll();
+                            },
+                            function(){
+                                cmNotify.error('CONTACTS.INFO.REQUEST.FAILED', {displayType:'modal'});
+                            }
+                        )
+                    }
+                };
             }
         }
     }

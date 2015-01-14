@@ -30,7 +30,7 @@
             todo keine server results
         </div>
     </li>
-    <li class="contact-search-item" ng-repeat="item in results">
+    <li class="contact-search-item" ng-repeat="item in results" ng-click="openModal('modalSendRequest',item)">
         <cm-avatar cm-data="item"></cm-avatar>
         <section class="identityName" cm-weight="1">
             <strong>{{item.getDisplayName()}}</strong>
@@ -40,3 +40,19 @@
         </section>
     </li>
 </ul>
+
+<cm-modal id="modalSendRequest" class="no-padding" cm-data-as="contact" cm-title="CONTACTS.HEADING.SEND_REQUEST">
+    <div class="modal-row" cm-rubber-space>
+        <cm-avatar cm-data="contact"></cm-avatar>
+        <div class="cm-request-brief" cm-weight="1">
+            <strong>{{contact.getDisplayName()}}</strong>
+        </div>
+    </div>
+    <div class="modal-row">
+        <textarea placeholder="{{'CONTACTS.PLACEHOLDER.REQUEST_MESSAGE'|cmTranslate}}" ng-model="contact.message" data-qa="input-friendrequestMessage"></textarea>
+    </div>
+    <button class="cm-btn-grey" ng-click="sendRequest(contact)" data-qa="btn-sendRequest" cm-reactive>
+        {{'CONTACTS.LABEL.SEND_REQUEST'|cmTranslate}}
+        <i class="fa cm-send"></i>
+    </button>
+</cm-modal>
