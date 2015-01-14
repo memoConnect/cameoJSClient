@@ -94,8 +94,9 @@
 
 </cm-scrollable>
 
-<cm-footer ng-if="step == 0">
+<cm-footer>
     <button
+            ng-if="step == 0"
             ng-click    = "done()"
             class       = "cm-btn-grey dib w50"
             data-qa     = "btn-cancel-authentication"
@@ -106,6 +107,7 @@
     </button>
 
     <button
+            ng-if="step == 0"
             ng-click    = "startAuthenticationRequest()"
             class       = "cm-btn-grey dib w50"
             data-qa     = "btn-start-authentication"
@@ -120,10 +122,7 @@
         <i class="fa cm-handshake"></i>
     </button>
 
-</cm-footer>
-
-<cm-footer ng-if = "step > 0 && step < 3" cm-rubber-space>
-    <button
+    <button ng-if = "step > 0 && step < 3"
             ng-click    = "cancel()"
             class       = "cm-btn-grey"
             data-qa     = "btn-cancel-authentication"
@@ -132,10 +131,9 @@
         {{BASE+"WAIT.CANCEL_BUTTON"|cmTranslate}}
         <i class="fa cm-checkbox-wrong"></i>
     </button>
-</cm-footer>
 
-<cm-footer ng-if = "step == 3" cm-rubber-space>
     <button
+            ng-if = "step == 3"
             ng-click    = "done()"
             class       = "cm-btn-grey"
             data-qa     = "btn-start-authentication"

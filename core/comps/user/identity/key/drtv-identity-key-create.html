@@ -1,5 +1,5 @@
 <div class="section" ng-show="active == 'choose'" data-qa="page-chose-keysize">
-    <cm-scrollable>
+    <cm-scrollable ng-show="active == 'choose'">
         <article class="mb15 content">
             <cm-info-bubble nose-x="50%">
                 <span ng-bind-html="'IDENTITY.KEYS.GENERATE.START.EXPLANATION' | cmParse"></span>
@@ -41,7 +41,7 @@
 </div>
 
 <div class="section" ng-show="active == 'generate'" data-qa="page-generating-key">
-    <cm-scrollable>
+    <cm-scrollable ng-show="active == 'generate'">
         <h3 class="content" ng-bind-html="'IDENTITY.KEYS.GENERATE.GENERATING.HEADLINE' | cmParse"></h3>
 
         <article class="key-generates content">
@@ -76,7 +76,7 @@
 </div>
 
 <div class="section" ng-show="active == 'store'" data-qa="page-save-key">
-    <cm-scrollable>
+    <cm-scrollable ng-show="active == 'store'">
         <h3 class="content" ng-bind-html="'IDENTITY.KEYS.GENERATE.SAVE.HEADLINE' | cmParse"></h3>
 
         <article class="key-generates content">

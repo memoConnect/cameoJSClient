@@ -70,13 +70,17 @@ angular.module('cmUser').directive('cmIdentityKeyList', [
                     })
                     .then(function(){
                         cmUserModel.removeKey(key);                        
-                    })
+                    });
                     refresh();
                 };
 
                 $scope.someKeyNeedsAuthentication = function(){
                     return $scope.trustedKeys.length < $scope.publicKeys.length
-                }
+                };
+
+                $scope.showHandshake = function(key){
+                    return !$scope.isTrustedKey(key) && $scope.isHandshakePossible;
+                };
 
                 $scope.isTrustedKey = function(key){
                     return $scope.trustedKeys.indexOf(key) != -1

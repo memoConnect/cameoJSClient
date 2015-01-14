@@ -1,4 +1,4 @@
-cm-identity-tag, cm-contact-tag, cm-recipient-tag, .contact-search-item, .contact-request-item{
+cm-identity-tag, cm-contact-tag, cm-recipient-tag, .contact-search-item, .contact-request-item, .key-list-item{
   .dtb!important;
 
   > * {
@@ -13,6 +13,9 @@ cm-identity-tag, cm-contact-tag, cm-recipient-tag, .contact-search-item, .contac
   }
   cm-contact-type, cm-contact-trust, .icon-list{
     width:@cm-unit;
+    &.with-two-icons{
+      width:@cm-unit*2;
+    }
   }
 
   .pos-rel;
@@ -49,6 +52,9 @@ cm-identity-tag, cm-contact-tag, cm-recipient-tag, .contact-search-item, .contac
   * + .icon-list{
     .dtbc;
     width:@cm-unit;
+    &.with-two-icons{
+      width:@cm-unit*2;
+    }
   }
 }
 

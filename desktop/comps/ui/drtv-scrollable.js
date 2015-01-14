@@ -9,28 +9,38 @@ angular.module('cmDesktopUi').directive('cmScrollable',[
             restrict: 'E',
             link: function (scope, element, attrs) {
 
-                var footer = attrs.cmData || 'cm-footer',
-                    scrollBarHeight = 0;
+                var footer = attrs.cmData || 'cm-footer';
 
                 $rootScope.$emit('cmScrollable:loaded');
 
                 function resize(){
-                    var offset = cmUtil.getOffsetToBody(element[0]),
-                        footerElement = $window.document.querySelector(footer),
-                        newHeight = ($window.innerHeight - offset.top - (footerElement ? footerElement.offsetHeight : 0) - scrollBarHeight);
+                    $timeout(function(){
+                        var offset = cmUtil.getOffsetToBody(element[0]),
+                            //footerElement = $window.document.querySelector(footer),
+                            footerElement = element[0].nextSibling,
+                            newHeight = ($window.innerHeight - offset.top - (footerElement ? footerElement.offsetHeight : 0));
 
-                    element.css('height',newHeight + 'px');
+                        element.css('height', newHeight + 'px');
+
+                    },100);
                 }
 
-                $timeout(function(){
-                    resize();
-                },50);
+                resize();
 
                 angular.element($window).on('resize',resize);
 
+                if('ngShow' in attrs){
+                    var killWatcher = scope.$watch(attrs.ngShow, function(ngShow){
+                        if(ngShow)
+                            resize();
+                    });
+                }
+
                 scope.$on('$destroy', function(){
+                    if(killWatcher)
+                        killWatcher();
                     angular.element($window).off('resize',resize);
-                })
+                });
             }
         }
     }
