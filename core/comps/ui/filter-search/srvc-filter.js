@@ -8,9 +8,10 @@ angular.module('cmUi')
         var self = this,
             currentFilter = '',
             currentResults = 0,
-            onClearCallbacks = [];
+            onClearCallbacks = [],
+            onUpdateCallbacks = [];
 
-        this.clear = function(bool){
+        this.clear = function(){
             //cmLogger.debug('cmFilter.clear');
 
             currentFilter = '';
@@ -32,6 +33,10 @@ angular.module('cmUi')
 
             if(typeof f == 'string' && f != ''){
                 currentFilter = f;
+
+                onUpdateCallbacks.forEach(function(obj){
+                    obj.callback();
+                });
             }
         };
 
@@ -46,6 +51,26 @@ angular.module('cmUi')
 
             if(typeof l == 'number'){
                 currentResults = l;
+            }
+        };
+
+        this.onUpdate = function(identifer,callback){
+            if(typeof identifer == 'string' && typeof callback == 'function'){
+                var exists = false,
+                    i = 0;
+
+                while(i < onUpdateCallbacks.length){
+                    if(onUpdateCallbacks[i].identifier == identifer){
+                        exists = true;
+                        break;
+                    }
+
+                    i++;
+                }
+
+                if(!exists){
+                    onUpdateCallbacks.push({identifier:identifer,callback:callback});
+                }
             }
         };
 
@@ -75,6 +100,7 @@ angular.module('cmUi')
         $rootScope.$on('logout', function(){
             self.clear();
             onClearCallbacks = [];
+            onUpdateCallbacks = [];
         });
     }
 ]);

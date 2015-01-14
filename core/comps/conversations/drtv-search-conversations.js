@@ -7,7 +7,7 @@ angular.module('cmConversations').directive('cmSearchConversations',[
     '$timeout',
     function (cmConversationFactory, cmFilter, cmLoader, $timeout){
         return {
-            restrict: 'EA',
+            restrict: 'E',
             template: '<button class="cm-btn-grey" data-qa="load-more-btn" ng-click="searchArchive()" cm-reactive><span ng-show="!showLoader">{{"TALKS.SEARCH_ARCHIVE"|cmTranslate}}<i class="fa cm-search"></i></span><cm-loader cm-color="ci-color" ng-show="showLoader"></cm-loader></button>',
             link: function(scope, element){
                 scope.setDefault = function(){
@@ -17,44 +17,52 @@ angular.module('cmConversations').directive('cmSearchConversations',[
                     }
                 };
 
-                scope.setDefault();
-
                 scope.updateElement = function(){
-                    if(!element.hasClass('cm-disabled')){
-                        element.addClass('cm-disabled');
+                    if(scope.matches.loaded == scope.matches.qty){
                         scope.isDisabled = true;
+                        if(!element.hasClass('cm-disabled')){
+                            element.addClass('cm-disabled');
+                        }
+                    } else {
+                        scope.setDefault();
                     }
                 };
+
+                scope.setDefault();
             },
             controller: function($scope){
-                var loader = new cmLoader($scope);
-                var isLoading = false;
+                var loader = new cmLoader($scope),
+                    isLoading = false,
+                    limit = 10;
 
                 $scope.timeout = null;
-                $scope.limit = 10;
-                $scope.offset = 0;
-                $scope.numberOfMatches = 0;
-                $scope.searchString = '';
-                $scope.oldString = '';
+
+                $scope.matches = {
+                    search: "",
+                    loaded: 0,
+                    qty: 0
+                };
 
                 $scope.searchArchive = function(){
-                    $scope.searchString = cmFilter.get();
+                    var s = cmFilter.get();
 
-                    if(typeof $scope.searchString == 'string' && $scope.searchString != '' && $scope.searchString.length >= 3 && !isLoading && !$scope.isDisabled){
+                    if(typeof s == 'string' && s != '' && s.length >= 3 && !isLoading && !$scope.isDisabled){
                         isLoading = true;
                         loader.start();
 
                         if($scope.timeout != null) $timeout.cancel($scope.timeout);
 
                         $scope.timeout = $timeout(function(){
-                            cmConversationFactory.search($scope.searchString, $scope.limit, $scope.offset).then(
+                            cmConversationFactory.search(s, limit, $scope.matches.loaded).then(
                                 function(data){
+                                    $scope.matches.search = s;
+
                                     if(typeof data.conversations != 'undefined'){
-                                        $scope.offset = data.conversations.length;
+                                        $scope.matches.loaded = $scope.matches.loaded + data.conversations.length;
                                     }
 
                                     if(typeof data.numberOfMatches == 'number'){
-                                        $scope.numberOfMatches = data.numberOfMatches;
+                                        $scope.matches.qty = data.numberOfMatches;
                                     }
                                 },
                                 function(result){
@@ -72,14 +80,16 @@ angular.module('cmConversations').directive('cmSearchConversations',[
                 };
 
                 function clear(){
-                    $scope.offset = 0;
-                    $scope.numberOfMatches = 0;
+                    $scope.matches = {
+                        search: "",
+                        loaded: 0,
+                        qty: 0
+                    };
 
                     $scope.setDefault();
                 }
 
-                //cmFilter.onSet('wdgt-talks', clear);
-
+                cmFilter.onUpdate('wdgt-talks', clear);
                 cmFilter.onClear('wdgt-talks', clear);
 
             }
