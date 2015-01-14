@@ -6,15 +6,15 @@
             </cm-info-bubble>
         </article>
 
-        <ul class="border-top border-bottom">
-            <li class="no-border">
+        <ul>
+            <li>
                 <span class="item" ng-click="toggleKeySize()" data-qa="select-key-size" cm-reactive>
                 {{'IDENTITY.KEYS.GENERATE.START.KEY_LENGTH.BUTTON_LABEL'|cmTranslate}} <strong>2048 (default)</strong>
                 </span>
                 <div class="short-links without-bg" ng-click="toggleKeySize()">
                     <i class="fa" ng-class="{'cm-down':!showKeySize,'cm-up':showKeySize}"></i>
                 </div>
-                <ul class="cm-submenu" ng-show="showKeySize">
+                <ul class="cm-submenu no-border-bottom" ng-show="showKeySize">
                     <li ng-click="chooseKeySize('2048')" cm-reactive>
                         <span class="item" data-qa="keysize-2048">2048</span>
                         <div class="short-links without-bg">

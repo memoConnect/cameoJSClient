@@ -1,9 +1,9 @@
-<h2 class="no-margin-bottom">
+<h2 class="no-margin-bottom border-bottom">
     <i class="fa cm-bell"></i>
     {{'SETTINGS.NOTIFY' | cmTranslate}}
 </h2>
 
-<ul>
+<ul class="no-border-top">
     <li ng-click="handlePushNotifications()"
         ng-class="{'is-disabled':!isApp()}" cm-reactive>
         <span class="item clearfix">
@@ -21,7 +21,8 @@
         </span>
     </li>
     <li ng-click="handleBrowserNotifications()"
-        ng-class="{'is-disabled':isApp() || !enabledBrowserNotification}">
+        ng-class="{'is-disabled':isApp() || !enabledBrowserNotification}"
+        cm-reactive>
         <span class="item clearfix">
             <span class="title">
                 <span>{{'SETTINGS.PAGES.NOTIFY.BROWSER_NOTIFICATIONS' | cmTranslate}}</span>

@@ -9,21 +9,25 @@
             <ul class="no-border">
                 <li class="cm-disabled" data-qa="btn-identity-trust">
                     <span class="item clearfix">
-                        <i class="fa cm-qr-code fa-2x"></i>
-                        {{'IDENTITY.LABEL.TRUST'|cmTranslate}}
+                        <span class="title single-line">
+                            <i class="fa cm-qr-code fa-2x"></i>
+                            {{'IDENTITY.LABEL.TRUST'|cmTranslate}}
+                        </span>
+                        <section class="icon-list">
+                            <i class="fa cm-right position-exception"></i>
+                        </section>
                     </span>
-                    <section class="icon-list">
-                        <i class="fa cm-right position-exception"></i>
-                    </section>
                 </li>
                 <li ng-click="goTo('/settings/identity/key/list')" data-qa="btn-identity-keys" cm-reactive>
-                     <span class="item clearfix">
-                         <i class="fa cm-key fa-2x"></i>
-                        {{'IDENTITY.LABEL.KEYMANAGEMENT'|cmTranslate}}
-                     </span>
-                    <section class="icon-list">
-                        <i class="fa cm-right position-exception"></i>
-                    </section>
+                    <span class="item clearfix">
+                        <span class="title single-line">
+                            <i class="fa cm-key fa-2x"></i>
+                            {{'IDENTITY.LABEL.KEYMANAGEMENT'|cmTranslate}}
+                        </span>
+                        <section class="icon-list">
+                            <i class="fa cm-right position-exception"></i>
+                        </section>
+                    </span>
                 </li>
             </ul>
         </div>

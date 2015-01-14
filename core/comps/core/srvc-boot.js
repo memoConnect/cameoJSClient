@@ -23,7 +23,7 @@ angular.module('cmCore')
 
         $rootScope.$on('cmBoot:appSpinner', function(event, action, where){
             angular.element($document[0].querySelector('.app-spinner'))
-                .css('display',action == 'hide'?'none':null);
+                .toggleClass('cm-hide',action == 'hide'?true:false);
         });
 
         $rootScope.$on('$routeChangeSuccess',function(){

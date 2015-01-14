@@ -16,7 +16,7 @@
         </cm-info-bubble>
     </article>
 
-    <ul ng-if="(publicKeys.length > 0)">
+    <ul ng-if="(publicKeys.length > 0)" class="no-margin-top">
         <li
             ng-if       = "!canCreate && someKeyNeedsAuthentication()"
             ng-click    = "goTo('/authentication')"
@@ -28,13 +28,12 @@
                     <i class="fa cm-handshake" ng-class="overview[page].icon"></i>
                     <span>{{::'IDENTITY.KEYS.AUTHENTICATION.HEADLINE'|cmTranslate}}</span>
                 </span>
-
                 <section class="icon-list">
                     <i class="fa cm-right"></i>
                 </section>
             </span>
         </li>
-        <li class="key-list-item clearfix" ng-repeat="key in publicKeys | orderBy:sortByPrivKeys" data-qa="key-list-item">
+        <li class="key-list-item tag-with-icon-list clearfix" ng-repeat="key in publicKeys | orderBy:sortByPrivKeys" data-qa="key-list-item">
             <section ng-click="goTo('settings/identity/key/edit/'+key.id)"
                 class="item tal"
                 cm-reactive

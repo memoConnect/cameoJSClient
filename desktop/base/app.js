@@ -320,7 +320,7 @@ angular.module('cameoClient', [
                 landscape       = width > minDim[0] || width > height,
                 effective_width = landscape ? Math.min(height, 420) : width,
                 fontSizePx      = (effective_width/cmConfig.static.remSize),
-                minWidthRem     = ((minDim[0]/fontSizePx)/cmConfig.static.remSize);
+                minWidthRem     = Math.ceil(minDim[0]/fontSizePx);
 
             html.style.fontSize = fontSizePx+'px';
             app.style.minWidth  = minWidthRem+'rem';
