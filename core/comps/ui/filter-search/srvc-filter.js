@@ -55,7 +55,7 @@ angular.module('cmUi')
         };
 
         this.onUpdate = function(identifer,callback){
-            if(typeof identifer == 'string' && typeof callback == 'function'){
+            if(typeof identifer == 'string' && identifer.length > 0 && typeof callback == 'function'){
                 var exists = false,
                     i = 0;
 
@@ -75,7 +75,7 @@ angular.module('cmUi')
         };
 
         this.onClear = function(identifer,callback){
-            if(typeof identifer == 'string' && typeof callback == 'function'){
+            if(typeof identifer == 'string' && identifer.length > 0 && typeof callback == 'function'){
                 var exists = false,
                     i = 0;
 
@@ -91,6 +91,42 @@ angular.module('cmUi')
                 if(!exists){
                     onClearCallbacks.push({identifier:identifer,callback:callback});
                 }
+            }
+        };
+
+        this.removeOnUpdate = function(identifer){
+            if(typeof identifer == 'string' && identifer.length > 0){
+                var i = 0,
+                    index;
+
+                while(i < onUpdateCallbacks.length){
+                    if(onUpdateCallbacks[i].identifier == identifer){
+                        index = i;
+                        break;
+                    }
+
+                    i++;
+                }
+
+                onUpdateCallbacks.splice(index, 1);
+            }
+        };
+
+        this.removeOnClear = function(identifer){
+            if(typeof identifer == 'string' && identifer.length > 0){
+                var i = 0,
+                    index;
+
+                while(i < onClearCallbacks.length){
+                    if(onClearCallbacks[i].identifier == identifer){
+                        index = i;
+                        break;
+                    }
+
+                    i++;
+                }
+
+                onClearCallbacks.splice(index, 1);
             }
         };
 

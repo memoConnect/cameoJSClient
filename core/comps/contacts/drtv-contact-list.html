@@ -30,13 +30,10 @@
             todo keine server results
         </div>
     </li>
-    <li class="contact-search-item" ng-repeat="item in results" ng-click="openModal('modalSendRequest',item)">
-        <cm-avatar cm-data="item"></cm-avatar>
-        <section class="identityName" cm-weight="1">
-            <strong>{{item.getDisplayName()}}</strong>
-        </section>
+    <li ng-repeat="item in results" ng-click="openModal('modalSendRequest',item)" cm-reactive>
+        <cm-contact-search-tag cm-contact="item"></cm-contact-search-tag>
         <section class="icon-list">
-            <i class="fa cm-contacts"></i>
+            <i class="fa cm-new-contact"></i>
         </section>
     </li>
 </ul>

@@ -12,17 +12,13 @@ angular.module('cmConversations').directive('cmSearchConversations',[
             link: function(scope, element){
                 scope.setDefault = function(){
                     scope.isDisabled = false;
-                    if(element.hasClass('cm-disabled')){
-                        element.removeClass('cm-disabled');
-                    }
+                    element.removeClass('cm-disabled');
                 };
 
                 scope.updateElement = function(){
                     if(scope.matches.loaded == scope.matches.qty){
                         scope.isDisabled = true;
-                        if(!element.hasClass('cm-disabled')){
-                            element.addClass('cm-disabled');
-                        }
+                        element.addClass('cm-disabled');
                     } else {
                         scope.setDefault();
                     }
@@ -91,6 +87,12 @@ angular.module('cmConversations').directive('cmSearchConversations',[
 
                 cmFilter.onUpdate('wdgt-talks', clear);
                 cmFilter.onClear('wdgt-talks', clear);
+
+                $scope.$on('$destroy',function(){
+                    clear();
+                    cmFilter.removeOnUpdate('wdgt-talks');
+                    cmFilter.removeOnClear('wdgt-talks');
+                });
 
             }
         }
