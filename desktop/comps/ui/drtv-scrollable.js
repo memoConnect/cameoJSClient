@@ -1,30 +1,30 @@
 'use strict';
 
 angular.module('cmDesktopUi').directive('cmScrollable',[
-    '$rootScope','$window',
-    function ($rootScope, $window) {
+    'cmUtil',
+    '$rootScope','$window','$timeout',
+    function (cmUtil,
+              $rootScope, $window, $timeout) {
         return {
             restrict: 'E',
-            link: function (scope, element) {
-                $rootScope.$emit('cm-scrollable:loaded')
+            link: function (scope, element, attrs) {
 
-                function getOffsetSum(elem) {
-                    var top=0, left=0;
-                    while(elem) {
-                        top = top + parseInt(elem.offsetTop);
-                        left = left + parseInt(elem.offsetLeft);
-                        elem = elem.offsetParent;
-                    }
-                    return {top: top, left: left};
-                }
+                var footer = attrs.cmData || 'cm-footer',
+                    scrollBarHeight = 0;
+
+                $rootScope.$emit('cmScrollable:loaded');
 
                 function resize(){
-                    var offset = getOffsetSum(element[0]);
-                    var newHeight = ($window.innerHeight - offset.top - $window.document.querySelector('cm-footer').offsetHeight) - 20; // scrollbar
-                    element.css({'height':newHeight + 'px'})
+                    var offset = cmUtil.getOffsetToBody(element[0]),
+                        footerElement = $window.document.querySelector(footer),
+                        newHeight = ($window.innerHeight - offset.top - (footerElement ? footerElement.offsetHeight : 0) - scrollBarHeight);
+
+                    element.css('height',newHeight + 'px');
                 }
 
-                resize();
+                $timeout(function(){
+                    resize();
+                },50);
 
                 angular.element($window).on('resize',resize);
 

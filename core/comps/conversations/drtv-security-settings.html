@@ -1,80 +1,82 @@
-<div ng-if = "conversation.securityAspects.getApplyingAspects()">    
-    <cm-security-aspect 
-        ng-repeat               = "aspect in conversation.securityAspects.getPositiveAspects()" 
-        cm-data                 = "aspect" 
-        cm-show-toggle-options  = "{{conversation.state.is('new')}}"
-    ></cm-security-aspect>
+<cm-scrollable>
+    <div ng-if="conversation.securityAspects.getApplyingAspects()">
+        <cm-security-aspect
+            ng-repeat               = "aspect in conversation.securityAspects.getPositiveAspects()"
+            cm-data                 = "aspect"
+            cm-show-toggle-options  = "{{conversation.state.is('new')}}"
+        ></cm-security-aspect>
 
-    <cm-security-aspect 
-        ng-repeat               = "aspect in conversation.securityAspects.getNegativeAspects()" 
-        cm-data                 = "aspect" 
-        cm-show-toggle-options  = "{{conversation.state.is('new')}}"
-    ></cm-security-aspect>
-</div>
-
-<article class="item">
-    <span class="body security-headline">
-        {{'CONVERSATION.PLACEHOLDER.ENCRYPTION' | cmTranslate}}
-    </span>
-    <span class="icon-list security-settings" ng-click="toggleConversationEncryption()" data-qa="btn-encryption">
-        <i class="fa" ng-class="{'cm-checkbox':!conversation.isEncrypted(), 'cm-checkbox-right':conversation.isEncrypted(), 'cm-grey':!conversation.state.is('new')}" data-qa="icon-checkbox-encryption"></i>
-    </span>
-</article>
-
-<article class="item" ng-if="conversation.passwordRequired()" ng-class="{'no-border':(conversation.state.is('new') && conversation.options.hasCaptcha)}">
-    <span class="body security-headline">
-        {{'CONVERSATION.PLACEHOLDER.PASSCAPTCHA' | cmTranslate}}
-    </span>
-    <span class="icon-list security-settings" ng-click="toggleCaptcha()" data-qa="btn-toggle-captcha">
-        <i class="fa" ng-class="{'cm-checkbox':!conversation.options.hasCaptcha, 'cm-checkbox-right':conversation.options.hasCaptcha, 'cm-grey':!conversation.state.is('new')}" data-qa="icon-checkbox-passcaptcha"></i>
-    </span>
-</article>
-
-<!--<article class="item" ng-if="(conversation.passwordRequired() && conversation.isEncrypted()) || conversation.hasPassword()">-->
-<article class="item" ng-if="(conversation.passwordRequired() && conversation.options.hasCaptcha)">
-    <section class="captcha" ng-if="conversation.state.is('new') && conversation.options.hasCaptcha" data-qa="captcha-canvas">
-        <cm-captcha></cm-captcha>
-        <p ng-if="!conversation.state.is('new')">
-            <button ng-click="requestCaptcha()"><i class="fa cm-key"></i> {{"CONVERSATION.LABEL.REQUEST_CAPTCHA"|cmTranslate}}</button>
-        </p>
-        <p ng-if="!conversation.state.is('new')">
-            <button ng-click="sendCaptcha()"><i class="fa cm-send"></i> {{"CONVERSATION.LABEL.SEND_CAPTCHA"|cmTranslate}}</button>
-        </p>
-    </section>
-
-    <span class="icon-list captcha-reload" ng-click="refreshCaptcha()" ng-if="conversation.state.is('new')">
-        <i class="fa cm-change"></i>
-    </span>
-
-    <section class="captcha" ng-if="!conversation.state.is('new')" data-qa="captcha-image">
-        <img cm-blob-image="conversation.passCaptcha" />
-    </section>
-</article>
-
-<article class="item cm-form-style no-border pt15" ng-if="conversation.passwordRequired()">
-    <span class="security-headline">{{'CONVERSATION.PLACEHOLDER.PASSWORD'|cmTranslate}}</span>
-    <div class="cm-input-ctn with-inside-icon" ng-class="{'with-inside-icon':!conversation.state.is('new')}" cm-input-watcher>
-        <input
-                data-qa     = "input-password"
-                type        = "text"
-                ng-model    = "conversation.password"
-                placeholder = "{{'CONVERSATION.PLACEHOLDER.PASSWORD'|cmTranslate}}"
-                ng-change   = "decrypt()"
-                ng-disabled = "conversation.state.is('decrypted')"
-                cm-adaptive-change = "2000"
-                />
-        <i class="fa cm-write" ng-if="conversation.state.is('new')"></i>
-        <i class="fa cm-checker" ng-if="!conversation.state.is('new') && conversation.state.is('decrypted')"  data-qa="icon-conversation-decrypted"></i>
+        <cm-security-aspect
+            ng-repeat               = "aspect in conversation.securityAspects.getNegativeAspects()"
+            cm-data                 = "aspect"
+            cm-show-toggle-options  = "{{conversation.state.is('new')}}"
+        ></cm-security-aspect>
     </div>
 
-    <cm-info-bubble class="cm-alert" ng-if="showPasswordLocalKeyInfo && conversation.state.is('new')">
-        <i class="fa cm-attention"></i>
-        {{'CONVERSATION.LABEL.SHOW_PW_INFO_BECAUSE_USER_HAS_NO_LOCAL_KEYS'|cmTranslate}}
-    </cm-info-bubble>
-    <cm-info-bubble class="classic-link" ng-click="goTo('/settings/identity/key/list')" ng-if="conversation.options.showKeyInfo && conversation.state.is('new')">
-        {{'CONVERSATION.LABEL.KEY_GENERATION'|cmTranslate}}
-    </cm-info-bubble>
-</article>
+    <article class="item">
+        <span class="body security-headline">
+            {{'CONVERSATION.PLACEHOLDER.ENCRYPTION' | cmTranslate}}
+        </span>
+        <span class="icon-list security-settings" ng-click="toggleConversationEncryption()" data-qa="btn-encryption">
+            <i class="fa" ng-class="{'cm-checkbox':!conversation.isEncrypted(), 'cm-checkbox-right':conversation.isEncrypted(), 'cm-grey':!conversation.state.is('new')}" data-qa="icon-checkbox-encryption"></i>
+        </span>
+    </article>
+
+    <article class="item" ng-if="conversation.passwordRequired()" ng-class="{'no-border':(conversation.state.is('new') && conversation.options.hasCaptcha)}">
+        <span class="body security-headline">
+            {{'CONVERSATION.PLACEHOLDER.PASSCAPTCHA' | cmTranslate}}
+        </span>
+        <span class="icon-list security-settings" ng-click="toggleCaptcha()" data-qa="btn-toggle-captcha">
+            <i class="fa" ng-class="{'cm-checkbox':!conversation.options.hasCaptcha, 'cm-checkbox-right':conversation.options.hasCaptcha, 'cm-grey':!conversation.state.is('new')}" data-qa="icon-checkbox-passcaptcha"></i>
+        </span>
+    </article>
+
+    <!--<article class="item" ng-if="(conversation.passwordRequired() && conversation.isEncrypted()) || conversation.hasPassword()">-->
+    <article class="item" ng-if="(conversation.passwordRequired() && conversation.options.hasCaptcha)">
+        <section class="captcha" ng-if="conversation.state.is('new') && conversation.options.hasCaptcha" data-qa="captcha-canvas">
+            <cm-captcha></cm-captcha>
+            <p ng-if="!conversation.state.is('new')">
+                <button ng-click="requestCaptcha()"><i class="fa cm-key"></i> {{"CONVERSATION.LABEL.REQUEST_CAPTCHA"|cmTranslate}}</button>
+            </p>
+            <p ng-if="!conversation.state.is('new')">
+                <button ng-click="sendCaptcha()"><i class="fa cm-send"></i> {{"CONVERSATION.LABEL.SEND_CAPTCHA"|cmTranslate}}</button>
+            </p>
+        </section>
+
+        <span class="icon-list captcha-reload" ng-click="refreshCaptcha()" ng-if="conversation.state.is('new')">
+            <i class="fa cm-change"></i>
+        </span>
+
+        <section class="captcha" ng-if="!conversation.state.is('new')" data-qa="captcha-image">
+            <img cm-blob-image="conversation.passCaptcha" />
+        </section>
+    </article>
+
+    <article class="item cm-form-style no-border pt15" ng-if="conversation.passwordRequired()">
+        <span class="security-headline">{{'CONVERSATION.PLACEHOLDER.PASSWORD'|cmTranslate}}</span>
+        <div class="cm-input-ctn with-inside-icon" ng-class="{'with-inside-icon':!conversation.state.is('new')}" cm-input-watcher>
+            <input
+                    data-qa     = "input-password"
+                    type        = "text"
+                    ng-model    = "conversation.password"
+                    placeholder = "{{'CONVERSATION.PLACEHOLDER.PASSWORD'|cmTranslate}}"
+                    ng-change   = "decrypt()"
+                    ng-disabled = "conversation.state.is('decrypted')"
+                    cm-adaptive-change = "2000"
+                    />
+            <i class="fa cm-write" ng-if="conversation.state.is('new')"></i>
+            <i class="fa cm-checker" ng-if="!conversation.state.is('new') && conversation.state.is('decrypted')"  data-qa="icon-conversation-decrypted"></i>
+        </div>
+
+        <cm-info-bubble class="cm-alert" ng-if="showPasswordLocalKeyInfo && conversation.state.is('new')">
+            <i class="fa cm-attention"></i>
+            {{'CONVERSATION.LABEL.SHOW_PW_INFO_BECAUSE_USER_HAS_NO_LOCAL_KEYS'|cmTranslate}}
+        </cm-info-bubble>
+        <cm-info-bubble class="classic-link" ng-click="goTo('/settings/identity/key/list')" ng-if="conversation.options.showKeyInfo && conversation.state.is('new')">
+            {{'CONVERSATION.LABEL.KEY_GENERATION'|cmTranslate}}
+        </cm-info-bubble>
+    </article>
+</cm-scrollable>
 
 <cm-footer>
     <button ng-click="goBack()" class="cm-btn-grey" data-qa="btn-security-done" cm-reactive>

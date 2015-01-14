@@ -1,6 +1,6 @@
 <cm-avatar cm-data="avatarIdentity"></cm-avatar>
 
-<div class="details" cm-weight="3">
+<div class="details">
     <div class="subject is-selectable" data-qa="conversation-subject" ng-bind-html="(conversation.subject || 'CONVERSATION.NO_SUBJECT' )| cmParse"></div>
     <cm-message 
         class       = "message" 
@@ -12,7 +12,7 @@
     <div class="recipients"><cm-recipients-comma-seperated cm-data="conversation"></cm-recipients-comma-seperated></div>
 </div>
 
-<div class="meta" cm-weight="2">
+<div class="meta">
     <div class="top">
         <cm-lock-level cm-level="conversation.lockStatus.level"></cm-lock-level>
         <span class="last-updated small">

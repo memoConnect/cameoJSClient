@@ -19,15 +19,20 @@ angular.module('cmDesktopUi').directive('cmColumn',[
                     }
                 }
 
-                var listen_to_scrollable = $rootScope.$on('cm-scrollable:loaded', handleScrollable);
+                var listen_to_scrollable = $rootScope.$on('cmScrollable:loaded', handleScrollable);
 
                 function resize(){
                     var header = $document[0].querySelector('cm-header'),
                         winHeight = $window.innerHeight,
                         children = element.children();
-                    
-                    if(children.length == 1)
-                        children.css('height',(winHeight-header.offsetHeight)+'px');
+
+                    // TODO: more than one children!!!
+                    if(header && children.length == 1) {
+                        children.css({
+                            'height': (winHeight - header.offsetHeight) + 'px',
+                            'position': 'relative'
+                        });
+                    }
                 }
 
                 angular.element($window).on('resize', resize);

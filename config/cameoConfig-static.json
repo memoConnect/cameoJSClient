@@ -27,6 +27,8 @@
     }
   },
   "appIcon": "gfx/icon_128x128.png",
+  "remSize": "32",
+  "minimumDesktopDimension": "1024x768",
   "certificates": {
     "stage": {
       "server":"https://stage.cameo.io",

@@ -276,62 +276,61 @@ angular.module('cameoClient', [
  * @TODO cmContactsModel anders initialisieren
  */
 .run([
-    '$rootScope', '$location', '$window', '$document', '$route', '$timeout',
     'cmUserModel', 'cmConversationFactory', 'cmContactsModel', 'cmRootService',
-    'cmSettings', 'cmLanguage', 'cmLogger', 'cfpLoadingBar', 'cmEnv', 'cmVersion',
-    'cmApi', 'cmAuthenticationRequest', 'cmSystemCheck',
-    function ($rootScope, $location, $window, $document, $route, $timeout,
-              cmUserModel, cmConversationFactory, cmContactsModel, cmRootService, cmSettings,
-              cmLanguage, cmLogger, cfpLoadingBar, cmEnv, cmVersion,
-              cmApi, cmAuthenticationRequest, cmSystemCheck) {
+    'cmSettings', 'cmLanguage', 'cmLogger', 'cfpLoadingBar', 'cmVersion',
+    'cmApi', 'cmAuthenticationRequest', 'cmSystemCheck', 'cmEnv', 'cmConfig',
+    '$rootScope', '$location', '$window', '$document', '$route', '$timeout',
+    function (cmUserModel, cmConversationFactory, cmContactsModel, cmRootService,
+              cmSettings, cmLanguage, cmLogger, cfpLoadingBar, cmVersion,
+              cmApi, cmAuthenticationRequest, cmSystemCheck, cmEnv, cmConfig,
+              $rootScope, $location, $window, $document, $route, $timeout) {
 
         //prep $rootScope with useful tools
-        $rootScope.console  =   window.console;
-        $rootScope.alert    =   window.alert;
+        $rootScope.console  =   $window.console;
+        $rootScope.alert    =   $window.alert;
 
         //add Overlay handles:
         $rootScope.showOverlay = function(id){ $rootScope.$broadcast('cmOverlay:show', id) };
         $rootScope.hideOverlay = function(id){ $rootScope.$broadcast('cmOverlay:hide', id) };
 
         // Make it easy for e2e-tests to monitor route changes:
-        window._route = {};
+        $window._route = {};
 
         $rootScope.$on('$routeChangeStart', function(){
-            window._route.path   = $location.$$path;
-            window._route.status = 'loading';
+            $window._route.path   = $location.$$path;
+            $window._route.status = 'loading';
         });
 
         $rootScope.$on('$routeChangeSuccess', function(){
-            window._route.status = 'success';
+            $window._route.status = 'success';
         });
 
         $rootScope.$on('$routeChangeError', function(){
-            window._route.status = 'error';
+            $window._route.status = 'error';
         });
 
         // Set view width e.g. 32rem
         function initScreenWidth(rem){
             var html    = $document[0].querySelector('html'),
-                app     = $document[0].querySelector('#cm-app');
+                app     = $document[0].querySelector('#cm-app'),
+                minDim  = cmConfig.static.minimumDesktopDimension.split('x'); // 0=w & 1=h
 
-            //prevent screen size to change when content overflows
-            //html.style.overflowY = 'scroll';
-
-            var height          = window.innerHeight,
-                width           = html.offsetWidth,
-                landscape       = width > 720 || width > height,
+            var height          = $window.innerHeight,
+                width           = $window.innerWidth,
+                landscape       = width > minDim[0] || width > height,
                 effective_width = landscape ? Math.min(height, 420) : width;
 
-            html.style.fontSize  = (effective_width/rem) +'px';
-            app.style.minWidth   = (rem*3)+'rem';
+            html.style.fontSize = (effective_width/cmConfig.static.remSize) +'px';
+            app.style.minWidth  = (cmConfig.static.remSize*3)+'rem';
+            app.style.minHeight = minDim[1]+'px';
             angular.element(app).toggleClass('landscape', landscape);
         }
 
         // Actually set view width to 32 rem
-        initScreenWidth(32);
+        initScreenWidth();
 
         $timeout(function(){
-            initScreenWidth(32);
+            initScreenWidth();
         },1000);
 
         // For dev purposes only:
@@ -366,7 +365,7 @@ angular.module('cameoClient', [
 
         // Todo: whats is todo??
         if(cmUserModel.getToken())
-            cmApi.listenToEvents()
+            cmApi.listenToEvents();
 
         // Systemcheck
         cmSystemCheck.run(true);

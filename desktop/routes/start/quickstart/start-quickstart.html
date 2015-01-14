@@ -1,13 +1,9 @@
 <section class="theme-a fixed-layout" ng-class="{'equal-cols':startRoute}" role="main">
-    <cm-header ng-if="startRoute">
+    <cm-header>
+        <cm-back back-to="/talks" ng-if="!startRoute"></cm-back>
         <cm-logo></cm-logo>
     </cm-header>
     <div class="cm-header-block" ng-if="startRoute"></div>
-
-    <cm-header ng-if="!startRoute">
-        <cm-back back-to="/talks"></cm-back>
-        <cm-logo></cm-logo>
-    </cm-header>
 
     <cm-column class="fill-bg">
         <cm-desktop-widget-menu ng-show="!startRoute"></cm-desktop-widget-menu>

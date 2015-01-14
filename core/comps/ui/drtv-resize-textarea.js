@@ -144,7 +144,7 @@ angular.module('cmUi')
                             element.attr('rows', maxRows);
                         }
 
-                        $rootScope.$broadcast('textArea:resize',element.css('height'));
+                        $rootScope.$emit('cmResizeTextarea:resize',element.css('height'));
                     }
                 }
 
