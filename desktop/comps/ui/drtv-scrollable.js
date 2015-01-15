@@ -21,7 +21,6 @@ angular.module('cmDesktopUi').directive('cmScrollable',[
                             newHeight = ($window.innerHeight - offset.top - (footerElement ? footerElement.offsetHeight : 0));
 
                         element.css('height', newHeight + 'px');
-
                     },100);
                 }
 
