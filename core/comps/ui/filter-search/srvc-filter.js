@@ -11,6 +11,14 @@ angular.module('cmUi')
             onClearCallbacks = [],
             onUpdateCallbacks = [];
 
+        function reset(){
+            //cmLogger.debug('cmFilter reset');
+
+            self.clear();
+            onClearCallbacks = [];
+            onUpdateCallbacks = [];
+        }
+
         this.clear = function(){
             //cmLogger.debug('cmFilter.clear');
 
@@ -31,7 +39,7 @@ angular.module('cmUi')
         this.set = function(f){
             //cmLogger.debug('cmFilter.set');
 
-            if(typeof f == 'string' && f != ''){
+            if(typeof f == 'string' && f != '' && currentFilter != f){
                 currentFilter = f;
 
                 onUpdateCallbacks.forEach(function(obj){
@@ -55,6 +63,8 @@ angular.module('cmUi')
         };
 
         this.onUpdate = function(identifer,callback){
+            //cmLogger.debug('cmFilter.onUpdate');
+
             if(typeof identifer == 'string' && identifer.length > 0 && typeof callback == 'function'){
                 var exists = false,
                     i = 0;
@@ -75,6 +85,8 @@ angular.module('cmUi')
         };
 
         this.onClear = function(identifer,callback){
+            //cmLogger.debug('cmFilter.onClear');
+
             if(typeof identifer == 'string' && identifer.length > 0 && typeof callback == 'function'){
                 var exists = false,
                     i = 0;
@@ -95,6 +107,8 @@ angular.module('cmUi')
         };
 
         this.removeOnUpdate = function(identifer){
+            //cmLogger.debug('cmFilter.removeOnUpdate');
+
             if(typeof identifer == 'string' && identifer.length > 0){
                 var i = 0,
                     index;
@@ -113,6 +127,8 @@ angular.module('cmUi')
         };
 
         this.removeOnClear = function(identifer){
+            //cmLogger.debug('cmFilter.removeOnClear');
+
             if(typeof identifer == 'string' && identifer.length > 0){
                 var i = 0,
                     index;
@@ -133,10 +149,6 @@ angular.module('cmUi')
         /**
          * event handling
          */
-        $rootScope.$on('logout', function(){
-            self.clear();
-            onClearCallbacks = [];
-            onUpdateCallbacks = [];
-        });
+        $rootScope.$on('logout', reset);
     }
 ]);
