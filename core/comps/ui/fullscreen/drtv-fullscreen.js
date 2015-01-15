@@ -7,13 +7,20 @@ angular.module('cmUi')
         return {
             restrict: 'A',
             transclude: true,
+            scope: true,
             template: '<div class="fullscreen-wrap" ng-class="{\'is-open\':isOpen}">'+
                         '<i class="fa cm-close" ng-click="closeFullscreen($event)"></i>'+
                         '<ng-transclude></ng-transclude>' +
+                        '<figcaption>{{::caption}}</figcaption>'+
                       '</div>',
-            controller: function ($scope, $element) {
+            controller: function ($scope, $element, $attrs) {
 
                 $scope.isOpen = false;
+                $scope.caption = '';
+                $attrs.$observe('cmFullscreen',function(caption){
+                    console.log(caption)
+                    $scope.caption = caption;
+                });
 
                 function isOpen(event, data){
                     if($element[0] != data.element)

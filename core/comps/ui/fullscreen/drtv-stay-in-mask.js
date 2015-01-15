@@ -32,8 +32,16 @@ angular.module('cmUi')
                             image.top = Math.round((mask.height - image.newHeight)/2);
                         }
                     } else if(image.isPortrait || image.isSquare) {
-                        image.newHeight = mask.height;
-                        image.newWidth = Math.round(image.newHeight * image.ratio);
+                        // scale to mask
+                        if(image.height >= mask.height){
+                            image.newHeight = mask.height;
+                            image.newWidth = Math.round(image.newHeight * image.ratio);
+                        } else {
+                            image.newHeight = image.height;
+                            image.newWidth = image.width;
+
+                            image.top = (mask.height / 2) - (image.height / 2);
+                        }
                     }
 
                     // width to big for window
