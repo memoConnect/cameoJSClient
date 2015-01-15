@@ -150,5 +150,14 @@ angular.module('cmUi')
          * event handling
          */
         $rootScope.$on('logout', reset);
+
+        $rootScope.$on('$routeChangeSuccess', function(){
+            var url = $rootScope.getCurrentUrl(),
+                whiteList = ['/talks', '/contact/list'];
+
+            if(whiteList.indexOf(url) == -1){
+                reset();
+            }
+        });
     }
 ]);
