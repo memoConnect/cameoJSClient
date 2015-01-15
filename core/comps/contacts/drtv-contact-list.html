@@ -1,7 +1,7 @@
 <cm-loader ng-show="isLoading" class="fullscreen"></cm-loader>
 
 <ul>
-    <li ng-repeat="contact in contacts | cmSearch:'contacts':search | cmPendingFirst as localResults">
+    <li ng-repeat="contact in contacts | cmSearch:'contacts':search | cmPendingFirst as localResults" class="tag-with-icon-list">
         <cm-contact-tag cm-contact="contact" ng-class="{'cm-disabled':contact.contactType == 'pending'}" ng-click="gotoContact(contact)" cm-reactive></cm-contact-tag>
         <section class="icon-list" ng-click="startConversationWithContact($event,contact)" data-qa="start-new-conversation-btn" cm-reactive>
             <i class="fa cm-new-talk" ng-hide="contact.contactType == 'pending'"></i>

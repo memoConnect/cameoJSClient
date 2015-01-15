@@ -1,32 +1,63 @@
 cm-identity-tag, cm-contact-tag, cm-contact-search-tag, cm-recipient-tag, .contact-search-item, .contact-request-item{
+  .dtb!important;
+
+  > * {
+    .vat;
+    .dtbc!important;
+    height: @cm-unit;
+  }
+
+  // layout
+  cm-avatar{
+    width:@cm-unit+1;
+  }
+  cm-contact-type, cm-contact-trust, .icon-list{
+    width:@cm-unit;
+    &.with-two-icons{
+      width:@cm-unit*2;
+    }
+  }
+
   .pos-rel;
-  .dib;
+
   .w100;
   min-height: @cm-unit;
-//    line-height: 1rem;
   padding: @cm-vertical-padding;
   cm-key-level {
     margin-right: 0.5rem;
   }
   .identityName, .requestIdentity{
-    .dib;
-    .vam;
+    .vam!important;
     .displayName{
       font-weight:bold;
       .mb10;
+      .single-line;
     }
     .cameoId{
       font-style: italic;
+      .single-line;
     }
     .message {
       .w60;
       .single-line;
     }
   }
-  .icon-list{
-    top: @cm-vertical-padding;
+}
+
+.tag-with-icon-list{
+  .dtb;
+   > *{
+     .vat;
+   }
+  * + .icon-list{
+    .dtbc;
+    width:@cm-unit;
+    &.with-two-icons{
+      width:@cm-unit*2;
+    }
   }
 }
+
 cm-identity-edit, cm-widget-contact-edit, cm-contact-create {
   .dbl;
   .edit-identity-head {
@@ -37,11 +68,9 @@ cm-identity-edit, cm-widget-contact-edit, cm-contact-create {
 
 cm-contact-tag, cm-recipient-tag, cm-contact-search-tag{
   .displayName{
-    .dib;
     .vat;
     height:@cm-unit;
     line-height:@cm-unit;
-    width:(@cm-unit * 4) - 1;
     font-weight:bold;
     .single-line;
   }
@@ -53,10 +82,7 @@ cm-contact-tag, cm-recipient-tag, .contact-search-item, cm-identity-tag, cm-cont
 
   cm-contact-type{
     .tar;
-    height: @cm-unit;
     line-height: @cm-unit;
-    .pos-tr;
-    right: @cm-unit;
     i {
       .no-margin !important;
       .tac;

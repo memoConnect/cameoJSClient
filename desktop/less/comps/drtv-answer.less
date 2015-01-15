@@ -1,27 +1,26 @@
 cm-answer{
   .dbl;
   .box-shadow-top;
-  .pos-fxd;
+  .pos-abs;
   bottom:0;
-  left:@cm-column-third-size;
-  width:@cm-column-third-size;
   z-index:2;
   background-color:@cm-light-grey;
   font-size:@cm-unit - 1;
-  //height:@cm-unit * 4;
+  .w100;
 
   @answer-padding: (@cm-horizontal-padding*2);
   @default-btns-height: (@cm-unit*4) + @answer-padding;
   @default-textarea-height: @default-btns-height - @answer-padding;
 
   &.in-fullscreen{
+    .pos-fxd;
     top: @cm-header-height;
     left:0;
-    width:100%;
+    .w100;
     .wrap{
-      height:100%;
+      .h100;
       .message {
-        height:100%;
+        .h100;
         textarea {
           width:100%!important;
           height:99%!important;

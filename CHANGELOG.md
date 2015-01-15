@@ -1,5 +1,11 @@
 # Dev
 
+## WW 15.01.2015
+* CAM-1581 new desktop layout
+    * removed position fixed
+    * cm-coloumn & cm-scrollable calcs the height for scrollable content
+    * min dimension is 1024x768
+
 #########
 # RC 0.5.0 - 12.01.2015
 #########

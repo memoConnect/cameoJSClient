@@ -13,10 +13,10 @@ angular.module('cmContacts')
 .directive('cmContactEdit', [
     'cmIdentityFactory', 'cmUtil', 'cmNotify', 'cmUserModel',
     'cmContactsModel', 'cmLogger', 'cmLoader', 'cmPristine',
-    '$rootScope', '$q', '$timeout',
+    '$rootScope', '$q',
     function(cmIdentityFactory, cmUtil, cmNotify, cmUserModel,
              cmContactsModel, cmLogger, cmLoader, cmPristine,
-             $rootScope, $q, $timeout){
+             $rootScope, $q){
 
         return {
             restrict: 'E',

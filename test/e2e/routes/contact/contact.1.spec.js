@@ -98,7 +98,7 @@ describe('Route Contact: ', function () {
         it('search and click to detail',function(){
             util.waitForPageLoad('/contact/list')
             .then(function(){
-                return  util.waitForElement('cm-contact-tag')
+                return util.waitForElement('cm-contact-tag')
             })
             .then(function(){
                 return util.headerSearchInList(extUserName)

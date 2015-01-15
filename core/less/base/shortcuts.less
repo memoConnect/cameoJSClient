@@ -76,6 +76,7 @@
 .border-complete {border: @cm-border-grey @cm-border-width solid}
 .border-top {border-top: @cm-border-grey @cm-border-width solid}
 .border-bottom {border-bottom: @cm-border-grey @cm-border-width solid}
+.border-bottom-bigger {border-bottom: @cm-border-grey @cm-border-width * 2 solid}
 .no-border-top{border-top: 0 !important}
 .no-border-bottom{border-bottom: 0 !important}
 
@@ -90,8 +91,8 @@
 .margin-auto{margin:auto}
 .dib{display:inline-block !important;}
 .dbl{display:block}
-.dpn{display:none}
-.dtb{display:table;.w100;}
+.dpn,.cm-hide{display:none !important}
+.dtb{display:table;.w100;table-layout:fixed}
 .dtbc{display:table-cell}
 .dtbr{display:table-row}
 .cm-disabled{

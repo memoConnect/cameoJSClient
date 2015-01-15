@@ -1,98 +1,102 @@
-<h2 class="border-bottom">
-    <i class="fa cm-key"></i>
-    {{
-    [
-    BASE+"PAGE_HEADLINE",
-    BASE+"PAGE_HEADLINE",
-    BASE+"PAGE_HEADLINE",
-    BASE+"PAGE_HEADLINE"
-    ][step]
-
-    | cmTranslate}}
-</h2>
-
-<article class="content">
-    <div class= "authentication-status">
-        <i class= "fa cm-key-request"   ng-class="{'active': step > 0}"></i>
-        <i class= "fa cm-key-response"  ng-class="{'active': step > 1}"></i>
-        <i class= "fa cm-handshake"     ng-class="{'active': step > 2}"></i>
-    </div>
-    <div class="space-for-loader">
-        <cm-loader cm-halt="waiting" type="balls"></cm-loader>
-    </div>
-    <cm-info-bubble class="cm-alert" ng-show="ERROR">
-        <div>
-            <i class="fa cm-attention"></i> {{BASE+"ERROR."+ERROR| uppercase |cmTranslate}}
-        </div>
-    </cm-info-bubble>
-    
-</article>
-
-<hr/>
-
-<article class="content">
-    <h3>
+<cm-scrollable>
+    <h2 class="border-bottom">
+        <i class="fa cm-key"></i>
         {{
         [
-        BASE+"HEADLINE",
-        BASE+"HEADLINE",
-        BASE+"HEADLINE",
-        BASE+"HEADLINE"
+        BASE+"PAGE_HEADLINE",
+        BASE+"PAGE_HEADLINE",
+        BASE+"PAGE_HEADLINE",
+        BASE+"PAGE_HEADLINE"
         ][step]
 
         | cmTranslate}}
-    </h3>
-    <cm-info-bubble nose-x = "40%">
-        {{
-        [
-        BASE+"EXPLANATION",
-        BASE+"EXPLANATION",
-        BASE+"EXPLANATION",
-        BASE+"EXPLANATION"
-        ][step]
+    </h2>
 
-        | cmTranslate:{'identity': toIdentity.getDisplayName()} }}
+    <article class="content">
+        <div class= "authentication-status">
+            <i class= "fa cm-key-request"   ng-class="{'active': step > 0}"></i>
+            <i class= "fa cm-key-response"  ng-class="{'active': step > 1}"></i>
+            <i class= "fa cm-handshake"     ng-class="{'active': step > 2}"></i>
+        </div>
+        <div class="space-for-loader">
+            <cm-loader cm-halt="waiting" type="balls"></cm-loader>
+        </div>
+        <cm-info-bubble class="cm-alert" ng-show="ERROR">
+            <div>
+                <i class="fa cm-attention"></i> {{BASE+"ERROR."+ERROR| uppercase |cmTranslate}}
+            </div>
+        </cm-info-bubble>
 
-        <br/>
-        <br/>
+    </article>
 
-        <strong ng-bind-html="[BASE+'START.INSTRUCTIONS',BASE+'WAIT.INSTRUCTIONS',BASE+'WAIT.INSTRUCTIONS',BASE+'DONE.INSTRUCTIONS'] [step] | cmParse"></strong>
-    </cm-info-bubble>
-</article>
+    <hr/>
 
-<hr/>
+    <article class="content">
+        <h3>
+            {{
+            [
+            BASE+"HEADLINE",
+            BASE+"HEADLINE",
+            BASE+"HEADLINE",
+            BASE+"HEADLINE"
+            ][step]
 
-<article ng-if="step > 0 && step <3" class="content">
-    <div class="transaction-secret is-selectable" ng-if="transactionSecret" data-qa="transaction-secret-value">
-        {{transactionSecret || '...'}}
-    </div>
-    <ng-loader ng-if = "!transactionSecret"></ng-loader>
-</article>
+            | cmTranslate}}
+        </h3>
+        <cm-info-bubble nose-x = "40%">
+            {{
+            [
+            BASE+"EXPLANATION",
+            BASE+"EXPLANATION",
+            BASE+"EXPLANATION",
+            BASE+"EXPLANATION"
+            ][step]
 
-<article class="content">
-    <strong>
-        {{
-        [
-        BASE+"START.NOTE",
-        BASE+"WAIT.NOTE",
-        BASE+"WAIT.NOTE",
-        BASE+"DONE.NOTE"
-        ][step]
+            | cmTranslate:{'identity': toIdentity.getDisplayName()} }}
 
-        | cmTranslate:{'identity': toIdentity.getDisplayName()} }}
-    </strong>
-</article>
+            <br/>
+            <br/>
 
-<br/>
+            <strong ng-bind-html="[BASE+'START.INSTRUCTIONS',BASE+'WAIT.INSTRUCTIONS',BASE+'WAIT.INSTRUCTIONS',BASE+'DONE.INSTRUCTIONS'] [step] | cmParse"></strong>
+        </cm-info-bubble>
+    </article>
 
-<article ng-if="step != 3 && !!getTimeout()" class="content">
-    <cm-timeout cm-data = "getTimeout()">
-        {{BASE+"TIMEOUT" | cmTranslate: {'timeout' : cmTimeout } }}
-    </cm-timeout>
-</article>
+    <hr/>
 
-<cm-footer ng-if="step == 0">
+    <article ng-if="step > 0 && step <3" class="content">
+        <div class="transaction-secret is-selectable" ng-if="transactionSecret" data-qa="transaction-secret-value">
+            {{transactionSecret || '...'}}
+        </div>
+        <ng-loader ng-if = "!transactionSecret"></ng-loader>
+    </article>
+
+    <article class="content">
+        <strong>
+            {{
+            [
+            BASE+"START.NOTE",
+            BASE+"WAIT.NOTE",
+            BASE+"WAIT.NOTE",
+            BASE+"DONE.NOTE"
+            ][step]
+
+            | cmTranslate:{'identity': toIdentity.getDisplayName()} }}
+        </strong>
+    </article>
+
+    <br/>
+
+    <article ng-if="step != 3 && !!getTimeout()" class="content">
+        <cm-timeout cm-data = "getTimeout()">
+            {{BASE+"TIMEOUT" | cmTranslate: {'timeout' : cmTimeout } }}
+        </cm-timeout>
+    </article>
+
+</cm-scrollable>
+
+<cm-footer>
     <button
+            ng-if="step == 0"
             ng-click    = "done()"
             class       = "cm-btn-grey dib w50"
             data-qa     = "btn-cancel-authentication"
@@ -103,6 +107,7 @@
     </button>
 
     <button
+            ng-if="step == 0"
             ng-click    = "startAuthenticationRequest()"
             class       = "cm-btn-grey dib w50"
             data-qa     = "btn-start-authentication"
@@ -117,10 +122,7 @@
         <i class="fa cm-handshake"></i>
     </button>
 
-</cm-footer>
-
-<cm-footer ng-if = "step > 0 && step < 3" cm-rubber-space>
-    <button
+    <button ng-if = "step > 0 && step < 3"
             ng-click    = "cancel()"
             class       = "cm-btn-grey"
             data-qa     = "btn-cancel-authentication"
@@ -129,10 +131,9 @@
         {{BASE+"WAIT.CANCEL_BUTTON"|cmTranslate}}
         <i class="fa cm-checkbox-wrong"></i>
     </button>
-</cm-footer>
 
-<cm-footer ng-if = "step == 3" cm-rubber-space>
     <button
+            ng-if = "step == 3"
             ng-click    = "done()"
             class       = "cm-btn-grey"
             data-qa     = "btn-start-authentication"
