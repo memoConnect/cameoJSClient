@@ -5,7 +5,7 @@ var fs = require('fs'),
     config = require("../../e2e/config/specs.js"),
     clc = require('cli-color'),
     self = this,
-    ptor
+    ptor = browser.driver
 
 this.getBrowserName = function(){
     return browser.getCapabilities().then(function(cap) {
@@ -28,8 +28,9 @@ this.setPtorInstance = function (newPtor) {
 }
 
 this.getPtorInstance = function () {
-    ptor = protractor.getInstance()
-    ptor.ignoreSynchronization = true
+    //ptor = protractor.getInstance()
+    //ptor.ignoreSynchronization = true
+    protractor.ignoreSynchronization = true
 
     // for every it in describe check error logs and
     // stop on error if config is on true
