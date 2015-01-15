@@ -309,6 +309,7 @@ angular.module('cmCore')
                 /**
                  * start upload with first chunk in array
                  */
+                this.state.set('onUpload');
                 this._uploadChunk(0);
 
                 return this;
@@ -373,7 +374,7 @@ angular.module('cmCore')
             };
 
             this.startDownloadChunks = function(){
-                if(!self.state.is('onDownload')){
+                if(!self.state.is('onDownload') && !self.state.is('onUpload')){
                     self.state.unset('readyForDownload');
                     self.state.set('onDownload');
                     self._downloadChunk(0);
@@ -508,7 +509,7 @@ angular.module('cmCore')
             this.on('upload:finish', function(){
 //                cmLogger.debug('upload:finish');
                 self.state.set('cached');
-                self.state.unset('onDownload');
+                self.state.unset('onUpload');
             });
 
             this.on('encrypt:chunk', function(event, index){

@@ -161,6 +161,19 @@ angular.module('cmRoutes').controller('TestCtrl',
                 isEncrypted: isEncrypted,
                 decryptFiles: decryptFiles
             },
+            {
+                id: 2,
+                text: '',
+                textOnly: false,
+                fileIds: [2],
+                files:[createFile({id:3,type:'image',state:'cached',src:'blob:http%3A//localhost%3A8000/0515c053-7ef1-40ac-8da0-26ad801a5fcf'})],
+                state: state(''),
+                on: on,
+                trigger: trigger,
+                isOwn:function(){return true},
+                isEncrypted: isEncrypted,
+                decryptFiles: decryptFiles
+            },
             //{
             //    id: 2,
             //    text: '',

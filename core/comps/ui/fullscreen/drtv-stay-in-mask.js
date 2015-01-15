@@ -26,16 +26,16 @@ angular.module('cmUi')
                     // width to big for mask
                     if(image.isLandscape){
                         image.newWidth = mask.width;
-                        image.newHeight = Math.round(image.newWidth / image.ratio);
+                        image.newHeight = Math.ceil(image.newWidth / image.ratio);
 
                         if(image.newHeight > mask.height) {
-                            image.top = Math.round((mask.height - image.newHeight)/2);
+                            image.top = Math.ceil((mask.height - image.newHeight)/2);
                         }
                     } else if(image.isPortrait || image.isSquare) {
                         // scale to mask
                         if(image.height >= mask.height){
                             image.newHeight = mask.height;
-                            image.newWidth = Math.round(image.newHeight * image.ratio);
+                            image.newWidth = Math.ceil(image.newHeight * image.ratio);
                         } else {
                             image.newHeight = image.height;
                             image.newWidth = image.width;
@@ -44,19 +44,36 @@ angular.module('cmUi')
                         }
                     }
 
-                    // width to big for window
-                    if(image.width > win.width){
-                        image.maxWidth = win.width;
-                        image.maxHeight = image.maxWidth / image.ratio;
+                    // check max if fit in window
+                    // on landscape check first the height
+                    if(win.isLandscape) {
+                        if (image.height > win.height) {
+                            image.maxHeight = win.height;
+                            image.maxWidth = Math.ceil(image.maxHeight * image.ratio);
+                        } else if(image.width > win.width) {
+                            image.maxWidth = win.width;
+                            image.maxHeight = image.maxWidth / image.ratio;
+                        } else {
+                            image.maxWidth = image.width;
+                            image.maxHeight = image.height;
+                        }
+                    // on portrait check first the width
                     } else {
-                        image.maxWidth = image.width;
-                        image.maxHeight = image.height;
+                        if(image.width > win.width) {
+                            image.maxWidth = win.width;
+                            image.maxHeight = image.maxWidth / image.ratio;
+                        } else {
+                            image.maxWidth = image.width;
+                            image.maxHeight = image.height;
+                        }
                     }
                 }
 
                 function browserResize(event, init){
                     win.width = $window.innerWidth;
                     win.height = $window.innerHeight;
+
+                    calcRatio(win);
 
                     if(!init)
                         calcDim();
@@ -110,6 +127,7 @@ angular.module('cmUi')
 
                     calcRatio(mask);
                     calcRatio(image);
+                    calcRatio(win);
 
                     calcDim();
 

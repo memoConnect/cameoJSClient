@@ -1,11 +1,11 @@
-<div class="file-download" ng-if="file.state.is('readyForDownload') || file.state.is('onDownload')" ng-click="file.startDownloadChunks()" cm-reactive>
+<div class="file-download" ng-if="file.state.is('readyForDownload') || file.state.is('onDownload') || file.state.is('onUpload')" ng-click="file.startDownloadChunks()" cm-reactive>
     <div class="file-state">
         <div class="file {{::file.detectedExtension}}"></div>
-        <cm-progressbar cm-percent="progress" ng-if="file.state.is('onDownload')"></cm-progressbar>
+        <cm-progressbar cm-percent="progress" ng-if="file.state.is('onDownload') || file.state.is('onUpload')"></cm-progressbar>
     </div>
     <div class="file-informations">
         <span class="file-size">
-            <i class="fa cm-download-blanc"></i><br />
+            <i class="fa" ng-class="{'cm-download':!file.state.is('onUpload'),'cm-upload':file.state.is('onUpload')}"></i><br />
             {{::cmUtil.bytesToStr(file.size)}}
         </span>
         <span class="file-name">

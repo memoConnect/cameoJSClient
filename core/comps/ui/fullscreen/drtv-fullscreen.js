@@ -18,7 +18,6 @@ angular.module('cmUi')
                 $scope.isOpen = false;
                 $scope.caption = '';
                 $attrs.$observe('cmFullscreen',function(caption){
-                    console.log(caption)
                     $scope.caption = caption;
                 });
 
