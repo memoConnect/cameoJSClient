@@ -8,7 +8,7 @@ angular.module('cmConversations').directive('cmSearchConversations',[
     function (cmConversationFactory, cmFilter, cmLoader, $timeout){
         return {
             restrict: 'E',
-            template: '<button class="cm-btn-grey" data-qa="load-more-btn" ng-click="searchArchive()" cm-reactive><span ng-show="!showLoader">{{"TALKS.SEARCH_ARCHIVE"|cmTranslate}}<i class="fa cm-search"></i></span><cm-loader cm-color="ci-color" ng-show="showLoader"></cm-loader></button>',
+            template: '<button class="cm-btn-grey" data-qa="btn-search-archive" ng-click="searchArchive()" cm-reactive><span ng-show="!showLoader">{{"TALKS.SEARCH_ARCHIVE"|cmTranslate}}<i class="fa cm-search"></i></span><cm-loader cm-color="ci-color" ng-show="showLoader"></cm-loader></button>',
             link: function(scope, element){
                 scope.setDefault = function(){
                     scope.isDisabled = false;
@@ -34,7 +34,6 @@ angular.module('cmConversations').directive('cmSearchConversations',[
                 $scope.timeout = null;
 
                 $scope.matches = {
-                    search: "",
                     loaded: 0,
                     qty: 0
                 };
@@ -51,8 +50,6 @@ angular.module('cmConversations').directive('cmSearchConversations',[
                         $scope.timeout = $timeout(function(){
                             cmConversationFactory.search(s, limit, $scope.matches.loaded).then(
                                 function(data){
-                                    $scope.matches.search = s;
-
                                     if(typeof data.conversations != 'undefined'){
                                         $scope.matches.loaded = $scope.matches.loaded + data.conversations.length;
                                     }
@@ -77,7 +74,6 @@ angular.module('cmConversations').directive('cmSearchConversations',[
 
                 function clear(){
                     $scope.matches = {
-                        search: "",
                         loaded: 0,
                         qty: 0
                     };
