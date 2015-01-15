@@ -66,7 +66,6 @@ angular.module('cmUi')
                 }).then(
                     function(response){
                         if(typeof response.data == 'object') {
-
                             response.data.forEach(function(rawCountry) {
                                 var country = rawCountry.split(',');
 

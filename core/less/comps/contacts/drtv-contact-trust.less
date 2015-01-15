@@ -19,6 +19,10 @@
 cm-contact-trust{
   .vat;
   .single-line;
+  span{
+    .dib;
+    height:@cm-unit;
+  }
   .aspect-icons{
     &.loading{
       .createContactTrustColor(@cm-border-grey);
@@ -38,14 +42,8 @@ cm-contact-trust{
 /* drtv in parent drtv's */
 cm-contact-tag, cm-recipient-tag{
   cm-contact-trust{
-    margin-right:1rem;
-    .cm-unit-btn;
-    line-height:@cm-unit;
-  }
-}
-
-cm-contact-edit{
-  cm-contact-trust{
-
+    span{
+      line-height:@cm-unit;
+    }
   }
 }

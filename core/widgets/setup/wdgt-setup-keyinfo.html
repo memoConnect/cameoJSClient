@@ -1,69 +1,72 @@
-<h2 class="border-bottom is-selectable">
-    <i class="fa cm-key"></i>
-    {{'IDENTITY.LABEL.KEYMANAGEMENT'|cmTranslate}}
-</h2>
+<cm-scrollable>
+    <h2 class="border-bottom is-selectable">
+        <i class="fa cm-key"></i>
+        {{'IDENTITY.LABEL.KEYMANAGEMENT'|cmTranslate}}
+    </h2>
 
-<article class="content">
-    <cm-info-bubble nose-x="50%">
-        <span ng-bind-html="'SETTINGS.PAGES.IDENTITY.KEYS.NO_LOCALKEYS_ON_THIS_DEVICE' | cmParse"></span>
-    </cm-info-bubble>
-</article>
+    <article class="content">
+        <cm-info-bubble nose-x="50%">
+            <span ng-bind-html="'SETTINGS.PAGES.IDENTITY.KEYS.NO_LOCALKEYS_ON_THIS_DEVICE' | cmParse"></span>
+        </cm-info-bubble>
+    </article>
 
-<ul class="border-top mt15">
-    <li ng-click="toggleSkipKeyInfo()" cm-reactive>
-        <span class="item disabled is-selectable">
-           {{'START.KEYINFO.SKIP_CHECKBOX_TEXT' | cmTranslate}}
-        </span>
-        <div class="short-links without-bg">
-            <input
-                id="skipKeyInfoInput"
-                data-qa="checkbox-skip-key-info-input"
-                name="skip"
-                type="checkbox"
-                class="ng-hide" />
-            <i
-                id="skipKeyInfoIcon"
-                data-qa="checkbox-skip-key-info-icon"
-                class="fa cm-grey"
-                ng-class="{
-                'cm-checkbox':!skipKeyInfo,
-                'cm-checkbox-right':skipKeyInfo
-                }"></i>
-        </div>
-    </li>
+    <ul class="border-top mt15">
+        <li ng-click="toggleSkipKeyInfo()" cm-reactive>
+            <span class="item disabled is-selectable">
+               {{'START.KEYINFO.SKIP_CHECKBOX_TEXT' | cmTranslate}}
+            </span>
+            <div class="short-links without-bg">
+                <input
+                    id="skipKeyInfoInput"
+                    data-qa="checkbox-skip-key-info-input"
+                    name="skip"
+                    type="checkbox"
+                    class="ng-hide" />
+                <i
+                    id="skipKeyInfoIcon"
+                    data-qa="checkbox-skip-key-info-icon"
+                    class="fa cm-grey"
+                    ng-class="{
+                    'cm-checkbox':!skipKeyInfo,
+                    'cm-checkbox-right':skipKeyInfo
+                    }"></i>
+            </div>
+        </li>
 
-    <li ng-click="goTo('/talks')" data-qa="btn-skip-keygen" cm-reactive>
-        <span class="item">
-            {{'START.KEYINFO.SKIP_TEXT' | cmTranslate}}
-        </span>
-        <div class="short-links without-bg">
-            <i class="fa cm-right"></i>
-        </div>
-    </li>
+        <li ng-click="goTo('/talks')" data-qa="btn-skip-keygen" cm-reactive>
+            <span class="item">
+                {{'START.KEYINFO.SKIP_TEXT' | cmTranslate}}
+            </span>
+            <div class="short-links without-bg">
+                <i class="fa cm-right"></i>
+            </div>
+        </li>
 
-    <li>
-        <span class="item is-selectable" ng-click="toggleKeySize()" cm-reactive>
-        {{'IDENTITY.KEYS.GENERATE.START.KEY_LENGTH.BUTTON_LABEL'|cmTranslate}} <strong>2048 (default)</strong>
-        </span>
-        <div class="short-links without-bg" ng-click="toggleKeySize()" cm-reactive data-qa="btn-toggle-keysize">
-            <i class="fa" ng-class="{'cm-down':!showKeySize,'cm-up':showKeySize}"></i>
-        </div>
-        <ul class="cm-submenu" ng-show="showKeySize">
-            <li ng-click="chooseKeySize('2048')" data-qa="checkbox-keysize-2048" cm-reactive>
-                <span class="item">2048</span>
-                <div class="short-links without-bg">
-                    <i class="fa" ng-class="{'cm-checkbox':keySize != 2048,'cm-checkbox-right':keySize == 2048}"></i>
-                </div>
-            </li>
-            <li ng-click="chooseKeySize('4096')" data-qa="checkbox-keysize-4096" cm-reactive>
-                <span class="item">4096</span>
-                <div class="short-links without-bg">
-                    <i class="fa" ng-class="{'cm-checkbox':keySize != 4096,'cm-checkbox-right':keySize == 4096}"></i>
-                </div>
-            </li>
-        </ul>
-    </li>
-</ul>
+        <li>
+            <span class="item is-selectable" ng-click="toggleKeySize()" cm-reactive>
+            {{'IDENTITY.KEYS.GENERATE.START.KEY_LENGTH.BUTTON_LABEL'|cmTranslate}} <strong>2048 (default)</strong>
+            </span>
+            <div class="short-links without-bg" ng-click="toggleKeySize()" cm-reactive data-qa="btn-toggle-keysize">
+                <i class="fa" ng-class="{'cm-down':!showKeySize,'cm-up':showKeySize}"></i>
+            </div>
+            <ul class="cm-submenu" ng-show="showKeySize">
+                <li ng-click="chooseKeySize('2048')" data-qa="checkbox-keysize-2048" cm-reactive>
+                    <span class="item">2048</span>
+                    <div class="short-links without-bg">
+                        <i class="fa" ng-class="{'cm-checkbox':keySize != 2048,'cm-checkbox-right':keySize == 2048}"></i>
+                    </div>
+                </li>
+                <li ng-click="chooseKeySize('4096')" data-qa="checkbox-keysize-4096" cm-reactive>
+                    <span class="item">4096</span>
+                    <div class="short-links without-bg">
+                        <i class="fa" ng-class="{'cm-checkbox':keySize != 4096,'cm-checkbox-right':keySize == 4096}"></i>
+                    </div>
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+</cm-scrollable>
 
 <cm-footer>
     <button ng-click="generateKey()" class="cm-btn-grey" data-qa="btn-next-step" cm-reactive>

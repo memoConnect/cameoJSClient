@@ -2,7 +2,6 @@
 
 angular.module('cameoClient', [
     'ngRoute',
-    'ngCookies',
     'ngTouch',
     'angular-loading-bar',
     // cameo dependencies
@@ -163,6 +162,10 @@ angular.module('cameoClient', [
                 // route resolver
                 routeParams.resolve.i18n = function(cmBoot){
                     return cmBoot.isReady.i18n();
+                };
+
+                routeParams.resolve.font = function(cmBoot){
+                    return cmBoot.isReady.font();
                 };
 
                 if (angular.isDefined(_settings_['waitForFirstBoot']) && _settings_['waitForFirstBoot'] == true){

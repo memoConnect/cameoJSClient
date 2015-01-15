@@ -329,7 +329,8 @@ angular.module('cmConfig',[])
 
             routeHelp: {
                 'start/quickstart': {i18n:'START.QUICKSTART.HEADLINE', icon:'cm-info', 'data-qa':'btn-help-quickstart'},
-                'support': {i18n:'HELP.LABEL.SUPPORT',icon:'cm-rhino-bubble-glyph',externLink:'http://support.cameonet.de', 'data-qa':'btn-help-support'}
+                'support': {i18n:'HELP.LABEL.SUPPORT',icon:'cm-rhino-bubble-glyph',externLink:'http://support.cameonet.de', 'data-qa':'btn-help-support'},
+                'settings/about': {i18n:'SETTINGS.PAGES.ABOUT_US.TITLE', icon:'cm-rhino-positive'}
             }
         };
         // performance page

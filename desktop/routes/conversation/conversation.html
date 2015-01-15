@@ -1,4 +1,4 @@
-<section class="theme-a fixed-layout">
+<section class="theme-a fixed-layout" role="main">
     <cm-header>
         <div>
             <cm-back back-to="/talks" ng-if="conversationId == 'new'"></cm-back>
@@ -21,7 +21,7 @@
     <cm-column class="fill-bg">
         <cm-widget-talks></cm-widget-talks>
     </cm-column>
-    <cm-column class="without-footer">
+    <cm-column>
         <cm-widget-conversation cm-data="conversation"></cm-widget-conversation>
     </cm-column>
 </section>

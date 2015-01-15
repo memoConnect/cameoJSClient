@@ -1,9 +1,9 @@
-<h2 class="no-margin-bottom">
+<h2 class="no-margin-bottom border-bottom">
     <i class="fa cm-settings"></i>
     {{'SETTINGS.LABEL' | cmTranslate}}
 </h2>
 
-<ul>
+<ul class="no-border-top">
     <li ng-repeat="page in overviewKeys"
         ng-click="goToSettingsPage($event, page, overview[page].disabled, overview[page])"
         ng-class="{'is-disabled':overview[page].disabled,'is-active':checkActive(page)}"

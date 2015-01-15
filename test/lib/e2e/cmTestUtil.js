@@ -772,13 +772,28 @@ this.getConversation = function(subject){
     })
 }
 
-this.readConversation = function (subject, message) {
+this.readConversation = function (subject, message, checkModal) {
     self.getConversation(subject)
-    ptor.wait(function(){
-        return $("cm-message").getText().then(function(text){
-            return text.search(message) != -1
+
+    if(checkModal){
+        self.waitForModalOpen();
+
+        self.waitForQa('btn-modal-handshake-link').then(
+            function(){
+                ptor.wait(function(){
+                    return $("cm-message").getText().then(function(text){
+                        return text.search(message) != -1
+                    })
+                })
+            }
+        )
+    } else {
+        ptor.wait(function(){
+            return $("cm-message").getText().then(function(text){
+                return text.search(message) != -1
+            })
         })
-    })
+    }
 }
 
 this.scrollToTop = function(){

@@ -60,11 +60,23 @@ angular.module('cmPhonegap').service('cmPhonegap', [
                         $rootScope.$apply();
                     });
                 }
+            },
+            initDevicesEvents: function(){
+                if($document.length > 0 && 'addEventListener' in $document[0]) {
+                    // detect when app goes in background
+                    $document[0].addEventListener('pause', function () {
+                        $rootScope.$broadcast('device:goesToBackground');
+                    });
+                    // detect when app goes in foreground
+                    $document[0].addEventListener('resume', function () {
+                        $rootScope.$broadcast('device:goesToForeground');
+                    });
+                }
             }
         };
 
-        // on home close app
         self.initDeviceButtons();
+        self.initDevicesEvents();
 
         return self;
     }]

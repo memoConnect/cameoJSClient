@@ -5,11 +5,6 @@ cm-message {
   &.right {
     .tar;
   }
-  &.file-view{
-    div.message {
-      min-width: @cm-message-min-width !important;
-    }
-  }
   article {
     .dib;
     div.message {
@@ -97,6 +92,7 @@ cm-message {
         color:@cm-light-grey;
       }
       div.message{
+        min-width: @cm-message-min-width !important;
         &.left, &.right{
           background-color:@cm-overlay-dark;
         }

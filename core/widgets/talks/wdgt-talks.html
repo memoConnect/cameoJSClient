@@ -5,7 +5,7 @@
         <i class="fa cm-info"></i>  {{'TALKS.LIST_EMPTY'|cmTranslate}}
     </li>
     <li ng-repeat="conversation in conversations | orderBy:'timeOfLastUpdate':true | cmSearch:'talks':search" ng-click="goto('/conversation/'+conversation.id)" cm-reactive data-qa="conversation-list-element">
-        <cm-conversation-tag cm-data="conversation" cm-rubber-space></cm-conversation-tag>
+        <cm-conversation-tag cm-data="conversation"></cm-conversation-tag>
     </li>
     <li ng-if="moreTalksAvailable()">
         <button class="cm-btn-grey" ng-click="loadMoreTalks()" data-qa="load-more-btn" cm-reactive>
