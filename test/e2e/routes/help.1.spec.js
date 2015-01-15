@@ -22,7 +22,7 @@ describe('help route', function () {
 
     it('two elements should be in list', function(){
         $$('cm-widget-help-list li').then(function(elements){
-            expect(elements.length).toEqual(2)
+            expect(elements.length).toEqual(3)
         })
     })
 
