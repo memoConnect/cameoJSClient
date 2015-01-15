@@ -6,24 +6,26 @@
         <div class="cm-fl w72">
             <ul class="no-border">
                 <li>
-                    <section>
-                         <span class="item clearfix">
+                    <article class="item">
+                         <span class="clearfix">
                             <cm-contact-trust cm-data="contact" cm-with-text></cm-contact-trust>
                          </span>
                         <section class="icon-list">
                             <i class="fa cm-info"></i>
                         </section>
-                    </section>
+                    </article>
                 </li>
 
                 <li class="no-border" data-qa="start-trust-handshake-btn" ng-click="goToAuthentication(contact.identity)" ng-if="!isTrusted && hasKeys && hasLocalKey">
-                    <span class="item clearfix">
+                    <article class="item">
+                        <span class="clearfix">
                             <i  class="fa cm-handshake"></i>
                             {{'CONTACT.TRUST.START'|cmTranslate}}
-                         </span>
-                    <section class="icon-list">
-                        <i class="fa cm-right"></i>
-                    </section>
+                        </span>
+                        <section class="icon-list">
+                            <i class="fa cm-right"></i>
+                        </section>
+                    </article>
                 </li>
             </ul>
         </div>
