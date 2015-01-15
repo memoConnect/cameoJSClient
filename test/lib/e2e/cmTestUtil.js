@@ -549,6 +549,12 @@ this.headerSearchInList = function (searchString) {
             })
 }
 
+this.closeHeaderSearch = function(){
+    self.waitAndClickQa('btn-close-search')
+
+    return this
+}
+
 this.clearLocalStorage = function () {
     ptor.executeScript('localStorage.clear()')
     return this

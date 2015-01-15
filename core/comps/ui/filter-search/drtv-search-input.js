@@ -12,7 +12,7 @@ angular.module('cmUi').directive('cmSearchInput',[
                 cmOptions: '=cmOptions',
                 visible: '=cmVisible'
             },
-            template:   '<i class="fa cm-left" ng-click="close()"></i>' +
+            template:   '<i class="fa cm-left" ng-click="close()" data-qa="btn-close-search"></i>' +
                         '<input data-qa="inp-list-search" id="inp-list-search" name="inp-list-search" type="text" value="" ng-model="search" placeholder="{{placeholder}}">' +
                         '<i data-qa="btn-list-search-clear" class="fa toggle-btn" ng-click="clickToogleBtn()" ng-class="{\'cm-search\':showDefaultIcon && counterKeydown == 0,\'cm-checkbox-wrong\':counterKeydown > 0}"></i>',
             link: function(scope, element, attrs){
