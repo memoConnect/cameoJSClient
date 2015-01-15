@@ -5,6 +5,11 @@
     * removed position fixed
     * cm-coloumn & cm-scrollable calcs the height for scrollable content
     * min dimension is 1024x768
+* CAM-1363 fullscreen for files in cm-message
+    * one height for all files states / onUpload, onDownloadReady, onDownload, cached
+    * new file view for all embed types
+    * image thumb stays in preivew mask, also stay in fulllscreen mask
+    * in fullscreen only pinch (mobile 2 touches) and zoom (mousewheel) possible, pan not possible yet (move)
 
 #########
 # RC 0.5.0 - 12.01.2015

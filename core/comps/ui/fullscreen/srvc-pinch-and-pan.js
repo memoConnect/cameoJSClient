@@ -304,7 +304,7 @@ angular.module('cmUi')
                     },
                     final: function(ev) {
                         if (ev.isFinal) {
-                            console.log('final', JSON.stringify(image.transform, null));
+                            //console.log('final', JSON.stringify(image.transform, null));
                             image.tmp.lastX = image.transform.translate.x;
                             image.tmp.lastY = image.transform.translate.y;
                         }

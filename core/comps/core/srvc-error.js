@@ -8,10 +8,6 @@ angular.module('cmCore')
     function($rootScope, $window, $injector){
         var self = {
             showOnPage: function(error){
-
-                console.error('reset error page',error)
-                return false;
-
                 $rootScope.errorThrown = error;
                 $rootScope.goto('/error');
             }
