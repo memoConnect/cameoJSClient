@@ -3,7 +3,7 @@
     <div class="displayName">{{identity.getDisplayName()}}</div>
     <div class="cameoId">{{identity.cameoId}}</div>
 </section>
-<section class="icon-list">
+<section class="icon-list" ng-class="{'with-two-icons':identity.isActive}">
     <i class="fa cm-write" ng-if="identity.isActive"></i>
     <i class="fa" ng-class="{'cm-radio-1':identity.isActive,'cm-radio-0':!identity.isActive}"></i>
 </section>
