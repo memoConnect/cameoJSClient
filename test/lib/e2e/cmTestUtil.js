@@ -24,7 +24,7 @@ this.isInternetExplorer = function(){
 }
 
 this.getPtorInstance = function () {
-    protractor.ignoreSynchronization = true
+    browser.ignoreSynchronization = true
 
     // for every it in describe check error logs and
     // stop on error if config is on true
@@ -92,16 +92,20 @@ this.checkErrorLogs = function(){
 
 var getCounter = 0;
 
-this.get = function (path) {
+this.get = function (_path_) {
     // console.log('util.get', path)
+
+    var path = '';
 
     // http://angular.github.io/protractor/#/api?view=Protractor.prototype.get
     if(getCounter == 0) {
-        var url = config.wwwUrl + '#' + path
-        browser.get(url)
+        path = config.wwwUrl + '#' + path
+        browser.get(path)
     // http://angular.github.io/protractor/#/api?view=Protractor.prototype.setLocation
-    } else
+    } else {
+        path = _path_
         browser.setLocation(path)
+    }
 
     getCounter++;
 
@@ -389,17 +393,46 @@ this.waitForEventSubscription = function () {
     }, config.waitForTimeout, 'waitForEventSubscription timeout reached')
 }
 
-this.waitForElement = function (selector, timeout) {
+this.click = function (dataQa) {
+    $("[data-qa='" + dataQa + "']").click()
+}
 
+this.waitForQa = function(dataQa){
+    return self.waitForElement("[data-qa='" + dataQa + "']")
+}
+
+this.waitAndClickQa = function (dataQa, preSelector, printOut) {
+    var preSelector = preSelector ? preSelector+' ' : '';
+    return self.waitForElement(preSelector+"[data-qa='" + dataQa + "']",'',printOut)
+        .then(function(){
+            if(printOut) {
+                console.log(preSelector + "[data-qa='" + dataQa + "'] click yo")
+            }
+
+            $(preSelector+"[data-qa='" + dataQa + "']").click()
+        })
+}
+
+this.waitAndClick = function (selector) {
+    self.waitForElement(selector)
+    $(selector).click()
+}
+
+this.waitForElement = function (selector, timeout, printOut) {
     return ptor.wait(function () {
         return $$(selector).then(function (elements) {
-            return elements.length > 0
+
+            if(printOut) {
+                console.log(selector + ' ' + elements.length > 0)
+                return false;
+            }
+
+            return elements.length > 0;
         })
     }, timeout || config.waitForTimeout, 'waitForElement ' + selector + ' timeout is reached')
 }
 
 this.waitForElements = function (selector, count) {
-
     if (count) {
         return  ptor.wait(function () {
                     return $$(selector).then(function (elements) {
@@ -707,27 +740,6 @@ this.addExternalContact = function (displayName) {
     self.waitAndClickQa('btn-cancel','cm-modal.active')
 
     self.waitForPageLoad("/contact/list")
-}
-
-this.click = function (dataQa) {
-    $("[data-qa='" + dataQa + "']").click()
-}
-
-this.waitForQa = function(dataQa){
-    return self.waitForElement("[data-qa='" + dataQa + "']")
-}
-
-this.waitAndClickQa = function (dataQa, preSelector) {
-    var preSelector = preSelector ? preSelector+' ' : '';
-    return  self.waitForElement(preSelector+"[data-qa='" + dataQa + "']")
-            .then(function(){
-                $(preSelector+"[data-qa='" + dataQa + "']").click()
-            })
-}
-
-this.waitAndClick = function (selector) {
-    self.waitForElement(selector)
-    $(selector).click()
 }
 
 this.setVal = function (dataQa, text, withClear){
