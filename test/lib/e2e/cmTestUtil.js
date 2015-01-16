@@ -92,18 +92,22 @@ this.checkErrorLogs = function(){
 
 var getCounter = 0;
 
-this.get = function (path) {
+this.get = function (_path_) {
     // console.log('util.get', path)
+
+    var path = '';
 
     // http://angular.github.io/protractor/#/api?view=Protractor.prototype.get
     if(getCounter == 0) {
-        var url = config.wwwUrl + '#' + path
-        browser.get(url)
+        path = config.wwwUrl + '#' + path
+        browser.get(path)
     // http://angular.github.io/protractor/#/api?view=Protractor.prototype.setLocation
     } else
         browser.setLocation(path)
 
     getCounter++;
+
+    console.log(path,getCounter);
 
     self.waitForPageLoad()
 
