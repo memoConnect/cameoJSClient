@@ -146,8 +146,8 @@ this.login = function (username, password, expectedRoute) {
 
     this.scrollToTop()
 
-    var user = $("input[name=user]");
-    var pw = $("input[name=pw]");
+    var user = $("input[name='user']");
+    var pw = $("input[name='pw']");
 
     var loginUser = username || config.loginUser1;
     var loginPassword = password || config.passwordUser1;
@@ -420,10 +420,14 @@ this.waitAndClick = function (selector) {
 
 this.waitForElement = function (selector, timeout, printOut) {
     return ptor.wait(function () {
+
+        if(printOut)
+            console.log('waitForElement '+selector)
+
         return $$(selector).then(function (elements) {
 
             if(printOut) {
-                console.log(selector + ' ' + elements.length > 0)
+                console.log('length = '+elements.length)
                 return false;
             }
 
