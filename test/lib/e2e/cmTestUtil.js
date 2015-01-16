@@ -90,16 +90,20 @@ this.checkErrorLogs = function(){
     })
 }
 
-this.get = function (path, withReload) {
+var getCounter = 0;
+
+this.get = function (path) {
     // console.log('util.get', path)
 
     // http://angular.github.io/protractor/#/api?view=Protractor.prototype.get
-    if(withReload) {
+    if(getCounter == 0) {
         var url = config.wwwUrl + '#' + path
         browser.get(url)
     // http://angular.github.io/protractor/#/api?view=Protractor.prototype.setLocation
     } else
         browser.setLocation(path)
+
+    getCounter++;
 
     self.waitForPageLoad()
 
@@ -115,7 +119,7 @@ this.expectCurrentUrl = function (match) {
 }
 
 this.logout = function () {
-    self.get('/login',true)
+    self.get('/login')
 
     return  $$("cm-menu").then(function (elements) {
                 if (elements.length > 0) {
@@ -131,7 +135,7 @@ this.logout = function () {
 this.login = function (username, password, expectedRoute) {
 
     self.logout()
-    self.get('/login',true)
+    self.get('/login')
 
     this.scrollToTop()
 

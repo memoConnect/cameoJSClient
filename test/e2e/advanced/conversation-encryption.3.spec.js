@@ -221,18 +221,22 @@ describe('Conversation encryption -', function () {
                             util.setVal('input-password', password)
 
                             ptor.wait(function(){
-                                return util.getVal('input-password').then(function(val){
-                                    return val == password
+                                return util.getVal('input-password')
+                                .then(function(val){
+                                    return expect(val).toBe(password)
                                 })
+                            }).then(function(){
+                                // make sure that the input loses focus and ng-blur gets fired:
+                                $("[data-qa='input-password']").sendKeys(protractor.Key.TAB)
+                                $("#cm-app").click()
+
+                                return util.waitForElement("[data-qa='icon-conversation-decrypted']")
+                                    .then(function(){
+                                        return $("[data-qa='btn-security-done']").click()
+                                    })
+                            }).then(function(){
+                                return self.waitForPageLoad(conversationRoute)
                             })
-
-                            //make sure that the input loses focus and ng-blur gets fired:
-                            $("[data-qa='input-password']").sendKeys(protractor.Key.TAB)
-                            $("#cm-app").click()
-
-                            util.waitForElement("[data-qa='icon-conversation-decrypted']")
-                            $("[data-qa='btn-security-done']").click()
-                            util.waitForElementDisappear("[data-qa='btn-security-done']")
                         }
                     }
                 })
