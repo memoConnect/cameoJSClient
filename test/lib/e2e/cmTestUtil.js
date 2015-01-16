@@ -90,10 +90,17 @@ this.checkErrorLogs = function(){
     })
 }
 
-this.get = function (path) {
-    var url = config.wwwUrl + '#' + path
+this.get = function (path, withReload) {
     // console.log('util.get', path)
-    browser.get(url)
+
+    // http://angular.github.io/protractor/#/api?view=Protractor.prototype.get
+    if(withReload) {
+        var url = config.wwwUrl + '#' + path
+        browser.get(url)
+    // http://angular.github.io/protractor/#/api?view=Protractor.prototype.setLocation
+    } else
+        browser.setLocation(path)
+
     self.waitForPageLoad()
 
     return this
@@ -108,7 +115,7 @@ this.expectCurrentUrl = function (match) {
 }
 
 this.logout = function () {
-    self.get('/login')
+    self.get('/login',true)
 
     return  $$("cm-menu").then(function (elements) {
                 if (elements.length > 0) {
@@ -124,7 +131,7 @@ this.logout = function () {
 this.login = function (username, password, expectedRoute) {
 
     self.logout()
-    self.get('/login')
+    self.get('/login',true)
 
     this.scrollToTop()
 
