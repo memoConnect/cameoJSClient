@@ -546,7 +546,7 @@ this.headerSearchInList = function (searchString) {
 }
 
 this.clearLocalStorage = function () {
-    ptor.executeScript('localStorage.clear()')
+    ptor.executeScript('localStorage.clear')
     return this
 }
 

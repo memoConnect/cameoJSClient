@@ -146,8 +146,11 @@ describe('Authentication requests -', function () {
     describe("key1 -", function () {
         // reset!!
         it('before all test starting clear Localstorage', function(){
-            util.get('/login')
-            util.clearLocalStorage()
+            util.get('/login',true)
+            util.waitForPageLoad('/login')
+            .then(function(){
+                    util.clearLocalStorage()
+            })
         })
 
         describe("create test user, generate key and check keytrust", function () {
