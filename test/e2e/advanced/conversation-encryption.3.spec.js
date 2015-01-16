@@ -217,8 +217,6 @@ describe('Conversation encryption -', function () {
                             
                             util.waitForElement("[data-qa='input-password']")
 
-                            console.log('enter password',password)
-
                             util.click('input-password')
                             util.setVal('input-password', password)
 
@@ -234,7 +232,6 @@ describe('Conversation encryption -', function () {
 
                                 return util.waitForElement("[data-qa='icon-conversation-decrypted']")
                                     .then(function(){
-                                        console.log('encrypted click done!!!')
                                         return $("[data-qa='btn-security-done']").click()
                                     })
                             }).then(function(){
