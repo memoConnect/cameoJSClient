@@ -21,7 +21,6 @@ describe('login screen', function () {
 
     it('should prompt for username and password after click on login and close it', function () {
         util.get('/login');
-
         util.waitForPageLoad('/login')
         .then(function(){
             var user = $("input[name=user]");

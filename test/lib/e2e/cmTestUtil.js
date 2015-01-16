@@ -102,12 +102,12 @@ this.get = function (_path_) {
         path = config.wwwUrl + '#' + path
         browser.get(path)
     // http://angular.github.io/protractor/#/api?view=Protractor.prototype.setLocation
-    } else
+    } else {
+        path = _path_
         browser.setLocation(path)
+    }
 
     getCounter++;
-
-    console.log(path,getCounter);
 
     self.waitForPageLoad()
 
