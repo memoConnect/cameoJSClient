@@ -212,6 +212,7 @@ describe('Authentication requests -', function () {
         })
 
         it("generate key3", function () {
+
             util.login(testUser1, "password")
             .then(function(){
                 util.get("/settings/identity/key/list")
@@ -247,11 +248,15 @@ describe('Authentication requests -', function () {
 
         it("get identityId from event", function () {
             identityId = authEvents[0].fromIdentityId
+            expect(identityId).toBe(authEvents[0].fromIdentityId)
         })
 
         it("abort request", function () {
             util.waitAndClickQa("btn-cancel-authentication")
-            util.waitForElementDisappear("[data-qa='transaction-secret-value']")
+            .then(function(){
+                util.waitForElementDisappear("[data-qa='transaction-secret-value']")
+            })
+
         })
 
         it("create encrypted conversation", function () {

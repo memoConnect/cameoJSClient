@@ -125,7 +125,10 @@ this.logout = function () {
                 if (elements.length > 0) {
                     $("cm-menu .cm-handler").click()
                     self.waitForElement(".cm-menu-list")
-                    $("[data-qa='logout-btn']").click()
+                    .then(function(){
+                        self.waitAndClickQa('logout-btn')
+                    })
+                    //$("[data-qa='logout-btn']").click()
                 }
                 return self.waitForPageLoad('/login')
             })
@@ -550,7 +553,8 @@ this.headerSearchInList = function (searchString) {
 }
 
 this.clearLocalStorage = function () {
-    ptor.executeScript('localStorage.clear')
+    ptor.executeScript('window.localStorage.clear()')
+
     return this
 }
 
