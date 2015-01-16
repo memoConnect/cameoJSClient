@@ -235,6 +235,8 @@ describe('Test Settings enableUnreadMessages: ', function(){
             util.waitForElement("[data-qa='ctn-unread-messages']")
             expect($("[data-qa='ctn-unread-messages']").isPresent()).toBe(true)
             expect($("[data-qa='ctn-unread-messages']").getText()).toContain(0)
+
+            util.closeHeaderSearch();
         })
     })
 
