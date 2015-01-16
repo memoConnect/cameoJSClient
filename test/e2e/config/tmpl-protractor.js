@@ -12,7 +12,6 @@ if(useChrome){
     browserConfig = {
         seleniumPort: null,
         chromeDriver: '<%= chromeDriverPath %>',
-        chromeOnly: true,
         capabilities:{
             'browserName':'chrome',
             'chromeOptions': {
@@ -23,7 +22,6 @@ if(useChrome){
 /* Internet Explorer */
 } else {
     browserConfig = {
-        chromeOnly: false,
         capabilities: {
             'browserName': 'internet explorer',
             'platform': 'ANY',

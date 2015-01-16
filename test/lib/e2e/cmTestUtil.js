@@ -1,11 +1,12 @@
 /**
  * Created by reimerei on 15.04.14.
+ * http://angular.github.io/protractor/#/api
  */
 var fs = require('fs'),
     config = require("../../e2e/config/specs.js"),
     clc = require('cli-color'),
     self = this,
-    ptor
+    ptor = browser.driver
 
 this.getBrowserName = function(){
     return browser.getCapabilities().then(function(cap) {
@@ -22,14 +23,8 @@ this.isInternetExplorer = function(){
     });
 }
 
-this.setPtorInstance = function (newPtor) {
-    ptor = newPtor
-    return this
-}
-
 this.getPtorInstance = function () {
-    ptor = protractor.getInstance()
-    ptor.ignoreSynchronization = true
+    protractor.ignoreSynchronization = true
 
     // for every it in describe check error logs and
     // stop on error if config is on true
@@ -95,15 +90,17 @@ this.checkErrorLogs = function(){
     })
 }
 
-this.get = function (path) {
-
-    if (ptor == undefined) {
-        console.error("please set ptor = util.getPtorInstance()")
-    }
-
-    var url = config.wwwUrl + '#' + path
+this.get = function (path, withReload) {
     // console.log('util.get', path)
-    ptor.get(url)
+
+    // http://angular.github.io/protractor/#/api?view=Protractor.prototype.get
+    if(withReload) {
+        var url = config.wwwUrl + '#' + path
+        browser.get(url)
+    // http://angular.github.io/protractor/#/api?view=Protractor.prototype.setLocation
+    } else
+        browser.setLocation(path)
+
     self.waitForPageLoad()
 
     return this
@@ -118,7 +115,7 @@ this.expectCurrentUrl = function (match) {
 }
 
 this.logout = function () {
-    self.get('/login')
+    self.get('/login',true)
 
     return  $$("cm-menu").then(function (elements) {
                 if (elements.length > 0) {
@@ -134,7 +131,7 @@ this.logout = function () {
 this.login = function (username, password, expectedRoute) {
 
     self.logout()
-    self.get('/login')
+    self.get('/login',true)
 
     this.scrollToTop()
 
@@ -213,7 +210,7 @@ this.deleteKeys = function(){
     this.get("/settings/identity/key/list")
     ptor.sleep(1000)
     .then(function(){
-        return  ptor.wait(function(){      
+        return  ptor.wait(function(){
                     return  $('[data-qa="btn-remove-modal"]').isPresent()
                             .then(function(bool){
                                 return  bool
