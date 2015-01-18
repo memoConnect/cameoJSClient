@@ -130,9 +130,8 @@ this.logout = function () {
                     $("cm-menu .cm-handler").click()
                     self.waitForElement(".cm-menu-list")
                     .then(function(){
-                        self.waitAndClickQa('logout-btn')
-                    })
-                    //$("[data-qa='logout-btn']").click()
+                        return self.waitAndClickQa('logout-btn')
+                    });
                 }
                 return self.waitForPageLoad('/login')
             })

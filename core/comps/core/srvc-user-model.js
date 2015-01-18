@@ -344,7 +344,7 @@ angular.module('cmCore')
 
             cmAuth.requestToken(user, pass).then(
                 function(token){
-                    cmAuth.storeToken(token);
+                    cmAuth.storeToken(token, true);
 
                     self.loadIdentity(accountData).finally(
                         function(){
