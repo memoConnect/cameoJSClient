@@ -219,8 +219,8 @@ this.deleteTestUser = function (loginName) {
 }
 
 this.deleteKeys = function(){
-    this.get("/settings/identity/key/list")
-    ptor.sleep(1000)
+    this.get('/settings/identity/key/list')
+    this.waitForPageLoad('/settings/identity/key/list')
     .then(function(){
         return  ptor.wait(function(){
                     return  $('[data-qa="btn-remove-modal"]').isPresent()
@@ -492,10 +492,7 @@ this.waitForModalClose = function () {
 
 
 this.confirmModal = function(){
-    return  $$('[data-qa="btn-confirm"]')
-            .then(function(buttons){
-                return buttons[0].click()
-            })
+    return $('cm-modal.active [data-qa="btn-confirm"]').click()
 }
 
 this.closeModal = function(){
