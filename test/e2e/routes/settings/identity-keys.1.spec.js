@@ -46,9 +46,10 @@ describe('Identity key settings: ', function () {
         expect($("[data-qa='btn-cancel-key-generation']").isDisplayed()).toBe(true)
     })
 
-    it('cancel generation', function () {
-        util.waitAndClickQa("btn-cancel-key-generation")
-        util.waitForPageLoad("/settings/identity/key/list")
+    it('cancel generation because of no key  talks', function() {
+        util.waitAndClickQa("btn-cancel-key-generation").then(function(){
+            util.waitForPageLoad("/settings/identity/key/list")
+        })
     })
 
     it('start generation again', function () {

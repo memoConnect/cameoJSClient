@@ -178,7 +178,7 @@ describe('Conversation encryption -', function () {
 
         var checkMessages = function (recipient, index) {
 
-            describe("recipient number " + (index + 1) + " -", function () {
+            describe("recipient number " + index + " -", function () {
 
                 var conversationRoute
 
