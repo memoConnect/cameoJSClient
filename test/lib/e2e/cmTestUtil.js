@@ -107,6 +107,8 @@ this.get = function (_path_) {
         browser.setLocation(path)
     }
 
+    //console.log(getCounter, path)
+
     getCounter++;
 
     self.waitForPageLoad()

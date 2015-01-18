@@ -927,6 +927,8 @@ angular.module('cmCore')
         $rootScope.$on('logout', function(event, data){
             //cmLogger.debug('cmUserModel - $rootScope.logout');
 
+            $rootScope.generateAutomatic = undefined;
+
             self.reset();
             isAuth = false;
 
