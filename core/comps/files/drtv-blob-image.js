@@ -8,7 +8,17 @@ angular.module('cmFiles').directive('cmBlobImage',[
             link: function(scope, element, attrs){
 
                 function showFile(file){
-                    if(typeof file.blob == 'object'){
+                    // mocked
+                    if('url' in file && 'src' in file.url){
+                        element.attr('src', file.url.src);
+                        element.on('load', function(){
+                            // hide spinner
+                            scope.$apply(function(){
+                                file.loaded = true;
+                            });
+                        });
+                    // loaded
+                    } else if(typeof file.blob == 'object'){
                         cmFilesAdapter
                         .getBlobUrl(file.blob, true)
                         .then(

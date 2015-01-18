@@ -1,5 +1,6 @@
 /**
  * Created by reimerei on 15.04.14.
+ * http://angular.github.io/protractor/#/api
  */
 var fs = require('fs'),
     config = require("../../e2e/config/specs.js"),
@@ -22,15 +23,8 @@ this.isInternetExplorer = function(){
     });
 }
 
-this.setPtorInstance = function (newPtor) {
-    ptor = newPtor
-    return this
-}
-
 this.getPtorInstance = function () {
-    //ptor = protractor.getInstance()
-    //ptor.ignoreSynchronization = true
-    protractor.ignoreSynchronization = true
+    browser.ignoreSynchronization = true
 
     // for every it in describe check error logs and
     // stop on error if config is on true
@@ -96,15 +90,25 @@ this.checkErrorLogs = function(){
     })
 }
 
-this.get = function (path) {
+var getCounter = 0;
 
-    if (ptor == undefined) {
-        console.error("please set ptor = util.getPtorInstance()")
+this.get = function (_path_) {
+    // console.log('util.get', path)
+
+    var path = '';
+
+    // http://angular.github.io/protractor/#/api?view=Protractor.prototype.get
+    if(getCounter == 0) {
+        path = config.wwwUrl + '#' + path
+        browser.get(path)
+    // http://angular.github.io/protractor/#/api?view=Protractor.prototype.setLocation
+    } else {
+        path = _path_
+        browser.setLocation(path)
     }
 
-    var url = config.wwwUrl + '#' + path
-    // console.log('util.get', path)
-    ptor.get(url)
+    getCounter++;
+
     self.waitForPageLoad()
 
     return this
@@ -125,7 +129,10 @@ this.logout = function () {
                 if (elements.length > 0) {
                     $("cm-menu .cm-handler").click()
                     self.waitForElement(".cm-menu-list")
-                    $("[data-qa='logout-btn']").click()
+                    .then(function(){
+                        self.waitAndClickQa('logout-btn')
+                    })
+                    //$("[data-qa='logout-btn']").click()
                 }
                 return self.waitForPageLoad('/login')
             })
@@ -139,8 +146,8 @@ this.login = function (username, password, expectedRoute) {
 
     this.scrollToTop()
 
-    var user = $("input[name=user]");
-    var pw = $("input[name=pw]");
+    var user = $("input[name='user']");
+    var pw = $("input[name='pw']");
 
     var loginUser = username || config.loginUser1;
     var loginPassword = password || config.passwordUser1;
@@ -214,7 +221,7 @@ this.deleteKeys = function(){
     this.get("/settings/identity/key/list")
     ptor.sleep(1000)
     .then(function(){
-        return  ptor.wait(function(){      
+        return  ptor.wait(function(){
                     return  $('[data-qa="btn-remove-modal"]').isPresent()
                             .then(function(bool){
                                 return  bool
@@ -386,17 +393,50 @@ this.waitForEventSubscription = function () {
     }, config.waitForTimeout, 'waitForEventSubscription timeout reached')
 }
 
-this.waitForElement = function (selector, timeout) {
+this.click = function (dataQa) {
+    $("[data-qa='" + dataQa + "']").click()
+}
 
+this.waitForQa = function(dataQa){
+    return self.waitForElement("[data-qa='" + dataQa + "']")
+}
+
+this.waitAndClickQa = function (dataQa, preSelector, printOut) {
+    var preSelector = preSelector ? preSelector+' ' : '';
+    return self.waitForElement(preSelector+"[data-qa='" + dataQa + "']",'',printOut)
+        .then(function(){
+            if(printOut) {
+                console.log(preSelector + "[data-qa='" + dataQa + "'] click yo")
+            }
+
+            $(preSelector+"[data-qa='" + dataQa + "']").click()
+        })
+}
+
+this.waitAndClick = function (selector) {
+    self.waitForElement(selector)
+    $(selector).click()
+}
+
+this.waitForElement = function (selector, timeout, printOut) {
     return ptor.wait(function () {
+
+        if(printOut)
+            console.log('waitForElement '+selector)
+
         return $$(selector).then(function (elements) {
-            return elements.length > 0
+
+            if(printOut) {
+                console.log('length = '+elements.length)
+                return false;
+            }
+
+            return elements.length > 0;
         })
     }, timeout || config.waitForTimeout, 'waitForElement ' + selector + ' timeout is reached')
 }
 
 this.waitForElements = function (selector, count) {
-
     if (count) {
         return  ptor.wait(function () {
                     return $$(selector).then(function (elements) {
@@ -556,7 +596,8 @@ this.closeHeaderSearch = function(){
 }
 
 this.clearLocalStorage = function () {
-    ptor.executeScript('localStorage.clear()')
+    ptor.executeScript('window.localStorage.clear()')
+
     return this
 }
 
@@ -709,27 +750,6 @@ this.addExternalContact = function (displayName) {
     self.waitAndClickQa('btn-cancel','cm-modal.active')
 
     self.waitForPageLoad("/contact/list")
-}
-
-this.click = function (dataQa) {
-    $("[data-qa='" + dataQa + "']").click()
-}
-
-this.waitForQa = function(dataQa){
-    return self.waitForElement("[data-qa='" + dataQa + "']")
-}
-
-this.waitAndClickQa = function (dataQa, preSelector) {
-    var preSelector = preSelector ? preSelector+' ' : '';
-    return  self.waitForElement(preSelector+"[data-qa='" + dataQa + "']")
-            .then(function(){
-                $(preSelector+"[data-qa='" + dataQa + "']").click()
-            })
-}
-
-this.waitAndClick = function (selector) {
-    self.waitForElement(selector)
-    $(selector).click()
 }
 
 this.setVal = function (dataQa, text, withClear){

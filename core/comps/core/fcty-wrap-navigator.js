@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('cmPhonegap')
+angular.module('cmCore')
 .factory('$navigator', function(){
     return typeof navigator != 'undefined' ? navigator : 'undefined';
 });
