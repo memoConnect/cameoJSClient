@@ -139,8 +139,7 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
                     cmCrypt.cancelGeneration()
                     .then(function(){
                         reset();
-                        startTime = undefined
-
+                        startTime = undefined;
 
                         if(typeof $rootScope.generateAutomatic != 'undefined'){
                             /**
@@ -224,7 +223,6 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
 
                         $scope.generate();
                     }
-
                     $rootScope.generateAutomatic = {}
                 }
             }

@@ -164,7 +164,7 @@ describe('Route Password Lost/Reset:', function(){
             })
 
             it('test cancel button',function(){
-                util.click('btn-cancel')
+                util.click('btn-cancelPasswordReset')
                 util.expectCurrentUrl('#/password/lost')
             })
         })
