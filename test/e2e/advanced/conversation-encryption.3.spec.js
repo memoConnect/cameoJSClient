@@ -223,7 +223,7 @@ describe('Conversation encryption -', function () {
                             ptor.wait(function(){
                                 return util.getVal('input-password')
                                 .then(function(val){
-                                    return expect(val).toBe(password)
+                                    return val == password
                                 })
                             }).then(function(){
                                 // make sure that the input loses focus and ng-blur gets fired:
@@ -235,7 +235,7 @@ describe('Conversation encryption -', function () {
                                         return $("[data-qa='btn-security-done']").click()
                                     })
                             }).then(function(){
-                                return self.waitForPageLoad(conversationRoute)
+                                return util.waitForPageLoad(conversationRoute)
                             })
                         }
                     }
