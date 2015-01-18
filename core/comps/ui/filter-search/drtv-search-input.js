@@ -86,6 +86,12 @@ angular.module('cmUi').directive('cmSearchInput',[
                         $scope.clear();
                     }
                 }
+
+                var filter = cmFilter.get();
+                if(typeof filter == 'string' && filter != ''){
+                    $scope.search;
+                    $scope.counterKeydown = 1;
+                }
             }
         }
     }
