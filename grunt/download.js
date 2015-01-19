@@ -9,7 +9,7 @@ module.exports = function(grunt, options){
     grunt.registerTask('download-page:create', [
         'clean:app-dl',
         'copy:app-resources-dl',
-        'getChecksums',
+        //'getChecksums',
         'template:app-index-dl'
     ]);
 
