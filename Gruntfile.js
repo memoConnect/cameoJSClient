@@ -197,14 +197,15 @@ module.exports = function (grunt) {
             testConfig.config.protractorDebug = true
         }
 
-        var platform = process.platform
+        var platform = process.platform,
+            chromeDriverPath = "../../../test/lib/ptor/chromedriver_2.13_";
         console.log("OS: " + platform)
         if (platform.match(/linux/)) {
-            testConfig.config.chromeDriverPath = "../../../test/lib/ptor/chromedriver_linux"
+            testConfig.config.chromeDriverPath = chromeDriverPath+"linux32"
         } else if (platform.match(/darwin/)) {
-            testConfig.config.chromeDriverPath = "../../../test/lib/ptor/chromedriver_mac"
+            testConfig.config.chromeDriverPath = chromeDriverPath+"mac32"
         } else if (platform.match(/win/)) {
-            testConfig.config.chromeDriverPath = "../../../test/lib/ptor/chromedriver_win.exe"
+            testConfig.config.chromeDriverPath = chromeDriverPath+"win32.exe"
         }
 
         return testConfig;
