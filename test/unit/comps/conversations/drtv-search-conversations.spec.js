@@ -36,10 +36,6 @@ describe('Directive cmSearchConversations', function(){
             expect(element.find('button').length).toBe(1)
         })
 
-        it('should exist one span', function(){
-            expect(element.find('span').length).toBe(1)
-        })
-
         it('should exist one cm-loader', function(){
             expect(element.find('cm-loader').length).toBe(1)
         })
