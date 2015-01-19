@@ -1,17 +1,55 @@
 <cm-loader ng-show="isLoading" class="fullscreen"></cm-loader>
 
-<article class="content" ng-if="!contacts.length && !isLoading">
-    <cm-info-bubble class="cm-alert">
-        <i class="fa cm-info"></i> {{"CONTACTS.LIST_EMPTY"|cmTranslate}}
-    </cm-info-bubble>
-</article>
-
-<ul ng-if="contacts.length > 0">
-    <li ng-repeat="contact in contacts | cmSearch:'contacts':search | cmPendingFirst" class="tag-with-icon-list">
-        <cm-contact-tag cm-contact="contact" ng-class="{'cm-disabled':contact.contactType == 'pending'}" ng-click="gotoContact(contact)" cm-reactive>
-        </cm-contact-tag>
+<ul>
+    <li ng-repeat="contact in contacts | cmSearch:'contacts':search | cmPendingFirst as localResults" class="tag-with-icon-list">
+        <cm-contact-tag cm-contact="contact" ng-class="{'cm-disabled':contact.contactType == 'pending'}" ng-click="gotoContact(contact)" cm-reactive></cm-contact-tag>
         <section class="icon-list" ng-click="startConversationWithContact($event,contact)" data-qa="start-new-conversation-btn" cm-reactive>
             <i class="fa cm-new-talk" ng-hide="contact.contactType == 'pending'"></i>
         </section>
     </li>
+    <li class="with-inside-left-icon" ng-show="(localResults.length == 0)">
+        <i class="fa cm-attention"></i>
+        <div class="item">
+            <!--{{"CONTACTS.LIST_EMPTY"|cmTranslate}}-->
+            @todo keine Kontakte gefunden
+        </div>
+    </li>
+    <li class="with-inside-left-icon with-inside-icon" cm-show-on-filter="search" cm-show-on-min-length="3" ng-click="toogleSearch(search)" data-qa="btn-search" cm-reactive>
+        <i class="fa cm-group"></i>
+        <div class="item">
+            {{'CONTACTS.SEARCH'|cmTranslate}} <strong ng-if="search">({{search}})</strong>
+        </div>
+        <i class="fa" ng-class="{'cm-down':!activateSearch,'cm-up':activateSearch}"></i>
+    </li>
+    <li ng-show="showLoader">
+        <cm-loader cm-color="ci-color"></cm-loader>
+    </li>
+    <li class="with-inside-left-icon" ng-show="(activateSearch && !showLoader && results.length == 0)">
+        <i class="fa cm-attention"></i>
+        <div class="item">
+            @todo keine server results
+        </div>
+    </li>
+    <li class="tag-with-icon-list" ng-repeat="item in results" ng-click="openModal('modalSendRequest',item)" cm-reactive data-qa="contact-search-item">
+        <cm-contact-search-tag cm-contact="item"></cm-contact-search-tag>
+        <section class="icon-list">
+            <i class="fa cm-new-contact"></i>
+        </section>
+    </li>
 </ul>
+
+<cm-modal id="modalSendRequest" class="no-padding" cm-data-as="contact" cm-title="CONTACTS.HEADING.SEND_REQUEST">
+    <div class="modal-row" cm-rubber-space>
+        <cm-avatar cm-data="contact"></cm-avatar>
+        <div class="cm-request-brief" cm-weight="1">
+            <strong>{{contact.getDisplayName()}}</strong>
+        </div>
+    </div>
+    <div class="modal-row">
+        <textarea placeholder="{{'CONTACTS.PLACEHOLDER.REQUEST_MESSAGE'|cmTranslate}}" ng-model="contact.message" data-qa="input-friendrequestMessage"></textarea>
+    </div>
+    <button class="cm-btn-grey" ng-click="sendRequest(contact)" data-qa="btn-sendRequest" cm-reactive>
+        {{'CONTACTS.LABEL.SEND_REQUEST'|cmTranslate}}
+        <i class="fa cm-send"></i>
+    </button>
+</cm-modal>

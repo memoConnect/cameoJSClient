@@ -107,11 +107,16 @@ describe('Route Contact: ', function () {
                 return  ptor.wait(function(){
                             return $$('cm-contact-tag').then(function(elements){ return elements.length == 1})
                         })
+            }).then(function(){
+                    util.closeHeaderSearch()
             })
+
+
         })
 
         it('should find external user after logout/login (1)', function(){
             util.login(testUser, 'password')
+
             .then(function(){
                 util.get('/contact')
                 return util.waitForPageLoad('/contact')

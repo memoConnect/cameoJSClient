@@ -13,16 +13,13 @@
 
 angular.module('cmWidgets')
 .directive('cmWidgetTalks', [
-
-    'cmUserModel',
-    'cmConversationFactory',
-
+    'cmUserModel', 'cmConversationFactory',
     function(cmUserModel, cmConversationFactory){
         return {
             restrict:       'AE',
             scope:          true,   
             templateUrl:    'widgets/talks/wdgt-talks.html',
-            controller: function($scope, $element, $attrs){
+            controller: function($scope){
                 /**
                  * init conversations to scope
                  */
@@ -55,7 +52,6 @@ angular.module('cmWidgets')
 
                     return true;
                 };
-
             }
         }
     }

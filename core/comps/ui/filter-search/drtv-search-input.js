@@ -1,17 +1,20 @@
 'use strict';
 
 angular.module('cmUi').directive('cmSearchInput',[
+    'cmFilter',
     '$document',
     '$rootScope',
-    function($document, $rootScope){
+    function(cmFilter, $document, $rootScope){
         return {
             restrict: 'E',
             scope: {
                 search: '=ngModel',
-                cmOptions: '=cmOptions'
+                cmOptions: '=cmOptions',
+                visible: '=cmVisible'
             },
-            template: '<input data-qa="inp-list-search" id="inp-list-search" name="inp-list-search" type="text" value="" ng-model="search" placeholder="{{placeholder}}">' +
-                      '<i data-qa="btn-list-search-clear" class="fa" ng-click="clear()" ng-class="{\'cm-search\':showDefaultIcon && counterKeydown == 0,\'cm-checkbox-wrong\':counterKeydown > 0}"></i>',
+            template:   '<i class="fa cm-left" ng-click="close()" data-qa="btn-close-search"></i>' +
+                        '<input data-qa="inp-list-search" id="inp-list-search" name="inp-list-search" type="text" value="" ng-model="search" placeholder="{{placeholder}}">' +
+                        '<i data-qa="btn-list-search-clear" class="fa toggle-btn" ng-click="clickToogleBtn()" ng-class="{\'cm-search\':showDefaultIcon && counterKeydown == 0,\'cm-checkbox-wrong\':counterKeydown > 0}"></i>',
             link: function(scope, element, attrs){
 
                 scope.placeholder = attrs.placeholder || '';
@@ -24,6 +27,8 @@ angular.module('cmUi').directive('cmSearchInput',[
                     scope.counterKeydown++;
                 })
                 .on('keyup', function(){
+                    cmFilter.set(scope.search);
+
                     if(scope.search == ''){
                         scope.counterKeydown = 0;
                         scope.$apply();
@@ -66,6 +71,26 @@ angular.module('cmUi').directive('cmSearchInput',[
                 $scope.clear = function(){
                     $scope.search = '';
                     $scope.counterKeydown = 0;
+                    cmFilter.clear();
+                };
+
+                $scope.close = function(){
+                    $scope.clear();
+                    $scope.visible = false;
+                };
+
+                $scope.clickToogleBtn = function(){
+                    if(angular.element($element[0].querySelector('i.toggle-btn')).hasClass('cm-search')){
+                        $scope.close();
+                    } else {
+                        $scope.clear();
+                    }
+                }
+
+                var filter = cmFilter.get();
+                if(typeof filter == 'string' && filter != ''){
+                    $scope.search;
+                    $scope.counterKeydown = 1;
                 }
             }
         }

@@ -1,0 +1,93 @@
+@cm-inside-li-size: @cm-unit;
+
+li {
+  div.item {
+    width:100%;
+    padding:1rem !important;
+    margin:0;
+    border:none;
+    .single-line
+  }
+
+  .default-one-icon{
+    .pos-rel;
+    white-space:nowrap;
+    i{
+      .with-cursor;
+      .pos-abs;
+      color: @cm-grey;
+      top:0;
+      bottom:0;
+      font-size:@cm-mega-font;
+      width:@cm-inside-li-size;
+      text-align:center;
+      line-height:@cm-inside-li-size;
+      &.cm-write{
+        .without-cursor;
+      }
+    }
+  }
+
+  .right-icons-to-his-positions{
+    &.with-inside-icon{
+      div.item + i, div.item + i.ng-hide + i{
+        right:0!important;
+        left:auto;
+      }
+    }
+    &.with-inside-icons{
+      div.item + i, div.item + i.ng-hide + i{
+        right:@cm-inside-li-size!important;
+        left:auto;
+      }
+      div.item + i + i{
+        right:0!important;
+        left:auto;
+      }
+    }
+  }
+
+  &.with-inside-left-icon {
+    padding-left:@cm-inside-li-size;
+    .default-one-icon;
+    i{
+      left:0;
+    }
+    .right-icons-to-his-positions;
+  }
+  &.with-inside-left-icons {
+    padding-left:@cm-inside-li-size * 2;
+    .default-one-icon;
+    i{
+      left:0;
+    }
+    i + i{
+      left:@cm-inside-li-size;
+    }
+    .right-icons-to-his-positions;
+  }
+  // right one icon
+  &.with-inside-icon{
+    padding-right:@cm-inside-li-size;
+    .default-one-icon;
+    div.item + i{
+      right:0;
+    }
+    cm-loader{
+      .pos-tr;
+      height: @cm-inside-li-size;
+      width: @cm-inside-li-size;
+    }
+  }
+  // right two icons
+  &.with-inside-icons{
+    padding-right:@cm-inside-li-size * 2;
+    .default-one-icon;
+    div.item + i{
+      right:@cm-inside-li-size;
+    }
+    div.item + i + i{
+      right:0;
+    }
+  }
+}

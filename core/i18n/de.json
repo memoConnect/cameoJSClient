@@ -195,7 +195,9 @@
     "TALKS": {
         "HEADING": "Talks",
         "MORE": "Weitere Talks laden",
-        "LIST_EMPTY": "Bisher keine Talks vorhanden."
+        "LIST_EMPTY": "Bisher keine Talks vorhanden.",
+        "SEARCH": "@todo TALKS.SEARCH",
+        "SEARCH_ARCHIVE": "@todo TALKS.SEARCH_ARCHIVE"
     },
 
     "CONVERSATION": {
@@ -316,7 +318,8 @@
             "ACCEPT": "Akzeptieren",
             "REJECT": "Zurückweisen",
             "IGNORE": "Ignorieren"
-        }
+        },
+        "SEARCH": "@todo CONTACTS.SEARCH"
     },
 
     "CONTACT": {

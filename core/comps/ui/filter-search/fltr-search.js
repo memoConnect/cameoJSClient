@@ -2,7 +2,8 @@
 
 angular.module('cmUi').filter('cmSearch', [
     'cmUtil',
-    function(cmUtil){
+    'cmFilter',
+    function(cmUtil,cmFilter){
         return function(arrayToSearch, searchType, searchString){
             
             if(!arrayToSearch.length || typeof searchString != 'string') return arrayToSearch;
@@ -79,6 +80,9 @@ angular.module('cmUi').filter('cmSearch', [
                     arrayFiltered.push(item);
                 }
             }
+
+            cmFilter.setResultLength(arrayFiltered.length);
+
             // return filtered array
             return arrayFiltered;
         }

@@ -587,6 +587,21 @@ this.headerSearchInList = function (searchString) {
             })
 }
 
+this.closeHeaderSearch = function(){
+    return  self.waitForElement("[data-qa='inp-list-search']")
+            .then(function(){
+                    if($("[data-qa='inp-list-search']").getAttribute('value') == ''){
+                        return self.waitAndClickQa('btn-close-search')
+                    } else {
+                        return self.waitForQa('btn-list-search-clear')
+                        .then(function(){
+                            self.click('btn-list-search-clear')
+                            return self.waitAndClickQa('btn-close-search')
+                        })
+                    }
+            })
+}
+
 this.clearLocalStorage = function () {
     ptor.executeScript('window.localStorage.clear()')
 

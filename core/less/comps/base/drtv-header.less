@@ -85,25 +85,26 @@ cm-header, .cm-header-block{
 
   cm-header-list-search{
     .dib;
-    .pos-rel;
     cm-search-input{
       .pos-abs;
       color:@cm-black;
       z-index:-1;
       height:@cm-unit;
-      width:23.9rem;
-      right:@cm-unit;
+      width:100%;
+      left:0;
       top:0;
       font-size:@cm-large-font;
       line-height:@cm-mega-font;
       .opacity-0;
       .tal;
       &.visible{
-        z-index:1;
+        z-index:1001;
         .opacity-100;
+        .border-bottom;
       }
       input{
-
+        padding-left: @cm-unit;
+        .border-bottom;
       }
       textarea{
         .no-border;
@@ -117,6 +118,9 @@ cm-header, .cm-header-block{
         width:@cm-unit;
         height:@cm-unit;
         line-height:@cm-unit!important;
+      }
+      i:first-child{
+        .pos-tl;
       }
     }
   }

@@ -58,6 +58,8 @@ describe('Route conversation:', function () {
 
     it('add contact to conversation', function () {
         $("[data-qa='btn-select-contact']").click()
+
+        util.closeHeaderSearch()
     })
 
     it('should add an external contact on the fly', function(){
