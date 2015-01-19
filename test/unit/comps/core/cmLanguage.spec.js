@@ -152,10 +152,10 @@ describe("cmLanguage", function() {
 
             var needles = '@todo,<br>'
             it('should have none of this '+needles+' inside', function(){
-                var foundPosition = [],
+                var foundPosition = {},
                     arrNeedles = needles.split(',');
 
-                function foundItem(needle, i18nKey){
+                function foundNeedle(needle, i18nKey){
                     if(!(needle in foundPosition)){
                         foundPosition[needle] = [];
                     }
@@ -175,8 +175,9 @@ describe("cmLanguage", function() {
                     } else {
                         //not an Object so obj[k] here is a value
                         arrNeedles.forEach(function(needle){
-                            if(obj.indexOf(needle) >= 0)
-                                foundItem(needle,key)
+                            if(obj.indexOf(needle) >= 0) {
+                                foundNeedle(needle, key)
+                            }
                         })
                     }
                 }
@@ -186,7 +187,7 @@ describe("cmLanguage", function() {
                 if(cmConfig.errorOnTodoInI18n)
                     expect(foundPosition.length).toEqual(0)
 
-                if(foundPosition.length > 0){
+                if(Object.keys(foundPosition).length > 0){
                     console.log(needles + '\'s found at: ' + JSON.stringify(foundPosition, null, 2) + '\n')
                 }
             })
