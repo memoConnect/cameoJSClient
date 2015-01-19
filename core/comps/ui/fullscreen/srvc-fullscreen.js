@@ -4,12 +4,12 @@
 
 angular.module('cmUi')
 .factory('cmFullscreen',[
-    'cmLogger', 'cmObject',
+    'cmLogger', 'cmObject', 'cmScreenOrientation',
     '$document', '$rootScope', '$window', '$timeout',
-    function(cmLogger, cmObject,
+    function(cmLogger, cmObject, cmScreenOrientation,
              $document, $rootScope, $window, $timeout) {
 
-        function detectBrowserForTabApi() {
+        function detectBrowserForFullscreenApi() {
             if (typeof doc.fullscreenEnabled !== 'undefined') {
                 isEnabled = 'fullscreenEnabled';
                 requestOpen = 'requestFullscreen';
@@ -62,6 +62,9 @@ angular.module('cmUi')
                 if(!this.isOpen() && element && requestOpen in element){
                     // cache top
                     self.scrollTop = $window.scrollY;
+
+                    //cmScreenOrientation.unlock();
+
                     // open fullscreen
                     element[requestOpen]();
                 }
@@ -84,7 +87,7 @@ angular.module('cmUi')
             }
         };
 
-        if(detectBrowserForTabApi()){
+        if(detectBrowserForFullscreenApi()){
             $document.on(eventChange, function (event) {
                 self.trigger('change', {
                     element: event.target,
@@ -99,6 +102,8 @@ angular.module('cmUi')
                     $timeout(function(){
                         $window.scrollTo(0,self.scrollTop);
                     },50);
+
+                    //cmScreenOrientation.lock();
                 }
             });
 
