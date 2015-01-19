@@ -75,8 +75,11 @@ angular.module('cmPhonegap').service('cmPhonegap', [
             }
         };
 
-        self.initDeviceButtons();
-        self.initDevicesEvents();
+        // buttons on device
+        self.isReady(function(){
+            self.initDeviceButtons();
+            self.initDevicesEvents();
+        });
 
         return self;
     }]
