@@ -324,7 +324,14 @@
             "REJECT": "Zurückweisen",
             "IGNORE": "Ignorieren"
         },
-        "SEARCH": "@todo CONTACTS.SEARCH"
+        "SEARCH": {
+            "INFO_NOTHING_FOUND": "Keine passenden lokalen Kontakte",
+            "SERVER_SEARCH": {
+                "INFO_NOTHING_FOUND": "Keine passenden neuen cameoNet-Kontakte",
+                "BUTTON_ACTIVE": "Ergebnis cameoNet-Suche",
+                "BUTTON_INACTIVE": "cameoNet jetzt durchsuchen"
+            }
+        }
     },
 
     "CONTACT": {

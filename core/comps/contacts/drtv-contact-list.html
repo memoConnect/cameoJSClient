@@ -10,14 +10,15 @@
     <li class="with-inside-left-icon" ng-show="(localResults.length == 0)">
         <i class="fa cm-attention"></i>
         <div class="item">
-            <!--{{"CONTACTS.LIST_EMPTY"|cmTranslate}}-->
-            @todo keine Kontakte gefunden
+            {{'CONTACTS.SEARCH.INFO_NOTHING_FOUND'|cmTranslate}}
         </div>
     </li>
     <li class="with-inside-left-icon with-inside-icon" cm-show-on-filter="search" cm-show-on-min-length="3" ng-click="toogleSearch(search)" data-qa="btn-search" cm-reactive>
         <i class="fa cm-group"></i>
         <div class="item">
-            {{'CONTACTS.SEARCH'|cmTranslate}} <strong ng-if="search">({{search}})</strong>
+            <span ng-show="activateSearch">{{'CONTACTS.SEARCH.SERVER_SEARCH.BUTTON_ACTIVE'|cmTranslate}}</span>
+            <span ng-show="!activateSearch">{{'CONTACTS.SEARCH.SERVER_SEARCH.BUTTON_INACTIVE'|cmTranslate}}</span>
+            <strong ng-show="search">&nbsp;({{search}})</strong></span>
         </div>
         <i class="fa" ng-class="{'cm-down':!activateSearch,'cm-up':activateSearch}"></i>
     </li>
@@ -27,7 +28,7 @@
     <li class="with-inside-left-icon" ng-show="(activateSearch && !showLoader && results.length == 0)">
         <i class="fa cm-attention"></i>
         <div class="item">
-            @todo keine server results
+            {{'CONTACTS.SEARCH.SERVER_SEARCH.INFO_NOTHING_FOUND' | cmTranslate}}
         </div>
     </li>
     <li class="tag-with-icon-list" ng-repeat="item in results" ng-click="openModal('modalSendRequest',item)" cm-reactive data-qa="contact-search-item">
