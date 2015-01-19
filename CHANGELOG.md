@@ -1,5 +1,8 @@
 # Dev
 
+## BS 19.01.2015
+* CAM-1588 update header search
+
 ## WW 15.01.2015
 * CAM-1581 new desktop layout
     * removed position fixed
