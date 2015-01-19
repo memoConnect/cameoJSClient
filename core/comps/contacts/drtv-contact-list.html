@@ -30,7 +30,7 @@
             @todo keine server results
         </div>
     </li>
-    <li ng-repeat="item in results" ng-click="openModal('modalSendRequest',item)" cm-reactive class="tag-with-icon-list">
+    <li class="tag-with-icon-list" ng-repeat="item in results" ng-click="openModal('modalSendRequest',item)" cm-reactive data-qa="contact-search-item">
         <cm-contact-search-tag cm-contact="item"></cm-contact-search-tag>
         <section class="icon-list">
             <i class="fa cm-new-contact"></i>
