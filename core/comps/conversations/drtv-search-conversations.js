@@ -5,20 +5,35 @@ angular.module('cmConversations').directive('cmSearchConversations',[
     'cmFilter',
     'cmLoader',
     '$timeout',
-    function (cmConversationFactory, cmFilter, cmLoader, $timeout){
+    '$document',
+    function (cmConversationFactory, cmFilter, cmLoader, $timeout, $document){
         return {
             restrict: 'E',
-            template: '<button class="cm-btn-grey" data-qa="btn-search-archive" ng-click="searchArchive()" cm-reactive><span ng-show="!showLoader">{{"TALKS.SEARCH_ARCHIVE"|cmTranslate}}<i class="fa cm-search"></i></span><cm-loader cm-color="ci-color" ng-show="showLoader"></cm-loader></button>',
+            template: '<button class="cm-btn-grey" data-qa="btn-search-archive" ng-click="searchArchive()" cm-reactive><span ng-show="!showLoader"><span class="enabledText">{{"TALKS.SEARCH.BUTTON.SERVER_SEARCH_ACTIVE"|cmTranslate}}</span><span class="disabledText cm-hide">{{"TALKS.SEARCH.BUTTON.SERVER_SEARCH_INACTIVE"|cmTranslate}}</span><i class="fa cm-search"></i></span><cm-loader cm-color="ci-color" ng-show="showLoader"></cm-loader></button>',
             link: function(scope, element){
+
+                function toggleButtonText(){
+                    if(scope.isDisabled){
+                        angular.element($document[0].querySelector('span.disabledText')).removeClass('cm-hide')
+                        angular.element($document[0].querySelector('span.enabledText')).addClass('cm-hide')
+                    } else {
+                        angular.element($document[0].querySelector('span.enabledText')).removeClass('cm-hide')
+                        angular.element($document[0].querySelector('span.disabledText')).addClass('cm-hide')
+                    }
+                }
+
                 scope.setDefault = function(){
                     scope.isDisabled = false;
                     element.removeClass('cm-disabled');
+                    toggleButtonText()
                 };
 
                 scope.updateElement = function(){
                     if(scope.matches.loaded == scope.matches.qty){
                         scope.isDisabled = true;
                         element.addClass('cm-disabled');
+                        toggleButtonText()
+
                     } else {
                         scope.setDefault();
                     }

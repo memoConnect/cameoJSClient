@@ -196,8 +196,13 @@
         "HEADING": "Talks",
         "MORE": "Weitere Talks laden",
         "LIST_EMPTY": "Bisher keine Talks vorhanden.",
-        "SEARCH": "@todo TALKS.SEARCH",
-        "SEARCH_ARCHIVE": "@todo TALKS.SEARCH_ARCHIVE"
+        "SEARCH": {
+            "INFO_NOTHING_FOUND": "Keine passenden Talks (durchsucht: Empfänger und Betreff)",
+            "BUTTON" :{
+                "SERVER_SEARCH_ACTIVE": "Talk-Archiv durchsuchen",
+                "SERVER_SEARCH_INACTIVE": "Keine weiteren Talks"
+            }
+        }
     },
 
     "CONVERSATION": {
