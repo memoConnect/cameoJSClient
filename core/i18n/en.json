@@ -163,7 +163,7 @@
     },
     "INFO": {
         "CREATE": {
-          "HEADLINE_SMALL": "Create your initial identity..",
+          "HEADLINE_SMALL": "Create your initial identity (more..)",
           "HEADLINE": "In your identity you define, what information other users can see. If you accept a contact request from another user, he can see all the fields that you enter in your identity profile.\nYour identity can be found by searching for the cameoID or its display name. ",
           "CAMEOID": "Every identity has a unique cameoID, with which you can be found in cameoNet.",
           "AVATAR": "cameoNet generates a random profile picture. To upload an individual picture please click on the rack-wheel in the bottom left corner.",
@@ -854,7 +854,7 @@
       "CREATE": {
           "HEADER": "User account data",
           "INFO": {
-              "NOTE_ABOUT_THIS_DATA_SMALL": "Enter e-mail address or telephone number..",
+              "NOTE_ABOUT_THIS_DATA_SMALL": "Contact details for password reset (more..)",
               "NOTE_ABOUT_THIS_DATA": "You can add your mobile phone number or e-mail address to your user account. You can validate them by generating a verification message. If you forget your password you can generate a new password and send it to a validated e-mail address or mobile phone number.\n\n Your e-mail address or mobile phone number cannot be seen by any other user."
           },
           "ERROR": "An error has occurred!\nPlease check your entries."
@@ -865,7 +865,7 @@
         "PHONENUMBER": "@:DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER",
         "OLD_PASSWORD": "Your password is invalid."
       },
-      "NOTE_ABOUT_THIS_DATA_SMALL": "Edit your account data..",
+      "NOTE_ABOUT_THIS_DATA_SMALL": "Edit your account data (more..)",
       "NOTE_ABOUT_THIS_DATA": "Here you can edit your account data. This data is not public. E-mail and/or phone number are needed for notifications and password reset.",
       "EMPTY": {
         "LOGINAME": "Please enter a login name.",
