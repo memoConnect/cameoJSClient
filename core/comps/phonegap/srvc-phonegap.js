@@ -11,12 +11,12 @@ angular.module('cmPhonegap').service('cmPhonegap', [
         var isReady = $q.defer();
 
         var self = {
-            isReady: function(fromWhere, callback){
+            isReady: function(whoIs, callback){
                 if($phonegapCameoConfig == 'undefined'){
                     return false;
                 }
 
-                cmLogger.info(fromWhere+' called cmPhonegap.isReady? '+$phonegapCameoConfig.deviceReady)
+                //cmLogger.info(whoIs+' called cmPhonegap.isReady? '+$phonegapCameoConfig.deviceReady)
 
                 // if config doesn't get device ready watch again
                 if(!$phonegapCameoConfig.deviceReady){
@@ -27,7 +27,7 @@ angular.module('cmPhonegap').service('cmPhonegap', [
 
                     isReady.promise.then(function(){
                         if(typeof callback == 'function') {
-                            console.log('calling callback of '+fromWhere)
+                            console.log('calling callback of '+whoIs)
                             callback();
                         }
                     });
