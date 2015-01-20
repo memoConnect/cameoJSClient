@@ -2,20 +2,20 @@
 
 <ul>
     <li ng-if="!conversations.length && !conversations.state.is('loading')" class="empty-list">
-        <i class="fa cm-info"></i>  {{'TALKS.LIST_EMPTY'|cmTranslate}}
+        <i class="fa cm-info"></i>  {{::'TALKS.LIST_EMPTY'|cmTranslate}}
     </li>
     <li ng-repeat="conversation in conversations | orderBy:'timeOfLastUpdate':true | cmSearch:'talks':search as results" ng-click="goto('/conversation/'+conversation.id)" cm-reactive data-qa="conversation-list-element">
         <cm-conversation-tag cm-data="conversation"></cm-conversation-tag>
     </li>
     <li cm-hide-on-filter="search" ng-if="moreTalksAvailable()">
         <button class="cm-btn-grey" ng-click="loadMoreTalks()" data-qa="load-more-btn" cm-reactive>
-            {{'TALKS.MORE'|cmTranslate}}
+            {{::'TALKS.MORE'|cmTranslate}}
         </button>
     </li>
     <li class="with-inside-left-icon" ng-show="(results.length == 0)">
         <i class="fa cm-attention"></i>
         <div class="item">
-            {{'TALKS.SEARCH.INFO_NOTHING_FOUND' | cmTranslate}}
+            {{::'TALKS.SEARCH.INFO_NOTHING_FOUND' | cmTranslate}}
         </div>
     </li>
     <li cm-show-on-filter="search" cm-show-on-min-length="3" data-qa="btn-search-at-server">

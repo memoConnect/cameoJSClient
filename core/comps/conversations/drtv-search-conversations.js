@@ -9,7 +9,7 @@ angular.module('cmConversations').directive('cmSearchConversations',[
     function (cmConversationFactory, cmFilter, cmLoader, $timeout, $document){
         return {
             restrict: 'E',
-            template: '<button class="cm-btn-grey" data-qa="btn-search-archive" ng-click="searchArchive()" cm-reactive><span ng-show="!showLoader"><span class="enabledText">{{"TALKS.SEARCH.BUTTON.SERVER_SEARCH_ACTIVE"|cmTranslate}}</span><span class="disabledText cm-hide">{{"TALKS.SEARCH.BUTTON.SERVER_SEARCH_INACTIVE"|cmTranslate}}</span><i class="fa cm-search"></i></span><cm-loader cm-color="ci-color" ng-show="showLoader"></cm-loader></button>',
+            template: '<button class="cm-btn-grey" data-qa="btn-search-archive" ng-click="searchArchive()" cm-reactive><span ng-show="!showLoader"><span class="enabledText">{{::"TALKS.SEARCH.BUTTON.SERVER_SEARCH_ACTIVE"|cmTranslate}}</span><span class="disabledText cm-hide">{{::"TALKS.SEARCH.BUTTON.SERVER_SEARCH_INACTIVE"|cmTranslate}}</span><i class="fa cm-search"></i></span><cm-loader cm-color="ci-color" ng-show="showLoader"></cm-loader></button>',
             link: function(scope, element){
 
                 function toggleButtonText(){
