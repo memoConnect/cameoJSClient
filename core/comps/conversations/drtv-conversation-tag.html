@@ -1,7 +1,7 @@
 <cm-avatar cm-data="avatarIdentity"></cm-avatar>
 
 <div class="details">
-    <div class="subject is-selectable" data-qa="conversation-subject" ng-bind-html="(::conversation.subject || 'CONVERSATION.NO_SUBJECT' )| cmParse"></div>
+    <div class="subject is-selectable" data-qa="conversation-subject" ng-bind-html="(conversation.subject || 'CONVERSATION.NO_SUBJECT' )| cmParse"></div>
     <cm-message 
         class       = "message" 
         cm-data     = "conversation.lastMessage" 
