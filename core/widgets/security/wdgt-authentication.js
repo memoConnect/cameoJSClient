@@ -99,8 +99,8 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
                                             key2: data.key.id
                                         })
                                         */
-                                       
-                                        cmUserModel.bulkReKeying(cmUserModel.loadLocalKeys()[0].id, data.key.id)
+
+                                        cmReKeying.process(cmUserModel.loadLocalKeys()[0].id)
                                     })
                         },
                         function(result){

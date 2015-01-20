@@ -20,10 +20,10 @@
 
 angular.module('cmCore')
 .service('cmAuthenticationRequest', [
-    'cmApi', 'cmObject', 'cmLogger', 'cmCrypt', 'cmUserModel',
+    'cmApi', 'cmObject', 'cmLogger', 'cmCrypt', 'cmUserModel', 'cmReKeying',
     'cmIdentityFactory', 'cmModal', 'cmCallbackQueue',
     '$rootScope', '$q',
-    function(cmApi, cmObject, cmLogger, cmCrypt, cmUserModel,
+    function(cmApi, cmObject, cmLogger, cmCrypt, cmUserModel, cmReKeying,
              cmIdentityFactory, cmModal, cmCallbackQueue,
              $rootScope, $q){
 
@@ -200,29 +200,6 @@ angular.module('cmCore')
                                 return $q.reject(reason);
                             }
                         )
-            },
-
-            //Todo: maybe find a more suitabble place for this function:
-            openBulkRequest: function(data){
-
-                if(typeof data == 'object' && 'key1' in data && 'key2' in data){
-                    var scope = $rootScope.$new();
-                    scope.data = data;
-
-                    var modalId = 'bulk-rekeying-modal';
-                    cmModal.create({
-                        id: modalId,
-                        type: 'plain',
-                        'class': 'no-padding',
-                        'cm-title': 'DRTV.BULK_REKEYING.HEADER'
-                    },'<cm-bulk-rekeying-request></cm-bulk-rekeying-request>',null,scope);
-
-                    cmModal.open(modalId);
-
-                    cmUserModel.one('bulkrekeying:finished',function(){
-                        $rootScope.closeModal(modalId);
-                    });
-                }
             }
         };
 
@@ -385,34 +362,10 @@ angular.module('cmCore')
                                         .then(function(data){
 
                                             if(is3rdParty === false){
-
-                                                /*
-                                                // Open modal for bulk rekeying:
-                                                self.openBulkRequest({
-                                                    key1: toKey.id,
-                                                    key2: fromKey.id
-                                                })
-                                                */
-
-                                                cmUserModel.bulkReKeying(data.toKey.id)
-
-                                                
+                                                cmReKeying.process(data.toKey.id);
                                             }else{
 
-                                                /*
-                                                // Open success Modal:
-                                                cmModal.create({
-                                                    id:             'authentication-request-successful',
-                                                    type:           'alert',
-                                                    'cm-close-btn': false,
-                                                },  
-                                                    is3rdParty
-                                                    ?   '{{"IDENTITY.KEYS.TRUST.MODAL.SUCCESS"|cmTranslate}}'
-                                                    :   '{{"IDENTITY.KEYS.AUTHENTICATION.MODAL.SUCCESS"|cmTranslate}}'
-                                                )
-
-                                                cmModal.open('authentication-request-successful')
-                                                */
+                                               // do nothing
                                             }
 
                                             //Send a request in return:
