@@ -2,7 +2,8 @@
 
 angular.module('cmCore').directive('cmTimeFormatSelect', [
     'cmSettings',
-    function(cmSettings){
+    'cmUserModel',
+    function(cmSettings, cmUserModel){
         return {
             restrict: 'AE',
             scope: true,
@@ -15,12 +16,18 @@ angular.module('cmCore').directive('cmTimeFormatSelect', [
             },
 
             controller: function($scope){
-                $scope.myFormat = cmSettings.get('timeFormat');
-
                 $scope.timeFormat = [
                     {name:"24h", value: "HH:mm"},
                     {name:"12h", value: "h:mm a"}
                 ];
+
+                function update(){
+                    $scope.myFormat = cmSettings.get('timeFormat');
+                }
+
+                update();
+
+                cmUserModel.on('update:finished', update)
             }
         }
     }
