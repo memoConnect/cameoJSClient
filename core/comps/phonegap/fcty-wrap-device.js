@@ -9,7 +9,7 @@ angular.module('cmPhonegap')
 
         var $device = init();
 
-        cmPhonegap.isReady(function(){
+        cmPhonegap.isReady('$device',function(){
             $device = init();
         });
 

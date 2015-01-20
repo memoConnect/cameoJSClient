@@ -24,14 +24,15 @@
     {"name":"nl.x-services.plugins.sslcertificatechecker","version":"3.3.1","repo":"https://github.com/EddyVerbruggen/SSLCertificateChecker-PhoneGap-Plugin.git "},
 
     {"name":"de.appplant.cordova.plugin.hidden-statusbar-overlay","version":"1.2.0"},
-    {"name":"com.jamiestarke.webviewdebug","version":"1.0.8"},
-    {"name":"com.telerik.plugins.wkwebview","version":"0.2.5","repo":"https://github.com/Telerik-Verified-Plugins/WKWebView.git "}
+    {"name":"com.jamiestarke.webviewdebug","version":"1.0.8"}
+
   ],
 
   "unused-plugins": [
     {"name":"com.verso.cordova.clipboard","version":"0.1.0"},
     {"name":"net.tunts.webintent","version":"0.2.1"},
-    {"name":"uk.co.ibcomputing.phonegapbuild.plugins.receivesendintents","version":"0.2.1","inner":"<param name=\"LAUNCHMODE\" value=\"singleTop\" />"}
+    {"name":"uk.co.ibcomputing.phonegapbuild.plugins.receivesendintents","version":"0.2.1","inner":"<param name=\"LAUNCHMODE\" value=\"singleTop\" />"},
+    {"name":"com.telerik.plugins.wkwebview","version":"0.2.5","repo":"https://github.com/Telerik-Verified-Plugins/WKWebView.git "}
   ],
   "@url-to-icons-screens": "http://docs.build.phonegap.com/en_US/configuring_icons_and_splash.md.html#Icons%20and%20Splash%20Screens",
   "resources": [

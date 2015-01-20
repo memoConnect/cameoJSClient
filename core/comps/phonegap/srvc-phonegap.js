@@ -2,19 +2,21 @@
 
 angular.module('cmPhonegap').service('cmPhonegap', [
     'cmLogger', 'cmHistory', 'cmModal',
-    '$q', '$document', '$phonegapCameoConfig', '$navigator', '$rootScope',
+    '$q', '$document', '$phonegapCameoConfig',
+    '$navigator', '$rootScope',
     function (cmLogger, cmHistory, cmModal,
-              $q, $document, $phonegapCameoConfig, $navigator, $rootScope) {
+              $q, $document, $phonegapCameoConfig,
+              $navigator, $rootScope) {
 
         var isReady = $q.defer();
 
         var self = {
-            isReady: function(callback){
+            isReady: function(fromWhere, callback){
                 if($phonegapCameoConfig == 'undefined'){
                     return false;
                 }
 
-                //cmLogger.info('cmPhonegap.isReady? '+$phonegapCameoConfig.deviceReady)
+                cmLogger.info(fromWhere+' called cmPhonegap.isReady? '+$phonegapCameoConfig.deviceReady)
 
                 // if config doesn't get device ready watch again
                 if(!$phonegapCameoConfig.deviceReady){
@@ -24,8 +26,10 @@ angular.module('cmPhonegap').service('cmPhonegap', [
                     });
 
                     isReady.promise.then(function(){
-                        if(typeof callback == 'function')
+                        if(typeof callback == 'function') {
+                            console.log('calling callback of '+fromWhere)
                             callback();
+                        }
                     });
                 // nothing to wait phonegap is ready
                 } else {
@@ -76,7 +80,7 @@ angular.module('cmPhonegap').service('cmPhonegap', [
         };
 
         // buttons on device
-        self.isReady(function(){
+        self.isReady('cmPhonegap.button init',function(){
             self.initDeviceButtons();
             self.initDevicesEvents();
         });

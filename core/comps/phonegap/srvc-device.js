@@ -3,9 +3,11 @@
 // https://github.com/apache/cordova-plugin-device/blob/master/doc/index.md
 
 angular.module('cmPhonegap')
-.service('cmDevice',
+.service('cmDevice',[
+    'cmPhonegap', 'cmLogger', 'cmUtil',
+    '$window', '$device', '$navigator',
     function (cmPhonegap, cmLogger, cmUtil,
-              $window, $device, $phonegapCameoConfig) {
+              $window, $device, $navigator) {
 
         var unknown = 'unknown';
 
@@ -16,11 +18,7 @@ angular.module('cmPhonegap')
             flags: {},
 
             init: function(){
-                if($phonegapCameoConfig == 'undefined') {
-                    return false;
-                }
-
-                cmPhonegap.isReady(function(){
+                cmPhonegap.isReady('cmDevice',function(){
                     if($device.get() == 'undefined'){
                         //cmLogger.info('DEVICE PLUGIN IS MISSING');
                         return false;
@@ -38,12 +36,17 @@ angular.module('cmPhonegap')
                 var nAgt = '';
 
                 // TODO: iOS8 Bug: Deprecated attempt to access property 'userAgent' on a non-Navigator object.
-                try {
-                    nAgt = ($window.navigator.userAgent||$window.navigator.vendor||$window.opera).toLowerCase();
-                } catch(e){
-                    nAgt = 'Mozilla/5.0 (iPhone; CPU iPhone OS 8_0 like Mac OS X) AppleWebKit';
-                }
 
+                // temp fix for iOS8 beta 1 (fixed in beta 2), add it after the reference to cordova.js
+                if ($navigator.userAgent === undefined) {
+                    nAgt = 'Mozilla/5.0 (iPhone; CPU iPhone OS 8_0 like Mac OS X) AppleWebKit';
+                    navigator.__defineGetter__('userAgent', function() {
+                        return nAgt;
+                    });
+                } else {
+
+                    nAgt = ($navigator.userAgent || $navigator.vendor || $window.opera).toLowerCase();
+                }
                 return nAgt;
             },
 
@@ -279,4 +282,4 @@ angular.module('cmPhonegap')
 
         return self;
     }
-);
+]);

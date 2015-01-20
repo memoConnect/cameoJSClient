@@ -220,19 +220,17 @@ angular.module('cameoClient', [
 // app run handling
 .run([
     'cmSslCertificateChecker', 'cmNetworkInformation', 'cmPushNotificationAdapter',
-    'cmPhonegap', 'cmLauncher',
+    'cmPhonegap', 'cmLauncher', 'cmSplashScreen',
     function(cmSslCertificateChecker, cmNetworkInformation, cmPushNotificationAdapter,
              cmPhonegap, cmLauncher){
 
-        cmPhonegap.isReady(function(){
+        cmPhonegap.isReady('app.js',function(){
             // check ssl certificate
             cmSslCertificateChecker.init();
             // check internet connection
             cmNetworkInformation.init();
             // register device for pushnotification
             cmPushNotificationAdapter.init();
-            // app launcher
-            cmLauncher.init();
         });
     }
 ])

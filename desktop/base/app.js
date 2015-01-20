@@ -207,16 +207,6 @@ angular.module('cameoClient', [
         createRoutes(cmConfigProvider.get('routes'));
     }
 ])
-// app run handling
-.run(['cmNetworkInformation', 'cmPushNotificationAdapter', 'cmPhonegap',
-    function(cmNetworkInformation, cmPushNotificationAdapter, cmPhonegap){
-        cmPhonegap.isReady(function(){
-            // check internet connection
-            cmNetworkInformation.init();
-            // register device for pushnotification
-            cmPushNotificationAdapter.init();
-        });
-}])
 .run(function(){
     // start entropy collection for random number generator
     sjcl.random.startCollectors();

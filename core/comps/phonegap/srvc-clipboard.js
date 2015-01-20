@@ -5,19 +5,15 @@
 angular.module('cmPhonegap')
     .service('cmClipboard', [
         'cmPhonegap',
-        '$cordova', '$phonegapCameoConfig',
+        '$cordova',
         function (cmPhonegap,
-                  $cordova, $phonegapCameoConfig) {
+                  $cordova) {
             var self = {
                 plugin: null,
                 available: false,
 
                 init: function(){
-                    if($phonegapCameoConfig == 'undefined') {
-                        return false;
-                    }
-
-                    cmPhonegap.isReady(function(){
+                    cmPhonegap.isReady('cmClipboard',function(){
                         if(!('plugins' in $cordova)
                             || !('clipboard' in $cordova.plugins)) {
                             //cmLogger.info('NETWORK-INFORMATION PLUGIN IS MISSING');

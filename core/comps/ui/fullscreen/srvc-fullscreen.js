@@ -118,9 +118,9 @@ angular.module('cmUi')
                     event.preventDefault();
                 }
             });
-
-            cmObject.addEventHandlingTo(self);
         }
+
+        cmObject.addEventHandlingTo(self);
 
     return self;
     }

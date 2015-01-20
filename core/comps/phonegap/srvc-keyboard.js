@@ -15,7 +15,7 @@ angular.module('cmPhonegap')
                 init: function(){
                     cmObject.addEventHandlingTo(self);
 
-                    cmPhonegap.isReady(function(){
+                    cmPhonegap.isReady('cmKeyboard',function(){
                         if(!('plugins' in $cordova) || !('Keyboard' in $cordova.plugins)) {
                             //cmLogger.info('SCREENORIENTATION PLUGIN IS MISSING');
                             return false;
