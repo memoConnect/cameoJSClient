@@ -7,7 +7,7 @@ angular.module('cmUi')
         return {
             restrict: 'A',
             link: function(scope, element, attrs) {
-                cmPinchAndPan.init({initOnFullscreen:true},element);
+                cmPinchAndPan.init({initOnFullscreen:attrs.cmPinchAndPan},element);
 
                 scope.$on('$destroy',function(){
                     cmPinchAndPan.destroy(element);
