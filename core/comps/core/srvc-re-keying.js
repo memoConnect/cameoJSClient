@@ -25,6 +25,10 @@ angular.module('cmCore')
                         cmUserModel.data.identity.getTrustedKeys().then(
                             function(trusted_keys){
 
+                                if(trusted_keys.length > 0){
+                                    self.showModal()
+                                }
+
                                 var rekeying_processes = [];
 
                                 trusted_keys.forEach(function(key){
@@ -76,6 +80,8 @@ angular.module('cmCore')
                                     }
                                 });
 
+                                console.log('rekeying_processes.length',rekeying_processes.length)
+
                                 $q.all(rekeying_processes).finally(
                                     function(){
                                         self.trigger('bulkrekeying:finished');
@@ -91,6 +97,14 @@ angular.module('cmCore')
                     this.state.unset('rekeying');
                 }
             }
+        };
+
+        this.showModal = function(){
+            cmLogger.debug('cmReKeying.showModal');
+
+            this.one('bulkrekeying:finished', function(){
+                cmLogger.debug('close rekeying modal!')
+            });
         }
     }
 ]);

@@ -4,6 +4,7 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
 
     'cmUserModel',
     'cmAuthenticationRequest',
+    'cmReKeying',
     'cmCallbackQueue',
     'cmIdentityFactory',
     'cmContactsModel',
@@ -11,7 +12,7 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
     '$rootScope',
     '$q',
 
-    function(cmUserModel, cmAuthenticationRequest, cmCallbackQueue, cmIdentityFactory, cmContactsModel, $timeout, $rootScope, $q){
+    function(cmUserModel, cmAuthenticationRequest, cmReKeying, cmCallbackQueue, cmIdentityFactory, cmContactsModel, $timeout, $rootScope, $q){
         return {
             restrict: 'E',
             templateUrl: 'widgets/security/wdgt-authentication.html',
