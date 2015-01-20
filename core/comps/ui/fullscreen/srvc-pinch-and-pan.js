@@ -192,7 +192,7 @@ angular.module('cmUi')
                         },100);
                     }
 
-                    if('initOnFullscreen' in _settings_) {
+                    if('initOnFullscreen' in _settings_ && _settings_.initOnFullscreen) {
                         cmFullscreen.on('change', function (event, data) {
                             if(!cmUtil.isInParent(data.element, _element_[0])){
                                 return false;
@@ -206,7 +206,7 @@ angular.module('cmUi')
                             }
                         });
                     } else {
-                        init();
+                        init(_element_[0]);
                     }
                 },
                 initHammer: function(){
