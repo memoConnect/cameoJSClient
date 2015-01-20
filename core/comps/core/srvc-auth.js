@@ -53,6 +53,9 @@ angular.module('cmCore')
 
                 /* reset validate Token */
                 _TOKEN_ = undefined;
+                if(_TOKEN_ != undefined){
+                    cmLogger.warn('cmAuth.removeToken - validate Token not removed')
+                }
 
                 /* remove Token from LocalStorage */
                 LocalStorageAdapter.remove('token');
@@ -114,7 +117,7 @@ angular.module('cmCore')
                     if(token !== undefined && token !== 'undefined' && token !== null && token.length > 0){
                         if(_TOKEN_ != undefined && _TOKEN_ != token){
                             $rootScope.$broadcast('logout',{where: 'cmAuth getToken failure'});
-                            cmLogger.debug('cmAuth.storeToken - Error - validateToken is different');
+                            cmLogger.debug('cmAuth.getToken - Error - validateToken is different');
 
                             return false;
                         }

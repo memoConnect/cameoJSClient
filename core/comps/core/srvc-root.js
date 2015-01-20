@@ -7,6 +7,10 @@ angular.module('cmCore')
     function(cmLogger, cmJob, cmModal, cmConfig, cmTransferScopeData,
              $rootScope, $window, $location, $route){
 
+        $rootScope.getCurrentUrl = function(){
+            return $location.$$path;
+        };
+
         $rootScope.goBack = function(){
             $window.history.back();
         };

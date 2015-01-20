@@ -146,8 +146,11 @@ describe('Authentication requests -', function () {
     describe("key1 -", function () {
         // reset!!
         it('before all test starting clear Localstorage', function(){
-            util.get('/login')
-            util.clearLocalStorage()
+            util.get('/login',true)
+            util.waitForPageLoad('/login')
+            .then(function(){
+                    util.clearLocalStorage()
+            })
         })
 
         describe("create test user, generate key and check keytrust", function () {
@@ -209,6 +212,7 @@ describe('Authentication requests -', function () {
         })
 
         it("generate key3", function () {
+
             util.login(testUser1, "password")
             .then(function(){
                 util.get("/settings/identity/key/list")
@@ -244,11 +248,15 @@ describe('Authentication requests -', function () {
 
         it("get identityId from event", function () {
             identityId = authEvents[0].fromIdentityId
+            expect(identityId).toBe(authEvents[0].fromIdentityId)
         })
 
         it("abort request", function () {
             util.waitAndClickQa("btn-cancel-authentication")
-            util.waitForElementDisappear("[data-qa='transaction-secret-value']")
+            .then(function(){
+                util.waitForElementDisappear("[data-qa='transaction-secret-value']")
+            })
+
         })
 
         it("create encrypted conversation", function () {

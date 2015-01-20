@@ -53,6 +53,17 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
                 })
             },
 
+            searchConversations: function(search, limit, offset){
+                var queryString = cmUtil.handleLimitOffset(limit,offset);
+
+                return cmApi.post({
+                    path: '/conversations/search' + queryString,
+                    data: {
+                        search: search
+                    }
+                })
+            },
+
             getConversationSummary: function(id){
                 //cmLogger.warn('cmConversationAdapter: .getConversationSummary is deprecated; use .getConversation(id, 1, 0) instead')
                 //return this.getConversation(id, 1, 0)

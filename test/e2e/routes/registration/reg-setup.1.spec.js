@@ -45,7 +45,7 @@ describe('Registration-Setup : ', function () {
         })
 
         it("should go direclty to /talks", function(){
-            util.waitForPageLoad("/talks")
+            util.waitForPageLoad('/talks')
         })
     })
 
@@ -58,22 +58,20 @@ describe('Registration-Setup : ', function () {
         })
 
         it("the next step should be setup identity", function () {
-            util.waitAndClickQa("btn-next-step")
+            util.waitAndClickQa('btn-next-step')
             .then(function(){
                 return util.waitForPageLoad('/setup/identity')
             })
         })
 
         it("the next step should be key generation", function () {
-            util.waitAndClickQa("btn-next-step")
-            .then(function(){
+            util.waitAndClickQa('btn-next-step').then(function(){
                 return util.waitForPageLoad('/settings/identity/key/create')
             })
         })
 
         it("should be in /talks after canceling key generation", function () {
-            util.waitAndClickQa('btn-cancel-key-generation')
-            .then(function(){
+            util.waitAndClickQa('btn-cancel-key-generation').then(function(){
                 return util.waitForPageLoad('/talks')
             })
         })

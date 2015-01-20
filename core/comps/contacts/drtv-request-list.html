@@ -9,10 +9,10 @@
 
 <section ng-if="(requests.length > 0)">
     <ul class="no-border-top">
-        <li ng-repeat="request in requests" class="contact-request-item" data-qa="contact-list-element">
-            <div>
+        <li ng-repeat="request in requests" data-qa="contact-list-element">
+            <div class="contact-request-item">
                 <cm-avatar cm-data="request.identity"></cm-avatar>
-                <section cm-weight="4" class="requestIdentity w75">
+                <section class="requestIdentity w75">
                     <div class="displayName" data-qa="contact-display-name">{{request.identity.getDisplayName()}}</div>
                 </section>
             </div>

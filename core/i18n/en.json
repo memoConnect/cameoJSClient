@@ -358,11 +358,9 @@
     "PAGES": {
       "ABOUT_US": {
         "3RD_PARTY": {
-          "TITLE": "3rd party plugins",
-          "DATE": "1412842948000",
-          "LIBRARIES": "AngularJS\nhttps://angularjs.org/;AngularJS translate\nhttps://github.com/angular-translate;AngularJS loading bar\nhttps://chieffancypants.github.io/angular-loading-bar;AngularJS emoji filter\nhttps://github.com/globaldev/angular-emoji-filter;captchagen\nhttps://github.com/wearefractal/captchagen;JSEncrypt\nhttps://github.com/travist/jsencrypt;Stanford Javascript Crypto Library (SJCL)\nhttps://crypto.stanford.edu/sjcl;CryptoJS\nhttps://www.code.google.com/p/crypto-js;FileSaver.js\n https://github.com/eligrey/FileSaver.js;Blob.js\nhttps://github.com/eligrey/Blob.js;passchk.js\nhttps://rumkin.com/tools/password/passchk.php;spin.js\nhttp://fgnass.github.io/spin.js;FastClick\nhttps://github.com/ftlabs/fastclick"
+          "TITLE": "3rd party plugins"
         },
-        "TEXT": "cameoNet 2014",
+        "TEXT": "cameoNet 2015",
         "TITLE": "About us"
       },
       "NOTIFY": {
@@ -681,7 +679,15 @@
     "TAG": {
       "FILTER": "Filter"
     },
-    "LIST_EMPTY": "No contacts yet!"
+    "LIST_EMPTY": "No contacts yet!",
+    "SEARCH": {
+      "INFO_NOTHING_FOUND": "@todo CONTACTS.SEARCH.INFO_NOTHING_FOUND",
+      "SERVER_SEARCH": {
+        "INFO_NOTHING_FOUND": "@todo CONTACTS.SEARCH.SERVER_SEARCH.INFO_NOTHING_FOUND",
+        "BUTTON_ACTIVE": "@todo CONTACTS.SEARCH.SERVER_SEARCH.BUTTON_ACTIVE",
+        "BUTTON_INACTIVE": "@todo CONTACTS.SEARCH.SERVER_SEARCH.BUTTON_INACTIVE"
+      }
+    }
   },
   "REGISTER": {
     "TITLE": {
@@ -805,7 +811,14 @@
   "TALKS": {
     "HEADING": "Talks",
     "MORE": "List more talks.",
-    "LIST_EMPTY": "No talks yet!"
+    "LIST_EMPTY": "No talks yet!",
+    "SEARCH": {
+      "INFO_NOTHING_FOUND": "@todo TALKS.SEARCH.INFO_NOTHING_FOUND",
+        "BUTTON" :{
+        "SERVER_SEARCH_ACTIVE": "@todo TALKS.SEARCH.BUTTON.SERVER_SEARCH_ACTIVE",
+        "SERVER_SEARCH_INACTIVE": "@todo TALKS.SEARCH.BUTTON.SERVER_SEARCH_INACTIVE"
+      }
+    }
   },
   "LANG": {
     "EN": "English",

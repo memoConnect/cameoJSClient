@@ -1,0 +1,100 @@
+cm-identity-tag, cm-contact-tag, cm-contact-search-tag, cm-recipient-tag, .contact-search-item, .contact-request-item, .key-list-item{
+  .dtb!important;
+  overflow: hidden;
+
+  > * {
+    .vat;
+    .dtbc!important;
+    height: @cm-unit;
+  }
+
+  // layout
+  cm-avatar{
+    width:@cm-unit+1;
+  }
+  cm-contact-type, cm-contact-trust, .icon-list{
+    width:@cm-unit;
+    &.with-two-icons{
+      width:@cm-unit*2;
+      white-space:nowrap;
+    }
+  }
+
+  .pos-rel;
+
+  .w100;
+  min-height: @cm-unit;
+  padding: @cm-vertical-padding;
+  cm-key-level {
+    margin-right: 0.5rem;
+  }
+  .identityName, .requestIdentity{
+    .vam!important;
+    .displayName{
+      font-weight:bold;
+      .mb10;
+      .single-line;
+    }
+    .cameoId{
+      font-style: italic;
+      .single-line;
+    }
+    .message {
+      .w60;
+      .single-line;
+    }
+  }
+}
+
+.tag-with-icon-list{
+  .dtb;
+   > *{
+     .vat;
+   }
+  * + .icon-list{
+    .dtbc;
+    width:@cm-unit;
+    &.with-two-icons{
+      width:@cm-unit*2;
+    }
+  }
+}
+
+cm-identity-edit, cm-widget-contact-edit, cm-contact-create {
+  .dbl;
+  .edit-identity-head {
+    padding-left: 2rem;
+    padding-right: 0;
+  }
+}
+
+cm-contact-tag, cm-recipient-tag, cm-contact-search-tag{
+  .displayName{
+    .vat;
+    height:@cm-unit;
+    line-height:@cm-unit;
+    font-weight:bold;
+    .single-line;
+  }
+}
+
+cm-contact-tag, cm-recipient-tag, .contact-search-item, cm-identity-tag, cm-contact-search-tag {
+  padding: 0;
+  height: @cm-unit;
+
+  cm-contact-type{
+    .tar;
+    line-height: @cm-unit;
+    i {
+      .no-margin !important;
+      .tac;
+      .vam;
+      width: @cm-unit;
+      height: @cm-unit;
+      font-size: @cm-unit - 1;
+      color: @cm-border-grey;
+      line-height: inherit;
+    }
+  }
+}
+

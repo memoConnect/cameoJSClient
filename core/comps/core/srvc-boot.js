@@ -3,9 +3,9 @@
 angular.module('cmCore')
 .service('cmBoot', [
     'cmObject', 'cmLogger',
-    '$q', '$rootScope', '$document', '$injector', '$timeout',
+    '$q', '$rootScope', '$document', '$injector',
     function(cmObject, cmLogger,
-             $q, $rootScope, $document, $injector, $timeout) {
+             $q, $rootScope, $document, $injector) {
         var promises = {};
 
         function reset(){
@@ -23,7 +23,7 @@ angular.module('cmCore')
 
         $rootScope.$on('cmBoot:appSpinner', function(event, action, where){
             angular.element($document[0].querySelector('.app-spinner'))
-                .css('display',action == 'hide'?'none':null);
+                .toggleClass('cm-hide',action == 'hide'?true:false);
         });
 
         $rootScope.$on('$routeChangeSuccess',function(){
@@ -46,6 +46,29 @@ angular.module('cmCore')
             },
 
             isReady: {
+                font: function(){
+                    if(!('font' in promises)){
+                        promises.font = $q.defer();
+
+                        // add cm-rhino-bubble-glyph as unicode glyph
+                        FontLoader.referenceText += "\uf044";
+
+                        var fontLoader = new FontLoader(['CameoFont'], {
+                            fontsLoaded: function(error) {
+                                if (error !== null) {
+                                    cmLogger.error('cmBoot: '+error.message+' '+error.notLoadedFontFamilies);
+                                    promises.font.resolve();
+                                }
+                            },
+                            fontLoaded: function(fontFamily) {
+                                promises.font.resolve();
+                            }
+                        }, 3000);
+                        fontLoader.loadFonts();
+                    }
+
+                    return promises.font.promise;
+                },
                 i18n: function(){
                     if(!('i18n' in promises)){
                         promises.i18n = $q.defer();

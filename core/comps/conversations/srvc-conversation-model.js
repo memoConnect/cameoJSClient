@@ -1051,6 +1051,10 @@ angular.module('cmConversations')
                 * message.from.id != cmUserModel.data.identity.id
                  &&
                  */
+
+                if(message.id == '#new_message')
+                    return false;
+
                 if((
                   !message.isEncrypted()
                 || message.state.is('decrypted')

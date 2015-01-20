@@ -35,10 +35,10 @@ angular.module('cmCore')
               $injector) {
         return function (exception, cause) {
 
-            var stack = undefined
+            var stack = undefined;
 
             try{
-                stack = (exception.stack+'')
+                stack = (exception.stack+'');
 
                 var error = {
                     location:   $injector.get('$location').$$path,
@@ -55,7 +55,7 @@ angular.module('cmCore')
                 }
 
             } catch(e){
-                cmLogger.error('stack permission denied:' +e)
+                cmLogger.error('stack permission denied:' +e);
             }
             //throw exception;
         };

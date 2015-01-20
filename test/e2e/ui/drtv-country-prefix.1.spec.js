@@ -19,6 +19,7 @@ describe('Country Prefix at phoneNumber', function () {
             util.scrollToElement("[data-qa='input-phoneNumber']")
             // list is hidden
             expect($('cm-country-prefix-list.is-visible').isPresent()).toBeFalsy()
+
             // input isnt empty
             if(options.checkInput){
                 // handler isnt visible
@@ -81,13 +82,15 @@ describe('Country Prefix at phoneNumber', function () {
             // submit ???
             if(options.qaSubmitButton) {
                 // save the number
-                util.click(options.qaSubmitButton)
-                if (options.checkAfterSubmit) {
-                    // after save check input
-                    util.waitForLoader(1, 'cm-footer').then(function () {
-                        expect(util.getVal('input-phoneNumber')).toBe(numberPrefix + '1234567')
-                    })
-                }
+                util.waitAndClickQa(options.qaSubmitButton)
+                .then(function(){
+                    if (options.checkAfterSubmit) {
+                        // after save check input
+                        util.waitForLoader(1, 'cm-footer').then(function () {
+                            expect(util.getVal('input-phoneNumber')).toBe(numberPrefix + '1234567')
+                        })
+                    }
+                })
             }
         })
     }
@@ -116,7 +119,7 @@ describe('Country Prefix at phoneNumber', function () {
                     qaSubmitButton: 'btn-next-step',
                     checkAfterSubmit: false
                 }).then(function(){
-                    util.click('btn-cancel-key-generation')
+                    util.waitAndClickQa('btn-cancel-key-generation')
                 })
             })
         })

@@ -32,13 +32,15 @@ module.exports = function (grunt, options) {
                     files: files,
                     configFile: 'test/unit/config/karma.js',
                     preprocessors: {
-                        'dist/app/i18n/*.json': ['json2js'],
-                        'build/i18n/language-keys.json': ['json2js']
+                        'dist/app/i18n/*.json': ['ng-json2js'],
+                        'build/i18n/language-keys.json': ['ng-json2js']
                     },
                     // for all i18n json strip to ->/i18n
                     ngJson2JsPreprocessor: {
                         stripPrefix: '(dist/app/)|(build/)'
-                    }
+                    },
+                    captureTimeout: 60000,
+                    browserNoActivityTimeout: 60000
                 },
                 jenkins: {
                     reporters: ['progress', 'junit'],

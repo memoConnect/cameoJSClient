@@ -1,9 +1,9 @@
-<h2 class="no-margin-bottom">
+<h2 class="no-margin-bottom border-bottom">
     <i class="fa cm-info"></i>
     {{'HELP.HEADING' | cmTranslate}}
 </h2>
 
-<ul>
+<ul class="no-border-top">
     <li ng-repeat="page in overviewKeys"
         ng-click="handleLink($event, page, overview[page].disabled, overview[page])"
         ng-class="{

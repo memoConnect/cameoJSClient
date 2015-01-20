@@ -195,7 +195,14 @@
     "TALKS": {
         "HEADING": "Talks",
         "MORE": "Weitere Talks laden",
-        "LIST_EMPTY": "Bisher keine Talks vorhanden."
+        "LIST_EMPTY": "Bisher keine Talks vorhanden.",
+        "SEARCH": {
+            "INFO_NOTHING_FOUND": "Keine passenden Talks (durchsucht: Empfänger und Betreff)",
+            "BUTTON" :{
+                "SERVER_SEARCH_ACTIVE": "Talk-Archiv durchsuchen",
+                "SERVER_SEARCH_INACTIVE": "Keine weiteren Talks"
+            }
+        }
     },
 
     "CONVERSATION": {
@@ -316,6 +323,14 @@
             "ACCEPT": "Akzeptieren",
             "REJECT": "Zurückweisen",
             "IGNORE": "Ignorieren"
+        },
+        "SEARCH": {
+            "INFO_NOTHING_FOUND": "Keine passenden lokalen Kontakte",
+            "SERVER_SEARCH": {
+                "INFO_NOTHING_FOUND": "Keine passenden neuen cameoNet-Kontakte",
+                "BUTTON_ACTIVE": "Ergebnis cameoNet-Suche",
+                "BUTTON_INACTIVE": "cameoNet jetzt durchsuchen"
+            }
         }
     },
 
@@ -640,11 +655,9 @@
             },
             "ABOUT_US": {
                 "TITLE": "Über uns",
-                "TEXT": "cameoNet 2014",
+                "TEXT": "cameoNet 2015",
                 "3RD_PARTY": {
-                    "TITLE": "Eingebundene Projekte",
-                    "DATE": "1412842948000",
-                    "LIBRARIES": "AngularJS\nhttps://angularjs.org/;AngularJS translate\nhttps://github.com/angular-translate;AngularJS loading bar\nhttps://chieffancypants.github.io/angular-loading-bar;AngularJS emoji filter\nhttps://github.com/globaldev/angular-emoji-filter;captchagen\nhttps://github.com/wearefractal/captchagen;JSEncrypt\nhttps://github.com/travist/jsencrypt;Stanford Javascript Crypto Library (SJCL)\nhttps://crypto.stanford.edu/sjcl;CryptoJS\nhttps://www.code.google.com/p/crypto-js;FileSaver.js\n https://github.com/eligrey/FileSaver.js;Blob.js\nhttps://github.com/eligrey/Blob.js;passchk.js\nhttps://rumkin.com/tools/password/passchk.php;spin.js\nhttp://fgnass.github.io/spin.js;FastClick\nhttps://github.com/ftlabs/fastclick"
+                    "TITLE": "Eingebundene Projekte"
                 }
             },
 

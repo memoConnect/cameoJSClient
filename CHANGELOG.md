@@ -1,5 +1,26 @@
 # Dev
 
+## BS 19.01.2015
+* CAM-1588 update header search
+
+## WW 15.01.2015
+* CAM-1581 new desktop layout
+    * removed position fixed
+    * cm-coloumn & cm-scrollable calcs the height for scrollable content
+    * min dimension is 1024x768
+* CAM-1363 fullscreen for files in cm-message
+    * one height for all files states / onUpload, onDownloadReady, onDownload, cached
+    * new file view for all embed types
+    * image thumb stays in preivew mask, also stay in fulllscreen mask
+    * in fullscreen only pinch (mobile 2 touches) and zoom (mousewheel) possible, pan not possible yet (move)
+* add a font loader
+* update thirdparty list
+* add about us to help route
+
+#########
+# RC 0.5.0 - 12.01.2015
+#########
+
 ## BS 09.01.2015
 * finish CAM-1315, story contains new trust aspect in conversations, "transtive rekeying"
 
