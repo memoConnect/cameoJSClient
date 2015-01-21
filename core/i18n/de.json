@@ -798,8 +798,8 @@
             "FAX": "Fax"
         },
         "BULK_REKEYING": {
-            "HEADER": "Neuverschlüsselung",
-            "CONTENT": "Die Talks auf diesem Gerät werden für den neuen cameoKey verschlüsselt.",
+            "HEADER": "@todo Neuverschlüsselung",
+            "CONTENT": "@todo Die Talks auf diesem Gerät werden für den neuen cameoKey verschlüsselt.",
             "START": "Start"
         },
         "FOOTER": {

@@ -124,8 +124,8 @@ angular.module('cmCore')
                 id: modal_id,
                 type: 'plain',
                 class: 'no-padding',
-                'cm-title': 'rekeying modal'
-            },'<cm-bulk-rekeying-request></cm-bulk-rekeying-request>', null, modal_scope);
+                'cm-title': 'DRTV.BULK_REKEYING.HEADER'
+            },'<cm-re-keying-modal></cm-rekeying-modal>', null, modal_scope);
 
 
             cmModal.open(modal_id);
