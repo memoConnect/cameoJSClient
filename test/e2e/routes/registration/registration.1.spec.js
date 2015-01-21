@@ -17,6 +17,18 @@ describe('Registration: ', function () {
         })
     })
 
+    it('should contain link to terms', function() {
+        util.waitForElement("[data-qa='link-terms']")
+        $("[data-qa='link-terms']").click()
+        util.waitForPageLoad("/terms")
+    })
+
+    it('should go back to registration',function(){
+        util.waitForElement('cm-back div.back-wrap')
+        $('cm-back div.back-wrap').click()
+        util.waitForPageLoad("/registration")
+    })
+
     it('should display errors if required fields are empty', function () {
         $("[data-qa='btn-createUser']").click()
 
@@ -79,15 +91,6 @@ describe('Registration: ', function () {
         })
 
     })
-
-    it('should link to term of use', function() {
-        util.scrollToBottom()
-
-        util.waitForElement("[data-qa='link-terms']")
-        $("[data-qa='link-terms']").click()
-        util.waitForPageLoad("/terms")
-    })
-
 
     it('should create account with valid credentials and have a support talk', function() {
         util.createTestUser()
