@@ -17,7 +17,8 @@ angular.module('cameoClient', [
     'cmAppConversations',
     'cmContacts',
     'cmConversations',
-    'cmValidate'
+    'cmValidate',
+    'cmTouchEvents'
 ])
 
 // cameo configuration for our providers
