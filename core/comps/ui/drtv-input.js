@@ -174,7 +174,8 @@ angular.module('cmUi')
 
                     cmPristine.off('reinit', reinit);
 
-                    killWatcher();
+                    if(killWatcher)
+                        killWatcher();
                 });
             }
         }
