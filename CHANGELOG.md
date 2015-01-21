@@ -6,6 +6,11 @@
     * re-keying modal will shown, when re-keying will be proceed
 * CAM-1511 - add scroll to after last message is decrypted
 
+## WW 21.01.2015
+* fixxed ios splashscreen
+* app keyboard should be closed before route change
+* fixxed image fullscreen for app
+
 ## BS 19.01.2015
 * CAM-1588 update header search
 

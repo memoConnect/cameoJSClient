@@ -1,14 +1,11 @@
 'use strict';
 
-angular.module('cmUser').directive('cmIncomingAuthenticationRequest',[
-
-    'cmUserModel',
-    'cmIdentityFactory',
-    'cmLoader',
-    '$timeout',
-    '$document',
-    
-    function (cmUserModel, cmIdentityFactory, cmLoader, $timeout, $document){
+angular.module('cmUser')
+.directive('cmIncomingAuthenticationRequest',[
+    'cmUserModel', 'cmIdentityFactory', 'cmLoader',
+    '$timeout', '$document',
+    function (cmUserModel, cmIdentityFactory, cmLoader,
+                $timeout, $document){
         return {
             restrict:       'E',
             scope:          false,
@@ -16,6 +13,10 @@ angular.module('cmUser').directive('cmIncomingAuthenticationRequest',[
             link: function(scope){
                 var loader  = new cmLoader(scope),
                     btns    = $document[0].querySelectorAll('footer button');
+
+                scope.isIdle = function(){
+                    return loader.isIdle();
+                };
 
                 scope.startLoader = function(){
                     loader.start();
@@ -56,9 +57,9 @@ angular.module('cmUser').directive('cmIncomingAuthenticationRequest',[
                 }
 
                 function refresh(){
-                    $scope.is3rdParty    =   $scope.request.fromIdentityId != cmUserModel.data.identity.id,
-                    $scope.fromIdentity  =   cmIdentityFactory.find($scope.request.fromIdentityId),
-                    $scope.fromKey       =   $scope.fromIdentity.keys.find($scope.request.fromKeyId)
+                    $scope.is3rdParty    =   $scope.request.fromIdentityId != cmUserModel.data.identity.id;
+                    $scope.fromIdentity  =   cmIdentityFactory.find($scope.request.fromIdentityId);
+                    $scope.fromKey       =   $scope.fromIdentity.keys.find($scope.request.fromKeyId);
 
                     $scope.modalMessageVars = {
                         cameoKey: $scope.fromKey.name,
@@ -75,7 +76,7 @@ angular.module('cmUser').directive('cmIncomingAuthenticationRequest',[
                     }, 50);
                 }
 
-                $scope.$watch('request', refresh)
+                $scope.$watch('request', refresh);
             }
         }
     }
