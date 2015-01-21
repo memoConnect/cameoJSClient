@@ -34,32 +34,40 @@ angular.module('cmCore')
                                 trusted_keys.forEach(function(key){
                                     if(key.id != localKey.id){
 
-                                        rekeying_processes.push(cmAuth.getBulkPassphrases(localKey.id, key.id).then(
+                                        var defered = $q.defer();
+
+                                        rekeying_processes.push(defered.promise);
+
+                                        cmAuth.getBulkPassphrases(localKey.id, key.id).then(
                                             function(list){
-                                                if(list.length == 0)
+                                                if(list.length == 0){
+                                                    defered.reject();
                                                     return [];
+                                                }
 
                                                 //re and encrypt passphrasees one by one, dont try to de and encrypt them all simultaniuosly:
                                                 list.reduce(function(previous_run, item){
                                                     return  previous_run
-                                                        .then(function(list_so_far){
-                                                            return  cmUserModel.decryptPassphrase(item.aePassphrase, localKey.id)
-                                                                .then(function(passphrase){
-                                                                    return key.encrypt(passphrase)
-                                                                })
-                                                                .then(function(encrypted_passphrase){
-                                                                    return  list_so_far.concat([{
-                                                                        conversationId: item.conversationId,
-                                                                        aePassphrase:   encrypted_passphrase
-                                                                    }])
-                                                                })
+                                                    .then(function(list_so_far){
+                                                        return  cmUserModel.decryptPassphrase(item.aePassphrase, localKey.id)
+                                                            .then(function(passphrase){
+                                                                return key.encrypt(passphrase)
+                                                            })
+                                                            .then(function(encrypted_passphrase){
+                                                                return  list_so_far.concat([{
+                                                                    conversationId: item.conversationId,
+                                                                    aePassphrase:   encrypted_passphrase
+                                                                }])
+                                                            })
 
-                                                        })
-                                                }, $q.when([]))
-                                                    .then(function(newList){
-                                                        return  cmAuth.saveBulkPassphrases(key.id, newList)
                                                     })
-                                                    .then(
+                                                }, $q.when([]))
+                                                .then(
+                                                    function(newList){
+                                                    console.warn('Save Schmutz!')
+                                                    return  cmAuth.saveBulkPassphrases(key.id, newList)
+                                                })
+                                                .then(
                                                     function(){
                                                         return  cmApi.broadcast({
                                                             name: 'rekeying:finished',
@@ -70,17 +78,25 @@ angular.module('cmCore')
                                                     },
                                                     function(){
                                                         cmLogger.debug('cmUserModel.bulkReKeying - Request Error - saveBulkPassphrases');
+                                                        return $q.reject();
+                                                    }
+                                                )
+                                                .then(
+                                                    function(){
+                                                        defered.resolve();
+                                                    },
+                                                    function(){
+                                                        defered.reject();
                                                     }
                                                 )
                                             },
                                             function(){
                                                 cmLogger.debug('cmUserModel.bulkReKeying - Request Error - getBulkPassphrases');
+                                                defered.reject();
                                             }
-                                        ))
+                                        )
                                     }
                                 });
-
-                                console.log('rekeying_processes.length',rekeying_processes.length)
 
                                 $q.all(rekeying_processes).finally(
                                     function(){
@@ -100,10 +116,10 @@ angular.module('cmCore')
         };
 
         this.showModal = function(){
-            cmLogger.debug('cmReKeying.showModal');
+            cmLogger.warn('cmReKeying.showModal');
 
             this.one('bulkrekeying:finished', function(){
-                cmLogger.debug('close rekeying modal!')
+                cmLogger.warn('close rekeying modal!')
             });
         }
     }
