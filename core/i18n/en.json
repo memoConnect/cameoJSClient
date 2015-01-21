@@ -235,7 +235,7 @@
     },
     "BULK_REKEYING": {
       "START": "Start",
-      "CONTENT": @todo "All talks on this device are now being encrypted by the new cameoKey.",
+      "CONTENT": "@todo All talks on this device are now being encrypted by the new cameoKey.",
       "HEADER": "@todo New encryption of talks"
     },
     "EXTERN_CONTACT": {
