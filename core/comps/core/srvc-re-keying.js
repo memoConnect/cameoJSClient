@@ -124,14 +124,14 @@ angular.module('cmCore')
                 id: modal_id,
                 type: 'plain',
                 class: 'no-padding',
-                'cm-title': 'DRTV.BULK_REKEYING.HEADER'
+                'cm-title': 'DRTV.BULK_REKEYING.HEADER',
+                'cm-close-btn': false,
+                'cm-close-on-backdrop': false
             },'<cm-re-keying-modal></cm-rekeying-modal>', null, modal_scope);
-
 
             cmModal.open(modal_id);
 
             this.one('bulkrekeying:finished', function(){
-                cmLogger.warn('close rekeying modal!')
                 var modal = cmModal.instances[modal_id];
 
                 if(modal && modal.isActive()){
