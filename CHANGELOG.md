@@ -2,8 +2,9 @@
 
 ## BS 21.01.2015
 * CAM-1620 - add Re-Keying Modal
-* update authentication-modal, add spinnter, style error msgs
-* re-keying modal will shown, when re-keying will be proceed
+    * update authentication-modal, add spinnter, style error msgs
+    * re-keying modal will shown, when re-keying will be proceed
+* CAM-1511 - add scroll to after last message is decrypted
 
 ## BS 19.01.2015
 * CAM-1588 update header search
