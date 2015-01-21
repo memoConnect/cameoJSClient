@@ -12,7 +12,7 @@ if(useChrome){
     browserConfig = {
         //seleniumPort: null,
         chromeDriver: '<%= chromeDriverPath %>',
-        directConnect: false,
+        directConnect: true,
         capabilities:{
             'browserName':'chrome',
             'chromeOptions': {
