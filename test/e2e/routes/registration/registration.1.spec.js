@@ -81,7 +81,8 @@ describe('Registration: ', function () {
     })
 
     it('should link to term of use', function() {
-        util.scrollToBottom()
+        //util.scrollToBottom()
+        util.scrollToElement("[data-qa='link-terms']")
 
         util.waitForElement("[data-qa='link-terms']")
         $("[data-qa='link-terms']").click()
