@@ -14,14 +14,10 @@ angular.module('cmPhonegap')
 
             init: function(){
                 cmPhonegap.isReady('cmSplashScreen',function(){
-                    console.log('splashscreen before')
-
                     if(!('splashscreen' in $navigator)) {
                         //cmLogger.info('SPLASHCREEN PLUGIN IS MISSING');
                         return false;
                     }
-
-                    console.log('phonegapReady hide!!!')
 
                     self.plugin = $navigator.splashscreen;
 

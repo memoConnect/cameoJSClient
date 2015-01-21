@@ -27,7 +27,7 @@ angular.module('cmPhonegap').service('cmPhonegap', [
 
                     isReady.promise.then(function(){
                         if(typeof callback == 'function') {
-                            console.log('calling callback of '+whoIs)
+                            //console.log('calling callback of '+whoIs)
                             callback();
                         }
                     });

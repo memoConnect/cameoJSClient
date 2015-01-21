@@ -5,9 +5,9 @@
 angular.module('cmPhonegap')
 .service('cmDevice',[
     'cmPhonegap', 'cmLogger', 'cmUtil',
-    '$window', '$device', '$navigator',
+    '$window', '$device',
     function (cmPhonegap, cmLogger, cmUtil,
-              $window, $device, $navigator) {
+              $window, $device) {
 
         var unknown = 'unknown';
 
@@ -36,17 +36,13 @@ angular.module('cmPhonegap')
                 var nAgt = '';
 
                 // TODO: iOS8 Bug: Deprecated attempt to access property 'userAgent' on a non-Navigator object.
-
-                // temp fix for iOS8 beta 1 (fixed in beta 2), add it after the reference to cordova.js
-                if ($navigator.userAgent === undefined) {
+                try {
+                    nAgt = ($window.navigator.userAgent||$window.navigator.vendor||$window.opera).toLowerCase();
+                } catch(e){
+                    console.log('fail',e)
                     nAgt = 'Mozilla/5.0 (iPhone; CPU iPhone OS 8_0 like Mac OS X) AppleWebKit';
-                    navigator.__defineGetter__('userAgent', function() {
-                        return nAgt;
-                    });
-                } else {
-
-                    nAgt = ($navigator.userAgent || $navigator.vendor || $window.opera).toLowerCase();
                 }
+
                 return nAgt;
             },
 

@@ -32,7 +32,7 @@ angular.module('cmPhonegap')
                             self.trigger('cmKeyboard:visible');
                         });
 
-                        $rootScope.$on('$routeChangeStart', function(){
+                        $rootScope.$on('$locationChangeStart', function(){
                            self.close();
                         });
                     });
