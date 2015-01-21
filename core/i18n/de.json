@@ -426,7 +426,7 @@
         },
         "INFO":{
             "CREATE": {
-                "HEADLINE_SMALL": "Anlegen Ihrer ersten Identität..",
+                "HEADLINE_SMALL": "Anlegen Ihrer ersten Identität (mehr..)",
                 "HEADLINE": "In Ihrer Identität legen Sie fest, wie Sie sich anderen Nutzern präsentieren. Wenn Sie eine Kontaktanfrage eines anderen Nutzers akzeptieren, sieht dieser in seinen Kontakten anschließend alle Daten, die Sie in Ihr Identitätsprofil eingegeben haben.\nIhre Identität kann über die cameoID oder den Anzeigenamen gefunden werden.",
                 "CAMEOID": "Jede Identität besitzt eine eindeutige cameoID, über die sie im cameoNet gefunden werden kann.",
                 "AVATAR": "cameoNet erzeugt ein zufälliges Profilbild. Zum Hochladen eines eigenen Bildes klicken Sie auf das Zahnrad in der unteren linken Ecke.",
@@ -683,7 +683,7 @@
         "CREATE": {
             "HEADER": "Benutzerkontodaten",
             "INFO": {
-                "NOTE_ABOUT_THIS_DATA_SMALL": "E-Mail-Adresse oder Telefonnummer hinterlegen..",
+                "NOTE_ABOUT_THIS_DATA_SMALL": "Kontaktdaten für Passwortrücksetzung (mehr..)",
                 "NOTE_ABOUT_THIS_DATA": "In Ihrem Benutzerkonto können Sie eine Mobilfunknummer oder E-Mail-Adresse hinterlegen und anschließend durch eine Prüfnachricht verifizieren lassen. Wenn Sie ihr Passwort vergessen, können Sie über eine verifizierte E-Mail-Adresse oder Telefonnummer ein neues Passwort erstellen.\n\nIhre E-Mail-Adresse und Telefonnummer sind für andere Nutzer nicht sichtbar."
             },
             "ERROR": "Es ist ein Fehler aufgetreten!\nBitte überprüfen Sie Ihre Eingaben."
@@ -698,7 +698,7 @@
                 "PHONENUMBER": "@:DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER",
                 "OLD_PASSWORD": "Das von Ihnen eingegebene Passwort ist ungültig."
             },
-            "NOTE_ABOUT_THIS_DATA_SMALL": "Daten ihres Benutzerkontos bearbeiten..",
+            "NOTE_ABOUT_THIS_DATA_SMALL": "Daten ihres Benutzerkontos bearbeiten (mehr..)",
             "NOTE_ABOUT_THIS_DATA": "Hier können Sie ihre Benutzerdaten bearbeiten. Dies umfasst:\n- Ihre Zugangsdaten, mit denen Sie sich anmelden\n- Telefonnummer oder E-Mail-Adresse für die Passwortrücksetzung und Offline-Benachrichtigungen.\n\nIhre Benutzerdaten sind für andere Nutzer nicht sichtbar.",
             "LOGINAME": "Der Loginname kann nicht geändert werden.",
             "PHONENUMBER": "Hier können Sie eine Mobilfunknummer hinterlegen. Sie erhalten eine Verifizierungs-SMS mit der Sie die Nummer für die Passwortrücksetzung aktivieren können.",

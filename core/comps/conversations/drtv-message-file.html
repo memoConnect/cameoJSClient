@@ -17,7 +17,7 @@
 
     <div class="file-image" ng-if="file.isEmbed('image')" cm-fullscreen="{{file.name}} ({{cmUtil.bytesToStr(file.size)}})">
         <cm-loader cm-color="ci-color" class="full-inline" ng-show="!file.loaded"></cm-loader>
-        <img cm-blob-image="file" cm-stay-in-mask="cm-message-file" cm-pinch-and-pan />
+        <img cm-blob-image="file" cm-stay-in-mask="cm-message-file" cm-pinch-and-pan="true" />
     </div>
     <div class="file-html5" ng-if="file.isEmbed('video')">
         <cm-loader cm-color="ci-color" ng-show="!file.loaded"></cm-loader>

@@ -10,8 +10,9 @@ var useChrome = true,
 /* Chrome */
 if(useChrome){
     browserConfig = {
-        seleniumPort: null,
+        //seleniumPort: null,
         chromeDriver: '<%= chromeDriverPath %>',
+        directConnect: true,
         capabilities:{
             'browserName':'chrome',
             'chromeOptions': {
@@ -22,6 +23,7 @@ if(useChrome){
 /* Internet Explorer */
 } else {
     browserConfig = {
+        seleniumServerJar: '../../../test/lib/ptor/selenium-server-standalone-2.44.0.jar',
         capabilities: {
             'browserName': 'internet explorer',
             'platform': 'ANY',
@@ -31,7 +33,6 @@ if(useChrome){
 }
 
 exports.config = extend(browserConfig, {
-    seleniumServerJar: '../../../test/lib/ptor/selenium-server-standalone-2.44.0.jar',
     allScriptsTimeout: 60000,
 
     onPrepare: function () {

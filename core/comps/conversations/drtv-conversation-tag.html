@@ -20,7 +20,7 @@
         </span>
     </div>
     <div class="bottom">
-        <cm-recipient-counter ng-if="conversation.recipients.length > 2">{{conversation.recipients.length||0}}</cm-recipient-counter>
+        <cm-recipient-counter ng-if="conversation.recipients.length > 2">{{::conversation.recipients.length||0}}</cm-recipient-counter>
         <span class="message-count is-selectable" ng-class="{'cm-orange' : conversation.unreadMessages > 0, 'cm-light-grey': conversation.unreadMessages == 0}" ng-if="settings.get('enableUnreadMessages') && (conversation.unreadMessages > -1)" data-qa="ctn-unread-messages"> ({{conversation.unreadMessages || 0}}) </span>
         <span class="message-count is-selectable"> {{conversation.numberOfMessages || 0}} </span>
     </div>
