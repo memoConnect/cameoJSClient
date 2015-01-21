@@ -313,6 +313,8 @@ angular.module('cmCore')
 
             modal_scope.verify  =   function(secret){
                                         var scope = this
+                                        scope.startLoader()
+
                                         scope.error.emptyInput    = !secret
                                         scope.error.wrongSecret   = !scope.error.emptyInput && !self.verify(scope.request, secret)
 
@@ -324,10 +326,12 @@ angular.module('cmCore')
                                         })
                                         .catch(function(error){
                                             scope.error.wrongSecret = true
+                                            scope.stopLoader();
                                             return $q.reject('verification failed.')
                                         })
                                         .then(function(res){
                                             // Modal is no longer needed:
+                                            scope.stopLoader();
                                             cmModal.close('incoming-authentication-request')
 
 

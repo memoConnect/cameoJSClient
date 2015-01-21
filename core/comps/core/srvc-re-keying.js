@@ -2,10 +2,10 @@
 
 angular.module('cmCore')
 .service('cmReKeying', [
-    'cmUserModel', 'cmApi', 'cmAuth', 'cmObject', 'cmStateManagement', 'cmUtil', 'cmLogger', 'cmKey',
-    '$q',
-    function(cmUserModel, cmApi, cmAuth, cmObject, cmStateManagement, cmUtil, cmLogger, cmKey,
-             $q)
+    'cmUserModel', 'cmApi', 'cmAuth', 'cmObject', 'cmStateManagement', 'cmUtil', 'cmLogger', 'cmKey', 'cmModal',
+    '$rootScope', '$q',
+    function(cmUserModel, cmApi, cmAuth, cmObject, cmStateManagement, cmUtil, cmLogger, cmKey, cmModal,
+             $rootScope, $q)
     {
         var self = this;
 
@@ -64,7 +64,6 @@ angular.module('cmCore')
                                                 }, $q.when([]))
                                                 .then(
                                                     function(newList){
-                                                    console.warn('Save Schmutz!')
                                                     return  cmAuth.saveBulkPassphrases(key.id, newList)
                                                 })
                                                 .then(
@@ -116,10 +115,28 @@ angular.module('cmCore')
         };
 
         this.showModal = function(){
-            cmLogger.warn('cmReKeying.showModal');
+            var modal_scope = $rootScope.$new(),
+                modal_id = 'bulk-re-keying';
+
+            modal_scope.working = true;
+
+            cmModal.create({
+                id: modal_id,
+                type: 'plain',
+                class: 'no-padding',
+                'cm-title': 'rekeying modal'
+            },'<cm-bulk-rekeying-request></cm-bulk-rekeying-request>', null, modal_scope);
+
+
+            cmModal.open(modal_id);
 
             this.one('bulkrekeying:finished', function(){
                 cmLogger.warn('close rekeying modal!')
+                var modal = cmModal.instances[modal_id];
+
+                if(modal && modal.isActive()){
+                    cmModal.close(modal_id)
+                }
             });
         }
     }

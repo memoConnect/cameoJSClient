@@ -4,7 +4,7 @@
 
     <form ng-submit="verify(transactSecret)">
         <div class="cm-input-ctn with-inside-icon">
-            <input id="inp-transactSecret" type="text" ng-model="transactSecret" cm-adaptive-change data-qa="inp-transactSecret">
+            <input id="inp-transactSecret" name="inp-transactSecret" type="text" ng-model="transactSecret" cm-adaptive-change data-qa="inp-transactSecret">
             <i class="fa cm-write"></i>
         </div>
 
@@ -12,13 +12,13 @@
         <span ng-if="!is3rdParty"   ng-bind-html="'IDENTITY.KEYS.AUTHENTICATION.ENTER_TRANSACTION_SECRET.INSTRUCTIONS'|cmTranslate:modalMessageVars"></span>
 
 
-        <div class="cm-warning" ng-show="error.emptyInput">
+        <cm-info-bubble class="cm-alert" ng-show="error.emptyInput">
             <i class="fa cm-info"></i>{{'SYSTEM.ERROR.EMPTY_INPUT'|cmTranslate}}
-        </div>
+        </cm-info-bubble>
 
-        <div class="cm-warning" ng-show="error.wrongSecret" data-qa="warn-wrong-input">
+        <cm-info-bubble class="cm-alert" ng-show="error.wrongSecret" data-qa="warn-wrong-input">
             <i class="fa cm-info"></i>{{'SYSTEM.ERROR.WRONG_INPUT'|cmTranslate}}
-        </div>
+        </cm-info-bubble>
     </form>
 </div>
 <footer>
@@ -48,5 +48,9 @@
             }}
             <i class="fa cm-checker cm-lg-icon"></i>
         </span>
+    </button>
+
+    <button class="cm-btn-grey dib cm-hide with-loader">
+        <cm-loader cm-color="ci-color"></cm-loader>
     </button>
 </footer>
