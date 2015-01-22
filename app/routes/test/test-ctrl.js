@@ -8,6 +8,7 @@ angular.module('cmRoutes').controller('TestCtrl',
         $scope.state = '';
         $scope.setState = function(drtv, event){
             $scope.state += drtv+'='+event.type+'\n';
+            event.preventDefault();
         }
 
     }
