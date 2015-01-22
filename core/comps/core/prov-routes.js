@@ -2,9 +2,9 @@
 
 angular.module('cmCore').provider('cmRoutes', [
     'cmConfigProvider',
-    '$routeProvider',
+    '$injector',
     function(cmConfigProvider,
-             $routeProvider){
+             $injector){
 
         function ucfirst(str) {
             //  discuss at: http://phpjs.org/functions/ucfirst/
@@ -139,12 +139,12 @@ angular.module('cmCore').provider('cmRoutes', [
 
                 // add route to provider
                 angular.forEach(routes,function(route){
-                    $routeProvider.
+                    $injector.get('$routeProvider').
                         when(route, routeParams);
                 });
                 // check otherwise
                 if(angular.isDefined(_settings_['isDefault'])){
-                    $routeProvider.otherwise({
+                    $injector.get('$routeProvider').otherwise({
                         redirectTo: '/'+routeKey
                     });
                 }
