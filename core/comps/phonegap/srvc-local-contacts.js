@@ -47,8 +47,6 @@ angular.module('cmPhonegap').service('cmLocalContacts', [
                     }
                     self.plugin = $navigator.contacts;
                 });
-
-                return true;
             },
 
             canRead: function() {

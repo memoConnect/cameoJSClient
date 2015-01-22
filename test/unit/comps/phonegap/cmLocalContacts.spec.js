@@ -42,10 +42,6 @@ describe('cmLocalContacts default none app', function() {
         it('should be defined', function () {
             expect(cmLocalContacts.init).toBeDefined()
         })
-
-        it('should return false', function () {
-            expect(cmLocalContacts.init()).toBeFalsy()
-        })
     })
 
     describe('method canRead', function () {
@@ -102,12 +98,6 @@ describe('cmLocalContacts is app', function() {
     describe('variable plugin', function () {
         it('should be an object', function () {
             expect(cmLocalContacts.plugin).not.toBe(null)
-        })
-    })
-
-    describe('method init', function () {
-        it('should return true', function () {
-            expect(cmLocalContacts.init()).toBeTruthy()
         })
     })
 
