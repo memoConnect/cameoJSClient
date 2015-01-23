@@ -521,8 +521,10 @@ this.waitForLoader = function (count, parentSelector, printOut) {
                 return ptor.wait(function () {
                     return $(parentSelector+'cm-loader').isDisplayed()
                             .then(function (isDisplayed) {
-                                if(printOut)
-                                    console.log(parentSelector+'cm-loader isDisplayed: '+isDisplayed+' toBe '+!isDisplayed)
+                                if(printOut) {
+                                    console.log(parentSelector + 'cm-loader isDisplayed: ' + isDisplayed + ' toBe ' + !isDisplayed)
+                                    self.printOutConsoleLog()
+                                }
 
                                 return !isDisplayed
                             })
@@ -873,5 +875,12 @@ this.setKeygenerationTimeout = function(jasmine){
 this.logCurrentUrl = function(){
     ptor.getCurrentUrl().then(function(url){
         console.log('logCurrentUrl:', url)
+    })
+}
+
+this.printOutConsoleLog = function(){
+    browser.manage().logs().get('browser').then(function(array){
+        console.log('Browser console.logs')
+        console.log(JSON.stringify(array,null,2))
     })
 }
