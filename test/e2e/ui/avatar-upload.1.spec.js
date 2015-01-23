@@ -53,6 +53,8 @@ describe('Avatar Upload: ', function () {
         if(isIE)
             return false
 
+        util.printOutConsoleLog(true)
+
         // avatar-upload-btn
         $("[data-qa='btn-file-choose']").sendKeys(newAvatar)
         .then(function(){

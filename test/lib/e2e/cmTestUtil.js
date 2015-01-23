@@ -878,9 +878,11 @@ this.logCurrentUrl = function(){
     })
 }
 
-this.printOutConsoleLog = function(){
+this.printOutConsoleLog = function(clear){
     browser.manage().logs().get('browser').then(function(array){
-        console.log('Browser console.logs')
-        console.log(JSON.stringify(array,null,2))
+        if(!clear) {
+            console.warn('Browser console.logs')
+            console.warn(JSON.stringify(array, null, 2))
+        }
     })
 }
