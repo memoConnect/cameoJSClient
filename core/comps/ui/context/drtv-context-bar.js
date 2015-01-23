@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('cmUi').directive('cmContextBar',[
-    'cmContextFactory',
-    function(cmContextFactory){
+    'cmContextFactory', 'cmModal',
+    function(cmContextFactory, cmModal){
         return {
             restrict: 'E',
             templateUrl: 'comps/ui/context/drtv-context-bar.html',
@@ -45,7 +45,14 @@ angular.module('cmUi').directive('cmContextBar',[
                 };
 
                 $scope.delete = function(){
-                    cmContextFactory.delete();
+                    cmModal.confirm({
+                        title:  'CONVERSATION.WARN.RECIPIENTS_MISSING',
+                        text:   'CONVERSATION.CONFIRM.RECIPIENTS_MISSING'
+                    })
+                    .then(function(){
+                        cmContextFactory.delete();
+                    })
+
                 };
             }
         }
