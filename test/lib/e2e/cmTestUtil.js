@@ -516,13 +516,12 @@ this.waitForLoader = function (count, parentSelector) {
             }, config.routeTimeout, 'waitForLoader start timeout reached')
             .then(function () {
                 // wait for loader disappear
-                ptor.wait(function () {
+                return ptor.wait(function () {
                     return $(parentSelector+'cm-loader').isDisplayed()
                     .then(function (isDisplayed) {
                         return !isDisplayed
                     })
                 }, config.routeTimeout, 'waitForLoader stop timeout reached')
-
             })
 }
 
