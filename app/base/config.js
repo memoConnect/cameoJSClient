@@ -118,8 +118,7 @@ angular.module('cmConfig',[])
                 },
                 'talks': {
                     waitForUserModel: true,
-                    waitForFirstBoot: true,
-                    hasCtrl: true
+                    waitForFirstBoot: true
                 },
                 'conversation': {
                     routes:[

@@ -59,8 +59,10 @@
 
 angular.module('cmUi')
 .directive('cmContext',[
+    'cmContextFactory',
     '$parse', '$window',
-    function ($parse, $window){
+    function (cmContextFactory,
+        $parse, $window){
         return {
             restrict: 'A',
             link: function(scope, element, attrs){
@@ -79,7 +81,7 @@ angular.module('cmUi')
                     var matches = contextData.match('('+type+'):([0-9a-zA-Z\\(\\)/"\'+\\.$ ]+,{.+\\)|[0-9a-zA-Z\\(\\)/"\'+\\.$ ]+)'),
                         value = undefined;
 
-                    if(matches.length > 2)
+                    if(matches && matches.length > 2)
                         value = $parse(matches[2]);
 
 
@@ -92,7 +94,9 @@ angular.module('cmUi')
                         callback = getOption('tap');
 
                     scope.$apply(function(){
-                        callback(scope, {$event: event, $context: context});
+                        if(typeof callback != 'undefined'){
+                            callback(scope, {$event: event, $context: context});
+                        }
                     });
                 }
 
@@ -101,8 +105,12 @@ angular.module('cmUi')
                     var context = getContext(),
                         callback = getOption('longTap');
 
+                    cmContextFactory.create();
+
                     scope.$apply(function(){
-                        callback(scope, {$event: event, $context: context});
+                        if(typeof callback != 'undefined'){
+                            callback(scope, {$event: event, $context: context});
+                        }
                     });
                 }
 
