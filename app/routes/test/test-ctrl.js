@@ -5,10 +5,5 @@ angular.module('cmRoutes').controller('TestCtrl',
 
         $rootScope.$broadcast('device:goesToBackground')
 
-        $scope.state = '';
-        $scope.setState = function(drtv, event){
-            $scope.state += drtv+'='+event.type+'\n';
-        }
-
     }
 );
