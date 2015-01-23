@@ -61,7 +61,6 @@ describe('Avatar Upload: ', function () {
             return util.waitForLoader(1,'cm-upload-avatar',true)
         })
         .then(function() {
-            util.printOutConsoleLog()
             return $('cm-identity-edit cm-avatar i').getAttribute('style')
         })
         .then(function(src){

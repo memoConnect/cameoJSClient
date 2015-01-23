@@ -519,14 +519,14 @@ this.waitForLoader = function (count, parentSelector, printOut) {
             .then(function () {
                 // wait for loader disappear
                 return ptor.wait(function () {
-                    return $(parentSelector+'cm-loader').isDisplayed()
-                            .then(function (isDisplayed) {
+                    return $(parentSelector+'cm-loader').getAttribute('class')
+                            .then(function (className) {
                                 if(printOut) {
-                                    console.log(parentSelector + 'cm-loader isDisplayed: ' + isDisplayed + ' toBe ' + !isDisplayed)
+                                    console.log(parentSelector + 'cm-loader isDisplayed: ' + className)
                                     self.printOutConsoleLog()
                                 }
 
-                                return !isDisplayed
+                                return className.indexOf('ng-hide') >= 0
                             })
                 }, config.routeTimeout, 'waitForLoader stop timeout reached')
             })

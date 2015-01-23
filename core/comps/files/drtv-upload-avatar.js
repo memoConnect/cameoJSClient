@@ -31,12 +31,15 @@ angular.module('cmFiles').directive('cmUploadAvatar',[
                                     cmUserModel.data.identity.one('update:finished', function(){
                                         console.warn('usermodel finished')
 
-                                        $timeout(function(){
-                                            cmUserModel.data.identity.one('avatar:loaded',function(){
-                                                scope.imageUpload = false;
-                                                $rootScope.$broadcast('cmUploadAvatar:success');
-                                            });
-                                        },50);
+                                        cmUserModel.data.identity.one('avatar:loaded',function(){
+                                            console.warn('avatar:loaded')
+                                            $timeout(function(){
+                                                    console.warn('timeout scope.imageUpload = false;')
+
+                                                    scope.imageUpload = false;
+                                                    $rootScope.$broadcast('cmUploadAvatar:success');
+                                            },50);
+                                        });
                                     });
                                 });
                             }

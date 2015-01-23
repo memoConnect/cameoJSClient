@@ -2,6 +2,7 @@
 
 ## BS 23.01.2015
 * Update SJCL Vendor Library
+* Add isApp to getBrowserInfo
 
 ## BS 21.01.2015
 * CAM-1620 - add Re-Keying Modal
