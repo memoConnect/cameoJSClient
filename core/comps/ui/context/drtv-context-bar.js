@@ -45,9 +45,14 @@ angular.module('cmUi').directive('cmContextBar',[
                 };
 
                 $scope.delete = function(){
+                    var constText = 'SYSTEM.CONTEXT.MODAL.CONFIRM.DELETE.ONE_ITEM';
+                    if(cmContextFactory.length > 1){
+                        constText = 'SYSTEM.CONTEXT.MODAL.CONFIRM.DELETE.MORE_ITEMS';
+                    }
+
                     cmModal.confirm({
-                        title:  'CONVERSATION.WARN.RECIPIENTS_MISSING',
-                        text:   'CONVERSATION.CONFIRM.RECIPIENTS_MISSING'
+                        title:  'SYSTEM.CONTEXT.MODAL.CONFIRM.DELETE.TITLE',
+                        text:   constText
                     })
                     .then(function(){
                         cmContextFactory.delete();

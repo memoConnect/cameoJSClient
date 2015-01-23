@@ -806,6 +806,17 @@
         "TITLE": "New Friend Request",
         "MSG": "Friend request from {{sender}}"
       }
+    },
+    "CONTEXT":{
+      "MODAL":{
+        "CONFIRM":{
+          "DELETE":{
+            "TITLE":"@todo SYSTEM.CONTEXT.MODAL.CONFIRM.DELETE.TITLE",
+            "ONE_ITEM":"@todo SYSTEM.CONTEXT.MODAL.CONFIRM.DELETE.ONE_ITEM",
+            "MORE_ITEMS":"@todo SYSTEM.CONTEXT.MODAL.CONFIRM.DELETE.MORE_ITEMS"
+          }
+        }
+      }
     }
   },
   "TALKS": {
