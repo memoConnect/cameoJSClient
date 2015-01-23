@@ -5,9 +5,9 @@
 angular.module('cmPhonegap')
 .service('cmDevice',[
     'cmPhonegap', 'cmLogger', 'cmUtil',
-    '$window', '$device',
+    '$window', '$device', '$phonegapCameoConfig',
     function (cmPhonegap, cmLogger, cmUtil,
-              $window, $device) {
+              $window, $device, $phonegapCameoConfig) {
 
         var unknown = 'unknown';
 
@@ -29,7 +29,7 @@ angular.module('cmPhonegap')
             },
 
             existsPlugin: function(){
-                return this.plugin != null;
+                return this.plugin != null || $phonegapCameoConfig != 'undefined';
             },
 
             getUserAgent: function(){
