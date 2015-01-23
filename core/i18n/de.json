@@ -236,7 +236,7 @@
             "NO_PASSWORD": "Sie müssen ein Passwort setzen oder die Verschlüsselung deaktivieren, weil nicht alle Empfänger einen cameoKey besitzen.\n <a href=\"#/{{type}}/{{typeId}}/security\">Hier Verschlüsselung einstellen</a>",
             "PASSWORD_NEEDED": "Zum Entschlüsseln des Talks geben Sie bitte ein Passwort ein.\n <a href=\"#/{{type}}/{{typeId}}/security\">Hier ein Passwort eingeben!</a>",
             "ASYMMETRIC_DECRYPT_ERROR": "Der cameoKey fehlt.",
-            "ASYMMETRIC_KEY_TRUST_ERROR": "@todo CONVERSATION.WARN.ASYMMETRIC_KEY_TRUST_ERROR"
+            "ASYMMETRIC_KEY_TRUST_ERROR": "Sie haben Ihren lokalen cameoKey noch nicht mit Ihren anderen cameoKeys verknüpft. Deshalb können Sie Talks mit Identitäten, die Ihnen vertrauen, hier nicht lesen."
         },
         "CONFIRM": {
             "RECIPIENTS_MISSING": "Möchten Sie die Nachricht ohne weitere Empfänger abschicken? Sie werden die einzige Person sein, die diese Nachricht lesen kann."
@@ -798,8 +798,8 @@
             "FAX": "Fax"
         },
         "BULK_REKEYING": {
-            "HEADER": "@todo Neuverschlüsselung",
-            "CONTENT": "@todo Die Talks auf diesem Gerät werden für den neuen cameoKey verschlüsselt.",
+            "HEADER": "Aktualisierung der Verschlüsselung",
+            "CONTENT": "Die Verschlüsselung Ihrer Talks wird für Ihren neuen cameoKey erweitert.",
             "START": "Start"
         },
         "FOOTER": {
@@ -956,13 +956,14 @@
                 "MSG": "Freundschaftsanfrage von {{sender}}"
             }
         },
-        "CONTEXT":{
-            "MODAL":{
-                "CONFIRM":{
-                    "DELETE":{
-                        "TITLE":"@todo SYSTEM.CONTEXT.MODAL.CONFIRM.DELETE.TITLE",
-                        "ONE_ITEM":"@todo SYSTEM.CONTEXT.MODAL.CONFIRM.DELETE.ONE_ITEM",
-                        "MORE_ITEMS":"@todo SYSTEM.CONTEXT.MODAL.CONFIRM.DELETE.MORE_ITEMS"
+        "CONTEXT": {
+            "MODAL": {
+                "CONFIRM": {
+                    "DELETE": {
+                        "TITLE": "Löschen",
+                        "ONE_ITEM": "Wollen Sie den ausgewählten Eintrag aus der Liste wirklich löschen?",
+                        "MORE_ITEMS": "Wollen Sie die ausgewählten Einträge aus der Liste wirklich löschen?"
+
                     }
                 }
             }

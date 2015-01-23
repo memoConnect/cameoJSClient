@@ -752,7 +752,7 @@
       "ASYMMETRIC_KEY_TRUST_ERROR": "@todo CONVERSATION.WARN.ASYMMETRIC_KEY_TRUST_ERROR"
     },
     "CONFIRM": {
-      "RECIPIENTS_MISSING": "Would you like to send this message without further recipients. You will be the only one to read it."
+      "RECIPIENTS_MISSING": "Would you like to send this message without further recipients? You will be the only one to read it."
     },
     "PLACEHOLDER": {
       "INFO": "Info",
@@ -807,17 +807,18 @@
         "MSG": "Friend request from {{sender}}"
       }
     },
-    "CONTEXT":{
-      "MODAL":{
-        "CONFIRM":{
-          "DELETE":{
-            "TITLE":"@todo SYSTEM.CONTEXT.MODAL.CONFIRM.DELETE.TITLE",
-            "ONE_ITEM":"@todo SYSTEM.CONTEXT.MODAL.CONFIRM.DELETE.ONE_ITEM",
-            "MORE_ITEMS":"@todo SYSTEM.CONTEXT.MODAL.CONFIRM.DELETE.MORE_ITEMS"
+      "CONTEXT": {
+          "MODAL": {
+              "CONFIRM": {
+                  "DELETE": {
+                      "TITLE": "@todo",
+                      "ONE_ITEM": "@todo",
+                      "MORE_ITEMS": "@todo"
+
+                  }
+              }
           }
-        }
       }
-    }
   },
   "TALKS": {
     "HEADING": "Talks",

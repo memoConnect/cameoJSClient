@@ -17,9 +17,11 @@ angular.module('cmFiles').directive('cmUploadAvatar',[
                     }).then(
                         function(files){
                             if (files.length > 0) {
+                                console.warn('set spinner')
                                 scope.imageUpload = true;
                                 files[0].uploadChunks();
                                 files[0].one('upload:finish',function(){
+                                    console.warn('upload finished, update usermodel')
                                     cmUserModel
                                         .data.identity
                                         .update({
@@ -27,12 +29,14 @@ angular.module('cmFiles').directive('cmUploadAvatar',[
                                         });
 
                                     cmUserModel.data.identity.one('update:finished', function(){
+                                        console.warn('usermodel finished')
+
                                         $timeout(function(){
                                             cmUserModel.data.identity.one('avatar:loaded',function(){
                                                 scope.imageUpload = false;
                                                 $rootScope.$broadcast('cmUploadAvatar:success');
                                             });
-                                        });
+                                        },50);
                                     });
                                 });
                             }

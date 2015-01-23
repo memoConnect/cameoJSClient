@@ -504,25 +504,31 @@ this.closeModal = function(){
             })
 }
 
-this.waitForLoader = function (count, parentSelector) {
-    count = count || 1,
+this.waitForLoader = function (count, parentSelector, printOut) {
+    count = count || 1
     parentSelector = parentSelector ? parentSelector+' ' : '' // that used for more then one loader on page
     // wait for loader appear
     return  ptor.wait(function() {
                 return  $(parentSelector+'cm-loader').getAttribute('cm-count')
                         .then(function(value){
+                            if(printOut)
+                                console.log(parentSelector+'cm-loader cm-count value: '+value)
                             return value >= count
                         })
             }, config.routeTimeout, 'waitForLoader start timeout reached')
             .then(function () {
                 // wait for loader disappear
-                ptor.wait(function () {
+                return ptor.wait(function () {
                     return $(parentSelector+'cm-loader').isDisplayed()
-                    .then(function (isDisplayed) {
-                        return !isDisplayed
-                    })
-                }, config.routeTimeout, 'waitForLoader stop timeout reached')
+                            .then(function (isDisplayed) {
+                                if(printOut) {
+                                    console.log(parentSelector + 'cm-loader isDisplayed: ' + isDisplayed + ' toBe ' + !isDisplayed)
+                                    self.printOutConsoleLog()
+                                }
 
+                                return !isDisplayed
+                            })
+                }, config.routeTimeout, 'waitForLoader stop timeout reached')
             })
 }
 
@@ -869,5 +875,14 @@ this.setKeygenerationTimeout = function(jasmine){
 this.logCurrentUrl = function(){
     ptor.getCurrentUrl().then(function(url){
         console.log('logCurrentUrl:', url)
+    })
+}
+
+this.printOutConsoleLog = function(clear){
+    browser.manage().logs().get('browser').then(function(array){
+        if(!clear) {
+            console.warn('Browser console.logs')
+            console.warn(JSON.stringify(array, null, 2))
+        }
     })
 }
