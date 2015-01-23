@@ -504,13 +504,15 @@ this.closeModal = function(){
             })
 }
 
-this.waitForLoader = function (count, parentSelector) {
-    count = count || 1,
+this.waitForLoader = function (count, parentSelector, printOut) {
+    count = count || 1
     parentSelector = parentSelector ? parentSelector+' ' : '' // that used for more then one loader on page
     // wait for loader appear
     return  ptor.wait(function() {
                 return  $(parentSelector+'cm-loader').getAttribute('cm-count')
                         .then(function(value){
+                            if(printOut)
+                                console.log(parentSelector+'cm-loader cm-count value: '+value)
                             return value >= count
                         })
             }, config.routeTimeout, 'waitForLoader start timeout reached')
@@ -518,9 +520,12 @@ this.waitForLoader = function (count, parentSelector) {
                 // wait for loader disappear
                 return ptor.wait(function () {
                     return $(parentSelector+'cm-loader').isDisplayed()
-                    .then(function (isDisplayed) {
-                        return !isDisplayed
-                    })
+                            .then(function (isDisplayed) {
+                                if(printOut)
+                                    console.log(parentSelector+'cm-loader isDisplayed: '+isDisplayed+' toBe '+!isDisplayed)
+
+                                return !isDisplayed
+                            })
                 }, config.routeTimeout, 'waitForLoader stop timeout reached')
             })
 }
