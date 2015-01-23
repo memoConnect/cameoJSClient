@@ -33,6 +33,8 @@ angular.module('cmFiles').directive('cmUploadAvatar',[
 
                                         $timeout(function(){
                                             cmUserModel.data.identity.one('avatar:loaded',function(){
+                                                console.warn('avatar:loaded scope.imageUpload = false;')
+
                                                 scope.imageUpload = false;
                                                 $rootScope.$broadcast('cmUploadAvatar:success');
                                             });
