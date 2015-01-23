@@ -752,7 +752,7 @@
       "ASYMMETRIC_KEY_TRUST_ERROR": "@todo CONVERSATION.WARN.ASYMMETRIC_KEY_TRUST_ERROR"
     },
     "CONFIRM": {
-      "RECIPIENTS_MISSING": "Would you like to send this message without further recipients. You will be the only one to read it."
+      "RECIPIENTS_MISSING": "Would you like to send this message without further recipients? You will be the only one to read it."
     },
     "PLACEHOLDER": {
       "INFO": "Info",
