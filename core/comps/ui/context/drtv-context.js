@@ -105,7 +105,7 @@ angular.module('cmUi')
                     var context = getContext(),
                         callback = getOption('longTap');
 
-                    cmContextFactory.create();
+                    scope.handleLongTap(context);
 
                     scope.$apply(function(){
                         if(typeof callback != 'undefined'){
@@ -138,6 +138,19 @@ angular.module('cmUi')
                     hammer.off('tap', onTap);
                     hammer.off('press', onLongTap);
                 });
+            },
+            controller: function($scope){
+                $scope.handleLongTap = function(context){
+                    console.log('handleLongTap',context)
+                    /**
+                     * @todo
+                     * context sauber an factory übergeben
+                     *
+                     * zweiten longtap auf element überprüfen,
+                     * wenn instance schon vorhanden, dann aus factory entfernen
+                     */
+                    cmContextFactory.create();
+                }
             }
         }
     }
