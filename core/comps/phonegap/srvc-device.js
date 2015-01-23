@@ -3,9 +3,11 @@
 // https://github.com/apache/cordova-plugin-device/blob/master/doc/index.md
 
 angular.module('cmPhonegap')
-.service('cmDevice',
+.service('cmDevice',[
+    'cmPhonegap', 'cmLogger', 'cmUtil',
+    '$window', '$device',
     function (cmPhonegap, cmLogger, cmUtil,
-              $window, $device, $phonegapCameoConfig) {
+              $window, $device) {
 
         var unknown = 'unknown';
 
@@ -16,11 +18,7 @@ angular.module('cmPhonegap')
             flags: {},
 
             init: function(){
-                if($phonegapCameoConfig == 'undefined') {
-                    return false;
-                }
-
-                cmPhonegap.isReady(function(){
+                cmPhonegap.isReady('cmDevice',function(){
                     if($device.get() == 'undefined'){
                         //cmLogger.info('DEVICE PLUGIN IS MISSING');
                         return false;
@@ -41,6 +39,7 @@ angular.module('cmPhonegap')
                 try {
                     nAgt = ($window.navigator.userAgent||$window.navigator.vendor||$window.opera).toLowerCase();
                 } catch(e){
+                    console.log('fail',e)
                     nAgt = 'Mozilla/5.0 (iPhone; CPU iPhone OS 8_0 like Mac OS X) AppleWebKit';
                 }
 
@@ -279,4 +278,4 @@ angular.module('cmPhonegap')
 
         return self;
     }
-);
+]);

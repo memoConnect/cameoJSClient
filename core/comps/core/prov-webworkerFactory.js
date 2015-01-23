@@ -14,22 +14,22 @@ angular.module('cmCore')
         this.setGlobalDefaultLimit = function(l){
             default_global_limit = l || default_global_limit
             return this
-        }
+        };
 
         this.setMobileDefaultLimit = function(l){
             default_mobile_limit = l || default_mobile_limit
             return this
-        }
+        };
 
         this.setDesktopDefaultLimit = function(l){
             default_desktop_limit = l || default_desktop_limit
             return this
-        }
+        };
 
         this.setAppDefaultLimit = function(l){
             default_desktop_limit = l || default_desktop_limit;
             return this
-        }
+        };
 
 
         this.$get = [

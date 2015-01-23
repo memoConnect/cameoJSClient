@@ -5,21 +5,16 @@
 angular.module('cmPhonegap')
 .service('cmNetworkInformation', [
     'cmPhonegap', 'cmUtil', 'cmLogger',
-    '$navigator', '$document', '$phonegapCameoConfig',
+    '$navigator', '$document',
     function (cmPhonegap, cmUtil, cmLogger,
-              $navigator, $document, $phonegapCameoConfig) {
+              $navigator, $document) {
         var self = {
             plugin: null,
             state: '',
 
             init: function(){
-                if($phonegapCameoConfig == 'undefined') {
-                    return false;
-                }
-
-                cmPhonegap.isReady(function(){
-                    if(!('connection' in $navigator)
-                    || !('type' in $navigator.connection)) {
+                cmPhonegap.isReady('cmNetworkInformation',function(){
+                    if(!('connection' in $navigator) || !('type' in $navigator.connection)) {
                         //cmLogger.info('NETWORK-INFORMATION PLUGIN IS MISSING');
                         return false;
                     }

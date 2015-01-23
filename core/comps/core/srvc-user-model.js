@@ -721,8 +721,13 @@ angular.module('cmCore')
 
         };
 
+        /**
+         * @deprecated
+         */
         this.bulkReKeying = function(localKeyId){
             //cmLogger.debug('cmUserModel.startBulkReKeying');
+
+            console.log('cmUserModel.bulkReKeying depracted!');
 
             if(!this.state.is('rekeying')){
                 this.state.set('rekeying');

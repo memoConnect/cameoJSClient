@@ -55,9 +55,6 @@
      </example>
  */
 
-/**
- * @TODO Doku anpassen
- */
 angular.module('cmUi')
 .directive('cmAvatar',[
     'cmUserModel', 'cmUtil', 'cmConfig',

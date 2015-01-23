@@ -2,9 +2,9 @@
 
 angular.module('cmUi')
     .factory('cmPinchAndPan',[
-        'cmFullscreen', 'cmUtil',
+        'cmFullscreen', 'cmUtil', 'cmModal',
         '$window', '$timeout', '$document',
-        function(cmFullscreen, cmUtil,
+        function(cmFullscreen, cmUtil, cmModal,
                  $window, $timeout, $document) {
 
             var utils = {
@@ -76,9 +76,12 @@ angular.module('cmUi')
                 tmp: {},
                 transform: {},
                 dim: {},
-                init: function(element){
+                init: function(element, isFullscreenInit){
                     // dom element
-                    this.element = angular.element(element).find('img');
+                    if(isFullscreenInit)
+                        this.element = angular.element(element).find('img');
+                    else
+                        this.element = angular.element(element);
 
                     // dimensions
                     this.dim.w = this.element[0].width;
@@ -177,7 +180,7 @@ angular.module('cmUi')
                         panInBounds: true
                     };
 
-                    function init(target){
+                    function init(target, isFullscreenInit){
                         if(self.mc != null) {
                             return false;
                         }
@@ -188,22 +191,28 @@ angular.module('cmUi')
                         $timeout(function(){
                             mask.init();
                             self.initHammer();
-                            image.init(target);
+                            image.init(target, isFullscreenInit);
                         },100);
                     }
 
                     if('initOnFullscreen' in _settings_ && _settings_.initOnFullscreen) {
                         cmFullscreen.on('change', function (event, data) {
-                            if(!cmUtil.isInParent(data.element, _element_[0])){
+                            if (!cmUtil.isInParent(data.element, _element_[0])) {
                                 return false;
                             }
 
                             if (data.isOpen) {
-                                init(data.element);
+                                init(data.element, true);
                             } else {
                                 image.update(true);
                                 self.destroy();
                             }
+                        });
+                    } else if('initOnModalChange' in _settings_ && _settings_.initOnModalChange) {
+                        init(_element_[0]);
+
+                        cmModal.one('modal:closed', function(){
+                            self.destroy();
                         });
                     } else {
                         init(_element_[0]);

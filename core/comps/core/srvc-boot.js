@@ -56,7 +56,8 @@ angular.module('cmCore')
                         var fontLoader = new FontLoader(['CameoFont'], {
                             fontsLoaded: function(error) {
                                 if (error !== null) {
-                                    cmLogger.error('cmBoot: '+error.message+' '+error.notLoadedFontFamilies);
+                                    console.log(error.notLoadedFontFamilies)
+                                    cmLogger.debug('cmBoot: '+error.message+' '+error.notLoadedFontFamilies);
                                     promises.font.resolve();
                                 }
                             },

@@ -13,7 +13,7 @@ angular.module('cmPhonegap')
             plugin: null,
 
             init: function(){
-                cmPhonegap.isReady(function(){
+                cmPhonegap.isReady('cmSplashScreen',function(){
                     if(!('splashscreen' in $navigator)) {
                         //cmLogger.info('SPLASHCREEN PLUGIN IS MISSING');
                         return false;

@@ -40,9 +40,9 @@
 angular.module('cmPhonegap')
 .service('cmCamera', [
     'cmPhonegap', 'cmFilesAdapter', 'cmFileTypes',
-    '$navigator', '$window', '$phonegapCameoConfig',
+    '$navigator', '$window',
     function (cmPhonegap, cmFilesAdapter, cmFileTypes,
-              $navigator, $window, $phonegapCameoConfig) {
+              $navigator, $window) {
 
         function FileError(e){
             var msg;
@@ -127,11 +127,7 @@ angular.module('cmPhonegap')
             plugin: null,
 
             init: function () {
-                if ($phonegapCameoConfig == 'undefined'){
-                    return false;
-                }
-
-                cmPhonegap.isReady(function () {
+                cmPhonegap.isReady('cmCamera',function () {
                     if($navigator == 'undefined'
                     || !('camera' in $navigator)) {
                         //cmLogger.info('CAMERA PLUGIN IS MISSING');

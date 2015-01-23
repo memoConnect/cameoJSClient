@@ -23,13 +23,15 @@ angular.module('cmPhonegap')
                 ],
 
                 init: function(){
-                    cmPhonegap.isReady(function(){
+                    cmPhonegap.isReady('cmScreenOrientation',function(){
                         if(!('unlockOrientation' in $screen)) {
                             //cmLogger.info('SCREENORIENTATION PLUGIN IS MISSING');
                             return false;
                         }
 
                         self.plugin = $screen;
+
+                        self.setPortrait();
                     });
                 },
                 getCurrent: function(){
