@@ -504,29 +504,22 @@ this.closeModal = function(){
             })
 }
 
-this.waitForLoader = function (count, parentSelector, printOut) {
+this.waitForLoader = function (count, parentSelector) {
     count = count || 1
     parentSelector = parentSelector ? parentSelector+' ' : '' // that used for more then one loader on page
     // wait for loader appear
     return  ptor.wait(function() {
                 return  $(parentSelector+'cm-loader').getAttribute('cm-count')
                         .then(function(value){
-                            if(printOut)
-                                console.log(parentSelector+'cm-loader cm-count value: '+value)
                             return value >= count
                         })
             }, config.routeTimeout, 'waitForLoader start timeout reached')
             .then(function () {
                 // wait for loader disappear
                 return ptor.wait(function () {
-                    return $(parentSelector+'cm-loader').getAttribute('class')
-                            .then(function (className) {
-                                if(printOut) {
-                                    console.log(parentSelector + 'cm-loader isDisplayed: ' + className)
-                                    self.printOutConsoleLog()
-                                }
-
-                                return className.indexOf('ng-hide') >= 0
+                    return $(parentSelector+'cm-loader').isDisplayed()
+                            .then(function (isDisplayed) {
+                                return !isDisplayed
                             })
                 }, config.routeTimeout, 'waitForLoader stop timeout reached')
             })

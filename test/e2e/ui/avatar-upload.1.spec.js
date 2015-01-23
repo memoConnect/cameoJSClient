@@ -53,12 +53,10 @@ describe('Avatar Upload: ', function () {
         if(isIE)
             return false
 
-        util.printOutConsoleLog(true)
-
         // avatar-upload-btn
         $("[data-qa='btn-file-choose']").sendKeys(newAvatar)
         .then(function(){
-            return util.waitForLoader(1,'cm-upload-avatar',true)
+            return util.waitForLoader(1,'cm-upload-avatar')
         })
         .then(function() {
             return $('cm-identity-edit cm-avatar i').getAttribute('style')
