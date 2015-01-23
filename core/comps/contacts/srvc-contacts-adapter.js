@@ -126,6 +126,11 @@ angular.module('cmContacts').service('cmContactsAdapter',[
             adapter.trigger('contact:update', data);
         });
 
+        cmApi.on('contact:deleted', function(event, data){
+            //cmLogger.debug('cmContactsAdapter cmApi.on:contact:update');
+            adapter.trigger('contact:deleted', data);
+        });
+
         cmApi.on('subscriptionId:changed', function(){
             //cmLogger.debug('cmContactsAdapter.on subscriptionId:changed');
             adapter.trigger('subscriptionId:changed');

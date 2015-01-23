@@ -326,8 +326,8 @@ angular.module('cmContacts').service('cmContactsModel',[
             cmNotify.create({label: 'NOTIFICATIONS.TYPES.FRIEND_REQUEST', bell:true});
         });
 
-        this.contacts.on('delete:finsihed', function(event, data){
-            self.deregister(data);
+        this.contacts.on('deleted:finished', function(event, data){
+            self.contacts.deregister(data);
             $rootScope.goto('/contact/list');
         });
 
@@ -345,6 +345,10 @@ angular.module('cmContacts').service('cmContactsModel',[
 
         cmContactsAdapter.on('contact:update', function(event, data){
             self.contacts.create(data, true);
+        });
+
+        cmContactsAdapter.on('contact:deleted', function(event, data){
+            self.contacts.deregister(data);
         });
 
         cmContactsAdapter.on('subscriptionId:changed', function(){
