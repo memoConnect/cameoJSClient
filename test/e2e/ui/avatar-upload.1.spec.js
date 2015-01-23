@@ -12,7 +12,8 @@ describe('Avatar Upload: ', function () {
         testUser
 
     it('check if is ie', function(){
-        util.isInternetExplorer().then(function(bool) {
+        util.isInternetExplorer()
+        .then(function(bool) {
             isIE = bool;
             if(isIE)
                 console.log('browser is ie, it blocks get return false because of sendFile on input=file doesnt work')
@@ -56,20 +57,30 @@ describe('Avatar Upload: ', function () {
         $("[data-qa='btn-file-choose']").sendKeys(newAvatar)
 
         util.waitForLoader(1,'cm-upload-avatar')
-
-        $('cm-identity-edit cm-avatar i').getAttribute('style').then(function(src){
+        .then(function() {
+            return $('cm-identity-edit cm-avatar i').getAttribute('style')
+        })
+        .then(function(src){
             newAvatarStyle = src
             expect(newAvatarStyle).not.toBe(avatarStyle)
-        })
 
-        $('cm-identity cm-avatar i').getAttribute('style').then(function(src){
-            expect(src).not.toBe(avatarStyle)
+            return $('cm-identity cm-avatar i').getAttribute('style')
         })
-
-        util.get('/settings/identity/list')
-        util.waitForPageLoad('/settings/identity/list')
-        $('cm-identity-tag cm-avatar i').getAttribute('style').then(function(src){
+        .then(function(src){
             expect(src).not.toBe(avatarStyle)
+
+            return $('cm-identity cm-avatar i').getAttribute('style')
+        })
+        .then(function(src){
+            expect(src).not.toBe(avatarStyle)
+
+            util.get('/settings/identity/list')
+            return util.waitForPageLoad('/settings/identity/list')
+        })
+        .then(function(){
+            $('cm-identity-tag cm-avatar i').getAttribute('style').then(function(src){
+                expect(src).not.toBe(avatarStyle)
+            })
         })
     })
 
