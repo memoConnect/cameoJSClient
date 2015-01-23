@@ -97,6 +97,21 @@
             cm-disable="disabled"
         ></cm-form-email>
     </form>
+
+    <hr class="margin-small" />
+
+    <article class="item" ng-click="contact.delete()" cm-reactive>
+        <span class="body">
+            <i class="fa cm-trash"></i>
+            {{::'CONTACT.PLACEHOLDER.DELETE'|cmTranslate}}
+        </span>
+        <span class="icon-list">
+            <i class="fa cm-right"></i>
+        </span>
+    </article>
+
+    <hr class="margin-small" />
+
 </cm-scrollable>
 
 <cm-footer>

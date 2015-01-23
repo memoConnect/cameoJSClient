@@ -346,7 +346,8 @@
             "STREET": "Straße",
             "STREETNR": "Nr.",
             "ZIP": "PLZ",
-            "CITY": "Ort"
+            "CITY": "Ort",
+            "DELETE": "@todo Kontakt löschen"
         },
         "INFO": {
             "EMPTY": {

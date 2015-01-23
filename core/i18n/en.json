@@ -567,7 +567,8 @@
       "ZIP": "ZIP",
       "CAMEOID": "CameoID",
       "STREET": "Street",
-      "CITY": "City"
+      "CITY": "City",
+      "DELETE": "@todo delete contact"
     },
     "FOOTER": {
       "SAVE": "Save",

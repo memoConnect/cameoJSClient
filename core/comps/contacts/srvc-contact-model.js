@@ -2,15 +2,12 @@
 
 angular.module('cmContacts')
 .factory('cmContactModel', [
-    'cmContactsAdapter',
-    'cmIdentityFactory',
-    'cmObject',
-    'cmStateManagement',
-    'cmUtil',
-    'cmLogger',
-    'cmSecurityAspectsContact',
+    'cmContactsAdapter', 'cmIdentityFactory', 'cmObject', 'cmStateManagement',
+    'cmUtil', 'cmLogger', 'cmSecurityAspectsContact', 'cmModal',
     '$q',
-    function(cmContactsAdapter, cmIdentityFactory, cmObject, cmStateManagement, cmUtil, cmLogger, cmSecurityAspectsContact, $q){
+    function(cmContactsAdapter, cmIdentityFactory, cmObject, cmStateManagement,
+             cmUtil, cmLogger, cmSecurityAspectsContact, cmModal,
+             $q){
         function ContactModel(data){
             var self = this;
 
@@ -110,12 +107,16 @@ angular.module('cmContacts')
                 return defer.promise;
             };
 
+            this.delete = function(){
+                return cmContactsAdapter
+                    .deleteContact(data)
+            };
+
             init(data);
 
             this.identity.on('update:finished', function(){
                 self.securityAspects.scheduleRefresh();
             });
-
         }
 
         return ContactModel;
