@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('cmCore').service('cmContextFactory', [
+angular.module('cmUi').service('cmContextFactory', [
     'cmContextModel', 'cmFactory', 'cmStateManagement', 'cmObject', 'cmLogger',
     '$rootScope', '$q',
     function(cmContextModel, cmFactory, cmStateManagement, cmObject, cmLogger,

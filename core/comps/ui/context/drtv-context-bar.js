@@ -1,11 +1,11 @@
 'use strict';
 
-angular.module('cmCore').directive('cmContextBar',[
+angular.module('cmUi').directive('cmContextBar',[
     'cmContextFactory',
     function(cmContextFactory){
         return {
             restrict: 'E',
-            templateUrl: 'comps/core/context/drtv-context-bar.html',
+            templateUrl: 'comps/ui/context/drtv-context-bar.html',
             scope: {},
             link: function(scope, element){
 

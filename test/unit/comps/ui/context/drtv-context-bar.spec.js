@@ -3,7 +3,7 @@
 describe('Directive cmContextBar', function() {
     var scope, element, cmContextFactory
 
-    beforeEach(module('cmCore'))
+    beforeEach(module('cmUi'))
 
     beforeEach(inject(function(_$compile_,_$rootScope_, _cmContextFactory_){
 
