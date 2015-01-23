@@ -5,9 +5,9 @@
 angular.module('cmPhonegap')
 .service('cmDevice',[
     'cmPhonegap', 'cmLogger', 'cmUtil',
-    '$window', '$device',
+    '$window', '$device', '$phonegapCameoConfig',
     function (cmPhonegap, cmLogger, cmUtil,
-              $window, $device) {
+              $window, $device, $phonegapCameoConfig) {
 
         var unknown = 'unknown';
 
@@ -64,7 +64,7 @@ angular.module('cmPhonegap')
                     this.plugin = {};
                 }
 
-                return this.emulateDevice || !this.emulateDevice && this.existsPlugin();
+                return this.emulateDevice || !this.emulateDevice && this.existsPlugin() || !this.emulateDevice && $phonegapCameoConfig != 'undefined';
             },
 
             isDesktop: function(where){
