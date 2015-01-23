@@ -9,10 +9,6 @@ angular.module('cmUi').directive('cmContextBar',[
             scope: {},
             link: function(scope, element){
 
-                function deactivate(){
-                    element.removeClass('cm-show');
-                }
-
                 function activate(){
                     if(!element.hasClass('cm-show')){
                         element.addClass('cm-show');
@@ -21,10 +17,24 @@ angular.module('cmUi').directive('cmContextBar',[
                     scope.counter = cmContextFactory.length;
                 }
 
+                function deactivate(){
+                    element.removeClass('cm-show');
+                }
+
+                function check(){
+                    if(cmContextFactory.length > 0){
+                        scope.counter = cmContextFactory.length;
+                    } else {
+                        deactivate();
+                    }
+                }
+
                 cmContextFactory.on('register', activate);
+                cmContextFactory.on('deregister', check);
 
                 scope.$on('$destroy',function(){
                     cmContextFactory.off('register', activate);
+                    cmContextFactory.off('deregister', check);
                 });
 
                 cmContextFactory.on('clear', deactivate);

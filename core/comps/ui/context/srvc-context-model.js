@@ -9,12 +9,28 @@ angular.module('cmUi').factory('cmContextModel', [
         function cmContextModel(data){
             var self = this;
 
-            function init(data){
-                //cmLogger.debug('cmContextModel.init')
+            cmObject.addEventHandlingTo(this);
 
-                console.log('cmContext.init data', data)
+            this.state = new cmStateManagement();
+
+            this.type = undefined;
+            this.model = undefined;
+
+            function init(data){
+                cmLogger.debug('cmContextModel init()');
+
+                // validate data
+
+                self.importData(data);
             }
 
+            this.importData = function(data){
+                cmLogger.debug('cmContextModel.importData');
+                console.log(data);
+
+                this.type   = data.type || this.type;
+                this.model  = data.model || this.model;
+            };
 
             init(data);
         }

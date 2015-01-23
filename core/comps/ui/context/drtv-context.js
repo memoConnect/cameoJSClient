@@ -139,18 +139,33 @@ angular.module('cmUi')
                     hammer.off('press', onLongTap);
                 });
             },
-            controller: function($scope){
-                $scope.handleLongTap = function(context){
-                    console.log('handleLongTap',context)
-                    /**
-                     * @todo
-                     * context sauber an factory übergeben
-                     *
-                     * zweiten longtap auf element überprüfen,
-                     * wenn instance schon vorhanden, dann aus factory entfernen
-                     */
-                    cmContextFactory.create();
+            controller: function($scope, $element){
+
+                function setClass(){
+                    $element.addClass('is-selected')
                 }
+
+                function removeClass(){
+                    $element.removeClass('is-selected')
+                }
+
+                $scope.handleLongTap = function(context){
+                    var instance = cmContextFactory.find(context);
+
+                    if(cmContextFactory.validate(context) && instance == null){
+                        setClass();
+                        cmContextFactory.create(context);
+                    } else {
+                        cmContextFactory.deregister(instance);
+                        removeClass();
+                    }
+                };
+
+                cmContextFactory.on('clear',removeClass);
+
+                $scope.$on('$destroy', function(){
+                    cmContextFactory.off('clear',removeClass);
+                })
             }
         }
     }
