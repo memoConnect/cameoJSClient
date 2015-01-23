@@ -596,6 +596,12 @@
         "PHONENUMBER": "@:DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER"
       }
     },
+    "MODAL": {
+      "DELETE": {
+        "HEADER": "@todo Contact delete",
+        "TEXT": "@todo You are sure to delete this contact?"
+      }
+    },
     "TRUST": {
       "OK": "trusted contact",
       "HAS_CAMEOKEYS": "has a cameoKey",

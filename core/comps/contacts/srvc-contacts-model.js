@@ -1,21 +1,14 @@
 'use strict';
 
 angular.module('cmContacts').service('cmContactsModel',[
-    'cmFactory',
-    'cmUserModel',
-    'cmContactModel',
-    'cmContactsAdapter',
-    'cmIdentityFactory',
-    'cmFriendRequestModel',
-    'cmStateManagement',
-    'cmUtil',
-    'cmObject',
-    'cmLogger',
-    'cmNotify',
-    'cmBrowserNotifications',
-    '$q',
-    '$rootScope',
-    function (cmFactory, cmUserModel, cmContactModel, cmContactsAdapter, cmIdentityFactory, cmFriendRequestModel, cmStateManagement, cmUtil, cmObject, cmLogger, cmNotify, cmBrowserNotifications, $q, $rootScope){
+    'cmFactory', 'cmUserModel', 'cmContactModel', 'cmContactsAdapter', 'cmIdentityFactory',
+    'cmFriendRequestModel', 'cmStateManagement', 'cmUtil', 'cmObject', 'cmLogger',
+    'cmNotify', 'cmBrowserNotifications',
+    '$q', '$rootScope',
+    function (cmFactory, cmUserModel, cmContactModel, cmContactsAdapter, cmIdentityFactory,
+              cmFriendRequestModel, cmStateManagement, cmUtil, cmObject, cmLogger,
+              cmNotify, cmBrowserNotifications,
+              $q, $rootScope){
         var self = this,
             events = {};
 
@@ -331,6 +324,11 @@ angular.module('cmContacts').service('cmContactsModel',[
 
         this.requests.on('register', function(){
             cmNotify.create({label: 'NOTIFICATIONS.TYPES.FRIEND_REQUEST', bell:true});
+        });
+
+        this.contacts.on('delete:finsihed', function(event, data){
+            self.deregister(data);
+            $rootScope.goto('/contact/list');
         });
 
         cmContactsAdapter.on('identity:updated', function(event, data){

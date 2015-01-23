@@ -371,6 +371,12 @@
                 "PHONENUMBER": "Bitte wählen Sie eine Telefonnummer aus"
             }
         },
+        "MODAL": {
+            "DELETE": {
+                "HEADER": "@todo Kontakt löschen",
+                "TEXT": "@todo Wollen Sie den Kontakt wirklich löschen?"
+            }
+        },
         "FOOTER": {
             "SAVE": "Speichern",
             "BACK": "Zurück"
