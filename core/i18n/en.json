@@ -806,7 +806,19 @@
         "TITLE": "New Friend Request",
         "MSG": "Friend request from {{sender}}"
       }
-    }
+    },
+      "CONTEXT": {
+          "MODAL": {
+              "CONFIRM": {
+                  "DELETE": {
+                      "TITLE": "@todo",
+                      "ONE_ITEM": "@todo",
+                      "MORE_ITEMS": "@todo"
+
+                  }
+              }
+          }
+      }
   },
   "TALKS": {
     "HEADING": "Talks",

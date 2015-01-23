@@ -798,8 +798,8 @@
             "FAX": "Fax"
         },
         "BULK_REKEYING": {
-            "HEADER": "@todo Neuverschlüsselung",
-            "CONTENT": "@todo Die Talks auf diesem Gerät werden für den neuen cameoKey verschlüsselt.",
+            "HEADER": "Aktualisierung der Verschlüsselung",
+            "CONTENT": "Die Verschlüsselung Ihrer Talks wird für Ihren neuen cameoKey erweitert.",
             "START": "Start"
         },
         "FOOTER": {
@@ -954,6 +954,18 @@
             "FRIEND_REQUEST": {
                 "TITLE": "neue Freundschaftsanfrage",
                 "MSG": "Freundschaftsanfrage von {{sender}}"
+            }
+        },
+        "CONTEXT": {
+            "MODAL": {
+                "CONFIRM": {
+                    "DELETE": {
+                        "TITLE": "Löschen",
+                        "ONE_ITEM": "Wollen Sie den ausgewählten Eintrag aus der Liste wirklich löschen?",
+                        "MORE_ITEMS": "Wollen Sie die ausgewählten Einträge aus der Liste wirklich löschen?"
+
+                    }
+                }
             }
         }
     },
