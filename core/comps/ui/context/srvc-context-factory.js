@@ -40,6 +40,10 @@ angular.module('cmUi').service('cmContextFactory', [
 
         self.delete = function(){
             cmLogger.debug('cmFactory.delete -> proceed delete context objects')
+
+            self.forEach(function(instance){
+                instance.processDelete()
+            })
         };
 
         self.validate = function(data){
