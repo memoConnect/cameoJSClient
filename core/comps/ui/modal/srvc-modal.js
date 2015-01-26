@@ -108,7 +108,7 @@ angular.module('cmUi')
                             title:  config.title    || 'DRTV.CONFIRM.HEADER',
                             html:   config.html     || '',
                             data:   config.data
-                        }
+                        };
 
             var deferred    = $q.defer(),
                 scope       = $rootScope.$new(),
@@ -137,18 +137,18 @@ angular.module('cmUi')
 
             self.one('modal:closed', function(event, id){
                 if(id == modalId)
-                    deferred.reject()
+                    deferred.reject();
 
-                return true //remove event binding
-            })
+                return true; //remove event binding
+            });
 
-            return deferred.promise
+            return deferred.promise;
         };
 
-        $rootScope.openModal        = self.open
-        $rootScope.closeModal       = self.close
-        $rootScope.isModalVisible   = false
-        $rootScope.confirm          = self.confirm
+        $rootScope.openModal        = self.open;
+        $rootScope.closeModal       = self.close;
+        $rootScope.isModalVisible   = false;
+        $rootScope.confirm          = self.confirm;
 
 //        $rootScope.$watch('isModalVisible' ,function(newValue){
 //            console.log('watch modal '+newValue)

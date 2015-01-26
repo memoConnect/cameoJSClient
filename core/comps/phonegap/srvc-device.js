@@ -3,7 +3,9 @@
 // https://github.com/apache/cordova-plugin-device/blob/master/doc/index.md
 
 angular.module('cmPhonegap')
-.service('cmDevice',
+.service('cmDevice',[
+    'cmPhonegap', 'cmLogger', 'cmUtil',
+    '$window', '$device', '$phonegapCameoConfig',
     function (cmPhonegap, cmLogger, cmUtil,
               $window, $device, $phonegapCameoConfig) {
 
@@ -16,11 +18,7 @@ angular.module('cmPhonegap')
             flags: {},
 
             init: function(){
-                if($phonegapCameoConfig == 'undefined') {
-                    return false;
-                }
-
-                cmPhonegap.isReady(function(){
+                cmPhonegap.isReady('cmDevice',function(){
                     if($device.get() == 'undefined'){
                         //cmLogger.info('DEVICE PLUGIN IS MISSING');
                         return false;
@@ -31,7 +29,7 @@ angular.module('cmPhonegap')
             },
 
             existsPlugin: function(){
-                return this.plugin != null;
+                return this.plugin != null || $phonegapCameoConfig != 'undefined';
             },
 
             getUserAgent: function(){
@@ -41,6 +39,7 @@ angular.module('cmPhonegap')
                 try {
                     nAgt = ($window.navigator.userAgent||$window.navigator.vendor||$window.opera).toLowerCase();
                 } catch(e){
+                    console.log('fail',e)
                     nAgt = 'Mozilla/5.0 (iPhone; CPU iPhone OS 8_0 like Mac OS X) AppleWebKit';
                 }
 
@@ -59,13 +58,13 @@ angular.module('cmPhonegap')
                     : unknown;
             },
 
-            isApp: function(){
+            isApp: function(withoutPlugin){
                 if(this.emulateDevice) {
                     cmLogger.warn('cmPhonegap.cmDevice.debug == true!!!');
                     this.plugin = {};
                 }
 
-                return this.emulateDevice || !this.emulateDevice && this.existsPlugin();
+                return this.emulateDevice || !this.emulateDevice && !withoutPlugin && this.existsPlugin() || !this.emulateDevice && withoutPlugin && $phonegapCameoConfig != 'undefined';
             },
 
             isDesktop: function(where){
@@ -126,15 +125,21 @@ angular.module('cmPhonegap')
                 if(this.emulateDevice && this.emulateDeviceType.indexOf('winphone') >= 0){
                     return true;
                 }
-                return this.isApp()
-                    && this.getPlatform().indexOf('win') >= 0;
+                return (this.isApp()
+                    && this.getPlatform().indexOf('iemobile') >= 0)
+                    || this.getUserAgent().indexOf('iemobile') >= 0;
             },
-            isWinPhone8: function(){
-                if(this.emulateDevice && this.emulateDeviceType.indexOf('winphone8') >= 0){
-                    return true;
-                }
-                return this.isApp()
-                    && this.getPlatform().indexOf('win32nt') >= 0;
+
+            isIE: function(_version_){
+                var msie = 'msie '
+                //var version = parseInt(this.getUserAgent().substring(msieIndex + 5, this.getUserAgent().indexOf(".", msieIndex)));
+
+                return (
+                    this.isApp() && this.getPlatform().indexOf(msie) >= 0
+                 || this.isApp() && !!this.getPlatform().match(/trident.*rv\:11\./)
+                 || this.getUserAgent().indexOf(msie) >= 0
+                 || !!this.getUserAgent().match(/trident.*rv\:11\./)
+                );
             },
             isBlackBerry: function(){
                 return this.isApp()
@@ -273,4 +278,4 @@ angular.module('cmPhonegap')
 
         return self;
     }
-);
+]);

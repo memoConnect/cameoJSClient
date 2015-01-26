@@ -62,6 +62,8 @@ module.exports = function (grunt) {
             buildConfig = extend(buildConfig,grunt.file.readJSON(buildConfigLocal));
         }
 
+        buildConfig.target = currentTarget;
+
         switch (currentTarget) {
             case "test" :
                 buildConfig = grunt.file.readJSON('./config/cameoBuildConfig-test.json');
@@ -79,8 +81,18 @@ module.exports = function (grunt) {
                 break;
         }
 
-        // load static data
-        buildConfig.static = grunt.file.readJSON('./config/cameoBuildConfig-static.json');
+        // load static data and compile vars
+        buildConfig.static = JSON.parse(
+            grunt.template.process(
+                grunt.file.read('config/cameoConfig-static.json'),
+                {
+                    data: {
+                        'dlPath': buildConfig.path.dl,
+                        'appPath': buildConfig.path.app
+                    }
+                }
+            )
+        );
 
         //check whether apiUrl should be overwritten
         var apiUrl = grunt.option('apiUrl');
@@ -95,6 +107,14 @@ module.exports = function (grunt) {
             var jsonPath = buildConfig.config.apiUrl.split('.');
             buildConfig.config.apiUrl = buildConfig.config[jsonPath[0]][jsonPath[1]];
         }
+
+        /**
+         * not important
+         */
+        //var defaultApiVersion = grunt.option('defaultApiVersion');
+        //if(defaultApiVersion){
+        //    buildConfig.config.defaultApiVersion = defaultApiVersion;
+        //}
 
         var version = grunt.option('appVersion');
         if (version) {
@@ -139,6 +159,8 @@ module.exports = function (grunt) {
         else
             testConfig = grunt.file.readJSON('./config/cameoTestConfig.json');
 
+        console.log('currentTarget', currentTarget)
+
         switch (currentTarget) {
             case "test" :
                 testConfig = grunt.file.readJSON('./config/cameoTestConfig-test.json');
@@ -175,14 +197,15 @@ module.exports = function (grunt) {
             testConfig.config.protractorDebug = true
         }
 
-        var platform = process.platform
+        var platform = process.platform,
+            chromeDriverPath = "../../../test/lib/ptor/chromedriver_2.13_";
         console.log("OS: " + platform)
         if (platform.match(/linux/)) {
-            testConfig.config.chromeDriverPath = "../test/lib/ptor/chromedriver_linux"
+            testConfig.config.chromeDriverPath = chromeDriverPath+"linux64"
         } else if (platform.match(/darwin/)) {
-            testConfig.config.chromeDriverPath = "../test/lib/ptor/chromedriver_mac"
+            testConfig.config.chromeDriverPath = chromeDriverPath+"mac32"
         } else if (platform.match(/win/)) {
-            testConfig.config.chromeDriverPath = "../test/lib/ptor/chromedriver_win.exe"
+            testConfig.config.chromeDriverPath = chromeDriverPath+"win32.exe"
         }
 
         return testConfig;
@@ -196,7 +219,8 @@ module.exports = function (grunt) {
         },
         globalCameoSecrets: globalCameoSecrets,
         globalCameoBuildConfig: globalCameoBuildConfig,
-        globalCameoTestConfig: globalCameoTestConfig
+        globalCameoTestConfig: globalCameoTestConfig,
+        globalCameoPhonegapConfig: grunt.file.readJSON('./config/cameoConfig-phonegap.json')
     });
 
     configs.pkg = grunt.file.readJSON('package.json');

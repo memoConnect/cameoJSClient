@@ -1,38 +1,44 @@
 'use strict';
 
 angular.module('cmDesktopUi').directive('cmColumn',[
-    '$rootScope', '$timeout',
-    function ($rootScope, $timeout) {
+    'cmConfig',
+    '$rootScope', '$window', '$document',
+    function (cmConfig,
+              $rootScope, $window, $document) {
         return {
             restrict: 'E',
-            link: function(scope, element, attrs){
-                function addGrabber(){
-                    if(element.find('cm-desktop-widget-menu').length == 1)
-                        element.append('<div class="grabber"></div>');
+            link: function(scope, element){
+                function handleScrollable(){
+                    if(element.find('cm-scrollable').length == 1){
+                        element.css({'overflow':'hidden'});
+                    }
                 }
 
-                addGrabber();
+                var listen_to_scrollable = $rootScope.$on('cmScrollable:loaded', handleScrollable);
 
-                if('cmWithoutFooterCheck' in attrs)
-                    return false;
+                function resize(){
+                    var header = $document[0].querySelector('cm-header'),
+                        winHeight = $window.innerHeight,
+                        children = element.children(),
+                        minDim = cmConfig.static.minimumDesktopDimension.split('x'),
+                        newHeight = winHeight - header.offsetHeight;
 
-                function checkFooter(){
-                    if(element.find('cm-footer').length == 0)
-                        element.addClass('without-footer');
-                    else
-                        element.removeClass('without-footer');
+                    // TODO: more than one children!!!
+                    if(header && children.length == 1) {
+                        children.css({
+                            'height': newHeight + 'px',
+                            'position': 'relative'
+                        });
+                    }
                 }
 
-                checkFooter();
+                angular.element($window).on('resize', resize);
 
-                var watchersEnd = $rootScope.$on('cmFooter:stateChanged',function(){
-                    $timeout(function(){
-                        checkFooter();
-                    },50);
-                });
+                resize();
 
                 scope.$on('$destroy', function(){
-                    watchersEnd();
+                    listen_to_scrollable();
+                    angular.element($window).off('resize', resize);
                 });
             }
         }

@@ -1,12 +1,19 @@
-var config = require("../../config-e2e-tests.js")
+var config = require("../../config/specs.js")
 var util = require("../../../lib/e2e/cmTestUtil.js")
 
 describe('Friendrequests: ', function () {
     var ptor = util.getPtorInstance()
-    var user1ToAccept = util.createTestUser()
+    var user1ToAccept
     var password = 'password'
     var requestMessage = 'moep moep mooooeeeppp?'
     afterEach(function() { util.stopOnError() });
+
+    it('should get a login name for user 1', function(){
+        util.createTestUser(undefined,'password reset')
+        .then(function(loginName){
+            user1ToAccept = loginName
+        })
+    })
 
     it('user2', function(){
 
@@ -17,23 +24,23 @@ describe('Friendrequests: ', function () {
             it('search', function(){
                 util.login(config.loginUser1,config.passwordUser1)
 
-                util.get('/contact/search')
-                util.waitForPageLoad('/contact/search')
+                util.get('/contact/list')
+                util.waitForPageLoad('/contact/list')
 
-                util.waitForElement("[data-qa='inp-search-cameo-ids']")
+                util.headerSearchInList(user1ToAccept)
 
-                $("[data-qa='inp-search-cameo-ids']").sendKeys(user1ToAccept)
+                util.waitAndClickQa('btn-search')
 
-                // find user 1
-                util.waitForElement("li.contact-search-item")
-                $$('li.contact-search-item').then(function(elements) {
-                    expect(elements.length).toEqual(1)
+                util.waitForQa('contact-search-item').then(function(){
+                    $$('li[data-qa="contact-search-item"]').then(function(elements) {
+                        expect(elements.length).toEqual(1)
+                    })
+                    expect($('li[data-qa="contact-search-item"]').getText()).toBe(user1ToAccept)
                 })
-                expect($('li.contact-search-item .identityName').getText()).toBe(user1ToAccept)
             })
 
             it('open modal', function(){
-                $("[data-qa='btn-openModal']").click()
+                util.waitAndClickQa('contact-search-item')
 
                 // fill out modal
                 expect($('cm-modal.active').isPresent()).toBe(true)
@@ -42,23 +49,16 @@ describe('Friendrequests: ', function () {
                 $("cm-modal.active [data-qa='btn-sendRequest']").click()
             })
 
-            it('should be now an contacts page', function(){
-                //util.expectCurrentUrl('#/contact/list')
-                util.waitForPageLoad('/contact/list')
-            })
-
             it('check if request is pending in list', function(){
-                util.waitForElement('cm-contact-tag')
+                util.setVal('inp-list-search','pending',true)
 
-                util.headerSearchInList('pending');
+                util.waitForElement('cm-contact-tag')
 
                 $$('cm-contact-tag').then(function(elements){
                     expect(elements.length).not.toEqual(0)
                 })
-                // multiple
-                //expect($("cm-contact-tag cm-request-brief [data-qa='contact-display-name']").getText()).toBe(user1ToAccept)
 
-                util.logout()
+                util.closeHeaderSearch()
             })
         })
     })
@@ -67,7 +67,6 @@ describe('Friendrequests: ', function () {
         describe('Friendrequests again "'+ user1ToAccept + '"', function(){
             it('login and accept', function() {
                 util.login(user1ToAccept, password)
-                util.waitForPageLoad("/start")
             })
 
             it('accept request', function(){
@@ -97,12 +96,20 @@ describe('Friendrequests: ', function () {
             it('check if request converted to contact', function(){
                 util.get('/contact/list')
 
-                // search for user2
-                util.headerSearchInList(config.displayNameUser1)
+                util.waitForPageLoad('/contact/list')
+                .then(function(){
+                    // search for user2
+                    util.headerSearchInList(config.displayNameUser1)
 
-                util.waitForElements('cm-contact-tag', 1)
-                expect($("[data-qa='contact-display-name']").getText()).toBe(config.displayNameUser1)
-                util.logout()
+                    util.waitForElements('cm-contact-tag', 1)
+                    expect($("[data-qa='contact-display-name']").getText()).toBe(config.displayNameUser1)
+                })
+                .then(function(){
+                        util.closeHeaderSearch()
+                        .then(function(){
+                                util.logout()
+                        })
+                })
             })
 
             it('delete test user', function(){

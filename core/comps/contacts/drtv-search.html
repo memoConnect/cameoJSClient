@@ -13,7 +13,7 @@
     <div class="modal-row">
         <textarea placeholder="{{'CONTACTS.PLACEHOLDER.REQUEST_MESSAGE'|cmTranslate}}" ng-model="contact.message" data-qa="input-friendrequestMessage"></textarea>
     </div>
-    <button class="cm-btn-grey" ng-click="sendRequest(contact)" data-qa="btn-sendRequest">
+    <button class="cm-btn-grey" ng-click="sendRequest(contact)" data-qa="btn-sendRequest" cm-reactive>
         {{'CONTACTS.LABEL.SEND_REQUEST'|cmTranslate}}
         <i class="fa cm-send"></i>
     </button>
@@ -22,7 +22,7 @@
 <article class="content">
     <form name="searchCameoId" autocomplete="off">
         <div class="cm-input-ctn with-inside-icon">
-            <input data-qa="inp-search-cameo-ids" type="text" value="" ng-model="string" ng-keyup="sendSearch()" ng-minlength="4" placeholder="{{'CONTACTS.PLACEHOLDER.ADD_NEW_CONTACT'|cmTranslate}}" name="string" />
+            <input data-qa="inp-search-cameo-ids" type="text" value="" ng-model="string" ng-keyup="sendSearch()" ng-minlength="3" placeholder="{{'CONTACTS.PLACEHOLDER.ADD_NEW_CONTACT'|cmTranslate}}" name="string" />
             <i class="fa cm-search"></i>
         </div>
         <cm-info-bubble nose-x="45%" class="cm-alert"
@@ -39,7 +39,7 @@
 
 <section class="mt15" ng-if="(results.length > 0)">
     <ul>
-        <li ng-repeat="contact in results" ng-click="openModal('modalSendRequest',contact)" data-qa="btn-openModal" class="contact-search-item">
+        <li class="contact-search-item"  ng-repeat="contact in results" ng-click="openModal('modalSendRequest',contact)" data-qa="btn-openModal" cm-reactive>
             <cm-avatar cm-data="contact"></cm-avatar>
             <section class="identityName" cm-weight="1">
                 <strong>{{contact.getDisplayName()}}</strong>

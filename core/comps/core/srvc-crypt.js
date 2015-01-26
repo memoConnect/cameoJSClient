@@ -29,7 +29,7 @@ angular.module('cmCore')
                 // Of course IE calls it msCrypto instead of being standard
                 else if (window.msCrypto && window.msCrypto.getRandomValues) {
                     randomInts = new Int32Array(length);
-                    window.crypto.getRandomValues(randomInts);
+                    window.msCrypto.getRandomValues(randomInts);
                 }
                 // So, no built-in functionality - bummer. If the user has wiggled the mouse enough,
                 // sjcl might help us out here
@@ -220,7 +220,7 @@ angular.module('cmCore')
                     return false;
                 }
 
-                var self = this
+                var self = this;
 
                 async.promise = $q.defer();
                 // start keygen over plugin crypto helper
@@ -235,11 +235,9 @@ angular.module('cmCore')
                         });
                 // start keygen over webworker
                 } else { 
-
                     cmWebworker.get({
                         jobName :   'rsa_keygen',
                         params  :   { keySize: keySize }
-
                     })
                     .then(
                         function(worker){

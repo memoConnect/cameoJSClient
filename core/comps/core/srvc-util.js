@@ -2,7 +2,7 @@
 
 angular.module('cmCore')
 .service('cmUtil',
-    function(cmLogger, $window, $injector){
+    function(cmLogger, $window, $injector, $document){
         /**
          * Checks if Key exists in an Object or Array
          * @param object
@@ -27,17 +27,21 @@ angular.module('cmCore')
          * @param offset
          * @returns {string}
          */
-        this.handleLimitOffset = function(limit,offset){
+        this.handleLimitOffset = function(limit,offset,timeLimit){
             var s = '';
 
-            if(angular.isDefined(limit) && this.validateInt(limit) !== false){
-                s = '?limit=' + parseInt(limit);
+            if(angular.isDefined(timeLimit) && this.validateInt(timeLimit) !== false){
+                s = '?timeLimit=' + parseInt(timeLimit);
             } else {
-                //default limit
-            }
+                if(angular.isDefined(limit) && this.validateInt(limit) !== false){
+                    s = '?limit=' + parseInt(limit);
+                } else {
+                    //default limit
+                }
 
-            if(s != '' && angular.isDefined(offset) && this.validateInt(offset) !== false){
-                s += '&offset=' + parseInt(offset);
+                if(s != '' && angular.isDefined(offset) && this.validateInt(offset) !== false){
+                    s += '&offset=' + parseInt(offset);
+                }
             }
 
             return s;
@@ -250,5 +254,59 @@ angular.module('cmCore')
             var matches = id ? String(id).match(alphNumericRegExp) : null;
             return matches != null;
         };
+
+        this.scrollToInputError = function() {
+            var el          = document.querySelector(".cm-input-error:not(.ng-hide)") || document.querySelector("form .ng-invalid:not(.ng-hide)") || document.querySelector(".cm-alert:not(.ng-hide)"),
+                offset      = this.getOffsetToBody(el),
+                bodyAndHtml = angular.element($document[0].querySelectorAll('body,html')),
+                cmHeader    = angular.element($document[0].querySelector('cm-header'));
+
+            angular.forEach(bodyAndHtml, function (tag) {
+                tag.scrollTop = offset.top - cmHeader[0].offsetHeight - 10; //-10 for the looks
+            });
+        };
+
+        /**
+         * Function returns a reference of requested parent element.
+         * @param {String} tag_name Tag name of requested parent element.
+         * @param {HTMLElement} el Initial element (from which search begins).
+         */
+        this.findParent = function(tag_name, el) {
+            // loop up until parent element is found
+            while (el && el.nodeName.toLowerCase() !== this.camelCaseToDash(tag_name)) {
+                el = el.parentNode;
+            }
+            // return found element
+            return el;
+        };
+
+        this.isInParent = function(parent, children){
+            var el = children;
+
+            while (el && el !== parent) {
+                el = el.parentNode;
+
+                if(el == parent){
+                    return true;
+                }
+            }
+            return false;
+        };
+
+        this.getOffsetToBody = function(el){
+            var top=0, left=0;
+            while(el) {
+                top = top + parseInt(el.offsetTop);
+                left = left + parseInt(el.offsetLeft);
+                el = el.offsetParent;
+            }
+            return {top: top, left: left};
+        };
+
+        this.camelCaseToDash = function(str){
+            return typeof str == 'string'
+                  ? str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()
+                  : false;
+        }
     }
 );

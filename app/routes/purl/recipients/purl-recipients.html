@@ -1,5 +1,5 @@
 <section class="theme-a fill-bg">
-    <cm-header cm-rubber-space>
+    <cm-header ng-if="conversation" cm-rubber-space>
         <cm-back cm-weight="1" back-to="purl/{{purlId}}"></cm-back>
         <div cm-weight="1"></div>
         <cm-logo cm-weight="4"></cm-logo>
@@ -8,8 +8,9 @@
             cm-data         = "conversation"
             cm-leading-icon = "cm-lock"
             ng-click        = "gotoPurl(purlId,'security')"
+            cm-reactive
         ></cm-security-indicator>
     </cm-header>
 
-    <cm-widget-conversation-recipients cm-data="conversation"></cm-widget-conversation>
+    <cm-widget-conversation-recipients cm-data="conversation"></cm-widget-conversation-recipients>
 </section>

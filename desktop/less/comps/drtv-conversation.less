@@ -1,10 +1,7 @@
 cm-conversation{
-    position:absolute;
-    top:0;
-    width:100%;
-    bottom:6*@cm-unit;
-    overflow: auto;
-    padding-bottom:0;
+    .pos-rel;
+    .w100;
+
     .answer {
         min-height: 6*@cm-unit;
         .btns-left{
@@ -21,7 +18,6 @@ cm-conversation{
             right:0;
         }
 
-
         .wrap {
             padding-bottom: @cm-unit !important;
             .message {
@@ -37,9 +33,24 @@ cm-conversation{
             }
         }
 
-
         textarea{
             height:4.8*@cm-unit;
+        }
+    }
+}
+
+cm-message{
+    article{
+        .dbl!important;
+        div.message{
+            &.right{
+                max-width:100%;
+                margin-left:2rem;
+                float: right;
+            }
+            &.left{
+                max-width:90%;
+            }
         }
     }
 }

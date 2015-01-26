@@ -11,7 +11,7 @@
 cm-header, .cm-header-block{
   .dbl;
   .pos-fxd;
-  padding:0.3rem 0;
+  //padding:0.3rem 0;
   top:0;
   z-index:11;
   width:@cm-app-width;
@@ -36,6 +36,7 @@ cm-header, .cm-header-block{
     width:@cm-unit;
     z-index:1;
     .back-wrap{
+      height:@cm-unit;
       text-overflow:ellipsis;
       overflow:hidden;
       .tac;
@@ -53,16 +54,16 @@ cm-header, .cm-header-block{
     .dib;
     .with-cursor;
     .pos-rel;
-    padding-left:@cm-horizontal-padding;
     a{
       .tal;
       .dbl;
       .single-line;
+      height:@cm-unit;
       color:@cm-white;
       font-size:@cm-large-font;
     }
     span{
-      padding:@cm-horizontal-padding;
+      padding:@cm-horizontal-padding 0;
     }
   }
 
@@ -84,26 +85,26 @@ cm-header, .cm-header-block{
 
   cm-header-list-search{
     .dib;
-    .pos-rel;
     cm-search-input{
       .pos-abs;
       color:@cm-black;
       z-index:-1;
       height:@cm-unit;
-      width:24rem - @cm-horizontal-padding;
-      right:@cm-unit;
+      width:100%;
+      left:0;
       top:0;
-      padding:1rem 0.4rem;
       font-size:@cm-large-font;
       line-height:@cm-mega-font;
       .opacity-0;
       .tal;
       &.visible{
-        z-index:1;
+        z-index:1001;
         .opacity-100;
+        .border-bottom;
       }
       input{
-
+        padding-left: @cm-unit;
+        .border-bottom;
       }
       textarea{
         .no-border;
@@ -118,6 +119,9 @@ cm-header, .cm-header-block{
         height:@cm-unit;
         line-height:@cm-unit!important;
       }
+      i:first-child{
+        .pos-tl;
+      }
     }
   }
 
@@ -126,7 +130,17 @@ cm-header, .cm-header-block{
   }
 }
 
+
+cm-header-list-search{
+  i{
+    height: @cm-unit;
+    width: @cm-unit;
+  }
+}
+
+
 cm-second-header{
+
   .dbl;
   height:@cm-unit;
   line-height:@cm-unit;

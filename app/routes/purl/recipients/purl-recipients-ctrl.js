@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('cmRoutes').controller('PurlRecipientCtrl',[
+angular.module('cmRoutes').controller('PurlRecipientsCtrl',[
 
     '$scope',
     '$rootScope',

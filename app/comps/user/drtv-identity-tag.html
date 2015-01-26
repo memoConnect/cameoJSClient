@@ -1,9 +1,9 @@
-<cm-avatar cm-data="identity" cm-weight="1"></cm-avatar>
-<section cm-weight="4" class="identityName">
+<cm-avatar cm-data="identity"></cm-avatar>
+<section class="identityName">
     <div class="displayName">{{identity.getDisplayName()}}</div>
     <div class="cameoId">{{identity.cameoId}}</div>
 </section>
-<section class="icon-list">
+<section class="icon-list" ng-class="{'with-two-icons':identity.isActive}">
     <i class="fa cm-write" ng-if="identity.isActive"></i>
     <i class="fa" ng-class="{'cm-radio-1':identity.isActive,'cm-radio-0':!identity.isActive}"></i>
 </section>

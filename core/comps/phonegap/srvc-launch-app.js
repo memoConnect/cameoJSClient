@@ -10,21 +10,17 @@ angular.module('cmPhonegap')
         var self = {
             params: {},
 
-            init: function(){
-                // triggered at phonegapCameoConfig 'resources/tempaltes/phonegap/config.js'
-                angular.element($window).on('launchApp',function(event) {
-                    var url = event.detail.url,
-                        protocolRegexp = '.*://',
-                        queryRegexp = '([^?=&]+)(=([^&]*))?';
+            parse: function(url){
+                var protocolRegexp = '.*://',
+                    queryRegexp = '([^?=&]+)(=([^&]*))?';
 
-                    url
-                        .replace(new RegExp( protocolRegexp, 'g' ),'')
-                        .replace(new RegExp( queryRegexp, 'g' ),function( $0, $1, $2, $3 ){
-                            self.params[ $1 ] = $3;
-                        });
+                url
+                    .replace(new RegExp( protocolRegexp, 'g' ),'')
+                    .replace(new RegExp( queryRegexp, 'g' ),function( $0, $1, $2, $3 ){
+                        self.params[ $1 ] = $3;
+                    });
 
-                    self.doLaunch();
-                });
+                this.doLaunch();
             },
 
             doLaunch: function(){
@@ -38,6 +34,11 @@ angular.module('cmPhonegap')
                     }
                 }
             }
+        };
+
+        // do it global
+        $window.handleOpenURL = function(url) {
+            self.parse(url);
         };
 
         return self;

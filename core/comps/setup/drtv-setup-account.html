@@ -1,0 +1,61 @@
+<cm-scrollable>
+    <article class="content" ng-click="toggleHeadlineInfo()" data-qa="ctn-toggle-headline">
+        <cm-info-bubble nose-x="45%">
+            <div ng-show="!showHeadlineInfo" data-qa="info-headline-small">
+                <i class="fa cm-info cm-ci-color"></i> {{::'ACCOUNT.CREATE.INFO.NOTE_ABOUT_THIS_DATA_SMALL'|cmTranslate}}
+            </div>
+            <div ng-show="showHeadlineInfo" data-qa="info-headline">
+                <i class="fa cm-info cm-ci-color"></i> {{::'ACCOUNT.CREATE.INFO.NOTE_ABOUT_THIS_DATA_SMALL'|cmTranslate}}
+                <hr class="margin-small" />
+                <span ng-bind-html="::'ACCOUNT.CREATE.INFO.NOTE_ABOUT_THIS_DATA'|cmParse"></span>
+            </div>
+        </cm-info-bubble>
+    </article>
+
+    <hr class="margin-small" />
+
+    <form name="cmForm" novalidate autocomplete="off">
+
+        <cm-form-phonenumber
+            ng-model="formData.phoneNumber"
+            ng-model-out="formData.mergedPhoneNumber"
+            cm-tabindex="2"
+            cm-label="ACCOUNT.PLACEHOLDER.PHONENUMBER"
+            cm-info="ACCOUNT.INFO.INVALID.PHONENUMBER"
+            cm-toggle-info="ACCOUNT.INFO.PHONENUMBER"
+        ></cm-form-phonenumber>
+
+        <hr class="margin-small" />
+
+        <cm-form-email
+            ng-model="formData.email"
+            cm-tabindex="3"
+            cm-label="ACCOUNT.PLACEHOLDER.EMAIL"
+            cm-info="ACCOUNT.INFO.INVALID.EMAIL"
+            cm-toggle-info="ACCOUNT.INFO.EMAIL"
+        ></cm-form-email>
+
+        <hr class="margin-small" />
+    </form>
+
+    <article class="content" ng-show="saveError" data-qa="ctn-save-error">
+        <cm-info-bubble class="cm-alert">
+            <i class="fa cm-info"></i>
+            <span ng-bind-html="::'ACCOUNT.CREATE.ERROR' | cmParse"></span>
+        </cm-info-bubble>
+    </article>
+</cm-scrollable>
+
+<cm-footer>
+    <button class="cm-btn-grey" ng-click="saveAccount()" data-qa="btn-next-step" cm-reactive>
+        <span ng-show="!showLoader && !isPristine" data-qa="btn-saveAccount">
+            {{::'ACCOUNT.FOOTER.SAVE'|cmTranslate}}
+            <i class="fa cm-checker"></i>
+        </span>
+        <span ng-show="isPristine" data-qa="btn-pristineSkip">
+            {{::'ACCOUNT.FOOTER.SKIP'|cmTranslate}}
+            <i class="fa cm-right"></i>
+        </span>
+        <cm-loader ng-show="showLoader" cm-color="ci-color"></cm-loader>
+    </button>
+</cm-footer>

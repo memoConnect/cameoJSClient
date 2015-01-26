@@ -2,11 +2,14 @@
 
 angular.module('cmCore').directive('cmDateFormatSelect', [
     'cmSettings',
-    function(cmSettings){
+    'cmUserModel',
+    function(cmSettings,cmUserModel){
         return {
             restrict: 'AE',
             scope: true,
-            template: '<select ng-model="myFormat" ng-options="obj.value as obj.name for obj in dateFormat"></select>',
+            template:   '<select ng-model="myFormat">'+
+                            '<option ng-repeat="item in dateFormat" value="{{item.value}}" ng-selected="myFormat == item.value">{{item.name}}</option>'+
+                        '</select>',
 
             link: function(scope, element){
                 element.find('select').on('change', function(){
@@ -15,17 +18,18 @@ angular.module('cmCore').directive('cmDateFormatSelect', [
             },
 
             controller: function($scope){
-                $scope.myFormat = cmSettings.get('dateFormat');
-
                 $scope.dateFormat = [
                     {name:"DD.MM.YYYY", value: "dd.MM.yyyy"},
                     {name:"YYYY-MM-DD", value: "yyyy-MM-dd"}
                 ];
 
-                $scope.timeFormat = {
-                    "24h": "HH:mm",
-                    "12h": "h:mm a"
-                };
+                function update(){
+                    $scope.myFormat = cmSettings.get('dateFormat');
+                }
+
+                update();
+
+                cmUserModel.on('update:finished', update)
             }
         }
     }

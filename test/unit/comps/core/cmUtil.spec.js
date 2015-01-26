@@ -72,6 +72,14 @@ describe('cmUtil', function() {
             expect(cmUtil.handleLimitOffset(10, 2)).toBe('?limit=10&offset=2')
         })
 
+        it('should return ?timeLimit=1411153446045', function () {
+            expect(cmUtil.handleLimitOffset(null, null, 1411153446045)).toBe('?timeLimit=1411153446045')
+        })
+
+        it('should return ?timeLimit=1411153446045', function () {
+            expect(cmUtil.handleLimitOffset(10, 2, 1411153446045)).toBe('?timeLimit=1411153446045')
+        })
+
         it('if wrong param type, should return nothing', function () {
             expect(cmUtil.handleLimitOffset('dfvfdvdf', 2)).toBe('')
         })
@@ -466,6 +474,33 @@ describe('cmUtil', function() {
             expect(cmUtil.isAlphaNumeric('2fsdf4F3ds', 10)).toBeTruthy()
             expect(cmUtil.isAlphaNumeric('eX28xqhS9eYrQyRfpm70')).toBeTruthy()
             expect(cmUtil.isAlphaNumeric('kTqQrwPMlEe1OrmxcSIq', 20)).toBeTruthy()
+        })
+    })
+
+    // TODO: missing new functions!!!
+
+    describe('camelCaseToDash', function(){
+        it('should be defined', function () {
+            expect(cmUtil.camelCaseToDash).toBeDefined()
+        })
+
+        it('should be false', function(){
+            expect(cmUtil.camelCaseToDash()).toBeFalsy()
+            expect(cmUtil.camelCaseToDash(undefined)).toBeFalsy()
+            expect(cmUtil.camelCaseToDash(null)).toBeFalsy()
+            expect(cmUtil.camelCaseToDash({})).toBeFalsy()
+            expect(cmUtil.camelCaseToDash([])).toBeFalsy()
+            expect(cmUtil.camelCaseToDash('')).toBe('')
+        })
+
+        it('should be has dashes', function () {
+            expect(cmUtil.camelCaseToDash('moep')).toBe('moep')
+            expect(cmUtil.camelCaseToDash('moepMoep')).toBe('moep-moep')
+            expect(cmUtil.camelCaseToDash('moepMoepMoep')).toBe('moep-moep-moep')
+            expect(cmUtil.camelCaseToDash('moepMoepMoepMeeop')).toBe('moep-moep-moep-meeop')
+            expect(cmUtil.camelCaseToDash('moepMoepMoepMeeopWhoop')).toBe('moep-moep-moep-meeop-whoop')
+
+            expect(cmUtil.camelCaseToDash('moep-moep')).toBe('moep-moep')
         })
     })
 

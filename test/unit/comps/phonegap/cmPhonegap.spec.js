@@ -28,13 +28,13 @@ describe('cmPhonegap default none app', function() {
         })
     })
 
-    describe('method initCloseApp', function () {
+    describe('method initDeviceButtons', function () {
         it('should be defined', function () {
-            expect(cmPhonegap.initCloseApp).toBeDefined()
+            expect(cmPhonegap.initDeviceButtons).toBeDefined()
         })
 
         it('should return false', function () {
-            expect(cmPhonegap.initCloseApp()).toBeFalsy()
+            expect(cmPhonegap.initDeviceButtons()).toBeFalsy()
         })
     })
 })
@@ -81,7 +81,7 @@ describe('cmPhonegap is app', function() {
 
         it('fast ready function go to promise queue and wait for "deviceready"', function(){
             spyOn(spy, 'promiseCallback')
-            cmPhonegap.isReady(spy.promiseCallback)
+            cmPhonegap.isReady('unitTest',spy.promiseCallback)
             // trigger event
             var event = document.createEvent('HTMLEvents')
             event.initEvent('deviceready', true, true)
@@ -93,15 +93,15 @@ describe('cmPhonegap is app', function() {
 
         it('after "deviceready" called without proise',function(){
             spyOn(spy, 'directlyCallback')
-            cmPhonegap.isReady(spy.directlyCallback)
+            cmPhonegap.isReady('unitTest',spy.directlyCallback)
             expect(spy.directlyCallback).toHaveBeenCalled()
         })
 
     })
 
-    xdescribe('method initCloseApp', function () {
+    xdescribe('method initDeviceButtons', function () {
         it('after dom:event backbutton exit app called', function () {
-            expect(cmPhonegap.initCloseApp()).toBeFalsy()
+            expect(cmPhonegap.initDeviceButtons()).toBeFalsy()
         })
     })
 })

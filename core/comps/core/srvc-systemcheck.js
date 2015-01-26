@@ -5,19 +5,13 @@
  * @name cmSystemCheck
  * @description
  */
-angular.module('cmCore').service('cmSystemCheck', [
-    'cmUserModel',
-    'cmObject',
-    'cmApi',
-    'cmVersion',
-    'cmLanguage',
-    'LocalStorageAdapter',
-    'cmLogger',
-    'cmDevice',
-    '$rootScope',
-    '$q',
+angular.module('cmCore')
+.service('cmSystemCheck', [
+    'cmUserModel', 'cmObject', 'cmApi', 'cmVersion', 'cmLanguage',
+    'LocalStorageAdapter', 'cmLogger', 'cmDevice', 'cmBoot',
+    '$rootScope', '$q',
     function(cmUserModel, cmObject, cmApi, cmVersion, cmLanguage,
-             LocalStorageAdapter, cmLogger, cmDevice,
+             LocalStorageAdapter, cmLogger, cmDevice, cmBoot,
              $rootScope, $q){
         var self = this;
 
@@ -25,20 +19,20 @@ angular.module('cmCore').service('cmSystemCheck', [
 
         this.getBrowserInfo = function(){
             //cmLogger.debug('cmSystemCheck.getBrowserInfo');
-
             var deferred = $q.defer();
 
             cmApi.post({
                 path: '/services/getBrowserInfo',
                 data: {
-                    version: cmVersion.version
+                    version: cmVersion.version,
+                    isApp: cmDevice.isApp(true)
                 }
             }).then(
                 function(data){
                     // without token
                     if(!cmUserModel.isAuth()){
                         var language = data.languageCode.substr(0,2),
-                            lc       = language == 'de' ? 'de_DE' : 'en_US';
+                            lc       = language == 'de' ? 'de' : 'en';
                         cmLanguage.switchLanguage(lc);
                     }
                     // flag handling
@@ -51,6 +45,8 @@ angular.module('cmCore').service('cmSystemCheck', [
                     } else {
                         $rootScope.clientVersionCheck = true;
                     }
+
+                    cmBoot.ready.browserInfo();
 
                     deferred.resolve();
                 },
@@ -68,23 +64,21 @@ angular.module('cmCore').service('cmSystemCheck', [
          */
         this.checkClientVersion = function(forceRedirect){
             //cmLogger.debug('cmSystemCheck.checkClientVersion');
-
             var deferred = $q.defer();
-
             if('clientVersionCheck' in $rootScope){
                 if($rootScope.clientVersionCheck == false){
                     this.trigger('check:failed', {forceRedirect:forceRedirect});
-                    return deferred.reject();
+                    deferred.reject();
                 } else {
-                    return deferred.resolve();
+                    deferred.resolve();
                 }
             } else {
                 this.getBrowserInfo().then(
                     function(){
-                        return self.checkClientVersion(forceRedirect);
+                        self.checkClientVersion(forceRedirect);
                     },
                     function(){
-                        return deferred.resolve();
+                        deferred.resolve();
                     }
                 )
             }

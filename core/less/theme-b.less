@@ -38,7 +38,7 @@
   article.item {
     .content;
     .with-cursor;
-    position: relative;
+    .pos-rel;
     min-height: @cm-unit;
     .body{
       .w100;
@@ -58,6 +58,10 @@
         }
       }
     }
+
+    .icon-list{
+      .pos-tr;
+    }
   }
 
   .section{
@@ -74,6 +78,7 @@
     padding:0 1rem;
     font-size:@cm-moep-font;
     line-height:@cm-unit;
+    height:@cm-unit;
     font-weight:bold;
     width: 100%;
     margin:0;
@@ -81,9 +86,15 @@
     text-align:center;
     margin-bottom: 1rem;
     i{
+      height:@cm-unit;
       margin-right:0.6rem;
       font-size:2.5rem;
       vertical-align:middle;
+    }
+    i.cm-info{
+      .cm-ci-color;
+      .ml15;
+      font-size: @cm-large-font;
     }
   }
 
@@ -104,9 +115,6 @@
     border: none;
     margin: 1em 0.1rem;
     height:1px;
-    &.margin-small {
-      margin: 0.5em 0.1rem;
-    }
   }
 
   cm-info-bubble{
@@ -150,10 +158,6 @@
   }
 
   .icon-list{
-    .pos-tr;
-    .tar;
-    height: @cm-unit;
-    line-height: @cm-unit;
     i {
       .no-margin !important;
       .tac;

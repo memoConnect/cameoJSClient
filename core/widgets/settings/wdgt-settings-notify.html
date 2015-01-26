@@ -1,12 +1,12 @@
-<h2 class="no-margin-bottom">
+<h2 class="no-margin-bottom border-bottom">
     <i class="fa cm-bell"></i>
     {{'SETTINGS.NOTIFY' | cmTranslate}}
 </h2>
 
-<ul>
+<ul class="no-border-top">
     <li ng-click="handlePushNotifications()"
-        ng-class="{'is-disabled':!isApp()}">
-        <span class="item clearfix">
+        ng-class="{'is-disabled':!isApp()}" cm-reactive>
+        <article class="item clearfix">
             <span class="title">
                 <span>{{'SETTINGS.PAGES.NOTIFY.PUSH_NOTIFICATIONS' | cmTranslate}}</span>
             </span>
@@ -18,6 +18,22 @@
                 }"></i>
                 <cm-loader ng-show="changePushNotifications" class="in-icon-list"></cm-loader>
             </section>
-        </span>
+        </article>
+    </li>
+    <li ng-click="handleBrowserNotifications()"
+        ng-class="{'is-disabled':isApp() || !enabledBrowserNotification}"
+        cm-reactive>
+        <article class="item clearfix">
+            <span class="title">
+                <span>{{'SETTINGS.PAGES.NOTIFY.BROWSER_NOTIFICATIONS' | cmTranslate}}</span>
+            </span>
+
+            <section class="icon-list">
+                <i class="fa" ng-class="{
+                    'cm-radio-0':!settings.browserNotifications,
+                    'cm-radio-1':settings.browserNotifications
+                }"></i>
+            </section>
+        </article>
     </li>
 </ul>

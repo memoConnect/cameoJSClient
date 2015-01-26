@@ -99,21 +99,36 @@ angular.module('cmContacts').service('cmContactsAdapter',[
                     path:'/contact/'+id
                 })
             }
-        }
+        };
 
-        cmObject.addEventHandlingTo(adapter)
+        cmObject.addEventHandlingTo(adapter);
 
         cmApi.on('identity:update', function (event, data){
 //            cmLogger.debug('cmContactsAdapter.on:identity:update')
-            adapter.trigger('identity:updated', data)
+            adapter.trigger('identity:updated', data);
         });
 
         cmApi.on('friendRequest:new', function(event, data){
-            adapter.trigger('friendRequest:new', data)
+            adapter.trigger('friendRequest:new', data);
         });
 
         cmApi.on('friendRequest:accepted', function(event, data){
-            adapter.trigger('friendRequest:accepted', data)
+            adapter.trigger('friendRequest:accepted', data);
+        });
+
+        cmApi.on('friendRequest:rejected', function(event, data){
+            //cmLogger.debug('cmContactsAdapter cmApi.on:friendRequest:rejected');
+            adapter.trigger('friendRequest:rejected', data);
+        });
+
+        cmApi.on('contact:update', function(event, data){
+            //cmLogger.debug('cmContactsAdapter cmApi.on:contact:update');
+            adapter.trigger('contact:update', data);
+        });
+
+        cmApi.on('contact:deleted', function(event, data){
+            //cmLogger.debug('cmContactsAdapter cmApi.on:contact:update');
+            adapter.trigger('contact:deleted', data);
         });
 
         cmApi.on('subscriptionId:changed', function(){
@@ -121,7 +136,6 @@ angular.module('cmContacts').service('cmContactsAdapter',[
             adapter.trigger('subscriptionId:changed');
         });
 
-        return adapter
-
+        return adapter;
     }
 ]);

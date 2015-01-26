@@ -1,27 +1,27 @@
-var app = angular.module("cockpit", ["ngRoute", "cmCore", "cockpitList", "cockpitEdit", "cockpitMain"])
-
-app.config(["cmApiProvider",
-    function (cmApiProvider) {
-        cmApiProvider.restApiUrl(cameo_config.restApi.replace("/a/v1", "/a/cockpit/v1"))
+angular.module("cockpit", [
+    "ngRoute", "cmCore", "cockpitList", "cockpitEdit", "cockpitMain"
+])
+.config(["cmApiProvider", "cmConfigProvider",
+    function (cmApiProvider, cmConfigProvider) {
+        cmApiProvider.restApiUrl(cmConfigProvider.get('restApi').replace("/a/", "/a/cockpit/"))
     }
 ])
-
-app.config(function ($routeProvider) {
+.config(function ($routeProvider) {
     $routeProvider.when('/', {
         templateUrl: 'cockpitMain.html',
         controller: 'cockpitMainCtrl'
     })
-    $routeProvider.when('/:elementName', {
+    .when('/:elementName', {
         templateUrl: 'cockpitList.html',
         controller: 'cockpitListCtrl'
     })
-    $routeProvider.when('/:elementName/filter/:filterName/:filterTerm', {
+    .when('/:elementName/filter/:filterName/:filterTerm', {
         templateUrl: 'cockpitList.html',
         controller: 'cockpitListCtrl'
     })
-    $routeProvider.when('/:elementName/:id', {
+    .when('/:elementName/:id', {
         templateUrl: 'cockpitEdit.html',
         controller: 'cockpitEditCtrl'
     })
-        .otherwise({redirectTo: "/"})
+    .otherwise({redirectTo: "/"});
 });

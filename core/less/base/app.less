@@ -3,6 +3,8 @@ html, body{.h100}
 body{
   font-size: @cm-base-font;
   color: @cm-base-font-color;
+  font-family:Helvetica, Arial,'lucida grande',tahoma,verdana,arial,sans-serif;
+  //font-family:monospace;
   cursor:default;
 }
 
@@ -30,6 +32,9 @@ html[xmlns] .clearfix{display:block}
 .with-cursor, [ng-click]{
   cursor:pointer;
 }
+.without-cursor{
+  cursor:default!important;
+}
 
 a[target='_blank'], .classic-link {
   text-decoration: underline !important;
@@ -40,11 +45,13 @@ a[target='_blank'], .classic-link {
     text-decoration: none !important;
   }
 }
+/* @deprecated
 .fa.with-response{
   &:hover, &:focus {
     color: @cm-ci-color;
   }
 }
+*/
 
 
 /* selection color */
@@ -87,11 +94,6 @@ button{
   line-height:@cm-unit;
   text-decoration: none;
   position: relative;
-  &.active, &:hover{
-    .cm-ci-color;
-    .box-shadow-top-inset-ci !important;
-    text-decoration:none;
-  }
 }
 .cm-btn-dib{
   .dib;
@@ -130,7 +132,7 @@ button{
   .pos-rel;
   .full-view;
   padding-top: @cm-header-height;
-  padding-bottom: @cm-footer-height + 2;
+  padding-bottom: @cm-footer-height + 1;
   &.no-header{padding-top:0}
   &.no-footer{padding-bottom:0}
 }

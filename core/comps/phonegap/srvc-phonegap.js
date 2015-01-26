@@ -1,20 +1,22 @@
 'use strict';
 
 angular.module('cmPhonegap').service('cmPhonegap', [
-    'cmLogger',
-    '$q', '$document', '$phonegapCameoConfig', '$navigator',
-    function (cmLogger,
-              $q, $document, $phonegapCameoConfig, $navigator) {
+    'cmLogger', 'cmHistory', 'cmModal',
+    '$q', '$document', '$phonegapCameoConfig',
+    '$navigator', '$rootScope',
+    function (cmLogger, cmHistory, cmModal,
+              $q, $document, $phonegapCameoConfig,
+              $navigator, $rootScope) {
 
         var isReady = $q.defer();
 
         var self = {
-            isReady: function(callback){
+            isReady: function(whoIs, callback){
                 if($phonegapCameoConfig == 'undefined'){
                     return false;
                 }
 
-                //cmLogger.info('cmPhonegap.isReady? '+$phonegapCameoConfig.deviceReady)
+                //cmLogger.info(whoIs+' called cmPhonegap.isReady? '+$phonegapCameoConfig.deviceReady)
 
                 // if config doesn't get device ready watch again
                 if(!$phonegapCameoConfig.deviceReady){
@@ -24,8 +26,10 @@ angular.module('cmPhonegap').service('cmPhonegap', [
                     });
 
                     isReady.promise.then(function(){
-                        if(typeof callback == 'function')
+                        if(typeof callback == 'function') {
+                            //console.log('calling callback of '+whoIs)
                             callback();
+                        }
                     });
                 // nothing to wait phonegap is ready
                 } else {
@@ -35,17 +39,51 @@ angular.module('cmPhonegap').service('cmPhonegap', [
 
                 return false;
             },
-            initCloseApp: function(){
-                return false;
-
-                $document[0].addEventListener('backbutton', function(e) {
-                    $navigator.app.exitApp();
-                });
+            initDeviceButtons: function(){
+                if($document.length > 0 && 'addEventListener' in $document[0]) {
+                    // handle history back and exit app
+                    $document[0].addEventListener('backbutton', function () {
+                        if (cmHistory.isEmpty()) {
+                            cmModal.confirm({
+                                title: 'MODAL.EXIT.HEADER',
+                                text: 'MODAL.EXIT.TEXT'
+                            })
+                            .then(function() {
+                                if('app' in $navigator && 'exitApp' in $navigator.app){
+                                    $navigator.app.exitApp();
+                                }
+                            });
+                        } else {
+                            $rootScope.goBack();
+                        }
+                        $rootScope.$apply();
+                    });
+                    // handle menu
+                    $document[0].addEventListener('menubutton', function (e) {
+                        $rootScope.$broadcast('cmMenu:toggle');
+                        $rootScope.$apply();
+                    });
+                }
+            },
+            initDevicesEvents: function(){
+                if($document.length > 0 && 'addEventListener' in $document[0]) {
+                    // detect when app goes in background
+                    $document[0].addEventListener('pause', function () {
+                        $rootScope.$broadcast('device:goesToBackground');
+                    });
+                    // detect when app goes in foreground
+                    $document[0].addEventListener('resume', function () {
+                        $rootScope.$broadcast('device:goesToForeground');
+                    });
+                }
             }
         };
 
-        // on home close app
-        self.initCloseApp();
+        // buttons on device
+        self.isReady('cmPhonegap.button init',function(){
+            self.initDeviceButtons();
+            self.initDevicesEvents();
+        });
 
         return self;
     }]

@@ -43,71 +43,78 @@
  </example>
  */
 
-angular.module('cmUi').directive('cmResizeTextarea',[
-    '$timeout',
-    'cmSettings',
-    '$rootScope',
-    function ($timeout, cmSettings, $rootScope) {
+angular.module('cmUi')
+.directive('cmResizeTextarea',[
+    '$timeout', '$rootScope',
+    function ($timeout, $rootScope) {
         return {
             restrict: 'A',
-            scope: {
-                text: '=ngModel'
-            },
             link: function (scope, element, attrs) {
                 // vars
-                var paddingLeft = element.css('paddingLeft'),
-                    paddingRight = element.css('paddingRight'),
+                var paddingLeft, paddingRight,
                     maxRows = attrs.cmMaxRows || 2,
                     shadowRowHeight = 0,
                     textAreaRowHeight = 0,
                     diffRowHeight = 0,
                     unit = 'px',
-                    $shadow;
+                    shadow = null;
 
                 /**
                  * create shadow of textarea for calcing the rows
                  */
                 function createShadow(){
-                    var width = element[0].offsetWidth;
-                        if(width == 0)
-                            width = parseInt(element.css('width'));
 
-                    $shadow = angular.element('<div class="textarea-shadow"></div>').css({
+                    var paddginLeft = element.css('paddingLeft'),
+                        paddingRight = element.css('paddingRight'),
+                        width = element[0].offsetWidth;
+
+                    if(width == 0)
+                        width = parseInt(element.css('width'));
+
+                    shadow = angular.element('<div class="textarea-shadow"></div>').css({
                         position: 'fixed',
                         top: -10000+unit,
                         left: -10000+unit,
-//                        top: 0,
-//                        left: 0,
+                        //top: 0,
+                        //left: 0,
                         width: width - parseInt(paddingLeft || 0) - parseInt(paddingRight || 0)+unit,
                         'font-size': element.css('fontSize'),
                         'font-family': element.css('fontFamily'),
                         'line-height': element.css('lineHeight'),
                         'word-wrap': 'break-word'
                     });
-                    element.after($shadow);
+                    element.after(shadow);
                 }
 
                 /**
                  * update for textarea input
                  */
                 function update(){
+
+                    if(shadow === null)
+                        createShadow();
+                    if (shadow === null)
+                        return;
+
                     // replace function for white spaces
                     var times = function(string, number){
                         for (var i = 0, r = ''; i < number; i++) r += string;
                         return r;
                     };
-
                     // set textarea value to shadow
                     var val = element.val().replace(/</g, '&lt;')
                         .replace(/>/g, '&gt;')
                         .replace(/&/g, '&amp;')
                         .replace(/\n$/, '<br/>&nbsp;')
                         .replace(/\n/g, '<br/>')
-                        .replace(/\s{2,}/g, function(space) { return times('&nbsp;', space.length - 1) + ' ' });
-                    $shadow.html(val);
+                        .replace(/\s{2,}/g, function(space) {
+                            return times('&nbsp;', space.length - 1) + ' '
+                        });
+
+                    shadow.html(val);
 
                     // on init get one row height
-                    var shadowHeight = $shadow[0].offsetHeight,
+                    var shadowHeight = shadow[0].offsetHeight,
                         hasNewLines = scope.text ? scope.text.split(/\r\n|\r|\n/g) : [];
 
                     // on init get one row height
@@ -117,6 +124,7 @@ angular.module('cmUi').directive('cmResizeTextarea',[
                         shadowRowHeight = shadowHeight;
                         diffRowHeight = textAreaRowHeight-shadowHeight;
                     }
+
                     // handle textarea height
                     if(shadowRowHeight > 0) {
                         // one line
@@ -136,7 +144,7 @@ angular.module('cmUi').directive('cmResizeTextarea',[
                             element.attr('rows', maxRows);
                         }
 
-                        $rootScope.$broadcast('textArea:resize',element.css('height'));
+                        $rootScope.$emit('cmResizeTextarea:resize',element.css('height'));
                     }
                 }
 
@@ -174,14 +182,7 @@ angular.module('cmUi').directive('cmResizeTextarea',[
                     textAreaRowHeight = element[0].offsetHeight;
 
                 // event binding
-                scope.$watch('text', function(newText){
-                    update(newText);
-                });
                 element.on('keyup', update);
-                element.on('redo', update);
-                element.on('undo', update);
-                element.on('keypress', update);
-                element.on('change', update);
                 element.on('keydown', function(e){
                     // on tab
                     if (e.keyCode == 9) {
@@ -190,31 +191,26 @@ angular.module('cmUi').directive('cmResizeTextarea',[
                         e.stopPropagation();
                         return false;
                     }
-                    // on return
-                    if(e.keyCode == 13 && e.shiftKey == false && cmSettings.is('sendOnReturn')){
-                        $rootScope.$broadcast('sendOnReturn');
-                        e.preventDefault();
-                        e.stopPropagation();
-                        return false;
-                    }
                     return true;
                 });
 
+                scope.$on('$destroy', function(){
+                    element.off('keydown');
+                    element.off('keyup',update);
+                });
+
                 // watch on ngModel for extern changes
-                var timeoutWatch = null;
                 scope.$watch(attrs.ngModel,function(newValue){
-                    if(newValue == ''){
-                        if(timeoutWatch != null)
-                            $timeout.remove(timeoutWatch);
-                        timeoutWatch = $timeout(function(){
-                            update();
-                            timeoutWatch = null;
-                        },50);
+                    if(newValue != undefined){
+                        update();
                     }
                 });
 
-                // init
-                createShadow();
+                // init first row hack
+                element.val('&nbsp;');
+                update();
+                // clear because one row calced
+                element.val('');
                 update();
             }
         }

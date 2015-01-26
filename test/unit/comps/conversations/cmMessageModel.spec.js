@@ -22,7 +22,8 @@ describe('cmMessageModel', function(){
         $httpBackend.verifyNoOutstandingRequest()
     })
 
-    /** more Tests needed *//
+
+    /** more Tests needed **/
     /**
      * removed test
      */
@@ -36,5 +37,9 @@ describe('cmMessageModel', function(){
 
         //expect nothing to happen! There must be no further requests.
     })
+
+
+    //Unit tests are almost impossible to implement, because too many things have to be mocked like keys and usermodel.
+
 
 })

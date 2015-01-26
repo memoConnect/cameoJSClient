@@ -1,0 +1,41 @@
+<div class="wrap" id="files-droparea">
+    <div class="attachments" data-qa="attachments-btn" cm-reactive>
+        <i class="fa cm-attachment"></i>
+        <div cm-user-rights>
+            <cm-file-choose cm-droparea="files-droparea"></cm-file-choose>
+            <cm-files-preview></cm-files-preview>
+            <cm-choose-source cm-options="{tooltip:'up'}"></cm-choose-source>
+        </div>
+        <div
+            data-qa="btn-fast-registration"
+            class="webreader-uploading"
+            cm-user-rights="showForGuest"
+            ng-click="openFastRegister()"></div>
+    </div>
+
+    <div class="message" data-qa="answer-ctn">
+        <textarea
+            id="answer-textarea"
+            data-qa="input-answer"
+            ng-model="newMessageText"
+            cm-resize-textarea
+            cm-send-on-return
+            cm-max-rows="8"
+            ></textarea>
+        <div class="inputter"></div>
+    </div>
+
+    <div class="btns-right">
+        <cm-emoji-handler></cm-emoji-handler>
+
+        <div class="post-wrap" data-qa="btn-send-answer" ng-click="send()" cm-reactive>
+            <i
+                class="fa cm-post with-cursor {{conversation.lockStatus.class}}-wrap"
+                ng-class="{
+                'cm-post-idle':isSending,
+                'cm-post-attention':isSendingAbort
+            }"></i>
+        </div>
+    </div>
+</div>
+<cm-emoji-list ng-model="newMessageText" cm-textarea="answer-textarea"></cm-emoji-list>

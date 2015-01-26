@@ -1,11 +1,11 @@
-<h2 class="no-margin-bottom">
+<h2 class="no-margin-bottom border-bottom">
     <i class="fa cm-fix"></i>
     {{'SETTINGS.APP' | cmTranslate}}
 </h2>
 
-<ul>
+<ul class="no-border-top">
     <li>
-        <span class="item clearfix">
+        <article class="item clearfix">
             <span class="title">
                 <span>{{'SETTINGS.PAGES.APP.LANGUAGE' | cmTranslate}}</span>
             </span>
@@ -13,21 +13,21 @@
             <section class="icon-list">
                 <div class="cm-select-ctn" cm-language-select></div>
             </section>
-        </span>
+        </article>
     </li>
-    <li ng-click="handleBooleans('convertEmoji')">
-        <span class="item clearfix">
+    <li ng-click="handleBooleans('convertSmileysToEmojis')" cm-reactive>
+        <article class="item clearfix">
             <span class="title">
                 <span>{{'SETTINGS.PAGES.APP.EMOJI_CONVERT' | cmTranslate}}</span>
             </span>
 
             <section class="icon-list">
-                 <i class="fa" ng-class="{'cm-radio-0':!settings.convertEmoji,'cm-radio-1':settings.convertEmoji}"></i>
+                 <i class="fa" ng-class="{'cm-radio-0':!settings.convertSmileysToEmojis,'cm-radio-1':settings.convertSmileysToEmojis}"></i>
             </section>
-        </span>
+        </article>
     </li>
-    <li ng-click="handleBooleans('sendOnReturn')">
-        <span class="item clearfix">
+    <li ng-click="handleBooleans('sendOnReturn')" cm-reactive>
+        <article class="item clearfix">
             <span class="title">
                 <span>{{'SETTINGS.PAGES.APP.SEND_ON_RETURN' | cmTranslate}}</span>
             </span>
@@ -35,10 +35,10 @@
             <section class="icon-list">
                 <i class="fa" ng-class="{'cm-radio-0':!settings.sendOnReturn, 'cm-radio-1':settings.sendOnReturn}"></i>
             </section>
-        </span>
+        </article>
     </li>
-    <li ng-click="handleBooleans('skipKeyInfo')">
-        <span class="item clearfix">
+    <li ng-click="handleBooleans('skipKeyInfo')" cm-reactive>
+        <article class="item clearfix">
             <span class="title">
                 <span>{{'SETTINGS.PAGES.APP.SKIP_KEY_INFO' | cmTranslate}}</span>
             </span>
@@ -46,10 +46,10 @@
             <section class="icon-list">
                 <i class="fa" ng-class="{'cm-radio-0':!settings.skipKeyInfo, 'cm-radio-1':settings.skipKeyInfo}" data-qa="checkbox-skip-keyinfo"></i>
             </section>
-        </span>
+        </article>
     </li>
     <li>
-        <span class="item clearfix">
+        <article class="item clearfix">
             <span class="title">
                 <span>{{'SETTINGS.PAGES.APP.DATE_FORMAT' | cmTranslate}}</span>
             </span>
@@ -57,10 +57,10 @@
             <section class="icon-list">
                 <div class="cm-select-ctn" cm-date-format-select></div>
             </section>
-        </span>
+        </article>
     </li>
     <li>
-        <span class="item clearfix">
+        <article class="item clearfix">
             <span class="title">
                 <span>{{'SETTINGS.PAGES.APP.TIME_FORMAT' | cmTranslate}}</span>
             </span>
@@ -68,6 +68,17 @@
             <section class="icon-list">
                 <div class="cm-select-ctn" cm-time-format-select></div>
             </section>
-        </span>
+        </article>
+    </li>
+    <li ng-click="handleBooleans('enableUnreadMessages')" cm-reactive data-qa="ctn-settings-enable-unread-messages">
+        <article class="item clearfix">
+            <span class="title">
+                <span>{{'SETTINGS.PAGES.APP.ENABLE_UNREAD_MESSAGES' | cmTranslate}}</span>
+            </span>
+
+            <section class="icon-list">
+                <i class="fa" ng-class="{'cm-radio-0':!settings.enableUnreadMessages, 'cm-radio-1':settings.enableUnreadMessages}" data-qa="checkbox-enable-unread-messages"></i>
+            </section>
+        </article>
     </li>
 </ul>

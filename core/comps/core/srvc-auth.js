@@ -10,7 +10,8 @@
  * @requires localStorage TODO: implement ServiceLocalStorage
  */
 
-angular.module('cmCore').service('cmAuth', [
+angular.module('cmCore')
+    .service('cmAuth', [
     'cmApi','LocalStorageAdapter', 'cmObject', 'cmUtil', 'cmLogger', 'cmCrypt' ,'$rootScope',
     function(cmApi, LocalStorageAdapter, cmObject, cmUtil, cmLogger, cmCrypt, $rootScope){
         var _TOKEN_ = undefined;
@@ -42,19 +43,22 @@ angular.module('cmCore').service('cmAuth', [
              *
              * @name removeToken
              * @description
-             * Delete token from localstorage
+             * Remove token from LocalStorage
+             * Reset validate Token
              *
              * @returns {Boolean} for removing succeed
              */
             removeToken: function(where){
-                //cmLogger.debug('cmAuth.removeToken');
+                cmLogger.debug('cmAuth.removeToken');
 
+                /* reset validate Token */
                 _TOKEN_ = undefined;
-                try {
-                    return LocalStorageAdapter.remove('token');
-                } catch (e){
-                    cmLogger.warn('cmAuth.removeToken - Local Storage Error')
+                if(_TOKEN_ != undefined){
+                    cmLogger.warn('cmAuth.removeToken - validate Token not removed')
                 }
+
+                /* remove Token from LocalStorage */
+                LocalStorageAdapter.remove('token');
             },
             /**
              * @ngdoc method
@@ -78,15 +82,15 @@ angular.module('cmCore').service('cmAuth', [
                     if(_TOKEN_ == undefined || _TOKEN_ == token){
                         _TOKEN_ = token;
 
-                        var moep;
+                        var bool;
                         try {
-                            moep = LocalStorageAdapter.save('token', token);
+                            bool = LocalStorageAdapter.save('token', token);
                         } catch(e){
                             cmLogger.warn('cmAuth.storeToken - Local Storage Error')
                         }
 
                         //return localStorage.setItem('token', token)/
-                        return moep;
+                        return bool;
                     } else if(_TOKEN_ != token) {
                         cmLogger.debug('cmAuth.storeToken - Error - validateToken is different')
                     }
@@ -113,7 +117,7 @@ angular.module('cmCore').service('cmAuth', [
                     if(token !== undefined && token !== 'undefined' && token !== null && token.length > 0){
                         if(_TOKEN_ != undefined && _TOKEN_ != token){
                             $rootScope.$broadcast('logout',{where: 'cmAuth getToken failure'});
-                            cmLogger.debug('cmAuth.storeToken - Error - validateToken is different');
+                            cmLogger.debug('cmAuth.getToken - Error - validateToken is different');
 
                             return false;
                         }
@@ -165,16 +169,15 @@ angular.module('cmCore').service('cmAuth', [
              * @param {String} reservationSecret From api given token for Username
              * @returns {Promise} for async handling
              */
-            checkAccountName: function(name, reservationSecret){
-                return cmApi.post({
+            checkAccountName: function(name){
+                var apiCall = {
                     path: '/account/check',
                     data: {
-                        loginName: name,
-                        reservationSecret: reservationSecret
+                        loginName: name
                     }
-    //                exp_ok: 'reservationSecret',
-    //                exp_ko: 'alternative'
-                })
+                };
+
+                return cmApi.post(apiCall);
             },
             /**
              * @ngdoc method
@@ -221,10 +224,12 @@ angular.module('cmCore').service('cmAuth', [
             },
 
             putAccount: function(data){
-                return cmApi.put({
+                var apiCall = {
                     path: '/account',
                     data: data
-                })
+                };
+
+                return cmApi.put(apiCall)
             },
 
             /**
@@ -266,6 +271,15 @@ angular.module('cmCore').service('cmAuth', [
                     path: '/identity',
                     data: data
                 })
+            },
+
+            initialIdentity: function(data){
+                var apiCall = {
+                    path: '/identity/initial',
+                    data: data
+                };
+
+                return cmApi.post(apiCall)
             },
 
             /**
@@ -447,22 +461,72 @@ angular.module('cmCore').service('cmAuth', [
                 return localStorage.getItem('twoFactorToken');
             },
 
+            sendPasswordLost: function(data){
+                return cmApi.post({
+                    path: '/resetPassword',
+                    data: data
+                });
+            },
 
+            checkResetPassword: function(resetId){
+                return cmApi.get({
+                    path: '/resetPassword/'+resetId
+                });
+            },
+
+            resetPassword: function(data, resetId){
+                return cmApi.post({
+                    path: '/resetPassword/'+resetId,
+                    data: data
+                });
+            },
+
+            sendVerification: function(type){
+                var data = {};
+
+                switch(type){
+                    case 'phoneNumber':
+                        data.verifyPhoneNumber = true;
+                    break;
+                    case 'email':
+                        data.verifyEmail = true;
+                    break;
+                }
+
+                cmApi.post({
+                    path: '/verify',
+                    data: data
+                })
+            },
+
+            confirmVerification: function(secret){
+                return cmApi.post({
+                    path: '/verify/'+secret
+                });
+            }
         };
 
         cmObject.addEventHandlingTo(auth);
 
         cmApi.on('identity:update', function (event, data){
-//            console.log('cmAuth.on:identity:update')
-            auth.trigger('identity:updated', data)
+            //cmLogger.debug('cmAuth.on:identity:update')
+            auth.trigger('identity:updated', data);
         });
 
+        cmApi.on('identity:new', function (event, data){
+            //cmLogger.debug('cmAuth.on:identity:new')
+            auth.trigger('identity:new', data);
+        });
 
         cmApi.on('conversation:new-aePassphrase', function(event, data){
-           //console.log('conversation:new-aePassphrase');
-            auth.trigger('conversation:update', data)
+            //cmLogger.debug('cmAuth.on:conversation:new-aePassphrase');
+            auth.trigger('conversation:update', data);
         });
 
+        cmApi.on('account:update', function (event, data){
+            //cmLogger.debug('cmAuth.on:account:update')
+            auth.trigger('account:update', data);
+        });
 
         return auth;
     }

@@ -1,6 +1,7 @@
 {
     "config": {
-        "apiUrl": "https://dev.cameo.io/a/v1",
+        "apiUrl": "https://dev.cameo.io/a/",
+        "defaultApiVersion": "v1",
         "autoLogin": true,
         "loadingBar": true,
         "enableDebug": true,

@@ -1,10 +1,47 @@
-input, textarea, select, button, i {
-  outline: none;
+button {
+  padding:0;
+}
+
+.genSelectable(@schmusi){
+  -webkit-user-select: @schmusi;
+  -khtml-user-select: @schmusi;
+  -moz-user-select: @schmusi;
+  -o-user-select: @schmusi;
+  user-select: @schmusi;
+}
+
+* {
+  outline: 0;
+  -webkit-touch-callout: none;
+  .genSelectable(none);
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+.is-selectable {
+  .genSelectable(text);
+  &-all{
+    * {
+      .genSelectable(text);
+    }
+  }
+}
+cm-info-bubble, input, textarea{
+  .genSelectable(text);
+  * {
+    .genSelectable(text);
+  }
 }
 
 .transition(@transition-property:all){
   /* [transition-property] [transition-duration] [transition-timing-function] [transition-delay] */
   @values:@transition-property 250ms ease;
+  transition:@values;
+  -webkit-transition:@values;
+  -moz-transition:@values;
+  -o-transition:@values;
+}
+.transitions(@one; @two){
+/* [transition-property] [transition-duration] [transition-timing-function] [transition-delay] */
+  @values:@one 250ms ease, @two 250ms ease;
   transition:@values;
   -webkit-transition:@values;
   -moz-transition:@values;
@@ -148,4 +185,8 @@ input, .without-box-shadow, i, button{
   transform: scaleY(-1);
   -ms-filter: flipv; /*IE*/
   filter: flipv; /*IE*/
+}
+
+a[href^='mailto:'] {
+  color: @cm-ci-color;
 }

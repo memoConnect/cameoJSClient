@@ -5,30 +5,38 @@
 angular.module('cmPhonegap')
 .service('cmNetworkInformation', [
     'cmPhonegap', 'cmUtil', 'cmLogger',
-    '$navigator', '$document', '$phonegapCameoConfig',
+    '$navigator', '$document',
     function (cmPhonegap, cmUtil, cmLogger,
-              $navigator, $document, $phonegapCameoConfig) {
+              $navigator, $document) {
         var self = {
+            plugin: null,
             state: '',
 
             init: function(){
-                if($phonegapCameoConfig == 'undefined') {
-                    return false;
-                }
-
-                cmPhonegap.isReady(function(){
-                    if(!('connection' in $navigator)
-                    || !('type' in $navigator.connection)) {
+                cmPhonegap.isReady('cmNetworkInformation',function(){
+                    if(!('connection' in $navigator) || !('type' in $navigator.connection)) {
                         //cmLogger.info('NETWORK-INFORMATION PLUGIN IS MISSING');
                         return false;
                     }
+
+                    self.plugin = $navigator.connection;
+
+                    $document.on('online', function(){
+                        self.checkConnection();
+                        self.goesOnline();
+                    });
+
+                    $document.on('offline', function(){
+                        self.checkConnection();
+                        self.goesOffline();
+                    });
 
                     self.checkConnection();
                 })
             },
 
             checkConnection: function(){
-                var networkState = $navigator.connection.type;
+                var networkState = this.plugin.type;
 
                 var states = {};
                 states[Connection.UNKNOWN] = 'Unknown connection';
@@ -50,9 +58,6 @@ angular.module('cmPhonegap')
 
             }
         };
-
-        $document[0].addEventListener('offline', self.goesOffline, false);
-        $document[0].addEventListener('online', self.goesOnline, false);
 
         return self;
     }

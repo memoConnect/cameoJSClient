@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cameoNET App Center</title>
+
+    <link rel="stylesheet" href="<%= appPath %>style.<%= currentVersion %>.css">
+    <style>
+        body,html,.table{height:100%;padding:0;margin:0}
+        body{font-size:12px;background:#000;color:#fff;font-family: "Helvetica Neue",Helvetica,Arial,sans-serif}
+        .table{display:table;margin: 0 auto}
+        .cell{display:table-cell;text-align:center;vertical-align:middle}
+        a {color:#000;text-decoration:none}
+        a:hover{text-decoration:underline}
+        ul{list-style:none;padding:0;margin:0}
+        li{display:block}
+        li a{display:block;padding-bottom:10px}
+        li a:last-child{padding-bottom:0}
+
+        .is-disabled{opacity:0.25}
+        .border-radius{-webkit-border-radius:20px;-moz-border-radius:20px;border-radius:20px}
+
+        .header{}
+        .header img{width:150px;}
+
+        .linker{
+            background:#fff;margin-top:10px;padding:15px
+        }
+    </style>
+</head>
+<body>
+    <div class="table">
+        <div class="cell">
+            <ul>
+                <li class="header">
+                    <img src="<%= appPath %>gfx/rhino-bubble.png" /><br />
+                    <span>
+                        App Center<br />
+                        <%= phonegapBaseFilename %>
+                    </span>
+                </li>
+                <li class="linker and border-radius">
+                    <a href="<%= appLinks.android.href %>">
+                        <img src="<%= appLinks.android.icon %>" alt="app from app store" />
+                    </a>
+                    <a href="<%= dlPath %><%= phonegapBaseFilename %>.apk">
+                        <img src="<%= appLinks.android.direct.icon %>" alt=".apk from our server" /><br />
+                        <span>SHA1 Checksum<br /> <%= checksums().android %></span>
+                    </a>
+                </li>
+                <li class="linker ios border-radius">
+                    <a href="<%= appLinks.ios.href %>">
+                        <img src="<%= appLinks.ios.icon %>" />
+                    </a>
+                    <a href="<%= testFlightiOSURL() %>"><strong>.ipa</strong> from Testflight</a>
+                </li>
+                <li class="linker win border-radius">
+                    <a class="is-disabled">
+                        <img src="<%= appLinks.winphone.icon %>" />
+                    </a>
+                    <a href="<%= dlPath %><%= phonegapBaseFilename %>.xap"><strong>.xap</strong> from our server</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <script>
+        (function(_location_, _navigator_,_document_){
+            function checkHashbang() {
+                if (_location_.hash != '') {
+                    var href = '',
+                        section = '';
+
+                    switch (_location_.hash.replace('#','')) {
+                        case 'apk':
+                            href = '<%= dlPath %><%= phonegapBaseFilename %>.apk';
+                            section = 'and';
+                        break;
+                        case 'ipa':
+                            href = '<%= testFlightiOSURL() %>';
+                            section = 'ios';
+                        break;
+                        case 'xap':
+                            href = '<%= dlPath %><%= phonegapBaseFilename %>.xap';
+                            section = 'win';
+                        break;
+                    }
+
+                    if (href != '') {
+                        _location_.href = href;
+                    }
+                    if (section != ''){
+                        [].forEach.call(document.querySelectorAll('.linker'),function(linker){
+                            if(linker.className.indexOf(section) < 0){
+                                linker.style.display = 'none';
+                            }
+                        });
+                    }
+                }
+            }
+
+            function updateAndroidMarketLinks(){
+                var ua = _navigator_.userAgent.toLowerCase();
+                if (0 <= ua.indexOf("android")) {
+                    // we have android
+                    var links = _document_.querySelectorAll("a[href^='https://market.android.com/']");
+                    [].forEach.call(links,function() {
+                        this.href = this.href.replace(/^https:\/\/market\.android\.com\//,"market://");
+                    });
+                }
+            }
+
+            checkHashbang();
+            updateAndroidMarketLinks();
+
+        })(location, navigator, document);
+    </script>
+</body>
+</html>

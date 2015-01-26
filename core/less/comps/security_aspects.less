@@ -23,10 +23,6 @@ cm-header cm-security-indicator{
   background: @cm-black;
   height: @cm-unit;
 
-  &:hover i, &:focus i{
-    color:@cm-ci-color;
-  }
-
   .leading-icon {
     display:inline-block;
     float:left;
@@ -61,7 +57,7 @@ cm-security-aspect{
   .dbl;
   .pos-rel;
   .border-bottom;
-  overflow:auto;
+  overflow:hidden;
   min-height: @cm-unit;
   section.content{
     width: @cm-app-width;
@@ -78,6 +74,10 @@ cm-security-aspect{
     margin-right: 0.5em;
     text-align: left;
     white-space: nowrap;
+  }
+
+  .icon-list{
+    .pos-tr;
   }
 
   .toggleOption {

@@ -2,25 +2,25 @@
 
 angular.module('cmContacts')
 .factory('cmContactModel', [
-    'cmContactsAdapter',
-    'cmIdentityFactory',
-    'cmObject',
-    'cmStateManagement',
-    'cmUtil',
-    'cmLogger',
+    'cmContactsAdapter', 'cmIdentityFactory', 'cmObject',
+    'cmStateManagement', 'cmUtil', 'cmLogger', 'cmSecurityAspectsContact', 'cmModal',
     '$q',
-    function(cmContactsAdapter, cmIdentityFactory, cmObject, cmStateManagement, cmUtil, cmLogger, $q){
+    function(cmContactsAdapter, cmIdentityFactory, cmObject,
+             cmStateManagement, cmUtil, cmLogger, cmSecurityAspectsContact, cmModal,
+             $q){
         function ContactModel(data){
             var self = this;
 
             cmObject.addEventHandlingTo(this);
 
-            this.state  = new cmStateManagement(['loading']);
+            this.state         = new cmStateManagement(['loading']);
 
             this.id            = undefined;
             this.contactType   = undefined;
             this.group         = [];
             this.identity      = cmIdentityFactory.new();
+
+            this.securityAspects    = new cmSecurityAspectsContact(this);
 
             function init(data){
                 //cmLogger.debug('cmContactModel:init');
@@ -107,8 +107,25 @@ angular.module('cmContacts')
                 return defer.promise;
             };
 
+            this.delete = function(withoutModal){
+                return withoutModal
+                    ? $q.when()
+                    : cmModal.confirm({
+                        title: 'CONTACT.MODAL.DELETE.HEADER',
+                        text: 'CONTACT.MODAL.DELETE.TEXT'
+                }).then(function() {
+                    return cmContactsAdapter
+                        .deleteContact(self.id)
+                }).then(function(){
+                    self.trigger('deleted:finished',self);
+                });
+            };
+
             init(data);
 
+            this.identity.on('update:finished', function(){
+                self.securityAspects.scheduleRefresh();
+            });
         }
 
         return ContactModel;

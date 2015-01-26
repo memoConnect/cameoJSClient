@@ -1,13 +1,16 @@
 'use strict';
 
 angular.module('cmRoutes').controller('StartQuickstartCtrl', [
-    '$rootScope',
-    '$scope',
-    function($rootScope, $scope) {
+    'cmHistory',
+    '$rootScope', '$scope',
+    function(cmHistory,
+             $rootScope, $scope) {
         $scope.startRoute = false;
 
-        if ($rootScope.urlHistory.length > 1 && $rootScope.urlHistory[$rootScope.urlHistory.length - 2].indexOf('/start') != -1) {
+        if (cmHistory.comesFrom('/start')) {
             $scope.startRoute = true;
         }
+
+        $rootScope.markQuickstart = false;
     }
 ]);

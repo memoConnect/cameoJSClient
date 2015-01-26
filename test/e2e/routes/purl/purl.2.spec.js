@@ -1,4 +1,4 @@
-var config = require("../../config-e2e-tests.js")
+var config = require("../../config/specs.js")
 var util = require("../../../lib/e2e/cmTestUtil.js")
 
 describe('Route: Purl - ', function () {
@@ -96,7 +96,7 @@ describe('Route: Purl - ', function () {
         })
 
         it('login modal should be visible', function(){
-            util.waitForElement("[data-qa='modal-login']");
+            util.waitForElement("[data-qa='modal-login']")
             expect($("[data-qa='modal-login']").isPresent()).toBe(true)
         })
 
@@ -177,7 +177,7 @@ describe('Route: Purl - ', function () {
      * Test 5
      * External User has open Purl then Internal User 1 will see his PURL
      */
-    describe('Test 5 - External User opens Purl, then User 1 open Purl "#/purl/' + config.purlExternal +'"', function(){
+    describe('Test 5 - External User opens Purl, then User 1 opens Purl "#/purl/' + config.purlExternal +'"', function(){
         it('should open', function(){
             util.logout();
 
@@ -192,10 +192,13 @@ describe('Route: Purl - ', function () {
         })
 
         it('login modal should be visible, when Internal User1 open his Purl', function(){
+            ptor.sleep(1000) //without sleep tests will fail :( ??
             util.get('/purl/' + config.purlUser1)
+            ptor.sleep(1000) //without sleep tests will fail :( ??
             util.expectCurrentUrl('#/purl/' + config.purlUser1)
 
-            util.waitForElement("[data-qa='modal-login']");
+            util.waitForElement("[data-qa='modal-login']")
+            
             expect($("[data-qa='modal-login']").isPresent()).toBe(true)
         })
 
@@ -235,9 +238,12 @@ describe('Route: Purl - ', function () {
             util.logout();
 
             util.login(config.loginUser2, config.passwordUser2);
+            util.waitForPageLoad("/setup/keyinfo")
+            .then(function(){
+                util.get('/purl/' + config.purlUser1)
+                return util.waitForPageLoad('/purl/' + config.purlUser1)                
+            })
 
-            util.get('/purl/' + config.purlUser1)
-            util.expectCurrentUrl('#/purl/' + config.purlUser1)
         })
 
 
@@ -247,13 +253,9 @@ describe('Route: Purl - ', function () {
         })
 
         it('should login with correct credentials', function () {
-            var user = $("input[name=user]");
-            var pw = $("input[name=pw]");
-
-            user.sendKeys(config.loginUser1);
-            pw.sendKeys(config.passwordUser1);
-
-            $("[data-qa='login-submit-btn']").click();
+            util.setVal('inp-username',config.loginUser1)
+            util.setVal('inp-password',config.passwordUser1)
+            util.click('login-submit-btn')
 
             util.waitForPageLoad("/purl/" + config.purlUser1)
         })
@@ -279,13 +281,20 @@ describe('Route: Purl - ', function () {
     describe("Test 7 - Internal user opens Purl that does not exists:", function(){
         it('should be 404 path', function(){
             util.login()
-            util.waitForPageLoad('/start')
-            util.get('/purl/moep')
-            ptor.wait(function () {
-                    return ptor.getCurrentUrl().then(function(url){
-                        return url.match(/#\/404$/)
-                    })
-            }, 5000, 'unable to load 404 page.')
+            .then(function(){
+                return  util.waitForPageLoad('/setup')
+            })
+            .then(function(){
+                return util.get('/purl/moep')
+            })
+            .then(function(){
+                return  ptor.wait(function () {
+                                return ptor.getCurrentUrl().then(function(url){
+                                    return url.match(/#\/404$/)
+                                })
+                        }, 5000, 'unable to load 404 page.')
+                
+            })
         })
     })
 

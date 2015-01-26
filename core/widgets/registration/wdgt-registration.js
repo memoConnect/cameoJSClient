@@ -2,10 +2,10 @@
 
 angular.module('cmWidgets').directive('cmWidgetRegistration', [
     'cmAuth', 'cmUserModel', 'cmUtil', 'cmLogger', 'cmTransferScopeData',
-    'cmNotify', 'cmSystemCheck', 'cmLoader', 'cmDevice',
+    'cmNotify', 'cmSystemCheck', 'cmLoader', 'cmDevice', 'cmCrypt',
     '$rootScope', '$location', '$q',
     function (cmAuth, cmUserModel, cmUtil, cmLogger, cmTransferScopeData,
-              cmNotify, cmSystemCheck, cmLoader, cmDevice,
+              cmNotify, cmSystemCheck, cmLoader, cmDevice, cmCrypt,
               $rootScope, $location, $q) {
         return {
             restrict: 'AE',
@@ -13,13 +13,13 @@ angular.module('cmWidgets').directive('cmWidgetRegistration', [
             templateUrl: 'widgets/registration/wdgt-registration.html',
 
             controller: function ($scope) {
-
                 cmSystemCheck.run(true);
 
                 var loader = new cmLoader($scope);
 
                 $scope.showLoginInfo = false;
-                $scope.showUserInfo = false;
+
+                $scope.formValidation = false;
 
                 $scope.toogleLoginInfo = function(){
                     if($scope.showLoginInfo){
@@ -29,20 +29,9 @@ angular.module('cmWidgets').directive('cmWidgetRegistration', [
                     }
                 };
 
-                $scope.toogleUserInfo = function(){
-                    if($scope.showUserInfo){
-                        $scope.showUserInfo = false;
-                    } else {
-                        $scope.showUserInfo = true;
-                    }
-                };
-
                 $scope.formData = {
                     cameoId: '',
-                    password: '',
-                    email: '',
-                    phone: '',
-                    displayName: ''
+                    password: ''
                 };
 
                 $scope.handleGuest = false;
@@ -60,14 +49,14 @@ angular.module('cmWidgets').directive('cmWidgetRegistration', [
                  */
                 $scope.validateForm = function () {
                     var deferred = $q.defer(),
+                        valid = true,
                         reservationCheck = false;
+
+                    $scope.formValidation = true;
 
                     var data = {
                         loginName: null,
                         password: null,
-                        email: null,
-                        phone: null,
-                        displayName: null,
                         reservationSecret: null
                     };
 
@@ -76,6 +65,7 @@ angular.module('cmWidgets').directive('cmWidgetRegistration', [
                         if ($scope.registrationForm.cameoId.$viewValue == undefined
                             || $scope.registrationForm.cameoId.$viewValue.toString() == ''
                         ) {
+                            valid = false;
                             $rootScope.$broadcast('cm-login-name:invalid');
                         }
                     } else {
@@ -87,35 +77,13 @@ angular.module('cmWidgets').directive('cmWidgetRegistration', [
                         || $scope.formData.password == 'none'
                         || $scope.formData.password == undefined) {
                         $rootScope.$broadcast('cm-password:empty');
+                        valid = false;
                     } else {
                         data.password = $scope.formData.password;
                     }
 
-                    // check email
-                    if ($scope.registrationForm.email.$valid == false) {
-                    } else {
-                        if ($scope.registrationForm.email.$viewValue != '') {
-                            data.email = $scope.registrationForm.email.$viewValue;
-                        }
-                    }
-
-                    // check phone
-                    if ($scope.registrationForm.phone.$valid == false) {
-                    } else {
-                        if ($scope.registrationForm.phone.$viewValue != '') {
-                            // 'phoneNumber' is for BE call
-                            data.phoneNumber = $scope.registrationForm.phone.$viewValue;
-                        }
-                    }
-
-                    // check name
-                    if ($scope.registrationForm.displayName.$viewValue != '') {
-                        data.displayName = $scope.registrationForm.displayName.$viewValue;
-                    }
-
                     // check agb
                     if ($scope.registrationForm.agb.$valid == false) {
-                        $scope.registrationForm.phone.dirty = true;
                         $scope.registrationForm.agb.$invalid = true;
                     }
 
@@ -123,6 +91,7 @@ angular.module('cmWidgets').directive('cmWidgetRegistration', [
                     if (data.loginName != null && cmUtil.objLen($scope.reservationSecrets) > 0) {
                         if (!(data.loginName in $scope.reservationSecrets)) {
                             cmNotify.warn('REGISTRATION.WARN.RESERVATIONSECRET_MISSING');
+                            valid = false;
                         } else {
                             data.reservationSecret = $scope.reservationSecrets[data.loginName];
                             reservationCheck = true;
@@ -154,12 +123,12 @@ angular.module('cmWidgets').directive('cmWidgetRegistration', [
                                 cmUserModel.doLogin($scope.formData.cameoId, $scope.formData.password, accountData).then(
                                     function() {
                                         if(cmDevice.isDesktop('cmWidgetRegistration') || cmDevice.isApp())
-                                            $rootScope.goto("/start/welcome");
+                                            $rootScope.goTo("/setup/account");
                                         else
-                                            $rootScope.goto("/start/download");
+                                            $rootScope.goTo("/start/download");
                                     },
                                     function() {
-                                        $scope.spinner('stop');
+                                        loader.stop();
                                     }
                                 );
                                 return true;
@@ -168,7 +137,7 @@ angular.module('cmWidgets').directive('cmWidgetRegistration', [
                                 loader.stop();
 
                                 if (typeof response == 'object' && 'data' in response && typeof response.data == 'object') {
-                                    if ('error' in response.data && response.data.error == 'invalid reservation secret') {
+                                    if (typeof response.data.error != 'undefined' && response.data.error == 'invalid reservation secret') {
                                         $rootScope.$broadcast('registration:checkAccountName');
                                     }
                                 } else {
@@ -187,13 +156,14 @@ angular.module('cmWidgets').directive('cmWidgetRegistration', [
                         },
                         function () {
                             loader.stop();
+                            cmUtil.scrollToInputError();
                         }
                     );
                 };
 
-                $rootScope.$on('registration:createUser', function () {
-                    $scope.createUser();
-                });
+                var stop_listening_to_create_user = $rootScope.$on('registration:createUser', function () {
+                                                        $scope.createUser();
+                                                    });
 
                 /**
                  * Guest Handling
@@ -215,6 +185,10 @@ angular.module('cmWidgets').directive('cmWidgetRegistration', [
                             $scope.reservationSecrets = noneScopeData
                     }
                 });
+
+                $scope.$on('$destroy', function(){
+                    stop_listening_to_create_user();
+                })
             }
         }
     }

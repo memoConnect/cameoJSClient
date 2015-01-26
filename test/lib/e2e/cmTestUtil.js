@@ -1,20 +1,30 @@
 /**
  * Created by reimerei on 15.04.14.
+ * http://angular.github.io/protractor/#/api
  */
 var fs = require('fs'),
-    config = require("../../e2e/config-e2e-tests.js"),
+    config = require("../../e2e/config/specs.js"),
     clc = require('cli-color'),
     self = this,
-    ptor
+    ptor = browser.driver
 
-this.setPtorInstance = function (newPtor) {
-    ptor = newPtor
-    return this
+this.getBrowserName = function(){
+    return browser.getCapabilities().then(function(cap) {
+        return cap.caps_.browserName;
+    });
+}
+
+this.isInternetExplorer = function(){
+    return this.getBrowserName().then(function(browserName) {
+        if(browserName.indexOf('explorer') == -1) {
+            return false
+        }
+        return true
+    });
 }
 
 this.getPtorInstance = function () {
-    ptor = protractor.getInstance()
-    ptor.ignoreSynchronization = true
+    browser.ignoreSynchronization = true
 
     // for every it in describe check error logs and
     // stop on error if config is on true
@@ -80,15 +90,28 @@ this.checkErrorLogs = function(){
     })
 }
 
-this.get = function (path) {
+var getCounter = 0;
 
-    if (ptor == undefined) {
-        console.error("please set ptor = util.getPtorInstance()")
+this.get = function (_path_) {
+    // console.log('util.get', path)
+
+    var path = '';
+
+    // http://angular.github.io/protractor/#/api?view=Protractor.prototype.get
+    if(getCounter == 0) {
+        path = config.wwwUrl + '#' + path
+        browser.get(path)
+    // http://angular.github.io/protractor/#/api?view=Protractor.prototype.setLocation
+    } else {
+        path = _path_
+        browser.setLocation(path)
     }
 
-    var url = config.wwwUrl + '#' + path
-    ptor.get(url)
-    this.waitForPageLoad()
+    //console.log(getCounter, path)
+
+    getCounter++;
+
+    self.waitForPageLoad()
 
     return this
 }
@@ -104,15 +127,29 @@ this.expectCurrentUrl = function (match) {
 this.logout = function () {
     self.get('/login')
 
-    $$("cm-menu").then(function (elements) {
-        if (elements.length > 0) {
-            $("cm-menu .cm-handler").click()
-            self.waitForElement(".cm-menu-list")
-            $("[data-qa='logout-btn']").click()
-        } else {
-        }
-    })
-    return this
+    return $$("cm-menu")
+        .then(function (elements) {
+            if (elements.length > 0) {
+
+                $$("cm-search-input").then(function(elements){
+                    if(elements.length > 0){
+                        elements[0].getAttribute('class')
+                        .then(function(className){
+                            if(className.indexOf('visible') >= 0){
+                                self.click('btn-close-search')
+                            }
+                        })
+                    }
+                })
+
+                $("cm-menu .cm-handler").click()
+                self.waitForElement(".cm-menu-list")
+                .then(function(){
+                    return self.waitAndClickQa('logout-btn')
+                })
+            }
+            return self.waitForPageLoad('/login')
+        })
 }
 
 this.login = function (username, password, expectedRoute) {
@@ -122,8 +159,8 @@ this.login = function (username, password, expectedRoute) {
 
     this.scrollToTop()
 
-    var user = $("input[name=user]");
-    var pw = $("input[name=pw]");
+    var user = $("input[name='user']");
+    var pw = $("input[name='pw']");
 
     var loginUser = username || config.loginUser1;
     var loginPassword = password || config.passwordUser1;
@@ -134,12 +171,10 @@ this.login = function (username, password, expectedRoute) {
     $("[data-qa='login-submit-btn']").click();
 
     if (typeof expectedRoute == 'string' && expectedRoute.length > 0) {
-        self.waitForPageLoad(expectedRoute)
+        return self.waitForPageLoad(expectedRoute)
     } else {
-        self.waitForPageLoad('(start|talks)')
+        return self.waitForPageLoad(['/start', '/talks', '/setup'])
     }
-
-    return this
 }
 
 this.createTestUser = function (testUserId, from){
@@ -152,23 +187,26 @@ this.createTestUser = function (testUserId, from){
     var loginName = prefix + id
     var password = 'password'
 
-    this.get("/registration");
-
-    $("[data-qa='input-cameoId']").clear()
-    $("[data-qa='input-cameoId']").sendKeys(loginName)
-    $("[data-qa='input-password']").sendKeys(password)
-    $("[data-qa='input-passwordConfirm']").sendKeys(password)
-
-    $("[data-qa='input-displayName']").sendKeys(loginName)
-
-    this.scrollToBottom()
-    $("[data-qa='icon-checkbox-agb']").click()
-
-    $("[data-qa='btn-createUser']").click()
-
-    this.waitForPageLoad("/start/welcome")
-
-    return loginName
+    this.get('/registration')
+    return  this.waitForPageLoad('/registration')
+            .then(function(){
+                self.setVal('input-cameoId',loginName,true)
+                self.setVal('input-password',password)
+                return  self.waitAndClickQa('icon-toggle-password')
+                        .then(function(){
+                            self.scrollToBottom()
+                            return self.waitAndClickQa('icon-checkbox-agb')
+                        })
+                        .then(function(){
+                            return self.waitAndClickQa('btn-createUser')                    
+                        })
+                        .then(function(){
+                            return self.waitForPageLoad("/setup/account")            
+                        })
+                        .then(function(){
+                            return loginName
+                        })
+            })
 }
 
 this.deleteTestUser = function (loginName) {
@@ -179,7 +217,7 @@ this.deleteTestUser = function (loginName) {
         var callback = arguments[arguments.length - 1];
 
         var xhr = new XMLHttpRequest();
-        xhr.open("DELETE", apiUrl + "/testUser/\n" + testUserId, true);
+        xhr.open("DELETE", apiUrl + "v1/testUser/" + testUserId, true);
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4) {
                 callback(xhr.responseText);
@@ -188,6 +226,35 @@ this.deleteTestUser = function (loginName) {
         xhr.send('');
 
     }, testUserId, config.apiUrl)
+
+    self.clearLocalStorage();
+}
+
+this.deleteKeys = function(){
+    this.get('/settings/identity/key/list')
+    this.waitForPageLoad('/settings/identity/key/list')
+    .then(function(){
+        return  ptor.wait(function(){
+                    return  $('[data-qa="btn-remove-modal"]').isPresent()
+                            .then(function(bool){
+                                return  bool
+                                        ?   $('[data-qa="btn-remove-modal"]').click()
+                                            .then(function(){
+                                                return self.confirmModal()
+                                            })
+                                            .then(function(){
+                                                return $('[data-qa="btn-remove-modal"]').isPresent()                                             
+                                            })
+                                            .then(function(present){
+                                                return !present
+                                            })
+                                        :   true
+                            })
+                }, 4000)
+    })
+
+
+
 }
 
 this.getTestUserNotifications = function (loginName) {
@@ -199,13 +266,15 @@ this.getTestUserNotifications = function (loginName) {
         var callback = arguments[arguments.length - 1]
 
         var xhr = new XMLHttpRequest()
-        xhr.open("GET", apiUrl + "/testUser/" + testUserId, true)
+
+        xhr.open("GET", apiUrl + "v1/testUser/" + testUserId+'?ts='+(new Date()).getTime(), true)
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4) {
                 callback(JSON.parse(xhr.responseText))
             }
         }
         xhr.send('')
+
     }, testUserId, config.apiUrl)
 }
 
@@ -216,7 +285,7 @@ this.getEventSubscription = function (token) {
         var callback = arguments[arguments.length - 1];
 
         var xhr = new XMLHttpRequest();
-        xhr.open("POST", apiUrl + "/eventSubscription", true);
+        xhr.open("POST", apiUrl + "v1/eventSubscription", true);
         xhr.setRequestHeader("Authorization", token);
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4) {
@@ -234,7 +303,7 @@ this.getEvents = function (token, subscriptionId) {
         var callback = arguments[arguments.length - 1];
 
         var xhr = new XMLHttpRequest();
-        xhr.open("GET", apiUrl + "/eventSubscription/" + subscriptionId, true);
+        xhr.open("GET", apiUrl + "v1/eventSubscription/" + subscriptionId+'?ts='+(new Date()).getTime(), true);
         xhr.setRequestHeader("Authorization", token);
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4) {
@@ -252,7 +321,7 @@ this.broadcastEvent = function (token, event) {
         var callback = arguments[arguments.length - 1];
 
         var xhr = new XMLHttpRequest();
-        xhr.open("POST", apiUrl + "/event/broadcast", true);
+        xhr.open("POST", apiUrl + "v1/event/broadcast", true);
         xhr.setRequestHeader("Authorization", token);
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4) {
@@ -270,7 +339,7 @@ this.remoteBroadcastEvent = function (token, event, identityId) {
         var callback = arguments[arguments.length - 1];
 
         var xhr = new XMLHttpRequest();
-        xhr.open("POST", apiUrl + "/event/broadcast/identity/" + identityId, true);
+        xhr.open("POST", apiUrl + "v1/event/broadcast/identity/" + identityId, true);
         xhr.setRequestHeader("Authorization", token);
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4) {
@@ -281,56 +350,115 @@ this.remoteBroadcastEvent = function (token, event, identityId) {
     }, token, event, config.apiUrl, identityId)
 }
 
-this.waitForPageLoad = function (expectedRoute) {
-    ptor.wait(function () {
+this.getIdentityId = function(token){
+    return ptor.executeAsyncScript(function (token, apiUrl) {
+
+        var callback = arguments[arguments.length - 1];
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", apiUrl + "v1/identity", true);
+        xhr.setRequestHeader("Authorization", token);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4) {
+                callback(JSON.parse(xhr.responseText))
+            }
+        }
+        xhr.send();
+    }, token, config.apiUrl)
+}
+
+
+this.waitForPageLoad = function (expectedRoutes, printOutWaiting) {
+
+    expectedRoutes = !Array.isArray(expectedRoutes) ? [expectedRoutes] : expectedRoutes
+    // console.log('waitForPageLoad', expectedRoutes.join(', '))
+
+    return ptor.wait(function () {
         return ptor.executeScript('return window != undefined && window._route').then(function (route) {
+            if(printOutWaiting)
+                console.log(route)
+
             if (route) {
                 // get current route
-                if (expectedRoute == undefined || route.path.search(expectedRoute) != -1) {
+                if (        
+                        expectedRoutes.length == 0 
+                    ||  expectedRoutes.some(function(expected_route){
+                            return route.path.search(expected_route) != -1
+                        })
+                ) {
                     return route.status == "success"
                 } else {
 //                        console.log("Error: unexpected route: " + route.path)
                 }
             }
         })
-
-    }, config.routeTimeout, 'waitForPage ' + (expectedRoute || 'any page') + ' timeout reached')
-    return this
+    }, config.routeTimeout, 'waitForPage ' + (expectedRoutes || 'any page') + ' timeout reached')
 }
 
 this.waitForEventSubscription = function () {
-    ptor.wait(function () {
-        return ptor.executeScript('return window != undefined && window._eventSubscriptionId').then(function (subscriptionId) {
-            if (subscriptionId) {
-                return true
-            }
-        })
-    }, config.routeTimeout, 'waitForEventSubscription timeout reached')
-    return this
+    return ptor.wait(function(){
+        return ptor.executeScript('return window != undefined && window._eventSubscriptionId')
+            .then(function (subscriptionId) {
+                if (subscriptionId) {
+                    return true
+                }
+            })
+    }, config.waitForTimeout, 'waitForEventSubscription timeout reached')
 }
 
-this.waitForElement = function (selector, timeout) {
+this.click = function (dataQa) {
+    return $("[data-qa='" + dataQa + "']").click()
+}
 
-    ptor.wait(function () {
+this.waitForQa = function(dataQa){
+    return self.waitForElement("[data-qa='" + dataQa + "']")
+}
+
+this.waitAndClickQa = function (dataQa, preSelector, printOut) {
+    var preSelector = preSelector ? preSelector+' ' : '';
+    return self.waitForElement(preSelector+"[data-qa='" + dataQa + "']",'',printOut)
+        .then(function(){
+            if(printOut) {
+                console.log(preSelector + "[data-qa='" + dataQa + "'] click yo")
+            }
+
+            $(preSelector+"[data-qa='" + dataQa + "']").click()
+        })
+}
+
+this.waitAndClick = function (selector) {
+    self.waitForElement(selector)
+    $(selector).click()
+}
+
+this.waitForElement = function (selector, timeout, printOut) {
+    return ptor.wait(function () {
+
+        if(printOut)
+            console.log('waitForElement '+selector)
+
         return $$(selector).then(function (elements) {
-            return elements.length > 0
+
+            if(printOut) {
+                console.log('length = '+elements.length)
+                return false;
+            }
+
+            return elements.length > 0;
         })
     }, timeout || config.waitForTimeout, 'waitForElement ' + selector + ' timeout is reached')
-
-    return this
 }
 
 this.waitForElements = function (selector, count) {
-
     if (count) {
-        ptor.wait(function () {
-            return $$(selector).then(function (elements) {
-                return elements.length == count
-            })
-        }, config.waitForTimeout, 'waitForElements ' + selector + ' count: ' + count + ' timeout is reached')
+        return  ptor.wait(function () {
+                    return $$(selector).then(function (elements) {
+                        return elements.length == count
+                    })
+                }, config.waitForTimeout, 'waitForElements ' + selector + ' count: ' + count + ' timeout is reached')
     }
 
-    return this
+    return this.waitForElement(selector)
 }
 
 this.waitForElementVisible = function (selector, timeout) {
@@ -356,17 +484,16 @@ this.waitForElementHidden = function (selector, timeout) {
 }
 
 this.waitForElementDisappear = function (selector, timeout) {
-    ptor.wait(function () {
+    return ptor.wait(function () {
         return ptor.isElementPresent(by.css(selector)).then(function (isPresent) {
             return !isPresent
         })
     }, timeout || config.waitForTimeout, 'waitForElementDisappear ' + selector + ' timeout is reached')
-
-    return this
 }
 
 this.waitForModalOpen = function () {
     this.waitForElement("cm-modal.active")
+    return this
 }
 
 this.waitForModalClose = function () {
@@ -375,28 +502,39 @@ this.waitForModalClose = function () {
     return this
 }
 
+
+this.confirmModal = function(){
+    return $('cm-modal.active [data-qa="btn-confirm"]').click()
+}
+
+this.closeModal = function(){
+    return  ptor.wait(function(){
+                return $("cm-modal.active [data-qa='cm-modal-close-btn']")
+            })
+            .then(function(button){
+                return button.click()
+            })
+}
+
 this.waitForLoader = function (count, parentSelector) {
-    count = count || 1,
+    count = count || 1
     parentSelector = parentSelector ? parentSelector+' ' : '' // that used for more then one loader on page
     // wait for loader appear
-    ptor.wait(function() {
-        return  $(parentSelector+'cm-loader').getAttribute('cm-count')
-                .then(function(value){
-                    return value >= count
-                })
-    }, config.routeTimeout, 'waitForLoader start timeout reached')
-    .then(function () {
-        // wait for loader disappear
-        ptor.wait(function () {
-            return $(parentSelector+'cm-loader').isDisplayed()
-            .then(function (isDisplayed) {
-                return !isDisplayed
+    return  ptor.wait(function() {
+                return  $(parentSelector+'cm-loader').getAttribute('cm-count')
+                        .then(function(value){
+                            return value >= count
+                        })
+            }, config.routeTimeout, 'waitForLoader start timeout reached')
+            .then(function () {
+                // wait for loader disappear
+                return ptor.wait(function () {
+                    return $(parentSelector+'cm-loader').isDisplayed()
+                            .then(function (isDisplayed) {
+                                return !isDisplayed
+                            })
+                }, config.routeTimeout, 'waitForLoader stop timeout reached')
             })
-        }, config.routeTimeout, 'waitForLoader stop timeout reached')
-
-    })
-
-    return this
 }
 
 this.waitForProgressbar = function (timeout) {
@@ -409,13 +547,20 @@ this.waitForProgressbar = function (timeout) {
     return this
 }
 
-this.checkWarning = function (qaValue) {
+this.checkWarning = function (qaValue, shouldBeHidden) {
     var css = "[data-qa='" + qaValue + "']"
     var warn = $(css)
-    expect(warn.isDisplayed()).toBe(true)
-    warn.getText().then(function (text) {
-        expect(text).not.toBe("")
-    })
+
+    if(shouldBeHidden){
+        expect(warn.isDisplayed()).toBeFalsy()
+    } else {
+        self.waitForQa(qaValue)
+        expect(warn.isDisplayed()).toBeTruthy()
+
+        warn.getText().then(function (text) {
+            expect(text).not.toBe("")
+        })
+    }
 
     return this
 }
@@ -429,6 +574,8 @@ this.clearInput = function (qaValue) {
     return this
 }
 
+
+//this is not returning the promise, it maybe better to use this.closeModal(see below)
 this.waitAndCloseNotify = function (check) {
     self.waitForElement("cm-modal.active [data-qa='cm-modal-close-btn']")
 
@@ -445,16 +592,30 @@ this.getFileExtension = function (file) {
 }
 
 this.headerSearchInList = function (searchString) {
-    self.waitAndClickQa("btn-header-list-search")
-    this.searchInList(searchString)
+    return  self.waitAndClickQa('btn-header-list-search')
+            .then(function(){
+                return self.setVal('inp-list-search',searchString,true)
+            })
 }
 
-this.searchInList = function (searchString) {
-    $("[data-qa='inp-list-search']").sendKeys(searchString)
+this.closeHeaderSearch = function(){
+    return  self.waitForElement("[data-qa='inp-list-search']")
+            .then(function(){
+                    if($("[data-qa='inp-list-search']").getAttribute('value') == ''){
+                        return self.waitAndClickQa('btn-close-search')
+                    } else {
+                        return self.waitForQa('btn-list-search-clear')
+                        .then(function(){
+                            self.click('btn-list-search-clear')
+                            return self.waitAndClickQa('btn-close-search')
+                        })
+                    }
+            })
 }
 
 this.clearLocalStorage = function () {
-    ptor.executeScript('localStorage.clear()')
+    ptor.executeScript('window.localStorage.clear()')
+
     return this
 }
 
@@ -476,9 +637,19 @@ this.getLocalStorage = function () {
 }
 
 this.setLocalStorage = function (key, value) {
-    ptor.executeScript(function (key, value) {
-        localStorage.setItem(key, value)
+    ptor.executeScript(function(_key_, _value_){
+        localStorage.setItem(_key_, _value_)
     }, key, value)
+
+    ptor.wait(function(){
+        return ptor.executeScript('return localStorage.getItem("'+key+'")')
+            .then(function (_value_) {
+                if (_value_ != undefined) {
+                    return true
+                }
+            })
+    }, config.waitForTimeout, 'setLocalStorage can\'t get out of storage')
+
     return this
 }
 
@@ -505,19 +676,28 @@ this.generateKey = function (keyNum, keyName) {
 
     ptor.wait(function () {
         return key != undefined
-    }, config.waitForTimeout , 'wait for file timeout reached').then(function(){
+    }, config.waitForTimeout , 'wait for file timeout reached')
+    .then(function(){
         self.get('/settings/identity/key/import')
-        self.waitForPageLoad('/settings/identity/key/import')
+        return self.waitForPageLoad('/settings/identity/key/import')
+    })
+    .then(function(){
         self.waitForElement("[data-qa='display-private-key']")
         self.setValQuick("display-private-key", key)
         self.setVal("display-private-key", " ")
         self.click("btn-import-key")
-        self.waitForElement("[data-qa='btn-save-key']")
+        return self.waitForElement("[data-qa='btn-save-key']")
+    })
+    .then(function(){
         if (keyName != undefined) {
             self.clearInput("input-key-name")
             self.setVal("input-key-name", keyName)
         }
+
         self.click("btn-save-key")
+
+        //self.checkWarning('info-key-error', true);
+        return self.waitForPageLoad(['/talks', '/authentication'])
     })
 }
 
@@ -537,10 +717,16 @@ this.clickBackBtn = function () {
 
 this.sendFriendRequest = function (displayName) {
     self.get("/contact/search")
-    $("[data-qa='inp-search-cameo-ids']").sendKeys(displayName)
-    self.waitForElement("[data-qa='btn-openModal']")
-    $("[data-qa='btn-openModal']").click()
-    $("[data-qa='btn-sendRequest']").click()
+    self.waitForPageLoad("/contact/search")
+    .then(function(){
+        $("[data-qa='inp-search-cameo-ids']").sendKeys(displayName)
+        return  self.waitForElement("[data-qa='btn-openModal']")
+    })
+    .then(function(){
+        $("[data-qa='btn-openModal']").click()
+        $("[data-qa='btn-sendRequest']").click()
+    })
+
 }
 
 this.acceptFriendRequests = function () {
@@ -553,13 +739,17 @@ this.acceptFriendRequests = function () {
         $$("[data-qa='btn-acceptRequest']").then(function (buttons) {
             var length = buttons.length
             if (length > 0) {
+
                 buttons[0].click()
+
                 ptor.wait(function () {
-                    return $$("[data-qa='btn-acceptRequest']").then(function (buttons2) {
-                        return buttons2.length == length - 1
+                    return $$("[data-qa='btn-acceptRequest']").then(function (_buttons_) {
+                        return _buttons_.length == length - 1
                     })
                 })
-                clickAccept()
+                if (length > 1) {
+                    clickAccept()
+                }
             }
         })
     }
@@ -569,35 +759,28 @@ this.acceptFriendRequests = function () {
 this.addExternalContact = function (displayName) {
     self.get("/contact/create")
     $("[data-qa='input-displayname']").sendKeys(displayName)
-    $("[data-qa='input-phoneNumber']").sendKeys("1233")
+    $("[data-qa='input-phoneNumber']").sendKeys("+491233")
+
     $("[data-qa='btn-create-contact']").click()
+
+    // close notify extern modal
+    self.waitForModalOpen()
+    self.waitAndClickQa('btn-cancel','cm-modal.active')
+
     self.waitForPageLoad("/contact/list")
 }
 
-this.click = function (dataQa) {
-    $("[data-qa='" + dataQa + "']").click()
+this.setVal = function (dataQa, text, withClear){
+
+    if(withClear)
+        this.clearInput(dataQa)
+
+    return $("[data-qa='" + dataQa + "']").sendKeys(text)
 }
 
-
-this.waitForQa = function(dataQa){
-    self.waitForElement("[data-qa='" + dataQa + "']")
+this.sendEnter = function(dataQa, withClear){
+    self.setVal(dataQa, protractor.Key.ENTER, withClear)
 }
-
-this.waitAndClickQa = function (dataQa) {
-    self.waitForElement("[data-qa='" + dataQa + "']")
-    $("[data-qa='" + dataQa + "']").click()
-}
-
-this.waitAndClick = function (selector) {
-    self.waitForElement(selector)
-    $(selector).click()
-}
-
-
-this.setVal = function (dataQa, text) {
-    $("[data-qa='" + dataQa + "']").sendKeys(text)
-}
-
 
 this.blurQa = function (dataQa) {
     $("[data-qa='" + dataQa + "']").sendKeys(protractor.Key.TAB)
@@ -618,9 +801,15 @@ this.createEncryptedConversation = function (subject, message) {
     self.setVal("input-subject", subject)
     self.setVal("input-answer", message)
     self.waitAndClickQa("btn-send-answer")
-    self.waitAndClickQa("btn-confirm")
+    self.waitAndClickQa("btn-confirm","cm-modal.active")
     self.waitForPageLoad("/conversation/*")
     self.waitForElements("cm-message", 1)
+
+    ptor.wait(function(){
+        return self.getVal("input-answer").then(function(answer){
+            return answer == ''
+        })
+    })
 }
 
 this.getConversation = function(subject){
@@ -628,9 +817,9 @@ this.getConversation = function(subject){
     self.waitForPageLoad("/talks")
     self.headerSearchInList(subject)
     ptor.wait(function(){
-            return $$('cm-conversation-tag').then(function(tags){
-                return tags.length == 1
-            })
+        return $$('cm-conversation-tag').then(function(tags){
+            return tags.length == 1
+        })
     })
     .then(function(){
         self.waitAndClick("cm-conversation-tag")
@@ -638,13 +827,28 @@ this.getConversation = function(subject){
     })
 }
 
-this.readConversation = function (subject, message) {
+this.readConversation = function (subject, message, checkModal) {
     self.getConversation(subject)
-    ptor.wait(function(){
-        return $("cm-message").getText().then(function(text){
-            return text.search(message) != -1
+
+    if(checkModal){
+        self.waitForModalOpen();
+
+        self.waitForQa('btn-modal-handshake-link').then(
+            function(){
+                ptor.wait(function(){
+                    return $("cm-message").getText().then(function(text){
+                        return text.search(message) != -1
+                    })
+                })
+            }
+        )
+    } else {
+        ptor.wait(function(){
+            return $("cm-message").getText().then(function(text){
+                return text.search(message) != -1
+            })
         })
-    })
+    }
 }
 
 this.scrollToTop = function(){
@@ -653,4 +857,37 @@ this.scrollToTop = function(){
 
 this.scrollToBottom = function(){
     $("body").sendKeys(protractor.Key.END)
+}
+
+this.scrollToElement = function(cssSelector){
+    return $(cssSelector).getLocation().then(function(positions){
+        ptor.executeScript('window.scrollTo(0,'+positions.y+');')
+    })
+}
+
+this.setKeygenerationTimeout = function(jasmine){
+    var expectedTimeout = 180000;
+    beforeEach(function () {
+        jasmine.getEnv().defaultTimeoutInterval = expectedTimeout
+    })
+
+    afterEach(function () {
+        jasmine.getEnv().defaultTimeoutInterval = 30000
+    })
+    return expectedTimeout;
+}
+
+this.logCurrentUrl = function(){
+    ptor.getCurrentUrl().then(function(url){
+        console.log('logCurrentUrl:', url)
+    })
+}
+
+this.printOutConsoleLog = function(clear){
+    browser.manage().logs().get('browser').then(function(array){
+        if(!clear) {
+            console.warn('Browser console.logs')
+            console.warn(JSON.stringify(array, null, 2))
+        }
+    })
 }

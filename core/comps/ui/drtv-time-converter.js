@@ -11,7 +11,8 @@ angular.module('cmUi').directive('cmTimeConverter',[
                 dateFormat: '=cmDateFormat',
                 specialType: '@cmSpecialType'
             },
-            template: '<span ng-if="time > 0">{{time | date: format}}</span>',
+            template: //'{{"time: "+time +" date: "+format}}'+
+                      '<span ng-if="time > 0" class="is-selectable">{{time | date: format}}</span>',
             controller: function($scope){
 
                 function update(){
@@ -46,6 +47,10 @@ angular.module('cmUi').directive('cmTimeConverter',[
                             break;
                         default:
                         // date Format does not change
+                    }
+
+                    if(typeof $scope.format == 'object'){
+                        $scope.format = 'dd.MM.yyyy - HH:mm';
                     }
                 }
 

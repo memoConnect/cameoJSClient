@@ -1,6 +1,17 @@
 'use strict';
 
-angular.module('cmUi').directive('cmLoader',[
+/**
+ * @ngdoc directive
+ * @name cmUi.directive:cmLoader
+ *
+ * @description
+ * shows default a spinner and with attr
+ * http://fgnass.github.io/spin.js/
+ *
+ */
+
+angular.module('cmUi')
+.directive('cmLoader',[
     function (){
         return {
             restrict:   'AE',
@@ -22,18 +33,27 @@ angular.module('cmUi').directive('cmLoader',[
                 $element.addClass(type);
 
                 var opts = {};
-                if($attrs.cmLength)
-                    opts.length = $attrs.cmLength;
-                if($attrs.cmRadius)
-                    opts.radius = $attrs.cmRadius;
                 if($attrs.cmColor) {
-                    if($attrs.cmColor == 'ci-color')
-                        opts.color = '#02BED2';
-                    else
-                        opts.color = $attrs.cmColor;
+
+                    switch($attrs.cmColor){
+                        case 'ci-color':
+                            opts.color = '#02BED2';
+                        break;
+                        case 'inp-grey':
+                            opts.color = '#666666';
+                        break;
+                        default:
+                            opts.color = $attrs.cmColor;
+                    }
                 }
-                if($attrs.cmWidth)
-                    opts.width = $attrs.cmWidth;
+
+                // spinner size
+                if($attrs.cmSize == 'small') {
+                    opts.lines = 10;
+                    opts.length = 4;
+                    opts.width = 4;
+                    opts.radius = 6;
+                }
 
                 if(type =='spinner'){
                     var spinner = new Spinner(opts);
@@ -82,9 +102,9 @@ angular.module('cmUi').directive('cmLoader',[
                 /**
                  * @ngdoc event
                  * @name start
-                 * @eventOf cmUi.directive:cmSpinner
+                 * @eventOf cmUi.directive:cmLoader
                  * @description
-                 * $scope.$on('cmSpinner:start',...)
+                 * $scope.$on('cmLoader:start',...)
                  */
                 $scope.$on('cmLoader:start', function(){
                     $scope.animate(true);
@@ -93,9 +113,9 @@ angular.module('cmUi').directive('cmLoader',[
                 /**
                  * @ngdoc event
                  * @name stop
-                 * @eventOf cmUi.directive:cmSpinner
+                 * @eventOf cmUi.directive:cmLoader
                  * @description
-                 * $scope.$on('cmSpinner:stop',...)
+                 * $scope.$on('cmLoader:stop',...)
                  */
                 $scope.$on('cmLoader:stop', function(){
                     $scope.animate(false);

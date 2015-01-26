@@ -42,6 +42,10 @@ module.exports = function(grunt, options) {
                 'app-files': {
                     files: [
                         {
+                            src: 'core/favicon.ico',
+                            dest: 'dist/app/favicon.ico'
+                        },
+                        {
                             expand: true,
                             cwd: 'core/gfx/',
                             src: ['**'],
@@ -55,14 +59,23 @@ module.exports = function(grunt, options) {
                         },
                         {
                             expand: true,
+                            cwd: 'core/performance/',
+                            src: ['**'],
+                            dest: 'dist/app/performance/'
+                        },
+                        {
+                            expand: true,
                             flatten: true,
                             cwd: 'core/css/fonts/',
                             src: ['**'],
-                            dest: 'dist/app/css/fonts'
+                            dest: 'dist/app/css/fonts/'
                         },
                         {
-                            src: 'core/favicon.ico',
-                            dest: 'dist/app/favicon.ico'
+                            expand: true,
+                            flatten: false,
+                            cwd: 'resource/download/gfx/',
+                            src: ['**'],
+                            dest: 'dist/app/gfx/'
                         }
                     ]
                 }
@@ -71,17 +84,19 @@ module.exports = function(grunt, options) {
                 'app-files': {
                     'options': {
                         'data': {
+                            'currentTarget': options.globalCameoBuildConfig.target,
                             'currentVersion': options.globalCameoBuildConfig.config.version,
                             'currentApiUrl': options.globalCameoBuildConfig.config.apiUrl,
+                            'defaultApiVersion': options.globalCameoBuildConfig.config.defaultApiVersion,
                             'autoLogin': options.globalCameoBuildConfig.config.autoLogin,
                             'loadingBar': options.globalCameoBuildConfig.config.loadingBar,
                             'enableDebug': options.globalCameoBuildConfig.config.enableDebug,
                             'performancePage': options.globalCameoBuildConfig.config.performancePage,
                             'phonegapFiles': options.globalCameoBuildConfig.debug.weinre ? '<script src="http://' + options.globalCameoBuildConfig.debug.weinreIp + ':8080/target/target-script-min.js#anonymous"></script>' : '',
                             'phonegapOnload': '',
-                            'appProtocol': options.globalCameoBuildConfig.static.appProtocol,
-                            'appLinks': JSON.stringify(options.globalCameoBuildConfig.static.appLinks),
-                            'errorOnTodoInI18n': options.globalCameoBuildConfig.config.errorOnTodoInI18n
+                            'errorOnTodoInI18n': options.globalCameoBuildConfig.config.errorOnTodoInI18n,
+
+                            'static': JSON.stringify(options.globalCameoBuildConfig.static)
                         }
                     },
                     'files': {

@@ -1,20 +1,14 @@
 'use strict';
 
 angular.module('cmContacts').service('cmContactsModel',[
-    'cmFactory',
-    'cmUserModel',
-    'cmContactModel',
-    'cmContactsAdapter',
-    'cmIdentityFactory',
-    'cmFriendRequestModel',
-    'cmStateManagement',
-    'cmUtil',
-    'cmObject',
-    'cmLogger',
-    'cmNotify',
-    '$q',
-    '$rootScope',
-    function (cmFactory, cmUserModel, cmContactModel, cmContactsAdapter, cmIdentityFactory, cmFriendRequestModel, cmStateManagement, cmUtil, cmObject, cmLogger, cmNotify, $q, $rootScope){
+    'cmFactory', 'cmUserModel', 'cmContactModel', 'cmContactsAdapter', 'cmIdentityFactory',
+    'cmFriendRequestModel', 'cmStateManagement', 'cmUtil', 'cmObject', 'cmLogger',
+    'cmNotify', 'cmBrowserNotifications',
+    '$q', '$rootScope',
+    function (cmFactory, cmUserModel, cmContactModel, cmContactsAdapter, cmIdentityFactory,
+              cmFriendRequestModel, cmStateManagement, cmUtil, cmObject, cmLogger,
+              cmNotify, cmBrowserNotifications,
+              $q, $rootScope){
         var self = this,
             events = {};
 
@@ -22,7 +16,7 @@ angular.module('cmContacts').service('cmContactsModel',[
 
         this.contacts       =   new cmFactory(cmContactModel,
                                     function sameByData(instance, data){
-                                        return data &&
+                                        return data && data.id != '' &&
                                               (data.id == instance.id ||
                                                data.identity &&
                                                data.identity.id &&
@@ -30,6 +24,15 @@ angular.module('cmContacts').service('cmContactsModel',[
                                                instance.identity &&
                                                instance.identity.id &&
                                                data.identity.id == instance.identity.id)
+                                    },
+                                    function sameByInstance(instance_1, instance_2){
+                                        return      instance_1
+                                        &&  instance_1.identity
+                                        &&  instance_1.identity.id
+                                        &&  instance_2
+                                        &&  instance_2.identity
+                                        &&  instance_2.identity.id
+                                        &&  instance_1.identity.id == instance_2.identity.id
                                     });
 
         // TODO: groups must be in factory style with models
@@ -60,7 +63,7 @@ angular.module('cmContacts').service('cmContactsModel',[
                                     })[0]
                                 }
 
-        this.findByIdentityId =   function(identityId){
+        this.findByIdentityId = function(identityId){
             return this.contacts.filter(function(contact){
                 return contact.identity.id == identityId
             })[0]
@@ -212,10 +215,10 @@ angular.module('cmContacts').service('cmContactsModel',[
             return  cmContactsAdapter
                     .addContact(data)
                     .then(function(data){
-                            self.trigger('add-contact', data)
-                            var contact = _add(data);
-                            self.trigger('after-add-contact', data)
-                            return contact
+                        self.trigger('add-contact', data)
+                        var contact = _add(data);
+                        self.trigger('after-add-contact', data)
+                        return contact
                     })
         };
 
@@ -231,23 +234,6 @@ angular.module('cmContacts').service('cmContactsModel',[
                 .then(
                 function(data){
 //                _edit(data);
-                    defer.resolve();
-                },
-                function(){
-                    defer.reject();
-                }
-            );
-
-            return defer.promise;
-        };
-
-        this.deleteContact = function(id, data){
-            var defer = $q.defer();
-            cmContactsAdapter
-                .deleteContact(data)
-                .then(
-                function(data){
-                    //_delete(data);
                     defer.resolve();
                 },
                 function(){
@@ -279,8 +265,11 @@ angular.module('cmContacts').service('cmContactsModel',[
         });
 
         cmContactsAdapter.on('friendRequest:new', function(event, data){
-            if(data.to == cmUserModel.data.identity.id)
-                self.requests.create(data.friendRequest);
+            if(data.to == cmUserModel.data.identity.id){
+                var request = self.requests.create(data.friendRequest);
+
+                cmBrowserNotifications.showFriendRequest(request.identity);
+            }
         });
 
         cmContactsAdapter.on('friendRequest:accepted', function(event, data){
@@ -298,8 +287,31 @@ angular.module('cmContacts').service('cmContactsModel',[
             }
         });
 
+        cmContactsAdapter.on('friendRequest:rejected', function(event, data){
+            if(data.to == cmUserModel.data.identity.id){
+                self.requests.forEach(function(request){
+                    if(request.identity.id == data.from)
+                        self.requests.deregister(request)
+                });
+
+                cmNotify.trigger('bell:unring');
+            }
+
+            if(data.from == cmUserModel.data.identity.id){
+                self.contacts.forEach(function(contact){
+                    if(contact.identity.id == data.to)
+                        self.contacts.deregister(contact)
+                });
+            }
+        });
+
         this.requests.on('register', function(){
             cmNotify.create({label: 'NOTIFICATIONS.TYPES.FRIEND_REQUEST', bell:true});
+        });
+
+        this.contacts.on('deleted:finished', function(event, data){
+            self.contacts.deregister(data);
+            $rootScope.goto('/contact/list');
         });
 
         cmContactsAdapter.on('identity:updated', function(event, data){
@@ -312,6 +324,14 @@ angular.module('cmContacts').service('cmContactsModel',[
                     contact.identity.importData(data);
                 }
             }
+        });
+
+        cmContactsAdapter.on('contact:update', function(event, data){
+            self.contacts.create(data, true);
+        });
+
+        cmContactsAdapter.on('contact:deleted', function(event, data){
+            self.contacts.deregister(data);
         });
 
         cmContactsAdapter.on('subscriptionId:changed', function(){

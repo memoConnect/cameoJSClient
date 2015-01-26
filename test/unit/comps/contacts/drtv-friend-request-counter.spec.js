@@ -2,15 +2,11 @@
 
 describe('Directive cmFriendRequestCounter', function () {
 
-    var directive, element, $scope, $httpBackend, cmContactsModel;
+    var directive, element, $scope, $httpBackend, cmContactsModel, cmContactsAdapter, cmUserModel;
 
+    beforeEach(module('cmCore'))
     beforeEach(module('cmContacts'))
-
-    beforeEach(function(){
-        module(function($provide){
-            $provide.constant('cmEnv',{});
-        })
-    })
+    beforeEach(module('cmConfig'))
 
     beforeEach(inject(function(_$httpBackend_){
         $httpBackend = _$httpBackend_;
@@ -20,8 +16,10 @@ describe('Directive cmFriendRequestCounter', function () {
         $httpBackend.whenGET('/friendRequests').respond({});
     }))
 
-    beforeEach(inject(function(_cmContactsModel_){
+    beforeEach(inject(function(_cmContactsModel_, _cmContactsAdapter_, _cmUserModel_){
         cmContactsModel = _cmContactsModel_;
+        cmContactsAdapter = _cmContactsAdapter_;
+        cmUserModel = _cmUserModel_;
     }))
 
     beforeEach(inject(function (_$rootScope_, _$compile_) {
@@ -44,6 +42,20 @@ describe('Directive cmFriendRequestCounter', function () {
 
             expect(element.html()).not.toBe('');
             expect(element.html()).toBe(' (2)');
+        })
+
+        it('should change displayed number, after friendRequest:rejected event over cmContactsAdapater', function(){
+            cmUserModel.data.identity.id = 'moep';
+            var mockRequestNew = {"friendRequest":{identity:{id:1}},to:'moep'}
+            var mockRequestReject = {"from":1,to: 'moep'}
+
+            cmContactsAdapter.trigger('friendRequest:new', mockRequestNew)
+
+            expect(element.html()).not.toBe('');
+            expect(element.html()).toBe(' (1)');
+
+            cmContactsAdapter.trigger('friendRequest:rejected', mockRequestReject)
+            expect(element.html()).toBe('');
         })
     });
 })

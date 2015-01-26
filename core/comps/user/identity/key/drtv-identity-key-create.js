@@ -1,21 +1,11 @@
 'use strict';
 
 angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
-    'cmUserModel',
-    'cmCrypt',
-    'cmUtil',
-    'cmLogger',
-    'cmNotify',
-    'cmKey',
-    'cmJob',
-    'cmApi',
-    'cmDevice',
-    'cmLoader',
-    '$window',
-    '$rootScope',
-    '$timeout',
-    function(cmUserModel, cmCrypt, cmUtil, cmLogger,
-             cmNotify, cmKey, cmJob, cmApi, cmDevice, cmLoader,
+    'cmUserModel', 'cmCrypt', 'cmUtil', 'cmLogger', 'cmNotify',
+    'cmKey', 'cmJob', 'cmApi', 'cmDevice', 'cmLoader', 'cmHistory',
+    '$window', '$rootScope',  '$timeout',
+    function(cmUserModel, cmCrypt, cmUtil, cmLogger, cmNotify,
+             cmKey, cmJob, cmApi, cmDevice, cmLoader, cmHistory,
              $window, $rootScope, $timeout){
         return {
             restrict: 'E',
@@ -27,7 +17,7 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
 
                 // only one privKey!!!
                 if(cmUserModel.hasPrivateKey()){
-                    if($rootScope.urlHistory.length > 1 && $rootScope.urlHistory[$rootScope.urlHistory.length - 2] == '/authentication'){
+                    if(cmHistory.comesFrom('/authentication')){
                         $scope.goTo('/talks', true);
                     } else {
                         $scope.goTo('/settings/identity/key/list', true);
@@ -73,8 +63,8 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
 
                 $scope.getElapsedTime = function(){
                     elapsedTime =   startTime 
-                                    ?   Math.max(new Date().getTime() - startTime, 0)
-                                    :   elapsedTime;
+                                    ?   Math.ceil(Math.max(new Date().getTime() - startTime, 0))
+                                    :   Math.ceil(elapsedTime);
                     return elapsedTime;
                 };
 
@@ -149,8 +139,7 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
                     cmCrypt.cancelGeneration()
                     .then(function(){
                         reset();
-                        startTime = undefined
-
+                        startTime = undefined;
 
                         if(typeof $rootScope.generateAutomatic != 'undefined'){
                             /**
@@ -207,7 +196,7 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
                                     if(cmUserModel.data.identity.keys.some(function(key){
                                         return key.id != result.data.keyId
                                     })){
-                                        $scope.goto('/authentication')
+                                        $scope.goTo('/authentication')
                                     } else {
                                         $scope.goTo('/talks');
                                     }
@@ -234,7 +223,6 @@ angular.module('cmRouteSettings').directive('cmIdentityKeyCreate', [
 
                         $scope.generate();
                     }
-
                     $rootScope.generateAutomatic = {}
                 }
             }

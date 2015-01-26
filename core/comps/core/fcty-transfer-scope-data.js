@@ -7,7 +7,8 @@ angular.module('cmCore')
     function(cmUtil,
              $location, $rootScope) {
 
-        var scopeData = {},
+        var keepIdsClear = [],
+            scopeData = {},
             noneScopeData = {},
             defaultOptions = {
                 id: '',
@@ -23,7 +24,14 @@ angular.module('cmCore')
             if(options.isDone)
                 return false;
 
-            _reset(options);
+            _clear(options);
+
+            // if in keepClear array ignore set
+            if(keepIdsClear.indexOf(options.id) >= 0){
+                // remove for next time settable
+                keepIdsClear.splice(keepIdsClear.indexOf(options.id), 1);
+                return false;
+            }
 
             options.onSet();
 
@@ -58,17 +66,19 @@ angular.module('cmCore')
         }
 
         // reset persist data
-        function _reset(options){
+        function _clear(options){
             delete scopeData[options.id];
             scopeData[options.id] = null;
             delete noneScopeData[options.id];
             noneScopeData[options.id] = null;
         }
 
-        $rootScope.$on('logout', function(){
+        function _reset(){
             scopeData = {};
             noneScopeData = {};
-        });
+        }
+
+        $rootScope.$on('logout', _reset);
 
         return {
             create: function ($scope, _options_) {
@@ -91,8 +101,22 @@ angular.module('cmCore')
                 return function(){
                     options.isDone = true;
                     clearEvent();
-                    _reset(options);
+                    _clear(options);
                 }
+            },
+            keepClear: function(data){
+                this.clear(data);
+
+                if(keepIdsClear.indexOf(data.id) < 0)
+                    keepIdsClear.push(data.id);
+            },
+            clear: function(data){
+                if(typeof data == 'object' && typeof data.id != 'undefined' && data.id != ''){
+                    _clear(data);
+                }
+            },
+            reset: function(){
+                _reset();
             }
         }
     }]

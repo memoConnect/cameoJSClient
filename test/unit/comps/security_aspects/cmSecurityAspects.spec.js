@@ -2,12 +2,14 @@
 
 describe('cmSecurityAspects', function(){
 
-    var security_aspects
+    var security_aspects,
+        $rootScope
 
     beforeEach(module('cmCore'))
     beforeEach(module('cmSecurityAspects'))
-    beforeEach(inject(function(_cmSecurityAspects_){
-        security_aspects = new _cmSecurityAspects_()
+    beforeEach(inject(function(_cmSecurityAspects_, _$rootScope_){
+        security_aspects    = new _cmSecurityAspects_()
+        $rootScope          = _$rootScope_
     }))
 
     it('should provide a factory to handle security aspects', function(){
@@ -66,14 +68,22 @@ describe('cmSecurityAspects', function(){
                             }
         })
 
-        security_aspects.refresh()
+        var applying    = undefined,
+            positives   = undefined,
+            negatives   = undefined,
+            neutrals    = undefined,
+            nonapplying = undefined
 
-        var applying    = security_aspects.applyingAspects,
+        security_aspects.refresh()
+        .then(function(){
+            applying    = security_aspects.applyingAspects,
             positives   = security_aspects.getPositiveAspects(),
             negatives   = security_aspects.getNegativeAspects(),
             neutrals    = security_aspects.getNeutralAspects(),
             nonapplying = security_aspects.getNonApplyingAspects()
-        
+        })
+
+        $rootScope.$apply()
 
         expect(applying.length).toBe(3)     //SA1, SA2, SA5
         expect(positives.length).toBe(1)    //SA1
@@ -85,12 +95,15 @@ describe('cmSecurityAspects', function(){
         test_object.my_method = function() { return 'ping' }
 
         security_aspects.refresh()
+        .then(function(){
+            applying    = security_aspects.getApplyingAspects(),
+            positives   = security_aspects.getPositiveAspects(),
+            negatives   = security_aspects.getNegativeAspects(),
+            neutrals    = security_aspects.getNeutralAspects(),
+            nonapplying = security_aspects.getNonApplyingAspects()
+        })
 
-        applying    = security_aspects.getApplyingAspects(),
-        positives   = security_aspects.getPositiveAspects(),
-        negatives   = security_aspects.getNegativeAspects(),
-        neutrals    = security_aspects.getNeutralAspects(),
-        nonapplying = security_aspects.getNonApplyingAspects()
+        $rootScope.$apply()
 
         expect(applying.length).toBe(5)     //SA1, SA2, SA3, SA4, SA5
         expect(positives.length).toBe(3)    //SA1, SA3, SA4
@@ -102,12 +115,15 @@ describe('cmSecurityAspects', function(){
         test_object.my_attribute = 4
 
         security_aspects.refresh()
+        .then(function(){
+            applying    = security_aspects.getApplyingAspects(),
+            positives   = security_aspects.getPositiveAspects(),
+            negatives   = security_aspects.getNegativeAspects(),
+            neutrals    = security_aspects.getNeutralAspects(),
+            nonapplying = security_aspects.getNonApplyingAspects()
+        })
 
-        applying    = security_aspects.getApplyingAspects(),
-        positives   = security_aspects.getPositiveAspects(),
-        negatives   = security_aspects.getNegativeAspects(),
-        neutrals    = security_aspects.getNeutralAspects(),
-        nonapplying = security_aspects.getNonApplyingAspects()
+        $rootScope.$apply()
 
         expect(applying.length).toBe(3)     //SA2, SA5, SA6
         expect(positives.length).toBe(0)    //

@@ -1,4 +1,4 @@
-var config = require("../../config-e2e-tests.js")
+var config = require("../../config/specs.js")
 var util = require("../../../lib/e2e/cmTestUtil.js")
 
 describe('Purl Registration: ', function () {
@@ -21,7 +21,10 @@ describe('Purl Registration: ', function () {
 
     it('create new test user', function(){
         util.logout()
-        internalLogin = util.createTestUser()
+        util.createTestUser()
+        .then(function(loginName){
+            internalLogin = loginName
+        })
     })
 
     it('add external contact to test user', function () {
@@ -34,6 +37,10 @@ describe('Purl Registration: ', function () {
 
         $('cm-footer button').click()
 
+        // close notify extern modal
+        util.waitForModalOpen()
+        util.waitAndClickQa('btn-cancel','cm-modal.active')
+
         util.waitForPageLoad('/contact/list')
     })
 
@@ -45,7 +52,7 @@ describe('Purl Registration: ', function () {
         // add recipient
         $(".cm-add-button").click()
         util.waitForPageLoad("/conversation/new/recipients")
-        util.searchInList(externalLogin)
+        util.headerSearchInList(externalLogin)
 
         util.waitForElement("[data-qa='contact-display-name']")
         $("[data-qa='btn-select-contact']").click()
@@ -76,7 +83,7 @@ describe('Purl Registration: ', function () {
         })
     })
 
-    it('open purl as external user purlId:"'+purl+'"', function () {
+    it('open purl as external user', function () {
         util.logout()
         util.get("/purl/" + purl)
         util.waitForPageLoad('/purl/' + purl)
@@ -109,34 +116,35 @@ describe('Purl Registration: ', function () {
         $("[data-qa='input-password']").sendKeys(password)
         $("[data-qa='input-passwordConfirm']").sendKeys(password)
 
-        $("[data-qa='input-displayName']").sendKeys(externalLogin)
-        $("[data-qa='link-terms']").sendKeys(protractor.Key.END)
         $("[data-qa='icon-checkbox-agb']").click()
 
         $("[data-qa='btn-createUser']").click()
     })
 
-    it('first url should be "/start/welcome" ', function () {
-        util.waitForPageLoad('/start/welcome')
+    it('first url should be "/setup/account" ', function () {
+        util.waitForPageLoad('/setup/account')
     })
 
-    /**
-     * @deprecated
-     */
-    //it("next step should be the /start/quickstart", function () {
-    //    util.waitAndClickQa("btn-next-step")
-    //    util.waitForPageLoad('/start/quickstart')
-    //})
+    it("the next step should be setup/identity ", function () {
+        util.waitAndClickQa("btn-next-step")
+        util.waitForPageLoad('/setup/identity')
+    })
 
     it("the next step should be key generation", function () {
         util.waitAndClickQa("btn-next-step")
         util.waitForPageLoad('/settings/identity/key/create')
     })
 
-    it("should be in /talks after saving the key", function () {
-        util.waitForElementVisible("[data-qa='page-save-key']", 30000)
-        util.waitAndClickQa("btn-save-key")
-        util.waitForPageLoad('/talks')
+    describe('with increased timeout', function () {
+        var expectedTimeout = util.setKeygenerationTimeout(jasmine);
+        it('wait for key generation and display key', function () {
+            util.waitForElementVisible("[data-qa='page-save-key']",expectedTimeout)
+
+            $("body").click();
+            util.waitAndClickQa("btn-save-key")
+
+            util.waitForPageLoad('/talks')
+        })
     })
 
     it("initial conversation should be present, along with user conversation", function(){
@@ -152,7 +160,6 @@ describe('Purl Registration: ', function () {
             expect(elements[0].$(".text").getText()).toContain(msgText)
             expect(elements[1].$(".text").getText()).toContain(msgText2)
             expect(elements[0].$("[data-qa='message-author']").getText()).toBe(internalLogin)
-//            expect(elements[1].$("[data-qa='message-author']").getText()).toBe(externalLogin)
         })
     })
 

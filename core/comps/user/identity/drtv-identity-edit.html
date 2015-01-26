@@ -1,84 +1,92 @@
-<article class="content edit-identity-head clearfix">
-    <div class="cm-fl mr5">
-        <cm-upload-avatar class="border-complete"></cm-upload-avatar>
-        <cm-avatar cm-data="identity" cm-view="{{chooseAvatar?'unknown':''}}" ng-show="identity" class="big"></cm-avatar>
-    </div>
-    <div class="cm-fl w72">
-        <ul class="no-border">
-            <li class="cm-disabled" data-qa="btn-identity-trust">
-                <span class="item clearfix">
-                    <i class="fa cm-qr-code fa-2x"></i>
-                    {{'IDENTITY.LABEL.TRUST'|cmTranslate}}
+<cm-scrollable>
+
+    <article class="content edit-identity-head clearfix">
+        <div class="cm-fl mr5">
+            <cm-upload-avatar class="border-complete"></cm-upload-avatar>
+            <cm-avatar cm-data="identity" cm-avatar-view="{{chooseAvatar?'unknown':''}}" ng-show="identity" class="big"></cm-avatar>
+        </div>
+        <div class="cm-fl w72">
+            <ul class="no-border">
+                <li class="cm-disabled" data-qa="btn-identity-trust">
+                    <span class="item clearfix">
+                        <span class="title single-line">
+                            <i class="fa cm-qr-code fa-2x"></i>
+                            {{'IDENTITY.LABEL.TRUST'|cmTranslate}}
+                        </span>
+                        <section class="icon-list">
+                            <i class="fa cm-right position-exception"></i>
+                        </section>
+                    </span>
+                </li>
+                <li ng-click="goTo('/settings/identity/key/list')" data-qa="btn-identity-keys" cm-reactive>
+                    <span class="item clearfix">
+                        <span class="title single-line">
+                            <i class="fa cm-key fa-2x"></i>
+                            {{'IDENTITY.LABEL.KEYMANAGEMENT'|cmTranslate}}
+                        </span>
+                        <section class="icon-list">
+                            <i class="fa cm-right position-exception"></i>
+                        </section>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </article>
+
+    <hr class="margin-small" />
+
+    <form name="cmForm" novalidate autocomplete="off">
+        <article class="content">
+            <label>{{'CONTACT.PLACEHOLDER.CAMEOID'|cmTranslate}}</label>
+            <div class="cm-input-ctn is-selectable-all with-inside-left-icon" data-qa="ctn-cameoid">
+                <i class="fa cm-rhino-positive"></i>
+                <span class="without-input">
+                    {{identity.cameoId}}
                 </span>
-                <section class="icon-list">
-                    <i class="fa cm-right position-exception"></i>
-                </section>
-            </li>
-            <li class="no-border" ng-click="goTo('/settings/identity/key/list')" data-qa="btn-identity-keys">
-                 <span class="item clearfix">
-                     <i class="fa cm-key fa-2x"></i>
-                    {{'IDENTITY.LABEL.KEYMANAGEMENT'|cmTranslate}}
-                 </span>
-                <section class="icon-list">
-                    <i class="fa cm-right position-exception"></i>
-                </section>
-            </li>
-        </ul>
-    </div>
-</article>
-
-<hr class="margin-small" />
-
-<form name="cmForm" novalidate autocomplete="off">
-    <article class="content">
-        <label>{{'CONTACT.PLACEHOLDER.CAMEOID'|cmTranslate}}</label>
-        <div class="cm-input-ctn cm-input-readonly">
-            <i class="fa cm-rhino-positive"></i>
-            <input
-                tabindex="1" data-qa="input-cameoId" required disabled
-                type="text" name="cameoId" ng-model="identity.cameoId" />
-        </div>
-    </article>
-
-    <hr class="margin-small" />
-
-    <article class="content">
-        <label>{{'CONTACT.PLACEHOLDER.DISPLAYNAME'|cmTranslate}}</label>
-        <div class="cm-input-ctn with-inside-icon">
-            <input
-                tabindex="2" data-qa="input-displayname" required
-                type="text" name="displayName" ng-model="formData.displayName" ng-keyup="validateDisplayName();" />
-            <i class="fa cm-write"></i>
-        </div>
-        <cm-info-bubble class="cm-alert" ng-show="cmForm.displayName.$dirty && cmForm.displayName.$invalid && cmForm.displayName.length > 0">
-            <div ng-show="cmForm.displayName.$error.required">
-                <i class="fa cm-info"></i> {{'CONTACT.INFO.EMPTY.DISPLAYNAME'|cmTranslate}}
             </div>
-        </cm-info-bubble>
-    </article>
+        </article>
 
-    <hr class="margin-small" />
+        <hr class="margin-small" />
 
-    <cm-form-phonenumber
-        ng-model="formData.phoneNumber"
-        cm-tabindex="3"
-        cm-label="CONTACT.PLACEHOLDER.PHONENUMBER"
-        cm-info="CONTACT.INFO.INVALID.PHONENUMBER"
-    ></cm-form-phonenumber>
+        <article class="content">
+            <label>{{'CONTACT.PLACEHOLDER.DISPLAYNAME'|cmTranslate}}</label>
+            <div class="cm-input-ctn with-inside-icon">
+                <input
+                    tabindex="2" data-qa="input-displayname"
+                    type="text" name="displayName" ng-model="formData.displayName" ng-keyup="validateDisplayName();" />
+                <i class="fa cm-write"></i>
+            </div>
+            <cm-info-bubble class="cm-alert" ng-show="cmForm.displayName.$dirty && cmForm.displayName.$invalid && cmForm.displayName.length > 0">
+                <div ng-show="cmForm.displayName.$error.required">
+                    <i class="fa cm-info"></i> {{'CONTACT.INFO.EMPTY.DISPLAYNAME'|cmTranslate}}
+                </div>
+            </cm-info-bubble>
+        </article>
 
-    <hr class="margin-small" />
+        <hr class="margin-small" />
 
-    <cm-form-email
-        ng-model="formData.email"
-        cm-tabindex="4"
-        cm-label="CONTACT.PLACEHOLDER.EMAIL"
-        cm-info="CONTACT.INFO.INVALID.EMAIL"
-    ></cm-form-email>
+        <cm-form-phonenumber
+            ng-model="formData.phoneNumber"
+            ng-model-out="formData.mergedPhoneNumber"
+            cm-tabindex="3"
+            cm-label="CONTACT.PLACEHOLDER.PHONENUMBER"
+            cm-info="CONTACT.INFO.INVALID.PHONENUMBER"
+        ></cm-form-phonenumber>
 
-</form>
+        <hr class="margin-small" />
+
+        <cm-form-email
+            ng-model="formData.email"
+            cm-tabindex="4"
+            cm-label="CONTACT.PLACEHOLDER.EMAIL"
+            cm-info="CONTACT.INFO.INVALID.EMAIL"
+        ></cm-form-email>
+
+    </form>
+</cm-scrollable>
 
 <cm-footer>
-    <button class="cm-btn-grey" ng-click="saveIdentity()" data-qa="btn-saveIdentity">
+    <button class="cm-btn-grey" ng-click="saveIdentity()" data-qa="btn-saveIdentity" cm-reactive>
         <span ng-show="!showLoader && !isPristine">
             {{'CONTACT.FOOTER.SAVE'|cmTranslate}}
             <i class="fa cm-checker"></i>

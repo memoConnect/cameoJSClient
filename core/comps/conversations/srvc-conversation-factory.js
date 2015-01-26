@@ -23,8 +23,9 @@ angular.module('cmConversations').service('cmConversationFactory', [
     'cmStateManagement',
     'cmConversationModel',
     'cmLogger',
+    '$q',
 
-    function($rootScope, cmUserModel, cmConversationsAdapter, cmFactory, cmStateManagement, cmConversationModel, cmLogger) {
+    function($rootScope, cmUserModel, cmConversationsAdapter, cmFactory, cmStateManagement, cmConversationModel, cmLogger, $q) {
         var self = cmFactory(cmConversationModel);
 
         var _quantity   = 0,
@@ -75,6 +76,39 @@ angular.module('cmConversations').service('cmConversationFactory', [
             return _limit;
         };
 
+        self.search = function(search, limit, offset){
+            if(cmUserModel.isGuest() || self.state.is('loading'))
+                return false;
+
+            var deferred = $q.defer();
+
+            self.state.set('loading');
+
+            cmConversationsAdapter.searchConversations(search,limit, offset).then(
+                function(data) {
+                    /**
+                     * @todo
+                     * _quantity = data.numberOfConversations;
+                     */
+
+                    data.conversations.forEach(function (conversation_data) {
+                        self.create(conversation_data);
+                    });
+
+                    deferred.resolve(data);
+                },
+                function(){
+                    deferred.reject('search errror');
+                }
+            ).finally(
+                function(){
+                    self.state.unset('loading');
+                }
+            );
+
+            return deferred.promise;
+        };
+
         /**
          * @ngdoc method
          * @methodOf cmConversationFactory
@@ -114,12 +148,18 @@ angular.module('cmConversations').service('cmConversationFactory', [
         cmConversationsAdapter.on('message:new', function(event,data){
             self
                 .create(data.conversationId)
-                .trigger('message:new', data.message)
+                .trigger('message:new', data)
         });
 
         cmConversationsAdapter.on('conversation:new', function(event,data){
             self.create(data)
         });
+
+        cmConversationsAdapter.on('conversation:update', function(event, data){
+            //cmLogger.debug('cmConversationFactory.on:conversation:update');
+            self.create(data, true)
+        });
+
 
         /**
          * @TODO CallbackQueue? Fingerprint check! Performance!
@@ -145,14 +185,12 @@ angular.module('cmConversations').service('cmConversationFactory', [
                     }
                 }
             }
-            //cmCallbackQueue.push(
-            //    // iterate over conversations and decrypt
-            //);
         });
 
         cmConversationsAdapter.on('subscriptionId:changed', function(){
             self.forEach(function (conversation) {
-                conversation.update();
+                //conversation.update();
+                conversation.loadLatestMessages();
             });
         });
 

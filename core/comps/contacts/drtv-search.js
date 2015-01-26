@@ -5,14 +5,17 @@ angular.module('cmContacts').directive('cmSearch',[
     'cmIdentityFactory',
     'cmNotify',
     'cmModal',
+    '$rootScope',
     '$timeout',
-    function (cmContactsModel, cmIdentityFactory, cmNotify, cmModal, $timeout){
+    function (cmContactsModel, cmIdentityFactory, cmNotify, cmModal, $rootScope, $timeout){
         return {
             restrict: 'E',
             templateUrl: 'comps/contacts/drtv-search.html',
             controller: function($scope){
                 $scope.pristine = true;
                 $scope.results = [];
+
+                $scope.searchCameoId = {};
 
                 /**
                  * searching for an existing cameoId
@@ -45,6 +48,18 @@ angular.module('cmContacts').directive('cmSearch',[
 
                     return true;
                 };
+
+                /**
+                 * check if defaultSearchContactString exists in $rootScope
+                 */
+                if(typeof $rootScope.defaultSearchContactString == 'string' && $rootScope.defaultSearchContactString != ''){
+                    $scope.string = $rootScope.defaultSearchContactString;
+                    $scope.searchCameoId.string = $scope.string;
+                    $rootScope.defaultSearchContactString = '';
+
+                    $scope.sendSearch();
+                }
+
 
                 /**
                  * Send friendship via model to api

@@ -7,13 +7,14 @@
 
     <form class="form-signin mb15" role="form" ng-submit="doLogin()" autocomplete="off" data-qa="modal-login">
         <select ng-model="formData.autologin" class="cm-form-control btn-block autologin" ng-change="changeAutologin()" ng-if="cmEnv.autoLogin">
-            <option value="none">{{'LOGIN.LABEL.AUTO'|cmTranslate}}</option>
+            <option value="none">{{'LOGIN.PLACEHOLDER.AUTOLOGIN'|cmTranslate}}</option>
             <option ng-repeat="(user,prop) in loginData">{{user}}</option>
         </select>
 
         <div class="cm-input-ctn" ng-class="{'cm-input-error':alertState!=''}">
             <input
                     tabindex="1"
+                    data-qa="inp-username"
                     type="text" ng-model="formData.user" ng-class="{'cm-input-error':alertState!=''}"
                     id="user" name="user" value="" required
                     placeholder="{{'LOGIN.PLACEHOLDER.USERNAME'|cmTranslate}}" />
@@ -22,6 +23,7 @@
         <div class="cm-input-ctn with-inside-icon" ng-class="{'cm-input-error':alertState!=''}">
             <input
                     tabindex="2"
+                    data-qa="inp-password"
                     type="{{passwordType}}" ng-model="formData.pass" ng-class="{'cm-input-error':alertState!=''}"
                     id="pw" name="pw" value="" required
                     placeholder="{{'LOGIN.PLACEHOLDER.PASSWORD'|cmTranslate}}" />
@@ -35,7 +37,7 @@
         <button class="btn-submit" type="submit"></button>
     </form>
 
-    <button class="cm-btn-grey" ng-click="doLogin()" data-qa="login-submit-btn">
+    <button class="cm-btn-grey" ng-click="doLogin()" data-qa="login-submit-btn" cm-reactive>
             <span ng-show="!showLoader">
                 {{'LOGIN.LABEL.SUBMIT'|cmTranslate}} <i class="fa cm-key cm-lg-icon"></i>
             </span>

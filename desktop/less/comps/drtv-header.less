@@ -1,19 +1,31 @@
 cm-header, .cm-header-block{
   .w100;
+  line-height: 3.8rem;
   > *{
     .dib;
   }
   cm-logo{
     margin-left:1rem;
   }
+
+  cm-header-list-search {
+    .pos-rel;
+    cm-search-input {
+      left: auto;
+      right: 4rem !important;
+      width: 24rem;
+    }
+  }
+
   .icons-list {
     > * {
       .dib!important;
-      .vap;
+      .vat;
+      height:@cm-unit;
       width:@cm-unit;
     }
     .pos-tr;
-    .tar;
+    .tal;
     height: @cm-unit;
     line-height: @cm-unit;
     i {

@@ -1,6 +1,7 @@
 {
     "config": {
-        "apiUrl": "https://www.cameonet.de/a/v1",
+        "apiUrl": "https://www.cameonet.de/a/",
+        "defaultApiVersion": "v1",
         "autoLogin": false,
         "loadingBar": false,
         "enableDebug": false,

@@ -44,13 +44,15 @@ angular.module('cmCore')
             this.isImage = function(){
                 return this.type == undefined
                      ? false
-                     : this.type.search('^image/') != -1;
+                     : this.type.search('^image/') != -1
+                       && this.type.search('tiff') == -1;
             };
 
             this.isEmbed = function(specificMime){
                 return this.type == undefined
                      ? false
-                     : this.type.search('^('+(specificMime||'image|video|audio')+')') != -1;
+                     : this.type.search('^('+(specificMime||'image|video|audio')+')') != -1
+                       && this.type.search('tiff') == -1;
             };
 
             // message id for backend event message:new
@@ -247,7 +249,7 @@ angular.module('cmCore')
                     try{
                         binary+= cmFilesAdapter.base64ToBinary(chunk.raw);
                     } catch(e){
-                        cmLogger.debug(e);
+                        cmLogger.debug('FileModel Chunk Error',e);
                     }
                 });
 
@@ -307,6 +309,7 @@ angular.module('cmCore')
                 /**
                  * start upload with first chunk in array
                  */
+                this.state.set('onUpload');
                 this._uploadChunk(0);
 
                 return this;
@@ -348,7 +351,7 @@ angular.module('cmCore')
             };
 
             this.downloadChunks = function(){
-//                cmLogger.debug('cmFileModel:downloadChunks');
+                //cmLogger.debug('cmFileModel:downloadChunks '+this.id);
                 // only crashed when fileId is missing
                 if(!this.id && this.state.is('onlyFileId')){
 //                    cmLogger.debug('cmFile.downloadChunks();')
@@ -371,8 +374,11 @@ angular.module('cmCore')
             };
 
             this.startDownloadChunks = function(){
-                self.state.unset('readyForDownload');
-                self._downloadChunk(0);
+                if(!self.state.is('onDownload') && !self.state.is('onUpload')){
+                    self.state.unset('readyForDownload');
+                    self.state.set('onDownload');
+                    self._downloadChunk(0);
+                }
             };
 
             this.downloadStart = function(autoDownload){
@@ -404,7 +410,7 @@ angular.module('cmCore')
                     cmModal.create({
                         id:'saveas',
                         type: 'alert'
-                    },'<span>{{\'NOTIFICATIONS.TYPES.SAVE_AS.IOS_NOT_SUPPORT\'|cmTranslate}}</span>');
+                    },'<span ng-bind-html="::\'NOTIFICATIONS.TYPES.SAVE_AS.IOS_NOT_SUPPORT\'|cmParse"></span>');
                     cmModal.open('saveas');
                 } else {
                     // phonegap download
@@ -492,6 +498,7 @@ angular.module('cmCore')
                 } else if(index.error) {
                     //cmLogger.warn('chunk not found');
                     self.state.set('cached');
+                    self.state.unset('onDownload');
                 }
             });
 
@@ -502,6 +509,7 @@ angular.module('cmCore')
             this.on('upload:finish', function(){
 //                cmLogger.debug('upload:finish');
                 self.state.set('cached');
+                self.state.unset('onUpload');
             });
 
             this.on('encrypt:chunk', function(event, index){
@@ -523,6 +531,7 @@ angular.module('cmCore')
             this.on('file:cached', function(){
 //                cmLogger.debug('file:cached');
                 self.state.set('cached');
+                self.state.unset('onDownload');
 
                 self
                     .decryptName()

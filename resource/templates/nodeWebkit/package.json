@@ -1,0 +1,51 @@
+{
+    "name": "<%= appBaseName %>",
+    "nodejs": true, 
+    "description": "safer communication!", 
+    "single-instance": true,
+    "no-edit-menu" : true,
+    "keywords": [
+        "messanger"
+    ],
+    "window": {
+        "fullscreen": false,
+        "show_in_taskbar" : true,
+        "resizable": true,
+        "position" : "center",
+        "title": "<%= appBaseName %>",
+        "always-on-top": false, 
+        "frame": true,
+        "visible": true, 
+        "as_desktop": false,
+        "height": 1024,
+        "max_height": 1600,
+        "min_height": 600,
+        "width": 1280,
+        "min_width": 800,
+        "max_width": 1960,
+        "position": "center", 
+        "show_in_taskbar": true, 
+        "toolbar": false,
+        "icon": "gfx/icon_128x128.png"
+    }, 
+    "version": "<%= currentVersion %>",
+    "webkit": {
+        "page-cache": true, 
+        "java": false, 
+        "plugin": true
+    }, 
+    "main": "index.html", 
+    "node-main": "",
+    "bugs" : "mailto://support@cameoNet.de",
+    "maintainers":[ {
+        "name": "memo Connect GmbH",
+        "email": "support@cameoNet.de",
+        "web": "https://cameoNet.de"
+    }],
+    "licenses": [
+        {
+            "type": "AGPLv3",
+            "url": "https://github.com/memoConnect/cameoJSClient/blob/master/GNU-AGPL-3.0.txt"
+        }
+    ]
+}

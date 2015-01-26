@@ -12,7 +12,9 @@ angular.module('cmUi')
                         var storeData = objectStoreLinks[store];
                         // compile default to app link
                         if(cmDevice.isMobile('appStoreLink') && cmDevice.isAndroid()){
-                            storeData.href.replace(/^https:\/\/market\.android\.com\//,"market://");
+                            // https://play.google.com/store/apps/details?id=appId
+                            // market://details?appId
+                            storeData.href = storeData.href.replace('https://play.google.com/store/apps/','market://');
                         }
                         filteredArray.push(storeData);
                     }

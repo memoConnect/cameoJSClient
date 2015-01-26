@@ -1,6 +1,7 @@
 cm-menu {
   .tar;
   .cm-handler{
+    height:@cm-unit;
     .with-cursor;
     .tac;
     cm-notify-signal {
@@ -17,6 +18,10 @@ cm-menu {
   .cm-menu-layer {
     .pos-fxd;
     .margin-auto;
+    .dpn;
+    &.is-active{
+      .dbl!important;
+    }
     width:@cm-app-width;
     top:0;
     bottom:0;
@@ -45,9 +50,13 @@ cm-menu {
           background:@cm-white;
           clear:both;
           min-height: 4rem;
-          border-bottom: @cm-border-grey @cm-border-width solid;
+          border-top: @cm-border-grey @cm-border-width solid;
         }
       }
+      ul li:last-child{
+        border-bottom: @cm-border-grey @cm-border-width solid;
+      }
+
       .cm-nose-wrapper {
         .pos-rel;
         .no-border;
@@ -56,7 +65,7 @@ cm-menu {
         line-height:@cm-mega-font;
         i{
           .pos-abs;
-          bottom:0.5rem;
+          bottom:0.4rem;
           right:0.5rem;
           font-size:@cm-large-font+1;
           color:@cm-light-grey;
@@ -85,7 +94,7 @@ cm-menu {
           top:20%;
           bottom:20%;
           width:0.1rem;
-          background:@cm-grey;
+          background:@cm-border-grey;
         }
       }
       i{
@@ -109,7 +118,7 @@ cm-menu {
         color:@cm-grey;
         font-size: 1.5rem;
       }
-      button.is-active, button:hover {
+      button.is-active {
         .box-shadow-bottom-new-grey !important;
       }
       li.is-active{

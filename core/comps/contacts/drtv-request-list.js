@@ -21,9 +21,14 @@ angular.module('cmRouteContacts').directive('cmRequestList', [
                 });
                 */
 
-                if($scope.requests.length > 0){
-                    cmNotify.trigger('bell:unring');
+                function deactiveBell(greaterZero){
+                    if(greaterZero && $scope.requests.length > 0){
+                        cmNotify.trigger('bell:unring');
+                    } else if($scope.requests.length == 0) {
+                        cmNotify.trigger('bell:unring');
+                    }
                 }
+                deactiveBell(true);
 
                 /**
                  * fired by repeat and accept that
@@ -36,7 +41,7 @@ angular.module('cmRouteContacts').directive('cmRequestList', [
                                 cmContactsModel.removeFriendRequest(item);
 
 //                                cmNotify.success('CONTACTS.INFO.REQUEST.ACCEPT',{displayType:'modal', ttl:3000});
-
+                                deactiveBell();
                                 cmContactsModel.trigger('friendRequests:updated');
                             },
 
@@ -60,7 +65,7 @@ angular.module('cmRouteContacts').directive('cmRequestList', [
                                 cmContactsModel.removeFriendRequest(item);
 
 //                                cmNotify.success('CONTACTS.INFO.REQUEST.REJECT',{displayType:'modal',ttl:3000});
-
+                                deactiveBell();
                                 cmContactsModel.trigger('friendRequests:updated');
                             },
 
@@ -80,7 +85,7 @@ angular.module('cmRouteContacts').directive('cmRequestList', [
                                 cmNotify.trigger('bell:unring');
 
 //                                cmNotify.success('CONTACTS.INFO.REQUEST.IGNORE',{displayType:'modal',ttl:3000});
-
+                                deactiveBell();
                                 cmContactsModel.trigger('friendRequests:updated');
                             },
 

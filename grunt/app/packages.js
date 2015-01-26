@@ -118,6 +118,7 @@ module.exports = function(grunt, options){
                         'core': 'core/comps/core',
                         'conversations': 'core/comps/conversations',
                         'contacts': 'core/comps/contacts',
+                        'setup': 'core/comps/setup',
                         'user': 'core/comps/user',
                         'validate': 'core/comps/validate',
                         'files': 'core/comps/files',
@@ -129,7 +130,7 @@ module.exports = function(grunt, options){
                         'app_widgets': 'app/widgets',
                         'app_ui': 'app/comps/ui',
                         'app_user': 'app/comps/user',
-                        'app_conversations': 'app/comps/conversations',
+                        'app_conversations': 'app/comps/conversations'
                     })
                 },
                 'app-cameo': {

@@ -1,4 +1,4 @@
-var config = require("../config-e2e-tests.js")
+var config = require("../config/specs.js")
 var util = require("../../lib/e2e/cmTestUtil.js")
 
 describe('login screen', function () {
@@ -6,7 +6,6 @@ describe('login screen', function () {
 
     it('should contain two buttons', function () {
         util.logout()
-        util.get("");
         util.expectCurrentUrl('#/login$')
 
         $$("[data-qa='register-btn'],[data-qa='login-submit-btn']").then(function (elements) {
@@ -21,17 +20,29 @@ describe('login screen', function () {
     });
 
     it('should prompt for username and password after click on login and close it', function () {
-        util.get("");
+        util.get('/login');
+        util.waitForPageLoad('/login')
+        .then(function(){
+            var user = $("input[name=user]");
+            var pw = $("input[name=pw]");
 
-        var user = $("input[name=user]");
-        var pw = $("input[name=pw]");
+            user.getAttribute("placeholder").then(function (text) {
+                expect(text).not.toBe("");
+            });
+            pw.getAttribute("placeholder").then(function (text) {
+                expect(text).not.toBe("");
+            });
+        })
 
-        user.getAttribute("placeholder").then(function (text) {
-            expect(text).not.toBe("");
-        });
-        pw.getAttribute("placeholder").then(function (text) {
-            expect(text).not.toBe("");
-        });
+        //var user = $("input[name=user]");
+        //var pw = $("input[name=pw]");
+        //
+        //user.getAttribute("placeholder").then(function (text) {
+        //    expect(text).not.toBe("");
+        //});
+        //pw.getAttribute("placeholder").then(function (text) {
+        //    expect(text).not.toBe("");
+        //});
     });
 
     it('should show error on wrong login', function () {
@@ -58,11 +69,13 @@ describe('login screen', function () {
 
         $("[data-qa='login-submit-btn']").click();
 
-        util.waitForPageLoad("/start")
+        util.waitForPageLoad("/setup")
     })
 
     it('dont show login page when already logged in', function () {
-        util.get("");
+        util.get('/login');
         util.expectCurrentUrl('#/talks')
+
+        util.logout()
     })
 })

@@ -1,10 +1,15 @@
 'use strict';
 
-angular.module('cmCore').service('cmRootService', [
-    '$rootScope', '$window', '$location',
-    'cmLogger', 'cmJob', 'cmModal', 'cmConfig',
-    function($rootScope, $window, $location,
-             cmLogger, cmJob, cmModal, cmConfig){
+angular.module('cmCore')
+.service('cmRootService', [
+    'cmLogger', 'cmJob', 'cmModal', 'cmConfig', 'cmTransferScopeData',
+    '$rootScope', '$window', '$location', '$route',
+    function(cmLogger, cmJob, cmModal, cmConfig, cmTransferScopeData,
+             $rootScope, $window, $location, $route){
+
+        $rootScope.getCurrentUrl = function(){
+            return $location.$$path;
+        };
 
         $rootScope.goBack = function(){
             $window.history.back();
@@ -16,7 +21,6 @@ angular.module('cmCore').service('cmRootService', [
          */
         $rootScope.goTo = function(path, replace){
             //cmLogger.debug('cmRootService.goTo ' + path);
-
             path = path[0] == '/' ? path : '/'+path;
             if(cmJob.isActive() !== false){
                 cmJob.setPendingUrl(path, replace);
@@ -40,9 +44,40 @@ angular.module('cmCore').service('cmRootService', [
             this.goTo('/registration');
         };
 
+        $rootScope.createNewContact = function(){
+            cmLogger.debug('cmRootService.createNewContact');
+
+            $rootScope.goTo('/contact/create');
+        };
+
         $rootScope.createNewConversation = function(){
-            delete $rootScope.pendingConversation;
+            //cmLogger.debug('cmRootService.createNewConversation');
+
+            $rootScope.pendingConversation = null;
+            $rootScope.pendingRecipients = [];
+
+            cmTransferScopeData.keepClear({id:'conversation-new'});
+
             $rootScope.goTo('/conversation/new');
+
+            $route.reload();
+        };
+
+        $rootScope.startConversationWithContact = function($event, contact){
+            $event.stopPropagation();
+            $event.preventDefault();
+
+            if(contact.contactType != 'pending'){
+                $rootScope.pendingConversation = null;
+                $rootScope.pendingRecipients = [];
+
+                if (contact.identity) {
+                    $rootScope.pendingRecipients = [contact.identity]
+                } else {
+                    cmLogger.error('Unable to find identity on contact. ' + contact)
+                }
+                $rootScope.goTo('/conversation/new');
+            }
         };
 
         $rootScope.createNewIdentity = function(){
@@ -51,6 +86,12 @@ angular.module('cmCore').service('cmRootService', [
 
         $rootScope.gotoContactList = function(){
             $rootScope.goTo('/contact/list')
+        };
+
+        $rootScope.gotoContact = function (contact) {
+            if(contact.contactType != 'pending') {
+                $rootScope.goTo('/contact/edit/' + contact.id);
+            }
         };
 
         $rootScope.gotoPurl = function(purlId, subpath){
@@ -62,7 +103,11 @@ angular.module('cmCore').service('cmRootService', [
         };
 
         $rootScope.goToApp = function(params){
-            window.location = cmConfig.appProtocol + '://?'+params;
+            window.location = cmConfig.static.appProtocol + '://?'+params;
+        };
+
+        $rootScope.openExternalLink = function(url){
+            $window.open(url, '_system', 'location=yes');
         };
 
         /**
@@ -105,5 +150,43 @@ angular.module('cmCore').service('cmRootService', [
             );
             cmModal.open('fast-registration')
         };
+
+        /**
+         * checks if a conversation route is open
+         * return {boolean}
+         */
+        $rootScope.checkConversationRoute = function(conversationId){
+            if(typeof conversationId == 'string' && $location.$$path.indexOf('conversation/' + conversationId) != -1){
+                return true;
+            } else if(typeof conversationId == 'undefined' && $location.$$path.indexOf('conversation') != -1){
+                return true;
+            }
+
+            return false;
+        };
+
+        /**
+         * checks if a purl route is open
+         * return {boolean}
+         */
+        $rootScope.checkPurlRoute = function(purlId){
+            if(typeof purlId == 'string' && $location.$$path.indexOf('purl/' + purlId) != -1){
+                return true;
+            } else if(typeof purlId == 'undefined' && $location.$$path.indexOf('purl') != -1){
+                return true;
+            }
+
+            return false;
+        };
+
+        $rootScope.$on('logout',function(){
+            $rootScope.pendingConversation = null;
+            $rootScope.pendingRecipients = [];
+        });
+
+        $rootScope.$on('identity:switched',function(){
+            $rootScope.pendingConversation = null;
+            $rootScope.pendingRecipients = [];
+        });
     }
 ]);

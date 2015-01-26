@@ -1,4 +1,4 @@
-var config = require("../../config-e2e-tests.js")
+var config = require("../../config/specs.js")
 var util = require("../../../lib/e2e/cmTestUtil.js")
 
 describe('Route conversation:', function () {
@@ -43,55 +43,50 @@ describe('Route conversation:', function () {
 
     it('display warning when there is no recipient', function(){
         $("[data-qa='btn-send-answer']").click()
-        util.waitAndClickQa('btn-cancel')
+        util.waitAndClickQa('btn-cancel','cm-modal.active')
     })
 
     it('add recipient', function () {
-        $(".cm-add-button").click()
+        util.waitAndClickQa('btn-add-recipients');
         util.waitForPageLoad("/conversation/new/recipients")
     })
 
     it('should filter contacts', function () {
-        util.searchInList(config.contactUser1DisplayName)
+        util.headerSearchInList(config.contactUser1CameoId)
         util.waitForElement("[data-qa='contact-display-name']")
     })
 
     it('add contact to conversation', function () {
         $("[data-qa='btn-select-contact']").click()
+
+        util.closeHeaderSearch()
     })
 
     it('should add an external contact on the fly', function(){
         util.waitForQa('input-on-the-fly-displayname')
-        util.setVal('input-on-the-fly-displayname', 'On-the-fly Contact')
-
-        /*
-        util.waitForQa('input-on-the-fly-mixed')
-        util.setVal('input-on-the-fly-mixed', 'bababa @ 123')
-
-        util.waitAndClick('btn-submit-on-the-fly-contact')
-
-        expect()
-        */
-        util.waitForQa('input-on-the-fly-mixed')
-        util.clearInput('input-on-the-fly-mixed')
-        util.setVal('input-on-the-fly-mixed', 'test@mail.com')
-
-        ptor.sleep(2000)
-        util.blurQa('input-on-the-fly-mixed')
-        ptor.sleep(2000)
-        util.blurQa('input-on-the-fly-mixed')
-
-        util.waitAndClickQa('btn-submit-on-the-fly-contact')
-
-
-        ptor.wait(function(){
-            return $$('cm-recipient-tag .displayName').then(function(elements){
-                return elements[1] && elements[1].getText().then(function(value){
-                    return value == "On-the-fly Contact" 
-                }) 
-            })
+        .then(function(){
+            util.setVal('input-on-the-fly-displayname', 'On-the-fly Contact')
+            return util.waitForQa('input-on-the-fly-mixed')
         })
-
+        .then(function(){
+            util.setVal('input-on-the-fly-mixed', 'devnull@cameo.io', true)
+            ptor.sleep(2000)
+            util.blurQa('input-on-the-fly-mixed')
+            ptor.sleep(2000)
+            util.blurQa('input-on-the-fly-mixed')
+            return util.waitAndClickQa('btn-submit-on-the-fly-contact')
+        })
+        .then(function(){
+            return  ptor.wait(function(){
+                        return $$('cm-recipient-tag .displayName').then(function(elements){
+                            return elements.some(function(element){
+                                return element.getText().then(function(value){
+                                    return value == "On-the-fly Contact"
+                                })
+                            })
+                        })
+                    })
+        })
     })
 
     it('go back to conversation on click on "done"', function () {
@@ -101,11 +96,10 @@ describe('Route conversation:', function () {
 
     it('added recipient should be displayed', function () {
         expect($(".recipients-counter").getText()).toBe('(2)')      //one internal contact an one external on-the-fly contact
-        expect($(".recipient-name").getText()).toBe(config.contactUser1DisplayName)
     })
 
     it('should have an answer bar', function () {
-        expect($('.answer').isPresent()).toBe(true)
+        expect($('cm-answer').isPresent()).toBe(true)
     })
 
     it('send message', function () {
@@ -113,7 +107,7 @@ describe('Route conversation:', function () {
     })
 
     it('there should be only one message, and it should contain the message text', function () {
-       util.waitForElements('cm-message',1)
+       util.waitForElement('cm-message')
        expect($('cm-message').getText()).toContain(messageText)
     })
 
@@ -180,14 +174,18 @@ describe('Route conversation:', function () {
     it('the conversation should contain both messages and check sort by date', function () {
         $$("cm-conversation-tag").then(function (elements) {
             elements[0].click()
-            util.waitForPageLoad("/conversation/.*")
-            util.waitForElements("cm-message", 2)
-            $$('cm-message').then(function (elements) {
-                expect(elements.length).toBe(2)
-                expect(elements[0].$(".text").getText()).toContain(messageText)
-                expect(elements[1].$(".text").getText()).toContain(messageText2)
-                expect(elements[1].$("[data-qa='message-author']").getText()).toBe(config.contactUser1DisplayName)
-            })
+            return  util.waitForPageLoad("/conversation/.*")
+        })
+        .then(function(){
+            return  util.waitForElements("cm-message", 2)
+        })
+        .then(function(){
+            return  $$('cm-message').then(function (elements) {
+                        expect(elements.length).toBe(2)
+                        expect(elements[0].$(".text").getText()).toContain(messageText)
+                        expect(elements[1].$(".text").getText()).toContain(messageText2)
+                        expect(elements[1].$("[data-qa='message-author']").getText()).toBe(config.contactUser1DisplayName)
+                    })
         })
     })
 })

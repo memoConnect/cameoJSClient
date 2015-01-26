@@ -6,8 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>cmDesign</title>
 
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+
     <link rel="stylesheet" href="style.<%= currentVersion %>.css">
     <script type="text/javascript" src="vendor.<%= currentVersion %>.js"></script>
+    <script type="text/javascript" src="cameo.<%= currentVersion %>.js"></script>
 
     <style>
         html{background:none !important;font-size:16px}
@@ -44,61 +47,24 @@
         }
 
         /* reactive */
-        .cm-re-header {background:#000;height:4rem;width:32rem;position:relative;color:#fff}
-        .cm-re-header .icon-list{position:absolute;right:0;top:0}
-        .cm-re-header .icon-list i{width:4rem;height:4rem;text-align:center;line-height:4rem;font-size:3rem}
-        .cm-re-header-sub{background:#EDEDED;height:4rem;width:32rem;position:relative;color:#4F4F4F}
-        .cm-re-header-sub div{display:inline-block;width:50%;text-align:center;line-height:4rem}
-        .cm-re-header-sub div.is-active{
+        .cm-demo-header {background:#000;height:4rem;width:32rem;position:relative;color:#fff}
+        .cm-demo-header .icon-list{position:absolute;right:0;top:0}
+        .cm-demo-header .icon-list i{width:4rem;height:4rem;text-align:center;line-height:4rem;font-size:3rem}
+        .cm-demo-default-pages{background:#EDEDED;height:4rem;width:32rem;position:relative;color:#4F4F4F}
+        .cm-demo-default-pages div{display:inline-block;width:50%;text-align:center;line-height:4rem}
+        .cm-demo-default-pages div.is-active{
             -webkit-box-shadow: inset 0px -10px 0px 0px #555555;
             -moz-box-shadow: inset 0px -10px 0px 0px #555555;
             box-shadow: inset 0px -10px 0px 0px #555555;
         }
-        .cm-re-body {width:32rem;color:#4F4F4F}
-        .cm-re-body cm-any-tag{display:block}
-        .cm-re-body cm-any-tag > *, .cm-re-body li .icon-list > *{vertical-align:top;}
-        .cm-re-body cm-avatar{display:inline-block;width:4rem;height:4rem;background:#000}
-        .cm-re-body span{display:inline-block;line-height:4rem;}
+        .cm-demo-theme {width:32rem;color:#4F4F4F}
+        .cm-demo-theme cm-any-tag{display:block}
+        .cm-demo-theme cm-any-tag > *, .cm-demo-theme li .icon-list > *{vertical-align:top;}
+        .cm-demo-theme cm-avatar{display:inline-block;width:4rem;height:4rem;background:#000}
+        .cm-demo-theme span{display:inline-block;line-height:4rem;}
 
-        .cm-re-footer {background:#555;height:4rem;width:32rem;color:#fff}
-        .cm-re-footer button{height:4rem;display:block;width:100%}
-        .cm-re-footer-dark {background:#000;height:4rem;width:32rem;color:#fff}
-        .cm-re-footer-dark button{height:4rem;display:block;width:100%}
-
-        [cm-reactive]{
-            cursor:pointer;
-            -webkit-transition: background 0.15s ease-in-out; /* Firefox */
-            -moz-transition: background 0.15s ease-in-out; /* WebKit */
-            -o-transition: background 0.15s ease-in-out; /* Opera */
-            transition: background 0.15s ease-in-out; /* Standard */
-        }
-        [cm-reactive='dark']
-            {background:#000}
-        [cm-reactive='dark'].is-hover,[cm-reactive='dark'].is-touched
-            {background:#555555}
-        [cm-reactive='dark'].is-clicked
-            {background:#8D8D8D}
-
-        [cm-reactive='light']
-            {background:#FFF}
-        [cm-reactive='light'].is-hover,[cm-reactive='light'].is-touched
-            {background:#EDEDED}
-        [cm-reactive='light'].is-clicked
-            {background:#DCDCDC}
-
-        [cm-reactive='light-grey']
-            {background:#ECECEC}
-        [cm-reactive='light-grey'].is-hover,[cm-reactive='light-grey'].is-touched
-            {background:#DBDBDB}
-        [cm-reactive='light-grey'].is-clicked
-            {background:#BFBFBF}
-
-        [cm-reactive='grey']
-            {background:#555555}
-        [cm-reactive='grey'].is-hover,[cm-reactive='grey'].is-touched
-            {background:#8D8D8D}
-        [cm-reactive='grey'].is-clicked
-            {background:#A0A0A0}
+        .cm-demo-footer {height:4rem;width:32rem;color:#fff}
+        .cm-demo-footer button{height:4rem;display:block;width:100%}
     </style>
 </head>
 <body ng-app="icons" ng-controller="ctrl">
@@ -107,6 +73,7 @@
     <a ng-click="setActive('cameofont')" ng-class="{'is-active':active=='cameofont'}">cameofont</a> |
     <a ng-click="setActive('filetypes')" ng-class="{'is-active':active=='filetypes'}">filetypes</a> |
     <a ng-click="setActive('emojis')" ng-class="{'is-active':active=='emojis'}">emojis</a> |
+    <a ng-click="setActive('flags')" ng-class="{'is-active':active=='flags'}">flags</a> |
     <a ng-click="setActive('reactive')" ng-class="{'is-active':active=='reactive'}">reactive elements</a>
 </header>
 
@@ -150,7 +117,7 @@
     <div ng-repeat="bundle in icons" class="maincat">
         <h3 ng-if="bundle.title">{{bundle.title}}</h3>
         <figure ng-repeat="css in bundle.css.split(' ')">
-            <i class="fa {{css}}"></i><figcaption ng-show="withFigcaption">{{css}}</figcaption>
+            <i class="fa {{css}}"></i><figcaption class="is-selectable">{{css}}</figcaption>
         </figure>
     </div>
 
@@ -162,7 +129,7 @@
     <div ng-repeat="bundle in types" class="maincat">
         <h3 ng-if="bundle.title">{{bundle.title}}</h3>
         <figure ng-repeat="css in bundle.css.split(' ')">
-            <i class="file {{css}}"></i><figcaption ng-show="withFigcaption">{{css}}</figcaption>
+            <i class="file {{css}}"></i><figcaption class="is-selectable">{{css}}</figcaption>
         </figure>
     </div>
 </section>
@@ -175,10 +142,18 @@
         <div ng-repeat="(index,subCat) in getKeys(emojis[mainCat])" class="subcat">
             <h3 ng-if="subCat">{{subCat}}</h3>
             <figure ng-repeat="icon in emojis[mainCat][subCat]" class="emoji-figure">
-                <i class="emoji emoji_{{icon | clearClassName}}"></i><figcaption ng-show="withFigcaption">{{icon | clearClassName}}</figcaption>
+                <i class="emoji emoji_{{icon | clearClassName}}"></i><figcaption class="is-selectable">{{icon | clearClassName}}</figcaption>
             </figure>
         </div>
     </div>
+</section>
+
+<section ng-if="active == 'flags'">
+    <h1><span class="anchor"></span>flags</h1>
+
+    <figure ng-repeat="icon in flags" class="flag-figure">
+        <i class="flag flag_{{icon | clearClassName}}"></i><figcaption class="is-selectable">{{icon | clearClassName}}</figcaption>
+    </figure>
 </section>
 
 <section ng-if="active == 'reactive'">
@@ -186,28 +161,28 @@
 
     <h2>header</h2>
 
-    <div class="cm-re-header">
+    <div class="cm-demo-header">
         <div class="icon-list">
-            <i class="fa cm-new-contact" cm-reactive="dark"></i><i class="fa cm-search" cm-reactive="dark"></i><i class="fa cm-menu" cm-reactive="dark"></i>
+            <i class="fa cm-new-contact" cm-reactive ng-click="testClick('new contact')"></i><i class="fa cm-search" cm-reactive ng-click="testClick('search')"></i><i class="fa cm-menu" cm-reactive ng-click="testClick('menu')"></i>
         </div>
     </div>
 
     <h2>default pages</h2>
-    <div class="cm-re-header-sub">
-        <div cm-reactive="light-grey"><i class="fa cm-talk"></i> Talks</div><div cm-reactive="light-grey" class="is-active"><i class="fa cm-person"></i> Kontakte</div>
+    <div class="cm-demo-default-pages">
+        <div cm-reactive ng-click="testClick('goTo Talks')"><i class="fa cm-talk"></i> Talks</div><div cm-reactive class="is-active" ng-click="testClick('goTo Contact')"><i class="fa cm-person"></i> Kontakte</div>
     </div>
 
     <h2>list items</h2>
 
-    <div class="cm-re-body theme-a">
+    <div class="cm-demo-theme theme-a">
         <ul>
             <li>
-                <cm-any-tag cm-reactive="light">
+                <cm-any-tag cm-reactive ng-click="testClick('open Item')">
                    <cm-avatar></cm-avatar>
                    <span>Text</span>
                 </cm-any-tag>
                 <div class="icon-list">
-                    <i class="fa cm-new-talk" cm-reactive="light"></i>
+                    <i class="fa cm-new-talk" cm-reactive ng-click="testClick('goTo new Talk')"></i>
                 </div>
             </li>
         </ul>
@@ -215,15 +190,12 @@
 
     <h2>footer</h2>
 
-    <div class="cm-re-footer">
-        <button cm-reactive="grey">
+    <div class="cm-demo-footer">
+        <button cm-reactive class="cm-btn-grey" ng-click="testClick('close grey')">
             Close
             <i class="fa cm-close"></i>
         </button>
-    </div>
-
-    <div class="cm-re-footer-dark">
-        <button cm-reactive="dark">
+        <button cm-reactive class="cm-btn-black" ng-click="testClick('close black')">
             Close
             <i class="fa cm-close"></i>
         </button>
@@ -262,27 +234,31 @@
     }
 
     angular
-    .module('icons',['emoji'])
+    .module('icons',['ngTouch','cmConfig','cmUi'])
 
-    .controller('ctrl',function ($scope, emoji){
-        $scope.active = location.hash != '' ? location.hash.replace('#','') : 'cameofont';
+    .controller('ctrl',function ($scope, emoji, flags){
+        var clearHash = location.hash.replace('#/','');
+        $scope.active = clearHash != '' ? clearHash : 'cameofont';
+
         $scope.baselineIcon = 'cm-checkbox-wrong';
         $scope.getKeys = function(object){
             return Object.keys(object);
-        }
+        };
 
         $scope.icons = [
             {title:'ci icons',css:'cm-logo cm-logo-c cm-logo-a cm-logo-m cm-logo-e cm-logo-o cm-logo-net cm-rhino-bubble-glyph cm-rhino-positive cm-beta cm-cameo-beta'},
-            {title:'specials',css:'cm-edge cm-edge-add cm-scroll-pane cm-grip'},
-            {title:'contact handler',css:'cm-client-add cm-address-book-positive cm-address-book cm-load-to-rhino cm-load-to'},
+            {title:'specials',css:'cm-edge cm-edge-add cm-scroll-pane cm-grip cm-grid cm-change cm-expand-bottom-left cm-expand-bottom-right cm-expand-top-left cm-expand-top-right'},
             {title:'checkbox',css:'cm-checkbox-bg cm-checkbox cm-checker cm-checkbox-right cm-checkbox-wrong cm-checkbox-add cm-checkbox-minus cm-radio-0 cm-radio-1'},
             {title:'menu',css:'cm-menu cm-menue-bell cm-menu-right-close cm-menu-right-open cm-menu-weight cm-menu-weight-bell'},
             {title:'directions',css:'cm-nose-left cm-nose-right cm-nose-up cm-nose-down cm-left cm-right cm-down cm-up'},
             {title:'notifications',css:'cm-info cm-attention cm-reject cm-ignore cm-bell cm-bell-ring cm-notification cm-notification-on cm-key-plus cm-key-minus'},
             {title:'message states',css:'cm-envelope-closed cm-envelope-open cm-send cm-lock cm-unlock'},
-            {title:'handler',css:'cm-write cm-contacts cm-key cm-no-key cm-export cm-visible cm-hidden cm-group cm-person cm-arrange cm-filter cm-anchor cm-clipboard cm-search cm-change cm-grid cm-close cm-fix cm-settings cm-in cm-out cm-logout cm-register cm-add-recipient cm-talk cm-talk-full cm-new-talk cm-new-contact cm-new-contact-query cm-list cm-import-key cm-export-key cm-create-key cm-cancel-key cm-handshake cm-key-request cm-key-response cm-trust cm-tag cm-connection-trusted cm-not-connected cm-connected cm-trash cm-save cm-avatar cm-avatar-add cm-qr-code cm-download-blanc cm-download-data'},
+            {title:'handler',css:'cm-write cm-export cm-visible cm-hidden cm-arrange cm-filter cm-anchor cm-clipboard cm-search cm-close cm-fix cm-settings cm-in cm-out cm-logout cm-register cm-list cm-tag cm-trash cm-save cm-download cm-download-data cm-upload cm-not-connected cm-connected cm-fullscreen cm-fullscreen-off'},
+            {title:'talk',css:'cm-new-talk cm-talk cm-talk-full cm-show-talk cm-hide-talk'},
+            {title:'contacts & identity',css:'cm-contacts cm-new-contact cm-new-contact-query cm-avatar cm-avatar-add cm-add-recipient cm-group cm-person cm-client-add cm-address-book-positive cm-address-book cm-load-to-rhino cm-load-to'},
             {title:'answer',css:'cm-plus cm-smile-negative cm-smile-positive cm-post cm-post-attention cm-post-idle cm-attachment'},
-            {title:'media',css:'cm-video cm-file cm-sound cm-location cm-pictures cm-camera cm-mobile cm-contract'}
+            {title:'media',css:'cm-video cm-file cm-sound cm-location cm-pictures cm-camera cm-mobile cm-contract'},
+            {title:'security',css:'cm-key cm-no-key cm-import-key cm-export-key cm-create-key cm-cancel-key cm-handshake cm-connection-trusted cm-connection-untrusted cm-key-request cm-key-response cm-trust cm-qr-code'}
         ];
 
         $scope.types = [
@@ -297,9 +273,15 @@
 
         $scope.emojis = emoji.items;
 
+        $scope.flags = flags.items;
+
         $scope.setActive = function(section){
             $scope.active = section;
             location.hash = section;
+        };
+
+        $scope.testClick = function(where){
+            console.log('ngClick',where);
         };
     })
 
@@ -310,138 +292,70 @@
     })
 
     .directive('figure',function($window, $document){
+        function getDocHeight() {
+            return Math.max(
+                    $document[0].body.scrollHeight, document.documentElement.scrollHeight,
+                    $document[0].body.offsetHeight, document.documentElement.offsetHeight,
+                    $document[0].body.clientHeight, document.documentElement.clientHeight
+            );
+        }
 
-                function getDocHeight() {
-                    return Math.max(
-                            $document[0].body.scrollHeight, document.documentElement.scrollHeight,
-                            $document[0].body.offsetHeight, document.documentElement.offsetHeight,
-                            $document[0].body.clientHeight, document.documentElement.clientHeight
-                    );
-                }
+        return {
+            restrict: 'E',
+            link: function(scope, element){
 
-                return {
-                    restrict: 'E',
-                    link: function(scope, element){
+                var viewport = {
+                    w: $window.innerWidth,
+                    h: $window.innerHeight
+                };
 
-                        var viewport = {
-                            w: $window.innerWidth,
-                            h: $window.innerHeight
-                        };
+                element.on('mouseenter', function(){
 
-                        element.on('mouseenter', function(){
-
-                            if(element.find('figcaption').length == 0)
-                                return false;
-
-                            element.addClass('showCaption')
-
-                            var pos = {},
-                                    caption = element.find('figcaption'),
-                                    top = (element[0].offsetHeight),
-                                    left = (caption[0].offsetWidth / 2)-(element[0].offsetWidth / 2);
-
-                            // fix for leftedge viewport
-                            if(left > element[0].offsetLeft){
-                                pos.left = 0;
-                            } else {
-                                pos.left = left;
-                            }
-
-                            // fix for right edge viewport
-                            var rightCaption = (element[0].offsetLeft-left)+caption[0].offsetWidth;
-                            if(rightCaption > viewport.w){
-                                pos.left = 'auto';
-                                pos.right = 0;
-                            }
-
-                            // fix viewport bottom
-                            // TODO
-
-                            // fix doc bottom
-                            var topCaption = (element[0].offsetTop + top + caption[0].offsetHeight);
-                            if(topCaption > getDocHeight()){
-                                top = -(element.find('i')[0].offsetHeight - caption[0].offsetHeight)
-                            }
-
-                            pos.top = top+'px'
-
-                            if('left' in pos && pos.left != 'auto')
-                                pos.left = -(pos.left)+'px';
-
-                            caption.css(pos);
-                        }).on('mouseleave', function(){
-                            element.removeClass('showCaption');
-                        })
-                    }
-                }
-            })
-
-    .directive('cmReactive',
-        function ($timeout){
-            return {
-                restrict: 'A',
-                controller: function($scope, $element){
-                    var isTouch = false;
-
-                    function isValidTouch(evt){
-
-                        function getOffsetSum(elem) {
-                            var top=0, left=0;
-                            while(elem) {
-                                top = top + parseInt(elem.offsetTop);
-                                left = left + parseInt(elem.offsetLeft);
-                                elem = elem.offsetParent;
-                            }
-                            return {top: top, left: left};
-                        }
-
-                        var offset = getOffsetSum($element[0]);
-
-                        if(evt.changedTouches[0].pageY <= (offset.top + $element[0].offsetHeight) && evt.changedTouches[0].pageY > offset.top
-                            && evt.changedTouches[0].pageX <= (offset.left + $element[0].offsetWidth) && evt.changedTouches[0].pageX > offset.left
-                        ){
-                            return true;
-                        }
-
+                    if(element.find('figcaption').length == 0)
                         return false;
+
+                    element.addClass('showCaption')
+
+                    var pos = {},
+                            caption = element.find('figcaption'),
+                            top = (element[0].offsetHeight),
+                            left = (caption[0].offsetWidth / 2)-(element[0].offsetWidth / 2);
+
+                    // fix for leftedge viewport
+                    if(left > element[0].offsetLeft){
+                        pos.left = 0;
+                    } else {
+                        pos.left = left;
                     }
 
-                    $element.on('mouseenter', function(){
-                        $element.addClass('is-hover');
-                    });
+                    // fix for right edge viewport
+                    var rightCaption = (element[0].offsetLeft-left)+caption[0].offsetWidth;
+                    if(rightCaption > viewport.w){
+                        pos.left = 'auto';
+                        pos.right = 0;
+                    }
 
-                    $element.on('mouseleave', function(){
-                        $element.removeClass('is-hover');
-                    });
+                    // fix viewport bottom
+                    // TODO
 
-                    $element.on('click',function(){
-                        if(!isTouch){
-                            $element.addClass('is-clicked');
-                            $timeout(function(){$element.removeClass('is-clicked')},250)
-                        }
-                    });
+                    // fix doc bottom
+                    var topCaption = (element[0].offsetTop + top + caption[0].offsetHeight);
+                    if(topCaption > getDocHeight()){
+                        top = -(element.find('i')[0].offsetHeight - caption[0].offsetHeight)
+                    }
 
-                    $element.on('touchstart',function(){
-                        isTouch = true;
-                        $element.removeClass('is-hover');
-                    });
+                    pos.top = top+'px'
 
-                    $element.on('touchend',function(evt){
-                        evt.preventDefault();
+                    if('left' in pos && pos.left != 'auto')
+                        pos.left = -(pos.left)+'px';
 
-                        $element.removeClass('is-hover');
-
-                        if(isValidTouch(evt)){
-                            $element.addClass('is-touched');
-                            $timeout(function(){$element.removeClass('is-touched')},250)
-                        }
-
-                        isTouch = false;
-                    });
-                }
+                    caption.css(pos);
+                }).on('mouseleave', function(){
+                    element.removeClass('showCaption');
+                })
             }
         }
-    );
+    })
 </script>
 </body>
 </html>

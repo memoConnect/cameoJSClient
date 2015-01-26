@@ -327,5 +327,14 @@
 .cm-radio-0:before{content:'\f095'}
 .cm-radio-1:before{content:'\f096'}
 .cm-qr-code:before{content:'\f099'}
-.cm-download-blanc:before{content:'\f100'}
+.cm-download:before{content:'\f100'}
 .cm-download-data:before{content:'\f101'}
+.cm-upload:before{content:'\f113'}
+.cm-expand-bottom-left:before{content:'\f105'}
+.cm-expand-bottom-right:before{content:'\f106'}
+.cm-expand-top-left:before{content:'\f107'}
+.cm-expand-top-right:before{content:'\f108'}
+.cm-fullscreen:before{content:'\f109'}
+.cm-fullscreen-off:before{content:'\f110'}
+.cm-show-talk:before{content:'\f111'}
+.cm-hide-talk:before{content:'\f112'}

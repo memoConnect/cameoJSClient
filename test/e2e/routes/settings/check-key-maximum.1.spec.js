@@ -1,4 +1,4 @@
-var config = require("../../config-e2e-tests.js")
+var config = require("../../config/specs.js")
 var util = require("../../../lib/e2e/cmTestUtil.js")
 describe('Check key maximum: ',function(){
     var ptor = util.getPtorInstance(),
@@ -7,7 +7,10 @@ describe('Check key maximum: ',function(){
     afterEach(function() { util.stopOnError() });
 
     it('should create a test user', function(){
-        testUser = util.createTestUser(undefined,'check-key-maximum')
+        util.createTestUser(undefined,'check-key-maximum')        
+        .then(function(loginName){
+            testUser = loginName
+        })
     })
 
     it('open key overview and a message should be present',function(){
@@ -25,16 +28,15 @@ describe('Check key maximum: ',function(){
     })
 
 
-    it('wait for key generation and display key', function () {
-        util.waitForElementVisible("[data-qa='page-save-key']",30000)
-        expect($("[data-qa='input-key-name']").getAttribute('value')).toBeTruthy()
+    describe('with increased timeout', function () {
+        var expectedTimeout = util.setKeygenerationTimeout(jasmine);
+        it('wait for key generation and display key', function () {
+            util.waitForElementVisible("[data-qa='page-save-key']",expectedTimeout)
+            expect($("[data-qa='input-key-name']").getAttribute('value')).toBeTruthy()
 
-        /**
-         * click on body closes modals
-         */
-        $("body").click();
-
-        util.waitAndClickQa("btn-save-key")
+            $("body").click();
+            util.waitAndClickQa("btn-save-key")
+        })
     })
 
     it('user should be now at talks route', function(){
@@ -52,7 +54,7 @@ describe('Check key maximum: ',function(){
     it('remove key and check if message and footer for create/import appear', function(){
         util.waitAndClickQa("btn-remove-modal")
         util.waitForElement("[data-qa='modal-confirm']")
-        util.waitAndClickQa("btn-confirm")
+        util.waitAndClickQa('btn-confirm','cm-modal.active')
 
         util.waitForElement("[data-qa='message-no-keys']")
         expect($("[data-qa='message-no-keys']").isPresent()).toBe(true)

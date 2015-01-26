@@ -9,7 +9,8 @@ angular.module('cmUi')
 
         // handle nose position
         function addNose(element, attrs){
-            if(!attrs.nose) return null
+            if(!attrs.nose)
+                return null;
 
             var nose        =   angular.element('<i class="nose fa"></i>'),
                 nose_side   =   attrs.nose.split('-'),
@@ -22,12 +23,12 @@ angular.module('cmUi')
                     'right-bottom': 'cm-nose-right flip',
                     'bottom-left':  'cm-nose-down flip',
                     'bottom-right': 'cm-nose-down'
-                }
+                };
 
             nose
                 .addClass(nose_class[attrs.nose])
                 .addClass(nose_side[0])
-                .css(nose_side[1], attrs.nosePosition || '2rem')
+                .css(nose_side[1], attrs.nosePosition || '2rem');
 
             element
                 .addClass('nose-'+nose_side[0])
@@ -68,7 +69,7 @@ angular.module('cmUi')
 
                         transclude_container
                         .append(clone);                 
-                    })
+                    });
                 };
 
                 // add external data to scope
@@ -95,17 +96,17 @@ angular.module('cmUi')
                         })
                     }
 
-                    return this
+                    return this;
                 };
 
                 scope.isActive = function(){
                     return element.hasClass('active')
-                }
+                };
 
                 // open modal
                 scope.open = function(ttl){
                     scope.toggle(true);
-                    return scope
+                    return scope;
                 };
                 // close modal
                 scope.close = function(fromBackdrop){

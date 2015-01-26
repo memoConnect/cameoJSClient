@@ -1,19 +1,127 @@
-div.answer{
+cm-answer{
+  .dbl;
+  .box-shadow-top;
+  .pos-abs;
+  bottom:0;
+  z-index:2;
+  background-color:@cm-light-grey;
+  font-size:@cm-unit - 1;
+  .w100;
 
-  textarea{
-    resize:none;
+  @answer-padding: (@cm-horizontal-padding*2);
+  @default-btns-height: (@cm-unit*4) + @answer-padding;
+  @default-textarea-height: @default-btns-height - @answer-padding;
+
+  &.in-fullscreen{
+    .pos-fxd;
+    top: @cm-header-height;
+    left:0;
+    .w100;
+    .wrap{
+      .h100;
+      .message {
+        .h100;
+        textarea {
+          width:100%!important;
+          height:99%!important;
+          &.with-files{
+            height:90%!important;
+          }
+        }
+      }
+    }
   }
 
-  .no-mar;
-  left:@cm-column-third-size;
-  width:@cm-column-third-size;
   .message{
-    width:75%;
+    .pos-rel;
+    .border-radius-top;
+    background:@cm-white;
+    margin-left:@answer-padding;
+    margin-top:@answer-padding;
+    margin-right:@answer-padding + @cm-unit;
+
+    [cm-drag-resize]{
+      color:@cm-border-grey;
+      .pos-tr;
+      font-size:@cm-mega-font;
+      cursor:ns-resize;
+    }
+
+    textarea, .textarea-shadow{
+      font-size:@cm-large-font;
+    }
+
+    textarea{
+      width:96%!important;
+      height:@default-textarea-height;
+      resize:none;
+      .dbl!important;
+      .no-border;
+      &.with-files{
+        height:@default-textarea-height - @cm-unit;
+      }
+    }
+
+    cm-files-preview{
+      .dbl;
+      height:@cm-unit;
+      border-top:@cm-border-grey @cm-border-width solid;
+      .tar;
+      .file-wrap{
+        .dib;
+        height:@cm-unit;
+        i.cm-close{
+          .vat;
+          .cm-unit-btn;
+        }
+        .file-image{
+          min-width:@cm-unit;
+          .vam;
+          .pos-rel;
+          .dib;
+          img{
+            .dbl;
+            height:@cm-unit - @answer-padding;
+          }
+        }
+      }
+    }
   }
-  cm-files-preview {
-    width:auto;
-    .file-wrap{
-      padding-right:@cm-unit * 2;
+
+  .btns-right {
+    .pos-br;
+    z-index:2;
+    width:@cm-unit;
+
+    .btn-post, .btn-attachments, .btn-fullscreen{
+      .pos-rel;
+      .cm-unit-btn;
+    }
+
+    cm-emoji-handler{
+      .cm-unit-btn;
+      i{
+        .cm-unit-btn;
+      }
+    }
+
+    &:last-child{
+      [cm-reactive]{
+        .no-border;
+      }
+    }
+  }
+
+  cm-emoji-list {
+    &.is-visible{
+      .pos-br;
+      .border-radius-top;
+      max-height:none;
+      z-index: 1;
+      background: #fff;
+      right: @answer-padding + @cm-unit;
+      left: @answer-padding;
+      top: @answer-padding;
     }
   }
 }

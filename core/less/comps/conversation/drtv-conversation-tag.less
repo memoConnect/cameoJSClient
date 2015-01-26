@@ -1,23 +1,32 @@
 cm-conversation-tag{
-  .dbl;
+  .dtb;
+  table-layout: fixed;
   .pos-rel;
-  background: @cm-overlay-light;
+
   color: @cm-dark-grey;
-  height: @cm-unit + 2*@cm-vertical-padding;
-  line-hieght:@cm-unit;
-  padding:@cm-vertical-padding @cm-horizontal-padding;
+  height: @cm-unit;
 
   > * {
-    .vam;
+    .vat;
     height: @cm-unit;
+    .dtbc!important;
+  }
+
+  // layout
+  cm-avatar {
+    width:@cm-unit;
+  }
+  .meta{
+    width:@cm-unit*2;
   }
 
   .details{
     .tal;
+    .vam;
 
     .subject, .message, .recipients{
       .single-line;
-      width: 21rem;
+      width:inherit;
     }
 
     .subject, .message {
@@ -36,9 +45,11 @@ cm-conversation-tag{
   }
 
   .meta{
-    position: relative;
+
+    padding-right:@cm-horizontal-padding;
+
     .top {
-      .single-line;
+      white-space: nowrap;
       .tar;
       font-size: @cm-small-font;
       line-height:0.4*@cm-unit;

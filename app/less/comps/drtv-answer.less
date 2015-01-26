@@ -1,0 +1,138 @@
+cm-answer{
+  .dbl;
+  .box-shadow-top;
+  .pos-fxd;
+  .vam;
+  .margin-hr-auto;
+  width:@cm-app-width;
+  min-height:@cm-footer-height;
+  bottom:0;
+  z-index:2;
+  background-color:@cm-white;
+  left:0;
+  right:0;
+  font-size:@cm-unit - 1;
+
+  .wrap{
+    .pos-rel;
+    min-height:@cm-unit;
+  }
+
+  .attachments{
+    .pos-bl;
+    .tac;
+    .dbl;
+    width:@cm-unit;
+    height:@cm-unit;
+  }
+
+  cm-files-preview{
+    .dbl;
+    .pos-abs;
+    bottom:@cm-footer-height;
+    width:@cm-app-width;
+    background:@cm-white;
+
+    .file-wrap{
+      .pos-rel;
+      .tac;
+      padding:@cm-vertical-padding;
+      i.cm-close{
+        .pos-abs;
+        .with-cursor;
+        .cm-unit-btn;
+        right:1rem;
+        top:50%;
+        margin-top:-2rem;
+        z-index:1;
+      }
+      .file{
+        font-size:@cm-unit*1.5;
+      }
+    }
+
+    .file-image{
+      position:relative;
+      height:@cm-unit * 2;
+      margin:0 auto;
+      img{
+        .with-cursor;
+        display:block;
+        max-width:@cm-app-width - 1;
+        max-height:@cm-unit * 2;
+        margin:0 auto;
+      }
+    }
+    .file{
+      margin:0 auto;
+    }
+  }
+
+  // btns-right
+  .btns-right{
+    .pos-br;
+
+    cm-emoji-handler{
+      .cm-unit-btn;
+      i{
+        .cm-unit-btn;
+      }
+    }
+    .post-wrap{
+      .cm-unit-btn;
+      i.cm-post {
+        &.is-disabled {
+          color:@cm-grey;
+        }
+      }
+    }
+
+  }
+
+  .message{
+    // (@cm-unit*3) = fileupload emojis post
+    width:@cm-app-width - (@cm-unit*3);
+    left:@cm-unit;
+    .pos-rel;
+    .tal;
+    .no-margin;
+    height:100%;
+    bottom:0;
+    textarea{
+      .w100;
+      .no-border;
+      .no-bg;
+      .no-pad;
+      margin-bottom:0.5em;
+      min-height: 26px;
+      &[rows='1']{
+        margin:1rem 0;
+      }
+    }
+    textarea, .textarea-shadow{
+      font-size:@cm-large-font;
+    }
+    .inputter {
+      .w100;
+      .pos-abs;
+      height:0.3rem;
+      bottom:0.3rem;
+
+      border-color: -moz-use-text-color @cm-black @cm-black;
+      border-image: none;
+      border-right: @cm-border-width solid @cm-black;
+      border-left: @cm-border-width solid @cm-black;
+      border-style: none solid solid;
+      border-width: medium @cm-border-width @cm-border-width;
+    }
+  }
+  div.message.large {
+    width:26rem;
+    margin-left:0.5rem;
+  }
+}
+
+.answer.files-dragged{
+  opacity:0.8;
+  background-color:@cm-black;
+}

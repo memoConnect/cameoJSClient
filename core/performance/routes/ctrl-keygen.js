@@ -34,27 +34,32 @@ angular.module('cameoClientPerformance')
 
             if($scope.canWebworker() == 'yes' && $scope.webworkerOn) {
                 $scope.state += ' [ generation via webworker ]';
-                worker = new Worker('webworker/keygen.js');
+                worker = new Worker('webworker/rsa_keygen.js');
 
                 worker.addEventListener('message', function (e) {
-                    var result = e.data;
-                    switch (result.msg) {
+                    var data = e.data;
+
+                    console.log(data)
+
+                    switch (data.msg) {
                         case 'finished':
                             $interval.cancel(interval);
                             $scope.state = 'generation success';
-                            $scope.generationTime = cmUtil.millisecondsToStr(result.timeElapsed);
-                            $scope.history.webworker[(async ? 'async' : 'sync')].push(cmUtil.millisecondsToStr(result.timeElapsed));
+                            $scope.generationTime = cmUtil.millisecondsToStr(data.result.timeElapsed);
+                            $scope.history.webworker[(async ? 'async' : 'sync')].push(cmUtil.millisecondsToStr(data.result.timeElapsed));
                             $scope.isIdle = false;
                             $scope.$apply();
-                            break;
+                        break;
                     }
                 });
 
                 worker.postMessage = worker.webkitPostMessage || worker.postMessage;
 
                 worker.postMessage({
-                    'cmd': 'start' + (!async ? '-sync' : ''),
-                    'keySize': $scope.keySize
+                    cmd: 'start' + (!async ? '-sync' : ''),
+                    params: {
+                        keySize: $scope.keySize
+                    }
                 });
             } else if(async){
                 cmCrypt.generateAsyncKeypair(

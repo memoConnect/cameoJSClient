@@ -12,10 +12,10 @@
 angular.module('cmContacts')
 .directive('cmContactEdit', [
     'cmIdentityFactory', 'cmUtil', 'cmNotify', 'cmUserModel',
-    'cmContactsModel', 'cmLogger', 'cmLoader',
+    'cmContactsModel', 'cmLogger', 'cmLoader', 'cmPristine',
     '$rootScope', '$q',
     function(cmIdentityFactory, cmUtil, cmNotify, cmUserModel,
-             cmContactsModel, cmLogger, cmLoader,
+             cmContactsModel, cmLogger, cmLoader, cmPristine,
              $rootScope, $q){
 
         return {
@@ -34,15 +34,11 @@ angular.module('cmContacts')
                 $scope.isTrusted = undefined;
                 $scope.hasKeys = undefined;
 
-                $scope.isPristine = true;
-                $rootScope.$on('pristine:false', function () {
-                    $scope.isPristine = false;
-                });
-
                 function reset(){
                     $scope.formData = {
                         displayName: $scope.contact.identity.displayName,
                         phoneNumber: $scope.contact.identity.phoneNumber.value,
+                        mergedPhoneNumber: '',
                         email: $scope.contact.identity.email.value
                     };
 
@@ -76,6 +72,8 @@ angular.module('cmContacts')
                 });
 
                 reset();
+
+
 
                 /**
                  * handle every single contact via model
@@ -111,7 +109,7 @@ angular.module('cmContacts')
 
                     function checkPhoneNumber() {
                         var defValue = $scope.contact.identity.phoneNumber,
-                            value = $scope.formData.phoneNumber;
+                            value = $scope.formData.mergedPhoneNumber;
                         if (value != undefined
                             && defValue && value != defValue.value) {
                             objectChange.phoneNumber = value;
@@ -156,7 +154,7 @@ angular.module('cmContacts')
 
                             $scope.contact.save(objectChange).then(
                                 function () {
-                                    $scope.isPristine = true;
+                                    cmPristine.resetView($scope);
                                     reset();
                                     loader.stop();
                                 },
@@ -168,9 +166,15 @@ angular.module('cmContacts')
                         },
                         function () {
                             loader.stop();
+                            cmUtil.scrollToInputError()
                         }
                     )
                 };
+
+                /**
+                 * Pristine Service Handling
+                 */
+                cmPristine.initView($scope);
             }
         }
     }

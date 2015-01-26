@@ -45,7 +45,7 @@
          <file name="index.html">
              <div ng-controller="Ctrl">
                  <h2>unknown / default avatar</h2>
-                 <cm-avatar cm-view="unknown"></cm-avatar>
+                 <cm-avatar cm-avatar-view="unknown"></cm-avatar>
 
                  <h2>cmIdentity avatar</h2>
                  <cm-avatar cm-data="simple_cmIdentityModel_1"></cm-avatar>
@@ -55,13 +55,9 @@
      </example>
  */
 
-/**
- * @TODO Doku anpassen
- */
-angular.module('cmUi').directive('cmAvatar',[
-    'cmUserModel',
-    'cmUtil',
-    'cmConfig',
+angular.module('cmUi')
+.directive('cmAvatar',[
+    'cmUserModel', 'cmUtil', 'cmConfig',
     function (cmUserModel, cmUtil, cmConfig){
 
         return {
@@ -86,7 +82,7 @@ angular.module('cmUi').directive('cmAvatar',[
                         size = attrs.cmSize;
                     }
 
-                    var imgSrc = cmConfig.restApi + '/file/' + scope.identity.avatarId + '/scale/' + size + '?token=' + cmUserModel.getToken(),
+                    var imgSrc = cmConfig.restApi + cmConfig.defaultApiVersion + '/file/' + scope.identity.avatarId + '/scale/' + size + '?token=' + cmUserModel.getToken(),
                         bgImg = new Image();
                     // preload for update avatar
                     bgImg.onload = function(){
@@ -97,7 +93,7 @@ angular.module('cmUi').directive('cmAvatar',[
                 }
 
                 // is unknown avatar for add reciepients or choose avatar
-                if('cmView' in attrs && attrs.cmView == 'unknown'){
+                if('cmAvatarView' in attrs && attrs.cmAvatarView == 'unknown'){
                     element.find('i').addClass('fa cm-person');
                 } else {
                     scope.$watch('identity',function(){

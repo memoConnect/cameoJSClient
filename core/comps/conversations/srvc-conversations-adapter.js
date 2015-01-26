@@ -38,9 +38,9 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
                 })
             },
 
-            getConversation: function(id, limit, offset){
+            getConversation: function(id, limit, offset, timeLimit){
                 //cmLogger.debug('getConversation');
-                var queryString = cmUtil.handleLimitOffset(limit,offset);
+                var queryString = cmUtil.handleLimitOffset(limit,offset, timeLimit);
 
                 if(queryString == ''){
                     queryString += '?' + cmUserModel.getLocalKeyIdsForRequest();
@@ -53,6 +53,17 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
                 })
             },
 
+            searchConversations: function(search, limit, offset){
+                var queryString = cmUtil.handleLimitOffset(limit,offset);
+
+                return cmApi.post({
+                    path: '/conversations/search' + queryString,
+                    data: {
+                        search: search
+                    }
+                })
+            },
+
             getConversationSummary: function(id){
                 //cmLogger.warn('cmConversationAdapter: .getConversationSummary is deprecated; use .getConversation(id, 1, 0) instead')
                 //return this.getConversation(id, 1, 0)
@@ -61,8 +72,8 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
                 })
             },
 
-            getConversationMessages: function(id, limit, offset) {
-                var queryString = cmUtil.handleLimitOffset(limit,offset);
+            getConversationMessages: function(id, limit, offset, timeLimit) {
+                var queryString = cmUtil.handleLimitOffset(limit,offset,timeLimit);
 
                 if(queryString == ''){
                     queryString += '?' + cmUserModel.getLocalKeyIdsForRequest();
@@ -122,6 +133,12 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
                         })
             },
 
+            sendReadStatus: function(idConversation, idMessage){
+                return	cmApi.post({
+                    path:	"/conversation/" + idConversation + "/message/" + idMessage + "/read"
+                })
+            },
+
             updateEncryptedPassphraseList: function(id, aePassphraseList){
                 return  cmApi.post({
                             path:    "/conversation/%1/aePassphrases".replace(/%1/, id),
@@ -138,6 +155,10 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
 
         cmApi.on('conversation:new', function(event, data){
             adapter.trigger('conversation:new', data)
+        });
+
+        cmApi.on('conversation:update', function(event, data){
+            adapter.trigger('conversation:update', data)
         });
 
         cmApi.on('rekeying:finished', function(event, data){

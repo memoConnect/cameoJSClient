@@ -3,16 +3,15 @@
 // https://github.com/apache/cordova-plugin-camera/blob/b76b5ae670bdff4dd4c716e889ab12e049f9c733/doc/index.mdhttps://github.com/apache/cordova-plugin-camera/blob/b76b5ae670bdff4dd4c716e889ab12e049f9c733/doc/index.md
 
 angular.module('cmFiles').directive('cmFileChoose', [
-    'cmDevice',
+    'cmDevice', 'cmAnswerFiles',
     '$rootScope',
-    function (cmDevice,
+    function (cmDevice, cmAnswerFiles,
               $rootScope) {
 
         var tpl = '<input type="file" data-qa="btn-file-choose" accept="{{accept}}" />';
 
         return {
             restrict: 'AE',
-            require: '^cmFiles',
             template: tpl,
 
             controller: function($scope, $element, $attrs){
@@ -22,7 +21,7 @@ angular.module('cmFiles').directive('cmFileChoose', [
                     $scope.accept = $attrs.cmAccept;
                 }
             },
-            link: function (scope, element, attrs, cmFilesCtrl) {
+            link: function (scope, element, attrs) {
                 var index = 1;
 
                 // add countrer for save resets
@@ -31,7 +30,7 @@ angular.module('cmFiles').directive('cmFileChoose', [
                 }
 
                 // phonegap
-                if (cmDevice.isAndroid()){
+                if (cmDevice.isApp() && cmDevice.isAndroid()){
                     element.on('click', function (evt) {
                         evt.preventDefault();
                         evt.stopPropagation();
@@ -43,15 +42,20 @@ angular.module('cmFiles').directive('cmFileChoose', [
                     // default fileapi
                     // file is selected
                     element.on('change', function (event) {
-                        cmFilesCtrl.setFile(event.target.files[0]);
+                        cmAnswerFiles.set(event.target.files[0]);
                     });
                 }
 
                 // reset files from sended message
-                scope.$on('cmFileChooseResetFiles',function(){
+                function callback_files_reset(){
                     element.html(tpl.replace('{{accept}}',scope.accept));
                     index++;
                     addCounter();
+                }
+
+                cmAnswerFiles.on('file:removed', callback_files_reset);
+                scope.$on('$destroy', function(){
+                    cmAnswerFiles.off('file:removed', callback_files_reset);
                 });
 
                 if(attrs.cmDroparea){
@@ -85,7 +89,7 @@ angular.module('cmFiles').directive('cmFileChoose', [
                             var files = evt.dataTransfer.files;
 
                             for (var i=0, l=files.length; i<l; i++) {
-                                cmFilesCtrl.setFile(files[i]);
+                                cmAnswerFiles.set(files[i]);
                             }
 
                             droparea.removeClass('files-dragged');

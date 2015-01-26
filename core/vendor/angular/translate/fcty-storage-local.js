@@ -10,7 +10,7 @@ angular.module('pascalprecht.translate')
  * to use localStorage as storage.
  *
  */
-    .factory('$translateLocalStorage', ['$window', '$translateCookieStorage', function ($window, $translateCookieStorage) {
+    .factory('$translateLocalStorage', ['$window', function ($window) {
 
         // Setup adapter
         var localStorageAdapter = (function(){
@@ -69,6 +69,6 @@ angular.module('pascalprecht.translate')
                 hasLocalStorageSupport = false;
             }
         }
-        var $translateLocalStorage = hasLocalStorageSupport ? localStorageAdapter : $translateCookieStorage;
+        var $translateLocalStorage = localStorageAdapter;
         return $translateLocalStorage;
     }]);

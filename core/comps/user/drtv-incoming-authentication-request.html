@@ -4,21 +4,22 @@
 
     <form ng-submit="verify(transactSecret)">
         <div class="cm-input-ctn with-inside-icon">
-            <input id="inp-transactSecret" type="text" ng-model="transactSecret" cm-adaptive-change data-qa="inp-transactSecret">
+            <input id="inp-transactSecret" name="inp-transactSecret" type="text" ng-model="transactSecret" data-qa="inp-transactSecret" cm-enter="verify(transactSecret)" />
             <i class="fa cm-write"></i>
         </div>
 
-        <span ng-if="is3rdParty"    ng-bind-html="'IDENTITY.KEYS.TRUST.ENTER_TRANSACTION_SECRET.INSTRUCTIONS'|cmTranslate:modalMessageVars"></span>
-        <span ng-if="!is3rdParty"   ng-bind-html="'IDENTITY.KEYS.AUTHENTICATION.ENTER_TRANSACTION_SECRET.INSTRUCTIONS'|cmTranslate:modalMessageVars"></span>
+        <cm-info-bubble class="cm-alert mb10" ng-show="error.emptyInput || error.wrongSecret">
+            <div ng-show="error.emptyInput">
+                <i class="fa cm-info"></i>{{'SYSTEM.ERROR.EMPTY_INPUT'|cmTranslate}}
+            </div>
 
+            <div ng-show="error.wrongSecret" data-qa="warn-wrong-input">
+                <i class="fa cm-info"></i>{{'SYSTEM.ERROR.WRONG_INPUT'|cmTranslate}}
+            </div>
+        </cm-info-bubble>
 
-        <div class="cm-warning" ng-show="error.emptyInput">
-            <i class="fa cm-info"></i>{{'SYSTEM.ERROR.EMPTY_INPUT'|cmTranslate}}
-        </div>
-
-        <div class="cm-warning" ng-show="error.wrongSecret" data-qa="warn-wrong-input">
-            <i class="fa cm-info"></i>{{'SYSTEM.ERROR.WRONG_INPUT'|cmTranslate}}
-        </div>
+        <span ng-if="is3rdParty" ng-bind-html="'IDENTITY.KEYS.TRUST.ENTER_TRANSACTION_SECRET.INSTRUCTIONS'|cmTranslate:modalMessageVars"></span>
+        <span ng-if="!is3rdParty" ng-bind-html="'IDENTITY.KEYS.AUTHENTICATION.ENTER_TRANSACTION_SECRET.INSTRUCTIONS'|cmTranslate:modalMessageVars"></span>
     </form>
 </div>
 <footer>
@@ -27,15 +28,17 @@
         data-qa     = "btn-cancel"
         cm-weight   = "1"
         ng-click    = "close()"
+        cm-reactive
     >
         {{ (labelCancel || 'MODAL.LABEL.CANCEL') | cmTranslate }}
         <i class="fa cm-checkbox-wrong cm-lg-icon"></i>
     </button>
     <button
         class       = "cm-btn-grey dib w50"
-        data-qa     = "btn-acceptRequest"
+        data-qa     = "btn-acceptIncomingRequest"
         ng-click    = "verify(transactSecret)"
         cm-weight   = "1"
+        cm-reactive
     >
         <span>
             {{
@@ -44,8 +47,10 @@
                 :   'IDENTITY.KEYS.AUTHENTICATION.ENTER_TRANSACTION_SECRET.SUBMIT_BUTTON'
                 |cmTranslate
             }}
-
             <i class="fa cm-checker cm-lg-icon"></i>
         </span>
+    </button>
+    <button class="cm-btn-grey dib cm-hide with-loader">
+        <cm-loader cm-color="ci-color"></cm-loader>
     </button>
 </footer>

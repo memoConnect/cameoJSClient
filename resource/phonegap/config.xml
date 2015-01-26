@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns = "http://www.w3.org/ns/widgets"
+        xmlns:gap = "http://phonegap.com/ns/1.0"
+        xmlns:android = "http://schemas.android.com/apk/www/res/android"
+        id        = "<%= currentAppId %>"
+        version   = "<%= currentVersion %>">
+
+    <name><%= currentName %></name>
+    <description>safer communication</description>
+    <author href="www.cameonet.de" email="support@cameonet.de">cameoNet</author>
+
+    <access origin="*" subdomains="true"  />
+    <content src="index.html" />
+
+    <log level="<%= logLevel %>"/>
+
+    <preference name="phonegap-version" value="3.6.3" />
+
+    <gap:platform name="android" />
+    <gap:platform name="winphone" />
+    <gap:platform name="ios" />
+
+    <!-- <preference name="permissions" value="all-permissions" /> -->
+    <preference name="permissions" value="none" />
+
+    <!-- multiplatform -->
+    <preference name="DisallowOverscroll" value="true"/>
+    <preference name="orientation" value="portrait" />
+    <preference name="HideKeyboardFormAccessoryBar" value="true" />
+
+    <!-- android -->
+    <preference name="keepRunning" value="false"/>
+    <preference name="LoadUrlTimeoutValue" value="5000" />
+    <preference name="ErrorUrl" value=""/>
+    <preference name="AndroidPersistentFileLocation" value="Internal" />
+    <!-- build -->
+    <preference name="android-minSdkVersion" value="<%= phonegapConfig.android_minSdkVersion %>" />
+    <preference name="android-maxSdkVersion" value="<%= phonegapConfig.android_maxSdkVersion %>" />
+    <preference name="android-targetSdkVersion" value="<%= phonegapConfig.android_targetSdkVersion %>" />
+    <preference name="android-installLocation" value="internalOnly" />
+    <preference name="android-windowSoftInputMode" value="adjustResize" />
+
+    <!-- ios -->
+    <preference name="iosPersistentFileLocation" value="Library" />
+    <preference name="EnableViewportScale" value="true" />
+    <preference name="MediaPlaybackRequiresUserAction" value="true" />
+    <preference name="AllowInlineMediaPlayback" value="true" />
+    <preference name="BackupWebStorage" value="local" />
+    <preference name="TopActivityIndicator" value="gray" />
+    <preference name="KeyboardDisplayRequiresUserAction" value="true" />
+    <preference name="SuppressesIncrementalRendering" value="true" />
+
+    <!-- statusbar -->
+    <!-- <preference name="StatusBarOverlaysWebView" value="false" /> -->
+    <!-- <preference name="StatusBarBackgroundColor" value="#555555" /> -->
+    <!-- <preference name="StatusBarStyle" value="lightcontent" /> -->
+
+    <!-- build -->
+    <preference name="target-device" value="universal" />
+    <preference name="prerendered-icon" value="true" />
+    <preference name="detect-data-types" value="true" />
+    <preference name="exit-on-suspend" value="false" />
+
+    <!-- other -->
+    <preference name="fullscreen" value="false" />
+    <preference name="webviewbounce" value="false" />
+    <preference name="stay-in-webview" value="true" />
+    <preference name="ios-statusbarstyle" value="default" />
+    <preference name="auto-hide-splash-screen" value="false" />
+    <preference name="disable-cursor" value="true" />
+
+    <preference name="ShowSplashScreenSpinner" value="false" />
+    <preference name="AutoHideSplashScreen" value="false" />
+
+    <!-- platform config files -->
+    <gap:config-file platform="android" parent="/manifest">
+        <application android:debuggable="<%= androidDebuggable %>" />
+    </gap:config-file>
+
+    <%= plugins %>
+
+    <%= resources %>
+
+</widget>

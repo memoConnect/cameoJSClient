@@ -1,96 +1,97 @@
-<article class="content" ng-click="chooseContact()">
-    <cm-info-bubble nose-x="55%">
-        <span ng-bind-html="'CONTACTS.INFO.IMPORT_RIGHTS' | cmParse"></span>
-    </cm-info-bubble>
-</article>
-
-<hr class="margin-small" />
-
-<form name="cmForm" novalidate autocomplete="off">
-    <article class="content">
-        <label>{{'CONTACT.PLACEHOLDER.DISPLAYNAME'|cmTranslate}}</label>
-        <div class="cm-input-ctn with-inside-icon cm-icon-grey">
-            <input
-                tabindex="1" data-qa="input-displayname"
-                type="text" name="displayName" ng-model="formData.displayName"
-                required />
-            <i class="fa cm-write"></i>
-        </div>
-        <cm-info-bubble class="cm-alert" ng-show="error.displayName">
-            <div ng-show="error.displayName">
-                <i class="fa cm-info"></i> {{'CONTACT.INFO.EMPTY.DISPLAYNAME'|cmTranslate}}
-            </div>
+<cm-scrollable>
+    <article class="content" ng-click="chooseContact()">
+        <cm-info-bubble nose-x="55%">
+            <span ng-bind-html="'CONTACTS.INFO.IMPORT_RIGHTS' | cmParse"></span>
         </cm-info-bubble>
     </article>
 
     <hr class="margin-small" />
 
-    <article class="content with-radiobutton" ng-repeat="item in formData.phoneNumbers">
-        <label>
-            {{'CONTACT.PLACEHOLDER.PHONENUMBER'|cmTranslate }}
-            <span ng-if="item.type">&nbsp;{{item.type}}</span>
-        </label>
-        <div class="cm-input-ctn with-inside-icon cm-icon-grey">
-            <input
-                tabindex="2" data-qa="input-phonenumber"
-                type="text" name="phoneNumber" ng-model="item.value"
-                cm-validate-phone cm-adaptive-change
-                 />
-            <i class="fa cm-write"></i>
-        </div>
-        <cm-info-bubble class="cm-alert" ng-show="cmForm.phoneNumber.$dirty && cmForm.phoneNumber.$invalid">
-            <div ng-show="cmForm.phoneNumber.$invalid">
-                <i class="fa cm-info"></i> {{'CONTACT.INFO.INVALID.PHONENUMBER'|cmTranslate}}
+    <form name="cmForm" novalidate autocomplete="off">
+        <article class="content">
+            <label>{{'CONTACT.PLACEHOLDER.DISPLAYNAME'|cmTranslate}}</label>
+            <div class="cm-input-ctn with-inside-icon cm-icon-grey">
+                <input
+                        tabindex="1" data-qa="input-displayname"
+                        type="text" name="displayName" ng-model="formData.displayName"
+                        required />
+                <i class="fa cm-write"></i>
+            </div>
+            <cm-info-bubble class="cm-alert" ng-show="error.displayName">
+                <div ng-show="error.displayName">
+                    <i class="fa cm-info"></i> {{'CONTACT.INFO.EMPTY.DISPLAYNAME'|cmTranslate}}
+                </div>
+            </cm-info-bubble>
+        </article>
+
+        <hr class="margin-small" />
+
+        <article class="content with-radiobutton" ng-repeat="item in formData.phoneNumbers">
+            <label>
+                {{'CONTACT.PLACEHOLDER.PHONENUMBER'|cmTranslate }}
                 <span ng-if="item.type">&nbsp;{{item.type}}</span>
+            </label>
+            <div class="cm-input-ctn with-inside-icon cm-icon-grey">
+                <input
+                        tabindex="2" data-qa="input-phonenumber"
+                        type="text" name="phoneNumber" ng-model="item.value"
+                        cm-validate-phone cm-adaptive-change
+                        />
+                <i class="fa cm-write"></i>
             </div>
-        </cm-info-bubble>
-        <i class="fa cm-radio-0" ng-class="{'cm-radio-1':isSelected(item,'phoneNumber')}" ng-click="chooseItem(item,'phone')"></i>
-    </article>
-    <article class="content">
-        <cm-info-bubble class="cm-alert" ng-show="error.selectPhoneNumber">
-            <div ng-show="error.selectPhoneNumber">
-                <i class="fa cm-info"></i> {{'CONTACT.INFO.SELECT.PHONENUMBER'|cmTranslate}}
-            </div>
-        </cm-info-bubble>
-    </article>
+            <cm-info-bubble class="cm-alert" ng-show="cmForm.phoneNumber.$dirty && cmForm.phoneNumber.$invalid">
+                <div ng-show="cmForm.phoneNumber.$invalid">
+                    <i class="fa cm-info"></i> {{'CONTACT.INFO.INVALID.PHONENUMBER'|cmTranslate}}
+                    <span ng-if="item.type">&nbsp;{{item.type}}</span>
+                </div>
+            </cm-info-bubble>
+            <i class="fa cm-radio-0" ng-class="{'cm-radio-1':isSelected(item,'phoneNumber')}" ng-click="chooseItem(item,'phone')"></i>
+        </article>
+        <article class="content">
+            <cm-info-bubble class="cm-alert" ng-show="error.selectPhoneNumber">
+                <div ng-show="error.selectPhoneNumber">
+                    <i class="fa cm-info"></i> {{'CONTACT.INFO.SELECT.PHONENUMBER'|cmTranslate}}
+                </div>
+            </cm-info-bubble>
+        </article>
 
-    <hr class="margin-small" />
+        <hr class="margin-small" />
 
-    <article class="content with-radiobutton" ng-repeat="item in formData.emails">
-        <label>
-            {{'CONTACT.PLACEHOLDER.EMAIL'|cmTranslate }}
-            <span ng-if="item.type">&nbsp;{{item.type}}</span>
-        </label>
-        <div class="cm-input-ctn with-inside-icon cm-icon-grey">
-            <input
-                tabindex="3" data-qa="input-email"
-                name="email" ng-model="item.value"
-                cm-validate-email />
-            <i class="fa cm-write"></i>
-        </div>
-        <cm-info-bubble class="cm-alert" ng-show="cmForm.email.$dirty && cmForm.email.$invalid">
-            <div ng-show="cmForm.email.$invalid">
-                <i class="fa cm-info"></i> {{'CONTACT.INFO.INVALID.EMAIL'|cmTranslate}}
-                <span ng-if="item.type">>&nbsp;{{item.type}}</span>
+        <article class="content with-radiobutton" ng-repeat="item in formData.emails">
+            <label>
+                {{'CONTACT.PLACEHOLDER.EMAIL'|cmTranslate }}
+                <span ng-if="item.type">&nbsp;{{item.type}}</span>
+            </label>
+            <div class="cm-input-ctn with-inside-icon cm-icon-grey">
+                <input
+                        tabindex="3" data-qa="input-email"
+                        name="email" ng-model="item.value"
+                        cm-validate-email />
+                <i class="fa cm-write"></i>
             </div>
-        </cm-info-bubble>
-        <i class="fa cm-radio-0" ng-class="{'cm-radio-1':isSelected(item,'email')}" ng-click="chooseItem(item,'email')"></i>
-    </article>
-    <article class="content">
-        <cm-info-bubble class="cm-alert" ng-show="error.selectEmail">
-            <div ng-show="error.selectEmail">
-                <i class="fa cm-info"></i> {{'CONTACT.INFO.SELECT.EMAIL'|cmTranslate}}
-            </div>
-        </cm-info-bubble>
-    </article>
-</form>
+            <cm-info-bubble class="cm-alert" ng-show="cmForm.email.$dirty && cmForm.email.$invalid">
+                <div ng-show="cmForm.email.$invalid">
+                    <i class="fa cm-info"></i> {{'CONTACT.INFO.INVALID.EMAIL'|cmTranslate}}
+                    <span ng-if="item.type">>&nbsp;{{item.type}}</span>
+                </div>
+            </cm-info-bubble>
+            <i class="fa cm-radio-0" ng-class="{'cm-radio-1':isSelected(item,'email')}" ng-click="chooseItem(item,'email')"></i>
+        </article>
+        <article class="content">
+            <cm-info-bubble class="cm-alert" ng-show="error.selectEmail">
+                <div ng-show="error.selectEmail">
+                    <i class="fa cm-info"></i> {{'CONTACT.INFO.SELECT.EMAIL'|cmTranslate}}
+                </div>
+            </cm-info-bubble>
+        </article>
+    </form>
+</cm-scrollable>
 
 <cm-footer>
-    <button data-qa="btn-create-contact" class="cm-btn-grey" id="registerUserButton" ng-click="importContact()">
+    <button data-qa="btn-create-contact" class="cm-btn-grey" id="registerUserButton" ng-click="importContact()" cm-reactive>
         <span ng-show="!showLoader">
             {{'CONTACT.FOOTER.SAVE'|cmTranslate}} <i class="fa cm-checkbox-right"></i>
         </span>
         <cm-loader ng-show="showLoader" cm-color="ci-color"></cm-loader>
     </button>
 </cm-footer>
-
