@@ -127,17 +127,29 @@ this.expectCurrentUrl = function (match) {
 this.logout = function () {
     self.get('/login')
 
-    return  $$("cm-menu").then(function (elements) {
-                if (elements.length > 0) {
-                    $("cm-menu .cm-handler").click()
-                    self.waitForElement(".cm-menu-list")
-                    .then(function(){
-                        return self.waitAndClickQa('logout-btn')
-                    });
-                }
-                return self.waitForPageLoad('/login')
-            })
-    
+    return $$("cm-menu")
+        .then(function (elements) {
+            if (elements.length > 0) {
+
+                $$("cm-search-input").then(function(elements){
+                    if(elements.length > 0){
+                        elements.first().getAttribute('class')
+                        .then(function(className){
+                            if(className.indexOf('visible') >= 0){
+                                self.click('btn-close-search')
+                            }
+                        })
+                    }
+                })
+
+                $("cm-menu .cm-handler").click()
+                self.waitForElement(".cm-menu-list")
+                .then(function(){
+                    return self.waitAndClickQa('logout-btn')
+                })
+            }
+            return self.waitForPageLoad('/login')
+        })
 }
 
 this.login = function (username, password, expectedRoute) {
