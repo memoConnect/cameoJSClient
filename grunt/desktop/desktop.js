@@ -31,6 +31,10 @@ module.exports = function(grunt, options) {
                 'desktop-files': {
                     files: [
                         {
+                            src: 'core/favicon.ico',
+                            dest: 'dist/desktop/favicon.ico'
+                        },
+                        {
                             expand: true,
                             cwd: 'core/gfx/',
                             src: ['**'],
@@ -44,14 +48,23 @@ module.exports = function(grunt, options) {
                         },
                         {
                             expand: true,
+                            cwd: 'core/performance/',
+                            src: ['**'],
+                            dest: 'dist/desktop/performance/'
+                        },
+                        {
+                            expand: true,
                             flatten: true,
                             cwd: 'core/css/fonts/',
                             src: ['**'],
                             dest: 'dist/desktop/css/fonts'
                         },
                         {
-                            src: 'core/favicon.ico',
-                            dest: 'dist/desktop/favicon.ico'
+                            expand: true,
+                            flatten: false,
+                            cwd: 'resource/download/gfx/',
+                            src: ['**'],
+                            dest: 'dist/desktop/gfx/'
                         }
                     ]
                 }

@@ -1,21 +1,14 @@
 'use strict';
 
 angular.module('cmContacts').service('cmContactsModel',[
-    'cmFactory',
-    'cmUserModel',
-    'cmContactModel',
-    'cmContactsAdapter',
-    'cmIdentityFactory',
-    'cmFriendRequestModel',
-    'cmStateManagement',
-    'cmUtil',
-    'cmObject',
-    'cmLogger',
-    'cmNotify',
-    'cmBrowserNotifications',
-    '$q',
-    '$rootScope',
-    function (cmFactory, cmUserModel, cmContactModel, cmContactsAdapter, cmIdentityFactory, cmFriendRequestModel, cmStateManagement, cmUtil, cmObject, cmLogger, cmNotify, cmBrowserNotifications, $q, $rootScope){
+    'cmFactory', 'cmUserModel', 'cmContactModel', 'cmContactsAdapter', 'cmIdentityFactory',
+    'cmFriendRequestModel', 'cmStateManagement', 'cmUtil', 'cmObject', 'cmLogger',
+    'cmNotify', 'cmBrowserNotifications',
+    '$q', '$rootScope',
+    function (cmFactory, cmUserModel, cmContactModel, cmContactsAdapter, cmIdentityFactory,
+              cmFriendRequestModel, cmStateManagement, cmUtil, cmObject, cmLogger,
+              cmNotify, cmBrowserNotifications,
+              $q, $rootScope){
         var self = this,
             events = {};
 
@@ -251,23 +244,6 @@ angular.module('cmContacts').service('cmContactsModel',[
             return defer.promise;
         };
 
-        this.deleteContact = function(id, data){
-            var defer = $q.defer();
-            cmContactsAdapter
-                .deleteContact(data)
-                .then(
-                function(data){
-                    //_delete(data);
-                    defer.resolve();
-                },
-                function(){
-                    defer.reject();
-                }
-            );
-
-            return defer.promise;
-        };
-
         /**
          * event handling
          */
@@ -333,6 +309,11 @@ angular.module('cmContacts').service('cmContactsModel',[
             cmNotify.create({label: 'NOTIFICATIONS.TYPES.FRIEND_REQUEST', bell:true});
         });
 
+        this.contacts.on('deleted:finished', function(event, data){
+            self.contacts.deregister(data);
+            $rootScope.goto('/contact/list');
+        });
+
         cmContactsAdapter.on('identity:updated', function(event, data){
             if(typeof data.id != 'undefined') {
                 var contact = self.contacts.filter(function (contact) {
@@ -347,6 +328,10 @@ angular.module('cmContacts').service('cmContactsModel',[
 
         cmContactsAdapter.on('contact:update', function(event, data){
             self.contacts.create(data, true);
+        });
+
+        cmContactsAdapter.on('contact:deleted', function(event, data){
+            self.contacts.deregister(data);
         });
 
         cmContactsAdapter.on('subscriptionId:changed', function(){

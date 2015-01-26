@@ -235,8 +235,8 @@
     },
     "BULK_REKEYING": {
       "START": "Start",
-      "CONTENT": "@todo All talks on this device are now being encrypted by the new cameoKey.",
-      "HEADER": "@todo New encryption of talks"
+      "CONTENT": "The talks on this device are now being encrypted for the new cameoKey.",
+      "HEADER": "Encrypting"
     },
     "EXTERN_CONTACT": {
       "INFO": {
@@ -567,7 +567,8 @@
       "ZIP": "ZIP",
       "CAMEOID": "CameoID",
       "STREET": "Street",
-      "CITY": "City"
+      "CITY": "City",
+      "DELETE": "Delete contact"
     },
     "FOOTER": {
       "SAVE": "Save",
@@ -593,6 +594,12 @@
         "EMAIL": "@:DRTV.VALIDATE_EMAIL.INFO.INVALID",
         "MIXED": "Your input was unvalid.",
         "PHONENUMBER": "@:DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER"
+      }
+    },
+    "MODAL": {
+      "DELETE": {
+        "HEADER": "Delete Contact",
+        "TEXT": "Are you sure you want to delete this contact?"
       }
     },
     "TRUST": {
@@ -681,11 +688,11 @@
     },
     "LIST_EMPTY": "No contacts yet!",
     "SEARCH": {
-      "INFO_NOTHING_FOUND": "@todo CONTACTS.SEARCH.INFO_NOTHING_FOUND",
+      "INFO_NOTHING_FOUND": "No contacts found",
       "SERVER_SEARCH": {
-        "INFO_NOTHING_FOUND": "@todo CONTACTS.SEARCH.SERVER_SEARCH.INFO_NOTHING_FOUND",
-        "BUTTON_ACTIVE": "@todo CONTACTS.SEARCH.SERVER_SEARCH.BUTTON_ACTIVE",
-        "BUTTON_INACTIVE": "@todo CONTACTS.SEARCH.SERVER_SEARCH.BUTTON_INACTIVE"
+        "INFO_NOTHING_FOUND": "No identities found on server",
+        "BUTTON_ACTIVE": "Results from cameoNet",
+        "BUTTON_INACTIVE": "Search cameoNet"
       }
     }
   },
@@ -749,7 +756,7 @@
       "PASSWORD_NEEDED": "Please enter a password to decode the talk.\n <a href=\"#/{{type}}/{{typeId}}/security\">Please enter here</a>",
       "PASSWORD_WRONG": "Wrong password",
       "PASSPHRASE_INVALID": "Invalid password",
-      "ASYMMETRIC_KEY_TRUST_ERROR": "@todo CONVERSATION.WARN.ASYMMETRIC_KEY_TRUST_ERROR"
+      "ASYMMETRIC_KEY_TRUST_ERROR": "The key on this device has not been linked to the keys that created this conversation."
     },
     "CONFIRM": {
       "RECIPIENTS_MISSING": "Would you like to send this message without further recipients? You will be the only one to read it."
@@ -811,9 +818,9 @@
           "MODAL": {
               "CONFIRM": {
                   "DELETE": {
-                      "TITLE": "@todo",
-                      "ONE_ITEM": "@todo",
-                      "MORE_ITEMS": "@todo"
+                      "TITLE": "Delete",
+                      "ONE_ITEM": "Do you really want to delete this item?",
+                      "MORE_ITEMS": "Do you really want to delete these items?"
 
                   }
               }
@@ -823,12 +830,12 @@
   "TALKS": {
     "HEADING": "Talks",
     "MORE": "List more talks.",
-    "LIST_EMPTY": "No talks yet!",
+    "LIST_EMPTY": "You have no talks.",
     "SEARCH": {
-      "INFO_NOTHING_FOUND": "@todo TALKS.SEARCH.INFO_NOTHING_FOUND",
+      "INFO_NOTHING_FOUND": "No talks found on server.",
         "BUTTON" :{
-        "SERVER_SEARCH_ACTIVE": "@todo TALKS.SEARCH.BUTTON.SERVER_SEARCH_ACTIVE",
-        "SERVER_SEARCH_INACTIVE": "@todo TALKS.SEARCH.BUTTON.SERVER_SEARCH_INACTIVE"
+        "SERVER_SEARCH_ACTIVE": "Search on cameoNet.",
+        "SERVER_SEARCH_INACTIVE": "Results from cameoNet"
       }
     }
   },

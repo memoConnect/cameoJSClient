@@ -29,7 +29,7 @@ angular.module('cmPhonegap')
             },
 
             existsPlugin: function(){
-                return this.plugin != null;
+                return this.plugin != null || $phonegapCameoConfig != 'undefined';
             },
 
             getUserAgent: function(){
