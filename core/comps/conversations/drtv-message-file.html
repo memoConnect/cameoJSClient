@@ -24,14 +24,14 @@
         <video controls="true" cm-blob-video-audio="file"></video>
     </div>
 
-    <div class="file-detail" ng-if="file.isEmbed('audio') || !file.isEmbed()" ng-click="file.promptSaveAs()">
+    <div class="file-detail" ng-if="file.isEmbed('audio') || !file.isEmbed()" >
         <div class="file-state">
             <div class="file {{::file.detectedExtension}}"></div>
             <div class="file-html5" ng-if="file.isEmbed('audio')">
                 <audio controls="true" cm-blob-video-audio="file"></audio>
             </div>
         </div>
-        <div class="file-informations">
+        <div class="file-informations" ng-click="file.promptSaveAs()">
             <span class="file-size">
                 <i class="fa cm-save"></i><br />
                 {{::cmUtil.bytesToStr(file.size)}}

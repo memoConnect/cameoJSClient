@@ -58,13 +58,13 @@ angular.module('cmPhonegap')
                     : unknown;
             },
 
-            isApp: function(){
+            isApp: function(withoutPlugin){
                 if(this.emulateDevice) {
                     cmLogger.warn('cmPhonegap.cmDevice.debug == true!!!');
                     this.plugin = {};
                 }
 
-                return this.emulateDevice || !this.emulateDevice && this.existsPlugin();
+                return this.emulateDevice || !this.emulateDevice && !withoutPlugin && this.existsPlugin() || !this.emulateDevice && withoutPlugin && $phonegapCameoConfig != 'undefined';
             },
 
             isDesktop: function(where){

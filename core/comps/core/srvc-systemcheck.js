@@ -25,7 +25,7 @@ angular.module('cmCore')
                 path: '/services/getBrowserInfo',
                 data: {
                     version: cmVersion.version,
-                    isApp: cmDevice.isApp()
+                    isApp: cmDevice.isApp(true)
                 }
             }).then(
                 function(data){
