@@ -347,7 +347,7 @@
             "STREETNR": "Nr.",
             "ZIP": "PLZ",
             "CITY": "Ort",
-            "DELETE": "@todo Kontakt löschen"
+            "DELETE": "Kontakt löschen"
         },
         "INFO": {
             "EMPTY": {
@@ -373,8 +373,8 @@
         },
         "MODAL": {
             "DELETE": {
-                "HEADER": "@todo Kontakt löschen",
-                "TEXT": "@todo Wollen Sie den Kontakt wirklich löschen?"
+                "HEADER": "Kontakt löschen",
+                "TEXT": "Wollen Sie den Kontakt wirklich löschen?"
             }
         },
         "FOOTER": {
