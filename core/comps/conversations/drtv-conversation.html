@@ -75,6 +75,10 @@
         <div class="h10"></div>
     </section>
 
+    <section class="body-group no-pad border-top">
+        <cm-delete-conversation></cm-delete-conversation>
+    </section>
+
     <button class="cm-btn-grey" ng-if="conversation && conversation.numberOfMessages > conversation.messages.length" ng-show="conversation.numberOfMessages != conversation.messages.length" ng-click="loadPreviousMessages()" data-qa="btn-load-more-messages">
         {{'CONVERSATION.LABEL.LOAD_PREVIOUS'|cmTranslate}}
     </button>
