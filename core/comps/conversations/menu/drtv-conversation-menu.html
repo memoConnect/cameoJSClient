@@ -1,0 +1,25 @@
+<div class="cm-handler" ng-click="handleMenu()" data-qa="btn-open-menu" cm-reactive>
+    <i class="fa cm-menu"></i>
+</div>
+<div class="cm-menu-layer" ng-class="{'is-active':menuVisible}">
+    <div class="cm-nose-wrapper" ng-click="handleMenu()">
+        <i class="fa cm-nose-up"></i>
+    </div>
+    <ul>
+        <li ng-if="conversation.state.is('new')" ng-click="goto('conversation/new/recipients')" cm-reactive>
+            <i class="fa cm-checkbox-add"></i>
+            {{::'CONVERSATION.MENU.ADD_RECIPIENTS'|cmTranslate}}
+        </li>
+        <li ng-if="!conversation.state.is('new') && conversation.recipients.length > 1" ng-click="goto('conversation/new/recipients')" cm-reactive>
+            <i class="fa cm-list"></i>
+            {{::'CONVERSATION.MENU.SHOW_RECIPIENTS'|cmTranslate}}
+        </li>
+        <li ng-click="goto('conversation/'+(conversation.id||'new')+'/security')" cm-reactive>
+            <i class="fa cm-lock"></i>
+            {{::'CONVERSATION.MENU.SECURITY_SETTINGS'|cmTranslate}}
+        </li>
+        <li ng-if="!conversation.state.is('new')">
+            <cm-delete-conversation cm-data="conversation"></cm-delete-conversation>
+        </li>
+    </ul>
+</div>

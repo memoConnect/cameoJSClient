@@ -782,6 +782,12 @@
       "ENCRYPTED": "- encrypted -",
       "REQUEST_CAPTCHA": "Please send a (new) passCaptcha."
     },
+    "MENU": {
+      "ADD_RECIPIENTS": "@todo Add recipients",
+      "SHOW_RECIPIENTS": "@todo Show recipients",
+      "SECURITY_SETTINGS": "@todo Security settings",
+      "DELETE": "@todo Delete talk"
+    },
     "HEADING": "new Talk",
     "NO_SUBJECT": "no subject",
     "MODAL": {

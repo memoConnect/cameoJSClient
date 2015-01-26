@@ -258,6 +258,12 @@
         "SETTINGS": {
             "OKAY": "Fertig"
         },
+        "MENU": {
+            "ADD_RECIPIENTS": "@todo Empfänger hinzufügen",
+            "SHOW_RECIPIENTS": "@todo Empfänger verwalten",
+            "SECURITY_SETTINGS": "@todo Sicherheits Einstellungen",
+            "DELETE": "@todo Talk löschen"
+        },
         "MODAL": {
             "DELETE":{
                 "HEADER": "Talk löschen",
