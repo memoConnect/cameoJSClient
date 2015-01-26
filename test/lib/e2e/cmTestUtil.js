@@ -133,7 +133,7 @@ this.logout = function () {
 
                 $$("cm-search-input").then(function(elements){
                     if(elements.length > 0){
-                        elements.first().getAttribute('class')
+                        elements[0].getAttribute('class')
                         .then(function(className){
                             if(className.indexOf('visible') >= 0){
                                 self.click('btn-close-search')
