@@ -107,10 +107,12 @@ angular.module('cmContacts')
                 return defer.promise;
             };
 
-            this.delete = function(){
-                return cmModal.confirm({
-                    title: 'CONTACT.MODAL.DELETE.HEADER',
-                    text: 'CONTACT.MODAL.DELETE.TEXT'
+            this.delete = function(withoutModal){
+                return withoutModal
+                    ? $q.when()
+                    : cmModal.confirm({
+                        title: 'CONTACT.MODAL.DELETE.HEADER',
+                        text: 'CONTACT.MODAL.DELETE.TEXT'
                 }).then(function() {
                     return cmContactsAdapter
                         .deleteContact(self.id)

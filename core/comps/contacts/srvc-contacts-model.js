@@ -244,23 +244,6 @@ angular.module('cmContacts').service('cmContactsModel',[
             return defer.promise;
         };
 
-        this.deleteContact = function(id, data){
-            var defer = $q.defer();
-            cmContactsAdapter
-                .deleteContact(data)
-                .then(
-                function(data){
-                    //_delete(data);
-                    defer.resolve();
-                },
-                function(){
-                    defer.reject();
-                }
-            );
-
-            return defer.promise;
-        };
-
         /**
          * event handling
          */
