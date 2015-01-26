@@ -431,7 +431,7 @@ angular.module('cmCore')
              * @returns {Boolean} for removing succeed
              */
             removeTwoFactorToken: function(){
-                return localStorage.removeItem('twoFactorToken');
+                return LocalStorageAdapter.remove('twoFactorToken');
             },
             /**
              * @ngdoc method
@@ -445,7 +445,7 @@ angular.module('cmCore')
              * @returns {Boolean} for setting succeed
              */
             storeTwoFactorToken: function(twoFactorToken){
-                return localStorage.setItem('twoFactorToken', twoFactorToken);
+                return LocalStorageAdapter.save('twoFactorToken', twoFactorToken);
             },
             /**
              * @ngdoc method
@@ -458,7 +458,7 @@ angular.module('cmCore')
              * @returns {String} twoFactorToken
              */
             getTwoFactorToken: function(){
-                return localStorage.getItem('twoFactorToken');
+                return LocalStorageAdapter.get('twoFactorToken');
             },
 
             sendPasswordLost: function(data){
