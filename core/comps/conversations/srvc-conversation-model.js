@@ -322,9 +322,13 @@ angular.module('cmConversations')
 
                             self.state.unset('loading');
                         },
-                        function(){
+                        function(response){
                             self.state.unset('loading');
                             self.trigger('load:failed');
+
+                            if(response.status && response.status == 404){
+                                self.trigger('notFound',self);
+                            }
                         }
                     );
                 } else if(this.state.is('loading') === false) {

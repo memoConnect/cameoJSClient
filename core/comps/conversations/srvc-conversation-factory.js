@@ -146,9 +146,13 @@ angular.module('cmConversations').service('cmConversationFactory', [
         });
 
         cmConversationsAdapter.on('message:new', function(event,data){
-            self
-                .create(data.conversationId)
-                .trigger('message:new', data)
+            var instance = self.find(data.conversationId);
+
+            if(instance){
+                self
+                    .create(data.conversationId)
+                    .trigger('message:new', data)
+            }
         });
 
         cmConversationsAdapter.on('conversation:new', function(event,data){
@@ -160,6 +164,14 @@ angular.module('cmConversations').service('cmConversationFactory', [
             self.create(data, true)
         });
 
+        cmConversationsAdapter.on('conversation:deleted', function(event, data){
+            //cmLogger.debug('cmConversationFactory.on:conversation:deleted');
+            var instance = self.find(data.id);
+
+            if(instance){
+                self.deregister(instance);
+            }
+        });
 
         /**
          * @TODO CallbackQueue? Fingerprint check! Performance!
@@ -192,6 +204,10 @@ angular.module('cmConversations').service('cmConversationFactory', [
                 //conversation.update();
                 conversation.loadLatestMessages();
             });
+        });
+
+        self.on('notFound', function(event, data){
+            self.deregister(data);
         });
 
         return self;

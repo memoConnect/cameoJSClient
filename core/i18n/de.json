@@ -257,6 +257,12 @@
         },
         "SETTINGS": {
             "OKAY": "Fertig"
+        },
+        "MODAL": {
+            "DELETE":{
+                "HEADER": "Talk löschen",
+                "TEXT": "Wollen Sie den Talk wirklich löschen?"
+            }
         }
     },
 
@@ -974,6 +980,9 @@
                     }
                 }
             }
+        },
+        "CONVERSATION":{
+            "DELETE": "@todo  Talk verlassen"
         }
     },
 

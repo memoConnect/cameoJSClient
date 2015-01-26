@@ -144,6 +144,12 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
                             path:    "/conversation/%1/aePassphrases".replace(/%1/, id),
                             data:   {aePassphraseList : aePassphraseList}
                         })
+            },
+
+            deleteConversation: function(idConversation){
+                return  cmApi.delete({
+                            path: "/conversation/" + idConversation + "/recipient"
+                        })
             }
         };
 
@@ -159,6 +165,10 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
 
         cmApi.on('conversation:update', function(event, data){
             adapter.trigger('conversation:update', data)
+        });
+
+        cmApi.on('conversation:deleted', function(event, data){
+            adapter.trigger('conversation:deleted', data)
         });
 
         cmApi.on('rekeying:finished', function(event, data){

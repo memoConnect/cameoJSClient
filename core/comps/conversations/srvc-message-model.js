@@ -452,7 +452,7 @@ angular.module('cmConversations')
              * @returns {*|Promise|!Promise.<RESULT>}
              */
             this.save = function (){
-                $q.when()
+             return $q.when()
                 .then(function(){
                     var publicData      = self.getPublicData(),
                         encryptedData   = self.encryptedData
@@ -500,7 +500,7 @@ angular.module('cmConversations')
                     return $q.when(message_data)
                 })
                 .catch(function(reason){
-                    cmLogger('cmMessage: saving failed:' + reason)
+                    cmLogger.debug('cmMessage: saving failed:' + reason)
                 })
             };
 

@@ -783,7 +783,13 @@
       "REQUEST_CAPTCHA": "Please send a (new) passCaptcha."
     },
     "HEADING": "new Talk",
-    "NO_SUBJECT": "no subject"
+    "NO_SUBJECT": "no subject",
+    "MODAL": {
+      "DELETE":{
+        "HEADER": "Delete Talk",
+        "TEXT": "Are you sure you want to delete this talk?"
+      }
+    }
   },
   "JOB": {
     "FILES_IN_UPLOAD_PROGRESS": "Files are being uploaded. If you close the window the process will be cancelled. Do you really want to leave?",
@@ -825,7 +831,10 @@
                   }
               }
           }
-      }
+      },
+    "CONVERSATION":{
+      "DELETE": "@todo leave talk"
+    }
   },
   "TALKS": {
     "HEADING": "Talks",
