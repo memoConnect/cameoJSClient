@@ -185,13 +185,14 @@ describe('Route Contact: ', function () {
 
         it('should find external user after logout/login (2)', function(){
             util.login(testUser, 'password');
-
             util.get('/contact')
-            util.waitForPageLoad('/contact')
-
-            util.headerSearchInList(extUserName)
-            $$('cm-contact-list cm-contact-tag cm-avatar').first().click()
-            util.expectCurrentUrl('#/contact/.*')
+            util.waitForPageLoad('/contact').then(function() {
+                return util.headerSearchInList(extUserName)
+            }).then(function() {
+                return $$('cm-contact-list cm-contact-tag').first().click()
+            }).then(function(){
+                return util.waitForPageLoad('/contact/*')
+            })
         })
 
         it('should be the same details in contact (2)', function(){
@@ -215,25 +216,41 @@ describe('Route Contact: ', function () {
     describe('search btn should be link to contact search', function(){
         it('open create new contact',function(){
             util.get('/contact/list')
-            util.expectCurrentUrl('#/contact/list')
-
-            util.waitAndClickQa('add-contact-btn')
-                .then(function(){
-                    return util.waitForPageLoad('/contact/create')
-                })
+            util.waitForPageLoad('/contact/list').then(function(){
+                util.waitAndClickQa('add-contact-btn')
+                    .then(function(){
+                        return util.waitForPageLoad('/contact/create')
+                    })
+            })
         })
 
         it('search btn should be displayed', function(){
-            expect($("[data-qa='btn-identity-search']").isDisplayed()).toBe(true)
+            expect($("[data-qa='btn-identity-search']").isDisplayed()).toBeTruthy()
         })
 
-        it('on lick on search btn, route should change to contact/search', function(){
+        it('on click on search btn, route should change to contact/search', function(){
             util.waitAndClickQa('btn-identity-search')
             .then(function(){
                 return util.waitForPageLoad('/contact/search')
             })
         })
+    })
 
+    describe('should be able to delete the external user', function(){
+        it('go to list and open external', function(){
+            util.get('/contact/list')
+            util.waitForPageLoad('/contact/list').then(function() {
+                return util.headerSearchInList(extUserName)
+            }).then(function(){
+                return $$('cm-contact-list cm-contact-tag').first().click()
+            }).then(function(){
+                return util.waitForPageLoad('/contact/*')
+            })
+        })
+
+        it('should have a delete button', function(){
+            expect($("[data-qa='btn-delete-contact']").isDisplayed()).toBeTruthy()
+        })
     })
 
     it('delete test user', function(){

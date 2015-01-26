@@ -42,6 +42,10 @@ module.exports = function(grunt, options) {
                 'app-files': {
                     files: [
                         {
+                            src: 'core/favicon.ico',
+                            dest: 'dist/app/favicon.ico'
+                        },
+                        {
                             expand: true,
                             cwd: 'core/gfx/',
                             src: ['**'],
@@ -55,14 +59,16 @@ module.exports = function(grunt, options) {
                         },
                         {
                             expand: true,
+                            cwd: 'core/performance/',
+                            src: ['**'],
+                            dest: 'dist/app/performance/'
+                        },
+                        {
+                            expand: true,
                             flatten: true,
                             cwd: 'core/css/fonts/',
                             src: ['**'],
                             dest: 'dist/app/css/fonts/'
-                        },
-                        {
-                            src: 'core/favicon.ico',
-                            dest: 'dist/app/favicon.ico'
                         },
                         {
                             expand: true,

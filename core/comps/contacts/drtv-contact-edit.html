@@ -98,9 +98,9 @@
         ></cm-form-email>
     </form>
 
-    <hr class="margin-small" />
+    <hr class="margin-small above-button" />
 
-    <article class="item" ng-click="contact.delete()" cm-reactive>
+    <article class="item" data-qa="btn-delete-contact" ng-click="contact.delete()" cm-reactive>
         <span class="body">
             <i class="fa cm-trash"></i>
             {{::'CONTACT.PLACEHOLDER.DELETE'|cmTranslate}}
@@ -110,7 +110,7 @@
         </span>
     </article>
 
-    <hr class="margin-small" />
+    <hr class="margin-small under-button" />
 
 </cm-scrollable>
 
