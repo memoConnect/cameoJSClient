@@ -8,7 +8,7 @@
 angular.module('cmCore').service('LocalStorageAdapter', [
 '$window',
 'cmLogger',
-function($window){
+function($window, cmLogger){
     return {
         /**
          * check usability in browser
