@@ -395,7 +395,7 @@ this.waitForEventSubscription = function () {
 }
 
 this.click = function (dataQa) {
-    $("[data-qa='" + dataQa + "']").click()
+    return $("[data-qa='" + dataQa + "']").click()
 }
 
 this.waitForQa = function(dataQa){

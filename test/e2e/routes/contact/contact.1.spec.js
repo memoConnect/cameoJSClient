@@ -239,7 +239,8 @@ describe('Route Contact: ', function () {
     describe('should be able to delete the external user', function(){
         it('go to list and open external', function(){
             util.get('/contact/list')
-            util.waitForPageLoad('/contact/list').then(function() {
+            util.waitForPageLoad('/contact/list')
+            .then(function(){
                 return util.headerSearchInList(extUserName)
             }).then(function(){
                 return $$('cm-contact-list cm-contact-tag').first().click()
@@ -249,7 +250,25 @@ describe('Route Contact: ', function () {
         })
 
         it('should have a delete button', function(){
+            util.scrollToBottom()
             expect($("[data-qa='btn-delete-contact']").isDisplayed()).toBeTruthy()
+
+            util.click('btn-delete-contact')
+            .then(function() {
+                return util.waitForElement("[data-qa='modal-confirm']")
+            }).then(function(){
+                return util.waitAndClickQa('btn-confirm','cm-modal.active')
+            })
+        })
+
+        it('after delete should be in list and external user not found', function(){
+            util.waitForPageLoad('/contact/list').then(function(){
+                return util.headerSearchInList(extUserName)
+            }).then(function(){
+                return $$('cm-contact-list cm-contact-tag')
+            }).then(function(elements){
+                expect(elements.length).toEqual(0)
+            })
         })
     })
 
