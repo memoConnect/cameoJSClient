@@ -567,7 +567,8 @@
       "ZIP": "ZIP",
       "CAMEOID": "CameoID",
       "STREET": "Street",
-      "CITY": "City"
+      "CITY": "City",
+      "DELETE": "@todo delete contact"
     },
     "FOOTER": {
       "SAVE": "Save",
@@ -593,6 +594,12 @@
         "EMAIL": "@:DRTV.VALIDATE_EMAIL.INFO.INVALID",
         "MIXED": "Your input was unvalid.",
         "PHONENUMBER": "@:DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER"
+      }
+    },
+    "MODAL": {
+      "DELETE": {
+        "HEADER": "@todo Contact delete",
+        "TEXT": "@todo You are sure to delete this contact?"
       }
     },
     "TRUST": {

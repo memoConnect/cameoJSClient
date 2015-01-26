@@ -346,7 +346,8 @@
             "STREET": "Straße",
             "STREETNR": "Nr.",
             "ZIP": "PLZ",
-            "CITY": "Ort"
+            "CITY": "Ort",
+            "DELETE": "@todo Kontakt löschen"
         },
         "INFO": {
             "EMPTY": {
@@ -368,6 +369,12 @@
             "SELECT": {
                 "EMAIL": "Bitte wählen Sie eine E-Mail aus",
                 "PHONENUMBER": "Bitte wählen Sie eine Telefonnummer aus"
+            }
+        },
+        "MODAL": {
+            "DELETE": {
+                "HEADER": "@todo Kontakt löschen",
+                "TEXT": "@todo Wollen Sie den Kontakt wirklich löschen?"
             }
         },
         "FOOTER": {
