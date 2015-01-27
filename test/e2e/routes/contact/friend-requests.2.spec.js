@@ -43,7 +43,7 @@ describe('Friendrequests: ', function () {
                 return util.waitAndClickQa('btn-delete-friendrequest')
             }).then(function(){
                 // confirm delete request
-                return util.waitAndClickQa('btn-confirm')
+                return util.waitAndClickQa('btn-confirm','cm-modal.active')
             }).then(function(){
                 // contact list should be empty
                 return $$('li[data-qa="contact-search-item"]')
