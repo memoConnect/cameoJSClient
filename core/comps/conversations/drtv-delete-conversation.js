@@ -34,26 +34,11 @@ angular.module('cmConversations').directive('cmDeleteConversation',[
                         var message = $scope.conversation.messages.create({
                             conversation:$scope.conversation,
                             id:'#new_message',
-                            fromIdentity: cmUserModel.data.identity
+                            fromIdentity: cmUserModel.data.identity,
+                            text:'$${SYSTEM.CONVERSATION.DELETE}'
                         });
 
-                        return  $scope.conversation.getPassphrase()
-                                .catch(function(){
-                                    return  $scope.conversation.isEncrypted()
-                                        ?   $q.reject('access denied')
-                                        :   $q.when(null);
-                                    //Todo: null for 'not encrypted' old convention
-                                })
-                                .then(function(passphrase) {
-                                    return message
-                                            .setText('$${SYSTEM.CONVERSATION.DELETE}')
-                                            .setPublicData(['text', 'fileIds'])
-                                            .revealSignatures()
-                                            .getSignatures()
-                                            .then(function () {
-                                                return message.save()
-                                            })
-                                })
+                        return $scope.conversation.sendMessage(message);
                     })
                     .then(function(){
                         return cmConversationsAdapter.deleteConversation($scope.conversation.id);
