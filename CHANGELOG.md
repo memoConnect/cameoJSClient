@@ -1,5 +1,8 @@
 # Dev
 
+## BS 27.01.2015
+* CAM-1331 add delete/leave conversations
+
 ## WW 27.01.2015
 * CAM-1649 add delete pending requests
 
