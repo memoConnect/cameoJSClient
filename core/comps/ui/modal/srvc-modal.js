@@ -96,7 +96,12 @@ angular.module('cmUi')
 
             // the modal directive (<cm-modal>) will register itself on next digest
 
-            return modal
+            return modal;
+        };
+
+        self.remove = function(id){
+            angular.element($document[0].querySelector('cm-modal#'+id)).remove();
+            delete self.instances[id];
         };
 
         self.confirm = function(config){
@@ -107,7 +112,8 @@ angular.module('cmUi')
                             okay:   config.okay     || 'MODAL.LABEL.OK',
                             title:  config.title    || 'DRTV.CONFIRM.HEADER',
                             html:   config.html     || '',
-                            data:   config.data
+                            data:   config.data,
+                            removeAfterClose: true
                         };
 
             var deferred    = $q.defer(),
@@ -120,11 +126,11 @@ angular.module('cmUi')
 
             scope.cancel            =   function(){ 
                                             $rootScope.closeModal(modalId)
-                                        }
+                                        };
             scope.confirm           =   function(){
                                             deferred.resolve(this)
                                             $rootScope.closeModal(modalId) 
-                                        }
+                                        };
             self.create({
                 id:             modalId,
                 type:           'confirm',
@@ -139,7 +145,9 @@ angular.module('cmUi')
                 if(id == modalId)
                     deferred.reject();
 
-                return true; //remove event binding
+                self.remove(modalId);
+
+                return true;
             });
 
             return deferred.promise;
