@@ -1,5 +1,8 @@
 # Dev
 
+## WW 27.01.2015
+* CAM-1649 add delete pending requests
+
 #########
 # RC 0.5.0 - 26.01.2015
 #########
