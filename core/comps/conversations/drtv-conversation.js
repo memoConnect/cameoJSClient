@@ -131,20 +131,18 @@ angular.module('cmConversations')
                             $scope.isSending = false;
                             $scope.isSendingAbort = true;
 
-                            if(!data.errorCode){
-                                deferred.reject('problem with file and none errorCode is give');
+                            if(!data.errorCodes){
+                                deferred.reject('problem with file and none errorCodes is give');
                             } else {
-                                deferred.reject('problem with prepare file upload');
-
-                                cmNotify.warn(data.errorCode, {
+                                cmNotify.warn(data.errorCodes[0], {
                                     ttl: 0,
-                                    i18n: cmErrorCodes.toI18n(data.errorCode, {
+                                    i18n: cmErrorCodes.toI18n(data.errorCodes[0], {
                                         error: data.error,
                                         header: data.headers
                                     })
                                 });
 
-                                deferred.reject(data.errorCode);
+                                deferred.reject(data.errorCodes);
                             }
                         }
                     );
