@@ -127,23 +127,19 @@ angular.module('cmConversations')
                                 filesForMessage = files;
                             deferred.resolve()
                         },
-                        function(data){
+                        function(error){
                             $scope.isSending = false;
                             $scope.isSendingAbort = true;
 
-                            if(!data.errorCodes){
-                                deferred.reject('problem with file and none errorCodes is give');
-                            } else {
-                                cmNotify.warn(data.errorCodes[0], {
-                                    ttl: 0,
-                                    i18n: cmErrorCodes.toI18n(data.errorCodes[0], {
-                                        error: data.error,
-                                        header: data.headers
-                                    })
-                                });
+                            cmNotify.warn(error.codes[0], {
+                                ttl: 0,
+                                i18n: cmErrorCodes.toI18n(error.codes[0], {
+                                    error: error.data,
+                                    headers: error.headers
+                                })
+                            });
 
-                                deferred.reject(data.errorCodes);
-                            }
+                            deferred.reject(data.errorCodes);
                         }
                     );
 
