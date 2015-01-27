@@ -267,6 +267,10 @@
             "DELETE":{
                 "HEADER": "Talk löschen",
                 "TEXT": "Wollen Sie den Talk wirklich löschen?"
+            },
+            "ASYMMETRIC_KEY_TRUST_ERROR": {
+                "HEADER": "@todo Fehler mit cameoKey",
+                "TEXT": "Sie haben Ihren lokalen cameoKey noch nicht mit Ihren anderen cameoKeys verknüpft. Deshalb können Sie Talks mit Identitäten, die Ihnen vertrauen, hier nicht lesen"
             }
         }
     },
