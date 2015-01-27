@@ -1,11 +1,10 @@
 'use strict';
 
-
 angular.module('cmConversations')
 .directive('cmConversationMenu', [
-    'cmConversationFactory', 'cmModal', 'cmUtil',
+    'cmUserModel', 'cmConversationFactory', 'cmModal', 'cmNotify', 'cmUtil',
     '$window', '$rootScope', '$q',
-    function (cmConversationFactory, cmModal, cmUtil,
+    function (cmUserModel, cmConversationFactory, cmModal, cmNotify, cmUtil,
               $window, $rootScope, $q) {
         return {
             restrict: 'E',
@@ -39,35 +38,38 @@ angular.module('cmConversations')
 
                 $scope.handleMenu = function(forceClose){
                     $scope.menuVisible = !forceClose && $scope.menuVisible || forceClose ? false : true;
-                }
+                };
 
                 $scope.delete = function(){
                     cmModal.confirm({
                         title:  'CONVERSATION.MODAL.DELETE.HEADER',
                         text:   'CONVERSATION.MODAL.DELETE.TEXT'
                     })
-                        .then(function() {
+                    .then(function() {
 
-                            if($scope.conversation.recipients.length > 1){
-                                var message = $scope.conversation.messages.create({
-                                    conversation:$scope.conversation,
-                                    id:'#new_message',
-                                    fromIdentity: cmUserModel.data.identity,
-                                    text:'$${SYSTEM.CONVERSATION.DELETE}'
-                                });
+                        if($scope.conversation.recipients.length > 1){
+                            var message = $scope.conversation.messages.create({
+                                conversation:$scope.conversation,
+                                id:'#new_message',
+                                fromIdentity: cmUserModel.data.identity,
+                                text:'$${SYSTEM.CONVERSATION.DELETE}'
+                            });
 
-                                return $scope.conversation.sendMessage(message);
-                            } else {
-                                return $q.when();
-                            }
-                        })
-                        .then(function(){
-                            return cmConversationFactory.deleteConversation($scope.conversation);
-                        })
-                        .then(function(){
-                            cmConversationFactory.deregister($scope.conversation);
-                            $rootScope.goTo('/talks');
-                        })
+                            return $scope.conversation.sendMessage(message, null, true);
+                        } else {
+                            return $q.when();
+                        }
+                    })
+                    .then(function(){
+                        return cmConversationFactory.deleteConversation($scope.conversation);
+                    })
+                    .then(function(){
+                        cmConversationFactory.deregister($scope.conversation);
+                        $rootScope.goTo('/talks');
+                    })
+                    .catch(function(r){
+                        console.log('delete error', r)
+                    })
                 }
             }
         }

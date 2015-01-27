@@ -446,7 +446,7 @@ angular.module('cmConversations')
 
             };
 
-            this.sendMessage = function(message, files){
+            this.sendMessage = function(message, files, force){
                 if(!(message instanceof cmMessageModel)){
                     return $q.reject('message no message-model');
                 }
@@ -458,8 +458,8 @@ angular.module('cmConversations')
                                 :   $q.when(null);
                             //Todo: null for 'not encrypted' old convention
                         })
-                        .then(function(passphrase) {
-
+                        .then(
+                            function(passphrase) {
                                 return self.isEncrypted()
                                         ? message
                                             .addFiles(files)
@@ -479,7 +479,20 @@ angular.module('cmConversations')
                                             .then(function () {
                                                 return message.save()
                                             })
-                        })
+                            },
+                            function(){
+                                if(typeof force == 'boolean' && force === true){
+                                    return  message
+                                        .addFiles(files)
+                                        .setPublicData(['text', 'fileIds'])
+                                        .revealSignatures()
+                                        .getSignatures()
+                                        .then(function () {
+                                            return message.save()
+                                        })
+                                }
+                            }
+                        )
             };
 
             /**
