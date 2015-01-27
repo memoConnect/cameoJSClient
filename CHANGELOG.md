@@ -1,5 +1,11 @@
 # Dev
 
+## WW 27.01.2015
+* CAM-1649 add delete pending requests
+
+## BS 26.01.2015
+* fix BUG CAM-1692, update LocalStorage handling
+
 #########
 # RC 0.5.0 - 26.01.2015
 #########

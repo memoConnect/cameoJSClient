@@ -55,7 +55,7 @@ angular.module('cmValidate')
                             function(){},
                             function(response){
                                 loader.stop();
-                                switch (response.data.errorCode){
+                                switch (response.data.errorCodes[0]){
                                     case "VERIFY.EXPIRED":
                                         scope.infoBubble.invalid = true;
                                     break;

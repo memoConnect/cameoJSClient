@@ -1,9 +1,11 @@
 'use strict';
 
 angular.module('cmContacts').directive('cmContactList',[
-    'cmContactsModel', 'cmIdentityFactory', 'cmFilter', 'cmLoader', 'cmLogger','cmModal','cmNotify',
-    '$rootScope','$timeout',
-    function (cmContactsModel, cmIdentityFactory, cmFilter, cmLoader, cmLogger, cmModal, cmNotify,
+    'cmContactsModel', 'cmIdentityFactory', 'cmFilter',
+    'cmLoader', 'cmLogger', 'cmModal', 'cmNotify', 'cmContactsAdapter',
+    '$rootScope', '$timeout',
+    function (cmContactsModel, cmIdentityFactory, cmFilter,
+              cmLoader, cmLogger, cmModal, cmNotify, cmContactsAdapter,
               $rootScope, $timeout) {
         return {
             restrict: 'AE',
@@ -120,6 +122,18 @@ angular.module('cmContacts').directive('cmContactList',[
                         )
                     }
                 };
+
+                $scope.deleteFriendRequest = function(contact, withoutModal){
+                    return withoutModal
+                        ? $q.when()
+                        : cmModal.confirm({
+                        title: 'CONTACT.MODAL.DELETE_FRIENDREQUEST.HEADER',
+                        text: 'CONTACT.MODAL.DELETE_FRIENDREQUEST.TEXT'
+                    }).then(function(){
+                        cmContactsModel
+                            .deleteFriendRequest(contact)
+                    });
+                }
             }
         }
     }

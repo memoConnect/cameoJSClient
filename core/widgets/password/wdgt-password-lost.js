@@ -68,7 +68,7 @@ angular.module('cmWidgets').directive('cmWidgetPasswordLost', [
                                 },
                                 function(response){
                                     loader.stop();
-                                    switch(response.data.errorCode){
+                                    switch(response.data.errorCodes[0]){
                                         case 'PASSWORD.RESET.LOGIN.NOT.FOUND':
                                             $scope.info.loginNotFound = true;
                                         break;
