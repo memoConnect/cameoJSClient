@@ -794,6 +794,48 @@ this.setValQuick = function (dataQa, text) {
     ptor.executeScript("document.querySelector(\"[data-qa='" + dataQa + "']\").value = '" + text + "'")
 }
 
+this.addRecipient = function(username){
+    self.waitAndClickQa('btn-add-recipients');
+    self.waitForPageLoad("/conversation/new/recipients")
+    self.headerSearchInList(username);
+    self.waitForQa('contact-display-name')
+    $("[data-qa='btn-select-contact']").click()
+
+    self.closeHeaderSearch()
+
+    self.get("/conversation/new")
+    self.waitForPageLoad("/conversation/new")
+}
+
+this.createUnencryptedConversation = function(subject, message, recpient){
+    self.get("/conversation/new")
+    self.waitForPageLoad("/conversation/new")
+
+    self.disableEncryption();
+
+    if(recpient){
+        if(typeof recpient == 'string'){
+            self.addRecipient(recpient)
+        }
+    }
+
+
+    self.setVal("input-subject", subject)
+    self.setVal("input-answer", message)
+    self.waitAndClickQa("btn-send-answer")
+    if(!recpient){
+        self.waitAndClickQa("btn-confirm", "cm-modal.active")
+    }
+    self.waitForPageLoad("/conversation/*")
+    self.waitForElements("cm-message", 1)
+
+    ptor.wait(function(){
+        return self.getVal("input-answer").then(function(answer){
+            return answer == ''
+        })
+    })
+}
+
 this.createEncryptedConversation = function (subject, message) {
     self.get("/conversation/new")
     self.waitForPageLoad("/conversation/new")

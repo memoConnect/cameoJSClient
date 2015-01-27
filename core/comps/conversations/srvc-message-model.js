@@ -328,12 +328,12 @@ angular.module('cmConversations')
                 reason.type == 0
                 ?   self.state.set('unverifiable')
                 :   self.state.set('defective')
-            }
+            };
 
             this.revealSignatures = function(){
                 this.reveal_signatures = true
                 return this
-            }
+            };
 
             this.setText = function(text){
                 this.text = text;
@@ -344,7 +344,7 @@ angular.module('cmConversations')
                 if(!this.state.is('new')) {
                     return (this.encryptedData == undefined) ? false : (this.encryptedData != false)
                 }
-            }
+            };
 
             this.getPublicData = function(){
                 var public_data = {};
@@ -354,7 +354,7 @@ angular.module('cmConversations')
                 });
 
                 return public_data
-            }
+            };
 
             this.getSecretData = function(){
                 var secret_data = {};
@@ -365,7 +365,7 @@ angular.module('cmConversations')
 
                 return secret_data
 
-            }
+            };
 
             this.getSignatures = function(){
                 return  this.authenticity
@@ -377,11 +377,11 @@ angular.module('cmConversations')
                             self.signatures.plain = signatures
                             return $q.when(self.signatures.plain)
                         })
-            }
+            };
 
             this.verifySignatures = function(){
                 return this.authenticity.verify(this.from)
-            }
+            };
 
 
             this.encrypt = function (passphrase) {
@@ -399,7 +399,7 @@ angular.module('cmConversations')
 
                             return  $q.when(self.encryptedData)
                         })
-            }
+            };
 
             this.decrypt = function (passphrase) {
                 //cmLogger.debug('cmMessageModel.decrypt');
@@ -452,7 +452,7 @@ angular.module('cmConversations')
              * @returns {*|Promise|!Promise.<RESULT>}
              */
             this.save = function (){
-                $q.when()
+             return $q.when()
                 .then(function(){
                     var publicData      = self.getPublicData(),
                         encryptedData   = self.encryptedData
@@ -500,7 +500,7 @@ angular.module('cmConversations')
                     return $q.when(message_data)
                 })
                 .catch(function(reason){
-                    cmLogger('cmMessage: saving failed:' + reason)
+                    cmLogger.debug('cmMessage: saving failed:' + reason)
                 })
             };
 
@@ -625,7 +625,7 @@ angular.module('cmConversations')
              * @returns {cmMessageModel.Message}
              */
             this.addFiles = function(array){
-                if(typeof array !== 'undefined' && array.length > 0){
+                if(typeof array !== 'undefined' && array != null && array.length > 0){
                     angular.forEach(array, function(file){
                         self._addFile(file);
                     });
