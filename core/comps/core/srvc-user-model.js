@@ -24,11 +24,11 @@ angular.module('cmCore')
     'cmBoot', 'cmAuth', 'cmLocalStorage', 'cmIdentityFactory', 'cmIdentityModel', 'cmFactory',
     'cmCrypt', 'cmKeyFactory', 'cmKey', 'cmStateManagement', 'cmObject', 'cmUtil',
     'cmNotify', 'cmLogger', 'cmCallbackQueue', 'cmPushNotificationAdapter', 'cmApi',
-    '$rootScope', '$q', '$location', '$timeout',
+    '$rootScope', '$q', '$location', '$timeout', 'cmMigrate', 'cmPhonegap',
     function(cmBoot, cmAuth, cmLocalStorage, cmIdentityFactory, cmIdentityModel, cmFactory,
              cmCrypt, cmKeyFactory, cmKey, cmStateManagement, cmObject, cmUtil,
              cmNotify, cmLogger, cmCallbackQueue, cmPushNotificationAdapter, cmApi,
-             $rootScope, $q, $location, $timeout){
+             $rootScope, $q, $location, $timeout, cmMigrate, cmPhonegap){
 
         var self = this,
             isAuth = false,
@@ -239,6 +239,21 @@ angular.module('cmCore')
                             }
                         );
                     }
+                } else {
+                    // migrate crosswalk
+                    cmPhonegap.isReady('cmUserModel', function(){
+                        cmMigrate.migrateLocalStorage().then(function(hasCompleted){
+                            cmLogger.debug("migration result: " + hasCompleted)
+                            if(hasCompleted) {
+                                cmLogger.debug("SUCCESS!!!!!!!!!!!!!!!!!!!!!!!!!")
+                                self.loadIdentity(accountData);
+                            } else {
+                                // do nothing
+                                cmLogger.error("No local storage migrated.")
+                            }
+
+                        })
+                    });
                 }
             }
 

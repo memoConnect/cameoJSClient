@@ -1,4 +1,4 @@
-module.exports = function(grunt, options){
+module.exports = function (grunt, options) {
 
     grunt.loadNpmTasks('grunt-phonegap');
 
@@ -15,12 +15,19 @@ module.exports = function(grunt, options){
         'phonegap:run'
     ]);
 
-    function genPlugins(useRepo){
+    grunt.registerTask('crosswalk:build', [
+        'phonegap:app-prepare',
+        'phonegap:app-config-crosswalk',
+        'phonegap:build',
+        'shell:compileCrosswalk'
+    ]);
+
+    function genPlugins(useRepo) {
         var plugins = options.globalCameoPhonegapConfig.plugins,
             array = [];
 
-        plugins.forEach(function(plugin){
-            if('repo' in plugin) {
+        plugins.forEach(function (plugin) {
+            if ('repo' in plugin) {
                 var repo = grunt.template.process(plugin.repo, {
                     data: {
                         'appProtocol': options.globalCameoBuildConfig.static.appProtocol
@@ -36,7 +43,7 @@ module.exports = function(grunt, options){
     }
 
     return {
-        tasks:{
+        tasks: {
             copy: {
                 'resources-phonegap-local': {
                     files: [
@@ -68,23 +75,32 @@ module.exports = function(grunt, options){
 
                     releaseName: function () {
                         var pkg = grunt.file.readJSON('package.json');
-                        return(pkg.name + '-' + pkg.version);
+                        return (pkg.name + '-' + pkg.version);
                     },
                     name: function () {
                         var pkg = grunt.file.readJSON('package.json');
                         return pkg.name;
                     },
                     versionCode: function () {
-                        return(1)
+                        return (1)
                     },
                     minSdkVersion: function () {
-                        return(21)
+                        return (21)
                     },
                     targetSdkVersion: function () {
                         return 21
                     }
                 }
+            },
+            shell: {
+                compileCrosswalk: {
+                    options: {
+                        stdout: true
+                    },
+                    command: './compileCrosswalk.sh'
+                }
             }
+
         }
     }
 };
