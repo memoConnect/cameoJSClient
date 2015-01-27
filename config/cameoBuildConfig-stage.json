@@ -7,7 +7,7 @@
         "enableDebug": true,
         "logLevel": "WARN",
         "performancePage": false,
-        "errorOnTodoInI18n": true
+        "errorOnTodoInI18n": false
     },
     "path": {
         "cockpit": "/c/",

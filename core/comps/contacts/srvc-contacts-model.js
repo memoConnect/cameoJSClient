@@ -207,6 +207,14 @@ angular.module('cmContacts').service('cmContactsModel',[
             return cmContactsAdapter.sendFriendRequest(id, message);
         };
 
+        this.deleteFriendRequest = function(contact){
+            return cmContactsAdapter
+                .deleteFriendRequest(contact.identity.id)
+                .then(function(){
+                    self.contacts.deregister(contact);
+                });
+        };
+
         this.addContact = function(data){
             var defer = $q.defer();
 
