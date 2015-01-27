@@ -67,8 +67,8 @@ angular.module('cmConversations')
                         cmConversationFactory.deregister($scope.conversation);
                         $rootScope.goTo('/talks');
                     })
-                    .catch(function(r){
-                        console.log('delete error', r)
+                    .catch(function(){
+                        cmNotify.warn('SYSTEM.ERROR.MESSAGE');
                     })
                 }
             }
