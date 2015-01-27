@@ -28,11 +28,11 @@ describe('Delete Conversation Spec: ',function() {
         it('should open conversation menu and show delete button', function () {
             util.waitAndClickQa('menu-conversation')
 
-            util.waitForQa('menu-delete-conversation')
+            util.waitForQa('btn-delete-talk')
         })
 
         it('should delete conversation', function () {
-            util.waitAndClickQa('menu-delete-conversation')
+            util.waitAndClickQa('btn-delete-talk')
             util.waitForModalOpen()
             util.confirmModal()
 
@@ -98,11 +98,11 @@ describe('Delete Conversation Spec: ',function() {
         it('should open conversation menu and show delete button', function () {
             util.waitAndClickQa('menu-conversation')
 
-            util.waitForQa('menu-delete-conversation')
+            util.waitForQa('btn-delete-talk')
         })
 
         it('should delete conversation', function () {
-            util.waitAndClickQa('menu-delete-conversation')
+            util.waitAndClickQa('btn-delete-talk')
             util.waitForModalOpen()
             util.confirmModal()
 
@@ -120,16 +120,20 @@ describe('Delete Conversation Spec: ',function() {
         })
 
         it('testUser1 should login', function(){
-            util.login(testUser2,'password');
+            util.login(testUser1,'password');
         })
 
         it('testUser1 should read Conversation', function(){
             util.readConversation(subject)
         })
 
-        it('conversation should not have any other recipients', function(){
-
+        it('there should no recipients', function(){
+            expect($('div.list-recipients').isPresent()).toBe(false)
         })
+    })
+
+    it('testUser1 should logout', function(){
+        util.logout()
     })
 
     it('should delete testUsers  ', function(){
