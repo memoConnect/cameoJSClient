@@ -598,8 +598,12 @@
     },
     "MODAL": {
       "DELETE": {
-        "HEADER": "Delete Contact",
+        "HEADER": "Delete contact",
         "TEXT": "Are you sure you want to delete this contact?"
+      },
+      "DELETE_FRIENDREQUEST": {
+        "HEADER": "@todo Delete request",
+        "TEXT": "@todo Are you sure you want to delete this request?"
       }
     },
     "TRUST": {
