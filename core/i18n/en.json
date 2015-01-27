@@ -845,6 +845,9 @@
                   }
               }
           }
+    },
+    "CONVERSATION":{
+      "DELETE": "@todo leave talk"
     }
   },
   "TALKS": {
