@@ -235,8 +235,7 @@
             "PASSWORD_WRONG": "Das eingegebene Passwort ist falsch.",
             "NO_PASSWORD": "Sie müssen ein Passwort setzen oder die Verschlüsselung deaktivieren, weil nicht alle Empfänger einen cameoKey besitzen.\n <a href=\"#/{{type}}/{{typeId}}/security\">Hier Verschlüsselung einstellen</a>",
             "PASSWORD_NEEDED": "Zum Entschlüsseln des Talks geben Sie bitte ein Passwort ein.\n <a href=\"#/{{type}}/{{typeId}}/security\">Hier ein Passwort eingeben!</a>",
-            "ASYMMETRIC_DECRYPT_ERROR": "Der cameoKey fehlt.",
-            "ASYMMETRIC_KEY_TRUST_ERROR": "Sie haben Ihren lokalen cameoKey noch nicht mit Ihren anderen cameoKeys verknüpft. Deshalb können Sie Talks mit Identitäten, die Ihnen vertrauen, hier nicht lesen."
+            "ASYMMETRIC_DECRYPT_ERROR": "Der cameoKey fehlt."
         },
         "CONFIRM": {
             "RECIPIENTS_MISSING": "Möchten Sie die Nachricht ohne weitere Empfänger abschicken? Sie werden die einzige Person sein, die diese Nachricht lesen kann."
@@ -257,6 +256,12 @@
         },
         "SETTINGS": {
             "OKAY": "Fertig"
+        },
+        "MODAL": {
+            "ASYMMETRIC_KEY_TRUST_ERROR": {
+                "HEADER": "@todo Fehler mit cameoKey",
+                "TEXT": "Sie haben Ihren lokalen cameoKey noch nicht mit Ihren anderen cameoKeys verknüpft. Deshalb können Sie Talks mit Identitäten, die Ihnen vertrauen, hier nicht lesen"
+            }
         }
     },
 
@@ -375,6 +380,10 @@
             "DELETE": {
                 "HEADER": "Kontakt löschen",
                 "TEXT": "Wollen Sie den Kontakt wirklich löschen?"
+            },
+            "DELETE_FRIENDREQUEST": {
+                "HEADER": "@todo Anfrage löschen",
+                "TEXT": "@todo Wollen Sie diese offene Kontaktanfrage wirklich löschen?"
             }
         },
         "FOOTER": {

@@ -1,6 +1,7 @@
 'use strict';
 
-angular.module('cmFiles').service('cmAnswerFiles', [
+angular.module('cmFiles')
+.service('cmAnswerFiles', [
     'cmObject', 'cmFileFactory',
     '$q',
     function (cmObject, cmFileFactory,
@@ -78,8 +79,8 @@ angular.module('cmFiles').service('cmAnswerFiles', [
                     },
                     function (result) {
                         deferred.reject({
-                            errorCode: result.data.errorCode,
-                            error: result.data.data,
+                            codes: result.data.errorCodes,
+                            data: result.data.data,
                             headers: result.config.headers
                         });
                     }

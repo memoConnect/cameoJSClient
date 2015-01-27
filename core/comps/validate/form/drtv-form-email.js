@@ -3,7 +3,9 @@
 angular.module('cmValidate')
 .directive('cmFormEmail', [
     'cmVerify',
-    function (cmVerify) {
+    '$rootScope',
+    function (cmVerify,
+              $rootScope) {
         return {
             restrict: 'E',
             scope: {
@@ -24,7 +26,17 @@ angular.module('cmValidate')
                     if(typeof $scope.toggleInfo == 'string'){
                         $scope.showEmailInfo = !$scope.showEmailInfo ? true : false;
                     }
-                }
+                };
+
+                var killWatcher = $rootScope.$on('cmValidate:error', function(event, errorCodes){
+                    if(errorCodes.length > 0 && errorCodes.indexOf('PHONENUMBER_INVALID') >= 0) {
+                        $scope.cmInnerForm.phoneNumberDisp.$setValidity('phoneNumberDisp', false);
+                    }
+                });
+
+                $scope.$on('$destroy', function(){
+                    killWatcher();
+                });
             }
         }
     }

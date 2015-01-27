@@ -28,7 +28,7 @@ angular.module('cmWidgets').directive('cmWidgetPasswordReset', [
 
                     },
                     function(response){
-                        switch(response.data.errorCode){
+                        switch(response.data.errorCodes[0]){
                             case 'PASSWORD.RESET.EXPIRED':
                                 $scope.info.expired = true;
                             break;
@@ -89,7 +89,7 @@ angular.module('cmWidgets').directive('cmWidgetPasswordReset', [
                                 },
                                 function(response){
                                     loader.stop();
-                                    switch(response.data.errorCode) {
+                                    switch(response.data.errorCodes[0]) {
                                         case 'PASSWORD.RESET.EXPIRED':
                                             $scope.info.expired = true;
                                         break;

@@ -37,12 +37,12 @@ angular.module('cmFiles').directive('cmUploadAvatar',[
                                 });
                             }
                         },
-                        function(errorCode, error, header) {
-                            cmNotify.warn(errorCode, {
+                        function(error) {
+                            cmNotify.warn(error.codes[0], {
                                 ttl: 0,
-                                i18n: cmErrorCodes.toI18n(errorCode, {
-                                    error: error,
-                                    header: header
+                                i18n: cmErrorCodes.toI18n(error.codes[0], {
+                                    error: error.data,
+                                    headers: error.headers
                                 })
                             });
                         }
