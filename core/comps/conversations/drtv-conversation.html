@@ -80,7 +80,7 @@
         <div class="h10"></div>
     </section>
 
-    <button class="cm-btn-grey" ng-if="conversation && conversation.numberOfMessages > conversation.messages.length" ng-show="conversation.numberOfMessages != conversation.messages.length" ng-click="loadPreviousMessages()" data-qa="btn-load-more-messages">
+    <button class="cm-btn-grey" ng-if="conversation && conversation.numberOfMessages > conversation.messages.length" ng-show="conversation.numberOfMessages != conversation.messages.length" ng-click="loadPreviousMessages()" data-qa="btn-load-more-messages" cm-reactive>
         {{'CONVERSATION.LABEL.LOAD_PREVIOUS'|cmTranslate}}
     </button>
 
