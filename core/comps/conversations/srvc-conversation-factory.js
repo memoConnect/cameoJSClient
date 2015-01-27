@@ -109,6 +109,16 @@ angular.module('cmConversations').service('cmConversationFactory', [
             return deferred.promise;
         };
 
+        self.deleteConversation = function(conversation){
+            var instance = self.find(conversation);
+
+            if(instance instanceof cmConversationModel){
+                return cmConversationsAdapter.deleteConversation(instance.id)
+            } else {
+                return $q.reject('conversation not found');
+            }
+        };
+
         /**
          * @ngdoc method
          * @methodOf cmConversationFactory

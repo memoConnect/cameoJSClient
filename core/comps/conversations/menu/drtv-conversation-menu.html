@@ -18,8 +18,9 @@
             <i class="fa cm-lock"></i>
             {{::'CONVERSATION.MENU.SECURITY_SETTINGS'|cmTranslate}}
         </li>
-        <li ng-if="!conversation.state.is('new')">
-            <cm-delete-conversation cm-data="conversation"></cm-delete-conversation>
+        <li ng-if="!conversation.state.is('new')" ng-click="delete()" cm-reactive>
+            <i class="fa cm-trash"></i>
+            {{::'CONVERSATION.MENU.DELETE'|cmTranslate}}
         </li>
     </ul>
 </div>
