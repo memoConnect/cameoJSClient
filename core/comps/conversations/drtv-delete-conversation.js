@@ -11,7 +11,7 @@ angular.module('cmConversations').directive('cmDeleteConversation',[
     function (cmUserModel, cmConversationsAdapter, cmConversationFactory, cmModal, cmLoader, $rootScope, $q){
         return {
             restrict: 'E',
-            template: '<i class="fa cm-trash" ng-click="delete()"></i>',
+            template: '<i class="fa cm-trash" ng-click="delete()"></i> {{::"CONVERSATION.MENU.DELETE"|cmTranslate}}',
             scope: {
                 conversation: '=cmData'
             },
