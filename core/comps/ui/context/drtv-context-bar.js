@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('cmUi').directive('cmContextBar',[
-    'cmContextFactory', 'cmModal',
-    function(cmContextFactory, cmModal){
+    'cmContextFactory', 'cmModal', 'cmLoader',
+    function(cmContextFactory, cmModal, cmLoader){
         return {
             restrict: 'E',
             templateUrl: 'comps/ui/context/drtv-context-bar.html',
@@ -48,6 +48,9 @@ angular.module('cmUi').directive('cmContextBar',[
                  */
             },
             controller: function($scope){
+                var running = false,
+                    loader = new cmLoader($scope);
+
                 $scope.counter = 0;
 
                 $scope.close = function(){
@@ -55,19 +58,29 @@ angular.module('cmUi').directive('cmContextBar',[
                 };
 
                 $scope.delete = function(){
-                    var constText = 'SYSTEM.CONTEXT.MODAL.CONFIRM.DELETE.ONE_ITEM';
-                    if(cmContextFactory.length > 1){
-                        constText = 'SYSTEM.CONTEXT.MODAL.CONFIRM.DELETE.MORE_ITEMS';
+                    if(!running){
+                        running = true;
+
+                        loader.start();
+
+                        var constText = 'SYSTEM.CONTEXT.MODAL.CONFIRM.DELETE.ONE_ITEM';
+                        if(cmContextFactory.length > 1){
+                            constText = 'SYSTEM.CONTEXT.MODAL.CONFIRM.DELETE.MORE_ITEMS';
+                        }
+
+                        cmModal.confirm({
+                            title:  'SYSTEM.CONTEXT.MODAL.CONFIRM.DELETE.TITLE',
+                            text:   constText
+                        })
+                            .then(function(){
+                                cmContextFactory
+                                    .delete()
+                                    .finally(function(){
+                                        running = false;
+                                        loader.stop();
+                                    });
+                            })
                     }
-
-                    cmModal.confirm({
-                        title:  'SYSTEM.CONTEXT.MODAL.CONFIRM.DELETE.TITLE',
-                        text:   constText
-                    })
-                    .then(function(){
-                        cmContextFactory.delete();
-                    })
-
                 };
             }
         }

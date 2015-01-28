@@ -43,14 +43,7 @@ angular.module('cmUi').factory('cmContextModel', [
             this.delete = function(){
                 //cmLogger.debug('cmContextModel.delete');
 
-                this.model.delete().then(
-                    function(){
-
-                    },
-                    function(){
-
-                    }
-                )
+                return this.model.delete();
             };
 
 

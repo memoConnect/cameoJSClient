@@ -39,11 +39,26 @@ angular.module('cmUi').service('cmContextFactory', [
         };
 
         self.delete = function(){
-            cmLogger.debug('cmFactory.delete -> proceed delete context objects')
+            //cmLogger.debug('cmFactory.delete -> proceed delete context objects');
+
+            var defered = $q.defer(),
+                done = [];
+
 
             self.forEach(function(instance){
-                instance.delete()
-            })
+                done.push(instance.delete())
+            });
+
+            $q.all(done).then(
+                function(){
+                    defered.resolve();
+                },
+                function(){
+                    defered.reject();
+                }
+            );
+
+            return defered.promise();
         };
 
         self.validate = function(data){
@@ -63,7 +78,7 @@ angular.module('cmUi').service('cmContextFactory', [
 
         self.on('deleted:finished', function(event, data){
             console.log('factory on delete:finished', data)
-        })
+        });
 
         $rootScope.$on('logout', function(){
             self.reset();
