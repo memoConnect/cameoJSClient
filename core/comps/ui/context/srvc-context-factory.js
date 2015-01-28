@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('cmUi').service('cmContextFactory', [
-    'cmFactory', 'cmContextModel', 'cmStateManagement', 'cmLogger',
+    'cmFactory', 'cmContextModel', 'cmStateManagement', 'cmNotify', 'cmLogger',
     '$rootScope', '$q',
-    function(cmFactory, cmContextModel, cmStateManagement, cmLogger,
+    function(cmFactory, cmContextModel, cmStateManagement, cmNotify, cmLogger,
              $rootScope, $q) {
 
         var self = cmFactory(cmContextModel,
@@ -54,6 +54,7 @@ angular.module('cmUi').service('cmContextFactory', [
                     defered.resolve();
                 },
                 function(){
+                    cmNotify.warn('NOT_ALL_DELETED')
                     defered.reject();
                 }
             );

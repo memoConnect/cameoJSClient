@@ -77,6 +77,7 @@ angular.module('cmUi').directive('cmContextBar',[
                                             .finally(function(){
                                                 running = false;
                                                 loader.stop();
+                                                $scope.close();
                                             });
                         })
                     }

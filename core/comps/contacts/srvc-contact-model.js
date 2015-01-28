@@ -116,8 +116,7 @@ angular.module('cmContacts')
                         text: 'CONTACT.MODAL.DELETE.TEXT'
                     })
                 }()).then(function(){
-                    return cmContactsAdapter
-                        .deleteContact(self.id)
+                    return cmContactsAdapter.deleteContact(self.id)
                 }).then(function(){
                     self.trigger('deleted:finished',self);
                 });
