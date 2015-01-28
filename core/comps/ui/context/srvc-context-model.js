@@ -2,10 +2,10 @@
 
 angular.module('cmUi').factory('cmContextModel', [
     'cmStateManagement', 'cmObject', 'cmLogger',
-    'cmConversationModel', 'cmContactModel',
+    'cmConversationContextModel', 'cmContactContextModel',
     '$rootScope', '$q',
     function(cmStateManagement, cmObject, cmLogger,
-             cmConversationModel, cmContactModel,
+             cmConversationContextModel, cmContactContextModel,
              $rootScope, $q) {
 
         function cmContextModel(data){
@@ -27,17 +27,23 @@ angular.module('cmUi').factory('cmContextModel', [
                 //cmLogger.debug('cmContextModel.importData');
 
                 this.type   = data.type || this.type;
-                this.model  = data.model || this.model;
+
+                switch(this.type){
+                    case "conversation":
+                            this.model = data.model ? new cmConversationContextModel(data.model) : this.model;
+                        break;
+                    case "contact":
+                            this.model = data.model ? new cmContactContextModel(data.model) : this.model;
+                        break;
+                    default:
+                        // remove model from factory
+                }
             };
 
-            this.processDelete = function(){
-                //cmLogger.debug('cmContextModel.processDelete');
+            this.delete = function(){
+                //cmLogger.debug('cmContextModel.delete');
 
-                if(this.type == 'conversation' && this.model instanceof cmConversationModel){
-                    console.log('delete conversation', this.model)
-                } else if(this.type == 'contact' && this.model instanceof cmContactModel){
-                    console.log('delete contact', this.model)
-                }
+                this.model.delete();
             };
 
 

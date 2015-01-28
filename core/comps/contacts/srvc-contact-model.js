@@ -108,17 +108,22 @@ angular.module('cmContacts')
             };
 
             this.delete = function(withoutModal){
+                console.log('cmContactModel.delete', withoutModal)
+
                 return withoutModal
                     ? $q.when()
                     : cmModal.confirm({
                         title: 'CONTACT.MODAL.DELETE.HEADER',
                         text: 'CONTACT.MODAL.DELETE.TEXT'
-                }).then(function() {
-                    return cmContactsAdapter
-                        .deleteContact(self.id)
-                }).then(function(){
-                    self.trigger('deleted:finished',self);
-                });
+                    }).then(function() {
+                        console.log('adapter')
+                        return cmContactsAdapter.deleteContact(self.id)
+                    }).then(function(){
+                        console.log('moeps')
+                        self.trigger('deleted:finished',self);
+                    },function(){
+                        console.log('tuff')
+                    });
             };
 
             init(data);

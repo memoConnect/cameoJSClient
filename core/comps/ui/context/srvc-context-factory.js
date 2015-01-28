@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('cmUi').service('cmContextFactory', [
-    'cmContextModel', 'cmFactory', 'cmStateManagement', 'cmLogger',
+    'cmFactory', 'cmContextModel', 'cmStateManagement', 'cmLogger',
     '$rootScope', '$q',
-    function(cmContextModel, cmFactory, cmStateManagement, cmLogger,
+    function(cmFactory, cmContextModel, cmStateManagement, cmLogger,
              $rootScope, $q) {
 
         var self = cmFactory(cmContextModel,
@@ -42,7 +42,7 @@ angular.module('cmUi').service('cmContextFactory', [
             cmLogger.debug('cmFactory.delete -> proceed delete context objects')
 
             self.forEach(function(instance){
-                instance.processDelete()
+                instance.delete()
             })
         };
 
