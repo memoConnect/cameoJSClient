@@ -1,8 +1,11 @@
 <!--<cm-loader ng-show="conversations.state.is('initial-loading')" class="fullscreen"></cm-loader>-->
 
 <ul>
-    <li ng-if="!conversations.length && !conversations.state.is('loading')" class="empty-list">
-        <i class="fa cm-info"></i>  {{::'TALKS.LIST_EMPTY'|cmTranslate}}
+    <li ng-if="!conversations.length && !conversations.state.is('loading')" class="with-inside-left-icon">
+        <i class="fa cm-info"></i>
+        <div class="item">
+            {{::'TALKS.LIST_EMPTY'|cmTranslate}}
+        </div>
     </li>
     <li ng-repeat="conversation in conversations | orderBy:'timeOfLastUpdate':true | cmSearch:'talks':search as results" cm-reactive data-qa="conversation-list-element"
         cm-context="{model:conversation,type:'conversation',tap:goto('/conversation/'+conversation.id)}">
