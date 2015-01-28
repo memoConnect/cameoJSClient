@@ -2,10 +2,10 @@
 
 angular.module('cmContacts').factory('cmContactContextModel', [
     'cmStateManagement', 'cmObject', 'cmLogger',
-    'cmContactsModel', 'cmContactModel',
+    'cmContactModel',
     '$rootScope', '$q',
     function(cmStateManagement, cmObject, cmLogger,
-             cmContactsModel, cmContactModel,
+             cmContactModel,
              $rootScope, $q) {
 
         function cmContactContextModel(data){
@@ -15,25 +15,28 @@ angular.module('cmContacts').factory('cmContactContextModel', [
 
             this.state = new cmStateManagement();
 
+            this.id = undefined;
             this.model = undefined;
 
             function init(model){
                 //cmLogger.debug('cmContactContextModel init');
+
+                // check instance of model, if wrong trigger deregister
                 self.importData(model);
             }
 
             this.importData = function(model){
                 //cmLogger.debug('cmContactContextModel.importData');
 
-                this.model  = model || this.model;
+                this.model = model || this.model;
+                this.id = this.model.id;
             };
 
             this.delete = function(){
-                cmLogger.debug('cmContactContextModel.delete');
+                //cmLogger.debug('cmContactContextModel.delete');
 
-                this.model.delete(true);
+                return this.model.delete(true);
             };
-
 
             init(data);
         }

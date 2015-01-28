@@ -30,10 +30,10 @@ angular.module('cmUi').factory('cmContextModel', [
 
                 switch(this.type){
                     case "conversation":
-                            this.model = data.model ? new cmConversationContextModel(data.model) : this.model;
+                            this.model = new cmConversationContextModel(data.model) || this.model;
                         break;
                     case "contact":
-                            this.model = data.model ? new cmContactContextModel(data.model) : this.model;
+                            this.model = new cmContactContextModel(data.model) || this.model;
                         break;
                     default:
                         // remove model from factory
@@ -43,7 +43,14 @@ angular.module('cmUi').factory('cmContextModel', [
             this.delete = function(){
                 //cmLogger.debug('cmContextModel.delete');
 
-                this.model.delete();
+                this.model.delete().then(
+                    function(){
+
+                    },
+                    function(){
+
+                    }
+                )
             };
 
 

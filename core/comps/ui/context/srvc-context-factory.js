@@ -60,6 +60,11 @@ angular.module('cmUi').service('cmContextFactory', [
         /**
          * EventHandling
          */
+
+        self.on('deleted:finished', function(event, data){
+            console.log('factory on delete:finished', data)
+        })
+
         $rootScope.$on('logout', function(){
             self.reset();
         });
