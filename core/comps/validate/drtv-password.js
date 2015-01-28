@@ -9,12 +9,15 @@ angular.module('cmValidate').directive('cmPassword', [
             templateUrl: 'comps/validate/drtv-password.html',
             scope: {
                 password: '=ngModel',
+                formName: '@formName',
                 tabindex: '@cmTabindex'
             },
             controller: function($scope, $element, $attrs){
                 $scope.required = ('cmDisableRequired' in $attrs) ? false : true;
 
                 $scope.nextTabIndex = parseInt($scope.tabindex) + 1;
+
+                $scope.parentForm = $scope.$parent[$scope.formName];
 
                 $scope.showConfirmPWStatus = true;
                 $scope.passwordType = 'password';
@@ -31,14 +34,6 @@ angular.module('cmValidate').directive('cmPassword', [
                     $scope.pwConfirm = '';
                     $scope.checkPWStrength();
                 });
-
-                $scope.checkPasswordLength = function(pw){
-                    if(pw.length > 0 && pw.length < 6){
-                        $scope.showPasswordLengthError = true;
-                    } else {
-                        $scope.showPasswordLengthError = false;
-                    }
-                };
 
                 $scope.togglePassword = function(){
                     if($scope.showPassword){
@@ -59,8 +54,7 @@ angular.module('cmValidate').directive('cmPassword', [
 
                     if(pw && pw.length >= 6){
                         $scope.checkPasswordLength(pw);
-
-                        $scope.showStrengthMeter= true;
+                        $scope.showStrengthMeter = true;
                         var bits = passchk_fast.passEntropy(pw);
 
                         if(bits < 28){
@@ -82,9 +76,22 @@ angular.module('cmValidate').directive('cmPassword', [
                         $scope.percent = '0%';
                         $scope.bgColor = 'very-weak';
 
-                        pw && pw.length > 0
-                        ?   $scope.showPasswordLengthError  = true
-                        :   $scope.showPasswordEmptyError   = true
+                        if(pw && pw.length > 0)
+                            $scope.showPasswordLengthError = true;
+                        else
+                            $scope.showPasswordEmptyError  = true;
+
+                        $scope.parentForm.password.$setValidity('password',false);
+                    }
+                };
+
+                $scope.checkPasswordLength = function(pw){
+                    if(pw.length > 0 && pw.length < 6){
+                        $scope.showPasswordLengthError = true;
+                        $scope.parentForm.password.$setValidity('password',false);
+                    } else {
+                        $scope.showPasswordLengthError = false;
+                        $scope.parentForm.password.$setValidity('password',true);
                     }
                 };
 
@@ -95,7 +102,7 @@ angular.module('cmValidate').directive('cmPassword', [
                     $scope.copyPW();
 
                     if(!$scope.pw || !$scope.pwConfirm){
-                        $scope.showConfirmPWStatus = false
+                        $scope.showConfirmPWStatus = false;
                         return false;
                     }
 
