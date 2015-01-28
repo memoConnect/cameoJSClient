@@ -992,6 +992,9 @@
                         "MORE_ITEMS": "Wollen Sie die ausgewählten Einträge aus der Liste wirklich löschen?"
 
                     }
+                },
+                "NOTIFY": {
+                    "DELETE_ERROR": "@todo SYSTEM.CONTEXT.MODAL.NOTIFY.DELETE_ERROR"
                 }
             }
         },

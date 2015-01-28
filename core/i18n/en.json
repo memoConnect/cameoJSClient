@@ -843,6 +843,9 @@
                       "MORE_ITEMS": "Do you really want to delete these items?"
 
                   }
+              },
+              "NOTIFY": {
+                "DELETE_ERROR": "@todo SYSTEM.CONTEXT.MODAL.NOTIFY.DELETE_ERROR"
               }
           }
     },

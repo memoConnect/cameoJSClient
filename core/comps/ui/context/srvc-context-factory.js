@@ -54,7 +54,7 @@ angular.module('cmUi').service('cmContextFactory', [
                     defered.resolve();
                 },
                 function(){
-                    cmNotify.warn('NOT_ALL_DELETED')
+                    cmNotify.warn('SYSTEM.CONTEXT.MODAL.NOTIFY.DELETE_ERROR')
                     defered.reject();
                 }
             );
