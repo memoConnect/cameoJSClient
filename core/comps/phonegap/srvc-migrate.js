@@ -29,26 +29,26 @@ angular.module('cmPhonegap')
 
                 migrateLocalStorage: function() {
 
-                    cmLogger.info('STARTING LOCAL STORAGE MIGRATION');
+                    cmLogger.debug('Starting local storage migration');
 
                     var deferred = $q.defer();
-                    var isCrosswalk = $phonegapCameoConfig.isCrosswalk || false
-
-                    cmLogger.info('IS CROSSWALK: ' + isCrosswalk);
 
                     if(this.isAvailable()){
-                        cmLogger.info('CALLING LOCAL STORAGE PLUGIN');
-                        this.plugin.migrateLocalStorage(
-                            function (hasCompleted) {
-                                cmLogger.debug("RESULT: "+ hasCompleted)
-                                deferred.resolve(hasCompleted == "true");
+                        cmLogger.info('Calling migration plugin...');
+                        this.plugin.getOldLocalStorage(
+                            function (values) {
+                                try {
+                                    var jsonObj = JSON.parse(values)
+                                    deferred.resolve(jsonObj)
+                                } catch (e) {
+                                    deferred.reject(e)
+                                }
+
                             }, function (reason) {
                                 deferred.reject(reason);
-                            },
-                            isCrosswalk
+                            }
                         );
                     } else {
-                        cmLogger.error('MIGRATION PLUGIN IS MISSING');
                         deferred.reject('MIGRATION PLUGIN IS MISSING');
                     }
 

@@ -17,7 +17,7 @@ module.exports = function (grunt, options) {
 
     grunt.registerTask('crosswalk:build', [
         'phonegap:app-prepare',
-        'phonegap:app-config-crosswalk',
+        'phonegap:app-config-local',
         'phonegap:build',
         'shell:compileCrosswalk'
     ]);

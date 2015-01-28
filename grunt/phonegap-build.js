@@ -41,11 +41,6 @@ module.exports = function(grunt, options){
         'template:phonegap-config-js'
     ]);
 
-    grunt.registerTask('phonegap:app-config-crosswalk', [
-        'template:phonegap-config-xml-local',
-        'template:phonegap-config-js-crosswalk'
-    ])
-
     var archive = {
         app: 'dist/dl/cameoNetApp.zip'
     };
@@ -229,17 +224,6 @@ module.exports = function(grunt, options){
                         'data': {
                             'googleSenderId': options.globalCameoSecrets.google.senderId,
                             'isCrosswalk' : false
-                        }
-                    },
-                    'files': {
-                        'build/phonegap/www/config.js': ['resource/phonegap/config.js']
-                    }
-                },
-                'phonegap-config-js-crosswalk': {
-                    'options': {
-                        'data': {
-                            'googleSenderId': options.globalCameoSecrets.google.senderId,
-                            'isCrosswalk' : true
                         }
                     },
                     'files': {

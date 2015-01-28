@@ -242,17 +242,26 @@ angular.module('cmCore')
                 } else {
                     // migrate crosswalk
                     cmPhonegap.isReady('cmUserModel', function(){
-                        cmMigrate.migrateLocalStorage().then(function(hasCompleted){
-                            cmLogger.debug("migration result: " + hasCompleted)
-                            if(hasCompleted) {
-                                cmLogger.debug("SUCCESS!!!!!!!!!!!!!!!!!!!!!!!!!")
-                                self.loadIdentity(accountData);
-                            } else {
-                                // do nothing
-                                cmLogger.error("No local storage migrated.")
-                            }
+                        cmMigrate.migrateLocalStorage().then(function(values){
+                                cmLogger.debug("Local storage migration. Writing old values to new local storage")
+                                cmLogger.debug("TYPE: " + typeof values)
 
-                        })
+                                for (var key in values) {
+                                //values.forEach( function(value, key){
+                                    cmLogger.debug(key)
+                                    try {
+                                        window.localStorage.setItem(key, values[key])
+                                    } catch(e) {
+                                        cmLogger.error("Error writing to local storage: " + e)
+                                    }
+                                }
+                                // reload app, to reinitialize storage. TODO: find a way to do this without reload
+                                location.reload()
+
+                            }, function(reason) {
+                                cmLogger.error("Could not migrate local storage: " + reason)
+                            }
+                        )
                     });
                 }
             }

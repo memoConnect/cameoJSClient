@@ -6,7 +6,7 @@
     "android_targetSdkVersion": 15
   },
   "plugins": [
-    {"name":"de.cameonet.cordova.migrate","repo":"./resource/phonegap/plugins/de.cameonet.cordova.migrate"},
+    {"name":"de.cameonet.cordova.migrate","repo":"./resource/phonegap/plugins/de.cameonet.cordova.migration"},
     {"name":"org.apache.cordova.network-information","version":"0.2.12"},
 
     {"name":"org.apache.cordova.device","version":"0.2.12"}
