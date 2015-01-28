@@ -119,6 +119,7 @@ angular.module('cmContacts')
                     return cmContactsAdapter.deleteContact(self.id)
                 }).then(function(){
                     self.trigger('deleted:finished',self);
+                    return $q.when();
                 });
             };
 
