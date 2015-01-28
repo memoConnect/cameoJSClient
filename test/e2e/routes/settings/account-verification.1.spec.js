@@ -23,7 +23,7 @@ describe('Route Settings Account Verification: ', function(){
 
                         return verifySecret != undefined
                     })
-                }, 5000, 'unable to getVerificationSecret')
+                }, 10000, 'unable to getVerificationSecret')
     }
 
     function createDescribesAndItsForVerification(type, value, extraValue){
