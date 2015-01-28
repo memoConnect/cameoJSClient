@@ -1,0 +1,75 @@
+
+<style type="text/css">
+
+
+    cm-selecter, cm-avatar.is-selected{
+        display:none!important;
+    }
+
+    cm-selecter.is-selected{
+        display:inline-block!important;
+    }
+
+    cm-selecter .wrap {
+        display: inline-block;
+        position: relative;
+        vertical-align: middle;
+        height: 4rem;
+        width: 4rem;
+        padding: 0.3rem;
+        font-size: 3rem;
+        background-size: cover;
+        overflow: hidden;
+    }
+
+    cm-selecter .wrap i {
+        text-align: center;
+        background: #ededed;
+        color: #555555;
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+
+    cm-avatar.is-selected .wrap{
+        -webkit-animation: minimize 1s; /* Chrome, Safari, Opera */
+        animation: minimize 1s;
+    }
+
+    cm-selecter.is-selected .wrap{
+        -webkit-animation: maximize 1s; /* Chrome, Safari, Opera */
+        animation: maximize 1s;
+    }
+
+    @-webkit-keyframes minimize {
+        from {width: 4rem;}
+        to {width: 0rem;}
+    }
+
+    @keyframes minimize {
+        from {width: 4rem;}
+        to {width: 0rem;}
+    }
+
+    @-webkit-keyframes maximize {
+        from {width: 0rem;}
+        to {width: 4rem;}
+    }
+
+    @keyframes maximize {
+        from {width: 0rem;}
+        to {width: 4rem;}
+    }
+
+</style>
+
+<button ng-click="toggle()">toogle jo</button><br />
+
+<div>
+    <cm-avatar cm-avatar-view="unknown" ng-class="{'is-selected':isSelected}"></cm-avatar>
+    <cm-selecter ng-class="{'is-selected':isSelected}">
+        <div class="wrap">
+            <i class="fa cm-checker" ></i>
+        </div>
+    </cm-selecter>
+</div>

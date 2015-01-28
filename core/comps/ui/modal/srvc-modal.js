@@ -96,6 +96,10 @@ angular.module('cmUi')
 
             // the modal directive (<cm-modal>) will register itself on next digest
 
+            self.one('modal:closed', function(){
+                self.remove(config.id);
+            });
+
             return modal;
         };
 
@@ -107,28 +111,27 @@ angular.module('cmUi')
         self.confirm = function(config){
 
             config  =   {
-                            text:   config.text,
-                            cancel: config.cancel   || 'MODAL.LABEL.CANCEL',
-                            okay:   config.okay     || 'MODAL.LABEL.OK',
-                            title:  config.title    || 'DRTV.CONFIRM.HEADER',
-                            html:   config.html     || '',
-                            data:   config.data,
-                            removeAfterClose: true
-                        };
+                text:   config.text,
+                cancel: config.cancel   || 'MODAL.LABEL.CANCEL',
+                okay:   config.okay     || 'MODAL.LABEL.OK',
+                title:  config.title    || 'DRTV.CONFIRM.HEADER',
+                html:   config.html     || '',
+                data:   config.data
+            };
 
             var deferred    = $q.defer(),
                 scope       = $rootScope.$new(),
-                modalId     = 'modal-confirm-'+(new Date()).getTime();
+                modalId     = 'modal-confirm';
 
             scope.text              =   config.text       || '';
-            scope.labelOkay         =   config.okay
-            scope.labelCancel       =   config.cancel
+            scope.labelOkay         =   config.okay;
+            scope.labelCancel       =   config.cancel;
 
             scope.cancel            =   function(){ 
                                             $rootScope.closeModal(modalId)
                                         };
             scope.confirm           =   function(){
-                                            deferred.resolve(this)
+                                            deferred.resolve(this);
                                             $rootScope.closeModal(modalId) 
                                         };
             self.create({
@@ -144,9 +147,6 @@ angular.module('cmUi')
             self.one('modal:closed', function(event, id){
                 if(id == modalId)
                     deferred.reject();
-
-                self.remove(modalId);
-
                 return true;
             });
 
