@@ -51,11 +51,9 @@ angular.module('cmUi').service('cmContextFactory', [
 
             $q.all(done).then(
                 function(){
-                    console.log('moep');
                     defered.resolve();
                 },
                 function(){
-                    console.log('miep');
                     defered.reject();
                 }
             );
