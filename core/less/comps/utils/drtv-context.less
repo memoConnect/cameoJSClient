@@ -1,0 +1,81 @@
+.animationLink(@name,@duration:250ms){
+  -webkit-animation: @name @duration forwards;
+  -moz-animation: @name @duration forwards;
+  -o-animation: @name @duration forwards;
+  animation: @name @duration forwards;
+}
+
+.animationIn(@name;@form:0deg;@to:0deg){
+  @fromValue:rotateY(@form);
+  @toValue:rotateY(@to);
+  @-webkit-keyframes @name {
+    0% {-webkit-transform: @fromValue}
+    100% {-webkit-transform: @toValue}
+  }
+  @-moz-keyframes @name {
+    0% {-moz-transform: @fromValue}
+    100% {-moz-transform: @toValue}
+  }
+  @-o-keyframes @name {
+    0% {-o-transform: @fromValue}
+    100% {-o-transform: @toValue}
+  }
+  @keyframes @name {
+    0% {transform: @fromValue}
+    100% {transform: @toValue}
+  }
+}
+
+.animationOut(@name;@form:0deg;@to:0deg){
+  @fromValue:rotateY(@form);
+  @toValue:rotateY(@to);
+  @-webkit-keyframes @name {
+    0% {-webkit-transform: @fromValue}
+    100% {-webkit-transform: @toValue}
+  }
+  @-moz-keyframes @name {
+    0% {-moz-transform: @fromValue}
+    100% {-moz-transform: @toValue}
+  }
+  @-o-keyframes @name {
+    0% {-o-transform: @fromValue}
+    100% {-o-transform: @toValue}
+  }
+  @keyframes @name {
+    0% {transform: @fromValue}
+    100% {transform: @toValue}
+  }
+}
+
+cm-selecter{
+  .pos-tl;
+  .dib;
+  .animationLink(hideRotate);
+  .is-unselected &{
+    .animationLink(hideRotate,0ms);
+  }
+  .is-selected &{
+    .animationLink(showRotate);
+  }
+  .wrap {
+    .dib;
+    .pos-rel;
+    .vam;
+    height:@cm-unit;
+    width:@cm-unit;
+    padding: @cm-horizontal-padding;
+    font-size: 3rem;
+    overflow: hidden;
+    i {
+      .tac;
+      .dbl;
+      background: @cm-black!important;
+      color: @cm-warning-color;
+      .w100;
+      .h100;
+    }
+  }
+}
+
+.animationIn(hideRotate, 0deg, 90deg);
+.animationOut(showRotate, 90deg, 0deg);

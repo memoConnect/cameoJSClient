@@ -1,13 +1,17 @@
 
 <style type="text/css">
 
-
-    cm-selecter, cm-avatar.is-selected{
-        display:none!important;
+    .cm-any-tag{
+        position:relative;
     }
 
-    cm-selecter.is-selected{
+    cm-selecter{
+        position: absolute;
+        left:0;
+        top:0;
         display:inline-block!important;
+        -webkit-animation: hideRotate 250ms forwards;
+        animation: hideRotate 250ms forwards;
     }
 
     cm-selecter .wrap {
@@ -31,45 +35,49 @@
         height: 100%;
     }
 
-    cm-avatar.is-selected .wrap{
-        -webkit-animation: minimize 1s; /* Chrome, Safari, Opera */
-        animation: minimize 1s;
+    .is-selected cm-selecter{
+        -webkit-animation: showRotate 250ms forwards;
+        animation: showRotate 250ms forwards;
     }
 
-    cm-selecter.is-selected .wrap{
-        -webkit-animation: maximize 1s; /* Chrome, Safari, Opera */
-        animation: maximize 1s;
+    @-webkit-keyframes hideRotate {
+        50% {
+            -webkit-transform: rotateY(0deg);
+        }
+        100% {
+            -webkit-transform: rotateY(90deg);
+        }
     }
 
-    @-webkit-keyframes minimize {
-        from {width: 4rem;}
-        to {width: 0rem;}
+    @keyframes hideRotate {
+        50% {
+            transform: rotateY(0deg);
+        }
+        100% {
+            transform: rotateY(90deg);
+        }
     }
 
-    @keyframes minimize {
-        from {width: 4rem;}
-        to {width: 0rem;}
+    @-webkit-keyframes showRotate {
+        0% {
+            -webkit-transform: rotateY(90deg);
+        }
+        50% {
+            -webkit-transform: rotateY(0deg);
+        }
     }
 
-    @-webkit-keyframes maximize {
-        from {width: 0rem;}
-        to {width: 4rem;}
-    }
-
-    @keyframes maximize {
-        from {width: 0rem;}
-        to {width: 4rem;}
+    @keyframes showRotate {
+        0% {
+            transform: rotateY(90deg);
+        }
+        50% {
+            transform: rotateY(0deg);
+        }
     }
 
 </style>
 
-<button ng-click="toggle()">toogle jo</button><br />
-
-<div>
-    <cm-avatar cm-avatar-view="unknown" ng-class="{'is-selected':isSelected}"></cm-avatar>
-    <cm-selecter ng-class="{'is-selected':isSelected}">
-        <div class="wrap">
-            <i class="fa cm-checker" ></i>
-        </div>
-    </cm-selecter>
+<div class="cm-any-tag" ng-click="toggle()" ng-class="{'is-selected':isSelected}" cm-context>
+    <cm-avatar cm-avatar-view="unknown"></cm-avatar>
 </div>

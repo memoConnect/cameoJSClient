@@ -62,13 +62,21 @@ angular.module('cmUi')
     'cmContextFactory',
     '$parse', '$window',
     function (cmContextFactory,
-        $parse, $window){
+              $parse, $window){
         return {
             restrict: 'A',
             link: function(scope, element, attrs){
 
                 var contextData = attrs.cmContext,
                     hammer;
+
+                // init cm-selecter
+                if(element.find('cm-avatar').length == 1 &&
+                    element.find('cm-selecter').length == 0){
+                    angular.element(element.find('cm-avatar'))
+                        .append('<cm-selecter><div class="wrap"><i class="fa cm-checker"></i></div></cm-selecter>');
+                    element.addClass('is-unselected');
+                }
 
                 function getContext(){
                     return {
@@ -78,6 +86,7 @@ angular.module('cmUi')
                 }
 
                 function getOption(type){
+
                     var matches = contextData.match('('+type+'):([0-9a-zA-Z\\(\\)/"\'+\\.$ ]+,{.+\\)|[0-9a-zA-Z\\(\\)/"\'+\\.$ ]+)'),
                         value = undefined;
 
@@ -134,22 +143,16 @@ angular.module('cmUi')
                 hammer.on('tap', onTap);
                 hammer.on('press', onLongTap);
 
-                scope.$on('$destroy', function(){
-                    hammer.off('tap', onTap);
-                    hammer.off('press', onLongTap);
-                });
-            },
-            controller: function($scope, $element){
-
                 function setClass(){
-                    $element.addClass('is-selected')
+                    element.removeClass('is-unselected');
+                    element.addClass('is-selected');
                 }
 
                 function removeClass(){
-                    $element.removeClass('is-selected')
+                    element.removeClass('is-selected');
                 }
 
-                $scope.handleLongTap = function(context){
+                scope.handleLongTap = function(context){
                     var instance = cmContextFactory.find(context);
 
                     if(cmContextFactory.validate(context) && instance == null){
@@ -163,9 +166,11 @@ angular.module('cmUi')
 
                 cmContextFactory.on('clear',removeClass);
 
-                $scope.$on('$destroy', function(){
+                scope.$on('$destroy', function(){
+                    hammer.off('tap', onTap);
+                    hammer.off('press', onLongTap);
                     cmContextFactory.off('clear',removeClass);
-                })
+                });
             }
         }
     }

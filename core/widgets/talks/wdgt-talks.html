@@ -5,9 +5,7 @@
         <i class="fa cm-info"></i>  {{::'TALKS.LIST_EMPTY'|cmTranslate}}
     </li>
     <li ng-repeat="conversation in conversations | orderBy:'timeOfLastUpdate':true | cmSearch:'talks':search as results" cm-reactive data-qa="conversation-list-element"
-        cm-context="{model:conversation,
-                     type:'conversation',
-                     tap:goto('/conversation/'+conversation.id)">
+        cm-context="{model:conversation,type:'conversation',tap:goto('/conversation/'+conversation.id)}">
         <cm-conversation-tag cm-data="conversation"></cm-conversation-tag>
     </li>
     <li cm-hide-on-filter="search" ng-if="moreTalksAvailable()">
