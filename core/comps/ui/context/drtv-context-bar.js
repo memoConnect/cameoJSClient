@@ -61,8 +61,6 @@ angular.module('cmUi').directive('cmContextBar',[
                     if(!running){
                         running = true;
 
-                        loader.start();
-
                         var constText = 'SYSTEM.CONTEXT.MODAL.CONFIRM.DELETE.ONE_ITEM';
                         if(cmContextFactory.length > 1){
                             constText = 'SYSTEM.CONTEXT.MODAL.CONFIRM.DELETE.MORE_ITEMS';
@@ -72,14 +70,15 @@ angular.module('cmUi').directive('cmContextBar',[
                             title:  'SYSTEM.CONTEXT.MODAL.CONFIRM.DELETE.TITLE',
                             text:   constText
                         })
-                            .then(function(){
-                                cmContextFactory
-                                    .delete()
-                                    .finally(function(){
-                                        running = false;
-                                        loader.stop();
-                                    });
-                            })
+                        .then(function(){
+                            loader.start();
+
+                            cmContextFactory.delete()
+                                            .finally(function(){
+                                                running = false;
+                                                loader.stop();
+                                            });
+                        })
                     }
                 };
             }
