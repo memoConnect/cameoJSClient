@@ -9,7 +9,7 @@ module.exports = function(grunt, options){
     grunt.registerTask('download-page:create', [
         'clean:app-dl',
         'copy:app-resources-dl',
-        //'getChecksums',
+        'getChecksums',
         'template:app-index-dl'
     ]);
 
@@ -23,7 +23,7 @@ module.exports = function(grunt, options){
         var algo = 'sha1';
         var shasum = crypto.createHash(algo);
 
-        var file = './dist/dl/cameoNet-local.0.0.1.apk';
+        var file = './dist/dl/'+options.globalCameoBuildConfig.phonegap.phonegapBaseFilename+'.apk';
         var s = fs.ReadStream(file);
         s.on('data', function(d) {
             shasum.update(d);
@@ -35,7 +35,6 @@ module.exports = function(grunt, options){
             done();
         });
     });
-
 
     return {
         tasks:{

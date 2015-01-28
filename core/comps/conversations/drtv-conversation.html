@@ -1,12 +1,17 @@
 <cm-scrollable cm-data="cm-answer">
-    <h2 ng-if="conversation.state.is('new')" class="border-bottom no-margin">
-        <i class="fa cm-talk"></i>
-        {{::'CONVERSATION.HEADING'|cmTranslate}}
-    </h2>
-    <h2 ng-if="!conversation.state.is('new') && conversation.subject" class="border-bottom no-margin single-line">
-        <i class="fa cm-talk is-selectable"></i>
-        <span ng-bind-html="conversation.subject|cmParse" data-qa="text-subject" class="is-selectable"></span>
-    </h2>
+    <div class="conversation-header">
+        <h2>
+            <span ng-if="conversation.state.is('new')">
+                <i class="fa cm-talk"></i>
+                {{::'CONVERSATION.HEADING'|cmTranslate}}
+            </span>
+            <span ng-if="!conversation.state.is('new') && conversation.subject" class="single-line">
+                <i class="fa cm-talk"></i>
+            <span ng-bind-html="::conversation.subject|cmParse" data-qa="text-subject" class="is-selectable"></span>
+            </span>
+        </h2>
+        <cm-conversation-menu cm-data="conversation" data-qa="menu-conversation"></cm-conversation-menu>
+    </div>
     <section class="body-group recipients" ng-if="conversation.state.is('new') || !conversation.state.is('new') && conversation.recipients.length > 1">
         <h3 ng-click="toggleRecipientView()" cm-reactive>
             <i class="fa" ng-class="{'cm-grid':!showGrid,'cm-menu-weight':showGrid}"></i>
@@ -72,11 +77,10 @@
                 <i class="fa cm-write"></i>
             </div>
         </article>
-
-        <div style="height:1rem"></div>
+        <div class="h10"></div>
     </section>
 
-    <button class="cm-btn-grey" ng-if="conversation && conversation.numberOfMessages > conversation.messages.length" ng-show="conversation.numberOfMessages != conversation.messages.length" ng-click="loadPreviousMessages()" data-qa="btn-load-more-messages">
+    <button class="cm-btn-grey" ng-if="conversation && conversation.numberOfMessages > conversation.messages.length" ng-show="conversation.numberOfMessages != conversation.messages.length" ng-click="loadPreviousMessages()" data-qa="btn-load-more-messages" cm-reactive>
         {{'CONVERSATION.LABEL.LOAD_PREVIOUS'|cmTranslate}}
     </button>
 

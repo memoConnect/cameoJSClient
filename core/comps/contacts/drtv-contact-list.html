@@ -6,8 +6,9 @@
                         cm-context="{model:contact,
                                     type:'contact',
                                     tap:gotoContact(contact)"></cm-contact-tag>
-        <section class="icon-list" ng-click="startConversationWithContact($event,contact)" data-qa="start-new-conversation-btn" cm-reactive>
-            <i class="fa cm-new-talk" ng-hide="contact.contactType == 'pending'"></i>
+        <section class="icon-list">
+            <i class="fa cm-new-talk" ng-click="startConversationWithContact($event,contact)" data-qa="start-new-conversation-btn" cm-reactive ng-hide="contact.contactType == 'pending'"></i>
+            <i class="fa cm-trash" cm-reactive ng-show="contact.contactType == 'pending'" data-qa="btn-delete-friendrequest" ng-click="deleteFriendRequest(contact)" cm-reactive></i>
         </section>
     </li>
     <li class="with-inside-left-icon" ng-show="(localResults.length == 0)">

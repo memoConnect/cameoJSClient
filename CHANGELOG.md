@@ -1,5 +1,21 @@
 # Dev
 
+## BS 27.01.2015
+* CAM-1331 add delete/leave conversations
+
+## WW 27.01.2015
+* CAM-1649 add delete pending requests
+
+## BS 26.01.2015
+* fix BUG CAM-1692, update LocalStorage handling
+
+#########
+# RC 0.5.0 - 26.01.2015
+#########
+
+## WW 26.01.2015
+* CAM-1647 add delete Contacts (cameo/extern)
+
 ## BS 23.01.2015
 * Update SJCL Vendor Library
 * Add isApp to getBrowserInfo
@@ -31,10 +47,6 @@
 * add a font loader
 * update thirdparty list
 * add about us to help route
-
-#########
-# RC 0.5.0 - 12.01.2015
-#########
 
 ## BS 09.01.2015
 * finish CAM-1315, story contains new trust aspect in conversations, "transtive rekeying"

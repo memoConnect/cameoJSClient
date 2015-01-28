@@ -51,7 +51,7 @@ angular.module('cmContacts').service('cmContactsAdapter',[
             getGroups: function(){
                 return cmApi.get({
                     path:'/contact-groups'
-                })
+                });
             },
             /**
              * Get User from one User Group
@@ -63,76 +63,84 @@ angular.module('cmContacts').service('cmContactsAdapter',[
             getAllFromGroup: function(group,limit,offset){
                 return cmApi.get({
                     path:'/contact-group/' + group + cmUtil.handleLimitOffset(limit,offset)
-                })
+                });
             },
             getFriendRequests: function(){
                 return cmApi.get({
                     path:'/friendRequests'
-                })
+                });
             },
             sendFriendRequest: function(id, message){
                 return cmApi.post({
                     path:'/friendRequest',
                     data: {identityId: id, message: message || null}
-                })
+                });
             },
             answerFriendRequest: function(id, type){
                 return cmApi.post({
                     path:'/friendRequest/answer',
                     data: {identityId:id, answerType:type}
-                })
+                });
+            },
+            deleteFriendRequest: function(id){
+                return cmApi.delete({
+                    path:'/friendRequest/'+id
+                });
             },
             addContact: function(data){
                 return cmApi.post({
                     path:'/contact',
                     data: {identity:data.identity||{}, groups:data.groups||[]}
-                })
+                });
             },
             editContact: function(id, data){
                 return cmApi.put({
                     path:'/contact/'+id,
                     data: data||{}
-                })
+                });
             },
             deleteContact: function(id){
                 return cmApi.delete({
                     path:'/contact/'+id
-                })
+                });
             }
-        }
+        };
 
-        cmObject.addEventHandlingTo(adapter)
+        cmObject.addEventHandlingTo(adapter);
 
         cmApi.on('identity:update', function (event, data){
 //            cmLogger.debug('cmContactsAdapter.on:identity:update')
-            adapter.trigger('identity:updated', data)
+            adapter.trigger('identity:updated', data);
         });
 
         cmApi.on('friendRequest:new', function(event, data){
-            adapter.trigger('friendRequest:new', data)
+            adapter.trigger('friendRequest:new', data);
         });
 
         cmApi.on('friendRequest:accepted', function(event, data){
-            adapter.trigger('friendRequest:accepted', data)
+            adapter.trigger('friendRequest:accepted', data);
         });
 
         cmApi.on('friendRequest:rejected', function(event, data){
             //cmLogger.debug('cmContactsAdapter cmApi.on:friendRequest:rejected');
-            adapter.trigger('friendRequest:rejected', data)
+            adapter.trigger('friendRequest:rejected', data);
         });
 
         cmApi.on('contact:update', function(event, data){
             //cmLogger.debug('cmContactsAdapter cmApi.on:contact:update');
-            adapter.trigger('contact:update', data)
+            adapter.trigger('contact:update', data);
         });
 
+        cmApi.on('contact:deleted', function(event, data){
+            //cmLogger.debug('cmContactsAdapter cmApi.on:contact:update');
+            adapter.trigger('contact:deleted', data);
+        });
 
         cmApi.on('subscriptionId:changed', function(){
             //cmLogger.debug('cmContactsAdapter.on subscriptionId:changed');
             adapter.trigger('subscriptionId:changed');
         });
 
-        return adapter
-
+        return adapter;
     }
 ]);
