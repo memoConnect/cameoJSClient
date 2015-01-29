@@ -15,10 +15,7 @@ angular.module('cmPhonegap')
                         if(!('cmMigrate' in $window)) {
                             cmLogger.info('MIGRATION PLUGIN IS MISSING');
                             return false;
-                        } else {
-                            cmLogger.info('MIGRATION PLUGIN FOUND');
                         }
-
                         self.plugin = $window.cmMigrate;
                     });
                 },
@@ -46,7 +43,8 @@ angular.module('cmPhonegap')
 
                             }, function (reason) {
                                 deferred.reject(reason);
-                            }
+                            },
+                            $phonegapCameoConfig.isCrosswalk
                         );
                     } else {
                         deferred.reject('MIGRATION PLUGIN IS MISSING');

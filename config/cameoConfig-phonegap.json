@@ -55,17 +55,17 @@
     {
       "platform": "android",
       "icons": [
-        {"src":"icon-36-ldpi.png","xdensity":"port-ldpi","qualifier":"ldpi"},
-        {"src":"icon-72-hdpi.png","xdensity":"port-hdpi","qualifier":"hdpi"},
-        {"src":"icon-96-xhdpi.png","xdensity":"port-xhdpi","qualifier":"xhdpi"},
-        {"src":"icon-144-xhdpi.png","xdensity":"port-xxhdpi","qualifier":"xxhdpi"}
+        {"src":"icon-36-ldpi.png","density":"ldpi","qualifier":"ldpi"},
+        {"src":"icon-72-hdpi.png","density":"hdpi","qualifier":"hdpi"},
+        {"src":"icon-96-xhdpi.png","density":"xhdpi","qualifier":"xhdpi"},
+        {"src":"icon-144-xhdpi.png","density":"xxhdpi","qualifier":"xxhdpi"}
       ],
       "screens": [
-        {"src":"drawable-ldpi/screen.9.png","xdensity":"port-ldpi","qualifier":"ldpi"},
-        {"src":"drawable-mdpi/screen.9.png","xdensity":"port-mdpi","qualifier":"mdpi"},
-        {"src":"drawable-hdpi/screen.9.png","xdensity":"port-hdpi","qualifier":"hdpi"},
-        {"src":"drawable-xhdpi/screen.9.png","xdensity":"port-xhdpi","qualifier":"xhdpi"},
-        {"src":"drawable-xxhdpi/screen.9.png","xdensity":"port-xxhdpi","qualifier":"xxhdpi"}
+        {"src":"drawable-ldpi/screen.9.png","density":"port-ldpi","qualifier":"ldpi"},
+        {"src":"drawable-mdpi/screen.9.png","density":"port-mdpi","qualifier":"mdpi"},
+        {"src":"drawable-hdpi/screen.9.png","density":"port-hdpi","qualifier":"hdpi"},
+        {"src":"drawable-xhdpi/screen.9.png","density":"port-xhdpi","qualifier":"xhdpi"},
+        {"src":"drawable-xxhdpi/screen.9.png","density":"port-xxhdpi","qualifier":"xxhdpi"}
       ]
     },
     {

@@ -1,3 +1,4 @@
 var phonegapCameoConfig = {
-    googleSenderId: '<%= googleSenderId %>'
+    googleSenderId: '<%= googleSenderId %>',
+    isCrosswalk: '<%= isCrosswalk %>'
 };

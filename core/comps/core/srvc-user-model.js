@@ -244,11 +244,7 @@ angular.module('cmCore')
                     cmPhonegap.isReady('cmUserModel', function(){
                         cmMigrate.migrateLocalStorage().then(function(values){
                                 cmLogger.debug("Local storage migration. Writing old values to new local storage")
-                                cmLogger.debug("TYPE: " + typeof values)
-
                                 for (var key in values) {
-                                //values.forEach( function(value, key){
-                                    cmLogger.debug(key)
                                     try {
                                         window.localStorage.setItem(key, values[key])
                                     } catch(e) {
