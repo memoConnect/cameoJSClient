@@ -1,9 +1,14 @@
 # Dev
 
+## BS 29.01.2015
+* CAM-1707 update re-keying process
+
+
 ## WW 29.01.2015
 * CAM-1711 extern contact with message
 * CAM-1702 password minimum length
 * CAM-1682 friendRequest accpect bubble to other devices
+* CAM-1631 import contacts validate phone in list
 
 ## WW 28.01.2015
 * CAM-1629 multiple modals
