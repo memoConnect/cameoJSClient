@@ -98,8 +98,6 @@ angular.module('cmWidgets').directive('cmWidgetRegistration', [
                         }
                     }
 
-                    console.log($scope.registrationForm,$scope.registrationForm.$valid)
-
                     if ($scope.registrationForm.$valid !== false && reservationCheck == true) {
                         deferred.resolve(data);
                     } else {
@@ -119,6 +117,9 @@ angular.module('cmWidgets').directive('cmWidgetRegistration', [
                     loader.start();
 
                     function sendCreateUserRequest(data) {
+
+                        console.log('sendCreateUserRequest',data)
+
                         cmAuth.createUser(data).then(
                             function (accountData) {
 
@@ -148,7 +149,6 @@ angular.module('cmWidgets').directive('cmWidgetRegistration', [
                             }
                         );
                     }
-
 
                     $scope.validateForm().then(
                         function (data) {
