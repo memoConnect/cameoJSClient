@@ -1,5 +1,10 @@
 #!/bin/bash
 set -e
+cordovaVersion="3.6.3-0.2.13"
+phongapVersion="3.6.3-0.22.7"
+
+[ $(cordova --version) == ${cordovaVersion} ]
+[ $(phonegap --version) == ${phongapVersion} ]
 
 crosswalkDir="/opt/crosswalk-cordova-10.39.235.15-arm"
 

@@ -16,7 +16,7 @@ module.exports = function (grunt, options) {
         'desktop:deploy-without-template',
         'desktop:gen-all-templates',
 
-        //'uglify:app-deploy',
+        'uglify:app-deploy',
         'cssmin:app-deploy'
     ]);
 
