@@ -242,9 +242,6 @@ angular.module('cmConversations')
                 var recipients = data.recipients || [];
                 recipients.forEach(
                     function(recipient_data){
-                        /**
-                         * @todo filter inactive recipients, do something
-                         */
                         self.addRecipient(cmIdentityFactory.create(recipient_data.identityId));
                     }
                 );
