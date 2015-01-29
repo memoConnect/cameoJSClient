@@ -74,7 +74,7 @@ angular.module('cmUi')
                 if(element.find('cm-avatar').length == 1 &&
                     element.find('cm-selecter').length == 0){
                     angular.element(element.find('cm-avatar'))
-                        .append('<cm-selecter><div class="wrap"><i class="fa cm-checker"></i></div></cm-selecter>');
+                        .append('<cm-selecter><div class="wrap"><i class="fa cm-checkbox-right"></i></div></cm-selecter>');
                     element.addClass('is-unselected');
                 }
 
@@ -103,7 +103,9 @@ angular.module('cmUi')
                         callback = getOption('tap');
 
                     scope.$apply(function(){
-                        if(typeof callback != 'undefined'){
+                        if(cmContextFactory.hasSelection()){
+                            scope.handleLongTap(context);
+                        } else if(typeof callback != 'undefined'){
                             callback(scope, {$event: event, $context: context});
                         }
                     });
@@ -114,16 +116,16 @@ angular.module('cmUi')
                     var context = getContext(),
                         callback = getOption('longTap');
 
-                    scope.handleLongTap(context);
-
                     scope.$apply(function(){
+                        scope.handleLongTap(context);
+
                         if(typeof callback != 'undefined'){
                             callback(scope, {$event: event, $context: context});
                         }
                     });
                 }
 
-                if (typeof Hammer === 'undefined' || !$window.addEventListener) {
+                if(typeof Hammer === 'undefined' || !$window.addEventListener) {
                     // fallback to mouse events where appropriate
                     element.bind('click', onTap);
                     element.bind('dblclick', onLongTap);

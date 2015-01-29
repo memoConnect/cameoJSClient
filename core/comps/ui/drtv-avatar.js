@@ -89,7 +89,7 @@ angular.module('cmUi')
                         scope.identity.trigger('avatar:loaded');
                     };
                     bgImg.src = imgSrc;
-                    element.find('i').css('background-image','url('+imgSrc+')');
+                    angular.element(element[0].querySelector('.wrap i')).css('background-image','url('+imgSrc+')');
                 }
 
                 // is unknown avatar for add reciepients or choose avatar

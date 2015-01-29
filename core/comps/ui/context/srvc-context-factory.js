@@ -72,6 +72,9 @@ angular.module('cmUi').service('cmContextFactory', [
             return false;
         };
 
+        self.hasSelection = function(){
+            return self.length > 0;
+        };
 
         /**
          * EventHandling
