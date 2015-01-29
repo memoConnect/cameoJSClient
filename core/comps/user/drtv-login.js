@@ -77,7 +77,10 @@ angular.module('cmUser').directive('cmLogin', [
                                 skipKeyInfo = storageService.get('skipKeyInfo') || false;
 
                             if(!$location.$$path.match(/\/purl\/.*/)){
-                                if(!cmUserModel.hasLocalKeys() && skipKeyInfo == false){
+
+                                if(typeof cmUserModel.data.account.registrationIncomplete != 'undefined' && cmUserModel.data.account.registrationIncomplete == false){
+                                    $rootScope.goTo("/setup/account");
+                                } else if(!cmUserModel.hasLocalKeys() && skipKeyInfo == false){
                                     $rootScope.goTo("/setup/keyinfo");
                                 } else {
                                     $rootScope.goTo("/talks");
