@@ -47,7 +47,7 @@ angular.module('cmConversations')
 
             // secret data
             this.secret = ['text','fileIds'];
-            this.reveal_signatures = false // encrypt signatures
+            this.reveal_signatures = false; // encrypt signatures
 
             // public data
             this.public = [];
@@ -166,7 +166,7 @@ angular.module('cmConversations')
                                                    
                                                 })
                                     }
-                                }
+                                };
 
             this.state = new cmStateManagement(['new','decrypted','loading', 'incomplete', 'sending', 'waitForFiles','notified']);
 
@@ -383,7 +383,6 @@ angular.module('cmConversations')
                 return this.authenticity.verify(this.from)
             };
 
-
             this.encrypt = function (passphrase) {
                 return  $q.when()
                         .then(function(){
@@ -455,20 +454,18 @@ angular.module('cmConversations')
              return $q.when()
                 .then(function(){
                     var publicData      = self.getPublicData(),
-                        encryptedData   = self.encryptedData
-
-
+                        encryptedData   = self.encryptedData;
 
                     // Check if the message is alright to be send to the backend:
                     var proper_public_data      =       (typeof publicData == 'object')
                                                     &&  Object.keys(publicData).length > 0,
                         proper_encrypted_data   =       (typeof encryptedData == 'string')
-                                                    &&  encryptedData.length > 0
+                                                    &&  encryptedData.length > 0;
 
                     if(proper_public_data == false && proper_encrypted_data == false )
-                        return $q.reject('Message improper.')
+                        return $q.reject('Message improper.');
                     
-                    //everything is alright:
+                    // everything is alright:
 
                     return  self.reveal_signatures !== true
                             ?   $q.when({

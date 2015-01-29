@@ -289,8 +289,10 @@ angular.module('cmContacts').service('cmContactsModel',[
             // Friend request accepted by the current user (on a different device):
             if(data.to == cmUserModel.data.identity.id){
                 self.requests.forEach(function(request){
-                    if(request.identity.id == data.from)
-                        self.requests.deregister(request)
+                    if(request.identity.id == data.from) {
+                        self.requests.deregister(request);
+                        self.contacts.create(data.contact, true);
+                    }
                 });
             }
         });
@@ -346,6 +348,8 @@ angular.module('cmContacts').service('cmContactsModel',[
             self.getAll(true);
             self.getFriendRequests();
         });
+
+
 
         cmUserModel.on('update:finished', function(){
             init();
