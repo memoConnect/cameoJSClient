@@ -9,6 +9,9 @@ angular.module('cmValidate').directive('cmValidateEmail',[
                 model: '=ngModel'
             },
             link: function(scope, element, attrs, ngModel){
+
+                var identifier = 'email';
+
                 scope.$watch('model',function (newValue) {
                     var check = true;
 
@@ -19,9 +22,9 @@ angular.module('cmValidate').directive('cmValidateEmail',[
                     }
 
                     if(check !== true){
-                        ngModel.$setValidity('email', false);
+                        ngModel.$setValidity(identifier, false);
                     } else {
-                        ngModel.$setValidity('email', true);
+                        ngModel.$setValidity(identifier, true);
                     }
                 });
             }

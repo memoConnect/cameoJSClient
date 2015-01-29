@@ -13,7 +13,7 @@ angular.module('cmPhonegap')
 
         var self = {
             plugin: null,
-            emulateDevice: false,
+            emulateDevice: true,
             emulateDeviceType: 'android', // android | ios | winphone
             flags: {},
 
