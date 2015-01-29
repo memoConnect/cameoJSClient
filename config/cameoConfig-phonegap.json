@@ -8,7 +8,7 @@
   "plugins": [
     {"name":"de.cameonet.cordova.contacts.readonly","version":"0.2.13","repo":"https://github.com/memoConnect/cordova-plugin-contacts.git"},
     {"name":"de.cameonet.cordova.crypto","version":"0.1","repo":"https://github.com/memoConnect/de.cameonet.cordova.crypto.git"},
-    {"name":"de.cameonet.cordova.migrate","version":"0.1"},
+    {"name":"de.cameonet.cordova.migration","version":"0.1"},
 
     {"name":"org.apache.cordova.device","version":"0.2.12"},
     {"name":"org.apache.cordova.splashscreen","version":"0.3.4"},
