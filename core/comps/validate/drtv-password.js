@@ -18,7 +18,8 @@ angular.module('cmValidate').directive('cmPassword', [
                 $scope.required = true;
                 if(('cmRequired' in $attrs)) {
                     $attrs.$observe('cmRequired', function (isRequired) {
-                        $scope.disabled = isRequired == 'false' ? false : true;
+                        console.log('cmRequired',isRequired)
+                        $scope.required = isRequired == 'false' ? false : true;
                     });
                 }
 
@@ -97,10 +98,10 @@ angular.module('cmValidate').directive('cmPassword', [
 
                         if(pw && pw.length > 0) {
                             $scope.error.tooShort = true;
-                            $scope.parentForm.password.$setValidity('tooShort',false);
+                            $scope.parentForm.$setValidity('passwordTooShort',false);
                         } else {
                             $scope.error.empty = true;
-                            $scope.parentForm.password.$setValidity('empty',false);
+                            $scope.parentForm.$setValidity('passwordEmpty',false);
                         }
                     }
                 };
@@ -108,10 +109,10 @@ angular.module('cmValidate').directive('cmPassword', [
                 $scope.checkPasswordLength = function(pw){
                     if(pw.length > 0 && pw.length < 6){
                         $scope.error.tooShort = true;
-                        $scope.parentForm.password.$setValidity('tooShort',false);
+                        $scope.parentForm.$setValidity('passwordTooShort',false);
                     } else {
                         $scope.error.tooShort = false;
-                        $scope.parentForm.password.$setValidity('tooShort',true);
+                        $scope.parentForm.$setValidity('passwordTooShort',true);
                     }
                 };
 
@@ -123,17 +124,17 @@ angular.module('cmValidate').directive('cmPassword', [
 
                     if(!$scope.pw || !$scope.pwConfirm){
                         $scope.error.confirmRight = false;
-                        $scope.parentForm.password.$setValidity('confirmRight',false);
+                        $scope.parentForm.$setValidity('passwordConfirmRight',false);
                         return false;
                     }
 
                     if(($scope.pw == $scope.pwConfirm)){
                         $scope.error.empty = false;
                         $scope.error.confirmRight = true;
-                        $scope.parentForm.password.$setValidity('confirmRight',true);
+                        $scope.parentForm.$setValidity('passwordConfirmRight',true);
                         setPassword(cmCrypt.hash($scope.pw));
                     } else {
-                        $scope.parentForm.password.$setValidity('confirmRight',false);
+                        $scope.parentForm.$setValidity('passwordConfirmRight',false);
                         $scope.error.confirmRight = false;
                         setPassword('none');
                     }
