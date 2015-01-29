@@ -532,7 +532,7 @@ angular.module('cmConversations')
 //                cmLogger.debug('cmConversationModel:disableEncryption');
 
                 if(this.state.is('new')){
-                    encryption_disabled = true
+                    encryption_disabled = true;
                     this.password = '';
                     this.trigger('encryption:disabled');
                 }
@@ -554,7 +554,7 @@ angular.module('cmConversations')
 //                cmLogger.debug('cmConversationModel:enableEncryption');
 
                 if(this.state.is('new')){
-                    encryption_disabled = false
+                    encryption_disabled = false;
                     this.trigger('encryption:enabled')
                 }
 
