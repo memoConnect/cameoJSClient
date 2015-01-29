@@ -91,12 +91,12 @@ describe('Route Settings Account Verification: ', function(){
                 util.waitForLoader(1,'cm-footer')
                 .then(function(){
                     // clear secret
-                    return  getVerificationSecret()
+                    return getVerificationSecret()
                 })
                 .then(function(){
                     util.click('btn-'+type+'ManuallyVerification')
                     // get secret
-                    return  getVerificationSecret()
+                    return getVerificationSecret()
                 })
 
             })

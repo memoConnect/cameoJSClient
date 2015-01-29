@@ -1,5 +1,10 @@
 # Dev
 
+## WW 28.01.2015
+* CAM-1629 multiple modals
+* CAM-1702 password minimum
+* CAM-1585 checksum at download page for apk
+
 ## BS 27.01.2015
 * CAM-1331 add delete/leave conversations
 

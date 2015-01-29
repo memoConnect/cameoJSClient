@@ -147,7 +147,6 @@ angular.module('cmWidgets').directive('cmWidgetRegistration', [
                         );
                     }
 
-
                     $scope.validateForm().then(
                         function (data) {
                             clearTransferScopeData();
@@ -161,9 +160,9 @@ angular.module('cmWidgets').directive('cmWidgetRegistration', [
                     );
                 };
 
-                var stop_listening_to_create_user = $rootScope.$on('registration:createUser', function () {
-                                                        $scope.createUser();
-                                                    });
+                var killWatcher = $rootScope.$on('registration:createUser', function () {
+                        $scope.createUser();
+                    });
 
                 /**
                  * Guest Handling
@@ -187,8 +186,8 @@ angular.module('cmWidgets').directive('cmWidgetRegistration', [
                 });
 
                 $scope.$on('$destroy', function(){
-                    stop_listening_to_create_user();
-                })
+                    killWatcher();
+                });
             }
         }
     }
