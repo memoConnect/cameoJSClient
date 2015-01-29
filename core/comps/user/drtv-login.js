@@ -78,6 +78,9 @@ angular.module('cmUser').directive('cmLogin', [
 
                             if(!$location.$$path.match(/\/purl\/.*/)){
 
+                                /**
+                                 * @todo false -> true
+                                 */
                                 if(typeof cmUserModel.data.account.registrationIncomplete != 'undefined' && cmUserModel.data.account.registrationIncomplete == false){
                                     $rootScope.goTo("/setup/account");
                                 } else if(!cmUserModel.hasLocalKeys() && skipKeyInfo == false){
