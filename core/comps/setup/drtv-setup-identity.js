@@ -112,7 +112,8 @@ angular.module('cmSetup')
 
                     $scope.updateIdentity = function () {
                         if($scope.isPristine) {
-                            $scope.goTo('/settings/identity/key/create');
+                            $scope.goToNextStep();
+
                             return false;
                         }
 
@@ -145,7 +146,11 @@ angular.module('cmSetup')
                         cmNotify.trigger('bell:ring');
                         $rootScope.markQuickstart = true;
 
-                        $rootScope.goTo('/settings/identity/key/create');
+                        cmUserModel.updateAccount({'registrationIncomplete':false}).finally(
+                            function(){
+                                $rootScope.goTo('/settings/identity/key/create');
+                            }
+                        );
                     };
 
                     /**
