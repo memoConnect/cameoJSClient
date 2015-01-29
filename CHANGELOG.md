@@ -1,5 +1,9 @@
 # Dev
 
+## BS 29.01.2015
+* CAM-1707 update re-keying process
+
+
 ## WW 29.01.2015
 * CAM-1711 extern contact with message
 * CAM-1702 password minimum length
