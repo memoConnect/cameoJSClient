@@ -102,6 +102,8 @@ angular.module('cmUser')
                     checkEmail();
                     checkPassword();
 
+                    console.log($scope.cmForm.$valid,$scope.cmForm)
+
                     if($scope.cmForm.$valid !== false && Object.keys(objectChange).length > 0){
                         deferred.resolve(objectChange);
                     } else {

@@ -18,33 +18,31 @@ angular.module('cmValidate').directive('cmPassword', [
                 $scope.required = true;
                 if(('cmRequired' in $attrs)) {
                     $attrs.$observe('cmRequired', function (isRequired) {
-                        $scope.disabled = isRequired == 'false' ? false : true;
+                        console.log('cmRequired',isRequired)
+                        $scope.required = isRequired == 'false' ? false : true;
                     });
                 }
 
                 $scope.nextTabIndex = parseInt($scope.tabindex) + 1;
                 $scope.parentForm = $scope.$parent[$scope.formName];
 
+                function reset(onlyError){
 
-                function reset(){
-                    $scope.pw = '';
-                    $scope.pwConfirm = '';
-                    $scope.checkPWStrength('reset');
+                    if(!onlyError) {
+                        $scope.pw = '';
+                        $scope.pwConfirm = '';
 
-                    $scope.showConfirmPWStatus = true;
-                    $scope.passwordType = 'password';
-                    $scope.showPassword = false;
-                    $scope.showPasswordLengthError = false;
-                    $scope.showPasswordEmptyError = false;
+                        $scope.passwordType = 'password';
+                        $scope.showPassword = false;
+                    }
+
+                    $scope.error = {
+                        empty: false,
+                        tooShort: false,
+                        confirmEmpty: false,
+                        confirmRight: true
+                    };
                 }
-
-                var killwatcher = $scope.$on('cm-password:empty', function(){
-                    $scope.showPasswordEmptyError = true;
-                });
-
-                var killwatcher2 = $scope.$on('cm-password:reset', function(){
-                    reset();
-                });
 
                 $scope.togglePassword = function(){
                     if($scope.showPassword){
@@ -59,17 +57,20 @@ angular.module('cmValidate').directive('cmPassword', [
                 };
 
                 $scope.validate = function(onlyConfirm){
-                    if(!$scope.parentForm.password.$untouched){
-                        if(!onlyConfirm)
-                            $scope.checkPWStrength('validate');
-                        $scope.confirmPW();
-                    }
+                    if(!$scope.pw)
+                        return false;
+
+                    if(!onlyConfirm)
+                        $scope.checkPWStrength('validate');
+
+                    $scope.confirmPW();
                 };
 
                 $scope.checkPWStrength = function(whoIs){
                     var pw = $scope.pw;
 
-                    $scope.showPasswordEmptyError = false;
+                    $scope.error.empty = false;
+                    $scope.error.tooShort = false;
 
                     if(pw && pw.length >= 6){
                         $scope.checkPasswordLength(pw);
@@ -95,23 +96,23 @@ angular.module('cmValidate').directive('cmPassword', [
                         $scope.percent = '0%';
                         $scope.bgColor = 'very-weak';
 
-                        if(pw && pw.length > 0)
-                            $scope.showPasswordLengthError = true;
-                        else {
-                            $scope.showPasswordEmptyError = true;
+                        if(pw && pw.length > 0) {
+                            $scope.error.tooShort = true;
+                            $scope.parentForm.$setValidity('passwordTooShort',false);
+                        } else {
+                            $scope.error.empty = true;
+                            $scope.parentForm.$setValidity('passwordEmpty',false);
                         }
-
-                        //$scope.parentForm.password.$setValidity('empty',false);
                     }
                 };
 
                 $scope.checkPasswordLength = function(pw){
                     if(pw.length > 0 && pw.length < 6){
-                        $scope.showPasswordLengthError = true;
-                        //$scope.parentForm.password.$setValidity('empty',false);
+                        $scope.error.tooShort = true;
+                        $scope.parentForm.$setValidity('passwordTooShort',false);
                     } else {
-                        $scope.showPasswordLengthError = false;
-                        //$scope.parentForm.password.$setValidity('empty',true);
+                        $scope.error.tooShort = false;
+                        $scope.parentForm.$setValidity('passwordTooShort',true);
                     }
                 };
 
@@ -122,16 +123,19 @@ angular.module('cmValidate').directive('cmPassword', [
                     $scope.copyPW();
 
                     if(!$scope.pw || !$scope.pwConfirm){
-                        $scope.showConfirmPWStatus = false;
+                        $scope.error.confirmRight = false;
+                        $scope.parentForm.$setValidity('passwordConfirmRight',false);
                         return false;
                     }
 
                     if(($scope.pw == $scope.pwConfirm)){
-                        $scope.showConfirmPWStatus = true;
-                        $scope.showPasswordEmptyError = false;
+                        $scope.error.empty = false;
+                        $scope.error.confirmRight = true;
+                        $scope.parentForm.$setValidity('passwordConfirmRight',true);
                         setPassword(cmCrypt.hash($scope.pw));
                     } else {
-                        $scope.showConfirmPWStatus = false;
+                        $scope.parentForm.$setValidity('passwordConfirmRight',false);
+                        $scope.error.confirmRight = false;
                         setPassword('none');
                     }
                 };
@@ -151,12 +155,20 @@ angular.module('cmValidate').directive('cmPassword', [
                     }
                 }
 
+                var killwatcher = $scope.$on('cm-password:empty', function(){
+                    $scope.error.empty = true;
+                });
+
+                var killwatcher2 = $scope.$on('cm-password:reset', function(){
+                    reset();
+                });
+
                 reset();
 
                 $scope.$on('$destroy', function(){
                     killwatcher();
                     killwatcher2();
-                })
+                });
             }
         }
     }
