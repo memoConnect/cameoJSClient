@@ -2,7 +2,7 @@
 
 ## BS 29.01.2015
 * CAM-1707 update re-keying process
-
+* CAM-1397 add incomplete registration handling
 
 ## WW 29.01.2015
 * CAM-1711 extern contact with message
