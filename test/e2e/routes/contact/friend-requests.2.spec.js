@@ -4,6 +4,7 @@ var util = require("../../../lib/e2e/cmTestUtil.js")
 describe('Friendrequests: ', function () {
     var ptor = util.getPtorInstance()
     var user1ToAccept
+    var user2ToDelete
     var password = 'password'
     var requestMessage = 'moep moep mooooeeeppp?'
 
@@ -17,6 +18,14 @@ describe('Friendrequests: ', function () {
         })
     })
 
+    it('register user2', function(){
+        util.createTestUser(undefined,'friendship')
+            .then(function(loginName){
+                user2ToDelete = loginName
+                return util.logout()
+            })
+    })
+
     describe('delete friendrequest', function(){
 
         it('login and accept', function() {
@@ -28,7 +37,7 @@ describe('Friendrequests: ', function () {
             util.get('/contact/list')
             util.waitForPageLoad('/contact/list')
             .then(function(){
-                return util.headerSearchInList(config.displayNameUser1)
+                return util.headerSearchInList(user2ToDelete)
             }).then(function(){
                 // activate search on server
                 return util.waitAndClickQa('btn-search')
@@ -147,6 +156,7 @@ describe('Friendrequests: ', function () {
 
         it('delete test user', function(){
             util.deleteTestUser(user1ToAccept)
+            util.deleteTestUser(user2ToDelete)
         })
     })
 

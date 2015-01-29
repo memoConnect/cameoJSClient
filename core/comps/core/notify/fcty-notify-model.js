@@ -95,7 +95,7 @@ angular.module('cmCore')
 
             this.renderModal = function() {
 //                cmLogger.debug('cmNotifyModel.renderModal');
-                var modalId = 'modal-notification-' + new Date().getTime();
+                var modalId = 'modal-notification';
 
                 if (!this.templateScope)
                     this.templateScope = $rootScope.$new();

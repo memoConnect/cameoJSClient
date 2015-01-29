@@ -1,5 +1,16 @@
 # Dev
 
+## WW 29.01.2015
+* CAM-1711 extern contact with message
+* CAM-1702 password minimum length
+
+## WW 28.01.2015
+* CAM-1629 multiple modals
+* CAM-1585 checksum at download page for apk
+
+## BS 27.01.2015
+* CAM-1331 add delete/leave conversations
+
 ## WW 27.01.2015
 * CAM-1649 add delete pending requests
 

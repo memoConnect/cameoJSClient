@@ -785,12 +785,22 @@
       "ENCRYPTED": "- encrypted -",
       "REQUEST_CAPTCHA": "Please send a (new) passCaptcha."
     },
+    "MENU": {
+      "ADD_RECIPIENTS": "@todo Add recipients",
+      "SHOW_RECIPIENTS": "@todo Show recipients",
+      "SECURITY_SETTINGS": "@todo Security settings",
+      "DELETE": "@todo Delete talk"
+    },
     "HEADING": "new Talk",
     "NO_SUBJECT": "no subject",
     "MODAL": {
       "ASYMMETRIC_KEY_TRUST_ERROR": {
           "HEADER": "@todo Error with cameoKey",
           "TEXT": "The key on this device has not been linked to the keys that created this conversation."
+      },
+      "DELETE":{
+        "HEADER": "Delete Talk",
+        "TEXT": "Are you sure you want to delete this talk?"
       }
     }
   },
@@ -807,7 +817,8 @@
   "SYSTEM": {
     "ERROR": {
       "WRONG_INPUT": "Please check the code and try again.",
-      "EMPTY_INPUT": "The input field is empty!"
+      "EMPTY_INPUT": "The input field is empty!",
+      "MESSAGE": "An error has occurred!"
     },
     "WELCOME": {
       "SUBJECT": "Welcome to cameoNet!",
@@ -834,7 +845,10 @@
                   }
               }
           }
-      }
+    },
+    "CONVERSATION":{
+      "DELETE": "@todo leave talk"
+    }
   },
   "TALKS": {
     "HEADING": "Talks",

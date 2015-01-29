@@ -89,7 +89,7 @@ angular.module('cmUi').directive('cmSearchInput',[
 
                 var filter = cmFilter.get();
                 if(typeof filter == 'string' && filter != ''){
-                    $scope.search;
+                    $scope.search = filter;
                     $scope.counterKeydown = 1;
                 }
             }

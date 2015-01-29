@@ -96,35 +96,44 @@ angular.module('cmUi')
 
             // the modal directive (<cm-modal>) will register itself on next digest
 
-            return modal
+            self.one('modal:closed', function(){
+                self.remove(config.id);
+            });
+
+            return modal;
+        };
+
+        self.remove = function(id){
+            angular.element($document[0].querySelector('cm-modal#'+id)).remove();
+            delete self.instances[id];
         };
 
         self.confirm = function(config){
 
             config  =   {
-                            text:   config.text,
-                            cancel: config.cancel   || 'MODAL.LABEL.CANCEL',
-                            okay:   config.okay     || 'MODAL.LABEL.OK',
-                            title:  config.title    || 'DRTV.CONFIRM.HEADER',
-                            html:   config.html     || '',
-                            data:   config.data
-                        };
+                text:   config.text,
+                cancel: config.cancel   || 'MODAL.LABEL.CANCEL',
+                okay:   config.okay     || 'MODAL.LABEL.OK',
+                title:  config.title    || 'DRTV.CONFIRM.HEADER',
+                html:   config.html     || '',
+                data:   config.data
+            };
 
             var deferred    = $q.defer(),
                 scope       = $rootScope.$new(),
-                modalId     = 'modal-confirm-'+(new Date()).getTime();
+                modalId     = 'modal-confirm';
 
             scope.text              =   config.text       || '';
-            scope.labelOkay         =   config.okay
-            scope.labelCancel       =   config.cancel
+            scope.labelOkay         =   config.okay;
+            scope.labelCancel       =   config.cancel;
 
             scope.cancel            =   function(){ 
                                             $rootScope.closeModal(modalId)
-                                        }
+                                        };
             scope.confirm           =   function(){
-                                            deferred.resolve(this)
+                                            deferred.resolve(this);
                                             $rootScope.closeModal(modalId) 
-                                        }
+                                        };
             self.create({
                 id:             modalId,
                 type:           'confirm',
@@ -138,8 +147,7 @@ angular.module('cmUi')
             self.one('modal:closed', function(event, id){
                 if(id == modalId)
                     deferred.reject();
-
-                return true; //remove event binding
+                return true;
             });
 
             return deferred.promise;

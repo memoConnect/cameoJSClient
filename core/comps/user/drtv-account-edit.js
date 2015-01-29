@@ -18,7 +18,11 @@ angular.module('cmUser')
                 $scope.showReadOnly = false;
 
                 $scope.togglePasswordChange = function(action){
+                    if(action == 'close' && !$scope.showPasswordChange)
+                        return false;
+
                     $scope.showPasswordChange = action && action == 'close' || $scope.showPasswordChange ? false : true;
+                    
                     if(!$scope.showPasswordChange){
                         $scope.formData.oldPassword = '';
                         $scope.formData.password = '';
@@ -70,8 +74,11 @@ angular.module('cmUser')
                     }
 
                     function checkPassword(){
-                        if(!$scope.showPasswordChange)
+                        if(!$scope.showPasswordChange) {
+                            $scope.cmForm.password.$setValidity('empty', true);
+                            $scope.cmForm.oldPassword.$setValidity('empty', true);
                             return false;
+                        }
 
                         // check password
                         if ($scope.formData.oldPassword != ''
@@ -94,6 +101,8 @@ angular.module('cmUser')
                     checkPhoneNumber();
                     checkEmail();
                     checkPassword();
+
+                    console.log($scope.cmForm.$valid,$scope.cmForm)
 
                     if($scope.cmForm.$valid !== false && Object.keys(objectChange).length > 0){
                         deferred.resolve(objectChange);

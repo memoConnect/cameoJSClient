@@ -1,8 +1,14 @@
 <cm-scrollable>
-    <article class="content">
-        <cm-info-bubble class="cm-alert">
-            <i class="fa cm-info cm-ci-color"></i>
-            <span ng-bind-html="::'ACCOUNT.INFO.NOTE_ABOUT_THIS_DATA'|cmParse"></span>
+    <article class="content"  ng-click="showHeadlineInfo = showHeadlineInfo ? false : true">
+        <cm-info-bubble nose-x="45%">
+            <div ng-show="!showHeadlineInfo">
+                <i class="fa cm-info cm-ci-color"></i> {{::'ACCOUNT.INFO.NOTE_ABOUT_THIS_DATA_SMALL'|cmTranslate}}
+            </div>
+            <div ng-show="showHeadlineInfo">
+                <i class="fa cm-info cm-ci-color"></i> {{::'ACCOUNT.INFO.NOTE_ABOUT_THIS_DATA_SMALL'|cmTranslate}}
+                <hr class="margin-small" />
+                <span ng-bind-html="::'ACCOUNT.INFO.NOTE_ABOUT_THIS_DATA'|cmParse"></span>
+            </div>
         </cm-info-bubble>
     </article>
 
@@ -76,7 +82,7 @@
 
                     <hr class="margin-small" />
 
-                    <cm-password ng-model="formData.password" cm-tabindex="5" cm-disable-required></cm-password>
+                    <cm-password ng-model="formData.password" cm-tabindex="5" form-name="cmForm" cm-required="{{showPasswordChange}}"></cm-password>
                 </section>
             </li>
         </ul>

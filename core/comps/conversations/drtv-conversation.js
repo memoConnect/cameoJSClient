@@ -196,28 +196,7 @@ angular.module('cmConversations')
                                                         return prepareFiles(passphrase)
                                                     })
                                                     .then(function(){
-                                                        return  $scope.conversation.isEncrypted()
-
-                                                                ?   new_message
-                                                                    .setText($scope.newMessageText)
-                                                                    .addFiles(filesForMessage)
-                                                                    .getSignatures()
-                                                                    .then(function(){
-                                                                        return new_message.encrypt(passphrase)
-                                                                    })
-                                                                    .then(function(){
-                                                                        return new_message.save()
-                                                                    })
-
-                                                                :   new_message
-                                                                    .setText($scope.newMessageText)
-                                                                    .addFiles(filesForMessage)
-                                                                    .setPublicData(['text','fileIds'])
-                                                                    .revealSignatures()
-                                                                    .getSignatures()
-                                                                    .then(function(){
-                                                                        return new_message.save()
-                                                                    })
+                                                        return $scope.conversation.sendMessage(new_message, filesForMessage);
                                                     })
 
                                         })
