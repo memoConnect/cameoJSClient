@@ -373,10 +373,12 @@ this.waitForPageLoad = function (expectedRoutes, printOutWaiting) {
     expectedRoutes = !Array.isArray(expectedRoutes) ? [expectedRoutes] : expectedRoutes
     // console.log('waitForPageLoad', expectedRoutes.join(', '))
 
+    var lastRoute
+
     return ptor.wait(function () {
         return ptor.executeScript('return window != undefined && window._route').then(function (route) {
-            if(printOutWaiting)
-                console.log(route)
+
+            lastRoute = route
 
             if (route) {
                 // get current route
@@ -392,7 +394,7 @@ this.waitForPageLoad = function (expectedRoutes, printOutWaiting) {
                 }
             }
         })
-    }, config.routeTimeout, 'waitForPage ' + (expectedRoutes || 'any page') + ' timeout reached')
+    }, config.routeTimeout, 'waitForPage ' + (expectedRoutes || 'any page') + ' timeout reached (staying on '+lastRoute+' wrong route)')
 }
 
 this.waitForEventSubscription = function () {
