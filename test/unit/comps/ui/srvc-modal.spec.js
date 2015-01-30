@@ -105,22 +105,18 @@ describe('cmModal', function(){
 
             expect(typeof cmModal.closeAll).toBe('function')
 
-            var el_1 = cmModal.create({ id:"my_modal_1" }, 'Hello World'),
-                el_2 = cmModal.create({ id:"my_modal_2" }, 'Hello User')
-            
+            var el_1 = cmModal.create({ id:"my_modal_1" }, 'Hello World')
+
 
             $rootScope.$apply()
 
             cmModal.open('my_modal_1'),
-            cmModal.open('my_modal_2')
 
             expect(el_1.hasClass('active')).toBe(true)
-            expect(el_2.hasClass('active')).toBe(true)
 
             cmModal.closeAll()
 
             expect(el_1.hasClass('active')).toBe(false)
-            expect(el_2.hasClass('active')).toBe(false)
 
         })
 
