@@ -34,13 +34,13 @@
             <div class="cm-input-ctn with-inside-icon cm-icon-grey">
                 <input
                         tabindex="2" data-qa="input-phonenumber"
-                        type="text" name="phoneNumber" ng-model="item.value"
+                        type="text" name="phoneNumber_{{$index}}" ng-model="item.value"
                         cm-validate-phone cm-adaptive-change
                         />
                 <i class="fa cm-write"></i>
             </div>
-            <cm-info-bubble class="cm-alert" ng-show="cmForm.phoneNumber.$dirty && cmForm.phoneNumber.$invalid">
-                <div ng-show="cmForm.phoneNumber.$invalid">
+            <cm-info-bubble class="cm-alert" ng-show="cmForm.phoneNumber_{{$index}}.$dirty && cmForm.phoneNumber_{{$index}}.$invalid">
+                <div ng-show="cmForm.phoneNumber_{{$index}}.$invalid">
                     <i class="fa cm-info"></i> {{'CONTACT.INFO.INVALID.PHONENUMBER'|cmTranslate}}
                     <span ng-if="item.type">&nbsp;{{item.type}}</span>
                 </div>
@@ -65,12 +65,12 @@
             <div class="cm-input-ctn with-inside-icon cm-icon-grey">
                 <input
                         tabindex="3" data-qa="input-email"
-                        name="email" ng-model="item.value"
+                        name="email_{{$index}}" ng-model="item.value"
                         cm-validate-email />
                 <i class="fa cm-write"></i>
             </div>
-            <cm-info-bubble class="cm-alert" ng-show="cmForm.email.$dirty && cmForm.email.$invalid">
-                <div ng-show="cmForm.email.$invalid">
+            <cm-info-bubble class="cm-alert" ng-show="cmForm.email_{{$index}}.$dirty && cmForm.email_{{$index}}.$invalid">
+                <div ng-show="cmForm.email_{{$index}}.$invalid">
                     <i class="fa cm-info"></i> {{'CONTACT.INFO.INVALID.EMAIL'|cmTranslate}}
                     <span ng-if="item.type">>&nbsp;{{item.type}}</span>
                 </div>
