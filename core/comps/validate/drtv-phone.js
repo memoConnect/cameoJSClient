@@ -15,7 +15,7 @@ angular.module('cmValidate').directive('cmValidatePhone',[
                     ){
                         ngModel.$setViewValue(newValue.replace(/ /g,''));
 
-                        if(newValue.search(/^[+]*[0-9]*$/) == 0){
+                        if(newValue.search(/^[+]*[ ()0-9]*$/) == 0){
                             ngModel.$setValidity('phone', true);
                         } else {
                             ngModel.$setValidity('phone', false);
