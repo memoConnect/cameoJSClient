@@ -218,16 +218,16 @@ angular.module('cmContacts').service('cmContactsModel',[
         this.addContact = function(data){
             var defer = $q.defer();
 
-            this.trigger('before-add-contact')
+            this.trigger('before-add-contact');
 
             return  cmContactsAdapter
                     .addContact(data)
                     .then(function(data){
-                        self.trigger('add-contact', data)
+                        self.trigger('add-contact', data);
                         var contact = _add(data);
-                        self.trigger('after-add-contact', data)
-                        return contact
-                    })
+                        self.trigger('after-add-contact', data);
+                        return contact;
+                    });
         };
 
         /**
@@ -290,7 +290,8 @@ angular.module('cmContacts').service('cmContactsModel',[
             if(data.to == cmUserModel.data.identity.id){
                 self.requests.forEach(function(request){
                     if(request.identity.id == data.from)
-                        self.requests.deregister(request)
+                        self.requests.deregister(request);
+                        self.contacts.create(data.contact, true);
                 });
             }
         });
