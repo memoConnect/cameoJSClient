@@ -971,7 +971,7 @@
         "ERROR": {
             "EMPTY_INPUT": "Eingabe ist leer!",
             "WRONG_INPUT": "Bitte überprüfen Sie Ihre Eingabe!",
-            "MESSAGE": "Es ist ein Fehler aufgetreten!"
+            "MESSAGE": "Es ist ein Fehler aufgetreten"
         },
         "EVENTS": {
             "NEW_MESSAGE": {
