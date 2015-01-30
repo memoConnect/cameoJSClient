@@ -26,6 +26,14 @@ module.exports = function(grunt, options){
         'download-page:create'
     ]);
 
+    grunt.registerTask('phonegap:build-all', [
+        'phonegap:app-prepare',
+        'phonegap-build:app-upload-zip',
+        'crosswalk:build-step',
+        'testflight:ios',
+        'download-page:create'
+    ]);
+
     grunt.registerTask('phonegap:create-only-zip', [
         'phonegap:app-prepare',
         'phonegap-build:app-only-zip'
@@ -39,6 +47,11 @@ module.exports = function(grunt, options){
     grunt.registerTask('phonegap:app-config-local', [
         'template:phonegap-config-xml-local',
         'template:phonegap-config-js'
+    ]);
+
+    grunt.registerTask('phonegap:app-config-local-crosswalk', [
+        'template:phonegap-config-xml-local',
+        'template:phonegap-config-js-crosswalk'
     ]);
 
     var archive = {
@@ -101,7 +114,7 @@ module.exports = function(grunt, options){
                     resourceXml.push('gap:qualifier="'+icon.qualifier+'"');
 
                 if('density' in icon)
-                    resourceXml.push('gap:density="'+icon.density+'"');
+                    resourceXml.push('density="'+icon.density+'"');
 
                 if('dim' in icon) {
                     var dimensions = icon.dim.split('x');
@@ -137,7 +150,7 @@ module.exports = function(grunt, options){
                     resourceXml.push('gap:qualifier="'+screen.qualifier+'"');
 
                 if('density' in screen)
-                    resourceXml.push('gap:density="'+screen.density+'"');
+                    resourceXml.push('density="'+screen.density+'"');
 
                 if('dim' in screen) {
                     var dimensions = screen.dim.split('x');
@@ -222,7 +235,19 @@ module.exports = function(grunt, options){
                 'phonegap-config-js': {
                     'options': {
                         'data': {
-                            'googleSenderId': options.globalCameoSecrets.google.senderId
+                            'googleSenderId': options.globalCameoSecrets.google.senderId,
+                            'isCrosswalk': false
+                        }
+                    },
+                    'files': {
+                        'build/phonegap/www/config.js': ['resource/phonegap/config.js']
+                    }
+                },
+                'phonegap-config-js-crosswalk': {
+                    'options': {
+                        'data': {
+                            'googleSenderId': options.globalCameoSecrets.google.senderId,
+                            'isCrosswalk': true
                         }
                     },
                     'files': {
