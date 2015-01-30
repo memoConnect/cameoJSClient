@@ -203,6 +203,12 @@ angular.module('cmConversations')
                 this.missingAePassphrases   = data.missingAePassphrases || this.missingAePassphrases;
                 this.keyTransmission        = data.keyTransmission      || this.keyTransmission;
 
+                console.log('recipients',data.recipients)
+                console.log('inactiveRecipients',data.inactiveRecipients)
+                if(data.recipients && data.inactiveRecipients){
+                    console.log('merge',data.recipients.concat(data.inactiveRecipients))
+                }
+
                 //Create passphraseVault:
                 if(data.sePassphrase || data.aePassphraseList){
                     passphraseVault =   cmPassphraseVault.create({
