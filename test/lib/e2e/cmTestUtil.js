@@ -896,11 +896,11 @@ this.readConversation = function (subject, message, checkModal) {
 }
 
 this.scrollToTop = function(){
-    $("body").sendKeys(protractor.Key.HOME)
+    return $("body").sendKeys(protractor.Key.HOME)
 }
 
 this.scrollToBottom = function(){
-    $("body").sendKeys(protractor.Key.END)
+    return $("body").sendKeys(protractor.Key.END)
 }
 
 this.scrollToElement = function(cssSelector){

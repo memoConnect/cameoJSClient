@@ -16,7 +16,8 @@ describe('Country Prefix at phoneNumber', function () {
         }
         return util.waitForPageLoad(options.route)
         .then(function() {
-            util.scrollToElement("[data-qa='input-phoneNumber']")
+            return util.scrollToElement("[data-qa='input-phoneNumber']")
+        }).then(function(){
             // list is hidden
             expect($('cm-country-prefix-list.is-visible').isPresent()).toBeFalsy()
 
@@ -39,16 +40,18 @@ describe('Country Prefix at phoneNumber', function () {
                 expect(util.getVal('input-phoneNumber')).toBe('')
             }
 
-            util.scrollToElement("[data-qa='btn-toggleCountries']")
+            return util.scrollToElement("[data-qa='btn-toggleCountries']")
+        }).then(function(){
             // open country list
             util.click('btn-toggleCountries')
             // list is visible
             expect($('cm-country-prefix-list.is-visible').isPresent()).toBeTruthy()
             // list have more than 0 countries
-            $$('cm-country-prefix-list > div').then(function (elements) {
-                expect(elements.length).not.toEqual(0)
-            })
-
+            return $$('cm-country-prefix-list > div')
+                .then(function (elements) {
+                    expect(elements.length).not.toEqual(0)
+                })
+        }).then(function(){
             // click on body outside the list
             if(options.checkClickOutside){
                 $('body').click()
@@ -56,23 +59,24 @@ describe('Country Prefix at phoneNumber', function () {
                 util.click('btn-toggleCountries')
             }
 
-            util.scrollToElement('cm-country-prefix-list.is-visible')
-
+            return util.scrollToElement('cm-country-prefix-list.is-visible')
+        }).then(function(){
             // send keys like a search
             if(options.searchWithKeys) {
                 shortcut = 'us'
                 numberPrefix = '+1'
                 $('body').sendKeys(shortcut)
                 expect($("[cm-country-prefix-shortcut='"+shortcut+"'].is-active").isPresent()).toBeTruthy()
-                $("[cm-country-prefix-shortcut='"+shortcut+"']").click()
+                return $("[cm-country-prefix-shortcut='"+shortcut+"']").click()
             // click on always visible
             } else {
                 shortcut = 'bz'
                 numberPrefix = '+501'
-                $("[cm-country-prefix-shortcut='"+shortcut+"']").click()
+                return $("[cm-country-prefix-shortcut='"+shortcut+"']").click()
             }
-
-            util.scrollToElement("[data-qa='input-phoneNumber']")
+        }).then(function(){
+            return util.scrollToElement("[data-qa='input-phoneNumber']")
+        }).then(function(){
             // now handler shows right shortcut and numberPrefix
             expect($('cm-country-prefix-handler').getText()).toBe(shortcut+numberPrefix)
             // list is hidden
@@ -82,11 +86,12 @@ describe('Country Prefix at phoneNumber', function () {
             // submit ???
             if(options.qaSubmitButton) {
                 // save the number
-                util.waitAndClickQa(options.qaSubmitButton)
+                return util.waitAndClickQa(options.qaSubmitButton)
                 .then(function(){
                     if (options.checkAfterSubmit) {
                         // after save check input
-                        util.waitForLoader(1, 'cm-footer').then(function () {
+                        return util.waitForLoader(1, 'cm-footer')
+                        .then(function () {
                             expect(util.getVal('input-phoneNumber')).toBe(numberPrefix + '1234567')
                         })
                     }
