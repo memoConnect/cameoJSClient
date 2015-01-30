@@ -1,8 +1,7 @@
 'use strict';
 
 angular.module('cmRouteContacts').directive('cmRequestList', [
-    'cmContactsModel',
-    'cmNotify',
+    'cmContactsModel', 'cmNotify',
     function(cmContactsModel, cmNotify){
         return {
             restrict: 'E',
@@ -10,16 +9,6 @@ angular.module('cmRouteContacts').directive('cmRequestList', [
             controller: function ($scope) {
                 $scope.requests = cmContactsModel.requests;
                 $scope.isLoading = false;
-
-                /*
-                cmContactsModel.on('friendRequests:loaded', function(){
-                    $scope.requests = cmContactsModel.requests;
-                });
-
-                cmContactsModel.on('friendRequests:updated', function(){
-                    $scope.requests = cmContactsModel.requests;
-                });
-                */
 
                 function deactiveBell(greaterZero){
                     if(greaterZero && $scope.requests.length > 0){
@@ -39,8 +28,6 @@ angular.module('cmRouteContacts').directive('cmRequestList', [
                         item.accept().then(
                             function(){
                                 cmContactsModel.removeFriendRequest(item);
-
-//                                cmNotify.success('CONTACTS.INFO.REQUEST.ACCEPT',{displayType:'modal', ttl:3000});
                                 deactiveBell();
                                 cmContactsModel.trigger('friendRequests:updated');
                             },
@@ -63,8 +50,6 @@ angular.module('cmRouteContacts').directive('cmRequestList', [
                         item.reject().then(
                             function(){
                                 cmContactsModel.removeFriendRequest(item);
-
-//                                cmNotify.success('CONTACTS.INFO.REQUEST.REJECT',{displayType:'modal',ttl:3000});
                                 deactiveBell();
                                 cmContactsModel.trigger('friendRequests:updated');
                             },
@@ -83,8 +68,6 @@ angular.module('cmRouteContacts').directive('cmRequestList', [
                         item.ignore().then(
                             function(){
                                 cmNotify.trigger('bell:unring');
-
-//                                cmNotify.success('CONTACTS.INFO.REQUEST.IGNORE',{displayType:'modal',ttl:3000});
                                 deactiveBell();
                                 cmContactsModel.trigger('friendRequests:updated');
                             },
