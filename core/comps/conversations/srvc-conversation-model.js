@@ -442,6 +442,55 @@ angular.module('cmConversations')
 
             };
 
+            this.sendMessage = function(message, files, force){
+                if(!(message instanceof cmMessageModel)){
+                    return $q.reject('message no message-model');
+                }
+
+                return  this.getPassphrase()
+                    .catch(function(){
+                        return  self.isEncrypted()
+                            ?   $q.reject('access denied')
+                            :   $q.when(null);
+                        //Todo: null for 'not encrypted' old convention
+                    })
+                    .then(
+                    function(passphrase) {
+                        return self.isEncrypted()
+                            ? message
+                            .addFiles(files)
+                            .getSignatures()
+                            .then(function () {
+                                return message.encrypt(passphrase)
+                            })
+                            .then(function () {
+                                return message.save()
+                            })
+
+                            : message
+                            .addFiles(files)
+                            .setPublicData(['text', 'fileIds'])
+                            .revealSignatures()
+                            .getSignatures()
+                            .then(function () {
+                                return message.save()
+                            })
+                    },
+                    function(){
+                        if(typeof force == 'boolean' && force === true){
+                            return  message
+                                .addFiles(files)
+                                .setPublicData(['text', 'fileIds'])
+                                .revealSignatures()
+                                .getSignatures()
+                                .then(function () {
+                                    return message.save()
+                                })
+                        }
+                    }
+                )
+            };
+
             /**
              * @param {Number} limit
              * @param {Number} offset
