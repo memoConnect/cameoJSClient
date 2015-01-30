@@ -117,9 +117,6 @@ angular.module('cmWidgets').directive('cmWidgetRegistration', [
                     loader.start();
 
                     function sendCreateUserRequest(data) {
-
-                        console.log('sendCreateUserRequest',data)
-
                         cmAuth.createUser(data).then(
                             function (accountData) {
 

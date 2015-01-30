@@ -283,6 +283,10 @@ angular.module('cmCore')
                 this.data.account.phoneNumber = {value:data.phoneNumber,isVerified:false};
             }
 
+            if(typeof data.registrationIncomplete != 'undefined'){
+                this.data.account.registrationIncomplete = data.registrationIncomplete
+            }
+
             this.trigger('account:updated');
         };
 

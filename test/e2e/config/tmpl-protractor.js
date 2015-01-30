@@ -42,6 +42,12 @@ exports.config = extend(browserConfig, {
         var SpecReporter = require('jasmine-spec-reporter');
         // add jasmine spec reporter
         jasmine.getEnv().addReporter(new SpecReporter({displayStacktrace: true, displaySpecDuration: true}));
+
+        //var HtmlReporter = require('protractor-html-screenshot-reporter');
+        //jasmine.getEnv().addReporter(new HtmlReporter({
+        //    baseDirectory: '/tmp/screenshots',
+        //    takeScreenShotsOnlyForFailedSpecs: true
+        //}));
     },
 
     jasmineNodeOpts: {
