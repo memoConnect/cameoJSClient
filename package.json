@@ -49,6 +49,7 @@
 
     "protractor": "1.6.1",
     "grunt-protractor-runner": "1.1.4",
+    "protractor-html-screenshot-reporter": "0.0.19",
 
     "grunt-shell": "1.1.1",
     "grunt-bg-shell": "2.3.1",
