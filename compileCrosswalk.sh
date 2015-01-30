@@ -1,12 +1,12 @@
 #!/bin/bash
 set -e
+crosswalkDir="/opt/crosswalk-cordova-10.39.235.15-arm"
 cordovaVersion="3.6.3-0.2.13"
 phongapVersion="3.6.3-0.22.7"
+antProperties="ant.properties"
 
 [ $(cordova --version) == ${cordovaVersion} ]
 [ $(phonegap --version) == ${phongapVersion} ]
-
-crosswalkDir="/opt/crosswalk-cordova-10.39.235.15-arm"
 
 cd build/phonegap-tmp
 cordova platform rm android
@@ -23,6 +23,11 @@ android update project --subprojects --path . --target "android-19"
 ant debug
 
 cd ../../../
-cordova build android
+
+if [ -e ${antProperties} ]; then
+    cp -v ${antProperties} ./platforms/android/
+fi
+
+cordova build android --release
 
 

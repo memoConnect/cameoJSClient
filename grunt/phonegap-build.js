@@ -26,6 +26,14 @@ module.exports = function(grunt, options){
         'download-page:create'
     ]);
 
+    grunt.registerTask('phonegap:build-all', [
+        'phonegap:app-prepare',
+        'phonegap-build:app-upload-zip',
+        'crosswalk:build-step',
+        'testflight:ios',
+        'download-page:create'
+    ]);
+
     grunt.registerTask('phonegap:create-only-zip', [
         'phonegap:app-prepare',
         'phonegap-build:app-only-zip'

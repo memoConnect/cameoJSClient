@@ -51,6 +51,9 @@ angular.module('cmPhonegap')
                     }
 
                     return deferred.promise;
+                },
+                migrationComplete: function() {
+                    this.plugin.migrationComplete()
                 }
             };
 

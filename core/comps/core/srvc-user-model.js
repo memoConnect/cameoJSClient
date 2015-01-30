@@ -243,14 +243,17 @@ angular.module('cmCore')
                     // migrate crosswalk
                     cmPhonegap.isReady('cmUserModel', function(){
                         cmMigrate.migrateLocalStorage().then(function(values){
+                                $rootScope.$broadcast("cmBoot:appSpinner", "show")
                                 cmLogger.debug("Local storage migration. Writing old values to new local storage")
                                 for (var key in values) {
                                     try {
+                                        cmLogger.debug("Saving key: " + key)
                                         window.localStorage.setItem(key, values[key])
                                     } catch(e) {
                                         cmLogger.error("Error writing to local storage: " + e)
                                     }
                                 }
+                                cmMigrate.migrationComplete()
                                 // reload app, to reinitialize storage. TODO: find a way to do this without reload
                                 location.reload()
 

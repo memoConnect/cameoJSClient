@@ -19,8 +19,32 @@ module.exports = function (grunt, options) {
         'phonegap:app-prepare',
         'phonegap:app-config-local-crosswalk',
         'phonegap:build',
-        'shell:compileCrosswalk'
+        'generate-ant-properties',
+        'shell:compileCrosswalk',
+        'crosswalk:copy-to-dl'
     ]);
+
+    grunt.registerTask('crosswalk:build-step', [
+        'phonegap:app-config-local-crosswalk',
+        'phonegap:build',
+        'generate-ant-properties',
+        'shell:compileCrosswalk',
+        'crosswalk:copy-to-dl'
+    ]);
+
+    grunt.registerTask('crosswalk:copy-to-dl', function () {
+        if (options.globalCameoBuildConfig.target == "default") {
+            grunt.task.run('copy:crosswalk-unsigned')
+        } else {
+            grunt.task.run('copy:crosswalk-signed')
+        }
+    })
+
+    grunt.registerTask('generate-ant-properties', function () {
+        if (options.globalCameoBuildConfig.target != "default") {
+            grunt.task.run('template:cordova-ant-properties')
+        }
+    })
 
     function genPlugins(useRepo) {
         var plugins = options.globalCameoPhonegapConfig.plugins,
@@ -54,7 +78,34 @@ module.exports = function (grunt, options) {
                             dest: 'build/phonegap-tmp/res/'
                         }
                     ]
+                },
+                'crosswalk-signed': {
+                    files: [
+                        {
+                            expand: true,
+                            cwd: 'build/phonegap-tmp/platforms/android/ant-build/',
+                            src: ['*-release.apk'],
+                            dest: 'dist/dl/',
+                            rename: function(dest, src) {
+                                return dest  + options.globalCameoBuildConfig.phonegap.phonegapBaseFilename + '.apk';
+                            }
+                        }
+                    ]
+                },
+                'crosswalk-unsigned': {
+                    files: [
+                        {
+                            expand: true,
+                            cwd: 'build/phonegap-tmp/platforms/android/ant-build/',
+                            src: ['*-release-unsigned.apk'],
+                            dest: 'dist/dl/',
+                            rename: function(dest, src) {
+                                return dest  + options.globalCameoBuildConfig.phonegap.phonegapBaseFilename + '.apk';
+                            }
+                        }
+                    ]
                 }
+
             },
             phonegap: {
                 // https://www.npmjs.org/package/grunt-phonegap
@@ -95,9 +146,24 @@ module.exports = function (grunt, options) {
             shell: {
                 compileCrosswalk: {
                     options: {
-                        stdout: true
+                        stdout: false
                     },
                     command: './compileCrosswalk.sh'
+                }
+            },
+            template: {
+                'cordova-ant-properties': {
+                    'options': {
+                        'data': {
+                            storePath: "../../../../../cameoAndroidKeys/" + options.globalCameoSecrets.android.keyStoreName,
+                            storePassword: options.globalCameoSecrets.android.KeyStorePassword,
+                            alias: options.globalCameoSecrets.android.keyAliasName,
+                            aliasPassword: options.globalCameoSecrets.android.keyAliasPassword
+                        }
+                    },
+                    'files': {
+                        'build/phonegap-tmp/ant.properties': ['resource/phonegap/ant.properties']
+                    }
                 }
             }
 
