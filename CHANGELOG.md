@@ -1,8 +1,8 @@
 # Dev
 
 ## WW 02.02.2015
-* fixxed phone errorcode
-* add to auth token a lowercase drtv
+* fixxed phone & email errorcodes now in cmApi
+* handshake token now case insentive (drtv-model-to-lowercase)
 
 ## BS 27.01.2015
 * CAM-1331 add delete/leave conversations
