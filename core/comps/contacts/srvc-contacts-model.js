@@ -280,6 +280,13 @@ angular.module('cmContacts').service('cmContactsModel',[
             }
         });
 
+        cmContactsAdapter.on('friendRequest:deleted', function(event, data){
+            self.requests.forEach(function(request){
+                if(request.identity.id == data.from)
+                    self.requests.deregister(request)
+            });
+        });
+
         cmContactsAdapter.on('friendRequest:accepted', function(event, data){
             // Friend request sent by the current user was accepted:
             if(data.from == cmUserModel.data.identity.id){
