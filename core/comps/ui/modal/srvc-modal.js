@@ -1,4 +1,4 @@
- 'use strict';
+'use strict';
 
 angular.module('cmUi')
 .service('cmModal',[
@@ -48,7 +48,7 @@ angular.module('cmUi')
 
         self.close = function(id){
             var instance = self.instances[id];
-            
+
             if(instance){
                 self.instances[id].close();
 
@@ -67,7 +67,7 @@ angular.module('cmUi')
 
         self.create = function(config, template, target, scope){
             var attrs = '';
-            
+
             //Todo: könnte man schöner machen:
             angular.forEach(config, function(value, key){ attrs += key+'="'+value+'"' });
 
@@ -127,13 +127,13 @@ angular.module('cmUi')
             scope.labelOkay         =   config.okay;
             scope.labelCancel       =   config.cancel;
 
-            scope.cancel            =   function(){ 
-                                            $rootScope.closeModal(modalId)
-                                        };
+            scope.cancel            =   function(){
+                $rootScope.closeModal(modalId)
+            };
             scope.confirm           =   function(){
-                                            deferred.resolve(this);
-                                            $rootScope.closeModal(modalId) 
-                                        };
+                deferred.resolve(this);
+                $rootScope.closeModal(modalId)
+            };
             self.create({
                 id:             modalId,
                 type:           'confirm',

@@ -161,8 +161,8 @@ angular.module('cmWidgets').directive('cmWidgetRegistration', [
                 };
 
                 var killWatcher = $rootScope.$on('registration:createUser', function () {
-                        $scope.createUser();
-                    });
+                    $scope.createUser();
+                });
 
                 /**
                  * Guest Handling

@@ -377,6 +377,8 @@ this.waitForPageLoad = function (expectedRoutes, printOutWaiting) {
 
     return ptor.wait(function () {
         return ptor.executeScript('return window != undefined && window._route').then(function (route) {
+            if(printOutWaiting)
+                console.log(route)
 
             lastRoute = route
 

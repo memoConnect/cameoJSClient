@@ -18,7 +18,8 @@
  </example>
  */
 
-angular.module('cmUi').directive('cmLogo',[
+angular.module('cmUi')
+.directive('cmLogo',[
     function (){
         return {
             restrict: 'AE',

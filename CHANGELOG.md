@@ -1,5 +1,9 @@
 # Dev
 
+## WW 02.02.2015
+* fixxed phone errorcode
+* add to auth token a lowercase drtv
+
 ## BS 29.01.2015
 * CAM-1707 update re-keying process
 * CAM-1397 add incomplete registration handling
