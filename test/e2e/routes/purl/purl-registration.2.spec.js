@@ -50,7 +50,8 @@ describe('Purl Registration: ', function () {
         util.waitForPageLoad('/conversation/new')
 
         // add recipient
-        $(".cm-add-button").click()
+        util.waitAndClickQa('btn-add-recipients')
+
         util.waitForPageLoad("/conversation/new/recipients")
         util.headerSearchInList(externalLogin)
 
