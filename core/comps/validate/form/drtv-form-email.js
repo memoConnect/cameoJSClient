@@ -29,8 +29,8 @@ angular.module('cmValidate')
                 };
 
                 var killWatcher = $rootScope.$on('cmValidate:error', function(event, errorCodes){
-                    if(errorCodes.length > 0 && errorCodes.indexOf('PHONENUMBER_INVALID') >= 0) {
-                        $scope.cmInnerForm.phoneNumberDisp.$setValidity('phoneNumberDisp', false);
+                    if(errorCodes.length > 0 && errorCodes.indexOf('EMAIL_INVALID') >= 0) {
+                        $scope.cmInnerForm.email.$setValidity('invalid', false);
                     }
                 });
 
