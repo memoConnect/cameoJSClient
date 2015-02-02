@@ -64,6 +64,7 @@ angular.module('cmConversations')
             this.id                 = undefined;
             
             this.recipients         = new cmFactory(cmIdentityModel);      //list of cmIdentityModel objects
+            this.inactiveRecipients = new cmFactory(cmIdentityModel);      //list of cmIdentityModel objects
             this.messages           = new cmFactory(cmMessageModel);       //list of MessageModel objects
 
             this.timeOfCreation     = 0;          //timestamp of the conversation's creation
@@ -203,14 +204,20 @@ angular.module('cmConversations')
                 this.missingAePassphrases   = data.missingAePassphrases || this.missingAePassphrases;
                 this.keyTransmission        = data.keyTransmission      || this.keyTransmission;
 
-                console.log('recipients',data.recipients)
-                console.log('inactiveRecipients',data.inactiveRecipients)
-                if(data.recipients && data.inactiveRecipients){
-                    console.log('merge',data.recipients.concat(data.inactiveRecipients))
-                }
+                console.log('1 recipients',data.recipients)
+                console.log('1 inactiveRecipients',data.inactiveRecipients)
 
                 //Create passphraseVault:
-                if(data.sePassphrase || data.aePassphraseList){
+                if((data.sePassphrase || data.aePassphraseList) && data.inactiveRecipients){
+
+                    passphraseVault =   cmPassphraseVault.create({
+                        sePassphrase:       data.sePassphrase,
+                        aePassphraseList:   data.aePassphraseList,
+                        signatures:         data.conversationSignatures,
+                        recipientKeyList:   data.recipients.concat(data.inactiveRecipients)
+                    })
+                } else if((data.sePassphrase || data.aePassphraseList) && !data.inactiveRecipients){
+
                     passphraseVault =   cmPassphraseVault.create({
                         sePassphrase:       data.sePassphrase,
                         aePassphraseList:   data.aePassphraseList,
@@ -218,12 +225,6 @@ angular.module('cmConversations')
                         recipientKeyList:   data.recipients
                     })
                 }
-
-                //if(passphraseVault.getKeyTransmission() != this.keyTransmission)
-                //    cmLogger.debug('cmConversationModel: inconsistent data: keyTransmission')
-                //    //TODO what is todo???
-                
-                //this.keyTransmission = passphraseVault.getKeyTransmission()
 
                 /**
                  * Important for none encrypted Conversations
@@ -248,9 +249,6 @@ angular.module('cmConversations')
                 var recipients = data.recipients || [];
                 recipients.forEach(
                     function(recipient_data){
-                        /**
-                         * @todo filter inactive recipients, do something
-                         */
                         self.addRecipient(cmIdentityFactory.create(recipient_data.identityId));
                     }
                 );
