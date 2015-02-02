@@ -18,7 +18,6 @@ angular.module('cmValidate').directive('cmPassword', [
                 $scope.required = true;
                 if(('cmRequired' in $attrs)) {
                     $attrs.$observe('cmRequired', function (isRequired) {
-                        console.log('cmRequired',isRequired)
                         $scope.required = isRequired == 'false' ? false : true;
                     });
                 }

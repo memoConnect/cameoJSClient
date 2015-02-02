@@ -13,8 +13,8 @@
         <cm-conversation-menu cm-data="conversation" data-qa="menu-conversation"></cm-conversation-menu>
     </div>
     <section class="body-group recipients" ng-if="conversation.state.is('new') || !conversation.state.is('new') && conversation.recipients.length > 1">
-        <h3 ng-click="toggleRecipientView()" cm-reactive>
-            <i class="fa" ng-class="{'cm-grid':!showGrid,'cm-menu-weight':showGrid}"></i>
+        <h3 ng-click="goto('conversation/'+(conversation.id||'new')+'/recipients')" cm-reactive data-qa="btn-add-recipients" cm-user-rights>
+            <i class="fa" ng-class="{'cm-checkbox-add':conversation.recipients.length == 1, 'cm-list':conversation.recipients.length > 1}"></i>
             {{'CONVERSATION.PLACEHOLDER.RECIPIENTS'|cmTranslate}}
             <span class="recipients-counter is-selectable">({{conversation.recipients.length-1}})</span>
             <span class="recipient-name is-selectable" ng-show="showGrid">{{recipientName}}</span>
@@ -48,16 +48,11 @@
             </div>
             <div
                 class="cm-add-button"
-                ng-click="goto('conversation/'+(conversation.id||'new')+'/recipients')"
+                ng-click="toggleRecipientView()"
                 cm-reactive
-                cm-user-rights
-                data-qa="btn-add-recipients">
-                <i
-                    class="fa"
-                    ng-class="{
-                        'cm-checkbox-add':conversation.recipients.length == 1,
-                        'cm-list':conversation.recipients.length > 1
-                    }"></i>
+                ng-if="conversation.recipients.length > 1"
+                >
+                <i class="fa" ng-class="{'cm-grid':!showGrid,'cm-menu-weight':showGrid}"></i>
             </div>
         </div>
     </section>

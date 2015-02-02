@@ -818,7 +818,7 @@
     "ERROR": {
       "WRONG_INPUT": "Please check the code and try again.",
       "EMPTY_INPUT": "The input field is empty!",
-      "MESSAGE": "An error has occurred!"
+      "MESSAGE": "An error has occurred"
     },
     "WELCOME": {
       "SUBJECT": "Welcome to cameoNet!",
