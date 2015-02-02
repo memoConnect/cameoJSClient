@@ -21,10 +21,10 @@
 angular.module('cmCore')
 .service('cmAuthenticationRequest', [
     'cmApi', 'cmObject', 'cmLogger', 'cmCrypt', 'cmUserModel', 'cmReKeying',
-    'cmIdentityFactory', 'cmModal', 'cmCallbackQueue',
+    'cmContactsModel', 'cmIdentityFactory', 'cmModal', 'cmCallbackQueue',
     '$rootScope', '$q',
     function(cmApi, cmObject, cmLogger, cmCrypt, cmUserModel, cmReKeying,
-             cmIdentityFactory, cmModal, cmCallbackQueue,
+             cmContactsModel, cmIdentityFactory, cmModal, cmCallbackQueue,
              $rootScope, $q){
 
         var self = {
@@ -143,7 +143,7 @@ angular.module('cmCore')
              */
 
             cancel: function(toIdentityId){
-                if(!typeof toIdentityId == 'string'){
+                if(typeof toIdentityId != 'string'){
                     cmLogger.debug('cmAuthenticationRequest: cancel() toIdentityId must be string.')
                     return false
                 }
@@ -232,12 +232,21 @@ angular.module('cmCore')
                 return false; // do not remove event binding
             }
 
+
             var fromIdentity = cmIdentityFactory.find(event.fromIdentityId)
 
             if(!fromIdentity){
                 cmLogger.debug('cmAuthenticationRequest: received request, but sender is unknown.');
+
                 return false; // do not remove event binding
             }
+
+            if(cmUserModel.data.identity.id != event.fromIdentityId && cmContactsModel.findByIdentityId(event.fromIdentityId) == undefined){
+                cmLogger.debug('cmAuthenticationRequest: received request, sender is not in contacts.');
+
+                return false; // do not remove event binding
+            }
+
 
             //If we dont know the key to sign:
             if(!fromIdentity.keys.find(request.fromKeyId)){
