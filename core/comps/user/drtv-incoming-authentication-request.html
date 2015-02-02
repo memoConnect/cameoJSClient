@@ -4,7 +4,7 @@
 
     <form ng-submit="verify(transactSecret)">
         <div class="cm-input-ctn with-inside-icon">
-            <input id="inp-transactSecret" name="inp-transactSecret" type="text" ng-model="transactSecret" data-qa="inp-transactSecret" cm-enter="verify(transactSecret)" />
+            <input id="inp-transactSecret" name="inp-transactSecret" type="text" ng-model="transactSecret" cm-model-to-lowercase data-qa="inp-transactSecret" cm-enter="verify(transactSecret)" />
             <i class="fa cm-write"></i>
         </div>
 

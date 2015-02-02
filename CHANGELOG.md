@@ -1,5 +1,9 @@
 # Dev
 
+## WW 02.02.2015
+* fixxed phone errorcode
+* add to auth token a lowercase drtv
+
 ## BS 27.01.2015
 * CAM-1331 add delete/leave conversations
 
