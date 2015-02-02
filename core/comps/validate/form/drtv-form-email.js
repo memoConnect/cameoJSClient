@@ -8,6 +8,7 @@ angular.module('cmValidate')
               $rootScope) {
         return {
             restrict: 'E',
+            require: 'ngModel',
             scope: {
                 ngModel: '=ngModel',
                 tabIndex: '@cmTabindex',
@@ -18,6 +19,21 @@ angular.module('cmValidate')
                 verificationData: '=cmVerify'
             },
             templateUrl: 'comps/validate/form/drtv-form-email.html',
+            link: function(scope, element, attrs, modelCtrl){
+                var killWatcher = $rootScope.$on('cmValidate:error', function(event, errorCodes){
+                    if(errorCodes.length > 0 && errorCodes.indexOf('EMAIL_INVALID') >= 0) {
+                        modelCtrl.$setValidity('invalid', false);
+                    }
+                });
+
+                scope.$watch('ngModel',function(newValue){
+                    modelCtrl.$setValidity('invalid', true);
+                });
+
+                scope.$on('$destroy', function(){
+                    killWatcher();
+                });
+            },
             controller: function($scope) {
                 cmVerify.handleInput('email',$scope);
 
@@ -27,16 +43,6 @@ angular.module('cmValidate')
                         $scope.showEmailInfo = !$scope.showEmailInfo ? true : false;
                     }
                 };
-
-                var killWatcher = $rootScope.$on('cmValidate:error', function(event, errorCodes){
-                    if(errorCodes.length > 0 && errorCodes.indexOf('EMAIL_INVALID') >= 0) {
-                        $scope.cmInnerForm.email.$setValidity('invalid', false);
-                    }
-                });
-
-                $scope.$on('$destroy', function(){
-                    killWatcher();
-                });
             }
         }
     }

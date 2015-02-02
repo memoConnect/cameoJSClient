@@ -82,9 +82,7 @@ angular.module('cmSetup')
                                 function(res){
                                     loader.stop();
 
-                                    if('errorCodes' in res.data){
-                                        $rootScope.$broadcast('cmValidate:error',res.data.errorCodes);
-                                    } else {
+                                    if(!'errorCodes' in res.data){
                                         $scope.saveError = true;
                                     }
                                 }
