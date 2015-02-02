@@ -242,7 +242,7 @@ angular.module('cmCore')
             }
 
             if(cmUserModel.data.identity.id != event.fromIdentityId && cmContactsModel.findByIdentityId(event.fromIdentityId) == undefined){
-                cmLogger.debug('cmAuthenticationRequest: received request, sender is not in contacts.');
+                cmLogger.debug('cmAuthenticationRequest: received request, sender not accepted.');
 
                 return false; // do not remove event binding
             }
