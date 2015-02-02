@@ -19,9 +19,9 @@ angular.module('cmValidate').directive('cmValidateEmail',[
                     }
 
                     if(check !== true){
-                        ngModel.$setValidity('email', false);
+                        ngModel.$setValidity('emailInvalid', false);
                     } else {
-                        ngModel.$setValidity('email', true);
+                        ngModel.$setValidity('emailInvalid', true);
                     }
                 });
             }

@@ -61,14 +61,26 @@ describe('Route Settings Account: ', function(){
             expect($("[data-qa='form-error-email-invalid']").isDisplayed()).toBeTruthy()
         })
 
-        it('fill form with new data', function(){
+        it('test wrong phonenumber', function(){
             util.clearInput('input-phoneNumber')
-            util.setVal('input-phoneNumber',phoneNumber)
+            util.checkWarning('form-error-phoneNumber-invalid',true)
+
+            util.setVal('input-phoneNumber','444444444444444444444444444444444444444444444',true)
+            .then(function(){
+                util.clearInput('input-email')
+                util.click('btn-saveAccount')
+                return util.waitForLoader(1,'cm-footer')
+            }).then(function(){
+               util.checkWarning('form-error-phoneNumber-invalid')
+            })
+        })
+
+        it('fill form with new data', function(){
+            util.setVal('input-phoneNumber',phoneNumber,true)
             util.getVal('input-phoneNumber').then(function(value){
                 expect(value).toBe(phoneNumber)
             })
-            util.clearInput('input-email')
-            util.setVal('input-email',email)
+            util.setVal('input-email',email,true)
             util.getVal('input-email').then(function(value){
                 expect(value).toBe(email)
             })
@@ -134,7 +146,7 @@ describe('Route Settings Account: ', function(){
             util.setVal('input-oldPassword',oldPassword)
             util.click('btn-saveAccount')
 
-            util.waitForLoader(1,'cm-footer')
+            util.waitForLoader(2,'cm-footer')
         })
 
         it('check saved data & test login with new password', function(){

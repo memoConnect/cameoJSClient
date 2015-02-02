@@ -16,12 +16,12 @@ angular.module('cmValidate').directive('cmValidatePhone',[
                         ngModel.$setViewValue(newValue.replace(/ /g,''));
 
                         if(newValue.search(/^[+]*[ ()0-9]*$/) == 0){
-                            ngModel.$setValidity('phone', true);
+                            ngModel.$setValidity('phoneNumberInvalid', true);
                         } else {
-                            ngModel.$setValidity('phone', false);
+                            ngModel.$setValidity('phoneNumberInvalid', false);
                         }
                     } else {
-                        ngModel.$setValidity('phone', true);
+                        ngModel.$setValidity('phoneNumberInvalid', true);
                         ngModel.$setPristine();
                     }
                 }

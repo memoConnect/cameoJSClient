@@ -31,8 +31,8 @@
         <input type="hidden" name="phoneNumber" ng-model="ngModelOut" />
     </div>
     <cm-country-prefix-list></cm-country-prefix-list>
-    <cm-info-bubble class="cm-alert" ng-show="cmInnerForm.phoneNumberDisp.$dirty && cmInnerForm.phoneNumberDisp.$invalid" data-qa="form-error-phoneNumber-invalid">
-        <div ng-show="cmInnerForm.phoneNumberDisp.$invalid">
+    <cm-info-bubble class="cm-alert" ng-show="cmInnerForm.$error.phoneNumberInvalid" >
+        <div data-qa="form-error-phoneNumber-invalid">
             <i class="fa cm-info"></i> {{::info|cmTranslate}}
         </div>
     </cm-info-bubble>

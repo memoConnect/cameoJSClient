@@ -1,5 +1,4 @@
 /**
- * Created by reimerei on 15.04.14.
  * http://angular.github.io/protractor/#/api
  */
 var fs = require('fs'),
@@ -505,7 +504,6 @@ this.waitForModalClose = function () {
 
     return this
 }
-
 
 this.confirmModal = function(){
     return $('cm-modal.active [data-qa="btn-confirm"]').click()
