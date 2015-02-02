@@ -46,11 +46,11 @@
                 </cm-avatar>
                 <cm-recipients-comma-seperated cm-data="conversation" ng-show="!showGrid"></cm-recipients-comma-seperated>
             </div>
-
             <div
                 class="cm-add-button"
                 ng-click="toggleRecipientView()"
                 cm-reactive
+                ng-if="conversation.recipients.length > 1"
                 >
                 <i class="fa" ng-class="{'cm-grid':!showGrid,'cm-menu-weight':showGrid}"></i>
             </div>
