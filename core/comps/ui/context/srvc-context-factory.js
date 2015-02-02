@@ -63,7 +63,7 @@ angular.module('cmUi').service('cmContextFactory', [
         };
 
         self.validate = function(data){
-            if(typeof data != 'undefined' && typeof data.type == 'string' && data.type != '' && typeof data.model == 'object' && typeof data.model.id != 'undefined' && data.model.id != ''){
+            if(data != null && typeof data == 'object' && typeof data.type == 'string' && data.type != '' && data.model != null && typeof data.model == 'object' && typeof data.model.id != 'undefined' && data.model.id != ''){
                 return true;
             } else {
                 // error
