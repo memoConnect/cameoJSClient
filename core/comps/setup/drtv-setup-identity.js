@@ -112,7 +112,8 @@ angular.module('cmSetup')
 
                     $scope.updateIdentity = function () {
                         if($scope.isPristine) {
-                            $scope.goTo('/settings/identity/key/create');
+                            //$scope.goTo('/settings/identity/key/create');
+                            $scope.goToNextStep();
                             return false;
                         }
 

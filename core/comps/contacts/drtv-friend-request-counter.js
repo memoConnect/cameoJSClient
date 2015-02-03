@@ -25,7 +25,10 @@ angular.module('cmContacts')
                         element.html(' (' + scope.counter +')');
                     } else {
                         element.html('');
-                        cmNotify.trigger('bell:unring');
+                        /**
+                         * @todo re-new
+                         */
+                        //cmNotify.trigger('bell:unring');
                     }
 
                     scope.setColor();
