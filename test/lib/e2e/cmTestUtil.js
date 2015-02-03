@@ -379,9 +379,8 @@ this.waitForPageLoad = function (expectedRoutes, printOutWaiting) {
             if(printOutWaiting)
                 console.log(route)
 
-            lastRoute = route
-
             if (route) {
+                lastRoute = route
                 // get current route
                 if (        
                         expectedRoutes.length == 0 
@@ -395,7 +394,7 @@ this.waitForPageLoad = function (expectedRoutes, printOutWaiting) {
                 }
             }
         })
-    }, config.routeTimeout, 'waitForPage ' + (expectedRoutes || 'any page') + ' timeout reached ( lastRoute was '+lastRoute+')')
+    }, config.routeTimeout, 'waitForPage ' + (expectedRoutes || 'any page') + ' timeout reached (lastRoute was '+lastRoute+')')
 }
 
 this.waitForEventSubscription = function () {
