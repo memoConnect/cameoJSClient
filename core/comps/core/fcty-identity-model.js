@@ -181,7 +181,7 @@ angular.module('cmCore')
                 var cameoId = this.cameoId || '',
                     name = '';
 
-                if(this.userType == 'external'){
+                if(this.userType != 'internal'){
                     name = this.displayName || this.email.value || this.phoneNumber.value ||  cameoId.split("@")[0] || this.id;
                 } else {
                     name = this.displayName || cameoId.split("@")[0] || this.email.value || this.phoneNumber.value || this.id;
