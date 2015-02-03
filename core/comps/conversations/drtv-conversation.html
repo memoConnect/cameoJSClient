@@ -9,7 +9,7 @@
     </h2>
     <section class="body-group recipients" ng-if="conversation.state.is('new') || !conversation.state.is('new') && conversation.recipients.length > 1">
         <h3 ng-click="goto('conversation/'+(conversation.id||'new')+'/recipients')" cm-reactive data-qa="btn-add-recipients" cm-user-rights>
-            <i class="fa" ng-class="{'cm-checkbox-add':conversation.recipients.length == 1, 'cm-list':conversation.recipients.length > 1}"></i>
+            <i class="fa" ng-class="{'cm-new-contact':conversation.recipients.length == 1, 'cm-list':conversation.recipients.length > 1}"></i>
             {{'CONVERSATION.PLACEHOLDER.RECIPIENTS'|cmTranslate}}
             <span class="recipients-counter is-selectable">({{conversation.recipients.length-1}})</span>
             <span class="recipient-name is-selectable" ng-show="showGrid">{{recipientName}}</span>
