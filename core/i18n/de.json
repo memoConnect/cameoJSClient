@@ -259,7 +259,7 @@
         },
         "MODAL": {
             "ASYMMETRIC_KEY_TRUST_ERROR": {
-                "HEADER": "@todo Fehler mit cameoKey",
+                "HEADER": "Entschlüsseln nicht erlaubt!",
                 "TEXT": "Sie haben Ihren lokalen cameoKey noch nicht mit Ihren anderen cameoKeys verknüpft. Deshalb können Sie Talks mit Identitäten, die Ihnen vertrauen, hier nicht lesen"
             }
         }
