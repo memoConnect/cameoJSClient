@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('cmUi')
-.directive('customValidation',[
+.directive('cmModelToLowercase',[
     function(){
         return {
             require: 'ngModel',
