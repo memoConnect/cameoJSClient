@@ -30,8 +30,12 @@ angular.module('cmValidate')
 
                 var killWatcher = $rootScope.$on('cmValidate:error', function(event, errorCodes){
                     if(errorCodes.length > 0 && errorCodes.indexOf('EMAIL_INVALID') >= 0) {
-                        $scope.cmInnerForm.email.$setValidity('invalid', false);
+                        $scope.cmInnerForm.email.$setValidity('emailInvalid', false);
                     }
+                });
+
+                $scope.$watch('ngModel',function(newValue){
+                    $scope.cmInnerForm.email.$setValidity('emailInvalid', true);
                 });
 
                 $scope.$on('$destroy', function(){

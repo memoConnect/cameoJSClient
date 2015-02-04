@@ -45,30 +45,27 @@ describe('Purl Registration: ', function () {
     })
 
     it('start conversation with external user', function () {
-
         util.get("/conversation/new")
         util.waitForPageLoad('/conversation/new')
+        .then(function(){
+            util.click('btn-add-recipients')
+            return util.waitForPageLoad("/conversation/new/recipients")
+        }).then(function(){
+            util.headerSearchInList(externalLogin)
+            util.waitForElement("[data-qa='contact-display-name']")
+            $("[data-qa='btn-select-contact']").click()
 
-        // add recipient
-        util.waitAndClickQa('btn-add-recipients')
+            // go back to conversation
+            $("[data-qa='btn-done']").click()
+            return util.waitForPageLoad("/conversation/new")
+        }).then(function(){
+            util.disableEncryption();
 
-        util.waitForPageLoad("/conversation/new/recipients")
-        util.headerSearchInList(externalLogin)
-
-        util.waitForElement("[data-qa='contact-display-name']")
-        $("[data-qa='btn-select-contact']").click()
-
-        // go back to conversation
-        $("[data-qa='btn-done']").click()
-
-        util.waitForPageLoad("/conversation/new")
-
-        util.disableEncryption();
-
-        // send message
-        $("[data-qa='input-answer']").sendKeys(msgText)
-        $("[data-qa='input-subject']").sendKeys(subject)
-        $("[data-qa='btn-send-answer']").click()
+            // send message
+            $("[data-qa='input-subject']").sendKeys(subject)
+            $("[data-qa='input-answer']").sendKeys(msgText)
+            $("[data-qa='btn-send-answer']").click()
+        })
     })
 
     it('get message send to test user', function () {
