@@ -53,7 +53,13 @@ angular.module('cmContacts')
                 this.id = data.id || this.id;
                 this.contactType = data.contactType || this.contactType;
                 this.groups = data.groups || this.groups;
+
+                if(data.identity){
+                    data.identity.userType = this.contactType
+                }
+
                 this.identity = data.identity ? cmIdentityFactory.create(data.identity, true) : this.identity;
+
 
                 this.trigger('update:finished');
             };

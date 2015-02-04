@@ -10,7 +10,7 @@ angular.module('cmValidate').directive('cmValidateEmail',[
             },
             link: function(scope, element, attrs, ngModel){
 
-                var identifier = 'email';
+                var identifier = 'emailInvalid';
 
                 scope.$watch('model',function (newValue) {
                     var check = true;
