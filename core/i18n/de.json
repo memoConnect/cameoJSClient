@@ -265,8 +265,8 @@
         },
         "MODAL": {
             "DELETE":{
-                "HEADER": "Talk löschen",
-                "TEXT": "Wollen Sie den Talk wirklich löschen?"
+                "HEADER": "@todo Talk löschen",
+                "TEXT": "@todo Wollen Sie den Talk wirklich löschen?"
             },
             "ASYMMETRIC_KEY_TRUST_ERROR": {
                 "HEADER": "@todo Fehler mit cameoKey",

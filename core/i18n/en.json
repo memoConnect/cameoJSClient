@@ -799,8 +799,8 @@
           "TEXT": "The key on this device has not been linked to the keys that created this conversation."
       },
       "DELETE":{
-        "HEADER": "Delete Talk",
-        "TEXT": "Are you sure you want to delete this talk?"
+        "HEADER": "@todo Delete Talk",
+        "TEXT": "@todo Are you sure you want to delete this talk?"
       }
     }
   },
