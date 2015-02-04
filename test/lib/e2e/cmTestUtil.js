@@ -1,5 +1,4 @@
 /**
- * Created by reimerei on 15.04.14.
  * http://angular.github.io/protractor/#/api
  */
 var fs = require('fs'),
@@ -377,10 +376,11 @@ this.waitForPageLoad = function (expectedRoutes, printOutWaiting) {
 
     return ptor.wait(function () {
         return ptor.executeScript('return window != undefined && window._route').then(function (route) {
-
-            lastRoute = route
+            if(printOutWaiting)
+                console.log(route)
 
             if (route) {
+                lastRoute = route
                 // get current route
                 if (        
                         expectedRoutes.length == 0 
@@ -394,7 +394,7 @@ this.waitForPageLoad = function (expectedRoutes, printOutWaiting) {
                 }
             }
         })
-    }, config.routeTimeout, 'waitForPage ' + (expectedRoutes || 'any page') + ' timeout reached (staying on '+lastRoute+' wrong route)')
+    }, config.routeTimeout, 'waitForPage ' + (expectedRoutes || 'any page') + ' timeout reached (lastRoute was '+lastRoute+')')
 }
 
 this.waitForEventSubscription = function () {
@@ -503,7 +503,6 @@ this.waitForModalClose = function () {
 
     return this
 }
-
 
 this.confirmModal = function(){
     return $('cm-modal.active [data-qa="btn-confirm"]').click()

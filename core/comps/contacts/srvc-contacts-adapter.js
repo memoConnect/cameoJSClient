@@ -121,6 +121,10 @@ angular.module('cmContacts').service('cmContactsAdapter',[
             adapter.trigger('friendRequest:accepted', data);
         });
 
+        cmApi.on('friendRequest:deleted', function(event, data){
+            adapter.trigger('friendRequest:deleted', data);
+        });
+
         cmApi.on('friendRequest:rejected', function(event, data){
             //cmLogger.debug('cmContactsAdapter cmApi.on:friendRequest:rejected');
             adapter.trigger('friendRequest:rejected', data);

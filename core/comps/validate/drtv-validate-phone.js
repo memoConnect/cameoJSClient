@@ -9,7 +9,7 @@ angular.module('cmValidate').directive('cmValidatePhone',[
             },
             link: function(scope, element, attrs, ngModel){
 
-                var identifier = 'phone';
+                var identifier = 'phoneNumberInvalid';
 
                 function checkPhoneNumber(newValue){
                     if(newValue && newValue != "" && correctValue == undefined

@@ -1,5 +1,9 @@
 # Dev
 
+## WW 02.02.2015
+* fixxed phone & email errorcodes now in cmApi
+* handshake token now case insentive (drtv-model-to-lowercase)
+
 ## BS 29.01.2015
 * CAM-1707 update re-keying process
 * CAM-1397 add incomplete registration handling
@@ -26,6 +30,9 @@
 #########
 # RC 0.5.0 - 26.01.2015
 #########
+
+## BS 03.02.2015
+* fix CAM-1554 switch DisplayName for external User
 
 ## WW 26.01.2015
 * CAM-1647 add delete Contacts (cameo/extern)

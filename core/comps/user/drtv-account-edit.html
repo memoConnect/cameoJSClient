@@ -20,8 +20,8 @@
             <label>{{::'ACCOUNT.PLACEHOLDER.LOGINNAME'|cmTranslate}}</label>
             <div class="cm-input-ctn">
                 <input
-                    tabindex="1" data-qa="input-loginName" disabled
-                    type="text" name="loginName" ng-model="account.loginName" />
+                        tabindex="1" data-qa="input-loginName" disabled
+                        type="text" name="loginName" ng-model="account.loginName" />
             </div>
             <cm-info-bubble class="cm-alert" ng-show="showReadOnly">
                 <i class="fa cm-info cm-ci-color"></i>
@@ -32,23 +32,23 @@
         <hr class="margin-small" />
 
         <cm-form-phonenumber
-            ng-model="formData.phoneNumber"
-            ng-model-out="formData.mergedPhoneNumber"
-            cm-tabindex="2"
-            cm-label="ACCOUNT.PLACEHOLDER.PHONENUMBER"
-            cm-info="ACCOUNT.INFO.INVALID.PHONENUMBER"
-            cm-verify="account.phoneNumber"
-        ></cm-form-phonenumber>
+                ng-model="formData.phoneNumber"
+                ng-model-out="formData.mergedPhoneNumber"
+                cm-tabindex="2"
+                cm-label="ACCOUNT.PLACEHOLDER.PHONENUMBER"
+                cm-info="ACCOUNT.INFO.INVALID.PHONENUMBER"
+                cm-verify="account.phoneNumber"
+                ></cm-form-phonenumber>
 
         <hr class="margin-small" />
 
         <cm-form-email
-            ng-model="formData.email"
-            cm-tabindex="3"
-            cm-label="ACCOUNT.PLACEHOLDER.EMAIL"
-            cm-info="ACCOUNT.INFO.INVALID.EMAIL"
-            cm-verify="account.email"
-        ></cm-form-email>
+                ng-model="formData.email"
+                cm-tabindex="3"
+                cm-label="ACCOUNT.PLACEHOLDER.EMAIL"
+                cm-info="ACCOUNT.INFO.INVALID.EMAIL"
+                cm-verify="account.email"
+                ></cm-form-email>
 
         <ul class="border-top border-bottom mt5">
             <li class="no-border">

@@ -31,8 +31,8 @@
         <input type="hidden" name="phoneNumber" ng-model="ngModelOut" />
     </div>
     <cm-country-prefix-list></cm-country-prefix-list>
-    <cm-info-bubble class="cm-alert" ng-show="cmInnerForm.phoneNumberDisp.$dirty && cmInnerForm.phoneNumberDisp.$invalid" data-qa="form-error-phoneNumber-invalid">
-        <div ng-show="cmInnerForm.phoneNumberDisp.$invalid">
+    <cm-info-bubble class="cm-alert" ng-show="cmInnerForm.$error.phoneNumberInvalid" >
+        <div data-qa="form-error-phoneNumber-invalid">
             <i class="fa cm-info"></i> {{::info|cmTranslate}}
         </div>
     </cm-info-bubble>
@@ -45,7 +45,7 @@
     </cm-info-bubble>
 
     <label class="dbl mt15">{{::'DRTV.VALIDATE_PHONE.LABEL_VERIFICATION_CODE'|cmTranslate}}</label>
-    <div class="cm-input-ctn with-inside-icon">
+    <div class="cm-input-ctn with-inside-icon without-validation">
         <input
             type="text"
             data-qa="inp-phoneNumberCodeVerify"

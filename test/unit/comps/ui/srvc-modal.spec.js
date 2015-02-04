@@ -106,15 +106,17 @@ describe('cmModal', function(){
 
             var el_1 = cmModal.create({ id:"my_modal_1" }, 'Hello World')
 
+
             $rootScope.$apply()
 
-            cmModal.open('my_modal_1')
+            cmModal.open('my_modal_1'),
 
             expect(el_1.hasClass('active')).toBe(true)
 
             cmModal.closeAll()
 
             expect(el_1.hasClass('active')).toBe(false)
+
         })
     })
 
