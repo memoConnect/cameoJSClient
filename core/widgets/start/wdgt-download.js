@@ -2,7 +2,7 @@
 
 angular.module('cmWidgets').directive('cmWidgetDownload',
     function(cmConfig, cmDevice, cmUserModel,
-             $filter){
+             $rootScope,$filter){
         return {
             restrict: 'E',
             templateUrl: 'widgets/start/wdgt-download.html',
@@ -25,11 +25,11 @@ angular.module('cmWidgets').directive('cmWidgetDownload',
 
                 function callbackAccountUpdate(){
                     if(typeof cmUserModel.data.account.registrationIncomplete != 'undefined' && cmUserModel.data.account.registrationIncomplete == false){
-                        $rootScope.goTo('/settings/identity/key/create');
+                        $rootScope.goTo('/setup/keyinfo');
                     }
                 }
 
-                cmUserModel.on('account:update', callbackAccountUpdate);
+                cmUserModel.on('account:updated', callbackAccountUpdate);
 
                 $scope.$on('$destroy', function(){
                     cmUserModel.off('account:update', callbackAccountUpdate);
