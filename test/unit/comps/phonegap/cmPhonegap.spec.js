@@ -81,7 +81,7 @@ describe('cmPhonegap is app', function() {
 
         it('fast ready function go to promise queue and wait for "deviceready"', function(){
             spyOn(spy, 'promiseCallback')
-            cmPhonegap.isReady(spy.promiseCallback)
+            cmPhonegap.isReady('unitTest',spy.promiseCallback)
             // trigger event
             var event = document.createEvent('HTMLEvents')
             event.initEvent('deviceready', true, true)
@@ -93,7 +93,7 @@ describe('cmPhonegap is app', function() {
 
         it('after "deviceready" called without proise',function(){
             spyOn(spy, 'directlyCallback')
-            cmPhonegap.isReady(spy.directlyCallback)
+            cmPhonegap.isReady('unitTest',spy.directlyCallback)
             expect(spy.directlyCallback).toHaveBeenCalled()
         })
 

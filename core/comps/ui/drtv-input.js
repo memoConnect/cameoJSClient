@@ -117,7 +117,7 @@ angular.module('cmUi')
                     ngModel.$commitViewValue();
                 }
 
-                function handleChange(event){
+                function handleChange(event, forceSet){
                     // check defaultValue
                     if(initValue == undefined) {
                         reinit();
@@ -131,7 +131,7 @@ angular.module('cmUi')
                     }
 
                     // handle adaptive change
-                    if('cmAdaptiveChange' in attrs){
+                    if('cmAdaptiveChange' in attrs && !forceSet){
                         $timeout.cancel(timeout);
                         timeout = $timeout(function(){
                             setValue()
@@ -158,6 +158,12 @@ angular.module('cmUi')
                     .on('keyup', handleChange)
                     .on('blur', handleChange);
 
+                if('cmEnter' in attrs){
+                    var killWatcher = scope.$on('cmEnter:pressed', function(){
+                        handleChange({},true);
+                    });
+                }
+
                 scope.$on('$destroy', function(){
                     element
                         .off('focus', handleChange)
@@ -167,6 +173,9 @@ angular.module('cmUi')
                     cmPristine.remove(ngModel);
 
                     cmPristine.off('reinit', reinit);
+
+                    if(killWatcher)
+                        killWatcher();
                 });
             }
         }

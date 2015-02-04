@@ -54,7 +54,8 @@ angular.module('cmUi')
             eventError,
             doc = $document[0],
             scrollTop = 0,
-            self = {
+        self = {
+            lastElement: null,
             isAvailable: function(){
                 return doc[isEnabled] ? true : false;
             },
@@ -67,6 +68,7 @@ angular.module('cmUi')
 
                     // open fullscreen
                     element[requestOpen]();
+                    self.lastElement = element;
                 }
             },
             isOpen: function(){
@@ -89,15 +91,17 @@ angular.module('cmUi')
 
         if(detectBrowserForFullscreenApi()){
             $document.on(eventChange, function (event) {
+                var element = self.lastElement;
+
                 self.trigger('change', {
-                    element: event.target,
+                    element: element,
                     isOpen: self.isOpen()
                 });
 
                 if(self.isOpen()){
-                    angular.element(event.target).addClass('is-fullscreen');
+                    angular.element(element).addClass('is-fullscreen');
                 } else {
-                    angular.element(event.target).removeClass('is-fullscreen');
+                    angular.element(element).removeClass('is-fullscreen');
                     // rejump to last top position
                     $timeout(function(){
                         $window.scrollTo(0,self.scrollTop);
@@ -118,9 +122,9 @@ angular.module('cmUi')
                     event.preventDefault();
                 }
             });
-
-            cmObject.addEventHandlingTo(self);
         }
+
+        cmObject.addEventHandlingTo(self);
 
     return self;
     }

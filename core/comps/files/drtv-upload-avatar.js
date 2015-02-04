@@ -27,22 +27,22 @@ angular.module('cmFiles').directive('cmUploadAvatar',[
                                         });
 
                                     cmUserModel.data.identity.one('update:finished', function(){
-                                        $timeout(function(){
-                                            cmUserModel.data.identity.one('avatar:loaded',function(){
+                                        cmUserModel.data.identity.one('avatar:loaded',function(){
+                                            $timeout(function(){
                                                 scope.imageUpload = false;
                                                 $rootScope.$broadcast('cmUploadAvatar:success');
-                                            });
+                                            },50);
                                         });
                                     });
                                 });
                             }
                         },
-                        function(errorCode, error, header) {
-                            cmNotify.warn(errorCode, {
+                        function(error) {
+                            cmNotify.warn(error.codes[0], {
                                 ttl: 0,
-                                i18n: cmErrorCodes.toI18n(errorCode, {
-                                    error: error,
-                                    header: header
+                                i18n: cmErrorCodes.toI18n(error.codes[0], {
+                                    error: error.data,
+                                    headers: error.headers
                                 })
                             });
                         }

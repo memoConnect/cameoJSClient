@@ -38,17 +38,17 @@ angular.module('cmUi')
                 };
 
                 function openFullscreen(){
-
-                    if(!cmDevice.isApp())
+                    // html5 fullscreen
+                    if(!cmDevice.isApp()) {
                         cmFullscreen.open($element[0]);
-                    else {
-                        // old way for fullscreen open modal
+                        // for app the old fullscren modal
+                    } else {
                         cmModal.create({
                             id: 'image-view',
                             'class': 'modal-image-fullscreen',
                             'type': 'fullscreen'
                         }, '<figure ng-style="fullscreenVisibility">' +
-                        '<img cm-stay-in-viewport cm-src="fullscreenImage" cm-loaded-spinner="fullscreenSpinner" cm-loaded-visibility="fullscreenVisibility" />' +
+                        '<img cm-stay-in-viewport cm-src="fullscreenImage" cm-loaded-spinner="fullscreenSpinner" cm-loaded-visibility="fullscreenVisibility"  cm-pinch-and-pan="{initOnModalChange:true}" />' +
                         '<figcaption><cm-message-assets></cm-message-assets></figcaption>' +
                         '</figure>' +
                         '<cm-footer><i class="fa cm-grid"></i></cm-footer>', null, $scope);

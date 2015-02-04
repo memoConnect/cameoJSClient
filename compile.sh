@@ -20,7 +20,7 @@ for i in "$@" ; do
 		    version="${i#*=}"
 	    ;;
 		--phonegap)
-			command=phonegap:to-build-server
+			command=phonegap:build-all
 		;;
 		--local-ios)
 		    command=phonegap:build-only

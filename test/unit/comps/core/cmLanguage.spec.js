@@ -185,7 +185,7 @@ describe("cmLanguage", function() {
                 scan(language_tables);
 
                 if(cmConfig.errorOnTodoInI18n)
-                    expect(foundPosition.length).toEqual(0)
+                    expect(Object.keys(foundPosition).length).toEqual(0)
 
                 if(Object.keys(foundPosition).length > 0){
                     console.log(needles + '\'s found at: ' + JSON.stringify(foundPosition, null, 2) + '\n')

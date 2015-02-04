@@ -15,7 +15,7 @@ angular.module('cmPhonegap')
             data: {},
 
             init: function(){
-                cmPhonegap.isReady(function(){
+                cmPhonegap.isReady('cmSslCertificateChecker',function(){
                     if(!('plugins' in $window)
                         || !('sslCertificateChecker' in $window.plugins)) {
                         //cmLogger.info('SSL_CERTIFICATE PLUGIN IS MISSING');

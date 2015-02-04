@@ -235,8 +235,7 @@
             "PASSWORD_WRONG": "Das eingegebene Passwort ist falsch.",
             "NO_PASSWORD": "Sie müssen ein Passwort setzen oder die Verschlüsselung deaktivieren, weil nicht alle Empfänger einen cameoKey besitzen.\n <a href=\"#/{{type}}/{{typeId}}/security\">Hier Verschlüsselung einstellen</a>",
             "PASSWORD_NEEDED": "Zum Entschlüsseln des Talks geben Sie bitte ein Passwort ein.\n <a href=\"#/{{type}}/{{typeId}}/security\">Hier ein Passwort eingeben!</a>",
-            "ASYMMETRIC_DECRYPT_ERROR": "Der cameoKey fehlt.",
-            "ASYMMETRIC_KEY_TRUST_ERROR": "@todo CONVERSATION.WARN.ASYMMETRIC_KEY_TRUST_ERROR"
+            "ASYMMETRIC_DECRYPT_ERROR": "Der cameoKey fehlt."
         },
         "CONFIRM": {
             "RECIPIENTS_MISSING": "Möchten Sie die Nachricht ohne weitere Empfänger abschicken? Sie werden die einzige Person sein, die diese Nachricht lesen kann."
@@ -257,6 +256,22 @@
         },
         "SETTINGS": {
             "OKAY": "Fertig"
+        },
+        "MENU": {
+            "ADD_RECIPIENTS": "Empfänger hinzufügen",
+            "SHOW_RECIPIENTS": "Empfängerliste öffnen",
+            "SECURITY_SETTINGS": "Sicherheitseinstellungen öffnen",
+            "DELETE": "Talk verlassen"
+        },
+        "MODAL": {
+            "DELETE":{
+                "HEADER": "Talk verlassen",
+                "TEXT": "Wollen Sie den Talk wirklich verlassen?<br/>Sie können danach nicht mehr auf diesen Talk zugreifen. Wenn der letzte Empfänger einen Talk verlässt, wird der Talk gelöscht."
+            },
+            "ASYMMETRIC_KEY_TRUST_ERROR": {
+                "HEADER": "Entschlüsseln nicht erlaubt",
+                "TEXT": "Sie haben Ihren lokalen cameoKey noch nicht mit Ihren anderen cameoKeys verknüpft. Deshalb dürfen Sie Talks mit Identitäten, die Ihnen vertrauen, hier nicht lesen."
+            }
         }
     },
 
@@ -346,7 +361,8 @@
             "STREET": "Straße",
             "STREETNR": "Nr.",
             "ZIP": "PLZ",
-            "CITY": "Ort"
+            "CITY": "Ort",
+            "DELETE": "Kontakt löschen"
         },
         "INFO": {
             "EMPTY": {
@@ -368,6 +384,16 @@
             "SELECT": {
                 "EMAIL": "Bitte wählen Sie eine E-Mail aus",
                 "PHONENUMBER": "Bitte wählen Sie eine Telefonnummer aus"
+            }
+        },
+        "MODAL": {
+            "DELETE": {
+                "HEADER": "Kontakt löschen",
+                "TEXT": "Wollen Sie den Kontakt wirklich löschen?"
+            },
+            "DELETE_FRIENDREQUEST": {
+                "HEADER": "Kontaktanfrage löschen",
+                "TEXT": "Wollen Sie diese Kontaktanfrage wirklich löschen?"
             }
         },
         "FOOTER": {
@@ -798,8 +824,8 @@
             "FAX": "Fax"
         },
         "BULK_REKEYING": {
-            "HEADER": "Neuverschlüsselung",
-            "CONTENT": "Die Talks auf diesem Gerät werden für den neuen cameoKey verschlüsselt.",
+            "HEADER": "Aktualisierung der Verschlüsselung",
+            "CONTENT": "Die Verschlüsselung Ihrer Talks wird für Ihren neuen cameoKey erweitert.",
             "START": "Start"
         },
         "FOOTER": {
@@ -944,7 +970,8 @@
         },
         "ERROR": {
             "EMPTY_INPUT": "Eingabe ist leer!",
-            "WRONG_INPUT": "Bitte überprüfen Sie Ihre Eingabe!"
+            "WRONG_INPUT": "Bitte überprüfen Sie Ihre Eingabe!",
+            "MESSAGE": "Es ist ein Fehler aufgetreten"
         },
         "EVENTS": {
             "NEW_MESSAGE": {
@@ -955,6 +982,21 @@
                 "TITLE": "neue Freundschaftsanfrage",
                 "MSG": "Freundschaftsanfrage von {{sender}}"
             }
+        },
+        "CONTEXT": {
+            "MODAL": {
+                "CONFIRM": {
+                    "DELETE": {
+                        "TITLE": "Löschen",
+                        "ONE_ITEM": "Wollen Sie den ausgewählten Eintrag aus der Liste wirklich löschen?",
+                        "MORE_ITEMS": "Wollen Sie die ausgewählten Einträge aus der Liste wirklich löschen?"
+
+                    }
+                }
+            }
+        },
+        "CONVERSATION":{
+            "DELETE": "Talk verlassen"
         }
     },
 

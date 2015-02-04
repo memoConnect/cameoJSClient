@@ -318,6 +318,9 @@ describe('Authentication requests -', function () {
             util.setVal("inp-transactSecret", transactionSecret)
             util.waitAndClick("cm-modal.active [data-qa='btn-acceptIncomingRequest']")
             util.waitForElementDisappear("cm-modal.active [data-qa='inp-transactSecret']")
+
+            util.waitForElement("cm-modal.active [data-qa='re-keying-modal']");
+
             ptor.sleep(5000)
         })
 

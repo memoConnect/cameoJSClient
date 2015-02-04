@@ -24,3 +24,6 @@
 /projectFilesBackup/
 .DS_Store
 /cache/
+
+resource/xliffTools/json
+resource/xliffTools/xliff

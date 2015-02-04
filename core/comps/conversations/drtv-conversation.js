@@ -127,25 +127,19 @@ angular.module('cmConversations')
                                 filesForMessage = files;
                             deferred.resolve()
                         },
-                        function(data){
+                        function(error){
                             $scope.isSending = false;
                             $scope.isSendingAbort = true;
 
-                            if(!data.errorCode){
-                                deferred.reject('problem with file and none errorCode is give');
-                            } else {
-                                deferred.reject('problem with prepare file upload');
+                            cmNotify.warn(error.codes[0], {
+                                ttl: 0,
+                                i18n: cmErrorCodes.toI18n(error.codes[0], {
+                                    error: error.data,
+                                    headers: error.headers
+                                })
+                            });
 
-                                cmNotify.warn(data.errorCode, {
-                                    ttl: 0,
-                                    i18n: cmErrorCodes.toI18n(data.errorCode, {
-                                        error: data.error,
-                                        header: data.headers
-                                    })
-                                });
-
-                                deferred.reject(data.errorCode);
-                            }
+                            deferred.reject(data.errorCodes);
                         }
                     );
 
@@ -202,28 +196,7 @@ angular.module('cmConversations')
                                                         return prepareFiles(passphrase)
                                                     })
                                                     .then(function(){
-                                                        return  $scope.conversation.isEncrypted()
-
-                                                                ?   new_message
-                                                                    .setText($scope.newMessageText)
-                                                                    .addFiles(filesForMessage)
-                                                                    .getSignatures()
-                                                                    .then(function(){
-                                                                        return new_message.encrypt(passphrase)
-                                                                    })
-                                                                    .then(function(){
-                                                                        return new_message.save()
-                                                                    })
-
-                                                                :   new_message
-                                                                    .setText($scope.newMessageText)
-                                                                    .addFiles(filesForMessage)
-                                                                    .setPublicData(['text','fileIds'])
-                                                                    .revealSignatures()
-                                                                    .getSignatures()
-                                                                    .then(function(){
-                                                                        return new_message.save()
-                                                                    })
+                                                        return $scope.conversation.sendMessage(new_message, filesForMessage);
                                                     })
 
                                         })

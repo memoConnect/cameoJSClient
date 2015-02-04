@@ -1,9 +1,9 @@
 <cm-scrollable>
 
-    <ul ng-if="(conversation.recipients.length > 1)" ng-class="{'mb15': conversation.state.is('new') && (conversation.recipients.length > 1)}">
+    <ul ng-if="(conversation.recipients.length > 1)" ng-class="{'mb15': conversation.state.is('new') && (conversation.recipients.length > 1)}" data-qa="list-recipients">
         <li ng-repeat="identity in conversation.recipients|cmHideAppOwner|orderBy:'getDisplayName()':false"
             class="tag-with-icon-list">
-            <cm-recipient-tag cm-data-selected="selected" cm-data="identity" cm-data-conversation="conversation" ng-click="goToContactWithIdentity(contact.identity)" cm-reactive></cm-recipient-tag>
+            <cm-recipient-tag cm-data-selected="selected" cm-data="identity" cm-data-conversation="conversation" ng-click="goToContactWithIdentity(identity)" cm-reactive></cm-recipient-tag>
             <section class="icon-list" data-qa="btn-select-contact" ng-click="toggleRecipient(identity)" cm-reactive>
                 <i class="fa"
                    ng-class="{'cm-checkbox':!selected[identity.id],

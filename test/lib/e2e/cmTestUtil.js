@@ -1,5 +1,4 @@
 /**
- * Created by reimerei on 15.04.14.
  * http://angular.github.io/protractor/#/api
  */
 var fs = require('fs'),
@@ -127,17 +126,29 @@ this.expectCurrentUrl = function (match) {
 this.logout = function () {
     self.get('/login')
 
-    return  $$("cm-menu").then(function (elements) {
-                if (elements.length > 0) {
-                    $("cm-menu .cm-handler").click()
-                    self.waitForElement(".cm-menu-list")
-                    .then(function(){
-                        return self.waitAndClickQa('logout-btn')
-                    });
-                }
-                return self.waitForPageLoad('/login')
-            })
-    
+    return $$("cm-menu")
+        .then(function (elements) {
+            if (elements.length > 0) {
+
+                $$("cm-search-input").then(function(elements){
+                    if(elements.length > 0){
+                        elements[0].getAttribute('class')
+                        .then(function(className){
+                            if(className.indexOf('visible') >= 0){
+                                self.click('btn-close-search')
+                            }
+                        })
+                    }
+                })
+
+                $("cm-menu .cm-handler").click()
+                self.waitForElement(".cm-menu-list")
+                .then(function(){
+                    return self.waitAndClickQa('logout-btn')
+                })
+            }
+            return self.waitForPageLoad('/login')
+        })
 }
 
 this.login = function (username, password, expectedRoute) {
@@ -176,24 +187,24 @@ this.createTestUser = function (testUserId, from){
     var password = 'password'
 
     this.get('/registration')
-    return  this.waitForPageLoad('/registration')
+    return this.waitForPageLoad('/registration')
             .then(function(){
                 self.setVal('input-cameoId',loginName,true)
                 self.setVal('input-password',password)
-                return  self.waitAndClickQa('icon-toggle-password')
-                        .then(function(){
-                            self.scrollToBottom()
-                            return self.waitAndClickQa('icon-checkbox-agb')
-                        })
-                        .then(function(){
-                            return self.waitAndClickQa('btn-createUser')                    
-                        })
-                        .then(function(){
-                            return self.waitForPageLoad("/setup/account")            
-                        })
-                        .then(function(){
-                            return loginName
-                        })
+                return self.waitAndClickQa('icon-toggle-password')
+                    .then(function(){
+                        self.scrollToBottom()
+                        return self.waitAndClickQa('icon-checkbox-agb')
+                    })
+                    .then(function(){
+                        return self.waitAndClickQa('btn-createUser')
+                    })
+                    .then(function(){
+                        return self.waitForPageLoad("/setup/account")
+                    })
+                    .then(function(){
+                        return loginName
+                    })
             })
 }
 
@@ -361,12 +372,15 @@ this.waitForPageLoad = function (expectedRoutes, printOutWaiting) {
     expectedRoutes = !Array.isArray(expectedRoutes) ? [expectedRoutes] : expectedRoutes
     // console.log('waitForPageLoad', expectedRoutes.join(', '))
 
+    var lastRoute
+
     return ptor.wait(function () {
         return ptor.executeScript('return window != undefined && window._route').then(function (route) {
             if(printOutWaiting)
                 console.log(route)
 
             if (route) {
+                lastRoute = route
                 // get current route
                 if (        
                         expectedRoutes.length == 0 
@@ -380,7 +394,7 @@ this.waitForPageLoad = function (expectedRoutes, printOutWaiting) {
                 }
             }
         })
-    }, config.routeTimeout, 'waitForPage ' + (expectedRoutes || 'any page') + ' timeout reached')
+    }, config.routeTimeout, 'waitForPage ' + (expectedRoutes || 'any page') + ' timeout reached (lastRoute was '+lastRoute+')')
 }
 
 this.waitForEventSubscription = function () {
@@ -395,7 +409,7 @@ this.waitForEventSubscription = function () {
 }
 
 this.click = function (dataQa) {
-    $("[data-qa='" + dataQa + "']").click()
+    return $("[data-qa='" + dataQa + "']").click()
 }
 
 this.waitForQa = function(dataQa){
@@ -490,7 +504,6 @@ this.waitForModalClose = function () {
     return this
 }
 
-
 this.confirmModal = function(){
     return $('cm-modal.active [data-qa="btn-confirm"]').click()
 }
@@ -505,7 +518,7 @@ this.closeModal = function(){
 }
 
 this.waitForLoader = function (count, parentSelector) {
-    count = count || 1,
+    count = count || 1
     parentSelector = parentSelector ? parentSelector+' ' : '' // that used for more then one loader on page
     // wait for loader appear
     return  ptor.wait(function() {
@@ -516,13 +529,12 @@ this.waitForLoader = function (count, parentSelector) {
             }, config.routeTimeout, 'waitForLoader start timeout reached')
             .then(function () {
                 // wait for loader disappear
-                ptor.wait(function () {
+                return ptor.wait(function () {
                     return $(parentSelector+'cm-loader').isDisplayed()
-                    .then(function (isDisplayed) {
-                        return !isDisplayed
-                    })
+                            .then(function (isDisplayed) {
+                                return !isDisplayed
+                            })
                 }, config.routeTimeout, 'waitForLoader stop timeout reached')
-
             })
 }
 
@@ -783,6 +795,48 @@ this.setValQuick = function (dataQa, text) {
     ptor.executeScript("document.querySelector(\"[data-qa='" + dataQa + "']\").value = '" + text + "'")
 }
 
+this.addRecipient = function(username){
+    self.waitAndClickQa('btn-add-recipients');
+    self.waitForPageLoad("/conversation/new/recipients")
+    self.headerSearchInList(username);
+    self.waitForQa('contact-display-name')
+    $("[data-qa='btn-select-contact']").click()
+
+    self.closeHeaderSearch()
+
+    self.get("/conversation/new")
+    self.waitForPageLoad("/conversation/new")
+}
+
+this.createUnencryptedConversation = function(subject, message, recpient){
+    self.get("/conversation/new")
+    self.waitForPageLoad("/conversation/new")
+
+    self.disableEncryption();
+
+    if(recpient){
+        if(typeof recpient == 'string'){
+            self.addRecipient(recpient)
+        }
+    }
+
+
+    self.setVal("input-subject", subject)
+    self.setVal("input-answer", message)
+    self.waitAndClickQa("btn-send-answer")
+    if(!recpient){
+        self.waitAndClickQa("btn-confirm", "cm-modal.active")
+    }
+    self.waitForPageLoad("/conversation/*")
+    self.waitForElements("cm-message", 1)
+
+    ptor.wait(function(){
+        return self.getVal("input-answer").then(function(answer){
+            return answer == ''
+        })
+    })
+}
+
 this.createEncryptedConversation = function (subject, message) {
     self.get("/conversation/new")
     self.waitForPageLoad("/conversation/new")
@@ -841,11 +895,11 @@ this.readConversation = function (subject, message, checkModal) {
 }
 
 this.scrollToTop = function(){
-    $("body").sendKeys(protractor.Key.HOME)
+    return $("body").sendKeys(protractor.Key.HOME)
 }
 
 this.scrollToBottom = function(){
-    $("body").sendKeys(protractor.Key.END)
+    return $("body").sendKeys(protractor.Key.END)
 }
 
 this.scrollToElement = function(cssSelector){
@@ -869,5 +923,14 @@ this.setKeygenerationTimeout = function(jasmine){
 this.logCurrentUrl = function(){
     ptor.getCurrentUrl().then(function(url){
         console.log('logCurrentUrl:', url)
+    })
+}
+
+this.printOutConsoleLog = function(clear){
+    browser.manage().logs().get('browser').then(function(array){
+        if(!clear) {
+            console.warn('Browser console.logs')
+            console.warn(JSON.stringify(array, null, 2))
+        }
     })
 }

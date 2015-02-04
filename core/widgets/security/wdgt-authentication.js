@@ -4,6 +4,7 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
 
     'cmUserModel',
     'cmAuthenticationRequest',
+    'cmReKeying',
     'cmCallbackQueue',
     'cmIdentityFactory',
     'cmContactsModel',
@@ -11,7 +12,7 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
     '$rootScope',
     '$q',
 
-    function(cmUserModel, cmAuthenticationRequest, cmCallbackQueue, cmIdentityFactory, cmContactsModel, $timeout, $rootScope, $q){
+    function(cmUserModel, cmAuthenticationRequest, cmReKeying, cmCallbackQueue, cmIdentityFactory, cmContactsModel, $timeout, $rootScope, $q){
         return {
             restrict: 'E',
             templateUrl: 'widgets/security/wdgt-authentication.html',
@@ -99,8 +100,8 @@ angular.module('cmWidgets').directive('cmWidgetAuthentication', [
                                             key2: data.key.id
                                         })
                                         */
-                                       
-                                        cmUserModel.bulkReKeying(cmUserModel.loadLocalKeys()[0].id, data.key.id)
+
+                                        cmReKeying.process(cmUserModel.loadLocalKeys()[0].id)
                                     })
                         },
                         function(result){

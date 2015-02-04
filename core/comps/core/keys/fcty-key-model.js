@@ -219,25 +219,25 @@ angular.module('cmCore')
                                         }
                                     )
                                     .catch(function(reason){
-                                        cmKeyCache.storeVerificationResult(self, data, signature, false)
+                                        cmKeyCache.storeVerificationResult(self, data, signature, false);
                                         return $q.reject(reason)
                                     })
 
                 return  promise
                         .then(function(result){
-                            cmKeyCache.storeVerificationResult(self, data, signature, true)
+                            cmKeyCache.storeVerificationResult(self, data, signature, true);
                             return $q.when(result)
                         })
                         .catch(function(reason){
-                            cmLogger.warn('cmKey: verification failed: '+reason);
-                            return $q.reject(reason)
+                            cmLogger.warn('cmKey: verification failed',reason);
+                            return $q.reject(reason);
                         })
             }
 
             this.encrypt = function(secret){
 
                 if(cmCryptoHelper.isAvailable())
-                    return cmCryptoHelper.rsaEncrypt(self.getPublicKey(), secret)
+                    return cmCryptoHelper.rsaEncrypt(self.getPublicKey(), secret);
 
 
                 return  cmWebworkerFactory.get({

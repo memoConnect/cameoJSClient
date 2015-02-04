@@ -27,8 +27,8 @@
         <i class="fa cm-write" ng-show="!disabled"></i>
     </div>
 
-    <cm-info-bubble class="cm-alert" ng-show="cmInnerForm.email.$dirty && cmInnerForm.email.$invalid">
-        <div ng-show="cmInnerForm.email.$invalid" data-qa="form-error-email-invalid">
+    <cm-info-bubble class="cm-alert" ng-show="cmInnerForm.$error.emailInvalid">
+        <div data-qa="form-error-email-invalid">
             <i class="fa cm-info"></i> {{::info|cmTranslate}}
         </div>
     </cm-info-bubble>

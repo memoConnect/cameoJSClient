@@ -9,19 +9,21 @@ angular.module('cmValidate').directive('cmValidatePhone',[
             },
             link: function(scope, element, attrs, ngModel){
 
+                var identifier = 'phoneNumberInvalid';
+
                 function checkPhoneNumber(newValue){
                     if(newValue && newValue != "" && correctValue == undefined
                     || newValue && newValue != "" && correctValue != undefined && newValue != correctValue
                     ){
                         ngModel.$setViewValue(newValue.replace(/ /g,''));
 
-                        if(newValue.search(/^[+]*[0-9]*$/) == 0){
-                            ngModel.$setValidity('phone', true);
+                        if(newValue.search(/^[+]*[ ()0-9]*$/) == 0){
+                            ngModel.$setValidity(identifier, true);
                         } else {
-                            ngModel.$setValidity('phone', false);
+                            ngModel.$setValidity(identifier, false);
                         }
                     } else {
-                        ngModel.$setValidity('phone', true);
+                        ngModel.$setValidity(identifier, true);
                         ngModel.$setPristine();
                     }
                 }
