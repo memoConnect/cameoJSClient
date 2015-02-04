@@ -1,5 +1,8 @@
 # Dev
 
+## BS 04.02.2015
+* CAM-1397 update, add event handling at start/download
+
 ## BS 29.01.2015
 * CAM-1397 add incomplete registration handling
 
