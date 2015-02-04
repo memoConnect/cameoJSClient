@@ -64,9 +64,9 @@ angular.module('cameoClient', [
 // app run handling
 .run([
     'cmSslCertificateChecker', 'cmNetworkInformation', 'cmPushNotificationAdapter',
-    'cmPhonegap', 'cmLauncher', 'cmSplashScreen',
+    'cmPhonegap', 'cmLauncher', 'cmSplashScreen', 'cmKeyboard',
     function(cmSslCertificateChecker, cmNetworkInformation, cmPushNotificationAdapter,
-             cmPhonegap, cmLauncher, cmSplashScreen){
+             cmPhonegap, cmLauncher, cmSplashScreen, cmKeyboard){
 
         cmPhonegap.isReady('app.js',function(){
             // check ssl certificate

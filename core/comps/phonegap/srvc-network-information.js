@@ -5,9 +5,9 @@
 angular.module('cmPhonegap')
 .service('cmNetworkInformation', [
     'cmPhonegap', 'cmUtil', 'cmLogger',
-    '$navigator', '$document',
+    '$navigator', '$document', '$window',
     function (cmPhonegap, cmUtil, cmLogger,
-              $navigator, $document) {
+              $navigator, $document, $window) {
         var self = {
             plugin: null,
             state: '',
@@ -58,6 +58,16 @@ angular.module('cmPhonegap')
 
             }
         };
+        // html5 events
+        if('onLine' in $navigator && $navigator.onLine) {
+            angular.element($window)
+            .on('online', function () {
+                self.goesOnline();
+            })
+            .on('offline', function () {
+                self.goesOffline();
+            });
+        }
 
         return self;
     }

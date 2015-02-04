@@ -13,10 +13,6 @@ angular.module('cmPhonegap')
             $cordova = init();
         });
 
-        return {
-            get: function () {
-                return $cordova;
-            }
-        }
+        return $cordova;
     }
 ]);

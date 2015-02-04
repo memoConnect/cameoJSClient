@@ -2,8 +2,10 @@
 
 angular.module('cmPhonegap')
     .service('cmMigrate', [
-        'cmPhonegap', '$phonegapCameoConfig', '$window', '$q', 'cmLogger',
-        function (cmPhonegap, $phonegapCameoConfig, $window, $q, cmLogger){
+        'cmPhonegap',
+        '$phonegapCameoConfig', '$window', '$q', 'cmLogger',
+        function (cmPhonegap,
+                  $phonegapCameoConfig, $window, $q, cmLogger){
 
             var self = {
 
@@ -13,7 +15,7 @@ angular.module('cmPhonegap')
 
                     cmPhonegap.isReady('cmMigrate',function(){
                         if(!('cmMigrate' in $window)) {
-                            cmLogger.info('MIGRATION PLUGIN IS MISSING');
+                            //cmLogger.info('MIGRATION PLUGIN IS MISSING');
                             return false;
                         }
                         self.plugin = $window.cmMigrate;
