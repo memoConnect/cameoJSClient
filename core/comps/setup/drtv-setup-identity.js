@@ -153,6 +153,18 @@ angular.module('cmSetup')
                         );
                     };
 
+                    function callbackAccountUpdate(){
+                        if(typeof cmUserModel.data.account.registrationIncomplete != 'undefined' && cmUserModel.data.account.registrationIncomplete == false){
+                            $rootScope.goTo('/settings/identity/key/create');
+                        }
+                    }
+
+                    cmUserModel.on('account:update', callbackAccountUpdate);
+
+                    $scope.$on('$destroy', function(){
+                        cmUserModel.off('account:update', callbackAccountUpdate);
+                    });
+
                     /**
                      * Pristine Service Handling
                      */
