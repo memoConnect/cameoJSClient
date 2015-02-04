@@ -382,8 +382,8 @@
                 "TEXT": "Wollen Sie den Kontakt wirklich löschen?"
             },
             "DELETE_FRIENDREQUEST": {
-                "HEADER": "@todo Anfrage löschen",
-                "TEXT": "@todo Wollen Sie diese offene Kontaktanfrage wirklich löschen?"
+                "HEADER": "Kontaktanfrage löschen",
+                "TEXT": "Wollen Sie diese Kontaktanfrage wirklich löschen?"
             }
         },
         "FOOTER": {
