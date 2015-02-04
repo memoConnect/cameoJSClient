@@ -108,6 +108,12 @@ module.exports = function (grunt) {
             buildConfig.config.apiUrl = buildConfig.config[jsonPath[0]][jsonPath[1]];
         }
 
+        // option to disable uglify for quicker builds
+        var disableUglify = grunt.option('disableUglify');
+        if (disableUglify) {
+            buildConfig.config.disableUglify = true
+        }
+
         /**
          * not important
          */

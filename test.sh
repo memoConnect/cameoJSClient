@@ -29,7 +29,7 @@ fi
 
 if [ ! -z "$4" ]; then
     echo -e "\e[33m[ CameoClientTest running e2e specs: $4 ]\033[0m"
-    ./node_modules/grunt-cli/bin/grunt tests-e2e:all  ${target} ${wwwUrlArg} ${apiUrlArg} --specs=${4}
+    ./node_modules/grunt-cli/bin/grunt tests-e2e:all  ${target} ${wwwUrlArg} ${apiUrlArg} --specs=${4} --disableUglify
 else
     echo -e "\e[33m[ CameoClientTest - running all unit and e2e tests ]\033[0m"
     ./node_modules/grunt-cli/bin/grunt tests-unit ${target} ${wwwUrlArg} ${apiUrlArg}
