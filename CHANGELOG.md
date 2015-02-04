@@ -1,12 +1,27 @@
 # Dev
 
+## BS 04.02.2015
+* CAM-1397 update, add event handling at start/download
+
+## BS 29.01.2015
+* CAM-1397 add incomplete registration handling
+
+## BS 27.01.2015
+* CAM-1331 add delete/leave conversations
+
+#########
+# RC 0.5.0 - 04.02.2015
+#########
+
+## BS 03.02.2015
+* fix CAM-1554 switch DisplayName for external User
+
 ## WW 02.02.2015
 * fixxed phone & email errorcodes now in cmApi
 * handshake token now case insentive (drtv-model-to-lowercase)
 
 ## BS 29.01.2015
 * CAM-1707 update re-keying process
-* CAM-1397 add incomplete registration handling
 
 ## WW 29.01.2015
 * CAM-1711 extern contact with message
@@ -18,21 +33,11 @@
 * CAM-1629 multiple modals
 * CAM-1585 checksum at download page for apk
 
-## BS 27.01.2015
-* CAM-1331 add delete/leave conversations
-
 ## WW 27.01.2015
 * CAM-1649 add delete pending requests
 
 ## BS 26.01.2015
 * fix BUG CAM-1692, update LocalStorage handling
-
-#########
-# RC 0.5.0 - 26.01.2015
-#########
-
-## BS 03.02.2015
-* fix CAM-1554 switch DisplayName for external User
 
 ## WW 26.01.2015
 * CAM-1647 add delete Contacts (cameo/extern)

@@ -258,19 +258,19 @@
             "OKAY": "Fertig"
         },
         "MENU": {
-            "ADD_RECIPIENTS": "@todo Empfänger hinzufügen",
-            "SHOW_RECIPIENTS": "@todo Empfänger verwalten",
-            "SECURITY_SETTINGS": "@todo Sicherheits Einstellungen",
-            "DELETE": "@todo Talk löschen"
+            "ADD_RECIPIENTS": "Empfänger hinzufügen",
+            "SHOW_RECIPIENTS": "Empfängerliste öffnen",
+            "SECURITY_SETTINGS": "Sicherheitseinstellungen öffnen",
+            "DELETE": "Talk verlassen"
         },
         "MODAL": {
             "DELETE":{
-                "HEADER": "Talk löschen",
-                "TEXT": "Wollen Sie den Talk wirklich löschen?"
+                "HEADER": "Talk verlassen",
+                "TEXT": "Wollen Sie den Talk wirklich verlassen?<br/>Sie können danach nicht mehr auf diesen Talk zugreifen. Wenn der letzte Empfänger einen Talk verlässt, wird der Talk gelöscht."
             },
             "ASYMMETRIC_KEY_TRUST_ERROR": {
-                "HEADER": "@todo Fehler mit cameoKey",
-                "TEXT": "Sie haben Ihren lokalen cameoKey noch nicht mit Ihren anderen cameoKeys verknüpft. Deshalb können Sie Talks mit Identitäten, die Ihnen vertrauen, hier nicht lesen"
+                "HEADER": "Entschlüsseln nicht erlaubt",
+                "TEXT": "Sie haben Ihren lokalen cameoKey noch nicht mit Ihren anderen cameoKeys verknüpft. Deshalb dürfen Sie Talks mit Identitäten, die Ihnen vertrauen, hier nicht lesen."
             }
         }
     },
@@ -392,8 +392,8 @@
                 "TEXT": "Wollen Sie den Kontakt wirklich löschen?"
             },
             "DELETE_FRIENDREQUEST": {
-                "HEADER": "@todo Anfrage löschen",
-                "TEXT": "@todo Wollen Sie diese offene Kontaktanfrage wirklich löschen?"
+                "HEADER": "Kontaktanfrage löschen",
+                "TEXT": "Wollen Sie diese Kontaktanfrage wirklich löschen?"
             }
         },
         "FOOTER": {
@@ -996,7 +996,7 @@
             }
         },
         "CONVERSATION":{
-            "DELETE": "@todo  Talk verlassen"
+            "DELETE": "Talk verlassen"
         }
     },
 
