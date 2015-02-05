@@ -25,12 +25,14 @@
     {"name":"de.cameonet.cordova.url-scheme","version":"3.2.2","repo":"https://github.com/memoConnect/de.cameonet.cordova.url-scheme.git"},
 
     {"name":"de.appplant.cordova.plugin.hidden-statusbar-overlay","version":"1.2.0"},
-    {"name":"com.jamiestarke.webviewdebug","version":"1.0.8"}
+    {"name":"com.jamiestarke.webviewdebug","version":"1.0.8"},
+
+    {"name":"nl.x-services.plugins.launchmyapp","version":"3.2.0","inner":"<param name=\"URL_SCHEME\" value=\"<%= appProtocol %>\" />","repo":"https://github.com/EddyVerbruggen/LaunchMyApp-PhoneGap-Plugin.git --variable URL_SCHEME=<%= appProtocol %>"}
   ],
 
   "unused-plugins": [
+    {"name":"es.keensoft.fullscreenimage","version":"1.0.0","repo":"https://github.com/keensoft/FullScreenImage-Cordova-Plugin.git"},
     {"name":"net.yoik.cordova.plugins.screenorientation","version":"1.3.1"},
-    {"name":"nl.x-services.plugins.launchmyapp","version":"3.2.0","inner":"<param name=\"URL_SCHEME\" value=\"<%= appProtocol %>\" />","repo":"https://github.com/EddyVerbruggen/LaunchMyApp-PhoneGap-Plugin.git --variable URL_SCHEME=<%= appProtocol %>"},
 
     {"name":"com.verso.cordova.clipboard","version":"0.1.0"},
     {"name":"net.tunts.webintent","version":"0.2.1"},

@@ -15,7 +15,7 @@
     <section class="body-group recipients" ng-if="conversation.state.is('new') || !conversation.state.is('new') && conversation.recipients.length > 1">
         <h3 ng-click="goto('conversation/'+(conversation.id||'new')+'/recipients')" cm-reactive data-qa="btn-add-recipients" cm-user-rights>
             <i class="fa" ng-class="{'cm-new-contact':conversation.recipients.length == 1, 'cm-list':conversation.recipients.length > 1}"></i>
-            {{'CONVERSATION.PLACEHOLDER.RECIPIENTS'|cmTranslate}}
+            {{::'CONVERSATION.PLACEHOLDER.RECIPIENTS'|cmTranslate}}
             <span class="recipients-counter is-selectable">({{conversation.recipients.length-1}})</span>
             <span class="recipient-name is-selectable" ng-show="showGrid">{{recipientName}}</span>
         </h3>
@@ -59,14 +59,14 @@
 
     <section class="body-group no-pad border-top" ng-if="conversation.state.is('new')">
         <article class="content cm-form-style mt5">
-            <label>{{'CONVERSATION.PLACEHOLDER.SUBJECT' | cmTranslate}}</label>
+            <label>{{::'CONVERSATION.PLACEHOLDER.SUBJECT' | cmTranslate}}</label>
             <div class="cm-input-ctn with-inside-icon">
                 <input
                         name="subject"
                         type="text"
                         data-qa="input-subject"
                         ng-model="conversation.subject"
-                        placeholder="{{'CONVERSATION.PLACEHOLDER.NO_SUBJECT'|cmTranslate}}"
+                        placeholder="{{::'CONVERSATION.PLACEHOLDER.NO_SUBJECT'|cmTranslate}}"
                         cm-adaptive-change
                         />
                 <i class="fa cm-write"></i>
@@ -76,7 +76,7 @@
     </section>
 
     <button class="cm-btn-grey" ng-if="conversation && conversation.numberOfMessages > conversation.messages.length" ng-show="conversation.numberOfMessages != conversation.messages.length" ng-click="loadPreviousMessages()" data-qa="btn-load-more-messages" cm-reactive>
-        {{'CONVERSATION.LABEL.LOAD_PREVIOUS'|cmTranslate}}
+        {{::'CONVERSATION.LABEL.LOAD_PREVIOUS'|cmTranslate}}
     </button>
 
     <div id="conversation-top"></div>

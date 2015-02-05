@@ -5,15 +5,19 @@
 angular.module('cmPhonegap')
 .service('cmKeyboard', [
     'cmPhonegap', 'cmObject',
-    '$cordova', '$window', '$rootScope',
+    '$cordova', '$window', '$rootScope', '$timeout',
     function (cmPhonegap, cmObject,
-              $cordova, $window, $rootScope){
+              $cordova, $window, $rootScope, $timeout){
 
         var self = {
             plugin: null,
 
             init: function(){
                 cmObject.addEventHandlingTo(self);
+
+                $rootScope.$on('$routeChangeSuccess', function(){
+                    $rootScope.lastFocus = undefined;
+                });
 
                 cmPhonegap.isReady('cmKeyboard',function(){
                     if(!('plugins' in $cordova) || !('Keyboard' in $cordova.plugins)) {
@@ -48,6 +52,15 @@ angular.module('cmPhonegap')
             show: function(){
                 if(self.plugin != null)
                     self.plugin.show();
+            },
+            focusLast: function(){
+                if($rootScope.lastFocus) {
+                    console.log('focus last element',$rootScope.lastFocus)
+                    self.show();
+                    $timeout(function(){
+                        $rootScope.lastFocus.focus();
+                    },50);
+                }
             }
         };
 

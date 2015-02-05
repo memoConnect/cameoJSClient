@@ -117,6 +117,10 @@ angular.module('cmUi')
                     ngModel.$commitViewValue();
                 }
 
+                function setLastFocus(){
+                    $rootScope.lastFocus = this;
+                }
+
                 function handleChange(event, forceSet){
                     // check defaultValue
                     if(initValue == undefined) {
@@ -154,6 +158,7 @@ angular.module('cmUi')
                 element
                     .unbind('input')
                     .unbind('keydown')
+                    .on('focus', setLastFocus)
                     .on('focus', handleChange)
                     .on('keyup', handleChange)
                     .on('blur', handleChange);
@@ -166,6 +171,7 @@ angular.module('cmUi')
 
                 scope.$on('$destroy', function(){
                     element
+                        .off('focus', setLastFocus)
                         .off('focus', handleChange)
                         .off('keyup', handleChange)
                         .off('blur', handleChange);
