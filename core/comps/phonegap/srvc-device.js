@@ -5,9 +5,9 @@
 angular.module('cmPhonegap')
 .service('cmDevice',[
     'cmPhonegap', 'cmLogger', 'cmUtil',
-    '$window', '$device', '$phonegapCameoConfig', '$navigator',
+    '$window', '$device', '$phonegapCameoConfig',
     function (cmPhonegap, cmLogger, cmUtil,
-              $window, $device, $phonegapCameoConfig, $navigator) {
+              $window, $device, $phonegapCameoConfig) {
 
         var unknown = 'unknown';
 
@@ -39,7 +39,7 @@ angular.module('cmPhonegap')
 // http://stackoverflow.com/questions/24784541/cordova-2-9-x-ios-8-useragent-bug
 // https://github.com/apache/cordova-js/blob/26e3e49e49b2fb61ca836572af85c7a776ea9f1c/src/common/init.js#L46-L65
 
-                nAgt = ($navigator.userAgent || $navigator.vendor || $window.opera).toLowerCase();
+                nAgt = ($window.navigator.userAgent || $window.navigator.vendor || $window.opera).toLowerCase();
 
                 return nAgt;
             },
@@ -65,7 +65,7 @@ angular.module('cmPhonegap')
                 return this.emulateDevice || !this.emulateDevice && !withoutPlugin && this.existsPlugin() || !this.emulateDevice && withoutPlugin && $phonegapCameoConfig != 'undefined';
             },
 
-            isDesktop: function(where){
+            isDesktop: function(whoIs){
                 // emulate device
                 if(this.emulateDevice)
                     return false;
