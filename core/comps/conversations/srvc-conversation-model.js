@@ -64,6 +64,7 @@ angular.module('cmConversations')
             this.id                 = undefined;
             
             this.recipients         = new cmFactory(cmIdentityModel);      //list of cmIdentityModel objects
+            this.inactiveRecipients = [];
             this.messages           = new cmFactory(cmMessageModel);       //list of MessageModel objects
 
             this.timeOfCreation     = 0;          //timestamp of the conversation's creation
@@ -205,19 +206,24 @@ angular.module('cmConversations')
 
                 //Create passphraseVault:
                 if(data.sePassphrase || data.aePassphraseList){
+
+                    var recipients = [];
+
+                    if(typeof data.inactiveRecipients != 'undefined'){
+                        recipients = data.recipients.concat(data.inactiveRecipients)
+                    } else {
+                        recipients = data.recipients;
+                    }
+
+                    console.log('recipients', recipients)
+
                     passphraseVault =   cmPassphraseVault.create({
                         sePassphrase:       data.sePassphrase,
                         aePassphraseList:   data.aePassphraseList,
                         signatures:         data.conversationSignatures,
-                        recipientKeyList:   data.recipients
+                        recipientKeyList:   recipients
                     })
                 }
-
-                //if(passphraseVault.getKeyTransmission() != this.keyTransmission)
-                //    cmLogger.debug('cmConversationModel: inconsistent data: keyTransmission')
-                //    //TODO what is todo???
-                
-                //this.keyTransmission = passphraseVault.getKeyTransmission()
 
                 /**
                  * Important for none encrypted Conversations
@@ -245,6 +251,8 @@ angular.module('cmConversations')
                         self.addRecipient(cmIdentityFactory.create(recipient_data.identityId));
                     }
                 );
+
+                this.inactiveRecipients = data.inactiveRecipients || this.inactiveRecipients;
 
                 if(this.userHasPrivateKey() == false){
                     this.options.showKeyInfo = true;

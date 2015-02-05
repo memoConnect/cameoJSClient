@@ -123,29 +123,33 @@ angular.module('cmConversations')
                                 +'<div ng-repeat ="recipient in aspect.recipients">{{recipient.displayName}} ({{recipient.cameoId}})</div>',
                     check: function(conversation){
                         var self = this
-                        
+
                         return  !conversation.state.is('new')
                                 &&
                                 conversation.verifyAuthenticity()
                                 .then(function(recipientKeyList){
-                                    self.recipients =   recipientKeyList.map(function(item){
+                                        //console.log('Aspekt recipientKeyList', recipientKeyList)
+
+
+                                    self.recipients = recipientKeyList.map(function(item){
                                                             return cmIdentityFactory.find(item.identityId)
                                                         })
                                     return  recipientKeyList.reduce(function(so_far, item){
                                                 return  so_far
                                                         .then(function(reason){
                                                             var identity = cmIdentityFactory.create(item.identityId)
-                                                            return  cmUserModel.verifyIdentityKeys(identity, false, true)                                                                         
-                                                        })                                                            
+                                                            //console.log('identity', identity)
+                                                            return  cmUserModel.verifyIdentityKeys(identity, false, true)
+                                                        })
                                                         .then(function(ttrusted_keys){
-                                                            return  item.keys.every(function(key){ 
+                                                            return  item.keys.every(function(key){
                                                                         return ttrusted_keys.some(function(tt_key){
                                                                             return tt_key.id == key.id
                                                                         })
                                                                     })
                                                                     ?   $q.when(true)
                                                                     :   $q.reject('unauthentic key in recipient key list')
-                                                        })   
+                                                        })
                                             }, $q.when(false))
                                 })
                                 .then(
@@ -153,9 +157,17 @@ angular.module('cmConversations')
                                     function(){ return false }
                                 )
 
+
+                        if(conversation.inactiveRecipients.length > 0){
+                            var r = conversation.recipients.concat(conversation.inactiveRecipients)
+                        } else {
+                            var r = conversation.recipients;
+                        }
+
                         //temporary solution, AP
-                        return  conversation.recipients.length < 3
-                            ?   conversation.recipients.reduce(function(so_far, recipient){
+
+                        return  r.length < 3
+                            ?   r.reduce(function(so_far, recipient){
                                     return  so_far
                                             .then(function(){
                                                 return  cmUserModel.verifyIdentityKeys(recipient, true)

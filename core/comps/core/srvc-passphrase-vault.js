@@ -193,16 +193,22 @@ angular.module('cmCore')
                     return $q.reject('missing signature')
 
                 // the original signee ought to be among the original recipients, so get them first:
+                console.log('Passphrase recipientKeyList',recipientKeyList)
+
                 recipientKeyList
                 .map(function(item){
                     return cmIdentityFactory.find(item.identityId)
                 })
                 .forEach(function(recipient){
+                        //console.log('phv recipient', recipient)
+
                     if(!recipient) return null
 
                     //add matching key/identity to signature object for later use
                     signatures.forEach(function(signature){
                         var key = recipient.keys.find(signature.keyId)
+
+                        //console.log('phv key', key)
                         if(key){
                             signature.identity  = recipient
                             signature.key       = key
@@ -219,15 +225,20 @@ angular.module('cmCore')
                                     }
                         })
                         .then(function(data){
-                            return  cmCrypt.hashObject(data) || $q.reject('cmPassphraseVault.verifyAuthenticity: cmCrypt.hashObject() failed.')
+                            console.dir(data)
+                            return  cmCrypt.hashObject(data,'phv') || $q.reject('cmPassphraseVault.verifyAuthenticity: cmCrypt.hashObject() failed.')
                         })
                         .then(function(token){
-
+                            console.info('token', token)
                             var valid_signatures= [],
                                 bad_signatures  = [] 
 
                             return  $q.all(signatures.map(function(signature){
                                         var key = signature.key
+
+                                        //console.log('phv key 2', key)
+                                        //console.log('phv token', token)
+                                        //console.log('phv signature.content', signature.content)
 
                                         return  key
                                                 ?   key.verify(token, signature.content)
@@ -236,6 +247,7 @@ angular.module('cmCore')
                                                             valid_signatures.push(signature)
                                                         },
                                                         function(reason){
+                                                            //console.log('phv fail reason)', reason)
                                                             bad_signatures.push(signature)
                                                         }
                                                     )
@@ -245,6 +257,8 @@ angular.module('cmCore')
                                                 :   $q.when()
                                     }))
                                     .then(function(){
+                                        //console.log('phv valid_signatures', valid_signatures.length)
+
                                         return  valid_signatures.length > 0
                                                 ?   $q.when(valid_signatures)
                                                 :   $q.reject(
@@ -310,6 +324,8 @@ angular.module('cmCore')
             data.aePassphraseList   = data.aePassphraseList   || [],
             data.recipientKeyList   = data.recipientKeyList   || [],
             data.signatures         = data.signatures         || []
+
+            console.log('phv create signatures', data.signatures)
 
             return new PassphraseVault(data)
         };

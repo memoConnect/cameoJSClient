@@ -72,7 +72,7 @@ angular.module('cmCore')
              * @param  {[type]} hash_method [description]
              * @return {[type]}             [description]
              */
-            hashObject: function(obj){
+            hashObject: function(obj, from){
                 var visited = []
 
                 function objectToArray(obj){
@@ -94,6 +94,11 @@ angular.module('cmCore')
                     visited.push(obj)
 
                     var values  =   keys.map(function(key){ return objectToArray(obj[key]) })
+
+                    if (from){
+                        console.log('moep',[keys, values])
+                    }
+
 
                     return [keys, values]
                 }
