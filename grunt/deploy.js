@@ -15,8 +15,7 @@ module.exports = function (grunt, options) {
 
         'desktop:deploy-without-template',
         'desktop:gen-all-templates',
-
-        'uglify:app-deploy',
+        'optional-uglify',
         'cssmin:app-deploy'
     ]);
 
@@ -32,6 +31,12 @@ module.exports = function (grunt, options) {
         'clean:nwPackageLinux',
         'compress:mwPackageLinux'
     ]);
+
+    grunt.registerTask('optional-uglify', function(){
+        if (! options.globalCameoBuildConfig.config.disableUglify) {
+            grunt.task.run('uglify:app-deploy')
+        }
+    })
 
     return {
         tasks: {
