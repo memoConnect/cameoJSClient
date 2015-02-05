@@ -36,8 +36,6 @@ angular.module('cmPhonegap')
                     .on('native.keyboardshow',function(){
                         self.trigger('cmKeyboard:visible');
                     });
-
-
                 });
             },
             scroll: function(bool){
@@ -54,7 +52,6 @@ angular.module('cmPhonegap')
             },
             focusLast: function(timeout){
                 if($rootScope.lastFocus) {
-                    console.log('focus last element',$rootScope.lastFocus)
                     $timeout(function(){
                         self.show();
                         $rootScope.lastFocus.focus();
