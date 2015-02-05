@@ -28,7 +28,7 @@ done
 ./setup.sh
 
 if [ ! -z "$specs" ]; then
-    echo -e "\e[33m[ CameoClientTest running e2e specs: $4 ]\033[0m"
+    echo -e "\e[33m[ CameoClientTest running e2e specs: $specs ]\033[0m"
     ./node_modules/grunt-cli/bin/grunt tests-e2e:all  ${targetArg} ${wwwUrlArg} ${apiUrlArg} ${testScreenshotPathArg} --specs=${specs} --disableUglify=true
 else
     echo -e "\e[33m[ CameoClientTest - running all unit and e2e tests ]\033[0m"
