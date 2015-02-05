@@ -44,10 +44,20 @@ angular.module('cmUi')
                 };
 
 
+                if(cmFilter.getSearchVisibility()){
+                    $scope.visible = true;
+                    var input = $document[0].querySelector('#inp-list-search');
+                    input.focus();
+                }
+
                 var filter = cmFilter.get();
                 if(typeof filter == 'string' && filter != ''){
                     $scope.visible = true;
                     $scope.ngModel = filter;
+                } else {
+                    if($scope.visible){
+                        $scope.ngModel = '';
+                    }
                 }
             }
         }

@@ -9,7 +9,8 @@ angular.module('cmUi')
             currentFilter = '',
             currentResults = 0,
             onClearCallbacks = [],
-            onUpdateCallbacks = [];
+            onUpdateCallbacks = [],
+            searchVisibility = false;;
 
         function reset(){
             //cmLogger.debug('cmFilter reset');
@@ -24,6 +25,7 @@ angular.module('cmUi')
 
             currentFilter = '';
             currentResults = 0;
+            searchVisibility = false;
 
             onClearCallbacks.forEach(function(obj){
                 obj.callback();
@@ -59,6 +61,16 @@ angular.module('cmUi')
 
             if(typeof l == 'number'){
                 currentResults = l;
+            }
+        };
+
+        this.getSearchVisibility = function(){
+            return searchVisibility;
+        };
+
+        this.setSearchVisibility = function(bool){
+            if(bool && bool === true){
+                searchVisibility = true;
             }
         };
 
