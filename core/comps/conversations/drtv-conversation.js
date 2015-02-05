@@ -150,10 +150,12 @@ angular.module('cmConversations')
                  * with preparing files for upload
                  * after preparation send message
                  */
-                $scope.send = function(e){
+                $scope.send = function(event){
 
-                    e.stopPropagation();
-                    e.preventDefault();
+                    if(event && 'stopPropagation' in event) {
+                        event.stopPropagation();
+                        event.preventDefault();
+                    }
 
                     if((!$scope.newMessageText || $scope.newMessageText.length == 0)
                     && cmAnswerFiles.files.length  == 0){
