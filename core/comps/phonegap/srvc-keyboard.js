@@ -15,7 +15,8 @@ angular.module('cmPhonegap')
             init: function(){
                 cmObject.addEventHandlingTo(self);
 
-                $rootScope.$on('$routeChangeSuccess', function(){
+                $rootScope.$on('$locationChangeStart', function(){
+                    self.close();
                     $rootScope.lastFocus = undefined;
                 });
 
@@ -36,9 +37,7 @@ angular.module('cmPhonegap')
                         self.trigger('cmKeyboard:visible');
                     });
 
-                    $rootScope.$on('$locationChangeStart', function(){
-                       self.close();
-                    });
+
                 });
             },
             scroll: function(bool){
@@ -53,13 +52,13 @@ angular.module('cmPhonegap')
                 if(self.plugin != null)
                     self.plugin.show();
             },
-            focusLast: function(){
+            focusLast: function(timeout){
                 if($rootScope.lastFocus) {
                     console.log('focus last element',$rootScope.lastFocus)
-                    self.show();
                     $timeout(function(){
+                        self.show();
                         $rootScope.lastFocus.focus();
-                    },50);
+                    },timeout || 50);
                 }
             }
         };

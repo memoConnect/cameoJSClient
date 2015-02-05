@@ -30,7 +30,7 @@
     <div class="btns-right">
         <cm-emoji-handler></cm-emoji-handler>
 
-        <div class="post-wrap" data-qa="btn-send-answer" ng-click="send()" cm-reactive>
+        <div class="post-wrap" data-qa="btn-send-answer" ng-click="send($event)" cm-reactive>
             <i
                 class="fa cm-post with-cursor {{conversation.lockStatus.class}}-wrap"
                 ng-class="{

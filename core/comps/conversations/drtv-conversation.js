@@ -150,7 +150,11 @@ angular.module('cmConversations')
                  * with preparing files for upload
                  * after preparation send message
                  */
-                $scope.send = function(){
+                $scope.send = function(e){
+
+                    e.stopPropagation();
+                    e.preventDefault();
+
                     if((!$scope.newMessageText || $scope.newMessageText.length == 0)
                     && cmAnswerFiles.files.length  == 0){
                         cmNotify.warn('CONVERSATION.WARN.MESSAGE_EMPTY', {ttl:5000});
