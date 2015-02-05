@@ -26,7 +26,7 @@ angular.module('cmCore').provider('cmLogger', [
             }
 
             function log_object(obj) {
-                console.groupCollapsed(obj);
+                console.groupCollapsed();
                 console.dir(obj);
                 console.groupEnd();
             }
