@@ -39,16 +39,25 @@ angular.module('cmPhonegap')
                 });
             },
             scroll: function(bool){
-                if(self.plugin != null)
-                    self.plugin.disableScroll(bool);
+                if(self.plugin != null) {
+                    self.plugin.disableScroll(bool || true);
+                    return true;
+                }
+                return false;
             },
             close: function(){
-                if(self.plugin != null)
+                if(self.plugin != null) {
                     self.plugin.close();
+                    return true;
+                }
+                return false;
             },
             show: function(){
-                if(self.plugin != null)
+                if(self.plugin != null) {
                     self.plugin.show();
+                    return true;
+                }
+                return false;
             },
             focusLast: function(timeout){
                 if($rootScope.lastFocus) {
@@ -56,7 +65,9 @@ angular.module('cmPhonegap')
                         self.show();
                         $rootScope.lastFocus.focus();
                     },timeout || 50);
+                    return true;
                 }
+                return false;
             }
         };
 
