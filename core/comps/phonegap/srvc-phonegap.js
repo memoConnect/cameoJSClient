@@ -75,11 +75,11 @@ angular.module('cmPhonegap')
                 if($document.length > 0 && 'addEventListener' in $document[0]) {
                     // detect when app goes in background
                     $document.on('pause', function () {
-                        $rootScope.$broadcast('device:goesToBackground');
+                        $rootScope.$emit('cmApi:sleep');
                     });
                     // detect when app goes in foreground
                     $document.on('resume', function () {
-                        $rootScope.$broadcast('device:goesToForeground');
+                        $rootScope.$emit('cmApi:wakeup');
                     });
                 }
             }
