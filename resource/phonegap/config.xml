@@ -16,9 +16,9 @@
 
     <preference name="phonegap-version" value="3.6.3" />
 
-    <gap:platform name="android" />
-    <!--<gap:platform name="winphone" />-->
-    <!--<gap:platform name="ios" />-->
+    <!--<gap:platform name="android" />-->
+    <gap:platform name="winphone" />
+    <gap:platform name="ios" />
 
     <!-- <preference name="permissions" value="all-permissions" /> -->
     <preference name="permissions" value="none" />
