@@ -215,8 +215,6 @@ angular.module('cmConversations')
                         recipients = data.recipients;
                     }
 
-                    console.log('recipients', recipients)
-
                     passphraseVault =   cmPassphraseVault.create({
                         sePassphrase:       data.sePassphrase,
                         aePassphraseList:   data.aePassphraseList,

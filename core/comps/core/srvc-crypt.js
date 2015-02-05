@@ -2,9 +2,9 @@
 
 angular.module('cmCore')
 .service('cmCrypt',[
-    'cmLogger', 'cmKey', 'cmWebworkerFactory', 'cmCryptoHelper', 
+    'cmUtil', 'cmLogger', 'cmKey', 'cmWebworkerFactory', 'cmCryptoHelper',
     '$q', '$interval', '$rootScope',
-    function (cmLogger, cmKey, cmWebworker, cmCryptoHelper,
+    function (cmUtil, cmLogger, cmKey, cmWebworker, cmCryptoHelper,
               $q, $interval, $rootScope) {
         // private vars
         var async = {
@@ -72,39 +72,52 @@ angular.module('cmCore')
              * @param  {[type]} hash_method [description]
              * @return {[type]}             [description]
              */
-            hashObject: function(obj, from){
+            hashObject: function(obj, sortHelper){
                 var visited = []
 
-                function objectToArray(obj){
+                function sortByIdentifier(arr, identifier) {
+                    return arr.sort(function(a, b) {
+                            var x = a[identifier].toLowerCase();
+                            var y = b[identifier].toLowerCase();
+                        return x < y ? -1 : x > y ? 1 : 0;
+                    });
+                }
 
-                    //console.log(visited.length)
+                function objectToArray(obj, name){
 
                     if(visited.indexOf(obj) != -1)
                         throw "Error: cmCrypt.hashObject() unable to hash cyclic Objects."
                     
 
-                    if(typeof obj == "string") return obj
-                    if(typeof obj == "number") return obj.toString()
+                    if(typeof obj == "string") return obj;
+                    if(typeof obj == "number") return obj.toString();
                         
                     if(["[object Object]", "[object Array]"].indexOf(Object.prototype.toString.call(obj)) == -1)
-                        throw "Error: cmCrypt.hashObject() unable to hash Objects with values like " + Object.prototype.toString.call(obj) 
+                        throw "Error: cmCrypt.hashObject() unable to hash Objects with values like " + Object.prototype.toString.call(obj);
 
-                    var keys    =   Object.keys(obj).sort()
+                    var keys;
 
-                    visited.push(obj)
-
-                    var values  =   keys.map(function(key){ return objectToArray(obj[key]) })
-
-                    if (from){
-                        console.log('moep',[keys, values])
+                    if(typeof name == 'string' && sortHelper && cmUtil.objLen(sortHelper) > 0 && cmUtil.isArray(obj)){
+                        Object.keys(sortHelper).map(function(arrayKey){
+                            if(arrayKey == name){
+                                keys = Object.keys(sortByIdentifier(obj,sortHelper[arrayKey]));
+                            }
+                        })
                     }
 
+                    if(!keys){
+                        keys = Object.keys(obj).sort();
+                    }
 
-                    return [keys, values]
+                    visited.push(obj);
+
+                    var values = keys.map(function(key){ return objectToArray(obj[key], key) });
+
+                    return [keys, values];
                 }
 
-                    return this.hash(JSON.stringify(objectToArray(obj)))
-                },
+                return this.hash(JSON.stringify(objectToArray(obj)))
+            },
 
             /**
              * this methods encodes a string base64
