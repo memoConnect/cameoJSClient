@@ -46,10 +46,13 @@ angular.module('cmConversations').directive('cmConversationTag',[
 
                 $scope.conversation.on('update:finished message:new',update);
 
+                $scope.conversation.recipients.on('deregister', update)
+
                 update();
 
                 $scope.$on('$destroy', function () {
                     $scope.conversation.off('update:finished message:new', update);
+                    $scope.conversation.recipients.off('deregister', update)
                 });
             }
         }

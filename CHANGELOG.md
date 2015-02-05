@@ -1,5 +1,10 @@
 # Dev
 
+## BS 05.02.2015
+* Update conversation handling if a recipient leave the conversation
+** update BE Eventhandling, deleted recipients will now deregistered
+** at talks route, conversation-tag update them self, if conversation.recipients trigger deregister
+
 ## BS 04.02.2015
 * CAM-1397 update, add event handling at start/download
 
