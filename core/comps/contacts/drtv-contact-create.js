@@ -29,7 +29,7 @@ angular.module('cmContacts')
 
                 $scope.goToSearch = function(){
                     if($scope.formData.displayName != ''){
-                        $rootScope.defaultSearchContactString = $scope.formData.displayName;
+                        cmFilter.set($scope.formData.displayName)
                     }
 
                     cmFilter.setSearchVisibility(true);
