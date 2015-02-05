@@ -10,7 +10,7 @@ describe('help route', function () {
     })
 
     it('menu button should be available',function(){
-        util.click('btn-open-menu')
+        util.click('btn-open-menus')
         util.waitForElementVisible("[data-qa='btn-menu-help']")
     })
 
