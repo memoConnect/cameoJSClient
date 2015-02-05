@@ -40,5 +40,5 @@ else
     echo -e "\e[33m[ CameoClientTest - running all unit and e2e tests ]\033[0m"
     ./node_modules/grunt-cli/bin/grunt tests-unit ${target} ${wwwUrlArg} ${apiUrlArg}
     [ $? -eq 0 ] || exit $?; # exit for none-zero return code
-    ./node_modules/grunt-cli/bin/grunt tests-e2e  ${target} ${wwwUrlArg} ${apiUrlArg} --testScreenShotPath=${testScreenshotPath}
+    ./node_modules/grunt-cli/bin/grunt tests-e2e  ${target} ${wwwUrlArg} ${apiUrlArg} --testScreenshotPath=${testScreenshotPath}
 fi

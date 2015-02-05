@@ -191,6 +191,7 @@ module.exports = function (grunt) {
         //set path for screenshots
         var defaultPath = "./target/screenshots"
         testConfig.config.testScreenshotPath = grunt.option('testScreenshotPath') || defaultPath
+        console.log("LLLOOOOGGGG: " +testConfig.config.testScreenshotPath )
 
         // URL Bust for requireJS
         testConfig.config.urlBust = (new Date()).getTime();
