@@ -7,7 +7,7 @@ angular.module('cmUi')
             require: 'ngModel',
             link: function(scope, element, attrs, modelCtrl) {
                 modelCtrl.$parsers.push(function (inputValue) {
-                    var transformedInput = inputValue.toLowerCase().replace(/ /g, '');
+                    var transformedInput = inputValue.toLowerCase();
 
                     if (transformedInput!=inputValue) {
                         modelCtrl.$setViewValue(transformedInput);
