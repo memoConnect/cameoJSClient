@@ -1,0 +1,39 @@
+cm-context-bar {
+  .pos-fxd;
+  top:0;
+  width:@cm-app-width;
+  z-index:10002;
+
+  display: none;
+
+//  color:@cm-white;
+  color: @cm-grey;
+  background:@cm-white;
+  line-height:@cm-unit;
+  height:@cm-header-height;
+  font-size:@cm-mega-font;
+  white-space:nowrap;
+
+  span.counter{
+    .pos-abs;
+    top: 0;
+    left: @cm-unit;
+
+    .dib;
+    .tac;
+    width:@cm-unit;
+    height:@cm-unit;
+    line-height:@cm-unit!important;
+  }
+
+  i{
+    .pos-tr;
+    .tac;
+    width:@cm-unit;
+    height:@cm-unit;
+    line-height:@cm-unit!important;
+  }
+  i:first-child{
+    .pos-tl;
+  }
+}

@@ -87,12 +87,10 @@ angular.module('cmCore')
                         cmKeyboard.close();
 
                         cmKeyboard.one('hidden', function(){
-                            console.log('keyboard geschlossen route solved')
                             defer.resolve();
                         });
                         return defer.promise;
                     } else {
-                        console.log('keyboard plugin nich da rute resolved')
                         return $q.when();
                     }
                 },

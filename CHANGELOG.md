@@ -1,6 +1,7 @@
 # Dev
 
 ## WW 06.02.2015
+* new context in list of talks and contacts with tap and longtap
 * CAM-1566 cmKeyboard handling ()
     * on cmEnter:pressed or locationChangeStart events cmKeyboard.closed triggered
     * new function focusLast kepps the keyboard visible while clicked out of the keyboard that will close the keyboard

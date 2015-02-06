@@ -2,7 +2,7 @@
  * http://angular.github.io/protractor/#/api
  */
 var fs = require('fs'),
-    config = require("../../e2e/config/specs.js"),
+    config = require('./config/specs.js'),
     clc = require('cli-color'),
     self = this,
     ptor = browser.driver
@@ -366,7 +366,6 @@ this.getIdentityId = function(token){
     }, token, config.apiUrl)
 }
 
-
 this.waitForPageLoad = function (expectedRoutes, printOutWaiting) {
 
     expectedRoutes = !Array.isArray(expectedRoutes) ? [expectedRoutes] : expectedRoutes
@@ -410,6 +409,15 @@ this.waitForEventSubscription = function () {
 
 this.click = function (dataQa) {
     return $("[data-qa='" + dataQa + "']").click()
+}
+
+this.tap = function(selector, index){
+    var element = $$(selector).get(index || 0);
+    browser.actions().mouseDown(element).perform();
+    return browser.sleep(1000)
+    .then(function(){
+        browser.actions().mouseUp().perform();
+    });
 }
 
 this.waitForQa = function(dataQa){
@@ -575,7 +583,6 @@ this.clearInput = function (qaValue) {
     return this
 }
 
-
 //this is not returning the promise, it maybe better to use this.closeModal(see below)
 this.waitAndCloseNotify = function (check) {
     self.waitForElement("cm-modal.active [data-qa='cm-modal-close-btn']")
@@ -704,10 +711,12 @@ this.generateKey = function (keyNum, keyName) {
 
 this.disableEncryption = function () {
     $("cm-header:not(.ng-hide) cm-security-indicator").click()
-    self.waitForPageLoad("/conversation/new/security")
-    $("[data-qa='btn-encryption']").click()
-    $("[data-qa='btn-security-done']").click()
-    self.waitForPageLoad("/conversation/new")
+    return self.waitForPageLoad('/conversation/new/security')
+    .then(function(){
+        $("[data-qa='btn-encryption']").click()
+        $("[data-qa='btn-security-done']").click()
+        return self.waitForPageLoad('/conversation/new')
+    })
 }
 
 this.clickBackBtn = function () {
@@ -772,7 +781,6 @@ this.addExternalContact = function (displayName) {
 }
 
 this.setVal = function (dataQa, text, withClear){
-
     if(withClear)
         this.clearInput(dataQa)
 
@@ -789,6 +797,10 @@ this.blurQa = function (dataQa) {
 
 this.getVal = function (dataQa) {
     return $("[data-qa='" + dataQa + "']").getAttribute('value')
+}
+
+this.getHtml = function(dataQa){
+    return $("[data-qa='" + dataQa + "']").getInnerHtml()
 }
 
 this.setValQuick = function (dataQa, text) {
@@ -808,32 +820,36 @@ this.addRecipient = function(username){
     self.waitForPageLoad("/conversation/new")
 }
 
-this.createUnencryptedConversation = function(subject, message, recpient){
-    self.get("/conversation/new")
-    self.waitForPageLoad("/conversation/new")
-
-    self.disableEncryption();
-
-    if(recpient){
-        if(typeof recpient == 'string'){
-            self.addRecipient(recpient)
+this.createUnencryptedConversation = function(subject, message, recpient, goToTalksAfterCreate){
+    self.get('/conversation/new')
+    return self.waitForPageLoad('/conversation/new')
+    .then(function(){
+        return self.disableEncryption();
+    }).then(function(){
+        if(recpient){
+            if(typeof recpient == 'string'){
+                self.addRecipient(recpient)
+            }
         }
-    }
-
-
-    self.setVal("input-subject", subject)
-    self.setVal("input-answer", message)
-    self.waitAndClickQa("btn-send-answer")
-    if(!recpient){
-        self.waitAndClickQa("btn-confirm", "cm-modal.active")
-    }
-    self.waitForPageLoad("/conversation/*")
-    self.waitForElements("cm-message", 1)
-
-    ptor.wait(function(){
-        return self.getVal("input-answer").then(function(answer){
-            return answer == ''
+        self.setVal('input-subject', subject)
+        self.setVal('input-answer', message)
+        self.waitAndClickQa('btn-send-answer')
+        if(!recpient){
+            self.waitAndClickQa('btn-confirm', 'cm-modal.active')
+        }
+        return self.waitForElements('cm-message', 1)
+    }).then(function(){
+        return ptor.wait(function(){
+            return self.getVal('input-answer')
+            .then(function(answer){
+                return answer == ''
+            })
         })
+    }).then(function(){
+        if(goToTalksAfterCreate) {
+            self.get('/talks')
+            return self.waitForPageLoad('/talks')
+        }
     })
 }
 
@@ -881,7 +897,7 @@ this.readConversation = function (subject, message, checkModal) {
         self.waitForQa('btn-modal-handshake-link').then(
             function(){
                 ptor.wait(function(){
-                    return $("cm-message").getText().then(function(text){
+                    return $$("cm-message").get(0).getText().then(function(text){
                         return text.search(message) != -1
                     })
                 })
@@ -889,7 +905,7 @@ this.readConversation = function (subject, message, checkModal) {
         )
     } else {
         ptor.wait(function(){
-            return $("cm-message").getText().then(function(text){
+            return $$("cm-message").get(0).getText().then(function(text){
                 return text.search(message) != -1
             })
         })
