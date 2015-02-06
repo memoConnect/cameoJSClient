@@ -59,7 +59,7 @@ angular.module('cmCore')
              * this method calculates a secure hash
              * @param secretString String that should be hashed
              */
-            
+
             hash: function (secretString) {
                 if (typeof secretString != 'string' || secretString.length == 0)
                     throw "cmCrypt.hash(): invalid argument."
@@ -77,8 +77,8 @@ angular.module('cmCore')
 
                 function sortByIdentifier(arr, identifier) {
                     return arr.sort(function(a, b) {
-                            var x = a[identifier].toLowerCase();
-                            var y = b[identifier].toLowerCase();
+                        var x = a[identifier].toLowerCase();
+                        var y = b[identifier].toLowerCase();
                         return x < y ? -1 : x > y ? 1 : 0;
                     });
                 }
@@ -87,11 +87,11 @@ angular.module('cmCore')
 
                     if(visited.indexOf(obj) != -1)
                         throw "Error: cmCrypt.hashObject() unable to hash cyclic Objects."
-                    
+
 
                     if(typeof obj == "string") return obj;
                     if(typeof obj == "number") return obj.toString();
-                        
+
                     if(["[object Object]", "[object Array]"].indexOf(Object.prototype.toString.call(obj)) == -1)
                         throw "Error: cmCrypt.hashObject() unable to hash Objects with values like " + Object.prototype.toString.call(obj);
 
@@ -251,18 +251,18 @@ angular.module('cmCore')
                                 key: key
                             });
                         });
-                // start keygen over webworker
-                } else { 
+                    // start keygen over webworker
+                } else {
                     cmWebworker.get({
                         jobName :   'rsa_keygen',
                         params  :   { keySize: keySize }
                     })
-                    .then(
+                        .then(
                         function(worker){
                             keygenWorker = worker
 
                             worker.run()
-                            .then(
+                                .then(
                                 function(result){
                                     var key = (new cmKey()).setKey(result.privKey);
 
@@ -327,15 +327,15 @@ angular.module('cmCore')
                 if(cmWebworker.available){
                     return keygenWorker.cancel()
                 } else if(async.crypt != null){
-                        // clear promise and library vars if param withReject is true
+                    // clear promise and library vars if param withReject is true
                     if(withoutReject == undefined) {
-                            async.crypt.cancelAsync();
-                            async.promise.reject();
-                        }
-                        return $q.when(true);
+                        async.crypt.cancelAsync();
+                        async.promise.reject();
                     }
-                    return $q.when(false);
-                },
+                    return $q.when(true);
+                }
+                return $q.when(false);
+            },
 
             generatePassword: function (length) {
                 return this.randomString(length || 10, true)

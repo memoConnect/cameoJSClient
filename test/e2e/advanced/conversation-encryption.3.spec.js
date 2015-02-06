@@ -1,6 +1,5 @@
 var config = require("../config/specs.js")
-var util = require("../../lib/e2e/cmTestUtil.js")
-
+var util = require("../cmUtil.js")
 
 describe('Conversation encryption -', function () {
 
@@ -58,12 +57,14 @@ describe('Conversation encryption -', function () {
 
         it("add message text", function () {
             var text = "moep_message_" + Math.floor(Math.random() * 1000000);
-            $("[data-qa='input-answer']").sendKeys(text)
+            util.setVal('input-answer',text)
             var message = {
                 text: text,
                 author: sender.login
             }
             messages.push(message)
+
+            expect(util.getVal('input-answer')).toBe(text)
         })
 
         it("show modal when security settings need to be adjusted", function () {
@@ -149,15 +150,17 @@ describe('Conversation encryption -', function () {
 
             $("[data-qa='btn-send-answer']").click()
             util.waitForElement('cm-message')
-            util.getConversation(subject)
-
-            // get conversation Id
-            ptor.wait(function () {
-                return ptor.getCurrentUrl().then(function (url) {
-                    conversationId = url.split("/").pop()
-                    return conversationId != "new"
-                })
-            }, 5000, 'unable to get conversation id')
+            .then(function(){
+                return util.getConversation(subject)
+            }).then(function() {
+                // get conversation Id
+                return ptor.wait(function () {
+                    return ptor.getCurrentUrl().then(function (url) {
+                        conversationId = url.split("/").pop()
+                        return conversationId != "new"
+                    })
+                }, 5000, 'unable to get conversation id')
+            })
 
         })
 

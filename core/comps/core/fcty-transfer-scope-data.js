@@ -52,9 +52,8 @@ angular.module('cmCore')
             if ((options.id in scopeData) && scopeData[options.id] != null) {
                 if(typeof $scope[options.scopeVar] == 'object'){
                     $scope[options.scopeVar] = angular.extend({}, $scope[options.scopeVar], scopeData[options.id]);
-                }else{
-                    $scope[options.scopeVar] = scopeData[options.id]
-
+                } else {
+                    $scope[options.scopeVar] = scopeData[options.id];
                 }
                 options.onGet(scopeData[options.id], noneScopeData[options.id]);
                 _reset(options);
@@ -87,7 +86,7 @@ angular.module('cmCore')
 
                 var options = angular.extend({}, defaultOptions, _options_ || {});
                 // init
-                var clearEvent = $rootScope.$on('$routeChangeStart', function () {
+                var clearEvent = $rootScope.$on('$locationChangeStart', function () {
                     _set($scope, options);
                 });
 

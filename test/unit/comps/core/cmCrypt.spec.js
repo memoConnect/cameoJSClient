@@ -7,7 +7,7 @@ describe('cmCrypt', function () {
 
     beforeEach(module('cmCore'))
     beforeEach(inject(function(_cmCrypt_) {
-       cmCrypt = _cmCrypt_;
+        cmCrypt = _cmCrypt_;
     }))
 
     describe('should provide the function',function(){
@@ -49,14 +49,14 @@ describe('cmCrypt', function () {
     describe('.hashObject()', function(){
         var obj_0 = { 1: undefined },
             obj_1 = {
-                        key_1:      "my first value",
-                        key_2:      {
-                                        "key in a box": "value in a box"
-                                    }, 
-                        _:          "value with funny key",
-                        1:          "value with numerical key",
-                        array:      [1, "2A", { 'my_key' : 'my_value' }]
-                    }
+                key_1:      "my first value",
+                key_2:      {
+                    "key in a box": "value in a box"
+                },
+                _:          "value with funny key",
+                1:          "value with numerical key",
+                array:      [1, "2A", { 'my_key' : 'my_value' }]
+            }
 
         function shuffleKeys(obj){
 
@@ -88,9 +88,9 @@ describe('cmCrypt', function () {
             size = size < min_size ? min_size : size
 
             while(size-i > 0){
-                obj[cmCrypt.hash(Math.random().toString())] =   Math.random() > 0.5 
-                                                                ?   cmCrypt.hash(cmCrypt.hash(Math.random().toString())) 
-                                                                :   getRandomObject(max_size-1)
+                obj[cmCrypt.hash(Math.random().toString())] =   Math.random() > 0.5
+                    ?   cmCrypt.hash(cmCrypt.hash(Math.random().toString()))
+                    :   getRandomObject(max_size-1)
                 i++
             }
 
@@ -109,7 +109,7 @@ describe('cmCrypt', function () {
             expect(function(){ cmCrypt.hashObject( new Date()   )}).toThrow()
             expect(function(){ cmCrypt.hashObject( Math         )}).toThrow()
 
-            
+
         })
 
         it('should throw an error if it encounters a cyclic object.', function(){
@@ -249,7 +249,7 @@ describe('cmCrypt', function () {
 
     describe('asymmetric encryption', function(){
         var key              = undefined,
-            publicKey        = undefined, 
+            publicKey        = undefined,
             privateKey       = undefined,
             secret           = 'priv',      //test key is too short to encrypt anything much longer
             encrypted_secret = undefined,
@@ -272,8 +272,8 @@ describe('cmCrypt', function () {
             runs(function(){
                 inject(function($rootScope){
                     cmCrypt
-                    .generateAsyncKeypair(128)
-                    .then(
+                        .generateAsyncKeypair(128)
+                        .then(
                         function(result){
                             key        = result.key
                             publicKey  = key.getPublicKey()
@@ -284,7 +284,7 @@ describe('cmCrypt', function () {
                 })
             })
 
-            waitsFor(function() {                    
+            waitsFor(function() {
                 return publicKey && privateKey
             }, 'public and private key to be defined', 3000);
         })
@@ -294,7 +294,7 @@ describe('cmCrypt', function () {
             expect(cmCrypt.generateAsyncKeypair('huhu')).toBeFalsy()
             expect(cmCrypt.generateAsyncKeypair({test:1})).toBeFalsy()
             expect(cmCrypt.generateAsyncKeypair(['pups'])).toBeFalsy()
-        })     
+        })
 
     })
 

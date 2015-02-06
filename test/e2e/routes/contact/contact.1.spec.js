@@ -1,5 +1,5 @@
 var config = require("../../config/specs.js")
-var util = require("../../../lib/e2e/cmTestUtil.js")
+var util = require("../../cmUtil.js")
 
 describe('Route Contact: ', function () {
     var ptor = util.getPtorInstance(),
@@ -213,36 +213,14 @@ describe('Route Contact: ', function () {
         })
     })
 
-    describe('search btn should be link to contact search', function(){
-        it('open create new contact',function(){
-            util.get('/contact/list')
-            util.waitForPageLoad('/contact/list').then(function(){
-                util.waitAndClickQa('add-contact-btn')
-                    .then(function(){
-                        return util.waitForPageLoad('/contact/create')
-                    })
-            })
-        })
-
-        it('search btn should be displayed', function(){
-            expect($("[data-qa='btn-identity-search']").isDisplayed()).toBeTruthy()
-        })
-
-        it('on click on search btn, route should change to contact/search', function(){
-            util.waitAndClickQa('btn-identity-search')
-            .then(function(){
-                return util.waitForPageLoad('/contact/search')
-            })
-        })
-    })
-
     describe('should be able to delete the external user', function(){
         it('go to list and open external', function(){
             util.get('/contact/list')
             util.waitForPageLoad('/contact/list')
             .then(function(){
                 return util.headerSearchInList(extUserName)
-            }).then(function(){
+            })
+            .then(function(){
                 return $$('cm-contact-list cm-contact-tag').first().click()
             }).then(function(){
                 return util.waitForPageLoad('/contact/*')
@@ -269,6 +247,31 @@ describe('Route Contact: ', function () {
             }).then(function(elements){
                 expect(elements.length).toEqual(0)
             })
+
+            util.closeHeaderSearch();
+        })
+    })
+
+    describe('search btn should be link to contact search', function(){
+        it('open create new contact',function(){
+            util.get('/contact/list')
+            util.waitForPageLoad('/contact/list').then(function(){
+                util.waitAndClickQa('add-contact-btn')
+                    .then(function(){
+                        return util.waitForPageLoad('/contact/create')
+                    })
+            })
+        })
+
+        it('search btn should be displayed', function(){
+            expect($("[data-qa='btn-identity-search']").isDisplayed()).toBeTruthy()
+        })
+
+        it('on click on search btn, route should change to contact/search', function(){
+            util.waitAndClickQa('btn-identity-search')
+                .then(function(){
+                    return util.waitForPageLoad('/contact/list')
+                })
         })
     })
 

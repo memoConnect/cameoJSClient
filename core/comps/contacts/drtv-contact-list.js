@@ -78,6 +78,8 @@ angular.module('cmContacts').directive('cmContactList',[
                 var filter = cmFilter.get();
                 if(typeof filter == 'string' && filter != ''){
                     $scope.toogleSearch();
+                } else if(cmFilter.getSearchVisibility()) {
+                    $scope.toogleSearch();
                 }
 
                 function onClearFilter(){
@@ -124,12 +126,14 @@ angular.module('cmContacts').directive('cmContactList',[
                 };
 
                 $scope.deleteFriendRequest = function(contact, withoutModal){
-                    return withoutModal
+                    return (function(){
+                        return withoutModal
                         ? $q.when()
                         : cmModal.confirm({
-                        title: 'CONTACT.MODAL.DELETE_FRIENDREQUEST.HEADER',
-                        text: 'CONTACT.MODAL.DELETE_FRIENDREQUEST.TEXT'
-                    }).then(function(){
+                            title: 'CONTACT.MODAL.DELETE_FRIENDREQUEST.HEADER',
+                            text: 'CONTACT.MODAL.DELETE_FRIENDREQUEST.TEXT'
+                        })
+                    }()).then(function(){
                         cmContactsModel
                             .deleteFriendRequest(contact)
                     });

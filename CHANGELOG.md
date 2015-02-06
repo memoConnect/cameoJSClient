@@ -1,5 +1,28 @@
 # Dev
 
+## 06.02.2015
+* CAM-1724 update search contact
+    * contact/create search btn links now to contact/list
+    * server search will be activated
+    * list will be empty, if filter string is empty
+* Update Filter/Search
+    * if search will be opened and filter string is empty, list view is also empty
+
+## WW 06.02.2015
+* new context in list of talks and contacts with tap and longtap
+* CAM-1566 cmKeyboard handling ()
+    * on cmEnter:pressed or locationChangeStart events cmKeyboard.closed triggered
+    * new function focusLast kepps the keyboard visible while clicked out of the keyboard that will close the keyboard
+* CAM-1646 html5 networkstatus handling
+    * on offline or online fire to the browser cmApi gets a sellep or wakeup event
+* CAM-1622 handshake transaction secret now lowercase
+    * new drtv cm-model-to-lowercase
+
+## BS 05.02.2015
+* Update conversation handling if a recipient leave the conversation
+    * update BE Eventhandling, deleted recipients will now deregistered
+    * at talks route, conversation-tag update them self, if conversation.recipients trigger deregister
+
 ## BS 04.02.2015
 * CAM-1397 update, add event handling at start/download
 

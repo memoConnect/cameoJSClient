@@ -113,7 +113,17 @@ angular.module('cmConversations').service('cmConversationFactory', [
             var instance = self.find(conversation);
 
             if(instance instanceof cmConversationModel){
-                return cmConversationsAdapter.deleteConversation(instance.id)
+                return  cmConversationsAdapter
+                        .deleteConversation(instance.id)
+                        .then(
+                            function(){
+                                self.deregister(conversation);
+                                return $q.when();
+                            },
+                            function(){
+                                return $q.reject();
+                            }
+                        );
             } else {
                 return $q.reject('conversation not found');
             }
@@ -171,7 +181,18 @@ angular.module('cmConversations').service('cmConversationFactory', [
 
         cmConversationsAdapter.on('conversation:update', function(event, data){
             //cmLogger.debug('cmConversationFactory.on:conversation:update');
-            self.create(data, true)
+            var instance = self.create(data, true);
+
+            if(instance){
+                if(typeof data.recipients != 'undefined'){
+                    data.recipients.forEach(function(recipient){
+                        if(typeof recipient.deleted != 'undefined' && recipient.deleted == true && typeof recipient.identityId == 'string'){
+                            instance.recipients.deregister(recipient.identityId)
+                        }
+                    });
+                }
+            }
+
         });
 
         cmConversationsAdapter.on('conversation:deleted', function(event, data){

@@ -70,8 +70,8 @@
 .pos-rel{position:relative}
 .pos-abs{position:absolute}
 .pos-fxd{position:fixed}
-.pos-tr{.pos-abs;right:0;top:0}
-.pos-tl{.pos-abs;right:0;left:0}
+.pos-tr{.pos-abs;top:0;right:0}
+.pos-tl{.pos-abs;top:0;left:0}
 .pos-br{.pos-abs;bottom:0;right:0}
 .pos-bl{.pos-abs;bottom:0;left:0}
 .pos-full{.pos-abs;bottom:0;left:0;width:100%;height:100%}
@@ -130,4 +130,11 @@
   .pos-abs;
   right: 2rem;
   font-size: @cm-mega-font;
+}
+
+.is-selected {
+  background-color: @cm-light-grey;
+  .cm-light-grey{
+    color:@cm-white;
+  }
 }

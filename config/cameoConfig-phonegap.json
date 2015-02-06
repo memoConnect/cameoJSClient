@@ -9,6 +9,7 @@
     {"name":"de.cameonet.cordova.contacts.readonly","version":"0.2.13","repo":"https://github.com/memoConnect/cordova-plugin-contacts.git"},
     {"name":"de.cameonet.cordova.crypto","version":"0.1","repo":"https://github.com/memoConnect/de.cameonet.cordova.crypto.git"},
     {"name":"de.cameonet.cordova.migration","version":"0.1","repo":"https://github.com/memoConnect/de.cameonet.cordova.migration.git"},
+    {"name":"de.cameonet.cordova.url-scheme","version":"3.2.2","repo":"https://github.com/memoConnect/de.cameonet.cordova.url-scheme.git"},
 
     {"name":"org.apache.cordova.device","version":"0.2.12"},
     {"name":"org.apache.cordova.splashscreen","version":"0.3.4"},
@@ -18,7 +19,7 @@
     {"name":"org.apache.cordova.network-information","version":"0.2.12"},
     {"name":"org.apache.cordova.inappbrowser","version":"0.5.2"},
 
-    {"name":"net.yoik.cordova.plugins.screenorientation","version":"1.3.1"},
+    {"name":"com.ionic.keyboard","version":"1.0.3"},
 
     {"name":"com.phonegap.plugins.pushplugin","version":"2.1.1"},
     {"name":"nl.x-services.plugins.sslcertificatechecker","version":"3.3.1","repo":"https://github.com/EddyVerbruggen/SSLCertificateChecker-PhoneGap-Plugin.git "},
@@ -28,7 +29,8 @@
   ],
 
   "unused-plugins": [
-    {"name":"nl.x-services.plugins.launchmyapp","version":"3.2.0","inner":"<param name=\"URL_SCHEME\" value=\"<%= appProtocol %>\" />","repo":"https://github.com/EddyVerbruggen/LaunchMyApp-PhoneGap-Plugin.git --variable URL_SCHEME=<%= appProtocol %>"},
+    {"name":"es.keensoft.fullscreenimage","version":"1.0.0","repo":"https://github.com/keensoft/FullScreenImage-Cordova-Plugin.git"},
+    {"name":"net.yoik.cordova.plugins.screenorientation","version":"1.3.1"},
 
     {"name":"com.verso.cordova.clipboard","version":"0.1.0"},
     {"name":"net.tunts.webintent","version":"0.2.1"},

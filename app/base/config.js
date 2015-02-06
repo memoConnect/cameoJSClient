@@ -220,9 +220,6 @@ angular.module('cmConfig',[])
                     waitForUserModel: true,
                     waitForFirstBoot: true
                 },
-                'contact-search':  {
-                    routes:['/contact/search']
-                },
                 'contact-create': {
                     routes:['/contact/create']
                 },

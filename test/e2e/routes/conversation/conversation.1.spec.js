@@ -1,5 +1,5 @@
 var config = require("../../config/specs.js")
-var util = require("../../../lib/e2e/cmTestUtil.js")
+var util = require("../../cmUtil.js")
 
 describe('Route conversation:', function () {
     var ptor = util.getPtorInstance()
@@ -174,18 +174,18 @@ describe('Route conversation:', function () {
     it('the conversation should contain both messages and check sort by date', function () {
         $$("cm-conversation-tag").then(function (elements) {
             elements[0].click()
-            return  util.waitForPageLoad("/conversation/.*")
+            return util.waitForPageLoad("/conversation/.*")
         })
         .then(function(){
-            return  util.waitForElements("cm-message", 2)
+            return util.waitForElements("cm-message", 2)
         })
         .then(function(){
-            return  $$('cm-message').then(function (elements) {
-                        expect(elements.length).toBe(2)
-                        expect(elements[0].$(".text").getText()).toContain(messageText)
-                        expect(elements[1].$(".text").getText()).toContain(messageText2)
-                        expect(elements[1].$("[data-qa='message-author']").getText()).toBe(config.contactUser1DisplayName)
-                    })
+            return $$('cm-message').then(function (elements) {
+                expect(elements.length).toBe(2)
+                expect(elements[0].$(".text").getText()).toContain(messageText)
+                expect(elements[1].$(".text").getText()).toContain(messageText2)
+                expect(elements[1].$("[data-qa='message-author']").getText()).toBe(config.contactUser1DisplayName)
+            })
         })
     })
 })

@@ -465,12 +465,12 @@ angular.module('cmCore').provider('cmApi',[
                                 secret: 'b4plIJMNITRDeJ9vl0JG' //only working on dev
                             }
                         }, true)
-                            .then(function(id){
-                                api.setSubscriptionId(id);
-                            })
-                            .finally(function(){
-                                api.state.unset('event_call_running');
-                            })
+                        .then(function(id){
+                            api.setSubscriptionId(id);
+                        })
+                        .finally(function(){
+                            api.state.unset('event_call_running');
+                        })
                     } else {
                         return $q.reject('event_call_running');
                     }
@@ -482,11 +482,9 @@ angular.module('cmCore').provider('cmApi',[
                         if (!api.subscriptionId) {
                             //if no subscriptionId is present, get one and try again later:
                             api.subscribeToEventStream()
-                            .then(
-                                function(){
-                                    api.getEvents();
-                                }
-                            );
+                            .then(function(){
+                                api.getEvents();
+                            });
                             /*
                             ,
                             function(){
@@ -553,15 +551,15 @@ angular.module('cmCore').provider('cmApi',[
                     });
                 }
 
-                $rootScope.$on('device:goesToBackground', function(){
-                    console.log('device:goesToBackground api.stopListeningToEvents')
+                $rootScope.$on('cmApi:sleep', function(){
+                    cmLogger.info('cmApi:sleep > stopListeningToEvents');
                     api.stopListeningToEvents();
                 });
 
-                $rootScope.$on('device:goesToForeground', function(){
+                $rootScope.$on('cmApi:wakeup', function(){
                     var token = $injector.has('cmAuth') ? $injector.get('cmAuth').getToken() : undefined;
                     if(token){
-                        console.log('device:goesToForeground api.listenToEvents')
+                        cmLogger.info('cmApi:wakeup > listenToEvents');
                         api.listenToEvents();
                     }
                 });

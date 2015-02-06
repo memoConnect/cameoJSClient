@@ -108,6 +108,12 @@ module.exports = function (grunt) {
             buildConfig.config.apiUrl = buildConfig.config[jsonPath[0]][jsonPath[1]];
         }
 
+        // option to disable uglify for quicker builds
+        var disableUglify = grunt.option('disableUglify');
+        if (disableUglify) {
+            buildConfig.config.disableUglify = true
+        }
+
         /**
          * not important
          */
@@ -181,6 +187,11 @@ module.exports = function (grunt) {
             console.log("wwwUrl: " + wwwUrl);
             testConfig.config.wwwUrl = wwwUrl;
         }
+
+        //set path for screenshots
+        var defaultPath = "./target/screenshots"
+        testConfig.config.testScreenshotPath = grunt.option('testScreenshotPath') || defaultPath
+
         // URL Bust for requireJS
         testConfig.config.urlBust = (new Date()).getTime();
 

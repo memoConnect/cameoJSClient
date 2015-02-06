@@ -31,6 +31,7 @@ module.exports = function (grunt, options) {
     ]);
     grunt.registerTask('tests-e2e:prepare', [
         'test:generate-keys',
+        'clean:test-screenshots',
         'app:to-dist'
     ]);
 
@@ -110,7 +111,8 @@ module.exports = function (grunt, options) {
                     'options': {
                         'data': {
                             'chromeDriverPath': options.globalCameoTestConfig.config.chromeDriverPath,
-                            'capabilities': "capabilities:{'browserName':'chrome'}"
+                            'capabilities': "capabilities:{'browserName':'chrome'}",
+                            'testScreenshotPath' : options.globalCameoTestConfig.config.testScreenshotPath
                         }
                     },
                     'files': {
@@ -144,7 +146,16 @@ module.exports = function (grunt, options) {
                         'test/e2e/config/specs.js': ['test/e2e/config/tmpl-specs.js']
                     }
                 }
+            },
+            clean: {
+                'test-screenshots': {
+                    options: { force: true },
+                    src: [
+                        options.globalCameoTestConfig.config.testScreenshotPath
+                    ]
+                }
             }
+
         }
     }
 };

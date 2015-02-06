@@ -45,7 +45,7 @@ angular.module('cmConversations')
     'cmKeyStorageService',
     '$q',
     '$rootScope',
-    
+
     function (cmBoot, cmConversationsAdapter, cmMessageModel, cmIdentityFactory, cmIdentityModel, cmFileFactory,
               cmCrypt, cmUserModel, cmFactory, cmStateManagement, cmBrowserNotifications, cmNotify, cmObject, cmLogger, cmPassphraseVault,
               cmSecurityAspectsConversation, cmUtil, cmFilesAdapter, cmSettings, cmKeyStorageService,
@@ -62,7 +62,7 @@ angular.module('cmConversations')
             cmObject.addEventHandlingTo(self);
 
             this.id                 = undefined;
-            
+
             this.recipients         = new cmFactory(cmIdentityModel);      //list of cmIdentityModel objects
             this.inactiveRecipients = [];
             this.messages           = new cmFactory(cmMessageModel);       //list of MessageModel objects
@@ -125,7 +125,7 @@ angular.module('cmConversations')
                 if(typeof data == 'string' && data.length > 0){
                     self.id = data;
                     self.load();
-                // via data.id
+                    // via data.id
                 } else if(typeof data == 'object' && ('id' in data)){
                     self.id = data.id;
                     if(cmUtil.objLen(data) < 2){
@@ -257,10 +257,10 @@ angular.module('cmConversations')
                 }
 
                 /*
-                if(!this.state.is('new') && this.keyTransmission == 'mixed' && this.isUserInPassphraseList() == false){
-                    this.options.hasPassword = true;
-                }
-                */
+                 if(!this.state.is('new') && this.keyTransmission == 'mixed' && this.isUserInPassphraseList() == false){
+                 this.options.hasPassword = true;
+                 }
+                 */
 
                 this.state.unset('new');
                 this.trigger('update:finished');
@@ -285,21 +285,21 @@ angular.module('cmConversations')
                     data.subject = this.subject;
 
                 var passphrase_data =   passphraseVault
-                                        ?   passphraseVault.exportData()
-                                        :   { keyTransmission: 'none' }
+                    ?   passphraseVault.exportData()
+                    :   { keyTransmission: 'none' }
 
                 data.sePassphrase           =   passphrase_data.sePassphrase        || undefined;
                 data.aePassphraseList       =   passphrase_data.aePassphraseList    || undefined;
                 data.keyTransmission        =   passphrase_data.keyTransmission
                 data.conversationSignatures =   passphrase_data.signatures
 
-                data.recipients             =       passphrase_data.recipientKeyList 
-                                                ||  this.recipients.map(function(recipient){ 
-                                                        return  {
-                                                                    identityId:     recipient.id ,
-                                                                    keys:          []
-                                                                }
-                                                    });
+                data.recipients             =       passphrase_data.recipientKeyList
+                ||  this.recipients.map(function(recipient){
+                    return  {
+                        identityId:     recipient.id ,
+                        keys:          []
+                    }
+                });
 
                 return data;
             };
@@ -361,40 +361,40 @@ angular.module('cmConversations')
                     return $q.reject();
 
                 return  $q.when(
-                            this.isEncrypted()
-                            ?   cmPassphraseVault.encryptPassphrase({
-                                    passphrase:         undefined,   // will be generated
-                                    password:           this.password,
-                                    identities:         this.recipients,
-                                    restrict_to_keys:   undefined   // encrypt for all recipient keys
-                                })  
-                            :   undefined 
-                        )
-                        .then(function(pv){
-                            passphraseVault = pv;
-                            return cmConversationsAdapter.newConversation(self.exportData())
-                        })                            
-                        .then(
-                            function (conversation_data) {
-                                self
-                                .importData(conversation_data)
-                                .savePassCaptcha();
+                    this.isEncrypted()
+                        ?   cmPassphraseVault.encryptPassphrase({
+                        passphrase:         undefined,   // will be generated
+                        password:           this.password,
+                        identities:         this.recipients,
+                        restrict_to_keys:   undefined   // encrypt for all recipient keys
+                    })
+                        :   undefined
+                )
+                    .then(function(pv){
+                        passphraseVault = pv;
+                        return cmConversationsAdapter.newConversation(self.exportData())
+                    })
+                    .then(
+                    function (conversation_data) {
+                        self
+                            .importData(conversation_data)
+                            .savePassCaptcha();
 
-                                if(typeof self.password == 'string' && self.password.length > 0){
-                                    self.localPWHandler.set(conversation_data.id, self.password);
-                                }
+                        if(typeof self.password == 'string' && self.password.length > 0){
+                            self.localPWHandler.set(conversation_data.id, self.password);
+                        }
 
-                                self.state.unset('new');
-                                self.trigger('save:finished');
+                        self.state.unset('new');
+                        self.trigger('save:finished');
 
-                                return conversation_data;
-                            },
+                        return conversation_data;
+                    },
 
-                            function(){
-                                self.trigger('save:failed');
-                                return $q.reject();
-                            }
-                        )
+                    function(){
+                        self.trigger('save:failed');
+                        return $q.reject();
+                    }
+                )
             };
 
             this.update = function(conversation_data, fromDrtvInit){
@@ -458,47 +458,47 @@ angular.module('cmConversations')
                 }
 
                 return  this.getPassphrase()
-                        .catch(function(){
-                            return  self.isEncrypted()
-                                ?   $q.reject('access denied')
-                                :   $q.when(null);
-                            //Todo: null for 'not encrypted' old convention
-                        })
-                        .then(
-                            function(passphrase) {
-                                return self.isEncrypted()
-                                        ? message
-                                            .addFiles(files)
-                                            .getSignatures()
-                                            .then(function () {
-                                                return message.encrypt(passphrase)
-                                            })
-                                            .then(function () {
-                                                return message.save()
-                                            })
+                    .catch(function(){
+                        return  self.isEncrypted()
+                            ?   $q.reject('access denied')
+                            :   $q.when(null);
+                        //Todo: null for 'not encrypted' old convention
+                    })
+                    .then(
+                    function(passphrase) {
+                        return self.isEncrypted()
+                            ? message
+                            .addFiles(files)
+                            .getSignatures()
+                            .then(function () {
+                                return message.encrypt(passphrase)
+                            })
+                            .then(function () {
+                                return message.save()
+                            })
 
-                                        : message
-                                            .addFiles(files)
-                                            .setPublicData(['text', 'fileIds'])
-                                            .revealSignatures()
-                                            .getSignatures()
-                                            .then(function () {
-                                                return message.save()
-                                            })
-                            },
-                            function(){
-                                if(typeof force == 'boolean' && force === true){
-                                    return  message
-                                        .addFiles(files)
-                                        .setPublicData(['text', 'fileIds'])
-                                        .revealSignatures()
-                                        .getSignatures()
-                                        .then(function () {
-                                            return message.save()
-                                        })
-                                }
-                            }
-                        )
+                            : message
+                            .addFiles(files)
+                            .setPublicData(['text', 'fileIds'])
+                            .revealSignatures()
+                            .getSignatures()
+                            .then(function () {
+                                return message.save()
+                            })
+                    },
+                    function(){
+                        if(typeof force == 'boolean' && force === true){
+                            return  message
+                                .addFiles(files)
+                                .setPublicData(['text', 'fileIds'])
+                                .revealSignatures()
+                                .getSignatures()
+                                .then(function () {
+                                    return message.save()
+                                })
+                        }
+                    }
+                )
             };
 
             /**
@@ -583,8 +583,8 @@ angular.module('cmConversations')
 //                cmLogger.debug('cmConversationModel.isEncrypted');
 
                 return this.state.is('new')
-                        ?   !encryption_disabled
-                        :   this.keyTransmission != "none";
+                    ?   !encryption_disabled
+                    :   this.keyTransmission != "none";
             };
 
             /**
@@ -600,12 +600,12 @@ angular.module('cmConversations')
 
                 function run(){
                     self.getPassphrase()
-                    .then(function (passphrase) {
-                        return $q.all(self.messages.map(function (message) {
-                            return message.decrypt(passphrase)
-                        }))
-                    })
-                    .then(
+                        .then(function (passphrase) {
+                            return $q.all(self.messages.map(function (message) {
+                                return message.decrypt(passphrase)
+                            }))
+                        })
+                        .then(
                         function () {
                             self.trigger('decrypt:success');
 
@@ -642,7 +642,7 @@ angular.module('cmConversations')
              */
             this.getKeyTransmission = function(){
                 //If the conversation is not new:
-                if(!this.state.is('new')) 
+                if(!this.state.is('new'))
                     return this.keyTransmission
 
 
@@ -650,7 +650,7 @@ angular.module('cmConversations')
                 if(!this.isEncrypted())
                     return 'none';
 
-                //Conversation is new and encrypted, 
+                //Conversation is new and encrypted,
                 //is a password required for at least one recipient and if so are there any recipients who wont need a password?
                 if(this.passwordRequired())
                     return this.getNiceRecipients() > 0 ? 'mixed' : 'symmetric'
@@ -695,8 +695,8 @@ angular.module('cmConversations')
              */
             this.verifyAuthenticity = function(){
                 return  passphraseVault
-                        ?   passphraseVault.verifyAuthenticity()
-                        :   $q.reject('cmConversationModel: missing passphraseVault')
+                    ?   passphraseVault.verifyAuthenticity()
+                    :   $q.reject('cmConversationModel: missing passphraseVault')
             }
 
             /**
@@ -714,11 +714,11 @@ angular.module('cmConversations')
 
                 if(this.state.is('new')){
                     return  this.isEncrypted()
-                    &&  (
-                    this.getBadRecipients().length != 0
-                    ||  !this.userHasPrivateKey()
-                    || this.hasPassword()
-                    )
+                        &&  (
+                        this.getBadRecipients().length != 0
+                        ||  !this.userHasPrivateKey()
+                        || this.hasPassword()
+                        )
 
                 } else {
                     return this.hasPassword() && (!this.userHasPrivateKey() || !this.userHasAccess())
@@ -819,7 +819,7 @@ angular.module('cmConversations')
                         .prepareForUpload()
                         .then(function(){
                             self.passCaptcha.uploadChunks();
-                         });
+                        });
 
                     this.passCaptcha.on('upload:finish', function(){
                         cmConversationsAdapter.updateCaptcha(self.id, self.passCaptcha.id);
@@ -1107,7 +1107,7 @@ angular.module('cmConversations')
             this.messages.on('last-message:read', function(event, message){
                 // TODO: if last my own unread will never set back
                 /*
-                * message.from.id != cmUserModel.data.identity.id
+                 * message.from.id != cmUserModel.data.identity.id
                  &&
                  */
 
@@ -1115,12 +1115,12 @@ angular.module('cmConversations')
                     return false;
 
                 if((
-                  !message.isEncrypted()
-                || message.state.is('decrypted')
-                || message.state.is('incomplete')
-                )
-                && self.unreadMessages > 0
-                && cmSettings.get('enableUnreadMessages')
+                    !message.isEncrypted()
+                    || message.state.is('decrypted')
+                    || message.state.is('incomplete')
+                    )
+                    && self.unreadMessages > 0
+                    && cmSettings.get('enableUnreadMessages')
                 ){
                     self.unreadMessages = 0;
                     cmConversationsAdapter.sendReadStatus(self.id, message.id)

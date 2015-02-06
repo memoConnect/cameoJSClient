@@ -3,10 +3,7 @@
 angular.module('cmUi')
 .directive('cmHeaderListSearch',[
     'cmFilter',
-    '$rootScope',
-    '$timeout',
-    '$document',
-    function (cmFilter, $rootScope, $timeout, $document){
+    function (cmFilter){
         return {
             restrict: 'E',
             scope: {
@@ -34,7 +31,7 @@ angular.module('cmUi')
                     $scope.visible = $scope.visible ? false : true;
                     // set focus to input
                     if($scope.visible) {
-                        var input = $document[0].querySelector('#inp-list-search');
+                        var input = $element[0].querySelector('#inp-list-search');
                         input.focus();
                     } else {
                         /* if visibility is hidden, filter will be cleared */
@@ -44,10 +41,20 @@ angular.module('cmUi')
                 };
 
 
+                if(cmFilter.getSearchVisibility()){
+                    $scope.visible = true;
+                    var input = $element[0].querySelector('#inp-list-search');
+                    input.focus();
+                }
+
                 var filter = cmFilter.get();
                 if(typeof filter == 'string' && filter != ''){
                     $scope.visible = true;
                     $scope.ngModel = filter;
+                } else {
+                    if($scope.visible){
+                        $scope.ngModel = '';
+                    }
                 }
             }
         }

@@ -2,6 +2,31 @@
 
 describe("cmLanguage", function() {
 
+    var whitelistI18nKeys = [
+        'DD.MM.YYYY', // date format
+        'DRTV.CHOOSE_SOURCE', // drtv-choose-source with type var
+        'IDENTITY.KEYS.AUTHENTICATION', // wdgt-authentication BASE var
+        'IDENTITY.KEYS.TRUST', // wdgt-authentication BASE var
+        'START.INSTRUCTIONS',
+        'MODAL.CONNECTION_HANDLER', // drtv-connection-handler eventId var
+        'NOTIFICATIONS.MODAL_HEADER', // fcty-notify-model severity var
+        'PASSWORD.RESET.EMAIL.NOT.FOUND', // wdgt-password-lost error code
+        'PASSWORD.RESET.EXPIRED',
+        'PASSWORD.RESET.LOGIN.NOT.FOUND',
+        'PASSWORD.RESET.NO.EMAIL.PHONENUMBER',
+        'PASSWORD.RESET.PHONENUMBER.NOT.FOUND',
+        'SCE_CONTEXTS.CSS',// angularjs
+        'SCE_CONTEXTS.HTML',
+        'SCE_CONTEXTS.JS',
+        'SCE_CONTEXTS.RESOURCE_URL',
+        'SCE_CONTEXTS.URL',
+        'SECURITY_ASPECT.CONTACT', // fcty-security-aspects-contact languagePrefix var
+        'SECURITY_ASPECT.CONVERSATION', // fcty-security-aspects-conversation languagePrefix var
+        'SECURITY_ASPECT.CONVERSATION.DEFAULT.DESCRIPTION', // ftcty-securtiy_aspects comment
+        'SECURITY_ASPECT.CONVERSATION.DEFAULT.NAME',
+        'VERIFY.EXPIRED' // srvc-verify error code
+    ];
+
     var cmConfig,
         language_tables = {};
 
@@ -91,14 +116,14 @@ describe("cmLanguage", function() {
 
                         missing_ids[lang_key] = missing_ids[lang_key] || []
 
-                        if(translated_keys.indexOf(message_id) == -1)
+                        if(translated_keys.indexOf(message_id) == -1 && whitelistI18nKeys.indexOf(message_id) == -1)
                             missing_ids[lang_key].push(message_id) 
                     })
                 })
 
                 $.each(language_tables, function(lang_key, language_data){
                     if(missing_ids[lang_key].length != 0)
-                        console.log('\n'+ lang_key + ' is missing translations for the following message ids:\n\n'+ JSON.stringify(missing_ids[lang_key], null, 2) + '\n')
+                        console.log('\n'+ lang_key + ' is missing translations for the following message ids:\n'+ JSON.stringify(missing_ids[lang_key], null, 2) + '\n')
 
                     //expect(missing_ids[lang_key].length).toBe(0)
                 })
@@ -188,7 +213,7 @@ describe("cmLanguage", function() {
                     expect(Object.keys(foundPosition).length).toEqual(0)
 
                 if(Object.keys(foundPosition).length > 0){
-                    console.log(needles + '\'s found at: ' + JSON.stringify(foundPosition, null, 2) + '\n')
+                    console.log(needles + '\'s found at:\n'+ JSON.stringify(foundPosition, null, 2) + '\n')
                 }
             })
         })

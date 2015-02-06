@@ -11,9 +11,9 @@
 
 angular.module('cmContacts')
 .directive('cmContactCreate', [
-    'cmLocalContacts', 'cmContactsModel', 'cmUtil', 'cmNotify', 'cmLoader', 'cmModalContactImport',
+    'cmLocalContacts', 'cmContactsModel', 'cmUtil', 'cmNotify', 'cmLoader', 'cmModalContactImport', 'cmFilter',
     '$rootScope','$q',
-    function(cmLocalContacts, cmContactsModel, cmUtil, cmNotify, cmLoader, cmModalContactImport,
+    function(cmLocalContacts, cmContactsModel, cmUtil, cmNotify, cmLoader, cmModalContactImport, cmFilter,
              $rootScope, $q){
         return {
             restrict:       'AE',
@@ -29,10 +29,12 @@ angular.module('cmContacts')
 
                 $scope.goToSearch = function(){
                     if($scope.formData.displayName != ''){
-                        $rootScope.defaultSearchContactString = $scope.formData.displayName;
+                        cmFilter.set($scope.formData.displayName)
                     }
 
-                    $rootScope.goTo('/contact/search');
+                    cmFilter.setSearchVisibility(true);
+
+                    $rootScope.goTo('/contact/list');
                 };
 
                 $scope.disabled = false;

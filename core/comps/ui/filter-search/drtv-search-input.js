@@ -69,7 +69,7 @@ angular.module('cmUi').directive('cmSearchInput',[
                 }
 
                 $scope.clear = function(){
-                    $scope.search = '';
+                    $scope.search = undefined;
                     $scope.counterKeydown = 0;
                     cmFilter.clear();
                 };

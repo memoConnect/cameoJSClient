@@ -602,8 +602,8 @@
         "TEXT": "Are you sure you want to delete this contact?"
       },
       "DELETE_FRIENDREQUEST": {
-        "HEADER": "@todo Delete request",
-        "TEXT": "@todo Are you sure you want to delete this request?"
+        "HEADER": "Delete friend request",
+        "TEXT": "Are you sure you want to delete this friend request?"
       }
     },
     "TRUST": {
@@ -786,21 +786,21 @@
       "REQUEST_CAPTCHA": "Please send a (new) passCaptcha."
     },
     "MENU": {
-      "ADD_RECIPIENTS": "@todo Add recipients",
-      "SHOW_RECIPIENTS": "@todo Show recipients",
-      "SECURITY_SETTINGS": "@todo Security settings",
-      "DELETE": "@todo Delete talk"
+      "ADD_RECIPIENTS": "Add recipients",
+      "SHOW_RECIPIENTS": "Show recipients",
+      "SECURITY_SETTINGS": "Security settings",
+      "DELETE": "Delete talk"
     },
     "HEADING": "new Talk",
     "NO_SUBJECT": "no subject",
     "MODAL": {
       "ASYMMETRIC_KEY_TRUST_ERROR": {
-          "HEADER": "@todo Error with cameoKey",
+          "HEADER": "CameoKey error",
           "TEXT": "The key on this device has not been linked to the keys that created this conversation."
       },
       "DELETE":{
-        "HEADER": "@todo Delete Talk",
-        "TEXT": "@todo Are you sure you want to delete this talk?"
+        "HEADER": "Delete Talk",
+        "TEXT": "Are you sure you want to delete this talk?"
       }
     }
   },
@@ -843,11 +843,14 @@
                       "MORE_ITEMS": "Do you really want to delete these items?"
 
                   }
+              },
+              "NOTIFY": {
+                "DELETE_ERROR": "@todo SYSTEM.CONTEXT.MODAL.NOTIFY.DELETE_ERROR"
               }
           }
     },
     "CONVERSATION":{
-      "DELETE": "@todo leave talk"
+      "DELETE": "Leave talk"
     }
   },
   "TALKS": {
