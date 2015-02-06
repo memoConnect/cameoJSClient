@@ -31,7 +31,7 @@ angular.module('cmUi')
                     $scope.visible = $scope.visible ? false : true;
                     // set focus to input
                     if($scope.visible) {
-                        var input = $document[0].querySelector('#inp-list-search');
+                        var input = $element[0].querySelector('#inp-list-search');
                         input.focus();
                     } else {
                         /* if visibility is hidden, filter will be cleared */
@@ -43,7 +43,7 @@ angular.module('cmUi')
 
                 if(cmFilter.getSearchVisibility()){
                     $scope.visible = true;
-                    var input = $document[0].querySelector('#inp-list-search');
+                    var input = $element[0].querySelector('#inp-list-search');
                     input.focus();
                 }
 
