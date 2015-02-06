@@ -820,7 +820,7 @@ this.addRecipient = function(username){
     self.waitForPageLoad("/conversation/new")
 }
 
-this.createUnencryptedConversation = function(subject, message, recpient){
+this.createUnencryptedConversation = function(subject, message, recpient, goToTalksAfterCreate){
     self.get('/conversation/new')
     return self.waitForPageLoad('/conversation/new')
     .then(function(){
@@ -846,8 +846,10 @@ this.createUnencryptedConversation = function(subject, message, recpient){
             })
         })
     }).then(function(){
-        self.get('/talks')
-        return self.waitForPageLoad('/talks')
+        if(goToTalksAfterCreate) {
+            self.get('/talks')
+            return self.waitForPageLoad('/talks')
+        }
     })
 }
 
@@ -895,7 +897,7 @@ this.readConversation = function (subject, message, checkModal) {
         self.waitForQa('btn-modal-handshake-link').then(
             function(){
                 ptor.wait(function(){
-                    return $("cm-message").getText().then(function(text){
+                    return $$("cm-message").get(0).getText().then(function(text){
                         return text.search(message) != -1
                     })
                 })
@@ -903,7 +905,7 @@ this.readConversation = function (subject, message, checkModal) {
         )
     } else {
         ptor.wait(function(){
-            return $("cm-message").getText().then(function(text){
+            return $$("cm-message").get(0).getText().then(function(text){
                 return text.search(message) != -1
             })
         })

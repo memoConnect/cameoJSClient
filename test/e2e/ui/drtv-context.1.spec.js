@@ -15,9 +15,9 @@ describe('Context selection ', function () {
     describe('test conversations', function(){
 
         it('create 2 conversations', function(){
-            util.createUnencryptedConversation('talk1','message1')
+            util.createUnencryptedConversation('talk1','message1', undefined, true)
             .then(function(){
-                return util.createUnencryptedConversation('talk2', 'message2')
+                return util.createUnencryptedConversation('talk2', 'message2', undefined, true)
             })
         })
 
