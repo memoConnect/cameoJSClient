@@ -857,14 +857,16 @@ this.createEncryptedConversation = function (subject, message) {
 
 this.getConversation = function(subject){
     self.get("/talks")
-    self.waitForPageLoad("/talks")
-    self.headerSearchInList(subject)
-    ptor.wait(function(){
-        return $$('cm-conversation-tag').then(function(tags){
-            return tags.length == 1
-        })
-    })
+    return self.waitForPageLoad("/talks")
     .then(function(){
+        return self.headerSearchInList(subject)
+    }).then(function(){
+        return ptor.wait(function(){
+            return $$('cm-conversation-tag').then(function(tags){
+                return tags.length == 1
+            })
+        })
+    }).then(function(){
         self.waitAndClick("cm-conversation-tag")
         self.waitForElement("cm-message")
     })

@@ -6,7 +6,7 @@ angular.module('cmUi')
         return function(scope, element, attrs) {
 
             function onEnter(event){
-                if(event.which === 13) {
+                if(event.keyCode === 13) {
                     scope.$broadcast('cmEnter:pressed');
                     scope.$apply(function(){
                         scope.$eval(attrs.cmEnter, {'event': event});

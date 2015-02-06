@@ -20,20 +20,23 @@ module.exports = function(grunt, options){
             fs = require('fs');
 
         // change the algo to sha1, sha256 etc according to your requirements
-        var algo = 'sha1';
-        var shasum = crypto.createHash(algo);
+        var algo = 'sha1',
+            shasum = crypto.createHash(algo),
+            file = './dist/dl/'+options.globalCameoBuildConfig.phonegap.phonegapBaseFilename+'.apk';
 
-        var file = './dist/dl/'+options.globalCameoBuildConfig.phonegap.phonegapBaseFilename+'.apk';
-        var s = fs.ReadStream(file);
-        s.on('data', function(d) {
-            shasum.update(d);
-        });
-        s.on('end', function() {
-            var d = shasum.digest('hex');
-            checksums.android = d;
-
+        if(grunt.file.exists(file)) {
+            fs.ReadStream(file)
+            .on('data', function (d) {
+                shasum.update(d);
+            })
+            .on('end', function () {
+                checksums.android = shasum.digest('hex');
+                done();
+            });
+        } else {
+            checksums.android = '';
             done();
-        });
+        }
     });
 
     return {

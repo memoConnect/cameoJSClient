@@ -1,12 +1,41 @@
 # Dev
 
+## WW 06.02.2015
+* CAM-1566 cmKeyboard handling ()
+    * on cmEnter:pressed or locationChangeStart events cmKeyboard.closed triggered
+    * new function focusLast kepps the keyboard visible while clicked out of the keyboard that will close the keyboard
+* CAM-1646 html5 networkstatus handling
+    * on offline or online fire to the browser cmApi gets a sellep or wakeup event
+* CAM-1622 handshake transaction secret now lowercase
+    * new drtv cm-model-to-lowercase
+
+## BS 05.02.2015
+* Update conversation handling if a recipient leave the conversation
+    * update BE Eventhandling, deleted recipients will now deregistered
+    * at talks route, conversation-tag update them self, if conversation.recipients trigger deregister
+
+## BS 04.02.2015
+* CAM-1397 update, add event handling at start/download
+
+## BS 29.01.2015
+* CAM-1397 add incomplete registration handling
+
+## BS 27.01.2015
+* CAM-1331 add delete/leave conversations
+
+#########
+# RC 0.5.0 - 04.02.2015
+#########
+
+## BS 03.02.2015
+* fix CAM-1554 switch DisplayName for external User
+
 ## WW 02.02.2015
 * fixxed phone & email errorcodes now in cmApi
 * handshake token now case insentive (drtv-model-to-lowercase)
 
 ## BS 29.01.2015
 * CAM-1707 update re-keying process
-* CAM-1397 add incomplete registration handling
 
 ## WW 29.01.2015
 * CAM-1711 extern contact with message
@@ -18,21 +47,11 @@
 * CAM-1629 multiple modals
 * CAM-1585 checksum at download page for apk
 
-## BS 27.01.2015
-* CAM-1331 add delete/leave conversations
-
 ## WW 27.01.2015
 * CAM-1649 add delete pending requests
 
 ## BS 26.01.2015
 * fix BUG CAM-1692, update LocalStorage handling
-
-#########
-# RC 0.5.0 - 26.01.2015
-#########
-
-## BS 03.02.2015
-* fix CAM-1554 switch DisplayName for external User
 
 ## WW 26.01.2015
 * CAM-1647 add delete Contacts (cameo/extern)

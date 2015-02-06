@@ -1,6 +1,7 @@
 'use strict';
 
-angular.module('cmCore').provider('cmLogger', [
+angular.module('cmCore')
+.provider('cmLogger', [
     '$logProvider',
     function($logProvider){
         var debug_enabled = true;
@@ -26,7 +27,7 @@ angular.module('cmCore').provider('cmLogger', [
             }
 
             function log_object(obj) {
-                console.groupCollapsed(obj);
+                console.groupCollapsed();
                 console.dir(obj);
                 console.groupEnd();
             }

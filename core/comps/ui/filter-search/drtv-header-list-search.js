@@ -3,10 +3,7 @@
 angular.module('cmUi')
 .directive('cmHeaderListSearch',[
     'cmFilter',
-    '$rootScope',
-    '$timeout',
-    '$document',
-    function (cmFilter, $rootScope, $timeout, $document){
+    function (cmFilter){
         return {
             restrict: 'E',
             scope: {
@@ -21,7 +18,7 @@ angular.module('cmUi')
                         ' cm-visible="visible"' +
                         ' cm-options="{hideElements:\'cm-footer\',scrollTo:options.scrollTo}"' +
                         ' ng-class="{visible:visible}"></cm-search-input>',
-            controller: function($scope, $element, $attrs){
+            controller: function($scope, $element){
                 // option for drtv
                 $scope.options = angular.extend({}, {
                     scrollTo:false
@@ -34,7 +31,7 @@ angular.module('cmUi')
                     $scope.visible = $scope.visible ? false : true;
                     // set focus to input
                     if($scope.visible) {
-                        var input = $document[0].querySelector('#inp-list-search');
+                        var input = $element[0].querySelector('#inp-list-search');
                         input.focus();
                     } else {
                         /* if visibility is hidden, filter will be cleared */
@@ -42,7 +39,6 @@ angular.module('cmUi')
                         cmFilter.clear();
                     }
                 };
-
 
                 var filter = cmFilter.get();
                 if(typeof filter == 'string' && filter != ''){

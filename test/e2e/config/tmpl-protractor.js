@@ -43,11 +43,11 @@ exports.config = extend(browserConfig, {
         // add jasmine spec reporter
         jasmine.getEnv().addReporter(new SpecReporter({displayStacktrace: true, displaySpecDuration: true}));
 
-        //var HtmlReporter = require('protractor-html-screenshot-reporter');
-        //jasmine.getEnv().addReporter(new HtmlReporter({
-        //    baseDirectory: '/tmp/screenshots',
-        //    takeScreenShotsOnlyForFailedSpecs: true
-        //}));
+        var HtmlReporter = require('protractor-html-screenshot-reporter');
+        jasmine.getEnv().addReporter(new HtmlReporter({
+            baseDirectory: '<%= testScreenshotPath %>',
+            takeScreenShotsOnlyForFailedSpecs: true
+        }));
     },
 
     jasmineNodeOpts: {
