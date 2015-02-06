@@ -75,7 +75,6 @@
                     scope.$on('$destroy', function(){
                         hammer.off(eventName, fn);
                     });
-
                 }
             };
         }]);

@@ -64,7 +64,6 @@ angular.module('cmConversations')
                         return cmConversationFactory.deleteConversation($scope.conversation);
                     })
                     .then(function(){
-                        cmConversationFactory.deregister($scope.conversation);
                         $rootScope.goTo('/talks');
                     })
                     .catch(function(){

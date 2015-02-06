@@ -113,7 +113,17 @@ angular.module('cmConversations').service('cmConversationFactory', [
             var instance = self.find(conversation);
 
             if(instance instanceof cmConversationModel){
-                return cmConversationsAdapter.deleteConversation(instance.id)
+                return  cmConversationsAdapter
+                        .deleteConversation(instance.id)
+                        .then(
+                            function(){
+                                self.deregister(conversation);
+                                return $q.when();
+                            },
+                            function(){
+                                return $q.reject();
+                            }
+                        );
             } else {
                 return $q.reject('conversation not found');
             }

@@ -1,4 +1,4 @@
-var util = require("../../lib/e2e/cmTestUtil.js")
+var util = require("../cmUtil.js")
 var config = require("../config/specs.js")
 
 describe('Message signing -', function () {

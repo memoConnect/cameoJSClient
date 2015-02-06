@@ -15,6 +15,7 @@
                 type="text" ng-model="formData.user" ng-class="{'cm-input-error':alertState!=''}"
                 id="user" name="user" value="" required
                 placeholder="{{'LOGIN.PLACEHOLDER.USERNAME'|cmTranslate}}"
+                cm-enter="doLogin()"
                 cm-last-focus />
         </div>
     </article>
@@ -28,7 +29,7 @@
                 placeholder="{{'LOGIN.PLACEHOLDER.PASSWORD'|cmTranslate}}"
                 cm-enter="doLogin()"
                 cm-last-focus />
-            <i class="fa cm-icon-grey" ng-class="{'cm-visible':passwordType=='password','cm-hidden':passwordType=='text'}" ng-click="handlePassword()" cm-reactive></i>
+            <i class="fa cm-icon-grey" ng-class="{'cm-visible':passwordType=='password','cm-hidden':passwordType=='text'}" ng-click="handlePassword($event)" cm-reactive></i>
         </div>
     </article>
 

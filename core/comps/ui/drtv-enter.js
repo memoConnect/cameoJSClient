@@ -20,8 +20,8 @@ angular.module('cmUi')
             element.on('keypress', onEnter);
 
             scope.$on('$destroy', function(){
-                element.off('keydown');
-                element.off('keypress');
+                element.off('keydown', onEnter);
+                element.off('keypress', onEnter);
             })
         };
     }

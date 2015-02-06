@@ -151,11 +151,10 @@ angular.module('cmConversations')
                  * after preparation send message
                  */
                 $scope.send = function(event){
-
-                    if(event && 'stopPropagation' in event) {
-                        event.stopPropagation();
-                        event.preventDefault();
-                    }
+                    /**
+                     * reset focus to answer textarea
+                     */
+                    cmKeyboard.focusLast(event);
 
                     if((!$scope.newMessageText || $scope.newMessageText.length == 0)
                     && cmAnswerFiles.files.length  == 0){
@@ -184,10 +183,7 @@ angular.module('cmConversations')
                         new_message.state.set('waitForFiles');
                     }
 
-                    /**
-                     * reset focus to answer textarea
-                     */
-                    cmKeyboard.focusLast();
+
 
                     return checkConversationSetup()
                     .then(function(){
