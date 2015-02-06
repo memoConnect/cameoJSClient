@@ -143,8 +143,7 @@ angular.module('cmSetup')
                     $scope.goToNextStep = function(){
                         loader.stop();
 
-                        cmNotify.trigger('bell:ring');
-                        $rootScope.markQuickstart = true;
+                        cmNotify.ringBimmel('markHelp');
 
                         cmUserModel.updateAccount({'registrationIncomplete':false}).finally(
                             function(){
