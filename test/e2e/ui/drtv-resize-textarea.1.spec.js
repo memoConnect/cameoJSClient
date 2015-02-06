@@ -1,5 +1,5 @@
 var config = require("../config/specs.js")
-var util = require("../../lib/e2e/cmTestUtil.js")
+var util = require("../cmUtil.js")
 
 // start init tests
 describe('Textarea Resize', function () {
