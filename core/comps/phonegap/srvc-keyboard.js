@@ -15,8 +15,9 @@ angular.module('cmPhonegap')
             init: function(){
                 cmObject.addEventHandlingTo(self);
 
+                $rootScope.$on('cmEnter:pressed', self.forceClose);
                 $rootScope.$on('$locationChangeStart', function(){
-                    self.close();
+                    self.forceClose();
                     $rootScope.lastFocus = undefined;
                 });
 
@@ -31,12 +32,21 @@ angular.module('cmPhonegap')
                     // event handling
                     angular.element($window)
                     .on('native.keyboardhide',function(){
-                        self.trigger('cmKeyboard:hidden');
+                        self.trigger('hidden');
                     })
                     .on('native.keyboardshow',function(){
-                        self.trigger('cmKeyboard:visible');
+                        self.trigger('visible');
                     });
                 });
+            },
+            existsPlugin: function(){
+                return self.plugin != null;
+            },
+            isVisible: function(){
+                if(self.plugin != null) {
+                    return self.plugin.isVisible;
+                }
+                return false;
             },
             scroll: function(bool){
                 if(self.plugin != null) {
@@ -52,6 +62,9 @@ angular.module('cmPhonegap')
                 }
                 return false;
             },
+            forceClose: function(){
+                self.close();
+            },
             show: function(){
                 if(self.plugin != null) {
                     self.plugin.show();
@@ -59,12 +72,18 @@ angular.module('cmPhonegap')
                 }
                 return false;
             },
-            focusLast: function(timeout){
+            focusLast: function(event){
                 if($rootScope.lastFocus) {
-                    $timeout(function(){
+
+                    if(event && 'stopPropagation' in event) {
+                        event.stopPropagation();
+                        event.preventDefault();
+                    }
+
+                    //$timeout(function(){
                         self.show();
                         $rootScope.lastFocus.focus();
-                    },timeout || 50);
+                    //}, 50);
                     return true;
                 }
                 return false;

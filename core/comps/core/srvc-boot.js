@@ -2,9 +2,9 @@
 // TODO: doku and tests
 angular.module('cmCore')
 .service('cmBoot', [
-    'cmObject', 'cmLogger',
+    'cmObject', 'cmLogger', 'cmKeyboard',
     '$q', '$rootScope', '$document', '$injector',
-    function(cmObject, cmLogger,
+    function(cmObject, cmLogger, cmKeyboard,
              $q, $rootScope, $document, $injector) {
         var promises = {};
 
@@ -79,6 +79,22 @@ angular.module('cmCore')
                     }
 
                     return promises.i18n.promise;
+                },
+                keyboard: function(){
+                    if(cmKeyboard.existsPlugin() && cmKeyboard.isVisible()){
+                        var defer = $q.defer();
+
+                        cmKeyboard.close();
+
+                        cmKeyboard.one('hidden', function(){
+                            console.log('keyboard geschlossen route solved')
+                            defer.resolve();
+                        });
+                        return defer.promise;
+                    } else {
+                        console.log('keyboard plugin nich da rute resolved')
+                        return $q.when();
+                    }
                 },
                 firstBoot: function(){
                     promises.firstBoot = $q.when();

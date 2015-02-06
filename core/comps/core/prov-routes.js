@@ -106,6 +106,10 @@ angular.module('cmCore').provider('cmRoutes', [
                     return cmBoot.isReady.font();
                 };
 
+                routeParams.resolve.keyboard = function(cmBoot){
+                    return cmBoot.isReady.keyboard();
+                };
+
                 if (angular.isDefined(_settings_['waitForFirstBoot']) && _settings_['waitForFirstBoot'] == true){
                     routeParams.resolve.firstBoot = function(cmBoot) {
                         return cmBoot.isReady.firstBoot();

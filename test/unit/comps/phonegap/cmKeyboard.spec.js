@@ -138,7 +138,7 @@ describe('cmKeyboard is app', function() {
             whoop2Be = 'juhubuhuh'
 
         it('init should init init hide event', function () {
-            cmKeyboard.on('cmKeyboard:hidden', function () {
+            cmKeyboard.on('hidden', function () {
                 whoop1 = whoop1Be
             })
 
@@ -149,7 +149,7 @@ describe('cmKeyboard is app', function() {
         })
 
         it('init should init init show event', function () {
-            cmKeyboard.on('cmKeyboard:visible', function () {
+            cmKeyboard.on('visible', function () {
                 whoop2 = whoop2Be
             })
 

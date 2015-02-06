@@ -15,11 +15,11 @@ angular.module('cmAppConversations').directive('cmAnswer',[
                 var textarea = element[0].querySelector('#answer-textarea')
 
                 function clickWatcher(){
-                    cmKeyboard.one('cmKeyboard:visible', function(){
+                    cmKeyboard.one('visible', function(){
                         $rootScope.$emit('scroll:to');
                     });
 
-                    cmKeyboard.one('cmKeyboard:hidden', function(){
+                    cmKeyboard.one('hidden', function(){
                         $rootScope.$emit('scroll:to');
                     });
                 }

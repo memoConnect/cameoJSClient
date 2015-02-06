@@ -31,12 +31,11 @@ angular.module('cmUser')
                     return true;
                 }
 
-                $scope.handlePassword = function(){
+                $scope.handlePassword = function(event){
+                    cmKeyboard.focusLast(event);
                     $scope.passwordType = ($scope.passwordType != 'password')
                         ? 'password'
                         : 'text';
-
-                    cmKeyboard.focusLast();
                 };
 
                 $scope.checkPasswordLength = function(){
