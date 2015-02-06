@@ -5,10 +5,5 @@ angular.module('cmRoutes').controller('TestCtrl',
 
         $rootScope.$broadcast('cmApi:sleep')
 
-        $scope.isSelected = false;
-
-        $scope.toggle = function(){
-            $scope.isSelected = $scope.isSelected ? false : true;
-        }
     }
 );
