@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('cmUi').directive('cmScrollTo',[
-    'cmLogger',
+    'cmLogger', 'cmKeyboard',
     '$timeout', '$rootScope', '$document',
-    function (cmLogger,
+    function (cmLogger, cmKeyboard,
               $timeout, $rootScope, $document){
         return {
             restrict: 'A',

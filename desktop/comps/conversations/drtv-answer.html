@@ -15,7 +15,7 @@
     <div class="btns-right">
         <ul class="no-border-top">
             <li>
-                <div class="btn-post" data-qa="btn-send-answer" ng-click="send()" cm-reactive>
+                <div class="btn-post" data-qa="btn-send-answer" ng-click="send($event)" cm-reactive>
                     <i class="fa cm-post with-cursor {{conversation.lockStatus.class}}-wrap"
                        ng-class="{
                         'cm-post-idle':isSending,

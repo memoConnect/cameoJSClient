@@ -1,6 +1,7 @@
 'use strict';
 
-angular.module('cmCore').provider('cmLogger', [
+angular.module('cmCore')
+.provider('cmLogger', [
     '$logProvider',
     function($logProvider){
         var debug_enabled = true;

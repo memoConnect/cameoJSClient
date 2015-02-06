@@ -24,7 +24,7 @@ angular.module('cmPhonegap')
                         return false;
                     }
 
-                    self.plugin = $device.get()
+                    self.plugin = $device.get();
                 });
             },
 
@@ -38,12 +38,8 @@ angular.module('cmPhonegap')
                 // TODO: iOS8 Bug: Deprecated attempt to access property 'userAgent' on a non-Navigator object.
 // http://stackoverflow.com/questions/24784541/cordova-2-9-x-ios-8-useragent-bug
 // https://github.com/apache/cordova-js/blob/26e3e49e49b2fb61ca836572af85c7a776ea9f1c/src/common/init.js#L46-L65
-                try {
-                    nAgt = ($window.navigator.userAgent||$window.navigator.vendor||$window.opera).toLowerCase();
-                } catch(e){
-                    console.log('fail',e)
-                    nAgt = 'Mozilla/5.0 (iPhone; CPU iPhone OS 8_0 like Mac OS X) AppleWebKit';
-                }
+
+                nAgt = ($window.navigator.userAgent || $window.navigator.vendor || $window.opera).toLowerCase();
 
                 return nAgt;
             },
@@ -69,7 +65,7 @@ angular.module('cmPhonegap')
                 return this.emulateDevice || !this.emulateDevice && !withoutPlugin && this.existsPlugin() || !this.emulateDevice && withoutPlugin && $phonegapCameoConfig != 'undefined';
             },
 
-            isDesktop: function(where){
+            isDesktop: function(whoIs){
                 // emulate device
                 if(this.emulateDevice)
                     return false;
@@ -151,6 +147,7 @@ angular.module('cmPhonegap')
                 return this.isApp()
                     && this.getPlatform().indexOf('amazon-fireos') >= 0;
             },
+
 
             getCurrentOS: function(){
                 var os = 'unknown';

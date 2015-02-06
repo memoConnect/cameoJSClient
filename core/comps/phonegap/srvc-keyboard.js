@@ -3,56 +3,76 @@
 // https://github.com/driftyco/ionic-plugins-keyboard
 
 angular.module('cmPhonegap')
-    .service('cmKeyboard', [
-        'cmPhonegap', 'cmObject',
-        '$cordova', '$window', '$rootScope',
-        function (cmPhonegap, cmObject,
-                  $cordova, $window, $rootScope){
+.service('cmKeyboard', [
+    'cmPhonegap', 'cmObject',
+    '$cordova', '$window', '$rootScope', '$timeout',
+    function (cmPhonegap, cmObject,
+              $cordova, $window, $rootScope, $timeout){
 
-            var self = {
-                plugin: null,
+        var self = {
+            plugin: null,
 
-                init: function(){
-                    cmObject.addEventHandlingTo(self);
+            init: function(){
+                cmObject.addEventHandlingTo(self);
 
-                    cmPhonegap.isReady('cmKeyboard',function(){
-                        if(!('plugins' in $cordova) || !('Keyboard' in $cordova.plugins)) {
-                            //cmLogger.info('SCREENORIENTATION PLUGIN IS MISSING');
-                            return false;
-                        }
+                $rootScope.$on('$locationChangeStart', function(){
+                    self.close();
+                    $rootScope.lastFocus = undefined;
+                });
 
-                        self.plugin = $cordova.plugins.Keyboard;
+                cmPhonegap.isReady('cmKeyboard',function(){
+                    if(!('plugins' in $cordova) || !('Keyboard' in $cordova.plugins)) {
+                        //cmLogger.info('KEYBOARD PLUGIN IS MISSING');
+                        return false;
+                    }
 
-                        // event handling
-                        angular.element($window)
-                        .on('native.keyboardhide',function(){
-                            self.trigger('cmKeyboard:hidden');
-                        })
-                        .on('native.keyboardshow',function(){
-                            self.trigger('cmKeyboard:visible');
-                        });
+                    self.plugin = $cordova.plugins.Keyboard;
 
-                        $rootScope.$on('$locationChangeStart', function(){
-                           self.close();
-                        });
+                    // event handling
+                    angular.element($window)
+                    .on('native.keyboardhide',function(){
+                        self.trigger('cmKeyboard:hidden');
+                    })
+                    .on('native.keyboardshow',function(){
+                        self.trigger('cmKeyboard:visible');
                     });
-                },
-                scroll: function(bool){
-                    if(self.plugin != null)
-                        self.plugin.disableScroll(bool);
-                },
-                close: function(){
-                    if(self.plugin != null)
-                        self.plugin.close();
-                },
-                show: function(){
-                    if(self.plugin != null)
-                        self.plugin.show();
+                });
+            },
+            scroll: function(bool){
+                if(self.plugin != null) {
+                    self.plugin.disableScroll(bool || true);
+                    return true;
                 }
-            };
+                return false;
+            },
+            close: function(){
+                if(self.plugin != null) {
+                    self.plugin.close();
+                    return true;
+                }
+                return false;
+            },
+            show: function(){
+                if(self.plugin != null) {
+                    self.plugin.show();
+                    return true;
+                }
+                return false;
+            },
+            focusLast: function(timeout){
+                if($rootScope.lastFocus) {
+                    $timeout(function(){
+                        self.show();
+                        $rootScope.lastFocus.focus();
+                    },timeout || 50);
+                    return true;
+                }
+                return false;
+            }
+        };
 
-            self.init();
+        self.init();
 
-            return self;
-        }
-    ]);
+        return self;
+    }
+]);

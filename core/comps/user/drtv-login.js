@@ -1,11 +1,12 @@
 'use strict';
 
-angular.module('cmUser').directive('cmLogin', [
+angular.module('cmUser')
+.directive('cmLogin', [
     'cmNotify', 'cmUserModel', 'cmKeyStorageService', 'cmCrypt',
-    'cmConfig', 'cmEnv', 'cmLoader',
-    '$location','$rootScope',
+    'cmConfig', 'cmEnv', 'cmLoader', 'cmKeyboard',
+    '$location', '$rootScope',
     function (cmNotify, cmUserModel, cmKeyStorageService, cmCrypt,
-              cmConfig, cmEnv, cmLoader,
+              cmConfig, cmEnv, cmLoader, cmKeyboard,
               $location, $rootScope) {
         return  {
             restrict    :   'AE',
@@ -34,6 +35,8 @@ angular.module('cmUser').directive('cmLogin', [
                     $scope.passwordType = ($scope.passwordType != 'password')
                         ? 'password'
                         : 'text';
+
+                    cmKeyboard.focusLast();
                 };
 
                 $scope.checkPasswordLength = function(){

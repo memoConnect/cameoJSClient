@@ -14,12 +14,12 @@ angular.module('cmConversations')
 
     'cmConversationFactory', 'cmUserModel', 'cmCrypt', 'cmLogger', 'cmNotify',
     'cmModal', 'cmEnv', 'cmSettings', 'cmKeyStorageService', 'cmTransferScopeData',
-    'cmErrorCodes', 'cmAnswerFiles',
+    'cmErrorCodes', 'cmAnswerFiles', 'cmKeyboard',
     '$location', '$rootScope', '$document', '$routeParams', '$q',
 
     function (cmConversationFactory, cmUserModel, cmCrypt, cmLogger, cmNotify,
               cmModal, cmEnv, cmSettings, cmKeyStorageService, cmTransferScopeData,
-              cmErrorCodes, cmAnswerFiles,
+              cmErrorCodes, cmAnswerFiles, cmKeyboard,
               $location, $rootScope, $document, $routeParams, $q) {
         return {
             restrict: 'AE',
@@ -86,7 +86,6 @@ angular.module('cmConversations')
                 };
 
                 function checkConversationSetup(){
-
                     $scope.isSending        = true;
                     $scope.isSendingAbort   = false;
 
@@ -151,26 +150,30 @@ angular.module('cmConversations')
                  * with preparing files for upload
                  * after preparation send message
                  */
-                $scope.send = function(){
+                $scope.send = function(event){
+
+                    if(event && 'stopPropagation' in event) {
+                        event.stopPropagation();
+                        event.preventDefault();
+                    }
 
                     if((!$scope.newMessageText || $scope.newMessageText.length == 0)
-                    && cmAnswerFiles.files.length  == 0
-                    ){
+                    && cmAnswerFiles.files.length  == 0){
                         cmNotify.warn('CONVERSATION.WARN.MESSAGE_EMPTY', {ttl:5000});
                         return $q.reject('message invalid.')
                     }      
 
-                    if($scope.isSending)
+                    if($scope.isSending) {
                         return $q.reject('message upload already in progress.');
-
+                    }
 
                     var new_message = $scope.conversation.messages
-                                        .create({
-                                            conversation:$scope.conversation,
-                                            id:'#new_message',
-                                            fromIdentity:cmUserModel.data.identity
-                                        })
-                                        .setText($scope.newMessageText);
+                    .create({
+                        conversation:$scope.conversation,
+                        id:'#new_message',
+                        fromIdentity:cmUserModel.data.identity
+                    })
+                    .setText($scope.newMessageText);
 
                     new_message.state.set('sending');
 
@@ -181,49 +184,52 @@ angular.module('cmConversations')
                         new_message.state.set('waitForFiles');
                     }
 
+                    /**
+                     * reset focus to answer textarea
+                     */
+                    cmKeyboard.focusLast();
+
                     return checkConversationSetup()
-                            .then(function(){
-                                return  $scope.conversation.getPassphrase()
-                                        .catch(function(){
-                                                return  $scope.conversation.isEncrypted()
-                                                        ?   $q.reject('access denied')
-                                                        :   $q.when(null);
-                                        //Todo: null for 'not encrypted' old convention
-                                        })
-                                        .then(function(passphrase){
-                                            return  $q.when()
-                                                    .then(function(){
-                                                        return prepareFiles(passphrase)
-                                                    })
-                                                    .then(function(){
-                                                        return $scope.conversation.sendMessage(new_message, filesForMessage);
-                                                    })
+                    .then(function(){
+                        return  $scope.conversation.getPassphrase()
+                                .catch(function(){
+                                        return  $scope.conversation.isEncrypted()
+                                                ?   $q.reject('access denied')
+                                                :   $q.when(null);
+                                //Todo: null for 'not encrypted' old convention
+                                })
+                                .then(function(passphrase){
+                                    return  $q.when()
+                                            .then(function(){
+                                                return prepareFiles(passphrase)
+                                            })
+                                            .then(function(){
+                                                return $scope.conversation.sendMessage(new_message, filesForMessage);
+                                            })
 
-                                        })
-                            })
-                            .then(
-                                function(){
-                                    // tidy up:
-                                    clearTransferScopeData();
-                                    $scope.newMessageText = '';
-                                    filesForMessage = [];
-                                    cmAnswerFiles.reset();
-                                    $rootScope.$broadcast('cmAnswer:reset');
-                                    
-                                    //Todo: This is not the right place to count messages:
-                                    $scope.conversation.numberOfMessages ++;
-                                },
-                                function(){
-                                    $scope.conversation.messages.deregister(new_message)
-                                }
-                            )
-                            .finally(function(){
-                                new_message.state.unset('sending');
-                                new_message.state.unset('waitForFiles');
-                                $scope.isSending = false;
-                            })                                    
+                                })
+                    })
+                    .then(
+                        function(){
+                            // tidy up:
+                            clearTransferScopeData();
+                            $scope.newMessageText = '';
+                            filesForMessage = [];
+                            cmAnswerFiles.reset();
+                            $rootScope.$broadcast('cmAnswer:reset');
 
-                  
+                            //Todo: This is not the right place to count messages:
+                            $scope.conversation.numberOfMessages ++;
+                        },
+                        function(){
+                            $scope.conversation.messages.deregister(new_message)
+                        }
+                    )
+                    .finally(function(){
+                        new_message.state.unset('sending');
+                        new_message.state.unset('waitForFiles');
+                        $scope.isSending = false;
+                    });
                 };
 
                 $scope.showTrustError = function(){

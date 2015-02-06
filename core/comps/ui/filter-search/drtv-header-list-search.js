@@ -3,10 +3,7 @@
 angular.module('cmUi')
 .directive('cmHeaderListSearch',[
     'cmFilter',
-    '$rootScope',
-    '$timeout',
-    '$document',
-    function (cmFilter, $rootScope, $timeout, $document){
+    function (cmFilter){
         return {
             restrict: 'E',
             scope: {

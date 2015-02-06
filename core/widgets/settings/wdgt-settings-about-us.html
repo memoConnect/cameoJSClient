@@ -3,7 +3,7 @@
     {{::'SETTINGS.PAGES.ABOUT_US.TITLE'|cmTranslate}}
 </h2>
 
-<article class="about-us content tac">
+<article class="about-us content tac is-selectable">
     <i class="fa cm-rhino-bubble-glyph"></i><br />
     {{version}}<br />
     {{::'SETTINGS.PAGES.ABOUT_US.TEXT'|cmTranslate}}
@@ -11,9 +11,9 @@
 
 <hr>
 
-<h4 ng-bind-html="::'DRTV.IMPRINT.HEADLINE'|cmParse" cm-html-compile class="content"></h4>
+<h4 ng-bind-html="::'DRTV.IMPRINT.HEADLINE'|cmParse" cm-html-compile class="content is-selectable"></h4>
 
-<article ng-bind-html="::'DRTV.IMPRINT.CONTENT'|cmParse" cm-html-compile class="content"></article>
+<article ng-bind-html="::'DRTV.IMPRINT.CONTENT'|cmParse" cm-html-compile class="content is-selectable"></article>
 
 <hr>
 
@@ -22,7 +22,7 @@
     (<cm-time-converter cm-timestamp="thirdPartyLibraries.date" cm-special-type="date-seperator"></cm-time-converter>)
 </h3>
 
-<ul>
+<ul class="is-selectable-all">
     <li ng-repeat="lib in thirdPartyLibraries.libraries">
         <span class="item text mb5">
             {{::lib.name}}<br />
