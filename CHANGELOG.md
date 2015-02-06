@@ -1,5 +1,13 @@
 # Dev
 
+## 06.02.2015
+* CAM-1724 update search contact
+    * contact/create search btn links now to contact/list
+    * server search will be activated
+    * list will be empty, if filter string is empty
+* Update Filter/Search
+    * if search will be opened and filter string is empty, list view is also empty
+
 ## WW 06.02.2015
 * new context in list of talks and contacts with tap and longtap
 * CAM-1566 cmKeyboard handling ()
