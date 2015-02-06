@@ -1,6 +1,6 @@
 # Dev
 
-## 06.02.2015
+## BS 06.02.2015
 * CAM-1724 update search contact
     * contact/create search btn links now to contact/list
     * server search will be activated
