@@ -1,5 +1,5 @@
 var config = require("../../config/specs.js")
-var util = require("../../../lib/e2e/cmTestUtil.js")
+var util = require("../../cmUtil.js")
 
 console.log('test removed - check old message decryption')
 xdescribe('Route Conversation - Check Old Message Decryption: ', function() {
