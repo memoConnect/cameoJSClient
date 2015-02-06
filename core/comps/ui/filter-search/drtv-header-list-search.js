@@ -18,7 +18,7 @@ angular.module('cmUi')
                         ' cm-visible="visible"' +
                         ' cm-options="{hideElements:\'cm-footer\',scrollTo:options.scrollTo}"' +
                         ' ng-class="{visible:visible}"></cm-search-input>',
-            controller: function($scope, $element){
+            controller: function($scope, $element, $attrs){
                 // option for drtv
                 $scope.options = angular.extend({}, {
                     scrollTo:false
@@ -40,10 +40,21 @@ angular.module('cmUi')
                     }
                 };
 
+
+                if(cmFilter.getSearchVisibility()){
+                    $scope.visible = true;
+                    var input = $element[0].querySelector('#inp-list-search');
+                    input.focus();
+                }
+
                 var filter = cmFilter.get();
                 if(typeof filter == 'string' && filter != ''){
                     $scope.visible = true;
                     $scope.ngModel = filter;
+                } else {
+                    if($scope.visible){
+                        $scope.ngModel = '';
+                    }
                 }
             }
         }

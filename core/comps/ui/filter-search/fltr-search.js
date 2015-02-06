@@ -5,9 +5,11 @@ angular.module('cmUi').filter('cmSearch', [
     'cmFilter',
     function(cmUtil,cmFilter){
         return function(arrayToSearch, searchType, searchString){
-            
+
             if(!arrayToSearch.length || typeof searchString != 'string') return arrayToSearch;
 
+            // clear view if string is empty CAM-1724
+            if(typeof searchString == 'string' && searchString == '') return [];
 
 
             /**

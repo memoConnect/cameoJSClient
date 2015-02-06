@@ -42,6 +42,18 @@ describe('Service cmFilter', function(){
             expect(typeof cmFilter.getResultLength).toBe('function')
         })
 
+        it('should exists a "setResultLength" method', function(){
+            expect(typeof cmFilter.setResultLength).toBe('function')
+        })
+
+        it('should exists a "setResultLength" method', function(){
+            expect(typeof cmFilter.setResultLength).toBe('function')
+        })
+
+        it('should exists a "setSearchVisibility" method', function(){
+            expect(typeof cmFilter.setSearchVisibility).toBe('function')
+        })
+
         it('should exists a "onUpdate" method', function(){
             expect(typeof cmFilter.onUpdate).toBe('function')
         })
@@ -90,6 +102,36 @@ describe('Service cmFilter', function(){
 
             cmFilter.setResultLength(true)
             expect(cmFilter.getResultLength()).toBe(0)
+        })
+
+        it('default getSearchVisibility should be false', function(){
+            expect(cmFilter.getSearchVisibility()).toBe(false)
+        })
+
+        it('getSearchVisibility should be false, if setSearchVisibility param is not a bool', function(){
+            cmFilter.setSearchVisibility()
+            expect(cmFilter.getSearchVisibility()).toBe(false)
+
+            cmFilter.setSearchVisibility(null)
+            expect(cmFilter.getSearchVisibility()).toBe(false)
+
+            cmFilter.setSearchVisibility('moep')
+            expect(cmFilter.getSearchVisibility()).toBe(false)
+
+            cmFilter.setSearchVisibility({})
+            expect(cmFilter.getSearchVisibility()).toBe(false)
+
+            cmFilter.setSearchVisibility([])
+            expect(cmFilter.getSearchVisibility()).toBe(false)
+
+            cmFilter.setSearchVisibility(1)
+            expect(cmFilter.getSearchVisibility()).toBe(false)
+
+            cmFilter.setSearchVisibility(false)
+            expect(cmFilter.getSearchVisibility()).toBe(false)
+
+            cmFilter.setSearchVisibility(true)
+            expect(cmFilter.getSearchVisibility()).toBe(true)
         })
     })
 

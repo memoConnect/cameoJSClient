@@ -726,15 +726,29 @@ this.clickBackBtn = function () {
 }
 
 this.sendFriendRequest = function (displayName) {
-    self.get("/contact/search")
-    self.waitForPageLoad("/contact/search")
+    self.get("/contact/list")
+    self.waitForPageLoad("/contact/list")
     .then(function(){
-        $("[data-qa='inp-search-cameo-ids']").sendKeys(displayName)
-        return  self.waitForElement("[data-qa='btn-openModal']")
+        return self.headerSearchInList(displayName)
     })
     .then(function(){
-        $("[data-qa='btn-openModal']").click()
-        $("[data-qa='btn-sendRequest']").click()
+        return self.waitAndClickQa('btn-search');
+    })
+    .then(function(){
+        return self.waitForQa('contact-search-item')
+                .then(function(){
+                    $$('li[data-qa="contact-search-item"]')
+                    .then(function(elements) {
+                        expect(elements.length).toEqu
+                    })
+                    expect($('li[data-qa="contact-search-item"]').getText()).toBe(displayName)
+                })
+    })
+    .then(function(){
+        return self.waitAndClickQa('contact-search-item')
+    })
+    .then(function(){
+        return self.waitAndClickQa('btn-sendRequest');
     })
 
 }

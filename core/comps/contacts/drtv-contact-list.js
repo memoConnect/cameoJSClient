@@ -78,6 +78,8 @@ angular.module('cmContacts').directive('cmContactList',[
                 var filter = cmFilter.get();
                 if(typeof filter == 'string' && filter != ''){
                     $scope.toogleSearch();
+                } else if(cmFilter.getSearchVisibility()) {
+                    $scope.toogleSearch();
                 }
 
                 function onClearFilter(){

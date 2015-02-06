@@ -36,26 +36,7 @@ describe('Test Settings enableUnreadMessages: ', function(){
 
         /* copied from friend-requests.2.spec.js */
         it('user2 should find user1 and initialize friend request', function(){
-            util.get('/contact/search')
-            util.waitForPageLoad('/contact/search')
-
-            util.waitForElement("[data-qa='inp-search-cameo-ids']")
-
-            $("[data-qa='inp-search-cameo-ids']").sendKeys(user1)
-
-            util.waitForElement("li.contact-search-item")
-            $$('li.contact-search-item').then(function(elements) {
-                expect(elements.length).toEqual(1)
-            })
-
-            $("[data-qa='btn-openModal']").click()
-
-            // fill out modal
-            expect($('cm-modal.active').isPresent()).toBe(true)
-
-            $("cm-modal.active [data-qa='btn-sendRequest']").click()
-
-            util.waitForPageLoad('/contact/list')
+            util.sendFriendRequest(user1)
 
             util.logout()
         })
