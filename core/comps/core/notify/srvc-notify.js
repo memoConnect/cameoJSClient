@@ -105,7 +105,7 @@ angular.module('cmCore')
         self.ringBimmel = function(identifier){
             unringForce = false;
 
-            if(bimmelJobs.indexOf(identifier) == -1)
+            //if(bimmelJobs.indexOf(identifier) == -1)
                 bimmelJobs.push(identifier);
 
             self.trigger('bell:ring');

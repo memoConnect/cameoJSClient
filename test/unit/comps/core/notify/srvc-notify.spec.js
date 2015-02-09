@@ -109,6 +109,29 @@ describe('cmNotify service', function(){
             expect(cmNotify.isBimmel()).toBeFalsy()
             expect(cmNotify.isBimmel('markHelp')).toBeTruthy()
         })
+
+        it('add two friend request',function(){
+            cmNotify.ringBimmel('friendRequest')
+            cmNotify.ringBimmel('friendRequest')
+
+            // menu show bimmel
+            expect(cmNotify.isBimmel()).toBeTruthy()
+            expect(cmNotify.isBimmel('markHelp')).toBeTruthy()
+
+            // one friendrequest deleted
+            cmNotify.unringBimmel('friendRequest')
+
+            // menu already show bimmel
+            expect(cmNotify.isBimmel()).toBeTruthy()
+            expect(cmNotify.isBimmel('markHelp')).toBeTruthy()
+
+            // one friendrequest accepted
+            cmNotify.unringBimmel('friendRequest')
+
+            // menu already show bimmel
+            expect(cmNotify.isBimmel()).toBeFalsy()
+            expect(cmNotify.isBimmel('markHelp')).toBeFalsy()
+        })
     })
 
 })

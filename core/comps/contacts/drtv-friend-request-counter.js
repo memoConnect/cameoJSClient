@@ -2,8 +2,8 @@
 
 angular.module('cmContacts')
 .directive('cmFriendRequestCounter', [
-    'cmContactsModel',
-    function (cmContactsModel) {
+    'cmContactsModel', 'cmNotify',
+    function (cmContactsModel, cmNotify) {
         return {
             restrict : 'E',
             scope: true,
@@ -25,6 +25,7 @@ angular.module('cmContacts')
                         element.html(' (' + scope.counter +')');
                     } else {
                         element.html('');
+                        cmNotify.unringBimmel('friendRequest');
                     }
 
                     scope.setColor();
