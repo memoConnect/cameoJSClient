@@ -116,21 +116,21 @@ describe('cmNotify service', function(){
 
             // menu show bimmel
             expect(cmNotify.isBimmel()).toBeTruthy()
-            expect(cmNotify.isBimmel('markHelp')).toBeTruthy()
+            expect(cmNotify.isBimmel('friendRequest')).toBeTruthy()
 
             // one friendrequest deleted
             cmNotify.unringBimmel('friendRequest')
 
             // menu already show bimmel
             expect(cmNotify.isBimmel()).toBeTruthy()
-            expect(cmNotify.isBimmel('markHelp')).toBeTruthy()
+            expect(cmNotify.isBimmel('friendRequest')).toBeTruthy()
 
             // one friendrequest accepted
             cmNotify.unringBimmel('friendRequest')
 
             // menu already show bimmel
             expect(cmNotify.isBimmel()).toBeFalsy()
-            expect(cmNotify.isBimmel('markHelp')).toBeFalsy()
+            expect(cmNotify.isBimmel('friendRequest')).toBeFalsy()
         })
     })
 
