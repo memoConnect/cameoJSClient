@@ -26,7 +26,7 @@ angular.module('cmUi').factory('cmContextModel', [
             this.importData = function(data){
                 //cmLogger.debug('cmContextModel.importData');
 
-                this.type   = data.type || this.type;
+                this.type = data.type || this.type;
 
                 switch(this.type){
                     case "conversation":
@@ -36,14 +36,18 @@ angular.module('cmUi').factory('cmContextModel', [
                             this.model = new cmContactContextModel(data.model) || this.model;
                         break;
                     default:
-                        // remove model from factory
+                        // remove model from factory?
                 }
             };
 
             this.delete = function(){
                 //cmLogger.debug('cmContextModel.delete');
 
-                return this.model.delete();
+                if(typeof this.model.delete == 'function'){
+                    return this.model.delete();
+                } else {
+                    return $q.when();
+                }
             };
 
 
