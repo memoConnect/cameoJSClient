@@ -110,7 +110,7 @@ describe('cmNotify service', function(){
             expect(cmNotify.isBimmel('markHelp')).toBeTruthy()
         })
 
-        it('add two friend request',function(){
+        it('add two friend request one is deleted after addition',function(){
             cmNotify.ringBimmel('friendRequest')
             cmNotify.ringBimmel('friendRequest')
 
@@ -133,5 +133,4 @@ describe('cmNotify service', function(){
             expect(cmNotify.isBimmel('friendRequest')).toBeFalsy()
         })
     })
-
 })

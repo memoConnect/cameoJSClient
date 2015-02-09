@@ -1,0 +1,16 @@
+{
+    "content_scripts": [], 
+    "description": "Extension for external Storage", 
+    "creator": "cameoNet Dev", 
+    "background_scripts": ["main.js"],
+	"content_scripts": ["content.js"],
+	"options_page": "options.html",
+    "homepage_url": "https://www.cameonet.de", 
+    "version": "0.5.0", 
+    "browser_button": {
+        "caption": "cameoNet", 
+        "icon": "icons/button.png", 
+        "tooltipText": "cameoNet"
+    }, 
+    "name": "cameoPlugin"
+}

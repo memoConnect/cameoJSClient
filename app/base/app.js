@@ -1,5 +1,17 @@
 'use strict';
 
+angular.element(window)
+.on('cmBrowser:toApp', function(event){
+    console.log('plugin called app')
+    console.log(event.detail)
+    console.log('#####')
+})
+
+window.addEventListener('load',function() {
+    var event = new CustomEvent('cmBrowser:toPlugin',{'detail':{token:'xyz'}});
+    window.dispatchEvent(event);
+})
+
 angular.module('cameoClient', [
     'ngRoute',
     'ngTouch',
