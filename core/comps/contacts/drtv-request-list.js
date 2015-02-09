@@ -10,14 +10,7 @@ angular.module('cmRouteContacts').directive('cmRequestList', [
                 $scope.requests = cmContactsModel.requests;
                 $scope.isLoading = false;
 
-                function deactiveBell(greaterZero){
-                    if(greaterZero && $scope.requests.length > 0){
-                        cmNotify.trigger('bell:unring');
-                    } else if($scope.requests.length == 0) {
-                        cmNotify.trigger('bell:unring');
-                    }
-                }
-                deactiveBell(true);
+                cmNotify.unringBimmel('friendRequest');
 
                 /**
                  * fired by repeat and accept that
@@ -28,14 +21,8 @@ angular.module('cmRouteContacts').directive('cmRequestList', [
                         item.accept().then(
                             function(){
                                 cmContactsModel.removeFriendRequest(item);
-                                deactiveBell();
                                 cmContactsModel.trigger('friendRequests:updated');
-                            },
-
-                            function(){
-                                /**
-                                 * @todo accept fails
-                                 */
+                                cmNotify.unringBimmel('friendRequest');
                             }
                         )
                     }
@@ -50,14 +37,8 @@ angular.module('cmRouteContacts').directive('cmRequestList', [
                         item.reject().then(
                             function(){
                                 cmContactsModel.removeFriendRequest(item);
-                                deactiveBell();
                                 cmContactsModel.trigger('friendRequests:updated');
-                            },
-
-                            function(){
-                                /**
-                                 * @todo reject fails
-                                 */
+                                cmNotify.unringBimmel('friendRequest');
                             }
                         )
                     }
@@ -67,15 +48,9 @@ angular.module('cmRouteContacts').directive('cmRequestList', [
                     if(typeof item == 'object'){
                         item.ignore().then(
                             function(){
-                                cmNotify.trigger('bell:unring');
-                                deactiveBell();
+                                cmContactsModel.removeFriendRequest(item);
                                 cmContactsModel.trigger('friendRequests:updated');
-                            },
-
-                            function(){
-                                /**
-                                 * @todo ignrore fails
-                                 */
+                                cmNotify.unringBimmel('friendRequest');
                             }
                         )
                     }

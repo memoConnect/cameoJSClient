@@ -197,7 +197,6 @@ angular.module('cmPhonegap')
                     break;
                     case 'friendRequest':
                         $rootScope.goTo('contact/request/list', true);
-                        cmNotify.trigger('bell:unring');
                     break;
                 }
             }

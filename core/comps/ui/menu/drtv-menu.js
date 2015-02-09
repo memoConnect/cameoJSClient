@@ -13,7 +13,11 @@ angular.module('cmUi').directive('cmMenu',[
                 $scope.menu = cmConfig.menu;
                 $scope.menuKeys = Object.keys($scope.menu);
 
-                $scope.markHelp = $rootScope.markQuickstart || false;
+                $scope.markHelp = cmNotify.isBimmel('markHelp');
+
+                cmNotify.on('bell:unring', function(){
+                    $scope.markHelp = cmNotify.isBimmel('markHelp');
+                });
 
                 $scope.version = cmConfig.version;
                 $scope.menuVisible = false;
@@ -21,8 +25,9 @@ angular.module('cmUi').directive('cmMenu',[
                 $scope.handleMenu = function(){
                     $scope.menuVisible = $scope.menuVisible ? false : true;
 
-                    if($scope.menuVisible)
-                        cmNotify.trigger('bell:unring');
+                    if($scope.menuVisible){
+                        cmNotify.unringBimmelForce();
+                    }
                 };
 
                 $scope.checkActive = function(url){

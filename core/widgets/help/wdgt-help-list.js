@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('cmWidgets').directive('cmWidgetHelpList', [
-    'cmUserModel', 'cmConfig', 'cmUtil',
-    '$window', '$location', '$rootScope',
-    function(cmUserModel, cmConfig, cmUtil,
-             $window, $location, $rootScope){
+    'cmUserModel', 'cmConfig', 'cmUtil', 'cmNotify',
+    '$window', '$location',
+    function(cmUserModel, cmConfig, cmUtil, cmNotify,
+             $window, $location){
         return {
             restrict: 'E',
             templateUrl: 'widgets/help/wdgt-help-list.html',
@@ -12,10 +12,9 @@ angular.module('cmWidgets').directive('cmWidgetHelpList', [
                 $scope.overview = cmConfig.routeHelp;
                 $scope.overviewKeys = Object.keys($scope.overview);
 
-                $scope.markQuickstart = $rootScope.markQuickstart || false;
+                cmNotify.unringBimmel('markHelp');
 
                 $scope.handleLink = function($event, pageUrl, isDisabled, route){
-
                     if('externLink' in route){
                         $window.open(route.externLink);
                         return false;

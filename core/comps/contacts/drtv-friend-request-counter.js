@@ -2,8 +2,8 @@
 
 angular.module('cmContacts')
 .directive('cmFriendRequestCounter', [
-    'cmContactsModel', 'cmNotify',
-    function (cmContactsModel, cmNotify) {
+    'cmContactsModel',
+    function (cmContactsModel) {
         return {
             restrict : 'E',
             scope: true,
@@ -25,10 +25,6 @@ angular.module('cmContacts')
                         element.html(' (' + scope.counter +')');
                     } else {
                         element.html('');
-                        /**
-                         * @todo re-new
-                         */
-                        //cmNotify.trigger('bell:unring');
                     }
 
                     scope.setColor();
@@ -45,9 +41,8 @@ angular.module('cmContacts')
 
                 scope.$on('$destroy', function(){
                     cmContactsModel.requests.off('register deregister', refresh);
-                    cmContactsModel.off('friendRequests:loaded', refresh);
-                    cmContactsModel.off('friendRequests:updated', refresh);
-                })
+                    cmContactsModel.off('friendRequests:loaded friendRequests:updated', refresh);
+                });
             }
         }
     }
