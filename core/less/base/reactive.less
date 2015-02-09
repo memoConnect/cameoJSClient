@@ -73,7 +73,7 @@ cm-header, cm-second-header, .cm-demo-header, cm-choose-source {
   .createReactive(@cm-black);
 }
 // white -> lighten
-.cm-menu-list [cm-reactive], cm-context-bar{
+.cm-menu-list [cm-reactive]{
   .cm-reactive-default();
 }
 // sub header grey -> darken
@@ -124,4 +124,11 @@ button[cm-reactive] {
 
 .file-download{
   .createInnerReactive(transparent);
+}
+
+cm-context-bar{
+  .createReactive(@cm-grey-new);
+}
+.is-selected {
+  .createInnerReactive(@cm-grey-new);
 }
