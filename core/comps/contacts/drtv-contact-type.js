@@ -21,7 +21,7 @@ angular.module('cmContacts').directive('cmContactType',[
                         icon = (type == 'internal') ? 'cm-rhino-positive'   : icon;
                         icon = (type == 'external') ? 'cm-address-book'     : icon;
                         icon = (type == 'local')    ? 'cm-mobile'           : icon;
-                        icon = (type == 'pending')  ? 'cm-rhino-positive'   : icon;
+                        icon = (type == 'pending')  ? 'cm-not-connected'    : icon;
                         icon = (type == 'unknown')  ? 'cm-address-book'     : icon;
                     } else {
                         icon = attrs.cmForceIcon;

@@ -60,9 +60,9 @@
 angular.module('cmUi')
 .directive('cmContext',[
     'cmContextFactory',
-    '$parse', '$window',
+    '$parse', '$window', '$timeout',
     function (cmContextFactory,
-              $parse, $window){
+              $parse, $window, $timeout){
         return {
             restrict: 'A',
             link: function(scope, element, attrs){
@@ -85,6 +85,13 @@ angular.module('cmUi')
                     }
                 }
 
+                function emulateClick(){
+                    element.addClass('ng-click-active');
+                    $timeout(function(){
+                        element.removeClass('ng-click-active');
+                    },100);
+                }
+
                 function getOption(type){
 
                     var matches = contextData.match('('+type+'):([0-9a-zA-Z\\(\\)/"\'+\\.$ ]+,{.+\\)|[0-9a-zA-Z\\(\\)/"\'+\\.$ ]+)'),
@@ -102,6 +109,8 @@ angular.module('cmUi')
                     var context = getContext(),
                         callback = getOption('tap');
 
+                    emulateClick();
+
                     scope.$apply(function(){
                         if(cmContextFactory.hasSelection()){
                             scope.handleLongTap(context);
@@ -115,6 +124,8 @@ angular.module('cmUi')
                     event.preventDefault();
                     var context = getContext(),
                         callback = getOption('longTap');
+
+                    emulateClick();
 
                     scope.$apply(function(){
                         scope.handleLongTap(context);
