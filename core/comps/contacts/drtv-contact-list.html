@@ -9,8 +9,8 @@
                         ng-if="contact.contactType != 'pending'"
         ></cm-contact-tag>
         <cm-contact-tag cm-contact="contact" cm-reactive
-                        cm-context="{model:contact,
-                                    type:'pendingRequest'}"
+                        cm-context="{model:contact.identity,
+                                    type:'pendingContact'}"
                         ng-if="contact.contactType == 'pending'"
         ></cm-contact-tag>
         <section class="icon-list">
