@@ -1,23 +1,25 @@
 var browserName = kango.browser.getName();
 
 function callApp(json,eventName){
-	var event = new CustomEvent(eventName || 'cmBrowser:toApp', {'detail':json||{}});
+	var event = new CustomEvent(eventName, {'detail':json||{}});
 	window.dispatchEvent(event);
 }
 
-kango.console.log('plugin cameoNet content '+browserName)
+//kango.console.log('plugin cameoNet content '+browserName)
 
 // app check if browser plugin is available
 window.addEventListener('cmBrowser:checkAvailability', function(){
 	callApp({},'cmBrowser:isAvailable');
 });
 
+// set
 window.addEventListener('cmBrowser:setItem', function(event){
 	var params = event.detail;
 	kango.storage.setItem(params.key,params.value);
 	callApp({},'cmBrowser:setItemDone');
 });
 
+// get
 window.addEventListener('cmBrowser:getItem', function(event){
 	var params = event.detail,
 		returnObj = {
@@ -26,20 +28,23 @@ window.addEventListener('cmBrowser:getItem', function(event){
 	callApp(returnObj,'cmBrowser:setGetDone');
 });
 
+// remove
 window.addEventListener('cmBrowser:removeItem', function(event){
 	var params = event.detail;
 	kango.storage.removeItem(params.key);
 	callApp({},'cmBrowser:removeItemDone');
 });
 
-window.addEventListener('cmBrowser:getAllKeys', function(event){
+// get all
+window.addEventListener('cmBrowser:getAllKeys', function(){
 	var returnObj = {
-			keys: kango.storage.getKeys()
-		};
+        keys: kango.storage.getKeys()
+    };
 	callApp(returnObj,'cmBrowser:getAllKeysDone');
 });
 
-window.addEventListener('cmBrowser:clear', function(event){
-	keys: kango.storage.clear();
+// clear storage
+window.addEventListener('cmBrowser:clear', function(){
+	kango.storage.clear();
 	callApp({},'cmBrowser:clearDone');
 });

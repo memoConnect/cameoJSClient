@@ -4,13 +4,28 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Options page demo</title>
+    <title>cmBrowserPlugin settings</title>
+
     <script type="text/javascript" src="kango-ui/kango_api.js"></script>
-    <script type="text/javascript" src="cameo.0.2.6.js"></script>
-    <script type="text/javascript" src="vendor.0.2.6.js"></script>
+    <script type="text/javascript" src="lib/vendor.0.2.6.js"></script>
+    <script type="text/javascript" src="lib/cameo.0.2.6.js"></script>
     <script type="text/javascript" src="options.js"></script>
+
 </head>
 <body ng-app="cmOptionsPage" ng-controller="cmKeyList">
-    {{test}}
+    <!--<button ng-click="generateKey()">generate key</button>-->
+    <!--<pre>{{generatedKey}}</pre>-->
+
+    <label>key</label><br/>
+    <input type="text" ng-model="key" name="key" /><br/>
+    <br/>
+    <label>value</label><br/>
+    <input type="text" ng-model="value" name="value" /><br/>
+    <br/>
+    <button ng-click="setItem()">setItem</button>
+    <button ng-click="removeItem()">removeItem</button>
+    <button ng-click="clear()">clear</button>
+    <hr>
+    <pre style="white-space: pre-wrap;">{{storage}}</pre>
 </body>
 </html>
