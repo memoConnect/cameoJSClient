@@ -230,9 +230,6 @@ angular.module('cmConversations')
                                     filesForMessage = [];
                                     cmAnswerFiles.reset();
                                     $rootScope.$broadcast('cmAnswer:reset');
-                                    
-                                    //Todo: This is not the right place to count messages:
-                                    $scope.conversation.numberOfMessages ++;
                                 },
                                 function(){
                                     $scope.conversation.messages.deregister(new_message)

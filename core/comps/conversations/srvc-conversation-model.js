@@ -1084,6 +1084,7 @@ angular.module('cmConversations')
             });
 
             this.messages.on('message:saved', function(){
+                self.numberOfMessages ++;
                 self.setLastMessage();
             });
 
