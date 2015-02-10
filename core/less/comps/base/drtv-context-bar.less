@@ -1,14 +1,11 @@
 cm-context-bar {
+  .dpn;
   .pos-fxd;
   top:0;
   width:@cm-app-width;
   z-index:10002;
-
-  display: none;
-
-//  color:@cm-white;
-  color: @cm-grey;
-  background:@cm-white;
+  background: @cm-grey-new;
+  color: @cm-white;
   line-height:@cm-unit;
   height:@cm-header-height;
   font-size:@cm-mega-font;
@@ -35,5 +32,8 @@ cm-context-bar {
   }
   i:first-child{
     .pos-tl;
+  }
+  i:not(.cm-left){
+    font-size:3rem;
   }
 }

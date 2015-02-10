@@ -2,7 +2,7 @@
 
 describe('Factory/Services cmContextModel', function() {
 
-    var cmContextModel, cmConversationContextModel, cmContactContextModel, model_1, model_2, model_3
+    var cmContextModel, cmConversationContextModel, cmContactContextModel, cmPendingContactContextModel, model_1, model_2, model_3, model_4
 
     beforeEach(module('cmConversations'))
 
@@ -27,6 +27,13 @@ describe('Factory/Services cmContextModel', function() {
         }
 
         model_3 = {
+            type: 'pendingContact',
+            model: {
+                id: 'moep_3'
+            }
+        }
+
+        model_4 = {
             type: 'moep',
             model: {
                 id: 'moep_3'
@@ -108,9 +115,31 @@ describe('Factory/Services cmContextModel', function() {
             })
         })
 
+        describe('create cmPendingContactContextModel', function(){
+            beforeEach(inject(function(_cmContextModel_, _cmPendingContactContextModel_){
+                cmContextModel = new _cmContextModel_(model_3)
+                cmPendingContactContextModel = _cmPendingContactContextModel_
+            }))
+
+            it('model should be an instance of cmPendingContactContextModel', function(){
+                expect(cmContextModel.model instanceof cmPendingContactContextModel).toBe(true)
+                expect(cmContextModel.id).toBe(model_2.id)
+            })
+
+            it('on delete, model delete method should be called', function(){
+                expect(typeof cmContextModel.model.delete).toBe('function')
+
+                spyOn(cmContextModel.model,'delete')
+
+                cmContextModel.delete()
+
+                expect(cmContextModel.model.delete).toHaveBeenCalled()
+            })
+        })
+
         describe('create undefined model', function(){
             beforeEach(inject(function(_cmContextModel_){
-                cmContextModel = new _cmContextModel_(model_3)
+                cmContextModel = new _cmContextModel_(model_4)
             }))
 
             it('model should not have an instance or an type', function(){

@@ -2,10 +2,10 @@
 
 angular.module('cmUi').factory('cmContextModel', [
     'cmStateManagement', 'cmObject', 'cmLogger',
-    'cmConversationContextModel', 'cmContactContextModel',
+    'cmConversationContextModel', 'cmContactContextModel', 'cmPendingContactContextModel',
     '$rootScope', '$q',
     function(cmStateManagement, cmObject, cmLogger,
-             cmConversationContextModel, cmContactContextModel,
+             cmConversationContextModel, cmContactContextModel, cmPendingContactContextModel,
              $rootScope, $q) {
 
         function cmContextModel(data){
@@ -34,6 +34,9 @@ angular.module('cmUi').factory('cmContextModel', [
                         break;
                     case "contact":
                             this.model = new cmContactContextModel(data.model) || this.model;
+                        break;
+                    case "pendingContact":
+                            this.model = new cmPendingContactContextModel(data.model) || this.model;
                         break;
                     default:
                         // remove model from factory?

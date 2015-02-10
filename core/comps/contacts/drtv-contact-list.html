@@ -2,13 +2,20 @@
 
 <ul>
     <li ng-repeat="contact in contacts | cmSearch:'contacts':search | cmPendingFirst as localResults" class="tag-with-icon-list">
-        <cm-contact-tag cm-contact="contact" ng-class="{'cm-disabled':contact.contactType == 'pending'}" cm-reactive
+        <cm-contact-tag cm-contact="contact" cm-reactive
                         cm-context="{model:contact,
                                     type:'contact',
-                                    tap:gotoContact(contact)"></cm-contact-tag>
+                                    tap:gotoContact(contact)}"
+                        ng-if="contact.contactType != 'pending'"
+        ></cm-contact-tag>
+        <cm-contact-tag cm-contact="contact" cm-reactive
+                        cm-context="{model:contact.identity,
+                                    type:'pendingContact'}"
+                        ng-if="contact.contactType == 'pending'"
+        ></cm-contact-tag>
         <section class="icon-list">
-            <i class="fa cm-new-talk" ng-click="startConversationWithContact($event,contact)" data-qa="start-new-conversation-btn" cm-reactive ng-hide="contact.contactType == 'pending'"></i>
-            <i class="fa cm-trash" cm-reactive ng-show="contact.contactType == 'pending'" data-qa="btn-delete-friendrequest" ng-click="deleteFriendRequest(contact)" cm-reactive></i>
+            <i class="fa cm-new-talk" ng-click="startConversationWithContact($event,contact)" data-qa="start-new-conversation-btn" cm-reactive ng-if="contact.contactType != 'pending'"></i>
+            <i class="fa cm-trash" ng-click="deleteFriendRequest(contact)" data-qa="btn-delete-friendrequest" cm-reactive ng-if="contact.contactType == 'pending'" ></i>
         </section>
     </li>
     <li class="with-inside-left-icon" ng-show="(localResults.length == 0)">
