@@ -1,5 +1,9 @@
 # Dev
 
+#########
+# RC 0.5.1 - 10.02.2015
+#########
+
 ## BS 06.02.2015
 * CAM-1724 update search contact
     * contact/create search btn links now to contact/list
