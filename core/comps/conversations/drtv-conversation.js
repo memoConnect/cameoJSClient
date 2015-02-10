@@ -167,12 +167,12 @@ angular.module('cmConversations')
                     }
 
                     var new_message = $scope.conversation.messages
-                    .create({
-                        conversation:$scope.conversation,
-                        id:'#new_message',
-                        fromIdentity:cmUserModel.data.identity
-                    })
-                    .setText($scope.newMessageText);
+                    					.create({
+                        					conversation:$scope.conversation,
+                        					id:'#new_message',
+                       						 fromIdentity:cmUserModel.data.identity
+                    					})
+                    					.setText($scope.newMessageText);
 
                     new_message.state.set('sending');
 
@@ -213,9 +213,6 @@ angular.module('cmConversations')
                             filesForMessage = [];
                             cmAnswerFiles.reset();
                             $rootScope.$broadcast('cmAnswer:reset');
-
-                            //Todo: This is not the right place to count messages:
-                            $scope.conversation.numberOfMessages ++;
                         },
                         function(){
                             $scope.conversation.messages.deregister(new_message)
