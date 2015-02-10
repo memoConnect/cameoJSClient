@@ -29,9 +29,12 @@ describe('Route: Contact/List', function () {
 
     describe('contacts list', function(){
         it('should have clickable first element linking to details', function(){
-            util.waitForElements('cm-contact-list cm-contact-tag:not(.cm-disabled)')
+
+            util.headerSearchInList('internal')
             .then(function(){
-                return  $$('cm-contact-list cm-contact-tag:not(.cm-disabled)').get(0).click()
+                return util.waitForElements('cm-contact-list cm-contact-tag')
+            }).then(function(){
+                return  $$('cm-contact-list cm-contact-tag').get(0).click()
             })
             .then(function(){
                 return  util.waitForPageLoad(/\/contact\/edit\/[a-zA-Z0-9]+$/)
