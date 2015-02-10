@@ -177,7 +177,6 @@ describe('FileUpload create TestUser', function(){
                 return false
 
             util.login(testUser, 'password')
-            util.waitForPageLoad('/setup/account')
 
             util.get('/talks')
             util.waitForPageLoad('/talks')
