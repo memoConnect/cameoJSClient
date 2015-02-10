@@ -93,6 +93,10 @@ describe('Route Contact: ', function () {
             // close notify extern modal
             util.waitForModalOpen()
             util.waitAndClickQa('btn-cancel','cm-modal.active')
+
+            /**
+             * @todo check conversation
+             */
         })
 
         it('search and click to detail',function(){
