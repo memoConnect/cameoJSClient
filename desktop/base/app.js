@@ -193,7 +193,7 @@ angular.module('cameoClient', [
         });
 
         // Todo: whats is todo??
-        if(cmUserModel.getToken())
+        if(cmUserModel.getToken('desktop app.js 196'))
             cmApi.listenToEvents();
 
         // Systemcheck
@@ -201,3 +201,20 @@ angular.module('cameoClient', [
 
     }
 ]);
+
+// manual bootstrap after plugin is ready
+angular.element(document).ready(function(){
+    var timeout;
+    // watch on answer
+    angular.element(window).one('cmBrowser:isAvailable', function () {
+        var event = new CustomEvent('cmBrowser:setItem',{detail:{key:'test',value:'app.run '+(new Date())}});
+        window.dispatchEvent(event);
+    });
+    // call plugin
+    var event = new CustomEvent('cmBrowser:checkAvailability');
+    window.dispatchEvent(event);
+    // timeout
+    window.setTimeout(function(){
+        angular.bootstrap(document, ['cameoClient']);
+    }, 500);
+});

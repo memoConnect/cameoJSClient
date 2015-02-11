@@ -82,7 +82,7 @@ angular.module('cmUi')
                         size = attrs.cmSize;
                     }
 
-                    var imgSrc = cmConfig.restApi + cmConfig.defaultApiVersion + '/file/' + scope.identity.avatarId + '/scale/' + size + '?token=' + cmUserModel.getToken(),
+                    var imgSrc = cmConfig.restApi + cmConfig.defaultApiVersion + '/file/' + scope.identity.avatarId + '/scale/' + size + '?token=' + cmUserModel.getToken('cmAvatar 85'),
                         bgImg = new Image();
                     // preload for update avatar
                     bgImg.onload = function(){

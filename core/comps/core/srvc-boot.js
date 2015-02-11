@@ -3,9 +3,9 @@
 angular.module('cmCore')
 .service('cmBoot', [
     'cmObject', 'cmLogger', 'cmKeyboard',
-    '$q', '$rootScope', '$document', '$injector',
+    '$q', '$rootScope', '$document', '$injector', '$timeout', '$window',
     function(cmObject, cmLogger, cmKeyboard,
-             $q, $rootScope, $document, $injector) {
+             $q, $rootScope, $document, $injector, $timeout, $window) {
         var promises = {};
 
         function reset(){

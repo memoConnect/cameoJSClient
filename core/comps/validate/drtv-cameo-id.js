@@ -1,6 +1,7 @@
 'use strict';
 
-angular.module('cmValidate').directive('cmCameoId',[
+angular.module('cmValidate')
+.directive('cmCameoId',[
     'cmAuth', 'cmUserModel',
     '$q', '$rootScope',
     function (cmAuth, cmUserModel,
@@ -86,7 +87,7 @@ angular.module('cmValidate').directive('cmCameoId',[
                          * @TODO !!!
                          */
                         var auth = undefined;
-                        if(!cmUserModel.getToken()){
+                        if(!cmUserModel.getToken('cmCameoId 89')){
                             auth = cmUserModel.data.account.basicAuth;
                         }
 

@@ -50,7 +50,7 @@ angular.module('cmOptionsPage',['cmCore','cmPhonegap'])
             storage[key] = kango.storage.getItem(key);
         });
 
-        $scope.storage = storage;
+        $scope.storage = JSON.stringify(storage,null,2);
     };
 
     $timeout(function(){

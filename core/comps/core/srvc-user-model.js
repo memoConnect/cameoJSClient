@@ -184,7 +184,7 @@ angular.module('cmCore')
                     deferred.reject();
                 }
             } else {
-                if(this.getToken() !== false){
+                if(this.getToken('cmUsermodel.loadIdentity 187') !== false){
                     /**
                      * @todo hack for external user in purl
                      */
@@ -349,7 +349,7 @@ angular.module('cmCore')
 //                }
 //            }
 
-            return this.getToken();
+            return this.getToken('cmUsermodel.isAuth 352');
         };
 
         this.setAuth = function(){
@@ -392,7 +392,7 @@ angular.module('cmCore')
             //cmLogger.debug('cmUserModel:doLogout',where);
 
             $rootScope.$broadcast('logout', {
-                token:this.getToken(),
+                token: this.getToken('cmUsermodel.doLogout 395'),
                 goToLogin: goToLogin,
                 where: where
             });
@@ -852,10 +852,10 @@ angular.module('cmCore')
          * Token Functions
          * @TODO handle Token with identity
          */
-        this.getToken = function(){
+        this.getToken = function(whoIs){
             //cmLogger.debug('cmUserModel:getToken');
 
-            var token = cmAuth.getToken();
+            var token = cmAuth.getToken(whoIs+' cmUserModel 858');
 
             if(token !== undefined && token !== 'undefined' && token !== null && token.length > 0){
                 return token;
@@ -970,7 +970,7 @@ angular.module('cmCore')
                 self.removeToken();
             }
 
-            if(self.getToken() !== false){
+            if(self.getToken('cmUsermodel.onLogout 973') !== false){
                 cmLogger.error('Token was not removed at logout!');
                 throw new Error('Failure at Logout Process!')
             }

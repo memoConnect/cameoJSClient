@@ -268,7 +268,7 @@ angular.module('cmCore').provider('cmApi',[
                         token = config.overrideToken;
                         delete config.overrideToken;
                     } else if($injector.has('cmAuth')){
-                        token = $injector.get('cmAuth').getToken();
+                        token = $injector.get('cmAuth').getToken('cmApi 271');
                     }
 
                     if(rest_api != '' || without_api_url){
@@ -318,7 +318,7 @@ angular.module('cmCore').provider('cmApi',[
                 // binary mock
                 api.getBinary = function(config){
                     var deferred = $q.defer(),
-                        token = $injector.has('cmAuth') ? $injector.get('cmAuth').getToken() : undefined;
+                        token = $injector.has('cmAuth') ? $injector.get('cmAuth').getToken('cmApi 321') : undefined;
 
                     prepareConfig(config, 'GET', token);
                     // assume binary as blob
@@ -338,7 +338,7 @@ angular.module('cmCore').provider('cmApi',[
 
                 api.postBinary = function(config){
                     var deferred = $q.defer(),
-                        token = $injector.has('cmAuth') ? $injector.get('cmAuth').getToken() : undefined;
+                        token = $injector.has('cmAuth') ? $injector.get('cmAuth').getToken('cmApi 341') : undefined;
                     prepareConfig(config, 'POST', token);
 
                     $http(config).then(
@@ -557,7 +557,7 @@ angular.module('cmCore').provider('cmApi',[
                 });
 
                 $rootScope.$on('cmApi:wakeup', function(){
-                    var token = $injector.has('cmAuth') ? $injector.get('cmAuth').getToken() : undefined;
+                    var token = $injector.has('cmAuth') ? $injector.get('cmAuth').getToken('cmApi 560') : undefined;
                     if(token){
                         cmLogger.info('cmApi:wakeup > listenToEvents');
                         api.listenToEvents();

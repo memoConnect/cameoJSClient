@@ -1,58 +1,58 @@
 'use strict';
 
-describe('LocalStorageAdapter', function(){
-    var LocalStorageAdapter;
+describe('cmLocalStorageAdapter', function(){
+    var cmLocalStorageAdapter;
 
     beforeEach(module('cmCore'))
 
-    beforeEach(inject(function(_LocalStorageAdapter_){
-        LocalStorageAdapter = _LocalStorageAdapter_
+    beforeEach(inject(function(_cmLocalStorageAdapter_){
+        cmLocalStorageAdapter = _cmLocalStorageAdapter_
     }))
 
     it('should exists', function(){
-        expect(LocalStorageAdapter).toBeDefined()
+        expect(cmLocalStorageAdapter).toBeDefined()
     })
 
     it('should have check function', function(){
-        expect(LocalStorageAdapter.check).toBeDefined()
+        expect(cmLocalStorageAdapter.check).toBeDefined()
     })
 
     it('should have get function', function(){
-        expect(LocalStorageAdapter.get).toBeDefined()
+        expect(cmLocalStorageAdapter.get).toBeDefined()
     })
 
     it('should have getAllKeys function', function(){
-        expect(LocalStorageAdapter.getAllKeys).toBeDefined()
+        expect(cmLocalStorageAdapter.getAllKeys).toBeDefined()
     })
 
     it('should have save function', function(){
-        expect(LocalStorageAdapter.save).toBeDefined()
+        expect(cmLocalStorageAdapter.save).toBeDefined()
     })
 
     it('should have remove function', function(){
-        expect(LocalStorageAdapter.remove).toBeDefined()
+        expect(cmLocalStorageAdapter.remove).toBeDefined()
     })
 
     it('should have clearAll function', function(){
-        expect(LocalStorageAdapter.clearAll).toBeDefined()
+        expect(cmLocalStorageAdapter.clearAll).toBeDefined()
     })
 });
 
-describe('LocalStorageService', function(){
-    var LocalStorageService;
+describe('cmLocalStorageService', function(){
+    var cmLocalStorageService;
 
     function createService(){
-        return new LocalStorageService;
+        return new cmLocalStorageService;
     }
 
     beforeEach(module('cmCore'))
 
-    beforeEach(inject(function(_LocalStorageService_){
-        LocalStorageService = _LocalStorageService_
+    beforeEach(inject(function(_cmLocalStorageService_){
+        cmLocalStorageService = _cmLocalStorageService_
     }))
 
     it('should exists', function(){
-        expect(LocalStorageService).toBeDefined()
+        expect(cmLocalStorageService).toBeDefined()
     })
 
     it('should have check function', function(){
@@ -87,13 +87,13 @@ describe('LocalStorageService', function(){
 });
 
 describe('cmLocalStorage', function(){
-    var cmLocalStorage, LocalStorageService;
+    var cmLocalStorage, cmLocalStorageService;
 
     beforeEach(module('cmCore'))
 
-    beforeEach(inject(function(_cmLocalStorage_, _LocalStorageService_){
+    beforeEach(inject(function(_cmLocalStorage_, _cmLocalStorageService_){
         cmLocalStorage = _cmLocalStorage_
-        LocalStorageService = _LocalStorageService_;
+        cmLocalStorageService = _cmLocalStorageService_;
     }))
 
     it('should exists', function(){
@@ -109,7 +109,7 @@ describe('cmLocalStorage', function(){
     })
 
 
-    describe('create Instance(s) of LocalStorageService', function(){
+    describe('create Instance(s) of cmLocalStorageService', function(){
         var tmpInstanceId_1 = 'moep';
         var tmpInstanceKey_1 = 'moep123';
         var tmpInstanceId_2 = 'blub';

@@ -5,7 +5,9 @@ function callApp(json,eventName){
 	window.dispatchEvent(event);
 }
 
-//kango.console.log('plugin cameoNet content '+browserName)
+kango.console.log('plugin cameoNet content '+browserName)
+
+callApp({},'cmBrowser:isAvailable');
 
 // app check if browser plugin is available
 window.addEventListener('cmBrowser:checkAvailability', function(){

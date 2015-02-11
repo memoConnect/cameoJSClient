@@ -8,10 +8,10 @@
 angular.module('cmCore')
 .service('cmSystemCheck', [
     'cmUserModel', 'cmObject', 'cmApi', 'cmVersion', 'cmLanguage',
-    'LocalStorageAdapter', 'cmLogger', 'cmDevice', 'cmBoot',
+    'cmLocalStorageAdapter', 'cmLogger', 'cmDevice', 'cmBoot',
     '$rootScope', '$q',
     function(cmUserModel, cmObject, cmApi, cmVersion, cmLanguage,
-             LocalStorageAdapter, cmLogger, cmDevice, cmBoot,
+             cmLocalStorageAdapter, cmLogger, cmDevice, cmBoot,
              $rootScope, $q){
         var self = this;
 
@@ -89,12 +89,12 @@ angular.module('cmCore')
         this.checkLocalStorage = function(forceRedirect){
             var test = {key: 'cameoNet', value: 'cameoNet'};
 
-            if (!LocalStorageAdapter.check()) {
+            if (!cmLocalStorageAdapter.check()) {
                 this.trigger('check:failed', {forceRedirect:forceRedirect});
                 return false;
             } else {
-                if (LocalStorageAdapter.save(test.key, test.value)) {
-                    LocalStorageAdapter.remove(test.key);
+                if (cmLocalStorageAdapter.save(test.key, test.value)) {
+                    cmLocalStorageAdapter.remove(test.key);
 
                     return true;
                 }

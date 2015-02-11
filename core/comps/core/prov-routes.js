@@ -1,6 +1,7 @@
 'use strict';
 
-angular.module('cmCore').provider('cmRoutes', [
+angular.module('cmCore')
+.provider('cmRoutes', [
     'cmConfigProvider',
     '$injector',
     function(cmConfigProvider,

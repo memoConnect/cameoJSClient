@@ -11,6 +11,11 @@
     <script type="text/javascript" src="lib/cameo.0.2.6.js"></script>
     <script type="text/javascript" src="options.js"></script>
 
+    <style>
+        body{
+            font-size:16px;
+        }
+    </style>
 </head>
 <body ng-app="cmOptionsPage" ng-controller="cmKeyList">
     <!--<button ng-click="generateKey()">generate key</button>-->
@@ -26,6 +31,7 @@
     <button ng-click="removeItem()">removeItem</button>
     <button ng-click="clear()">clear</button>
     <hr>
-    <pre style="white-space: pre-wrap;">{{storage}}</pre>
+    <button ng-click="getStorage()">refresh</button>
+    <pre style="word-wrap:break-word;">{{storage}}</pre>
 </body>
 </html>

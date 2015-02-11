@@ -1,5 +1,4 @@
 {
-    "content_scripts": [], 
     "description": "Extension for external Storage", 
     "creator": "cameoNet Dev", 
     "background_scripts": ["main.js"],

@@ -12,8 +12,8 @@
 
 angular.module('cmCore')
     .service('cmAuth', [
-    'cmApi','LocalStorageAdapter', 'cmObject', 'cmUtil', 'cmLogger', 'cmCrypt' ,'$rootScope',
-    function(cmApi, LocalStorageAdapter, cmObject, cmUtil, cmLogger, cmCrypt, $rootScope){
+    'cmApi','cmLocalStorageAdapter', 'cmObject', 'cmUtil', 'cmLogger', 'cmCrypt' ,'$rootScope',
+    function(cmApi, cmLocalStorageAdapter, cmObject, cmUtil, cmLogger, cmCrypt, $rootScope){
         var _TOKEN_ = undefined;
         var auth = {
             /**
@@ -58,7 +58,7 @@ angular.module('cmCore')
                 }
 
                 /* remove Token from LocalStorage */
-                LocalStorageAdapter.remove('token');
+                cmLocalStorageAdapter.remove('token');
             },
             /**
              * @ngdoc method
@@ -77,14 +77,14 @@ angular.module('cmCore')
 
                 if(typeof force != 'undefined' && force == true){
                     _TOKEN_ = token;
-                    return LocalStorageAdapter.save('token', token);
+                    return cmLocalStorageAdapter.save('token', token);
                 } else {
                     if(_TOKEN_ == undefined || _TOKEN_ == token){
                         _TOKEN_ = token;
 
                         var bool;
                         try {
-                            bool = LocalStorageAdapter.save('token', token);
+                            bool = cmLocalStorageAdapter.save('token', token);
                         } catch(e){
                             cmLogger.warn('cmAuth.storeToken - Local Storage Error')
                         }
@@ -106,13 +106,13 @@ angular.module('cmCore')
              *
              * @returns {String} Token
              */
-            getToken: function(){
+            getToken: function(whoIs){
                 //cmLogger.debug('cmAuth.getToken')
 
                 var token;
 
                 try {
-                    token = LocalStorageAdapter.get('token');
+                    token = cmLocalStorageAdapter.get('token');
 
                     if(token !== undefined && token !== 'undefined' && token !== null && token.length > 0){
                         if(_TOKEN_ != undefined && _TOKEN_ != token){
@@ -130,6 +130,8 @@ angular.module('cmCore')
                 } catch (e){
                     cmLogger.warn('cmAuth.getToken - Local Storage Error')
                 }
+
+                //console.log(whoIs,'cmAuth getToken',token)
 
                 return token;
             },
@@ -431,7 +433,7 @@ angular.module('cmCore')
              * @returns {Boolean} for removing succeed
              */
             removeTwoFactorToken: function(){
-                return LocalStorageAdapter.remove('twoFactorToken');
+                return cmLocalStorageAdapter.remove('twoFactorToken');
             },
             /**
              * @ngdoc method
@@ -445,7 +447,7 @@ angular.module('cmCore')
              * @returns {Boolean} for setting succeed
              */
             storeTwoFactorToken: function(twoFactorToken){
-                return LocalStorageAdapter.save('twoFactorToken', twoFactorToken);
+                return cmLocalStorageAdapter.save('twoFactorToken', twoFactorToken);
             },
             /**
              * @ngdoc method
@@ -458,7 +460,7 @@ angular.module('cmCore')
              * @returns {String} twoFactorToken
              */
             getTwoFactorToken: function(){
-                return LocalStorageAdapter.get('twoFactorToken');
+                return cmLocalStorageAdapter.get('twoFactorToken');
             },
 
             sendPasswordLost: function(data){
