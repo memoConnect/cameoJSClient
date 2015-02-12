@@ -1,5 +1,12 @@
 # Dev
 
+#########
+# RC 0.5.1 - 10.02.2015
+#########
+
+## BS 12.02.2015
+* fix CAM-1693, search contacts will now removed, when filter closed
+
 ## BS 06.02.2015
 * CAM-1724 update search contact
     * contact/create search btn links now to contact/list
@@ -35,6 +42,9 @@
 #########
 # RC 0.5.0 - 04.02.2015
 #########
+
+## BS 10.02.2015
+* fix CAM-1711 create new conversation with message, after adding a new contact
 
 ## BS 03.02.2015
 * fix CAM-1554 switch DisplayName for external User

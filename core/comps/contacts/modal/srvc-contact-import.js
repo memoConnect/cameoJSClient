@@ -40,7 +40,13 @@ angular.module('cmContacts').service('cmModalContactImport', [
                             text: modalScope.data.messageTemplate
                         });
 
-                        return conversation.sendMessage(message, null, true);
+                        return message
+                                .setPublicData(['text'])
+                                .revealSignatures()
+                                .getSignatures()
+                                .then(function(){
+                                    return message.save()
+                                })
                     });
             });
         }
