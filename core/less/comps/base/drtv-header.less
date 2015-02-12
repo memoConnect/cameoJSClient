@@ -83,48 +83,6 @@ cm-header, .cm-header-block{
     .dib;
   }
 
-  cm-header-list-search{
-    .dib;
-    cm-search-input{
-      .pos-abs;
-      color:@cm-black;
-      z-index:-1;
-      height:@cm-unit;
-      width:100%;
-      left:0;
-      top:0;
-      font-size:@cm-large-font;
-      line-height:@cm-mega-font;
-      .opacity-0;
-      .tal;
-      &.visible{
-        z-index:1001;
-        .opacity-100;
-        .border-bottom;
-      }
-      input{
-        padding-left: @cm-unit;
-        .border-bottom;
-      }
-      textarea{
-        .no-border;
-        resize:none;
-        white-space:nowrap;
-        overflow:hidden;
-      }
-      i{
-        .pos-tr;
-        .tac;
-        width:@cm-unit;
-        height:@cm-unit;
-        line-height:@cm-unit!important;
-      }
-      i:first-child{
-        .pos-tl;
-      }
-    }
-  }
-
   cm-menu{
     .dib;
   }
