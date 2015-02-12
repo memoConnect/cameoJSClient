@@ -92,6 +92,8 @@ angular.module('cmUi')
 
                 if(!exists){
                     onUpdateCallbacks.push({identifier:identifer,callback:callback});
+                } else {
+                    onUpdateCallbacks[i].callback = callback;
                 }
             }
         };
@@ -114,6 +116,8 @@ angular.module('cmUi')
 
                 if(!exists){
                     onClearCallbacks.push({identifier:identifer,callback:callback});
+                } else {
+                    onClearCallbacks[i].callback = callback;
                 }
             }
         };
