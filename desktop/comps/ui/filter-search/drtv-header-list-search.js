@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('cmUi')
+angular.module('cmDesktopUi')
 .directive('cmHeaderListSearch',[
     'cmFilter',
     function (cmFilter){
