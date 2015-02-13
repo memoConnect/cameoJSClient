@@ -114,7 +114,7 @@ angular.module('cmUi')
                         if(cmContextFactory.hasSelection()){
                             scope.handleLongTap(context);
                         } else if(typeof callback != 'undefined'){
-                            //callback(scope, {$event: event, $context: context});
+                            callback(scope, {$event: event, $context: context});
                         }
                     });
                 }
@@ -130,7 +130,7 @@ angular.module('cmUi')
                         scope.handleLongTap(context);
 
                         if(typeof callback != 'undefined'){
-                            //callback(scope, {$event: event, $context: context});
+                            callback(scope, {$event: event, $context: context});
                         }
                     });
                 }
