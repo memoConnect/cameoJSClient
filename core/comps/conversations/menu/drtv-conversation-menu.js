@@ -31,7 +31,7 @@ angular.module('cmConversations')
                 });
             },
 
-            controller: function ($scope, $element, $attrs) {
+            controller: function ($scope) {
                 $scope.goto = $rootScope.goto;
 
                 $scope.menuVisible = false;
@@ -46,7 +46,6 @@ angular.module('cmConversations')
                         text:   'CONVERSATION.MODAL.DELETE.TEXT'
                     })
                     .then(function() {
-
                         if($scope.conversation.recipients.length > 1){
                             var message = $scope.conversation.messages.create({
                                 conversation:$scope.conversation,
@@ -61,13 +60,14 @@ angular.module('cmConversations')
                         }
                     })
                     .then(function(){
-                        return cmConversationFactory.deleteConversation($scope.conversation);
+                        return cmConversationFactory
+                            .deleteConversation($scope.conversation)
+                            .catch(function(){
+                                cmNotify.warn('SYSTEM.ERROR.MESSAGE');
+                            });
                     })
                     .then(function(){
                         $rootScope.goTo('/talks');
-                    })
-                    .catch(function(){
-                        cmNotify.warn('SYSTEM.ERROR.MESSAGE');
                     })
                 }
             }

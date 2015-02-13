@@ -146,7 +146,7 @@ angular.module('cmUi')
 
             self.one('modal:closed', function(event, id){
                 if(id == modalId)
-                    deferred.reject();
+                    deferred.reject('cmModal:closed');
                 return true;
             });
 
