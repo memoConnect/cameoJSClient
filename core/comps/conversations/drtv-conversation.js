@@ -27,7 +27,9 @@ angular.module('cmConversations')
             scope: true,
 
             controller: function ($scope, $element, $attrs) {
-                
+
+                $scope.checkPurlRoute = $rootScope.checkPurlRoute;
+
                 var self                 = this,
                     conversation_subject = $scope.$eval($attrs.cmSubject),
                     conversation_offset  = $attrs.offset,
@@ -66,6 +68,20 @@ angular.module('cmConversations')
                 if(!$scope.conversation.state.is('new')){
                     $scope.showGrid = storageService.get($scope.conversation.id)
                 }
+
+                $scope.gotoRecipients = function(){
+                    var obj = {};
+
+                    if('purlId' in $routeParams){
+                        obj.type = 'purl';
+                        obj.typeId = $routeParams.purlId;
+                    } else {
+                        obj.type = 'conversation';
+                        obj.typeId = $scope.conversation.id||'new';
+                    }
+
+                    $rootScope.goto(obj.type+'/'+obj.typeId+'/recipients')
+                };
 
                 $scope.toggleRecipientView = function(){
                     if($scope.showGrid){
