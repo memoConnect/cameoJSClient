@@ -75,7 +75,6 @@ angular.module('cmUi')
                     element.find('cm-selecter').length == 0){
                     angular.element(element.find('cm-avatar'))
                         .append('<cm-selecter><div class="wrap"><i class="fa cm-checkbox-right"></i></div></cm-selecter>');
-                    element.addClass('is-unselected');
                 }
 
                 function getContext(){
@@ -115,7 +114,7 @@ angular.module('cmUi')
                         if(cmContextFactory.hasSelection()){
                             scope.handleLongTap(context);
                         } else if(typeof callback != 'undefined'){
-                            callback(scope, {$event: event, $context: context});
+                            //callback(scope, {$event: event, $context: context});
                         }
                     });
                 }
@@ -131,7 +130,7 @@ angular.module('cmUi')
                         scope.handleLongTap(context);
 
                         if(typeof callback != 'undefined'){
-                            callback(scope, {$event: event, $context: context});
+                            //callback(scope, {$event: event, $context: context});
                         }
                     });
                 }
@@ -157,7 +156,7 @@ angular.module('cmUi')
                 hammer.on('press', onLongTap);
 
                 function setClass(){
-                    element.removeClass('is-unselected');
+                    element.addClass('with-animation');
                     element.addClass('is-selected');
                 }
 

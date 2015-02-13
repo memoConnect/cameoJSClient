@@ -5,6 +5,14 @@
   animation: @name @duration forwards;
 }
 
+.defaultAnimation(){
+  @value:rotateY(90deg);
+  -webkit-transform: @value;
+  -moz-transform: @value;
+  -o-transform: @value;
+  transform: @value;
+}
+
 .animationIn(@name;@form:0deg;@to:0deg){
   @fromValue:rotateY(@form);
   @toValue:rotateY(@to);
@@ -47,14 +55,18 @@
   }
 }
 
+[cm-context]{
+  overflow:hidden;
+}
+
 cm-selecter{
   .pos-tl;
   .dib;
-  .animationLink(hideRotate);
-  .is-unselected &{
-    .animationLink(hideRotate,0ms);
+  .defaultAnimation();
+  .with-animation &{
+    .animationLink(hideRotate);
   }
-  .is-selected &{
+  .is-selected.with-animation &{
     .animationLink(showRotate);
   }
   .wrap {
