@@ -60,7 +60,7 @@
         "GENERATING": {
           "GENERATION_TIMER": " {{time}}",
           "HEADLINE": "Generation of cameoKey in progress.",
-          "EXPLANATION": "Please be patient. This process can take some time according to the technical parameter of your device and the size of the cameoKey.\n If it lasts more than 5 minutes, you may stop the process and start again.\nIf you choose 4096 Bit the process can take 10-15 minutes.",
+          "EXPLANATION": "For secure communication you need a local cameoKey. Please be patient. This process can take some time according to the technical parameter of your device and the size of the cameoKey.\n If it lasts more than 5 minutes, you may stop the process and start again.\nIf you choose 4096 bit the process can take 10-15 minutes.",
           "TIME_PASSED": "Elapsed time:",
           "STOP_BUTTON": "Stop generation"
         },

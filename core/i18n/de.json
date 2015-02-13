@@ -489,7 +489,7 @@
                 },
                 "GENERATING": {
                     "HEADLINE": "cameoKey Generierung läuft!",
-                    "EXPLANATION": "Bitte haben Sie einen Moment Geduld. Dieser Prozess kann je nach Gerät und Schlüssellänge einige Zeit in Anspruch nehmen.\n Bei Wartenzeiten von über 5 Minuten  sollten Sie den Prozess abbrechen und erneut starten.\nBei einer Schlüssellänge von 4096 Bit, kann die Wartezeit bis zu 15 Minuten betragen.",
+                    "EXPLANATION": "Sie benötigen einen lokalen cameoKey um sicher kommunizieren zu können. Bitte haben Sie einen Moment Geduld. Die Erzeugung kann je nach Gerät und Schlüssellänge einige Zeit in Anspruch nehmen.\n Bei Wartenzeiten von über 5 Minuten  sollten Sie den Prozess abbrechen und erneut starten.\nBei einer Schlüssellänge von 4096 Bit, kann die Wartezeit bis zu 15 Minuten betragen.",
                     "TIME_PASSED": "Verbrauchte Zeit:",
                     "GENERATION_TIMER": " {{time}}",
                     "STOP_BUTTON": "Generierung abbrechen"
