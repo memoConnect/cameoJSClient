@@ -235,6 +235,8 @@ angular.module('cmConversations').service('cmConversationFactory', [
                 //conversation.update();
                 conversation.loadLatestMessages();
             });
+
+            self.getList();
         });
 
         self.on('notFound', function(event, data){
