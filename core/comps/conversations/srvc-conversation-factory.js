@@ -35,7 +35,7 @@ angular.module('cmConversations').service('cmConversationFactory', [
         self.state = new cmStateManagement(['loading']);
 
         self.getList = function(limit, offset){
-//            cmLogger.debug('cmConversationFactory.getList');
+            cmLogger.debug('cmConversationFactory.getList');
             if(cmUserModel.isGuest() || self.state.is('loading'))
                 return false;
 
@@ -59,7 +59,7 @@ angular.module('cmConversations').service('cmConversationFactory', [
                     _quantity = data.numberOfConversations;
 
                     data.conversations.forEach(function (conversation_data) {
-                        self.create(conversation_data);
+                        self.create(conversation_data, true);
                     });
                 }
             ).finally(
