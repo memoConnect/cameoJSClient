@@ -4,6 +4,9 @@
 # RC 0.5.1 - 10.02.2015
 #########
 
+## BS 13.02.2015
+* update for CAM-1625, load information after stand-by
+
 ## BS 12.02.2015
 * fix CAM-1693, search contacts will now removed, when filter closed
 

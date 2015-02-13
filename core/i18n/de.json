@@ -269,8 +269,8 @@
                 "TEXT": "Wollen Sie den Talk wirklich verlassen?<br/>Sie können danach nicht mehr auf diesen Talk zugreifen. Wenn der letzte Empfänger einen Talk verlässt, wird der Talk gelöscht."
             },
             "ASYMMETRIC_KEY_TRUST_ERROR": {
-                "HEADER": "Entschlüsseln nicht erlaubt",
-                "TEXT": "Sie haben Ihren lokalen cameoKey noch nicht mit Ihren anderen cameoKeys verknüpft. Deshalb dürfen Sie Talks mit Identitäten, die Ihnen vertrauen, hier nicht lesen."
+                "HEADER": "Problem mit lokalem cameoKey",
+                "TEXT": "Ihr lokaler cameoKey ist nicht mit dem cameoKey verknüpft, mit dem dieser Talk angelegt wurde."
             }
         }
     },
@@ -994,7 +994,7 @@
                     }
                 },
                 "NOTIFY": {
-                    "DELETE_ERROR": "@todo SYSTEM.CONTEXT.MODAL.NOTIFY.DELETE_ERROR"
+                    "DELETE_ERROR": "Es ist ein Fehler aufgetreten. Die ausgewählten Einträge konnten nicht gelöscht werden."
                 }
             }
         },
