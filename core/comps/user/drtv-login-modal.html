@@ -13,20 +13,26 @@
 
         <div class="cm-input-ctn" ng-class="{'cm-input-error':alertState!=''}">
             <input
-                    tabindex="1"
-                    data-qa="inp-username"
-                    type="text" ng-model="formData.user" ng-class="{'cm-input-error':alertState!=''}"
-                    id="user" name="user" value="" required
-                    placeholder="{{'LOGIN.PLACEHOLDER.USERNAME'|cmTranslate}}" />
+                tabindex="1"
+                data-qa="inp-username"
+                type="text" ng-model="formData.user" ng-class="{'cm-input-error':alertState!=''}"
+                id="user" name="user" value="" required
+                placeholder="{{'LOGIN.PLACEHOLDER.USERNAME'|cmTranslate}}"
+                cm-enter="doLogin()"
+                cm-paste
+                />
         </div>
 
         <div class="cm-input-ctn with-inside-icon" ng-class="{'cm-input-error':alertState!=''}">
             <input
-                    tabindex="2"
-                    data-qa="inp-password"
-                    type="{{passwordType}}" ng-model="formData.pass" ng-class="{'cm-input-error':alertState!=''}"
-                    id="pw" name="pw" value="" required
-                    placeholder="{{'LOGIN.PLACEHOLDER.PASSWORD'|cmTranslate}}" />
+                tabindex="2"
+                data-qa="inp-password"
+                type="{{passwordType}}" ng-model="formData.pass" ng-class="{'cm-input-error':alertState!=''}"
+                id="pw" name="pw" value="" required
+                placeholder="{{'LOGIN.PLACEHOLDER.PASSWORD'|cmTranslate}}"
+                cm-enter="doLogin()"
+                cm-paste
+                />
             <i class="fa cm-icon-grey cm-lg-icon" ng-class="{'cm-visible':passwordType=='password','cm-hidden':passwordType=='text'}" ng-click="handlePassword()"></i>
         </div>
 

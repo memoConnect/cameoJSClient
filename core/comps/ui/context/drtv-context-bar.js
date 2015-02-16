@@ -67,19 +67,20 @@ angular.module('cmUi').directive('cmContextBar',[
                         }
 
                         cmModal.confirm({
-                            title:  'SYSTEM.CONTEXT.MODAL.CONFIRM.DELETE.TITLE',
-                            text:   constText
+                            title: 'SYSTEM.CONTEXT.MODAL.CONFIRM.DELETE.TITLE',
+                            text: constText
                         })
                         .then(function(){
                             loader.start();
-
                             cmContextFactory.delete()
-                                            .finally(function(){
-                                                running = false;
-                                                loader.stop();
-                                                $scope.close();
-                                            });
-                        })
+                            .finally(function(){
+                                running = false;
+                                loader.stop();
+                                $scope.close();
+                            });
+                        }).catch(function(){
+                            running = false;
+                        });
                     }
                 };
             }

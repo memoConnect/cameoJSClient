@@ -4,10 +4,10 @@ angular.module('cmUser')
 .directive('cmLogin', [
     'cmNotify', 'cmUserModel', 'cmKeyStorageService', 'cmCrypt',
     'cmConfig', 'cmEnv', 'cmLoader', 'cmKeyboard',
-    '$location', '$rootScope',
+    '$location', '$rootScope', '$timeout',
     function (cmNotify, cmUserModel, cmKeyStorageService, cmCrypt,
               cmConfig, cmEnv, cmLoader, cmKeyboard,
-              $location, $rootScope) {
+              $location, $rootScope, $timeout) {
         return  {
             restrict    :   'AE',
             templateUrl :   'comps/user/drtv-login.html',

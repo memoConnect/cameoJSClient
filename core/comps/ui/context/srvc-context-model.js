@@ -30,14 +30,14 @@ angular.module('cmUi').factory('cmContextModel', [
 
                 switch(this.type){
                     case "conversation":
-                            this.model = new cmConversationContextModel(data.model) || this.model;
-                        break;
+                        this.model = new cmConversationContextModel(data.model) || this.model;
+                    break;
                     case "contact":
-                            this.model = new cmContactContextModel(data.model) || this.model;
-                        break;
+                        this.model = new cmContactContextModel(data.model) || this.model;
+                    break;
                     case "pendingContact":
-                            this.model = new cmPendingContactContextModel(data.model) || this.model;
-                        break;
+                        this.model = new cmPendingContactContextModel(data.model) || this.model;
+                    break;
                     default:
                         // remove model from factory?
                 }
@@ -52,7 +52,6 @@ angular.module('cmUi').factory('cmContextModel', [
                     return $q.when();
                 }
             };
-
 
             init(data);
         }
