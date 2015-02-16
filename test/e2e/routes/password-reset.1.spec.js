@@ -38,8 +38,10 @@ describe('Route Password Lost/Reset:', function(){
             return util.getTestUserNotifications(testUser).then(function (response) {
                 if(response['data'].length > 0 && 'content' in response['data'][0]) {
                     var message = response['data'][0]['content'],
-                        code = message.split('\"')[1],
-                        id = message.split('/pr/')[1]
+                        code = message.split('\"')[1];
+                    // get id
+                    /.*\/pr\/([a-zA-Z0-9]*) .*/.test(message);
+                    id = RegExp.$1;
 
                     resetData = {
                         code: code,
@@ -276,7 +278,6 @@ describe('Route Password Lost/Reset:', function(){
                 util.setVal('input-passwordConfirm',password)
 
                 util.click('btn-resetPassword')
-
                 // after success on login route
                 return util.waitForPageLoad('/login')
             })
