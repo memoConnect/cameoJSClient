@@ -59,11 +59,11 @@ module.exports = function (grunt, options) {
                 });
                 array.push(repo);
             } else {
-
-
-
-
-                array.push(plugin.name + "@" + plugin.version);
+                var version = plugin.version;
+                if(plugin.localVersion) {
+                    version = plugin.localVersion;
+                }
+                array.push(plugin.name + "@" + version);
             }
         });
 
