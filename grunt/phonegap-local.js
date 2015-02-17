@@ -136,7 +136,7 @@ module.exports = function (grunt, options) {
                         return (1)
                     },
                     minSdkVersion: function () {
-                        return (21)
+                        return (19)
                     },
                     targetSdkVersion: function () {
                         return 21
