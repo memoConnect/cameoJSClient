@@ -133,13 +133,13 @@ module.exports = function (grunt, options) {
                         return pkg.name;
                     },
                     versionCode: function () {
-                        return 1
+                        return (1)
                     },
                     minSdkVersion: function () {
-                        return 15
+                        return (15)
                     },
                     targetSdkVersion: function () {
-                        return 19
+                        return (19)
                     }
                 }
             },
