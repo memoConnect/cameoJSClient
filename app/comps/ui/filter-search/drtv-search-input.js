@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('cmUi').directive('cmSearchInput',[
+angular.module('cmAppUi').directive('cmSearchInput',[
     'cmFilter',
     '$document',
     '$rootScope',

@@ -269,8 +269,8 @@
                 "TEXT": "Wollen Sie den Talk wirklich verlassen?<br/>Sie können danach nicht mehr auf diesen Talk zugreifen. Wenn der letzte Empfänger einen Talk verlässt, wird der Talk gelöscht."
             },
             "ASYMMETRIC_KEY_TRUST_ERROR": {
-                "HEADER": "Entschlüsseln nicht erlaubt",
-                "TEXT": "Sie haben Ihren lokalen cameoKey noch nicht mit Ihren anderen cameoKeys verknüpft. Deshalb dürfen Sie Talks mit Identitäten, die Ihnen vertrauen, hier nicht lesen."
+                "HEADER": "Problem mit lokalem cameoKey",
+                "TEXT": "Ihr lokaler cameoKey ist nicht mit dem cameoKey verknüpft, mit dem dieser Talk angelegt wurde."
             }
         }
     },
@@ -489,7 +489,7 @@
                 },
                 "GENERATING": {
                     "HEADLINE": "cameoKey Generierung läuft!",
-                    "EXPLANATION": "Bitte haben Sie einen Moment Geduld. Dieser Prozess kann je nach Gerät und Schlüssellänge einige Zeit in Anspruch nehmen.\n Bei Wartenzeiten von über 5 Minuten  sollten Sie den Prozess abbrechen und erneut starten.\nBei einer Schlüssellänge von 4096 Bit, kann die Wartezeit bis zu 15 Minuten betragen.",
+                    "EXPLANATION": "Sie benötigen einen lokalen cameoKey um sicher kommunizieren zu können. Bitte haben Sie einen Moment Geduld. Die Erzeugung kann je nach Gerät und Schlüssellänge einige Zeit in Anspruch nehmen.\n Bei Wartenzeiten von über 5 Minuten  sollten Sie den Prozess abbrechen und erneut starten.\nBei einer Schlüssellänge von 4096 Bit, kann die Wartezeit bis zu 15 Minuten betragen.",
                     "TIME_PASSED": "Verbrauchte Zeit:",
                     "GENERATION_TIMER": " {{time}}",
                     "STOP_BUTTON": "Generierung abbrechen"
@@ -761,11 +761,11 @@
         "VALIDATE_PHONE": {
             "LABEL": "Mobilfunknummer",
             "PLACEHOLDER": "Mobilfunknummer",
-            "LABEL_VERIFICATION_CODE": "Verfizierungscode",
+            "LABEL_VERIFICATION_CODE": "Code (zum Verifizieren der Telefonnummer)",
             "INFO": {
                 "INVALID_PHONE_NUMBER": "Die Nummer scheint keine gültige Mobilfunknummer zu sein.",
                 "EMPTY": "Sie haben keine Mobilfunknummer eingegeben.",
-                "ISNT_VERIFIED": "Diese Telefonnummer wurde noch nicht verifiziert!\nEs wurde eine SMS mit einem Verfizierungscode an diese Nummer gesendet. Tragen Sie den Code hier ein oder klicken Sie auf den Link in der SMS. Um erneut eine SMS an diese Nummer zu senden, klicken Sie auf das {{icon}}-Icon.",
+                "ISNT_VERIFIED": "Diese Telefonnummer wurde noch nicht verifiziert!\nEs wurde eine SMS mit einem Code zum Verifizieren an dieser Telefonnummer gesendet. Tragen Sie den Code hier ein oder klicken Sie auf den Link in der SMS. Um erneut eine SMS an diese Nummer zu senden, klicken Sie auf das {{icon}}-Icon.",
                 "EMPTY_CODE": "Bitte tragen Sie hier den Code ein, der Ihnen in der Verifizierungs-SMS mitgeteilt wurde.",
                 "INVALID_CODE": "Der Code den Sie eingegeben haben ist falsch oder abgelaufen."
             }
@@ -773,11 +773,11 @@
         "VALIDATE_EMAIL": {
             "LABEL": "E-Mail",
             "PLACEHOLDER": "E-Mail",
-            "LABEL_VERIFICATION_CODE": "Verfizierungscode",
+            "LABEL_VERIFICATION_CODE": "Code (zum Verifizieren der E-Mail-Adresse)",
             "INFO": {
                 "INVALID": "Bitte geben Sie eine korrekte E-Mail-Adresse ein!",
                 "EMPTY": "Sie haben keine E-Mail-Adresse eingegeben.",
-                "ISNT_VERIFIED": "Diese E-Mail-Adresse wurde noch nicht verifiziert!\nEs wurde eine E-Mail mit einem Verfizierungscode an diese Adresse gesendet. Tragen Sie den Code hier ein oder klicken Sie auf den Link in der E-Mail. Um erneut eine E-Mail an diese Adresse zu senden, klicken Sie auf das {{icon}}-Icon.",
+                "ISNT_VERIFIED": "Diese E-Mail-Adresse wurde noch nicht verifiziert!\nEs wurde eine E-Mail mit einem Code zum Verifizieren an diese Adresse gesendet. Tragen Sie den Code hier ein oder klicken Sie auf den Link in der E-Mail. Um erneut eine E-Mail an diese Adresse zu senden, klicken Sie auf das {{icon}}-Icon.",
                 "EMPTY_CODE": "Bitte tragen Sie hier den Code ein, der Ihnen in der Verifizierungs-E-Mail mitgeteilt wurde.",
                 "INVALID_CODE": "Der Code den Sie eingegeben haben ist falsch oder abgelaufen."
             }
@@ -994,7 +994,7 @@
                     }
                 },
                 "NOTIFY": {
-                    "DELETE_ERROR": "@todo SYSTEM.CONTEXT.MODAL.NOTIFY.DELETE_ERROR"
+                    "DELETE_ERROR": "Es ist ein Fehler aufgetreten. Die ausgewählten Einträge konnten nicht gelöscht werden."
                 }
             }
         },
@@ -1028,11 +1028,11 @@
         "VERIFICATION": {
             "SMS": {
                 "SENDER": "cameoNet",
-                "MESSAGE": "Der Code zur Verifizierung lautet \"{{code}}\". Sie können auch auf folgenden Link klicken: {{link}}"
+                "MESSAGE": "{{displayName}}, zum Verifizieren hier klicken {{link}} oder \"{{code}}\" in Einst>Benutzerkonto>Code(TelefonNr) eingeben"
             },
             "MAIL": {
                 "SENDER": "cameoNet",
-                "MESSAGE": "Willkommen bei cameoNet,\nder Code zur Verifizierung dieser E-Mail-Adresse lautet \"{{code}}\". Alternativ können Sie auch auf folgenden Link klicken:\n{{link}}",
+                "MESSAGE": "Hallo {{displayName}},\num diese E-Mail-Adresse bei cameoNet zu verifizieren, klicken Sie bitte auf folgenden Link:\n{{link}}\nAlternativ können Sie in camenoNet auch folgenden Code unter Menü > Einstellungen > Benutzerkonto-Einstellungen in das Feld Code zum Verifizieren der E-Mail-Adresse eintragen:\n\"{{code}}\"",
                 "SUBJECT": "Verifizierung Ihrer E-Mail-Adresse bei cameoNet"
             },
             "LANDING_PAGE": {
@@ -1044,11 +1044,11 @@
         "RESET_PASSWORD": {
             "SMS": {
                 "SENDER": "cameoNet",
-                "MESSAGE": "Der Code zur Passwortrücksetzung lautet \"{{code}}\". Sie können auch auf folgenden Link klicken: {{link}}"
+                "MESSAGE": "Hallo {{displayName}}, zur Passwortrücksetzung hier klicken: {{link}} oder den Code \"{{code}}\" in cameoNet eingeben"
             },
             "MAIL": {
                 "SENDER": "cameoNet",
-                "MESSAGE": "Willkommen bei cameoNet,\nder Code zur Passwortrücksetzung lautet \"{{code}}\". Alternativ können Sie auch auf folgenden Link klicken:\n{{link}}",
+                "MESSAGE": "Hallo {{displayName}},\nbitte klicken Sie auf folgenden Link, um ein neues Passwort zu setzen:\n{{link}}\nAlternativ können Sie auch folgenden Code in cameoNet eingeben:\n\"{{code}}\"",
                 "SUBJECT": "Passwortrücksetzung für Ihr cameoNet-Benutzerkonto"
             }
         }

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('cmUi').filter('cmSearch', [
+angular.module('cmAppUi').filter('cmSearch', [
     'cmUtil',
     'cmFilter',
     function(cmUtil,cmFilter){

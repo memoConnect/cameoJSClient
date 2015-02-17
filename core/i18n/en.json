@@ -60,7 +60,7 @@
         "GENERATING": {
           "GENERATION_TIMER": " {{time}}",
           "HEADLINE": "Generation of cameoKey in progress.",
-          "EXPLANATION": "Please be patient. This process can take some time according to the technical parameter of your device and the size of the cameoKey.\n If it lasts more than 5 minutes, you may stop the process and start again.\nIf you choose 4096 Bit the process can take 10-15 minutes.",
+          "EXPLANATION": "For secure communication you need a local cameoKey. Please be patient. This process can take some time according to the technical parameter of your device and the size of the cameoKey.\n If it lasts more than 5 minutes, you may stop the process and start again.\nIf you choose 4096 bit the process can take 10-15 minutes.",
           "TIME_PASSED": "Elapsed time:",
           "STOP_BUTTON": "Stop generation"
         },
@@ -845,7 +845,7 @@
                   }
               },
               "NOTIFY": {
-                "DELETE_ERROR": "@todo SYSTEM.CONTEXT.MODAL.NOTIFY.DELETE_ERROR"
+                "DELETE_ERROR": "An error occurred. The selected items could not be deleted."
               }
           }
     },
@@ -992,11 +992,11 @@
     "VERIFICATION": {
       "SMS": {
         "SENDER": "cameoNet",
-        "MESSAGE": "The verification code is \"{{code}}\". You can also click on the following link: {{link}}"
+        "MESSAGE": "{{displayName}}, to verify this number click {{link}} or insert \"{{code}}\" at settings>account>code (phone number)"
       },
       "MAIL": {
         "SENDER": "cameoNet",
-        "MESSAGE": "Welcome to cameoNet,\nthe verification code for this email is \"{{code}}\". You can also click on the following link to verify this email:\n{{link}}",
+        "MESSAGE": "Hello {{displayName}},\nto verify this email address click on the following link:\n{{link}}\nAlternatively you can insert the following code in cameoNet at menu > settings > account settings > code for email address verification:\n\"{{code}}\"",
         "SUBJECT": "Verify your email at cameoNet"
       },
       "LANDING_PAGE": {
@@ -1008,11 +1008,11 @@
     "RESET_PASSWORD": {
       "SMS": {
         "SENDER": "cameoNet",
-        "MESSAGE": "The reset code is \"{{code}}\". You can also click on the following link: {{link}}"
+        "MESSAGE": "{{displayName}}, to reset your password click this link: {{link}} or insert \"{{code}}\" at cameoNet"
       },
       "MAIL": {
         "SENDER": "cameoNet",
-        "MESSAGE": "Welcome to cameoNet,\nthe reset code is \"{{code}}\". You can also click on the following link:\n{{link}}",
+        "MESSAGE": "Hello {{displayName}},\nto reset your password click on the following link:\n{{link}}\nAlternatively you can insert the following code at cameoNet:\n\"{{code}}\"",
         "SUBJECT": "Reset your password at cameoNet"
       }
     }
