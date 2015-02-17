@@ -139,7 +139,7 @@ module.exports = function (grunt, options) {
                         return (15)
                     },
                     targetSdkVersion: function () {
-                        return 21
+                        return (19)
                     }
                 }
             },
