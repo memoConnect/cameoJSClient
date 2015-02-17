@@ -12,21 +12,21 @@ cd build/phonegap-tmp
 cordova platform rm android
 cordova platform add android
 
-#cd platforms/android/
-#sed -i '/<\/application>/a <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" \/><uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" \/>' AndroidManifest.xml
-#cp ${crosswalkDir}/VERSION .
+cd platforms/android/
+sed -i '/<\/application>/a <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" \/><uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" \/>' AndroidManifest.xml
+cp ${crosswalkDir}/VERSION .
 
-#cd CordovaLib/
-#rm -rf *
-#cp -a ${crosswalkDir}/framework/* .
-#android update project --subprojects --path . --target "android-19"
-#ant debug
+cd CordovaLib/
+rm -rf *
+cp -a ${crosswalkDir}/framework/* .
+android update project --subprojects --path . --target "android-19"
+ant debug
 
-#cd ../../../
+cd ../../../
 
-#if [ -e ${antProperties} ]; then
-#    cp -v ${antProperties} ./platforms/android/
-#fi
+if [ -e ${antProperties} ]; then
+    cp -v ${antProperties} ./platforms/android/
+fi
 
 cordova build android --release
 
