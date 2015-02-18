@@ -1,15 +1,30 @@
 #!/bin/bash
-set -e
 cordovaVersion="3.6.3-0.2.13"
 phongapVersion="3.6.3-0.22.7"
 antProperties="ant.properties"
 
-[ $(cordova --version) == ${cordovaVersion} ]
-[ $(phonegap --version) == ${phongapVersion} ]
+if [ $(cordova --version) != ${cordovaVersion} ]; then
+    echo "Invalid cordova version. Required: ${cordovaVersion}"
+    exit 1
+fi
+if [ $(phonegap --version) != ${phongapVersion} ] ; then
+    echo "Invalid phonegap version. Required: ${phongapVersion}"
+    exit 1
+fi
+if [ -z ${ANDROID_HOME} ]; then
+    echo "ANDROID_HOME is not set"
+    exit 1
+fi
+if [ -z ${JAVA_HOME} ]; then
+    echo "JAVA_HOME is not set"
+    exit 1
+fi
+if [ -z ${CROSSWALK_HOME} ]; then
+    echo "CROSSWALK_HOME is not set"
+    exit 1
+fi
 
-[ ! -z ${ANDROID_HOME} ]
-[ ! -z ${JAVA_HOME} ]
-[ ! -z ${CROSSWALK_HOME} ]
+set -e
 
 cd build/phonegap-tmp
 cordova platform rm android
