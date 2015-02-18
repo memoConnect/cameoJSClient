@@ -59,7 +59,11 @@ module.exports = function (grunt, options) {
                 });
                 array.push(repo);
             } else {
-                array.push(plugin.name + "@" + plugin.version);
+                var version = plugin.version;
+                if(plugin.localVersion) {
+                    version = plugin.localVersion;
+                }
+                array.push(plugin.name + "@" + version);
             }
         });
 
@@ -133,13 +137,13 @@ module.exports = function (grunt, options) {
                         return pkg.name;
                     },
                     versionCode: function () {
-                        return 1
+                        return (1)
                     },
                     minSdkVersion: function () {
-                        return 15
+                        return (15)
                     },
                     targetSdkVersion: function () {
-                        return 19
+                        return (19)
                     }
                 }
             },
