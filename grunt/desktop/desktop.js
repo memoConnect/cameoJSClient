@@ -82,6 +82,7 @@ module.exports = function(grunt, options) {
                             'enableDebug': options.globalCameoBuildConfig.config.enableDebug,
                             'performancePage': options.globalCameoBuildConfig.config.performancePage,
                             'errorOnTodoInI18n': options.globalCameoBuildConfig.config.errorOnTodoInI18n,
+                            'nwFiles': '',
 
                             'static': JSON.stringify(options.globalCameoBuildConfig.static)
                         }
