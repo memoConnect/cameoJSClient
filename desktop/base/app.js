@@ -10,6 +10,7 @@ angular.module('cameoClient', [
     'cmDesktopWidgets',
     'cmCore',
     'cmPhonegap',
+    'cmNodeWebkit',
     'cmUi',
     'cmDesktopUi',
     'cmSetup',
@@ -58,6 +59,16 @@ angular.module('cameoClient', [
             .setQueueTime(250);
 
         cmRoutesProvider.create();
+    }
+])
+// nodeWebkit
+.run([
+    'cmNodeWebkit', 'cmNodeWebkitMenu',
+    function(cmNodeWebkit, cmNodeWebkitMenu){
+        cmNodeWebkit.isAvailable('app.js', function(){
+            // initialize Menu
+            cmNodeWebkitMenu.init();
+        });
     }
 ])
 .run(function(){
