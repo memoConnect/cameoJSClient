@@ -4,13 +4,11 @@ module.exports = function (grunt, options) {
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-node-webkit-builder');
 
     grunt.registerTask('nw:deploy', [
         'clean:nodeWebkit',
         'nw:nw-desktop-deploy',
-        'concat:nwScripts',
         'template:nodeWebkitPackage',
         'nodewebkit',
         'copy:nwIconSet',
@@ -119,17 +117,6 @@ module.exports = function (grunt, options) {
                     options: {
                         mode: true
                     }
-                }
-            },
-            concat: {
-                'options': {
-                    separator: '\n'
-                },
-                'nwScripts': {
-                    src: [
-                        'resource/nw/*.js'
-                    ],
-                    dest: 'dist/nodeWebkit/nwScripts.js'
                 }
             },
             compress: {
