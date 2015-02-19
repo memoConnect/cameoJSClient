@@ -1,3 +1,4 @@
+/*
 // Load native UI library
 var gui = require('nw.gui');
 
@@ -38,3 +39,4 @@ win.menu = menubar;
 menu.items[0].click = function() {
     alert("CLICK");
 };
+    */
