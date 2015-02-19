@@ -23,6 +23,7 @@ module.exports = function (grunt, options) {
     grunt.registerTask('nw:nw-desktop-deploy', [
         'copy:nwDeploy',
         'copy:nw-desktop-files',
+        'template:nw-config-js',
         'template:nw-desktop',
         'nw:create-webworker',// webworker.js
         'nw:create-style-via-less',// less.js
@@ -174,7 +175,7 @@ module.exports = function (grunt, options) {
                             'enableDebug': options.globalCameoBuildConfig.config.enableDebug,
                             'performancePage': options.globalCameoBuildConfig.config.performancePage,
                             'errorOnTodoInI18n': options.globalCameoBuildConfig.config.errorOnTodoInI18n,
-                            'nwFiles': '<script type="text/javascript" src="nwScripts.js"></script>',
+                            'nwFiles': '<script type="text/javascript" charset="utf-8" src="config.js"></script>',
 
                             'static': JSON.stringify(options.globalCameoBuildConfig.static)
                         }
@@ -184,6 +185,16 @@ module.exports = function (grunt, options) {
                         'dist/nodeWebkit/icons.html': ['core/icons.html'],
                         'build/nodeWebkit/base/config.js': ['desktop/base/config.js'],
                         'dist/nodeWebkit/performance.html': ['core/performance.html']
+                    }
+                },
+                'nw-config-js':{
+                    'options': {
+                        'data': {
+                            'isNodeWebkit': true
+                        }
+                    },
+                    'files': {
+                        'dist/nodeWebkit/config.js': ['resource/node-webkit/config.js']
                     }
                 }
             },

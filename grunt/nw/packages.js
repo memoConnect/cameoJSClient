@@ -126,6 +126,7 @@ module.exports = function(grunt, options){
                         'ui': 'core/comps/ui',
                         'widgets': 'core/widgets',
                         'phonegap': 'core/comps/phonegap',
+                        'node_webkit': 'core/comps/node_webkit',
                         'desktop_routes': 'desktop/routes',
                         'desktop_widgets': 'desktop/widgets',
                         'desktop_ui': 'desktop/comps/ui',

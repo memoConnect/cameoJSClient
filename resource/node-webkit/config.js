@@ -1,0 +1,3 @@
+var nodeWebkitCameoConfig = {
+    isNodeWebkit: '<%= isNodeWebkit %>'
+};
