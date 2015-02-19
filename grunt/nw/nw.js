@@ -194,7 +194,7 @@ module.exports = function (grunt, options) {
                         }
                     },
                     'files': {
-                        'dist/nodeWebkit/config.js': ['resource/node-webkit/config.js']
+                        'dist/nodeWebkit/config.js': ['resource/nodeWebkit/config.js']
                     }
                 }
             },
