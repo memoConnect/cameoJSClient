@@ -103,7 +103,31 @@ angular.module('cmCore')
         };
 
         $rootScope.goToApp = function(params){
-            window.location = cmConfig.static.appProtocol + '://?'+params;
+            $window.location = cmConfig.static.appProtocol + '://?'+params;
+        };
+
+        $rootScope.goToMobile = function(){
+            var absUrl = $location.$$absUrl;
+
+            if(absUrl.indexOf('/desktop/') != -1){
+                absUrl = absUrl.replace('/desktop/','/app/');
+            } else {
+                absUrl = absUrl.replace('/d/','/m/');
+            }
+
+            $window.location.href = absUrl;
+        };
+
+        $rootScope.goToDesktop = function(){
+            var absUrl = $location.$$absUrl;
+
+            if(absUrl.indexOf('/app/') != -1){
+                absUrl = absUrl.replace('/app/','/desktop/');
+            } else {
+                absUrl = absUrl.replace('/m/','/d/');
+            }
+
+            $window.location.href = absUrl;
         };
 
         $rootScope.openExternalLink = function(url){

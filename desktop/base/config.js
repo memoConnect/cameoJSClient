@@ -331,14 +331,6 @@ angular.module('cmConfig',[])
                 'support': {i18n:'HELP.LABEL.SUPPORT',icon:'cm-rhino-bubble-glyph',externLink:'http://support.cameonet.de', 'data-qa':'btn-help-support'}
             }
         };
-        // performance page
-        if('<%= performancePage %>' == 'true') {
-            self.menu['performance'] = {
-                i18n: 'SETTINGS.PAGES.PERFORMANCE.TITLE',
-                icon: 'cm-not-connected',
-                link: 'performance.html'
-            };
-        }
 
         this.get = function(key){
             return self[key];

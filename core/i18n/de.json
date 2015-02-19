@@ -857,7 +857,9 @@
         "OWN_KEYS": "Eigene Schlüssel",
         "SETTINGS": "@:SETTINGS.LABEL",
         "HELP": "@:HELP.HEADING",
-        "LOGOUT": "Abmelden"
+        "LOGOUT": "Abmelden",
+        "TO_MOBILE": "Zur Mobilen Version",
+        "TO_DESKTOP": "Zur Desktop Version"
     },
 
     "HELP":{

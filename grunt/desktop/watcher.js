@@ -10,9 +10,7 @@ module.exports = function(grunt, options){
     //]);
 
     grunt.registerTask('desktop:watcher', [
-        'desktop:deploy-without-template',
-        'desktop:gen-all-templates',
-
+        'desktop:deploy-to-dist',
         'watch:desktop'
     ]);
 
@@ -39,9 +37,7 @@ module.exports = function(grunt, options){
                         'core/**/*'
                     ],
                     tasks: [
-                        'desktop:gen-all-templates',
-                        'desktop:create-style-via-less',
-                        'desktop:packages'
+                        'desktop:deploy-to-dist'
                     ]
                 },
                 'desktop-other':{

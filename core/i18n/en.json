@@ -631,7 +631,9 @@
     "SETTINGS": "@:SETTINGS.LABEL",
     "OWN_KEYS": "Own keys",
     "HELP": "@:HELP.HEADING",
-    "NEW_TALK": "New talk"
+    "NEW_TALK": "New talk",
+    "TO_MOBILE": "Change to mobile version",
+    "TO_DESKTOP": "Change to desktop version"
   },
   "HELP":{
     "HEADING":"Help",
