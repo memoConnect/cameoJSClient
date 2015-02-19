@@ -21,6 +21,7 @@
             ng-if       = "!canCreate && someKeyNeedsAuthentication()"
             ng-click    = "goTo('/authentication')"
             data-qa     = "li-some-key-needs-authentication"
+            ng-class="{'is-active':checkActive('/authentication',true)}"
             cm-reactive
         >
             <span class="item clearfix">
@@ -33,7 +34,11 @@
                 </section>
             </span>
         </li>
-        <li class="key-list-item no-pad" ng-repeat="key in publicKeys | orderBy:sortByPrivKeys" data-qa="key-list-item">
+        <li
+            class="key-list-item no-pad"
+            ng-repeat="key in publicKeys | orderBy:sortByPrivKeys"
+            data-qa="key-list-item"
+            >
             <section ng-click="goTo('settings/identity/key/edit/'+key.id)"
                 class="item tal"
                 cm-reactive
@@ -62,7 +67,11 @@
                 </span>
             </section>
             <section class="icon-list" ng-class="{'with-two-icons':showHandshake(key)}">
-                <i class="fa cm-handshake" ng-if="showHandshake(key)" ng-click="goTo('/authentication/'+key.id, true)" data-qa="btn-start-handshake" cm-reactive></i>
+                <i class="fa cm-handshake"
+                   ng-if="showHandshake(key)"
+                   ng-click="goTo('/authentication/'+key.id, true)"
+                   data-qa="btn-start-handshake" cm-reactive
+                   ng-class="{'is-active':checkActive('/authentication/'+key.id)}"></i>
                 <i class="fa cm-cancel-key" ng-click="remove(key)" data-qa="btn-remove-modal" cm-reactive></i>
             </section>
         </li>

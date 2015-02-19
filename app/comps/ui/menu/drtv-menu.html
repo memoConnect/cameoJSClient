@@ -32,6 +32,12 @@
                 <div class="clearfix"></div>
             </li>
 
+            <li ng-click="goToDesktop()" ng-if="!isApp" data-qa="btn-to-desktop" cm-reactive>
+                <i class="fa cm-desktop icon-left"></i>
+                <a class="logout">{{'MENU.TO_DESKTOP'|cmTranslate}}</a>
+                <div class="clearfix"></div>
+            </li>
+
             <li ng-click="logout()" data-qa="logout-btn" cm-reactive>
                 <i class="fa cm-logout icon-left"></i>
                 <a class="logout">{{'MENU.LOGOUT'|cmTranslate}}</a>

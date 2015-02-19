@@ -17,7 +17,7 @@ module.exports = function(grunt, options) {
 
     grunt.registerTask('desktop:deploy-to-dist', [
         'desktop:deploy-without-template',
-        'template:desktop-files'
+        'desktop:gen-all-templates'
     ]);
 
     return {

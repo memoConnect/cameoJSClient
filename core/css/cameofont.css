@@ -236,6 +236,7 @@
 .cm-group:before{content:'\f014'}
 .cm-person:before{content:'\f015'}
 .cm-mobile:before{content:'\f016'}
+.cm-desktop:before{content:'\f114'}
 .cm-in:before{content:'\f017'}
 .cm-out:before{content:'\f018'}
 .cm-info:before{content:'\f019'}

@@ -1,9 +1,10 @@
 'use strict';
 
-angular.module('cmUi').directive('cmMenu',[
-    'cmUserModel', 'cmConfig', 'cmNotify', 'cmUtil',
+angular.module('cmAppUi')
+.directive('cmMenu',[
+    'cmUserModel', 'cmConfig', 'cmNotify', 'cmUtil', 'cmDevice',
     '$location', '$window', '$rootScope',
-    function (cmUserModel, cmConfig, cmNotify, cmUtil,
+    function (cmUserModel, cmConfig, cmNotify, cmUtil, cmDevice,
               $location, $window, $rootScope){
         return {
             restrict: 'AE',
@@ -75,6 +76,9 @@ angular.module('cmUi').directive('cmMenu',[
 
                     return false;
                 };
+
+                $scope.isApp = cmDevice.isApp();
+                $scope.goToDesktop = $rootScope.goToDesktop;
 
                 $scope.logout = function(){
                     cmUserModel.doLogout(true,'drtv-menu logout');

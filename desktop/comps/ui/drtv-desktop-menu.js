@@ -66,6 +66,8 @@ angular.module('cmDesktopUi').directive('cmDesktopMenu',[
                     return false;
                 };
 
+                $scope.goToMobile = $rootScope.goToMobile;
+
                 $scope.logout = function(){
                     cmUserModel.doLogout(true,'drtv-menu logout');
                 };
