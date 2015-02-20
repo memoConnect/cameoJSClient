@@ -1,14 +1,16 @@
 'use strict';
 
 angular.module('cmNodeWebkit').service('cmNodeWebkitMenu', [
-    'cmNodeWebkit', '$nodeWebkitCameoConfig',
-    'cmObject', 'cmLogger',
-    function (cmNodeWebkit, $nodeWebkitCameoConfig,
-              cmObject, cmLogger)
+    'cmNodeWebkit', '$nodeWebkitCameoConfig', 'cmNodeWebkitEventWrapper',
+    'cmUserModel', 'cmLogger',
+    '$rootScope',
+    function (cmNodeWebkit, $nodeWebkitCameoConfig, cmNodeWebkitEventWrapper,
+              cmUserModel, cmLogger,
+              $rootScope)
     {
         var self = this;
 
-        cmObject.addEventHandlingTo(this);
+        cmNodeWebkitEventWrapper.addTrigger(this);
 
         // Load native UI library
         var gui = this.gui = require('nw.gui');
@@ -26,6 +28,12 @@ angular.module('cmNodeWebkit').service('cmNodeWebkitMenu', [
                         })(item.click);
                     }
 
+                    if(typeof item.enabled != 'undefined' && !item.enabled){
+                        if(cmUserModel.isAuth() !== false){
+                            item.enabled = true;
+                        }
+                    }
+
                     if(item.items){
                         item.submenu = new gui.Menu();
                         createMenuItems(item.submenu, item.items);
@@ -37,7 +45,7 @@ angular.module('cmNodeWebkit').service('cmNodeWebkitMenu', [
         }
 
         this.init = function(){
-            cmLogger.debug('cmNodeWebkitMenu.init');
+            //cmLogger.debug('cmNodeWebkitMenu.init');
 
             if(!cmNodeWebkit.isAvailable('cmNodeWebkitMenu.init')){
                 return false;
@@ -47,7 +55,7 @@ angular.module('cmNodeWebkit').service('cmNodeWebkitMenu', [
         };
 
         this.render = function(){
-            cmLogger.debug('cmNodeWebkitMenu.render');
+            //cmLogger.debug('cmNodeWebkitMenu.render');
 
             if(!cmNodeWebkit.isAvailable('cmNodeWebkitMenu.render') && typeof $nodeWebkitCameoConfig.rootMenu != 'object' && typeof $nodeWebkitCameoConfig.rootMenu.items != 'object'){
                 return false;
@@ -69,8 +77,12 @@ angular.module('cmNodeWebkit').service('cmNodeWebkitMenu', [
             }
         };
 
-        this.one('close-app', function(){
-           win.close()
+        $rootScope.$on('login', function(){
+            self.render();
+        });
+
+        $rootScope.$on('logout', function(){
+            self.render();
         });
     }
 ]);

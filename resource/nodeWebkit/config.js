@@ -7,12 +7,14 @@ var nodeWebkitCameoConfig = {
                 type: 'normal',
                 label: 'cameoNet',
                 icon: '',
+                enabled: true,
                 items: [
                     {
                         type: 'normal',
                         label: 'Quickstart',
                         icon: '',
-                        click: 'show-quickstart'
+                        click: 'goto-quickstart',
+                        enabled: false
                     },
                     {
                         type: 'separator'
@@ -21,28 +23,25 @@ var nodeWebkitCameoConfig = {
                         type: 'normal',
                         label: 'Über',
                         icon: '',
-                        click: 'show-about-us'
+                        click: 'goto-about-us',
+                        enabled: false
                     },
                     {
                         type: 'normal',
                         label: 'Support',
                         icon: '',
-                        click: 'goto-support'
+                        click: 'open-support',
+                        enabled: false
                     },
                     {
                         type: 'separator'
                     },
                     {
                         type: 'normal',
-                        label: 'Logout',
-                        icon: '',
-                        click: 'user-logout'
-                    },
-                    {
-                        type: 'normal',
                         label: 'Quit',
                         icon: '',
-                        click: 'close-app'
+                        click: 'app-close',
+                        enabled: true
                     }
                 ]
             },
