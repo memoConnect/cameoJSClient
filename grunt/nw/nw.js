@@ -7,6 +7,7 @@ module.exports = function (grunt, options) {
     grunt.loadNpmTasks('grunt-node-webkit-builder');
 
     grunt.registerTask('nw:deploy', [
+        'clean:nodeWebkitBuild',
         'nw:create-dist',
         'nodewebkit',
         'copy:nwIconSet',
@@ -27,7 +28,7 @@ module.exports = function (grunt, options) {
     ]);
 
     grunt.registerTask('nw:create-dist', [
-        'clean:nodeWebkit',
+        'clean:nodeWebkitDist',
         'nw:nw-desktop-deploy',
         'template:nodeWebkitPackage'
     ]);
@@ -35,10 +36,14 @@ module.exports = function (grunt, options) {
     return {
         tasks: {
             clean: {
-                nodeWebkit: {
+                nodeWebkitBuild: {
+                    src: [
+                        'build/nodeWebkit/**'
+                    ]
+                },
+                nodeWebkitDist: {
                     src: [
                         'dist/nodeWebkit/**',
-                        'build/nodeWebkit/**'
                     ]
                 },
                 nwPackageLinux: {

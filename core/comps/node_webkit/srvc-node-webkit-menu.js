@@ -68,5 +68,9 @@ angular.module('cmNodeWebkit').service('cmNodeWebkitMenu', [
                 win.menu = menu;
             }
         };
+
+        this.one('close-app', function(){
+           win.close()
+        });
     }
 ]);
