@@ -7,9 +7,7 @@ module.exports = function (grunt, options) {
     grunt.loadNpmTasks('grunt-node-webkit-builder');
 
     grunt.registerTask('nw:deploy', [
-        'clean:nodeWebkit',
-        'nw:nw-desktop-deploy',
-        'template:nodeWebkitPackage',
+        'nw:create-dist',
         'nodewebkit',
         'copy:nwIconSet',
 //        'appdmg',
@@ -26,6 +24,12 @@ module.exports = function (grunt, options) {
         'nw:create-webworker',// webworker.js
         'nw:create-style-via-less',// less.js
         'nw:packages'//packages.js
+    ]);
+
+    grunt.registerTask('nw:create-dist', [
+        'clean:nodeWebkit',
+        'nw:nw-desktop-deploy',
+        'template:nodeWebkitPackage'
     ]);
 
     return {

@@ -1,128 +1,72 @@
 'use strict';
 
 angular.module('cmNodeWebkit').service('cmNodeWebkitMenu', [
-    'cmNodeWebkit', 'cmLogger',
-    function (cmNodeWebkit, cmLogger){
-        var cmNodeWebkitMenu = {
-            init: function(){
-                cmLogger.debug('cmNodeWebkitMenu.init')
+    'cmNodeWebkit', '$nodeWebkitCameoConfig',
+    'cmObject', 'cmLogger',
+    function (cmNodeWebkit, $nodeWebkitCameoConfig,
+              cmObject, cmLogger)
+    {
+        var self = this;
 
-                if(!cmNodeWebkit.isAvailable('cmNodeWebkitMenu')){
-                    return false;
-                }
+        cmObject.addEventHandlingTo(this);
 
-                this.render();
-            },
-            render: function(){
-                // Load native UI library
-                var gui = require('nw.gui');
+        // Load native UI library
+        var gui = this.gui = require('nw.gui');
+        var win = this.win = this.gui.Window.get();
 
-                // Create an empty menu
-                var menu = new gui.Menu();
+        function createMenuItems(menu, items){
+            if(typeof menu != 'undefined' && typeof items != 'undefined'){
+                items.forEach(function(item){
 
-                // Get the current window
-                var win = gui.Window.get();
-
-                // Create a menubar for window menu
-                var menubar = new gui.Menu({ type: 'menubar' });
-                var nativeMenuBar = new gui.Menu({ type: "menubar" });
-
-                // Create a menuitem
-                var subCameoNet = new gui.Menu();
-
-                subCameoNet.append(new gui.MenuItem({
-                    label: 'Über',
-                    click: function() {
-                        alert('tuff');
-
+                    if(typeof item.click == 'string'){
+                        item.click = (function(eventName){
+                            return function(){
+                                self.trigger(eventName);
+                            }
+                        })(item.click);
                     }
-                }));
 
-                subCameoNet.append(new gui.MenuItem({
-                    label: 'Quit',
-                    click: function() {
-                        win.close();
+                    if(item.items){
+                        item.submenu = new gui.Menu();
+                        createMenuItems(item.submenu, item.items);
                     }
-                }));
 
-
-                // You can have submenu!
-                menubar.append(new gui.MenuItem({ label: 'cameoNet', submenu: subCameoNet}));
-
-                // Create a menuitem
-                var subEdit = new gui.Menu();
-
-                subEdit.append(new gui.MenuItem({
-                    label: 'Copy',
-                    click: function() {
-                        document.execCommand("copy");
-                    }
-                }));
-
-                subEdit.append(new gui.MenuItem({
-                    label: 'Cut',
-                    click: function() {
-                        document.execCommand("cut");
-                    }
-                }));
-
-                subEdit.append(new gui.MenuItem({
-                    label: 'Paste',
-                    click: function() {
-                        document.execCommand("paste");
-                    }
-                }));
-
-                // You can have submenu!
-                menubar.append(new gui.MenuItem({ label: 'Edit', submenu: subEdit}));
-
-                // Create a menuitem
-                var subWindow = new gui.Menu();
-
-                subWindow.append(new gui.MenuItem({
-                    label: 'Minimize',
-                    click: function() {
-                        //
-                    }
-                }));
-
-                subWindow.append(new gui.MenuItem({
-                    label: 'Zoom',
-                    click: function() {
-                        //
-                    }
-                }));
-
-                // Create a menuitem
-                var subHelp = new gui.Menu();
-
-                subHelp.append(new gui.MenuItem({
-                    label: 'Quick Start',
-                    click: function() {
-                        //
-                    }
-                }));
-
-                subHelp.append(new gui.MenuItem({
-                    label: 'cameoNet Support',
-                    click: function() {
-                        //
-                    }
-                }));
-
-                // You can have submenu!
-                menubar.append(new gui.MenuItem({ label: 'Hilfe', submenu: subHelp}));
-
-                //assign the menubar to window menu
-                try {
-                    nativeMenuBar.createMacBuiltin("My App");
-                    win.menu = nativeMenuBar;
-                } catch (ex) {
-                    win.menu = menubar;
-                }
+                    menu.append(new gui.MenuItem(item));
+                })
             }
+        }
+
+        this.init = function(){
+            cmLogger.debug('cmNodeWebkitMenu.init');
+
+            if(!cmNodeWebkit.isAvailable('cmNodeWebkitMenu.init')){
+                return false;
+            }
+
+            this.render();
         };
 
-        return cmNodeWebkitMenu;
+        this.render = function(){
+            cmLogger.debug('cmNodeWebkitMenu.render');
+
+            if(!cmNodeWebkit.isAvailable('cmNodeWebkitMenu.render') && typeof $nodeWebkitCameoConfig.rootMenu != 'object' && typeof $nodeWebkitCameoConfig.rootMenu.items != 'object'){
+                return false;
+            }
+
+            // Create a menubar for window menu
+            var menu = new gui.Menu({type:'menubar'});
+
+            var nativeMenuBar = new gui.Menu({type:'menubar'});
+
+            createMenuItems(menu, $nodeWebkitCameoConfig.rootMenu.items);
+
+            //assign the menuItems to window menu
+            try {
+                nativeMenuBar.createMacBuiltin("cameoNet");
+                win.menu = nativeMenuBar;
+            } catch (e) {
+                win.menu = menu;
+            }
+        };
     }
 ]);
