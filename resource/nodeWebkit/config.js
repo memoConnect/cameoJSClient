@@ -7,14 +7,13 @@ var nodeWebkitCameoConfig = {
                 type: 'normal',
                 label: 'cameoNet',
                 icon: '',
-                enabled: true,
                 items: [
                     {
                         type: 'normal',
                         label: 'Quickstart',
                         icon: '',
                         click: 'goto-quickstart',
-                        enabled: false
+                        onlyWithAuth: true
                     },
                     {
                         type: 'separator'
@@ -24,14 +23,14 @@ var nodeWebkitCameoConfig = {
                         label: 'Über',
                         icon: '',
                         click: 'goto-about-us',
-                        enabled: false
+                        onlyWithAuth: true
                     },
                     {
                         type: 'normal',
                         label: 'Support',
                         icon: '',
                         click: 'open-support',
-                        enabled: false
+                        onlyWithAuth: true
                     },
                     {
                         type: 'separator'
@@ -40,8 +39,7 @@ var nodeWebkitCameoConfig = {
                         type: 'normal',
                         label: 'Quit',
                         icon: '',
-                        click: 'app-close',
-                        enabled: true
+                        click: 'app-close'
                     }
                 ]
             },

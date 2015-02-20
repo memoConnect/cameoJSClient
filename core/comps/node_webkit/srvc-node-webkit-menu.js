@@ -28,10 +28,10 @@ angular.module('cmNodeWebkit').service('cmNodeWebkitMenu', [
                         })(item.click);
                     }
 
-                    if(typeof item.enabled != 'undefined' && !item.enabled){
-                        if(cmUserModel.isAuth() !== false){
-                            item.enabled = true;
-                        }
+                    if(typeof item.onlyWithAuth != 'undefined' && cmUserModel.isAuth() == false){
+                        item.enabled = false;
+                    } else {
+                        item.enabled = true;
                     }
 
                     if(item.items){
@@ -55,7 +55,7 @@ angular.module('cmNodeWebkit').service('cmNodeWebkitMenu', [
         };
 
         this.render = function(){
-            //cmLogger.debug('cmNodeWebkitMenu.render');
+            cmLogger.debug('cmNodeWebkitMenu.render');
 
             if(!cmNodeWebkit.isAvailable('cmNodeWebkitMenu.render') && typeof $nodeWebkitCameoConfig.rootMenu != 'object' && typeof $nodeWebkitCameoConfig.rootMenu.items != 'object'){
                 return false;
