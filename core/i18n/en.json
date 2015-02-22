@@ -980,6 +980,21 @@
       }
     }
   },
+  "NODEWEBKIT": {
+    "MENU": {
+      "LABEL": {
+        "CAMEONET": "@:CAMEO.NAME",
+        "QUICKSTART": "@:START.QUICKSTART.HEADLINE",
+        "ABOUT_US": "@:SETTINGS.PAGES.ABOUT_US.TITLE",
+        "SUPPORT": "@:HELP.LABEL.SUPPORT",
+        "QUIT": "Quit",
+        "EDIT": "Edit",
+        "COPY": "Copy",
+        "PASTE": "Paste",
+        "CUT": "Cut"
+      }
+    }
+  },
   "BACKEND": {
     "PUSH_MESSAGE": {
       "NEW_MESSAGE": {

@@ -1014,7 +1014,23 @@
                 "EXCEEDED": "Die maximale Dateigröße wurde überschritten.\nDie Datei die Sie hochladen möchten ist {{fileSize | cmBytesHumanReadable}} groß. Die maximale Dateigröße beträgt {{maxFileSize | cmBytesHumanReadable}}."
             }
         }
-    } ,
+    },
+
+   "NODEWEBKIT": {
+      "MENU": {
+        "LABEL": {
+          "CAMEONET": "@:CAMEO.NAME",
+          "QUICKSTART": "@:START.QUICKSTART.HEADLINE",
+          "ABOUT_US": "@:SETTINGS.PAGES.ABOUT_US.TITLE",
+          "SUPPORT": "@:HELP.LABEL.SUPPORT",
+          "QUIT": "Beenden",
+          "EDIT": "Bearbeiten",
+          "COPY": "Kopieren",
+          "PASTE": "Einfügen",
+          "CUT": "Ausschneiden"
+        }
+      }
+   },
 
     "BACKEND": {
         "PUSH_MESSAGE": {

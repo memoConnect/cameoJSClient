@@ -5,12 +5,12 @@ var nodeWebkitCameoConfig = {
         items: [
             {
                 type: 'normal',
-                label: 'cameoNet',
+                langKey: 'NODEWEBKIT.MENU.LABEL.CAMEONET',
                 icon: '',
                 items: [
                     {
                         type: 'normal',
-                        label: 'Quickstart',
+                        langKey: 'NODEWEBKIT.MENU.LABEL.QUICKSTART',
                         icon: '',
                         click: 'goto-quickstart',
                         onlyWithAuth: true
@@ -20,14 +20,14 @@ var nodeWebkitCameoConfig = {
                     },
                     {
                         type: 'normal',
-                        label: 'Über',
+                        langKey: 'NODEWEBKIT.MENU.LABEL.ABOUT_US',
                         icon: '',
                         click: 'goto-about-us',
                         onlyWithAuth: true
                     },
                     {
                         type: 'normal',
-                        label: 'Support',
+                        langKey: 'NODEWEBKIT.MENU.LABEL.SUPPORT',
                         icon: '',
                         click: 'open-support',
                         onlyWithAuth: true
@@ -37,7 +37,7 @@ var nodeWebkitCameoConfig = {
                     },
                     {
                         type: 'normal',
-                        label: 'Quit',
+                        langKey: 'NODEWEBKIT.MENU.LABEL.QUIT',
                         icon: '',
                         click: 'app-close'
                     }
@@ -45,20 +45,12 @@ var nodeWebkitCameoConfig = {
             },
             {
                 type: 'normal',
-                label: 'Edit',
+                langKey: 'NODEWEBKIT.MENU.LABEL.EDIT',
                 icon: '',
                 items: [
                     {
                         type: 'normal',
-                        label: 'Copy',
-                        icon: '',
-                        click: function(){
-                            document.execCommand("copy");
-                        }
-                    },
-                    {
-                        type: 'normal',
-                        label: 'Cut',
+                        langKey: 'NODEWEBKIT.MENU.LABEL.CUT',
                         icon: '',
                         click: function(){
                             document.execCommand("cut");
@@ -66,7 +58,15 @@ var nodeWebkitCameoConfig = {
                     },
                     {
                         type: 'normal',
-                        label: 'Paste',
+                        langKey: 'NODEWEBKIT.MENU.LABEL.COPY',
+                        icon: '',
+                        click: function(){
+                            document.execCommand("copy");
+                        }
+                    },
+                    {
+                        type: 'normal',
+                        langKey: 'NODEWEBKIT.MENU.LABEL.PASTE',
                         icon: '',
                         click: function(){
                             document.execCommand("paste");

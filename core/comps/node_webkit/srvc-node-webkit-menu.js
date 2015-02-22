@@ -3,10 +3,10 @@
 angular.module('cmNodeWebkit').service('cmNodeWebkitMenu', [
     'cmNodeWebkit', '$nodeWebkitCameoConfig', 'cmNodeWebkitEventWrapper',
     'cmUserModel', 'cmLogger',
-    '$rootScope',
+    '$rootScope', '$filter',
     function (cmNodeWebkit, $nodeWebkitCameoConfig, cmNodeWebkitEventWrapper,
               cmUserModel, cmLogger,
-              $rootScope)
+              $rootScope, $filter)
     {
         var self = this;
 
@@ -32,6 +32,10 @@ angular.module('cmNodeWebkit').service('cmNodeWebkitMenu', [
                         item.enabled = false;
                     } else {
                         item.enabled = true;
+                    }
+
+                    if(typeof item.langKey == 'string' && item.langKey.length > 0){
+                        item.label = $filter('cmTranslate')(item.langKey.toString());
                     }
 
                     if(item.items){
@@ -82,6 +86,10 @@ angular.module('cmNodeWebkit').service('cmNodeWebkitMenu', [
         });
 
         $rootScope.$on('logout', function(){
+            self.render();
+        });
+
+        $rootScope.$on('$translateChangeSuccess', function(){
             self.render();
         });
     }
