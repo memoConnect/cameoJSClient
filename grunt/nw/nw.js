@@ -177,7 +177,8 @@ module.exports = function (grunt, options) {
                             'enableDebug': options.globalCameoBuildConfig.config.enableDebug,
                             'performancePage': options.globalCameoBuildConfig.config.performancePage,
                             'errorOnTodoInI18n': options.globalCameoBuildConfig.config.errorOnTodoInI18n,
-                            'nwFiles': '<script type="text/javascript" charset="utf-8" src="config.js"></script><script type="text/javascript" charset="utf-8" src="desktopNotification.js"></script>',
+                            'nwFiles': '<script type="text/javascript" charset="utf-8" src="config.js"></script>',
+                            //'nwFiles': '<script type="text/javascript" charset="utf-8" src="config.js"></script><script type="text/javascript" charset="utf-8" src="desktopNotification.js"></script>',
 
                             'static': JSON.stringify(options.globalCameoBuildConfig.static)
                         }

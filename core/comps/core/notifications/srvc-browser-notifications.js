@@ -17,12 +17,12 @@ angular.module('cmCore').service('cmBrowserNotifications', [
         this.init = function(){
             //cmLogger.debug('cmBrowserNotifications.init');
 
-            if(service == null){
-                if(cmDevice.isNodeWebkit()){
-                    service = new cmNodeWebkitNotifications();
-                } else if(!cmDevice.isApp() && "Notification" in $window){
+            if(service == null && !cmDevice.isApp() && "Notification" in $window){
+                //if(cmDevice.isNodeWebkit()){
+                //    service = new cmNodeWebkitNotifications();
+                //} else if(!cmDevice.isApp() && "Notification" in $window){
                     service = new cmHTML5Notifications();
-                }
+                //}
             }
         };
 
