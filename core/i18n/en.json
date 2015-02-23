@@ -992,11 +992,11 @@
     "VERIFICATION": {
       "SMS": {
         "SENDER": "cameoNet",
-        "MESSAGE": "{{displayName}}, to verify this number click {{link}} or insert \"{{code}}\" at settings>account>code (phone number)"
+        "MESSAGE": "Hello, to verify this number click {{link}} or insert \"{{code}}\" at settings>account>code (phone number)"
       },
       "MAIL": {
         "SENDER": "cameoNet",
-        "MESSAGE": "Hello {{displayName}},\nto verify this email address click on the following link:\n{{link}}\nAlternatively you can insert the following code in cameoNet at menu > settings > account settings > code for email address verification:\n\"{{code}}\"",
+        "MESSAGE": "Hello,\nto verify this email address click on the following link:\n{{link}}\nAlternatively you can insert the following code in cameoNet at menu > settings > account settings > code for email address verification:\n\"{{code}}\"",
         "SUBJECT": "Verify your email at cameoNet"
       },
       "LANDING_PAGE": {
@@ -1008,11 +1008,11 @@
     "RESET_PASSWORD": {
       "SMS": {
         "SENDER": "cameoNet",
-        "MESSAGE": "{{displayName}}, to reset your password click this link: {{link}} or insert \"{{code}}\" at cameoNet"
+        "MESSAGE": "Hello, to reset your password click this link: {{link}} or insert \"{{code}}\" at cameoNet"
       },
       "MAIL": {
         "SENDER": "cameoNet",
-        "MESSAGE": "Hello {{displayName}},\nto reset your password click on the following link:\n{{link}}\nAlternatively you can insert the following code at cameoNet:\n\"{{code}}\"",
+        "MESSAGE": "Hello,\nto reset your password click on the following link:\n{{link}}\nAlternatively you can insert the following code at cameoNet:\n\"{{code}}\"",
         "SUBJECT": "Reset your password at cameoNet"
       }
     }
