@@ -1028,11 +1028,11 @@
         "VERIFICATION": {
             "SMS": {
                 "SENDER": "cameoNet",
-                "MESSAGE": "{{displayName}}, zum Verifizieren hier klicken {{link}} oder \"{{code}}\" in Einst>Benutzerkonto>Code(TelefonNr) eingeben"
+                "MESSAGE": "Hallo, zum Verifizieren hier klicken {{link}} oder \"{{code}}\" in Einst>Benutzerkonto>Code(TelefonNr) eingeben"
             },
             "MAIL": {
                 "SENDER": "cameoNet",
-                "MESSAGE": "Hallo {{displayName}},\num diese E-Mail-Adresse bei cameoNet zu verifizieren, klicken Sie bitte auf folgenden Link:\n{{link}}\nAlternativ können Sie in camenoNet auch folgenden Code unter Menü > Einstellungen > Benutzerkonto-Einstellungen in das Feld Code zum Verifizieren der E-Mail-Adresse eintragen:\n\"{{code}}\"",
+                "MESSAGE": "Hallo,\num diese E-Mail-Adresse bei cameoNet zu verifizieren, klicken Sie bitte auf folgenden Link:\n{{link}}\nAlternativ können Sie in camenoNet auch folgenden Code unter Menü > Einstellungen > Benutzerkonto-Einstellungen in das Feld Code zum Verifizieren der E-Mail-Adresse eintragen:\n\"{{code}}\"",
                 "SUBJECT": "Verifizierung Ihrer E-Mail-Adresse bei cameoNet"
             },
             "LANDING_PAGE": {
@@ -1044,11 +1044,11 @@
         "RESET_PASSWORD": {
             "SMS": {
                 "SENDER": "cameoNet",
-                "MESSAGE": "Hallo {{displayName}}, zur Passwortrücksetzung hier klicken: {{link}} oder den Code \"{{code}}\" in cameoNet eingeben"
+                "MESSAGE": "Hallo, zur Passwortrücksetzung hier klicken: {{link}} oder den Code \"{{code}}\" in cameoNet eingeben"
             },
             "MAIL": {
                 "SENDER": "cameoNet",
-                "MESSAGE": "Hallo {{displayName}},\nbitte klicken Sie auf folgenden Link, um ein neues Passwort zu setzen:\n{{link}}\nAlternativ können Sie auch folgenden Code in cameoNet eingeben:\n\"{{code}}\"",
+                "MESSAGE": "Hallo,\nbitte klicken Sie auf folgenden Link, um ein neues Passwort zu setzen:\n{{link}}\nAlternativ können Sie auch folgenden Code in cameoNet eingeben:\n\"{{code}}\"",
                 "SUBJECT": "Passwortrücksetzung für Ihr cameoNet-Benutzerkonto"
             }
         }
