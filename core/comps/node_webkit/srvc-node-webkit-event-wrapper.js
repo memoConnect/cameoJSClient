@@ -7,9 +7,6 @@ angular.module('cmNodeWebkit').service('cmNodeWebkitEventWrapper', [
 
         cmObject.addEventHandlingTo(this);
 
-        var gui = this.gui = require('nw.gui');
-        var win = this.win = this.gui.Window.get();
-
         this.addTrigger = function(obj){
             //cmLogger.debug('cmNodeWebkitEventWrapper.addTrigger -> ' + JSON.stringify(obj));
 

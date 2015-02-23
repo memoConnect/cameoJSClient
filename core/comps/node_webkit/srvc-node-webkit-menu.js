@@ -12,9 +12,11 @@ angular.module('cmNodeWebkit').service('cmNodeWebkitMenu', [
 
         cmNodeWebkitEventWrapper.addTrigger(this);
 
-        // Load native UI library
-        var gui = this.gui = require('nw.gui');
-        var win = this.win = this.gui.Window.get();
+        if(cmNodeWebkit.isAvailable()){
+            // Load native UI library
+            var gui = this.gui = require('nw.gui');
+            var win = this.win = this.gui.Window.get();
+        }
 
         function createMenuItems(menu, items){
             if(typeof menu != 'undefined' && typeof items != 'undefined'){
@@ -59,9 +61,11 @@ angular.module('cmNodeWebkit').service('cmNodeWebkitMenu', [
         };
 
         this.render = function(){
-            //cmLogger.debug('cmNodeWebkitMenu.render');
+            cmLogger.debug('cmNodeWebkitMenu.render');
 
-            if(!cmNodeWebkit.isAvailable('cmNodeWebkitMenu.render') && typeof $nodeWebkitCameoConfig.rootMenu != 'object' && typeof $nodeWebkitCameoConfig.rootMenu.items != 'object'){
+            console.log($nodeWebkitCameoConfig)
+
+            if(!cmNodeWebkit.isAvailable('cmNodeWebkitMenu.render') && typeof $nodeWebkitCameoConfig != 'object' && typeof $nodeWebkitCameoConfig.rootMenu != 'object' && typeof $nodeWebkitCameoConfig.rootMenu.items != 'object'){
                 return false;
             }
 
@@ -82,15 +86,21 @@ angular.module('cmNodeWebkit').service('cmNodeWebkitMenu', [
         };
 
         $rootScope.$on('login', function(){
-            self.render();
+            if(cmNodeWebkit.isAvailable()) {
+                self.render();
+            }
         });
 
         $rootScope.$on('logout', function(){
-            self.render();
+            if(cmNodeWebkit.isAvailable()) {
+                self.render();
+            }
         });
 
         $rootScope.$on('$translateChangeSuccess', function(){
-            self.render();
+            if(cmNodeWebkit.isAvailable()) {
+                self.render();
+            }
         });
     }
 ]);

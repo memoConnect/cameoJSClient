@@ -1,13 +1,13 @@
 'use strict';
 
 angular.module('cmNodeWebkit').service('cmNodeWebkit', [
-    '$nodeWebkitCameoConfig',
-    function($nodeWebkitCameoConfig){
+    'cmDevice', '$nodeWebkitCameoConfig',
+    function(cmDevice, $nodeWebkitCameoConfig){
         var cmNodeWebkit = {
             isAvailable: function(whoIs, callback){
                 //cmLogger.debug('cmNodeWebkit.isAvailable - called from -> ' + whoIs);
 
-                if($nodeWebkitCameoConfig == 'undefined' || !$nodeWebkitCameoConfig.isNodeWebkit){
+                if(cmDevice.isNodeWebkit() && $nodeWebkitCameoConfig == 'undefined' || !$nodeWebkitCameoConfig.isNodeWebkit){
                     return false;
                 }
 

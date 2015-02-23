@@ -1,3 +1,3 @@
 'use strict';
 
-angular.module('cmNodeWebkit',['pascalprecht.translate','cmCore']);
+angular.module('cmNodeWebkit',['pascalprecht.translate','cmCore','cmPhonegap']);
