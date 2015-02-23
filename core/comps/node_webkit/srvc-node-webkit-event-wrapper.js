@@ -1,11 +1,17 @@
 'use strict';
 
 angular.module('cmNodeWebkit').service('cmNodeWebkitEventWrapper', [
-    'cmObject', 'cmLogger', '$rootScope',
-    function(cmObject, cmLogger, $rootScope){
-        var self = this;
+    'cmNodeWebkit', 'cmObject', 'cmLogger', '$rootScope',
+    function(cmNodeWebkit, cmObject, cmLogger, $rootScope){
+        var self = this,
+            gui, win;
 
         cmObject.addEventHandlingTo(this);
+
+        if(cmNodeWebkit.isAvailable()){
+            gui = this.gui = require('nw.gui');
+            win = this.win = this.gui.Window.get();
+        }
 
         this.addTrigger = function(obj){
             //cmLogger.debug('cmNodeWebkitEventWrapper.addTrigger -> ' + JSON.stringify(obj));

@@ -8,14 +8,15 @@ angular.module('cmNodeWebkit').service('cmNodeWebkitMenu', [
               cmUserModel, cmLogger,
               $rootScope, $filter)
     {
-        var self = this;
+        var self = this,
+            gui, win;
 
         cmNodeWebkitEventWrapper.addTrigger(this);
 
         if(cmNodeWebkit.isAvailable()){
             // Load native UI library
-            var gui = this.gui = require('nw.gui');
-            var win = this.win = this.gui.Window.get();
+            gui = this.gui = require('nw.gui');
+            win = this.win = this.gui.Window.get();
         }
 
         function createMenuItems(menu, items){
