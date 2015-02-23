@@ -25,8 +25,8 @@
         "max_width": 1960,
         "position": "center", 
         "show_in_taskbar": true, 
-        "toolbar": true,
-        "icon": "gfx/icon_128x128.png"
+        "toolbar": false,
+        "icon": "gfx/icon-144-xxhdpi.png"
     }, 
     "version": "<%= currentVersion %>",
     "webkit": {
