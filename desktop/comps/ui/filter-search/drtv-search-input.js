@@ -12,11 +12,10 @@ angular.module('cmDesktopUi').directive('cmSearchInput',[
                 cmOptions: '=cmOptions',
                 visible: '=cmVisible'
             },
-            template:  '<input data-qa="inp-list-search" id="inp-list-search" name="inp-list-search" type="text" value="" ng-model="search" placeholder="{{placeholder}}">' +
-                       '<i data-qa="btn-list-search-clear" class="fa toggle-btn" ng-click="clickToogleBtn()" ng-class="{\'cm-search\':showDefaultIcon && counterKeydown == 0,\'cm-checkbox-wrong\':counterKeydown > 0}"></i>',
+            template:  '<input data-qa="inp-list-search" id="inp-list-search" name="inp-list-search" type="text" value="" ng-model="search" placeholder="{{\'DRTV.SEARCH.LABEL\'|cmTranslate}}">' +
+                       '<i data-qa="btn-list-search-clear" class="fa toggle-btn" ng-click="clickToogleBtn()" ng-class="{\'cm-search\':showDefaultIcon && counterKeydown == 0,\'cm-checkbox-wrong\':counterKeydown > 0}" cm-reactive></i>',
             link: function(scope, element, attrs){
 
-                scope.placeholder = attrs.placeholder || 'Search';
                 // wrapper events
                 element
                 .on('focus', function(){
