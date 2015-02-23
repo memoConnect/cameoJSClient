@@ -59,12 +59,12 @@ module.exports = function (grunt, options) {
                             src: 'core/favicon.ico',
                             dest: 'dist/nodeWebkit/favicon.ico'
                         },
-                        {
-                            expand: true,
-                            cwd: 'resource/nodeWebkit/vendor/desktopNotification',
-                            src: ['**'],
-                            dest: 'dist/nodeWebkit/'
-                        },
+                        //{
+                        //    expand: true,
+                        //    cwd: 'resource/nodeWebkit/vendor/desktopNotification',
+                        //    src: ['**'],
+                        //    dest: 'dist/nodeWebkit/'
+                        //},
                         {
                             expand: true,
                             cwd: 'core/gfx/',

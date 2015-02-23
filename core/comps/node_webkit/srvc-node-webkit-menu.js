@@ -62,9 +62,7 @@ angular.module('cmNodeWebkit').service('cmNodeWebkitMenu', [
         };
 
         this.render = function(){
-            cmLogger.debug('cmNodeWebkitMenu.render');
-
-            console.log($nodeWebkitCameoConfig)
+            //cmLogger.debug('cmNodeWebkitMenu.render');
 
             if(!cmNodeWebkit.isAvailable('cmNodeWebkitMenu.render') && typeof $nodeWebkitCameoConfig != 'object' && typeof $nodeWebkitCameoConfig.rootMenu != 'object' && typeof $nodeWebkitCameoConfig.rootMenu.items != 'object'){
                 return false;
