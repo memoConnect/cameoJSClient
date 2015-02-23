@@ -3,7 +3,9 @@
 angular.module('cmValidate')
 .directive('cmFormPhonenumber', [
     'cmCountryPrefix', 'cmVerify',
-    function (cmCountryPrefix, cmVerify) {
+    '$rootScope',
+    function (cmCountryPrefix, cmVerify,
+              $rootScope) {
         return {
             restrict: 'E',
             scope: {
@@ -23,14 +25,28 @@ angular.module('cmValidate')
 
                 $scope.typeof = function(variable){
                     return typeof variable;
-                }
+                };
 
                 $scope.showPhoneInfo = false;
                 $scope.togglePhoneInfo = function(){
                     if(typeof $scope.toggleInfo == 'string'){
                         $scope.showPhoneInfo = !$scope.showPhoneInfo ? true : false;
                     }
-                }
+                };
+
+                var killWatcher = $rootScope.$on('cmValidate:error', function(event, errorCodes){
+                    if(errorCodes.length > 0 && errorCodes.indexOf('PHONENUMBER_INVALID') >= 0) {
+                        $scope.cmInnerForm.phoneNumberDisp.$setValidity('phoneNumberInvalid',false);
+                    }
+                });
+
+                $scope.$watch('ngModel',function(newValue){
+                    $scope.cmInnerForm.phoneNumberDisp.$setValidity('phoneNumberInvalid',true);
+                });
+
+                $scope.$on('$destroy', function(){
+                    killWatcher();
+                });
             }
         }
     }

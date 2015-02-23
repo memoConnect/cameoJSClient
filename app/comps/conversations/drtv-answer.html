@@ -17,10 +17,12 @@
         <textarea
             id="answer-textarea"
             data-qa="input-answer"
+            name="input-answer"
             ng-model="newMessageText"
             cm-resize-textarea
             cm-send-on-return
             cm-max-rows="8"
+            cm-last-focus
             ></textarea>
         <div class="inputter"></div>
     </div>
@@ -28,7 +30,7 @@
     <div class="btns-right">
         <cm-emoji-handler></cm-emoji-handler>
 
-        <div class="post-wrap" data-qa="btn-send-answer" ng-click="send()" cm-reactive>
+        <div class="post-wrap" data-qa="btn-send-answer" ng-click="send($event)" cm-reactive>
             <i
                 class="fa cm-post with-cursor {{conversation.lockStatus.class}}-wrap"
                 ng-class="{

@@ -6,10 +6,10 @@ angular.module('cmPhonegap')
 .service('cmPushNotificationAdapter', [
     'cmPhonegap', 'cmDevice', 'cmPushNotifications',
     'cmUtil', 'cmLanguage', 'cmApi', 'cmLogger', 'cmObject',
-    '$rootScope', '$window', '$phonegapCameoConfig', '$injector',
+    '$rootScope', '$window', '$injector',
     function (cmPhonegap, cmDevice, cmPushNotifications,
               cmUtil, cmLanguage, cmApi, cmLogger, cmObject,
-              $rootScope, $window, $phonegapCameoConfig, $injector) {
+              $rootScope, $window, $injector) {
 
         var self = {
             plugin: null,
@@ -23,11 +23,7 @@ angular.module('cmPhonegap')
             },
 
             init: function(){
-                if ($phonegapCameoConfig == 'undefined'){
-                    return false;
-                }
-
-                cmPhonegap.isReady(function(){
+                cmPhonegap.isReady('cmPushNotificationAdapter.init',function(){
                     if(!('plugins' in $window) || !('pushNotification' in $window.plugins)) {
                         //cmLogger.info('PUSHNOTIFICATION PLUGIN IS MISSING');
                         return false;
@@ -75,7 +71,7 @@ angular.module('cmPhonegap')
 //                        self.registerDevice();
 //                    }
 //                });
-                cmPhonegap.isReady(function(){
+                cmPhonegap.isReady('cmPushNotificationAdapter.checkRegisteredDevice',function(){
                     if($injector.get('cmSettings').get('pushNotifications')) {
                         self.registerDevice();
                     }
@@ -107,6 +103,10 @@ angular.module('cmPhonegap')
                         function(){
                             self.deviceIsRegistrated = true;
                             self.trigger('device:registrated');
+                        },
+                        function(){
+                            cmLogger.error('cmPushNotificationAdapter.registerDevice',arguments);
+                            self.trigger('device:unregistrated');
                         }
                     );
                 });
@@ -128,10 +128,16 @@ angular.module('cmPhonegap')
                         data.overrideToken = token;
 
                     cmApi.delete(data)
-                    .then(function(){
-                        self.deviceIsRegistrated = false;
-                        self.trigger('device:unregistrated');
-                    });
+                    .then(
+                        function(){
+                            self.deviceIsRegistrated = false;
+                            self.trigger('device:unregistrated');
+                        },
+                        function(){
+                            cmLogger.error('cmPushNotificationAdapter.deleteDevice',arguments);
+                            self.trigger('device:registrated');
+                        }
+                    );
                 }
             }
         };

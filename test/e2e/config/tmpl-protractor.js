@@ -10,9 +10,9 @@ var useChrome = true,
 /* Chrome */
 if(useChrome){
     browserConfig = {
-        seleniumPort: null,
+        //seleniumPort: null,
         chromeDriver: '<%= chromeDriverPath %>',
-        chromeOnly: true,
+        directConnect: true,
         capabilities:{
             'browserName':'chrome',
             'chromeOptions': {
@@ -23,7 +23,7 @@ if(useChrome){
 /* Internet Explorer */
 } else {
     browserConfig = {
-        chromeOnly: false,
+        seleniumServerJar: '../../../test/lib/ptor/selenium-server-standalone-2.44.0.jar',
         capabilities: {
             'browserName': 'internet explorer',
             'platform': 'ANY',
@@ -33,7 +33,6 @@ if(useChrome){
 }
 
 exports.config = extend(browserConfig, {
-    seleniumServerJar: '../../../test/lib/ptor/selenium-server-standalone-2.44.0.jar',
     allScriptsTimeout: 60000,
 
     onPrepare: function () {
@@ -43,6 +42,12 @@ exports.config = extend(browserConfig, {
         var SpecReporter = require('jasmine-spec-reporter');
         // add jasmine spec reporter
         jasmine.getEnv().addReporter(new SpecReporter({displayStacktrace: true, displaySpecDuration: true}));
+
+        var HtmlReporter = require('protractor-html-screenshot-reporter');
+        jasmine.getEnv().addReporter(new HtmlReporter({
+            baseDirectory: '<%= testScreenshotPath %>',
+            takeScreenShotsOnlyForFailedSpecs: true
+        }));
     },
 
     jasmineNodeOpts: {

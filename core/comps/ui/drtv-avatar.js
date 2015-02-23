@@ -45,7 +45,7 @@
          <file name="index.html">
              <div ng-controller="Ctrl">
                  <h2>unknown / default avatar</h2>
-                 <cm-avatar cm-view="unknown"></cm-avatar>
+                 <cm-avatar cm-avatar-view="unknown"></cm-avatar>
 
                  <h2>cmIdentity avatar</h2>
                  <cm-avatar cm-data="simple_cmIdentityModel_1"></cm-avatar>
@@ -55,13 +55,9 @@
      </example>
  */
 
-/**
- * @TODO Doku anpassen
- */
-angular.module('cmUi').directive('cmAvatar',[
-    'cmUserModel',
-    'cmUtil',
-    'cmConfig',
+angular.module('cmUi')
+.directive('cmAvatar',[
+    'cmUserModel', 'cmUtil', 'cmConfig',
     function (cmUserModel, cmUtil, cmConfig){
 
         return {
@@ -93,11 +89,11 @@ angular.module('cmUi').directive('cmAvatar',[
                         scope.identity.trigger('avatar:loaded');
                     };
                     bgImg.src = imgSrc;
-                    element.find('i').css('background-image','url('+imgSrc+')');
+                    angular.element(element[0].querySelector('.wrap i')).css('background-image','url('+imgSrc+')');
                 }
 
                 // is unknown avatar for add reciepients or choose avatar
-                if('cmView' in attrs && attrs.cmView == 'unknown'){
+                if('cmAvatarView' in attrs && attrs.cmAvatarView == 'unknown'){
                     element.find('i').addClass('fa cm-person');
                 } else {
                     scope.$watch('identity',function(){

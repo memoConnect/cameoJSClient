@@ -23,8 +23,9 @@ angular.module('cmConversations').service('cmConversationFactory', [
     'cmStateManagement',
     'cmConversationModel',
     'cmLogger',
+    '$q',
 
-    function($rootScope, cmUserModel, cmConversationsAdapter, cmFactory, cmStateManagement, cmConversationModel, cmLogger) {
+    function($rootScope, cmUserModel, cmConversationsAdapter, cmFactory, cmStateManagement, cmConversationModel, cmLogger, $q) {
         var self = cmFactory(cmConversationModel);
 
         var _quantity   = 0,
@@ -34,7 +35,7 @@ angular.module('cmConversations').service('cmConversationFactory', [
         self.state = new cmStateManagement(['loading']);
 
         self.getList = function(limit, offset){
-//            cmLogger.debug('cmConversationFactory.getList');
+            //cmLogger.debug('cmConversationFactory.getList');
             if(cmUserModel.isGuest() || self.state.is('loading'))
                 return false;
 
@@ -58,7 +59,7 @@ angular.module('cmConversations').service('cmConversationFactory', [
                     _quantity = data.numberOfConversations;
 
                     data.conversations.forEach(function (conversation_data) {
-                        self.create(conversation_data);
+                        self.create(conversation_data, true);
                     });
                 }
             ).finally(
@@ -73,6 +74,59 @@ angular.module('cmConversations').service('cmConversationFactory', [
 
         self.getLimit = function(){
             return _limit;
+        };
+
+        self.search = function(search, limit, offset){
+            if(cmUserModel.isGuest() || self.state.is('loading'))
+                return false;
+
+            var deferred = $q.defer();
+
+            self.state.set('loading');
+
+            cmConversationsAdapter.searchConversations(search,limit, offset).then(
+                function(data) {
+                    /**
+                     * @todo
+                     * _quantity = data.numberOfConversations;
+                     */
+
+                    data.conversations.forEach(function (conversation_data) {
+                        self.create(conversation_data);
+                    });
+
+                    deferred.resolve(data);
+                },
+                function(){
+                    deferred.reject('search errror');
+                }
+            ).finally(
+                function(){
+                    self.state.unset('loading');
+                }
+            );
+
+            return deferred.promise;
+        };
+
+        self.deleteConversation = function(conversation){
+            var instance = self.find(conversation);
+
+            if(instance instanceof cmConversationModel){
+                return  cmConversationsAdapter
+                        .deleteConversation(instance.id)
+                        .then(
+                            function(){
+                                self.deregister(conversation);
+                                return $q.when();
+                            },
+                            function(){
+                                return $q.reject();
+                            }
+                        );
+            } else {
+                return $q.reject('conversation not found');
+            }
         };
 
         /**
@@ -112,9 +166,13 @@ angular.module('cmConversations').service('cmConversationFactory', [
         });
 
         cmConversationsAdapter.on('message:new', function(event,data){
-            self
-                .create(data.conversationId)
-                .trigger('message:new', data)
+            var instance = self.find(data.conversationId);
+
+            if(instance){
+                self
+                    .create(data.conversationId)
+                    .trigger('message:new', data)
+            }
         });
 
         cmConversationsAdapter.on('conversation:new', function(event,data){
@@ -123,9 +181,28 @@ angular.module('cmConversations').service('cmConversationFactory', [
 
         cmConversationsAdapter.on('conversation:update', function(event, data){
             //cmLogger.debug('cmConversationFactory.on:conversation:update');
-            self.create(data, true)
+            var instance = self.create(data, true);
+
+            if(instance){
+                if(typeof data.recipients != 'undefined'){
+                    data.recipients.forEach(function(recipient){
+                        if(typeof recipient.deleted != 'undefined' && recipient.deleted == true && typeof recipient.identityId == 'string'){
+                            instance.recipients.deregister(recipient.identityId)
+                        }
+                    });
+                }
+            }
+
         });
 
+        cmConversationsAdapter.on('conversation:deleted', function(event, data){
+            //cmLogger.debug('cmConversationFactory.on:conversation:deleted');
+            var instance = self.find(data.id);
+
+            if(instance){
+                self.deregister(instance);
+            }
+        });
 
         /**
          * @TODO CallbackQueue? Fingerprint check! Performance!
@@ -151,9 +228,6 @@ angular.module('cmConversations').service('cmConversationFactory', [
                     }
                 }
             }
-            //cmCallbackQueue.push(
-            //    // iterate over conversations and decrypt
-            //);
         });
 
         cmConversationsAdapter.on('subscriptionId:changed', function(){
@@ -161,6 +235,12 @@ angular.module('cmConversations').service('cmConversationFactory', [
                 //conversation.update();
                 conversation.loadLatestMessages();
             });
+
+            self.getList();
+        });
+
+        self.on('notFound', function(event, data){
+            self.deregister(data);
         });
 
         return self;

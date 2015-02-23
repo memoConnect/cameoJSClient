@@ -24,7 +24,8 @@ angular.module('cmCore')
             cmApi.post({
                 path: '/services/getBrowserInfo',
                 data: {
-                    version: cmVersion.version
+                    version: cmVersion.version,
+                    isApp: cmDevice.isApp(true)
                 }
             }).then(
                 function(data){

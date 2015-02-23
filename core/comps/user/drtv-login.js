@@ -1,12 +1,13 @@
 'use strict';
 
-angular.module('cmUser').directive('cmLogin', [
+angular.module('cmUser')
+.directive('cmLogin', [
     'cmNotify', 'cmUserModel', 'cmKeyStorageService', 'cmCrypt',
-    'cmConfig', 'cmEnv', 'cmLoader',
-    '$location','$rootScope',
+    'cmConfig', 'cmEnv', 'cmLoader', 'cmKeyboard',
+    '$location', '$rootScope', '$timeout',
     function (cmNotify, cmUserModel, cmKeyStorageService, cmCrypt,
-              cmConfig, cmEnv, cmLoader,
-              $location, $rootScope) {
+              cmConfig, cmEnv, cmLoader, cmKeyboard,
+              $location, $rootScope, $timeout) {
         return  {
             restrict    :   'AE',
             templateUrl :   'comps/user/drtv-login.html',
@@ -30,7 +31,8 @@ angular.module('cmUser').directive('cmLogin', [
                     return true;
                 }
 
-                $scope.handlePassword = function(){
+                $scope.handlePassword = function(event){
+                    cmKeyboard.focusLast(event);
                     $scope.passwordType = ($scope.passwordType != 'password')
                         ? 'password'
                         : 'text';
@@ -77,7 +79,10 @@ angular.module('cmUser').directive('cmLogin', [
                                 skipKeyInfo = storageService.get('skipKeyInfo') || false;
 
                             if(!$location.$$path.match(/\/purl\/.*/)){
-                                if(!cmUserModel.hasLocalKeys() && skipKeyInfo == false){
+
+                                if(typeof cmUserModel.data.account.registrationIncomplete != 'undefined' && cmUserModel.data.account.registrationIncomplete == true){
+                                    $rootScope.goTo("/setup/account");
+                                } else if(!cmUserModel.hasLocalKeys() && skipKeyInfo == false){
                                     $rootScope.goTo("/setup/keyinfo");
                                 } else {
                                     $rootScope.goTo("/talks");

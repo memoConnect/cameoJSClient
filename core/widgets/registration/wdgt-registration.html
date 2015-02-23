@@ -1,63 +1,67 @@
-<form name="registrationForm" class="form-horizontal" role="form" autocomplete="off" novalidate>
-    <article class="content small-text mt5 tac is-selectable">
-        {{'REGISTER.TITLE.MANDATORY_INFO' | cmTranslate}}
-    </article>
+<cm-scrollable>
 
-    <hr class="margin-small">
+    <form name="registrationForm" class="form-horizontal" role="form" autocomplete="off" novalidate>
+        <article class="content small-text mt5 tac is-selectable">
+            {{'REGISTER.TITLE.MANDATORY_INFO' | cmTranslate}}
+        </article>
 
-    <h2 ng-click="toogleLoginInfo()" cm-reactive>
-        <i class="fa cm-key"></i>
-        {{'REGISTER.TITLE.HEAD_LOGIN' | cmTranslate}}
-        <i class="fa cm-info"></i>
-    </h2>
+        <hr class="margin-small">
 
-    <article class="content" ng-show="showLoginInfo">
-        <cm-info-bubble nose-x="50%">
-            <span ng-bind-html="'REGISTER.INFO.LOGIN_INFORMATION'|cmParse"></span>
-        </cm-info-bubble>
-    </article>
+        <h2 ng-click="toogleLoginInfo()" cm-reactive>
+            <i class="fa cm-key"></i>
+            {{'REGISTER.TITLE.HEAD_LOGIN' | cmTranslate}}
+            <i class="fa cm-info"></i>
+        </h2>
 
-    <hr class="margin-small">
+        <article class="content" ng-show="showLoginInfo">
+            <cm-info-bubble nose-x="50%">
+                <span ng-bind-html="'REGISTER.INFO.LOGIN_INFORMATION'|cmParse"></span>
+            </cm-info-bubble>
+        </article>
 
-    <article class="content">
-        <cm-cameo-id
-            ng-model="formData.cameoId" form-name="registrationForm" cm-tabindex="1"
-            placeholder="REGISTER.PLACEHOLDER.USERNAME">
-        </cm-cameo-id>
-    </article>
+        <hr class="margin-small">
 
-    <hr class="margin-small">
+        <article class="content">
+            <cm-cameo-id
+                    ng-model="formData.cameoId" form-name="registrationForm" cm-tabindex="1"
+                    placeholder="REGISTER.PLACEHOLDER.USERNAME">
+            </cm-cameo-id>
+        </article>
 
-    <cm-password ng-model="formData.password" cm-tabindex="2"></cm-password>
+        <hr class="margin-small">
 
-    <hr class="margin-small">
+        <cm-password ng-model="formData.password" form-name="registrationForm" cm-tabindex="2"></cm-password>
 
-    <article class="content">
-        <div class="cm-clear-bg terms-link is-selectable" data-qa="form-input">
-            {{'REGISTER.LABEL.TERMS_ACCEPT'|cmTranslate}}&nbsp;
-            <a href="#/terms" data-qa="link-terms" class="classic-link">{{'REGISTER.LABEL.TERMS'|cmTranslate}}</a>&nbsp;*
-            <input
-                    data-qa="checkbox-agb"
-                    type="checkbox" id="agbCheckboxInput" name="agb" ng-model="formData.agb"
-                    class="ng-hide" required />
-            <i
-                    id="agbCheckbox"
-                    data-qa="icon-checkbox-agb"
-                    class="fa cm-ci-color ml15"
-                    ng-class="{
-                    'cm-checkbox':registrationForm.agb.$invalid,
-                    'cm-checkbox-right':!registrationForm.agb.$invalid
-                }"
-                    ng-click="acceptTerms()"></i>
-        </div>
+        <hr class="margin-small">
 
-        <cm-info-bubble class="cm-alert" nose-x="55%" ng-show="formValidation && registrationForm.agb.$invalid" data-qa="register-info-terms">
-            <div ng-show="registrationForm.agb.$invalid">
-                <i class="fa cm-info"></i>{{'REGISTER.INFO.TERMS'|cmTranslate}}
+        <article class="content">
+            <div class="cm-clear-bg terms-link is-selectable" data-qa="form-input">
+                {{'REGISTER.LABEL.TERMS_ACCEPT'|cmTranslate}}&nbsp;
+                <a href="#/terms" data-qa="link-terms" class="classic-link">{{'REGISTER.LABEL.TERMS'|cmTranslate}}</a>&nbsp;*
+                <input
+                        data-qa="checkbox-agb"
+                        type="checkbox" id="agbCheckboxInput" name="agb" ng-model="formData.agb"
+                        class="ng-hide" required />
+                <i
+                        id="agbCheckbox"
+                        data-qa="icon-checkbox-agb"
+                        class="fa cm-ci-color ml15"
+                        ng-class="{
+                        'cm-checkbox':registrationForm.agb.$invalid,
+                        'cm-checkbox-right':!registrationForm.agb.$invalid
+                    }"
+                        ng-click="acceptTerms()"></i>
             </div>
-        </cm-info-bubble>
-    </article>
-</form>
+
+            <cm-info-bubble class="cm-alert" nose-x="55%" ng-show="formValidation && registrationForm.agb.$invalid" data-qa="register-info-terms">
+                <div ng-show="registrationForm.agb.$invalid">
+                    <i class="fa cm-info"></i>{{'REGISTER.INFO.TERMS'|cmTranslate}}
+                </div>
+            </cm-info-bubble>
+        </article>
+    </form>
+
+</cm-scrollable>
 
 <cm-footer class="desktop-w-full">
     <button id="registerUserButton" class="cm-btn-black" ng-click="createUser()" data-qa="btn-createUser" cm-reactive>

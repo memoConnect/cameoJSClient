@@ -1,16 +1,28 @@
 'use strict';
 
 angular.module('cmUi')
-.directive('cmEnter', function() {
-    return function(scope, element, attrs) {
-        element.bind("keydown keypress", function(event) {
-            if(event.which === 13) {
-                scope.$apply(function(){
-                    scope.$eval(attrs.cmEnter, {'event': event});
-                });
+.directive('cmEnter', [
+    function() {
+        return function(scope, element, attrs) {
 
-                event.preventDefault();
+            function onEnter(event){
+                if(event.keyCode === 13) {
+                    scope.$broadcast('cmEnter:pressed');
+                    scope.$apply(function(){
+                        scope.$eval(attrs.cmEnter, {'event': event});
+                    });
+
+                    event.preventDefault();
+                }
             }
-        });
-    };
-});
+
+            element.on('keydown', onEnter);
+            element.on('keypress', onEnter);
+
+            scope.$on('$destroy', function(){
+                element.off('keydown', onEnter);
+                element.off('keypress', onEnter);
+            })
+        };
+    }
+]);

@@ -1,4 +1,4 @@
- 'use strict';
+'use strict';
 
 angular.module('cmUi')
 .service('cmModal',[
@@ -48,7 +48,7 @@ angular.module('cmUi')
 
         self.close = function(id){
             var instance = self.instances[id];
-            
+
             if(instance){
                 self.instances[id].close();
 
@@ -67,7 +67,7 @@ angular.module('cmUi')
 
         self.create = function(config, template, target, scope){
             var attrs = '';
-            
+
             //Todo: könnte man schöner machen:
             angular.forEach(config, function(value, key){ attrs += key+'="'+value+'"' });
 
@@ -96,35 +96,44 @@ angular.module('cmUi')
 
             // the modal directive (<cm-modal>) will register itself on next digest
 
-            return modal
+            self.one('modal:closed', function(){
+                self.remove(config.id);
+            });
+
+            return modal;
+        };
+
+        self.remove = function(id){
+            angular.element($document[0].querySelector('cm-modal#'+id)).remove();
+            delete self.instances[id];
         };
 
         self.confirm = function(config){
 
             config  =   {
-                            text:   config.text,
-                            cancel: config.cancel   || 'MODAL.LABEL.CANCEL',
-                            okay:   config.okay     || 'MODAL.LABEL.OK',
-                            title:  config.title    || 'DRTV.CONFIRM.HEADER',
-                            html:   config.html     || '',
-                            data:   config.data
-                        };
+                text:   config.text,
+                cancel: config.cancel   || 'MODAL.LABEL.CANCEL',
+                okay:   config.okay     || 'MODAL.LABEL.OK',
+                title:  config.title    || 'DRTV.CONFIRM.HEADER',
+                html:   config.html     || '',
+                data:   config.data
+            };
 
             var deferred    = $q.defer(),
                 scope       = $rootScope.$new(),
-                modalId     = 'modal-confirm-'+(new Date()).getTime();
+                modalId     = 'modal-confirm';
 
             scope.text              =   config.text       || '';
-            scope.labelOkay         =   config.okay
-            scope.labelCancel       =   config.cancel
+            scope.labelOkay         =   config.okay;
+            scope.labelCancel       =   config.cancel;
 
-            scope.cancel            =   function(){ 
-                                            $rootScope.closeModal(modalId)
-                                        }
+            scope.cancel            =   function(){
+                $rootScope.closeModal(modalId)
+            };
             scope.confirm           =   function(){
-                                            deferred.resolve(this)
-                                            $rootScope.closeModal(modalId) 
-                                        }
+                deferred.resolve(this);
+                $rootScope.closeModal(modalId)
+            };
             self.create({
                 id:             modalId,
                 type:           'confirm',
@@ -137,18 +146,17 @@ angular.module('cmUi')
 
             self.one('modal:closed', function(event, id){
                 if(id == modalId)
-                    deferred.reject()
+                    deferred.reject('cmModal:closed');
+                return true;
+            });
 
-                return true //remove event binding
-            })
-
-            return deferred.promise
+            return deferred.promise;
         };
 
-        $rootScope.openModal        = self.open
-        $rootScope.closeModal       = self.close
-        $rootScope.isModalVisible   = false
-        $rootScope.confirm          = self.confirm
+        $rootScope.openModal        = self.open;
+        $rootScope.closeModal       = self.close;
+        $rootScope.isModalVisible   = false;
+        $rootScope.confirm          = self.confirm;
 
 //        $rootScope.$watch('isModalVisible' ,function(newValue){
 //            console.log('watch modal '+newValue)

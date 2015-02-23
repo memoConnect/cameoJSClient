@@ -1,5 +1,5 @@
 var config = require("../../config/specs.js")
-var util = require("../../../lib/e2e/cmTestUtil.js")
+var util = require("../../cmUtil.js")
 
 describe('Route Contact: ', function () {
     var ptor = util.getPtorInstance(),
@@ -67,11 +67,8 @@ describe('Route Contact: ', function () {
 
     describe('create external contact', function(){
 
-        it('open modal and click create new contact',function(){
+        it('open create new contact',function(){
             util.waitAndClickQa('add-contact-btn')
-            .then(function(){
-                return util.waitAndClickQa('btn-modal-contact-create')
-            })
             .then(function(){
                 return util.waitForPageLoad('/contact/create')
             })
@@ -96,12 +93,16 @@ describe('Route Contact: ', function () {
             // close notify extern modal
             util.waitForModalOpen()
             util.waitAndClickQa('btn-cancel','cm-modal.active')
+
+            /**
+             * @todo check conversation
+             */
         })
 
         it('search and click to detail',function(){
             util.waitForPageLoad('/contact/list')
             .then(function(){
-                return  util.waitForElement('cm-contact-tag')
+                return util.waitForElement('cm-contact-tag')
             })
             .then(function(){
                 return util.headerSearchInList(extUserName)
@@ -110,11 +111,16 @@ describe('Route Contact: ', function () {
                 return  ptor.wait(function(){
                             return $$('cm-contact-tag').then(function(elements){ return elements.length == 1})
                         })
+            }).then(function(){
+                    util.closeHeaderSearch()
             })
+
+
         })
 
         it('should find external user after logout/login (1)', function(){
             util.login(testUser, 'password')
+
             .then(function(){
                 util.get('/contact')
                 return util.waitForPageLoad('/contact')
@@ -183,13 +189,14 @@ describe('Route Contact: ', function () {
 
         it('should find external user after logout/login (2)', function(){
             util.login(testUser, 'password');
-
             util.get('/contact')
-            util.waitForPageLoad('/contact')
-
-            util.headerSearchInList(extUserName)
-            $$('cm-contact-list cm-contact-tag cm-avatar').first().click()
-            util.expectCurrentUrl('#/contact/.*')
+            util.waitForPageLoad('/contact').then(function() {
+                return util.headerSearchInList(extUserName)
+            }).then(function() {
+                return $$('cm-contact-list cm-contact-tag').first().click()
+            }).then(function(){
+                return util.waitForPageLoad('/contact/*')
+            })
         })
 
         it('should be the same details in contact (2)', function(){
@@ -207,6 +214,68 @@ describe('Route Contact: ', function () {
             util.getVal('input-email').then(function(value){
                 expect(value).toBe(extUserMail2)
             })
+        })
+    })
+
+    describe('should be able to delete the external user', function(){
+        it('go to list and open external', function(){
+            util.get('/contact/list')
+            util.waitForPageLoad('/contact/list')
+            .then(function(){
+                return util.headerSearchInList(extUserName)
+            })
+            .then(function(){
+                return $$('cm-contact-list cm-contact-tag').first().click()
+            }).then(function(){
+                return util.waitForPageLoad('/contact/*')
+            })
+        })
+
+        it('should have a delete button', function(){
+            util.scrollToBottom()
+            expect($("[data-qa='btn-delete-contact']").isDisplayed()).toBeTruthy()
+
+            util.click('btn-delete-contact')
+            .then(function() {
+                return util.waitForElement("[data-qa='modal-confirm']")
+            }).then(function(){
+                return util.waitAndClickQa('btn-confirm','cm-modal.active')
+            })
+        })
+
+        it('after delete should be in list and external user not found', function(){
+            util.waitForPageLoad('/contact/list').then(function(){
+                return util.headerSearchInList(extUserName)
+            }).then(function(){
+                return $$('cm-contact-list cm-contact-tag')
+            }).then(function(elements){
+                expect(elements.length).toEqual(0)
+            })
+
+            util.closeHeaderSearch();
+        })
+    })
+
+    describe('search btn should be link to contact search', function(){
+        it('open create new contact',function(){
+            util.get('/contact/list')
+            util.waitForPageLoad('/contact/list').then(function(){
+                util.waitAndClickQa('add-contact-btn')
+                    .then(function(){
+                        return util.waitForPageLoad('/contact/create')
+                    })
+            })
+        })
+
+        it('search btn should be displayed', function(){
+            expect($("[data-qa='btn-identity-search']").isDisplayed()).toBeTruthy()
+        })
+
+        it('on click on search btn, route should change to contact/search', function(){
+            util.waitAndClickQa('btn-identity-search')
+                .then(function(){
+                    return util.waitForPageLoad('/contact/list')
+                })
         })
     })
 

@@ -280,6 +280,19 @@ angular.module('cmCore')
             return el;
         };
 
+        this.isInParent = function(parent, children){
+            var el = children;
+
+            while (el && el !== parent) {
+                el = el.parentNode;
+
+                if(el == parent){
+                    return true;
+                }
+            }
+            return false;
+        };
+
         this.getOffsetToBody = function(el){
             var top=0, left=0;
             while(el) {

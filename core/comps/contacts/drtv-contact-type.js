@@ -7,20 +7,26 @@ angular.module('cmContacts').directive('cmContactType',[
             restrict: 'AE',
             link: function(scope, element, attrs){
                 function refresh(data){
-                    // data maybe a contact or an identity
-                    var identity = data.identity || data;
 
-                    var contact = data.contactType
+                    if(!attrs.cmForceIcon){
+                        // data maybe a contact or an identity
+                        var identity = data.identity || data;
+
+                        var contact = data.contactType
                                 ? data
                                 : cmContactsModel.findByIdentity(data),
-                        type    = contact ? contact.contactType : 'unknown',
-                        icon    = ''
+                            type    = contact ? contact.contactType : 'unknown',
+                            icon    = ''
 
-                    icon = (type == 'internal') ? 'cm-rhino-positive'   : icon;
-                    icon = (type == 'external') ? 'cm-address-book'     : icon;
-                    icon = (type == 'local')    ? 'cm-mobile'           : icon;
-                    icon = (type == 'pending')  ? 'cm-rhino-positive'   : icon;
-                    icon = (type == 'unknown')  ? 'cm-address-book'     : icon;
+                        icon = (type == 'internal') ? 'cm-rhino-positive'   : icon;
+                        icon = (type == 'external') ? 'cm-address-book'     : icon;
+                        icon = (type == 'local')    ? 'cm-mobile'           : icon;
+                        icon = (type == 'pending')  ? 'cm-not-connected'    : icon;
+                        icon = (type == 'unknown')  ? 'cm-address-book'     : icon;
+                    } else {
+                        icon = attrs.cmForceIcon;
+                    }
+
 
                     element.children().remove();
 

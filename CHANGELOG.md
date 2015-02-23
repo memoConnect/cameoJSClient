@@ -1,15 +1,146 @@
-## Dev
+# Dev
 
-# WW 31.12.2014
+#########
+# RC 0.5.1 - 10.02.2015
+#########
+
+## WW 23.05.2015
+* fixxed conversation menu in desktop
+* closed keyboard on friendrequest
+* new pushplugin version
+
+## BS 13.02.2015
+* update for CAM-1625, load information after stand-by
+
+## BS 12.02.2015
+* fix CAM-1693, search contacts will now removed, when filter closed
+
+## BS 06.02.2015
+* CAM-1724 update search contact
+    * contact/create search btn links now to contact/list
+    * server search will be activated
+    * list will be empty, if filter string is empty
+* Update Filter/Search
+    * if search will be opened and filter string is empty, list view is also empty
+
+## WW 06.02.2015
+* new context in list of talks and contacts with tap and longtap
+* CAM-1566 cmKeyboard handling ()
+    * on cmEnter:pressed or locationChangeStart events cmKeyboard.closed triggered
+    * new function focusLast kepps the keyboard visible while clicked out of the keyboard that will close the keyboard
+* CAM-1646 html5 networkstatus handling
+    * on offline or online fire to the browser cmApi gets a sellep or wakeup event
+* CAM-1622 handshake transaction secret now lowercase
+    * new drtv cm-model-to-lowercase
+
+## BS 05.02.2015
+* Update conversation handling if a recipient leave the conversation
+    * update BE Eventhandling, deleted recipients will now deregistered
+    * at talks route, conversation-tag update them self, if conversation.recipients trigger deregister
+
+## BS 04.02.2015
+* CAM-1397 update, add event handling at start/download
+
+## BS 29.01.2015
+* CAM-1397 add incomplete registration handling
+
+## BS 27.01.2015
+* CAM-1331 add delete/leave conversations
+
+#########
+# RC 0.5.0 - 04.02.2015
+#########
+
+## BS 10.02.2015
+* fix CAM-1711 create new conversation with message, after adding a new contact
+
+## BS 03.02.2015
+* fix CAM-1554 switch DisplayName for external User
+
+## WW 02.02.2015
+* fixxed phone & email errorcodes now in cmApi
+* handshake token now case insentive (drtv-model-to-lowercase)
+
+## BS 29.01.2015
+* CAM-1707 update re-keying process
+
+## WW 29.01.2015
+* CAM-1711 extern contact with message
+* CAM-1702 password minimum length
+* CAM-1682 friendRequest accpect bubble to other devices
+* CAM-1631 import contacts validate phone in list
+
+## WW 28.01.2015
+* CAM-1629 multiple modals
+* CAM-1585 checksum at download page for apk
+
+## WW 27.01.2015
+* CAM-1649 add delete pending requests
+
+## BS 26.01.2015
+* fix BUG CAM-1692, update LocalStorage handling
+
+## WW 26.01.2015
+* CAM-1647 add delete Contacts (cameo/extern)
+
+## BS 23.01.2015
+* Update SJCL Vendor Library
+* Add isApp to getBrowserInfo
+
+## BS 21.01.2015
+* CAM-1620 - add Re-Keying Modal
+    * update authentication-modal, add spinnter, style error msgs
+    * re-keying modal will shown, when re-keying will be proceed
+* CAM-1511 - add scroll to after last message is decrypted
+
+## WW 21.01.2015
+* fixxed ios splashscreen
+* app keyboard should be closed before route change
+* fixxed image fullscreen for app
+
+## BS 19.01.2015
+* CAM-1588 update header search
+
+## WW 15.01.2015
+* CAM-1581 new desktop layout
+    * removed position fixed
+    * cm-coloumn & cm-scrollable calcs the height for scrollable content
+    * min dimension is 1024x768
+* CAM-1363 fullscreen for files in cm-message
+    * one height for all files states / onUpload, onDownloadReady, onDownload, cached
+    * new file view for all embed types
+    * image thumb stays in preivew mask, also stay in fulllscreen mask
+    * in fullscreen only pinch (mobile 2 touches) and zoom (mousewheel) possible, pan not possible yet (move)
+* add a font loader
+* update thirdparty list
+* add about us to help route
+
+## BS 09.01.2015
+* finish CAM-1315, story contains new trust aspect in conversations, "transtive rekeying"
+
+## WW 09.01.2015
+* add "pause check", when app goes to background, event subscribtion will be stopped and reactived on resume
+
+## BS 07.01.2015
+* finish CAM-1420 remove add contact modal, put links to search and local import in create contact route
+
+#########
+# RC 0.4.8 - 03.01.2015
+#########
+
+## WW 31.12.2014
 * app splashscreen + app spinner now visible till routeChangeSuccess /login | /talks & /conversation/:id | /contact/requests
 * fixxed emoji insertion now textarea resize if one full row and emoji insertion
-
+* fixxed ng-docs
+* cmCamera
+    * names choosen files from "content" to "cmFile_20141231(actual date).jpg(any extension)" on app/phonegap
+    * names taken image to "cmPicture_20141231(actual date).jpg"
 
 #########
-## RC 0.4.7 - 29.12.2014
+# RC 0.4.7 - 29.12.2014
 #########
 
-# WW 29.12.2014
+## WW 29.12.2014
 * account setup has other info bubbles as account settings
 * CAM-1559 identity setup form can save if only a avatar is uploaded
 * after registration ring is orange at menu. the reason therefore is to show the quickstart guid under help
@@ -21,10 +152,10 @@
 * CAM-1563 removed <br> out of i18n files, only use of /n (newline)
 * CAM-1565 unread message counter call on last message if unread counter is > 0
 
-# AP 23.12.2014
+## AP 23.12.2014
 * every talk ( and its recipients) will be signed by its creator, if he has a key
 * a new security aspect (third plus symbol) will indicate, wether the recipient list is authentic (complete and having no surplus recipients) and that all keys are verified.
-# WW 23.12.2014
+## WW 23.12.2014
 * desktop
     * changed order in menu
     * new message width in conversation detail
@@ -32,16 +163,16 @@
     * 212 countries in list for phonenumber merging
     * on desktop inlist search for shortcut or phoneNumber
 
-# BS 19.12.2014
+## BS 19.12.2014
 * fix CAM-1509, footer in desktop modus will not scroll
 
-# AP 18.12.2014
+## AP 18.12.2014
 * added authenticate some key button to key list
 
-# BS 18.12.2014
+## BS 18.12.2014
 * finish CAM-1501, add 4096 Bit info to key generation lang keys
 
-# BS 17.12.2014
+## BS 17.12.2014
 * add new setup routes
     * update registration, now it is possible to turn off confirmPW and show pw input
     * add setup account route
@@ -59,7 +190,7 @@
 * update identity settings
     * cameoId is an normal text container, input is removed
 
-# WW 17.12.2014
+## WW 17.12.2014
 * better detection for wrong route
     * no token
         * /talks & / goto /login
@@ -73,7 +204,7 @@
     * /code handles the code from message
     * /reset handles the new password
 
-# WW 16.12.2014
+## WW 16.12.2014
 * update password reset with code input
     * after succeed identification form change to code input
     * password/reset landing page checks onload if resetId is expired
@@ -84,13 +215,13 @@
 * fixxed long subject in conversation
 * ssl checker if offline shows offline modal instead of not trusted connection
 
-# WW 12.12.2014
+## WW 12.12.2014
 * new config.xml handling for phonegap
     * local building leads www/res/.. at path to resources
     * build.phonegap building needs res/.. at path to resources
     * new config with plugins and resoures for phonegap config/cameoConfig-phonegap.json
 
-# WW 11.12.2014
+## WW 11.12.2014
 * trusted contacts
     * in contact list, detail and recipients
     * oo = check trust
@@ -100,94 +231,97 @@
 * unit test command line -specs option available
 * fix icons for anrdoid devices lower then kitkat < 4.4
 
-# BS 11.12.2014
+## BS 11.12.2014
 * fix CAM-1490, add email or phone number to possible display names
 
-# WW 09.12.2014
+## WW 09.12.2014
 * search for cameoContacts with 3 letter minlength CAM-1417
 * fixxed desktop identity-list and menu without word break CAM-1414
 * added cm-enter on password-input to react on "Öffnen" on android keyboard CAM-1335
 
 #########
-## RC 0.4.6 - 08.12.2014
+# RC 0.4.6 - 08.12.2014
 #########
 
-## Hotfix 0.4.4.2
+# Hotfix 0.4.4.2
 * check CAM-1496
 * check CAM-1497
 * fix CAM-1495
 * fix CAM-1500
 * fix Textarea Resize
 
-## Dev
-# WW 08.12.2014
+# Dev
+## WW 08.12.2014
 * password reset (desktop and app)
     * new routes #/password/lost & #/password/reset
     * password lost starts a request send message to mail/sms
     * password reset handle the new password with the requestId
 
-# WW 06.12.2014
+## WW 06.12.2014
 * account email & phoneNumber verification
     * on edit email or phoneNumber automatically notfication via mail or sms
     * on inputs are manually buttons for new verricationSecret and modal for confirm verification
 
-# WW 05.12.2014
+## WW 05.12.2014
 * ssl certificat checker
     * plugin for ios and android
     * checks on dev/stage against *.cameo.io certificate
     * checks on prod against cameonet.de certificate
     * if fingerprint doesn't match the cmConnectionHandler shows a modal and blocked the app
 
-# BS 03.12.2014
+## BS 03.12.2014
 * update Event Handling CAM-1422 
     * add "contact:update" in FE
     * add "friendRequest:rejected" in FE
     * add "identity:new" in FE
 
-# WW 02.12.2014
+## WW 02.12.2014
 * internet explorer 11 & iemobile 11 solved
 
-# AP 02.12.2014
+## AP 02.12.2014
 * message signing and verify
 
 #########
-## RC 0.4.4.
+# RC 0.4.4.
 #########
 
-# BS 05.12.2014
+## BS 05.12.2014
 * fix CAM-1398, error will now shown, if key saving failed
-# BS 0..12.2014
+## BS 0..12.2014
 * fix CAM-1482, set timeout for browser notifications to 5s
 * fix CAM-1483, set z-index to choose element
 * fix CAM-1481, only one browser notification per message
 * fix CAM-1474, on MacOS Safari, in Desktop Mod, Footer will be displayed correct
-# BS 03.12.2014
+## BS 03.12.2014
 * fix CAM-1478, last-message:read will only send, if message is decrypted
-# BS 28.11.2014
+## BS 28.11.2014
 * add Authentication Route to Desktop Modus, CAM-1374
 
-0.4.3.
-# BS 27.11.2014
+#########
+# RC 0.4.3.
+#########
+
+## BS 27.11.2014
 * fix new Talk with -1 recipients CAM-1412
 * add route controller to start/keyinfo to check skipKeyInfo and redirect to talks, if skip is activated in settings
 * fix CAM-1415, redirect from d/ to d/#/talks or d/#/login fixed
 * add selectable class to message elements, key-edit and start routes
 
-# BS 25.11.2014
+## BS 25.11.2014
 * finish Story unread Messages CAM-1321
     * add button to settings to show or not the quantity of unread messages
     * if it is off, the client will not post the last message, the user reads, to the server, or show the quantity in talks view
     * somme settings will now synced with server
 
-# WW 21.11.2014
+## WW 21.11.2014
 * fix menu button CAM-1384
 * update back button, show modal if leaving app, fix CAM-1383
 
-# BS 21.11.2014
+## BS 21.11.2014
 * fix edit icon in contact edit view, disable if contact is cameo member
 * fix edit own identity CAM-1340
 
-# BS 20.11.2014
+## BS 20.11.2014
 * add BrowserNotificationService
 * fix invite service after importing a local contact
 * fix pending contacts in contacts-list CAM-1378

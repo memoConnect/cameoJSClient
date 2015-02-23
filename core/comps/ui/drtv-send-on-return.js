@@ -1,6 +1,7 @@
 'use strict';
 
-angular.module('cmUi').directive('cmSendOnReturn',[
+angular.module('cmUi')
+.directive('cmSendOnReturn',[
     'cmSettings',
     '$rootScope',
     function (cmSettings,
@@ -8,15 +9,23 @@ angular.module('cmUi').directive('cmSendOnReturn',[
         return {
             restrict: 'A',
             link: function(scope, element){
-                element.on('keydown', function(e){
-                    // on return
-                    if(e.keyCode == 13 && e.shiftKey == false && cmSettings.is('sendOnReturn')){
+
+                function keyDownHandler(event){
+                    if(event.keyCode == 13
+                    && event.shiftKey == false
+                    && cmSettings.is('sendOnReturn')){
                         $rootScope.$broadcast('sendOnReturn');
-                        e.preventDefault();
-                        e.stopPropagation();
+                        event.preventDefault();
+                        event.stopPropagation();
                         return false;
                     }
                     return true;
+                }
+
+                element.on('keydown',keyDownHandler);
+
+                scope.$on('$destroy',function(){
+                    element.off('keydown',keyDownHandler);
                 });
             }
         }

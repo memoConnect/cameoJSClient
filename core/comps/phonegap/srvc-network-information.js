@@ -4,23 +4,18 @@
 
 angular.module('cmPhonegap')
 .service('cmNetworkInformation', [
-    'cmPhonegap', 'cmUtil', 'cmLogger',
-    '$navigator', '$document', '$phonegapCameoConfig',
-    function (cmPhonegap, cmUtil, cmLogger,
-              $navigator, $document, $phonegapCameoConfig) {
+    'cmPhonegap', 'cmUtil', 'cmLogger', 'cmApi',
+    '$navigator', '$document', '$window', '$rootScope',
+    function (cmPhonegap, cmUtil, cmLogger, cmApi,
+              $navigator, $document, $window, $rootScope) {
         var self = {
             plugin: null,
             state: '',
 
             init: function(){
-                if($phonegapCameoConfig == 'undefined') {
-                    return false;
-                }
-
-                cmPhonegap.isReady(function(){
-                    if(!('connection' in $navigator)
-                    || !('type' in $navigator.connection)) {
-                        //cmLogger.info('NETWORK-INFORMATION PLUGIN IS MISSING');
+                cmPhonegap.isReady('cmNetworkInformation',function(){
+                    if(!('connection' in $navigator) || !('type' in $navigator.connection) || !Connection) {
+                        //cmLogger.info('NETWORKINFORMATION PLUGIN IS MISSING');
                         return false;
                     }
 
@@ -57,12 +52,29 @@ angular.module('cmPhonegap')
                 this.state = states[networkState];
             },
             goesOffline: function(){
-
+                $rootScope.$emit('cmApi:sleep');
             },
             goesOnline: function(){
-
+                $rootScope.$emit('cmApi:wakeup');
             }
         };
+        
+        // html5 events
+        if('onLine' in $navigator && $navigator.onLine) {
+            // is already offline
+            if(!$navigator.onLine){
+                //api.state.unset('event_call_running');
+                self.goesOffline();
+            }
+            // handle event states
+            angular.element($window)
+            .on('online', function () {
+                self.goesOnline();
+            })
+            .on('offline', function () {
+                self.goesOffline();
+            });
+        }
 
         return self;
     }

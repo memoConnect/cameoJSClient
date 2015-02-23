@@ -32,27 +32,21 @@
 
 angular.module('cmPhonegap').service('cmLocalContacts', [
     'cmPhonegap', 'cmUtil', 'cmLogger', 'cmDevice',
-    '$q', '$navigator', '$phonegapCameoConfig',
+    '$q', '$navigator',
     function (cmPhonegap, cmUtil, cmLogger, cmDevice,
-              $q, $navigator, $phonegapCameoConfig) {
+              $q, $navigator) {
 
         var self = {
             plugin: null,
 
             init: function () {
-                if($phonegapCameoConfig == 'undefined') {
-                    return false;
-                }
-
-                cmPhonegap.isReady(function(){
+                cmPhonegap.isReady('cmLocalContacts',function(){
                     if(!('contacts' in $navigator)) {
                         //cmLogger.info('CONTACTS PLUGIN IS MISSING');
                         return false;
                     }
                     self.plugin = $navigator.contacts;
                 });
-
-                return true;
             },
 
             canRead: function() {
@@ -85,6 +79,18 @@ angular.module('cmPhonegap').service('cmLocalContacts', [
                                 pref: false,
                                 type: "work", // mobile | work | fax
                                 value: "+49 123 "
+                            },
+                            {
+                                id: "2343",
+                                pref: false,
+                                type: "work", // mobile | work | fax
+                                value: "+49523123123 "
+                            },
+                            {
+                                id: "2343",
+                                pref: false,
+                                type: "work", // mobile | work | fax
+                                value: "+49 (30) 23434234"
                             }
                         ],
                         emails: [

@@ -1,10 +1,79 @@
 cm-conversation{
-    display: block;
-    padding-bottom: 10%;
+  .dbl;
+  height: inherit;
+//  padding-bottom: 10%;
+
+  .conversation-header{
+    .dtb;
+    h2, cm-conversation-menu{
+      .vat;
+      .no-margin-bottom;
+      .dtbc;
+      position: relative;
+    }
+    cm-conversation-menu{
+      width:@cm-unit;
+    }
+  }
+}
+
+.conversation-header{
+  background:@cm-light-grey;
+  .border-bottom;
+  .no-margin;
+}
+
+cm-conversation-menu{
+  .cm-handler{
+    .cm-unit-btn;
+    line-height:4rem;
+    font-size:@cm-mega-font;
+    .with-cursor;
+  }
+  .cm-menu-layer{
+    .pos-tr!important;
+    top:@cm-unit!important;
+    .dpn;
+    z-index:1;
+
+    &.is-active{
+      .dbl!important;
+    }
+
+    .cm-nose-wrapper{
+      height:@cm-unit;
+      .pos-tr;
+      font-size:@cm-ultra-font;
+      top: -3.1rem;
+      right: 1.2rem;
+    }
+
+    ul{
+      min-width:@cm-unit;
+      .grey-box-shadow;
+      .no-border;
+      li{
+        .single-line;
+        font-size: @cm-large-font;
+        line-height: @cm-unit;
+        padding-right:@cm-horizontal-padding;
+        i {
+          .tac;
+          width: @cm-unit - 0.5;
+          font-size: @cm-mega-font + 0.1;
+        }
+      }
+    }
+
+  }
 }
 
 .add-new-recipients {
   cm-avatar .wrap {
     vertical-align: middle;
   }
+}
+
+cm-messages-timeline{
+  .dbl;
 }

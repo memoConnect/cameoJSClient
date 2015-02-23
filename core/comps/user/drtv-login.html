@@ -14,7 +14,10 @@
                 tabindex="1"
                 type="text" ng-model="formData.user" ng-class="{'cm-input-error':alertState!=''}"
                 id="user" name="user" value="" required
-                placeholder="{{'LOGIN.PLACEHOLDER.USERNAME'|cmTranslate}}"  />
+                placeholder="{{'LOGIN.PLACEHOLDER.USERNAME'|cmTranslate}}"
+                cm-enter="doLogin()"
+                cm-paste
+                cm-last-focus />
         </div>
     </article>
 
@@ -25,8 +28,10 @@
                 type="{{passwordType}}" ng-model="formData.pass" ng-class="{'cm-input-error':alertState!=''}"
                 id="pw" name="pw" value="" required
                 placeholder="{{'LOGIN.PLACEHOLDER.PASSWORD'|cmTranslate}}"
-                cm-enter="doLogin()" />
-            <i class="fa cm-icon-grey" ng-class="{'cm-visible':passwordType=='password','cm-hidden':passwordType=='text'}" ng-click="handlePassword()" cm-reactive></i>
+                cm-enter="doLogin()"
+                cm-paste
+                cm-last-focus />
+            <i class="fa cm-icon-grey" ng-class="{'cm-visible':passwordType=='password','cm-hidden':passwordType=='text'}" ng-click="handlePassword($event)" cm-reactive></i>
         </div>
     </article>
 

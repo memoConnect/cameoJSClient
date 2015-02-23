@@ -2,6 +2,31 @@
 
 describe("cmLanguage", function() {
 
+    var whitelistI18nKeys = [
+        'DD.MM.YYYY', // date format
+        'DRTV.CHOOSE_SOURCE', // drtv-choose-source with type var
+        'IDENTITY.KEYS.AUTHENTICATION', // wdgt-authentication BASE var
+        'IDENTITY.KEYS.TRUST', // wdgt-authentication BASE var
+        'START.INSTRUCTIONS',
+        'MODAL.CONNECTION_HANDLER', // drtv-connection-handler eventId var
+        'NOTIFICATIONS.MODAL_HEADER', // fcty-notify-model severity var
+        'PASSWORD.RESET.EMAIL.NOT.FOUND', // wdgt-password-lost error code
+        'PASSWORD.RESET.EXPIRED',
+        'PASSWORD.RESET.LOGIN.NOT.FOUND',
+        'PASSWORD.RESET.NO.EMAIL.PHONENUMBER',
+        'PASSWORD.RESET.PHONENUMBER.NOT.FOUND',
+        'SCE_CONTEXTS.CSS',// angularjs
+        'SCE_CONTEXTS.HTML',
+        'SCE_CONTEXTS.JS',
+        'SCE_CONTEXTS.RESOURCE_URL',
+        'SCE_CONTEXTS.URL',
+        'SECURITY_ASPECT.CONTACT', // fcty-security-aspects-contact languagePrefix var
+        'SECURITY_ASPECT.CONVERSATION', // fcty-security-aspects-conversation languagePrefix var
+        'SECURITY_ASPECT.CONVERSATION.DEFAULT.DESCRIPTION', // ftcty-securtiy_aspects comment
+        'SECURITY_ASPECT.CONVERSATION.DEFAULT.NAME',
+        'VERIFY.EXPIRED' // srvc-verify error code
+    ];
+
     var cmConfig,
         language_tables = {};
 
@@ -91,14 +116,14 @@ describe("cmLanguage", function() {
 
                         missing_ids[lang_key] = missing_ids[lang_key] || []
 
-                        if(translated_keys.indexOf(message_id) == -1)
+                        if(translated_keys.indexOf(message_id) == -1 && whitelistI18nKeys.indexOf(message_id) == -1)
                             missing_ids[lang_key].push(message_id) 
                     })
                 })
 
                 $.each(language_tables, function(lang_key, language_data){
                     if(missing_ids[lang_key].length != 0)
-                        console.log('\n'+ lang_key + ' is missing translations for the following message ids:\n\n'+ JSON.stringify(missing_ids[lang_key], null, 2) + '\n')
+                        console.log('\n'+ lang_key + ' is missing translations for the following message ids:\n'+ JSON.stringify(missing_ids[lang_key], null, 2) + '\n')
 
                     //expect(missing_ids[lang_key].length).toBe(0)
                 })
@@ -152,10 +177,10 @@ describe("cmLanguage", function() {
 
             var needles = '@todo,<br>'
             it('should have none of this '+needles+' inside', function(){
-                var foundPosition = [],
+                var foundPosition = {},
                     arrNeedles = needles.split(',');
 
-                function foundItem(needle, i18nKey){
+                function foundNeedle(needle, i18nKey){
                     if(!(needle in foundPosition)){
                         foundPosition[needle] = [];
                     }
@@ -175,8 +200,9 @@ describe("cmLanguage", function() {
                     } else {
                         //not an Object so obj[k] here is a value
                         arrNeedles.forEach(function(needle){
-                            if(obj.indexOf(needle) >= 0)
-                                foundItem(needle,key)
+                            if(obj.indexOf(needle) >= 0) {
+                                foundNeedle(needle, key)
+                            }
                         })
                     }
                 }
@@ -184,10 +210,10 @@ describe("cmLanguage", function() {
                 scan(language_tables);
 
                 if(cmConfig.errorOnTodoInI18n)
-                    expect(foundPosition.length).toEqual(0)
+                    expect(Object.keys(foundPosition).length).toEqual(0)
 
-                if(foundPosition.length > 0){
-                    console.log(needles + '\'s found at: ' + JSON.stringify(foundPosition, null, 2) + '\n')
+                if(Object.keys(foundPosition).length > 0){
+                    console.log(needles + '\'s found at:\n'+ JSON.stringify(foundPosition, null, 2) + '\n')
                 }
             })
         })

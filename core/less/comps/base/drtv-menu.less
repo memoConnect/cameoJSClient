@@ -9,7 +9,7 @@ cm-menu {
       .pos-rel;
       z-index: 27;
       i{
-        font-size:@cm-mega-font + 0.5;
+        font-size:@cm-ultra-font;
         .vam;
         .w100;
       }
@@ -20,7 +20,7 @@ cm-menu {
     .margin-auto;
     .dpn;
     &.is-active{
-      .dbl;
+      .dbl!important;
     }
     width:@cm-app-width;
     top:0;
@@ -49,7 +49,7 @@ cm-menu {
           .pos-rel;
           background:@cm-white;
           clear:both;
-          min-height: 4rem;
+          min-height: @cm-unit;
           border-top: @cm-border-grey @cm-border-width solid;
         }
       }
@@ -116,7 +116,7 @@ cm-menu {
         .tal;
         .cm-fl;
         color:@cm-grey;
-        font-size: 1.5rem;
+        font-size:@cm-large-font;
       }
       button.is-active {
         .box-shadow-bottom-new-grey !important;

@@ -1,4 +1,4 @@
-var util = require("../../lib/e2e/cmTestUtil.js")
+var util = require("../cmUtil.js")
 var config = require("../config/specs.js")
 
 describe('Message signing -', function () {
@@ -75,7 +75,8 @@ describe('Message signing -', function () {
             var text = "moep_message_" + Math.floor(Math.random() * 1000000);
             $("[data-qa='input-answer']").sendKeys(text)
 
-            $("[data-qa='btn-send-answer']").click()
+            //$("[data-qa='btn-send-answer']").click()
+            util.waitAndClickQa('btn-send-answer')
             .then(function(){
                 return util.getConversation(subject)
             })

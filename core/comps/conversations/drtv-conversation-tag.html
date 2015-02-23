@@ -1,6 +1,6 @@
 <cm-avatar cm-data="avatarIdentity"></cm-avatar>
 
-<div class="details" cm-weight="3">
+<div class="details">
     <div class="subject is-selectable" data-qa="conversation-subject" ng-bind-html="(conversation.subject || 'CONVERSATION.NO_SUBJECT' )| cmParse"></div>
     <cm-message 
         class       = "message" 
@@ -12,7 +12,7 @@
     <div class="recipients"><cm-recipients-comma-seperated cm-data="conversation"></cm-recipients-comma-seperated></div>
 </div>
 
-<div class="meta" cm-weight="2">
+<div class="meta">
     <div class="top">
         <cm-lock-level cm-level="conversation.lockStatus.level"></cm-lock-level>
         <span class="last-updated small">
@@ -20,7 +20,7 @@
         </span>
     </div>
     <div class="bottom">
-        <cm-recipient-counter ng-if="conversation.recipients.length > 2">{{conversation.recipients.length||0}}</cm-recipient-counter>
+        <cm-recipient-counter ng-if="conversation.recipients.length > 2">{{::conversation.recipients.length||0}}</cm-recipient-counter>
         <span class="message-count is-selectable" ng-class="{'cm-orange' : conversation.unreadMessages > 0, 'cm-light-grey': conversation.unreadMessages == 0}" ng-if="settings.get('enableUnreadMessages') && (conversation.unreadMessages > -1)" data-qa="ctn-unread-messages"> ({{conversation.unreadMessages || 0}}) </span>
         <span class="message-count is-selectable"> {{conversation.numberOfMessages || 0}} </span>
     </div>

@@ -1,48 +1,77 @@
-<article class="content edit-identity-head clearfix">
-    <div class="cm-fl mr5">
-        <cm-avatar cm-data="identity" cm-view="{{chooseAvatar?'unknown':''}}" class="big"></cm-avatar>
-    </div>
-</article>
-
-<hr class="margin-small" />
-
-<form name="cmForm" novalidate autocomplete="off">
-    <article class="content">
-        <label>{{'CONTACT.PLACEHOLDER.DISPLAYNAME'|cmTranslate}}</label>
-        <div class="cm-input-ctn with-inside-icon" ng-class="{'cm-input-disabled':disabled}">
-            <input
-                    tabindex="1" data-qa="input-displayname"
-                    type="text" name="displayName" ng-model="formData.displayName"
-                    ng-disabled="disabled" />
-            <i class="fa cm-write"></i>
+<cm-scrollable>
+    <article class="content edit-identity-head clearfix">
+        <div class="cm-fl mr5">
+            <cm-avatar cm-data="identity" cm-avatar-view="{{chooseAvatar?'unknown':''}}" class="big"></cm-avatar>
         </div>
-
-        <cm-info-bubble class="cm-alert" ng-show="cmForm.displayName.$dirty && cmForm.displayName.$invalid">
-            <div ng-show="cmForm.displayName.$error.required">
-                <i class="fa cm-info"></i> {{'CONTACT.INFO.EMPTY.DISPLAYNAME'|cmTranslate}}
-            </div>
-        </cm-info-bubble>
+        <div class="cm-fl w72">
+            <ul class="no-border">
+                <li ng-click="goToSearch()" data-qa="btn-identity-search" cm-reactive>
+                    <article class="item">
+                        <span class="clearfix">
+                            <i class="fa cm-search fa-2x"></i>
+                            {{'CONTACTS.LABEL.SEARCH_IDENTITY'|cmTranslate}}
+                        </span>
+                        <section class="icon-list">
+                            <i class="fa cm-right position-exception"></i>
+                        </section>
+                    </article>
+                </li>
+                <li ng-click="goTo('/contact/import')" data-qa="btn-local-import"
+                    cm-reactive ng-if="canReadLocalContacts()">
+                    <article class="item">
+                        <span class="clearfix">
+                             <i class="fa cm-mobile fa-2x"></i>
+                            {{'CONTACTS.LABEL.IMPORT_LOCAL'|cmTranslate}}
+                        </span>
+                        <section class="icon-list">
+                            <i class="fa cm-right position-exception"></i>
+                        </section>
+                    </article>
+                </li>
+            </ul>
+        </div>
     </article>
 
     <hr class="margin-small" />
 
-    <cm-form-phonenumber
-        ng-model="formData.phoneNumber"
-        ng-model-out="formData.mergedPhoneNumber"
-        cm-tabindex="2"
-        cm-label="CONTACT.PLACEHOLDER.PHONENUMBER"
-        cm-info="CONTACT.INFO.INVALID.PHONENUMBER"
-    ></cm-form-phonenumber>
+    <form name="cmForm" novalidate autocomplete="off">
+        <article class="content">
+            <label>{{'CONTACT.PLACEHOLDER.DISPLAYNAME'|cmTranslate}}</label>
+            <div class="cm-input-ctn with-inside-icon" ng-class="{'cm-input-disabled':disabled}">
+                <input
+                        tabindex="1" data-qa="input-displayname"
+                        type="text" name="displayName" ng-model="formData.displayName"
+                        ng-disabled="disabled" />
+                <i class="fa cm-write"></i>
+            </div>
 
-    <hr class="margin-small" />
+            <cm-info-bubble class="cm-alert" ng-show="cmForm.displayName.$dirty && cmForm.displayName.$invalid">
+                <div ng-show="cmForm.displayName.$error.required">
+                    <i class="fa cm-info"></i> {{'CONTACT.INFO.EMPTY.DISPLAYNAME'|cmTranslate}}
+                </div>
+            </cm-info-bubble>
+        </article>
 
-    <cm-form-email
-        ng-model="formData.email"
-        cm-tabindex="3"
-        cm-label="CONTACT.PLACEHOLDER.EMAIL"
-        cm-info="CONTACT.INFO.INVALID.EMAIL"
-    ></cm-form-email>
-</form>
+        <hr class="margin-small" />
+
+        <cm-form-phonenumber
+            ng-model="formData.phoneNumber"
+            ng-model-out="formData.mergedPhoneNumber"
+            cm-tabindex="2"
+            cm-label="CONTACT.PLACEHOLDER.PHONENUMBER"
+            cm-info="CONTACT.INFO.INVALID.PHONENUMBER"
+        ></cm-form-phonenumber>
+
+        <hr class="margin-small" />
+
+        <cm-form-email
+            ng-model="formData.email"
+            cm-tabindex="3"
+            cm-label="CONTACT.PLACEHOLDER.EMAIL"
+            cm-info="CONTACT.INFO.INVALID.EMAIL"
+        ></cm-form-email>
+    </form>
+</cm-scrollable>
 
 <cm-footer ng-hide="disabled">
     <button data-qa="btn-create-contact" class="cm-btn-grey" id="registerUserButton" ng-click="saveUser()" cm-reactive>

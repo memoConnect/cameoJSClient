@@ -21,6 +21,7 @@
   }
   .without-input{
     .dbl;
+    min-height:@cm-unit - 1;
   }
   &~.pw-progress {
     .pos-rel;
@@ -145,9 +146,9 @@ form, .cm-form-style {
   }
 
   .cm-input-error,
-  .ng-invalid .cm-input-ctn,
-  .ng-invalid .cm-input-ctn input{
-    background-color:#F4DFDF !important
+  .ng-invalid .cm-input-ctn:not(.without-validation),
+  .ng-invalid .cm-input-ctn:not(.without-validation) input{
+    background-color:@cm-form-alert-red !important
   }
 
   select {

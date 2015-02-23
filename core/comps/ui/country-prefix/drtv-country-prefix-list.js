@@ -1,5 +1,18 @@
 'use strict';
 
+/**
+ * @ngdoc directive
+ * @name cmUi.directive:cmCountryPrefixList
+ * @description
+ * a list for all possile countries with prefix and flag
+ *
+ * @restrict E
+ * @requires cmCountryPrefix
+ * @requires cmUtil
+ * @requires $timeout
+ * @requires $window
+ * */
+
 angular.module('cmUi')
 .directive('cmCountryPrefixList',[
     'cmCountryPrefix', 'cmUtil',

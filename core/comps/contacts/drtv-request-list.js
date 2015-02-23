@@ -1,8 +1,7 @@
 'use strict';
 
 angular.module('cmRouteContacts').directive('cmRequestList', [
-    'cmContactsModel',
-    'cmNotify',
+    'cmContactsModel', 'cmNotify',
     function(cmContactsModel, cmNotify){
         return {
             restrict: 'E',
@@ -11,24 +10,7 @@ angular.module('cmRouteContacts').directive('cmRequestList', [
                 $scope.requests = cmContactsModel.requests;
                 $scope.isLoading = false;
 
-                /*
-                cmContactsModel.on('friendRequests:loaded', function(){
-                    $scope.requests = cmContactsModel.requests;
-                });
-
-                cmContactsModel.on('friendRequests:updated', function(){
-                    $scope.requests = cmContactsModel.requests;
-                });
-                */
-
-                function deactiveBell(greaterZero){
-                    if(greaterZero && $scope.requests.length > 0){
-                        cmNotify.trigger('bell:unring');
-                    } else if($scope.requests.length == 0) {
-                        cmNotify.trigger('bell:unring');
-                    }
-                }
-                deactiveBell(true);
+                cmNotify.unringBimmel('friendRequest');
 
                 /**
                  * fired by repeat and accept that
@@ -39,16 +21,8 @@ angular.module('cmRouteContacts').directive('cmRequestList', [
                         item.accept().then(
                             function(){
                                 cmContactsModel.removeFriendRequest(item);
-
-//                                cmNotify.success('CONTACTS.INFO.REQUEST.ACCEPT',{displayType:'modal', ttl:3000});
-                                deactiveBell();
                                 cmContactsModel.trigger('friendRequests:updated');
-                            },
-
-                            function(){
-                                /**
-                                 * @todo accept fails
-                                 */
+                                cmNotify.unringBimmel('friendRequest');
                             }
                         )
                     }
@@ -63,16 +37,8 @@ angular.module('cmRouteContacts').directive('cmRequestList', [
                         item.reject().then(
                             function(){
                                 cmContactsModel.removeFriendRequest(item);
-
-//                                cmNotify.success('CONTACTS.INFO.REQUEST.REJECT',{displayType:'modal',ttl:3000});
-                                deactiveBell();
                                 cmContactsModel.trigger('friendRequests:updated');
-                            },
-
-                            function(){
-                                /**
-                                 * @todo reject fails
-                                 */
+                                cmNotify.unringBimmel('friendRequest');
                             }
                         )
                     }
@@ -82,17 +48,9 @@ angular.module('cmRouteContacts').directive('cmRequestList', [
                     if(typeof item == 'object'){
                         item.ignore().then(
                             function(){
-                                cmNotify.trigger('bell:unring');
-
-//                                cmNotify.success('CONTACTS.INFO.REQUEST.IGNORE',{displayType:'modal',ttl:3000});
-                                deactiveBell();
+                                cmContactsModel.removeFriendRequest(item);
                                 cmContactsModel.trigger('friendRequests:updated');
-                            },
-
-                            function(){
-                                /**
-                                 * @todo ignrore fails
-                                 */
+                                cmNotify.unringBimmel('friendRequest');
                             }
                         )
                     }

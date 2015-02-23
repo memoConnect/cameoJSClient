@@ -73,12 +73,18 @@ cm-header, cm-second-header, .cm-demo-header, cm-choose-source {
   .createReactive(@cm-black);
 }
 // white -> lighten
-.cm-menu-list [cm-reactive]{
+.cm-menu-list [cm-reactive], cm-search-input [cm-reactive]{
   .cm-reactive-default();
 }
 // sub header grey -> darken
 section.default-pages, .cm-demo-default-pages{
   .createReactive(#ECECEC);
+}
+cm-conversation-menu .cm-handler{
+  .createInnerReactive(@cm-light-grey);
+}
+cm-conversation-menu .cm-menu-layer{
+  .createReactive(@cm-white);
 }
 // menu header grey -> darken
 .cm-menu-list li.cm-menu-header {
@@ -114,4 +120,15 @@ button[cm-reactive] {
   article[cm-reactive], h2[cm-reactive]{
     .createInnerReactive(transparent);
   }
+}
+
+.file-download{
+  .createInnerReactive(transparent);
+}
+
+cm-context-bar{
+  .createReactive(@cm-grey-new);
+}
+.is-selected {
+  .createInnerReactive(@cm-grey-new);
 }

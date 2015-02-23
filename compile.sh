@@ -20,10 +20,13 @@ for i in "$@" ; do
 		    version="${i#*=}"
 	    ;;
 		--phonegap)
-			command=phonegap:to-build-server
+			command=phonegap:build-all
 		;;
 		--local-ios)
 		    command=phonegap:build-only
+		;;
+		--disableUglify)
+		    disableUglifyArg=--disableUglify
 		;;
 	    *)
 	      echo Unknown option: ${i}
@@ -36,4 +39,4 @@ done
 
 echo -e "\e[33m[ CameoClient - starting deploy, target: ${target} ]\033[0m"
 
-grunt ${command} --target=${buildMode} --appVersion=${version} ${apiUrlArg}
+grunt ${command} --target=${buildMode} --appVersion=${version} ${apiUrlArg} ${disableUglifyArg}

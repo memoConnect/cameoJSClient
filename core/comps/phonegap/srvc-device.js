@@ -3,7 +3,9 @@
 // https://github.com/apache/cordova-plugin-device/blob/master/doc/index.md
 
 angular.module('cmPhonegap')
-.service('cmDevice',
+.service('cmDevice',[
+    'cmPhonegap', 'cmLogger', 'cmUtil',
+    '$window', '$device', '$phonegapCameoConfig',
     function (cmPhonegap, cmLogger, cmUtil,
               $window, $device, $phonegapCameoConfig) {
 
@@ -16,17 +18,13 @@ angular.module('cmPhonegap')
             flags: {},
 
             init: function(){
-                if($phonegapCameoConfig == 'undefined') {
-                    return false;
-                }
-
-                cmPhonegap.isReady(function(){
+                cmPhonegap.isReady('cmDevice',function(){
                     if($device.get() == 'undefined'){
                         //cmLogger.info('DEVICE PLUGIN IS MISSING');
                         return false;
                     }
 
-                    self.plugin = $device.get()
+                    self.plugin = $device.get();
                 });
             },
 
@@ -38,11 +36,10 @@ angular.module('cmPhonegap')
                 var nAgt = '';
 
                 // TODO: iOS8 Bug: Deprecated attempt to access property 'userAgent' on a non-Navigator object.
-                try {
-                    nAgt = ($window.navigator.userAgent||$window.navigator.vendor||$window.opera).toLowerCase();
-                } catch(e){
-                    nAgt = 'Mozilla/5.0 (iPhone; CPU iPhone OS 8_0 like Mac OS X) AppleWebKit';
-                }
+// http://stackoverflow.com/questions/24784541/cordova-2-9-x-ios-8-useragent-bug
+// https://github.com/apache/cordova-js/blob/26e3e49e49b2fb61ca836572af85c7a776ea9f1c/src/common/init.js#L46-L65
+
+                nAgt = ($window.navigator.userAgent || $window.navigator.vendor || $window.opera).toLowerCase();
 
                 return nAgt;
             },
@@ -59,16 +56,16 @@ angular.module('cmPhonegap')
                     : unknown;
             },
 
-            isApp: function(){
+            isApp: function(withoutPlugin){
                 if(this.emulateDevice) {
                     cmLogger.warn('cmPhonegap.cmDevice.debug == true!!!');
                     this.plugin = {};
                 }
 
-                return this.emulateDevice || !this.emulateDevice && this.existsPlugin();
+                return this.emulateDevice || !this.emulateDevice && !withoutPlugin && this.existsPlugin() || !this.emulateDevice && withoutPlugin && $phonegapCameoConfig != 'undefined';
             },
 
-            isDesktop: function(where){
+            isDesktop: function(whoIs){
                 // emulate device
                 if(this.emulateDevice)
                     return false;
@@ -150,6 +147,7 @@ angular.module('cmPhonegap')
                 return this.isApp()
                     && this.getPlatform().indexOf('amazon-fireos') >= 0;
             },
+
 
             getCurrentOS: function(){
                 var os = 'unknown';
@@ -279,4 +277,4 @@ angular.module('cmPhonegap')
 
         return self;
     }
-);
+]);

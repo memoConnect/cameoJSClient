@@ -7,6 +7,10 @@ angular.module('cmCore')
     function(cmLogger, cmJob, cmModal, cmConfig, cmTransferScopeData,
              $rootScope, $window, $location, $route){
 
+        $rootScope.getCurrentUrl = function(){
+            return $location.$$path;
+        };
+
         $rootScope.goBack = function(){
             $window.history.back();
         };
@@ -40,8 +44,14 @@ angular.module('cmCore')
             this.goTo('/registration');
         };
 
+        $rootScope.createNewContact = function(){
+            cmLogger.debug('cmRootService.createNewContact');
+
+            $rootScope.goTo('/contact/create');
+        };
+
         $rootScope.createNewConversation = function(){
-            cmLogger.debug('cmRootService.createNewConversation');
+            //cmLogger.debug('cmRootService.createNewConversation');
 
             $rootScope.pendingConversation = null;
             $rootScope.pendingRecipients = [];

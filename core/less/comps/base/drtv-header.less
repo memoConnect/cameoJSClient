@@ -63,7 +63,7 @@ cm-header, .cm-header-block{
       font-size:@cm-large-font;
     }
     span{
-      padding:@cm-horizontal-padding;
+      padding:@cm-horizontal-padding 0;
     }
   }
 
@@ -81,44 +81,6 @@ cm-header, .cm-header-block{
 
   .purl-identity-wrap{
     .dib;
-  }
-
-  cm-header-list-search{
-    .dib;
-    .pos-rel;
-    cm-search-input{
-      .pos-abs;
-      color:@cm-black;
-      z-index:-1;
-      height:@cm-unit;
-      width:23.9rem;
-      right:@cm-unit;
-      top:0;
-      font-size:@cm-large-font;
-      line-height:@cm-mega-font;
-      .opacity-0;
-      .tal;
-      &.visible{
-        z-index:1;
-        .opacity-100;
-      }
-      input{
-
-      }
-      textarea{
-        .no-border;
-        resize:none;
-        white-space:nowrap;
-        overflow:hidden;
-      }
-      i{
-        .pos-tr;
-        .tac;
-        width:@cm-unit;
-        height:@cm-unit;
-        line-height:@cm-unit!important;
-      }
-    }
   }
 
   cm-menu{

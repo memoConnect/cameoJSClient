@@ -3,7 +3,9 @@
 angular.module('cmValidate')
 .directive('cmFormEmail', [
     'cmVerify',
-    function (cmVerify) {
+    '$rootScope',
+    function (cmVerify,
+              $rootScope) {
         return {
             restrict: 'E',
             scope: {
@@ -24,7 +26,21 @@ angular.module('cmValidate')
                     if(typeof $scope.toggleInfo == 'string'){
                         $scope.showEmailInfo = !$scope.showEmailInfo ? true : false;
                     }
-                }
+                };
+
+                var killWatcher = $rootScope.$on('cmValidate:error', function(event, errorCodes){
+                    if(errorCodes.length > 0 && errorCodes.indexOf('EMAIL_INVALID') >= 0) {
+                        $scope.cmInnerForm.email.$setValidity('emailInvalid', false);
+                    }
+                });
+
+                $scope.$watch('ngModel',function(newValue){
+                    $scope.cmInnerForm.email.$setValidity('emailInvalid', true);
+                });
+
+                $scope.$on('$destroy', function(){
+                    killWatcher();
+                });
             }
         }
     }

@@ -3170,7 +3170,6 @@ forEach({
   clone: jqLiteClone,
 
   triggerHandler: function(element, event, extraParameters) {
-
     var dummyEvent, eventFnsCopy, handlerArgs;
     var eventName = event.type || event;
     var expandoStore = jqLiteExpandoStore(element);

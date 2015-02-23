@@ -1,5 +1,5 @@
 var config = require("../config/specs.js")
-var util = require("../../lib/e2e/cmTestUtil.js")
+var util = require("../cmUtil.js")
 
 describe('Authentication requests -', function () {
     var ptor = util.getPtorInstance(),
@@ -146,8 +146,11 @@ describe('Authentication requests -', function () {
     describe("key1 -", function () {
         // reset!!
         it('before all test starting clear Localstorage', function(){
-            util.get('/login')
-            util.clearLocalStorage()
+            util.get('/login',true)
+            util.waitForPageLoad('/login')
+            .then(function(){
+                    util.clearLocalStorage()
+            })
         })
 
         describe("create test user, generate key and check keytrust", function () {
@@ -209,6 +212,7 @@ describe('Authentication requests -', function () {
         })
 
         it("generate key3", function () {
+
             util.login(testUser1, "password")
             .then(function(){
                 util.get("/settings/identity/key/list")
@@ -244,11 +248,15 @@ describe('Authentication requests -', function () {
 
         it("get identityId from event", function () {
             identityId = authEvents[0].fromIdentityId
+            expect(identityId).toBe(authEvents[0].fromIdentityId)
         })
 
         it("abort request", function () {
             util.waitAndClickQa("btn-cancel-authentication")
-            util.waitForElementDisappear("[data-qa='transaction-secret-value']")
+            .then(function(){
+                util.waitForElementDisappear("[data-qa='transaction-secret-value']")
+            })
+
         })
 
         it("create encrypted conversation", function () {
@@ -256,7 +264,7 @@ describe('Authentication requests -', function () {
         })
 
         it("should not be able to read conversation from key1", function () {
-            util.readConversation(subject1, "- encrypted -")
+            util.readConversation(subject1, "- encrypted -", true)
         })
 
         it("delete localstorage", function () {
@@ -310,6 +318,9 @@ describe('Authentication requests -', function () {
             util.setVal("inp-transactSecret", transactionSecret)
             util.waitAndClick("cm-modal.active [data-qa='btn-acceptIncomingRequest']")
             util.waitForElementDisappear("cm-modal.active [data-qa='inp-transactSecret']")
+
+            util.waitForElement("cm-modal.active [data-qa='re-keying-modal']");
+
             ptor.sleep(5000)
         })
 
@@ -331,7 +342,7 @@ describe('Authentication requests -', function () {
         })
 
         it("should not be able to read conversation from key3", function () {
-            util.readConversation(subject3, encryptedMessage3)
+            util.readConversation(subject3, "- encrypted -", true)
         })
 
         it("delete localstorage", function () {
@@ -373,7 +384,6 @@ describe('Authentication requests -', function () {
         })
 
         it("both keys should now be trusted", function () {
-            //util.get("/settings/identity/key/list")
             util.waitForElements("[data-qa='key-list-item']", 2)
 
             checkKeyTrust(keyName1, true)
@@ -391,6 +401,34 @@ describe('Authentication requests -', function () {
             util.clearLocalStorage()
         })
 
+    })
+
+    describe("key1 again check conversation from key3 -", function(){
+        it("import key", function () {
+            util.setLocalStorage(localStorage1.key, localStorage1.value)
+            util.login(testUser1, "password")
+                .then(function(){
+                    util.waitForEventSubscription()
+
+                    util.get("/settings/identity/key/list")
+                    return util.waitForPageLoad('/settings/identity/key/list')
+                })
+                .then(function(){
+                    util.waitForElements("[data-qa='key-list-item']", 2)
+
+                    checkKeyTrust(keyName1, true)
+                    checkKeyTrust(keyName3, true)
+                })
+        })
+
+        it("should be able to read conversation from key3", function () {
+            util.readConversation(subject3, encryptedMessage3)
+        })
+
+        it("delete localstorage", function () {
+            util.logout()
+            util.clearLocalStorage()
+        })
     })
 
     describe("key2 -", function () {
@@ -473,11 +511,11 @@ describe('Authentication requests -', function () {
         })
 
         it("should not be able to read conversation from key1", function () {
-            util.readConversation(subject1 , "- encrypted -")
+            util.readConversation(subject1 , "- encrypted -", true)
         })
 
-        it("should be not able to read conversation from key3", function () {
-            util.readConversation(subject3, "- encrypted -")
+        it("should not be able to read conversation from key3", function () {
+            util.readConversation(subject3, "- encrypted -", true)
         })
 
         it("delete localstorage", function () {
@@ -551,11 +589,6 @@ describe('Authentication requests -', function () {
         })
 
         it("all three keys should now be trusted", function () {
-            // ptor.wait(function () {
-            //     return $("cm-identity-key-list").getText().then(function (text) {
-            //         return text.indexOf("untrusted") == -1
-            //     })
-            // })
 
             checkKeyTrust(keyName1, true)
             checkKeyTrust(keyName2, true)

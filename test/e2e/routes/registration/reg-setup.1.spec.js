@@ -1,5 +1,5 @@
 var config = require("../../config/specs.js")
-var util = require("../../../lib/e2e/cmTestUtil.js")
+var util = require("../../cmUtil.js")
 
 describe('Registration-Setup : ', function () {
     var ptor = util.getPtorInstance()
@@ -45,7 +45,7 @@ describe('Registration-Setup : ', function () {
         })
 
         it("should go direclty to /talks", function(){
-            util.waitForPageLoad("/talks")
+            util.waitForPageLoad('/talks')
         })
     })
 
@@ -58,18 +58,22 @@ describe('Registration-Setup : ', function () {
         })
 
         it("the next step should be setup identity", function () {
-            util.waitAndClickQa("btn-next-step")
-            util.waitForPageLoad('/setup/identity')
+            util.waitAndClickQa('btn-next-step')
+            .then(function(){
+                return util.waitForPageLoad('/setup/identity')
+            })
         })
 
         it("the next step should be key generation", function () {
-            util.waitAndClickQa("btn-next-step")
-            util.waitForPageLoad('/settings/identity/key/create')
+            util.waitAndClickQa('btn-next-step').then(function(){
+                return util.waitForPageLoad('/settings/identity/key/create')
+            })
         })
 
         it("should be in /talks after canceling key generation", function () {
-            util.waitAndClickQa("btn-cancel-key-generation")
-            util.waitForPageLoad('/talks')
+            util.waitAndClickQa('btn-cancel-key-generation').then(function(){
+                return util.waitForPageLoad('/talks')
+            })
         })
     })
 

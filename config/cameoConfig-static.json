@@ -27,6 +27,8 @@
     }
   },
   "appIcon": "gfx/icon_128x128.png",
+  "remSize": "32",
+  "minimumDesktopDimension": "1024x768",
   "certificates": {
     "stage": {
       "server":"https://stage.cameo.io",
@@ -36,5 +38,23 @@
       "server":"https://www.cameonet.de",
       "fingerprint": "41 53 8F D8 23 98 5B 48 F7 0D C3 DD 89 DD CE 8C 00 9D 85 D5"
     }
+  },
+  "thirdPartyLibraries": {
+    "date": "1420794299000",
+    "libraries": [
+      {"name":"AngularJS","url":"angularjs.org"},
+      {"name":"AngularJS translate","url":"https://github.com/angular-translate"},
+      {"name":"AngularJS loading bar","url":"https://chieffancypants.github.io/angular-loading-bar"},
+      {"name":"AngularJS emoji filter","url":"https://github.com/globaldev/angular-emoji-filter"},
+      {"name":"captchagen","url":"https://github.com/wearefractal/captchagen"},
+      {"name":"JSEncrypt","url":"https://github.com/travist/jsencrypt"},
+      {"name":"Stanford Javascript Crypto Library (SJCL)","url":"https://crypto.stanford.edu/sjcl"},
+      {"name":"CryptoJS","url":"https://www.code.google.com/p/crypto-js"},
+      {"name":"FileSaver.js","url":"https://github.com/eligrey/FileSaver.js"},
+      {"name":"Blob.js","url":"https://github.com/eligrey/Blob.js"},
+      {"name":"passchk.js","url":"https://rumkin.com/tools/password/passchk.php"},
+      {"name":"spin.js","url":"http://fgnass.github.io/spin.js"},
+      {"name":"FontLoader","url":"https://github.com/smnh/FontLoader"}
+    ]
   }
 }

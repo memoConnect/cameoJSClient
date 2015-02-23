@@ -2,15 +2,12 @@
 
 angular.module('cmContacts')
 .factory('cmContactModel', [
-    'cmContactsAdapter',
-    'cmIdentityFactory',
-    'cmObject',
-    'cmStateManagement',
-    'cmUtil',
-    'cmLogger',
-    'cmSecurityAspectsContact',
+    'cmContactsAdapter', 'cmIdentityFactory', 'cmObject',
+    'cmStateManagement', 'cmUtil', 'cmLogger', 'cmSecurityAspectsContact', 'cmModal',
     '$q',
-    function(cmContactsAdapter, cmIdentityFactory, cmObject, cmStateManagement, cmUtil, cmLogger, cmSecurityAspectsContact, $q){
+    function(cmContactsAdapter, cmIdentityFactory, cmObject,
+             cmStateManagement, cmUtil, cmLogger, cmSecurityAspectsContact, cmModal,
+             $q){
         function ContactModel(data){
             var self = this;
 
@@ -56,7 +53,13 @@ angular.module('cmContacts')
                 this.id = data.id || this.id;
                 this.contactType = data.contactType || this.contactType;
                 this.groups = data.groups || this.groups;
+
+                if(data.identity){
+                    data.identity.userType = this.contactType
+                }
+
                 this.identity = data.identity ? cmIdentityFactory.create(data.identity, true) : this.identity;
+
 
                 this.trigger('update:finished');
             };
@@ -110,12 +113,27 @@ angular.module('cmContacts')
                 return defer.promise;
             };
 
+            this.delete = function(withoutModal){
+                return (function(){
+                    return withoutModal
+                    ? $q.when()
+                    : cmModal.confirm({
+                        title: 'CONTACT.MODAL.DELETE.HEADER',
+                        text: 'CONTACT.MODAL.DELETE.TEXT'
+                    })
+                }()).then(function(){
+                    return cmContactsAdapter.deleteContact(self.id)
+                }).then(function(){
+                    self.trigger('deleted:finished',self);
+                    return $q.when();
+                });
+            };
+
             init(data);
 
             this.identity.on('update:finished', function(){
                 self.securityAspects.scheduleRefresh();
             });
-
         }
 
         return ContactModel;

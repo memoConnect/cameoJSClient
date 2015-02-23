@@ -4,8 +4,10 @@ angular.module('cmCore')
 .factory('cmIdentityModel',[
     'cmAuth', 'cmCrypt', 'cmKey', 'cmKeyFactory', 'cmObject', 'cmLogger', 'cmApi',
     'cmFileFactory', 'cmStateManagement', 'cmUtil', 'cmNotify',
+    '$injector',
     function(cmAuth, cmCrypt, cmKey, cmKeyFactory, cmObject, cmLogger, cmApi,
-             cmFileFactory, cmStateManagement, cmUtil,cmNotify){
+             cmFileFactory, cmStateManagement, cmUtil, cmNotify,
+             $injector){
 
         function Identity(identity_data){
 
@@ -177,7 +179,14 @@ angular.module('cmCore')
 
             this.getDisplayName = function(){
                 var cameoId = this.cameoId || '',
+                    name = '';
+
+                if(this.userType != 'internal'){
                     name = this.displayName || this.email.value || this.phoneNumber.value ||  cameoId.split("@")[0] || this.id;
+                } else {
+                    name = this.displayName || cameoId.split("@")[0] || this.email.value || this.phoneNumber.value || this.id;
+                }
+
                 return name;
             };
 
@@ -211,6 +220,14 @@ angular.module('cmCore')
 
             this.hasKeys = function(){
                 return (this.keys.length > 0);
+            };
+
+            this.getTrustedKeys = function(){
+                return $injector.get('cmUserModel').verifyIdentityKeys(this, true).then(
+                    function(trusted_keys){
+                        return trusted_keys;
+                    }
+                )
             };
 
             init(identity_data);

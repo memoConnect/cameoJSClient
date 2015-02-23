@@ -86,7 +86,7 @@ angular.module('cmUi').directive('cmProgressbar',[
                             newPercent = 100;
                         }
 
-                        $scope.cmPercent = Math.round(newPercent);
+                        $scope.cmPercent = newPercent ? Math.round(newPercent) : 0;
                     })
                 }
             }

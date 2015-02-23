@@ -22,7 +22,7 @@ angular.module('cmFiles').directive('cmFilesPreview',[
                 }
 
                 cmAnswerFiles.on('files:resetted', callback_files_resetted);
-                var watch = $rootScope.$on('textArea:resize', function(){
+                var watch = $rootScope.$on('cmResizeTextarea:resize', function(){
                     var answerMessage = $document[0].querySelector('cm-answer .message');
                     $element.css('bottom',answerMessage.offsetHeight+'px');
                 });

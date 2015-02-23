@@ -7,6 +7,16 @@ cm-header, .cm-header-block{
   cm-logo{
     margin-left:1rem;
   }
+
+  cm-header-list-search {
+    .pos-rel;
+    cm-search-input {
+      left: auto;
+      right: 4rem !important;
+      width: 24rem;
+    }
+  }
+
   .icons-list {
     > * {
       .dib!important;
@@ -20,6 +30,28 @@ cm-header, .cm-header-block{
     line-height: @cm-unit;
     i {
       color: @cm-white !important;
+    }
+
+    cm-header-list-search{
+      width: auto !important;
+      .tal;
+
+      cm-search-input {
+        .pos-rel;
+        right: 0 !important;
+
+        input {
+          .w80;
+          .no-pad;
+          color: @cm-black;
+//          border-bottom: 1px solid @cm-border-grey !important;
+        }
+        i {
+          .vat;
+          .pos-tr;
+          color: @cm-black !important;
+        }
+      }
     }
   }
 }

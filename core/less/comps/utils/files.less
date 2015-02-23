@@ -1,23 +1,25 @@
 cm-modal.modal-image-fullscreen{
   .content{
-    display:table;
+    .dtb;
+    .pos-rel;
+    .no-pad;
     width:@cm-app-width;
     height:100%;
     z-index:2;
-    position:relative;
     ng-transclude{
-      display:table-cell;
-      vertical-align:middle;
-      text-align:center;
+      .dtbc;
+      .vam;
+      .tac;
       width:100%;
       figure{
-        display:inline-block;
+        .dbl;
+        .no-margin;
         img{
           max-width: 100%;
           height: auto;
         }
         figcaption{
-          text-align: right;
+          .tar;
         }
         &.is-landscape{
           figcaption{
@@ -26,7 +28,7 @@ cm-modal.modal-image-fullscreen{
         }
       }
       cm-footer{
-        text-align:right;
+        .tar;
         color:@cm-white;
         i.cm-grid{
           margin:@cm-unit - 3;

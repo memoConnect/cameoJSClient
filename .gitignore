@@ -1,6 +1,11 @@
 /.idea/
+/.tmp/
+/.codova/
 /node_modules/
 /_node_modules_bak/
+/_node_modules_new/
+/node_modules_bak/
+/node_modules_new/
 /phonegap-build/
 /phonegap-src/
 /phonegap-target/
@@ -19,3 +24,6 @@
 /projectFilesBackup/
 .DS_Store
 /cache/
+
+resource/xliffTools/json
+resource/xliffTools/xliff

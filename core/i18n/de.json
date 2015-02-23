@@ -195,7 +195,14 @@
     "TALKS": {
         "HEADING": "Talks",
         "MORE": "Weitere Talks laden",
-        "LIST_EMPTY": "Bisher keine Talks vorhanden."
+        "LIST_EMPTY": "Bisher keine Talks vorhanden.",
+        "SEARCH": {
+            "INFO_NOTHING_FOUND": "Keine passenden Talks (durchsucht: Empfänger und Betreff)",
+            "BUTTON" :{
+                "SERVER_SEARCH_ACTIVE": "Talk-Archiv durchsuchen",
+                "SERVER_SEARCH_INACTIVE": "Keine weiteren Talks"
+            }
+        }
     },
 
     "CONVERSATION": {
@@ -249,6 +256,22 @@
         },
         "SETTINGS": {
             "OKAY": "Fertig"
+        },
+        "MENU": {
+            "ADD_RECIPIENTS": "Empfänger hinzufügen",
+            "SHOW_RECIPIENTS": "Empfängerliste öffnen",
+            "SECURITY_SETTINGS": "Sicherheitseinstellungen öffnen",
+            "DELETE": "Talk verlassen"
+        },
+        "MODAL": {
+            "DELETE":{
+                "HEADER": "Talk verlassen",
+                "TEXT": "Wollen Sie den Talk wirklich verlassen?<br/>Sie können danach nicht mehr auf diesen Talk zugreifen. Wenn der letzte Empfänger einen Talk verlässt, wird der Talk gelöscht."
+            },
+            "ASYMMETRIC_KEY_TRUST_ERROR": {
+                "HEADER": "Problem mit lokalem cameoKey",
+                "TEXT": "Ihr lokaler cameoKey ist nicht mit dem cameoKey verknüpft, mit dem dieser Talk angelegt wurde."
+            }
         }
     },
 
@@ -302,7 +325,7 @@
             "SEARCH_IDENTITY": "CameoNet durchsuchen",
             "ADD_EXTERN": "Externen Kontakt hinzufügen",
             "SEND_REQUEST": "Senden",
-            "IMPORT_LOCAL": "Lokalen Kontakt importieren"
+            "IMPORT_LOCAL": "Telefonbuch durchsuchen"
         },
         "BUTTON": {
             "RESET": "Zurücksetzen",
@@ -315,6 +338,14 @@
             "ACCEPT": "Akzeptieren",
             "REJECT": "Zurückweisen",
             "IGNORE": "Ignorieren"
+        },
+        "SEARCH": {
+            "INFO_NOTHING_FOUND": "Keine passenden lokalen Kontakte",
+            "SERVER_SEARCH": {
+                "INFO_NOTHING_FOUND": "Keine passenden neuen cameoNet-Kontakte",
+                "BUTTON_ACTIVE": "Ergebnis cameoNet-Suche",
+                "BUTTON_INACTIVE": "cameoNet jetzt durchsuchen"
+            }
         }
     },
 
@@ -330,7 +361,8 @@
             "STREET": "Straße",
             "STREETNR": "Nr.",
             "ZIP": "PLZ",
-            "CITY": "Ort"
+            "CITY": "Ort",
+            "DELETE": "Kontakt löschen"
         },
         "INFO": {
             "EMPTY": {
@@ -352,6 +384,16 @@
             "SELECT": {
                 "EMAIL": "Bitte wählen Sie eine E-Mail aus",
                 "PHONENUMBER": "Bitte wählen Sie eine Telefonnummer aus"
+            }
+        },
+        "MODAL": {
+            "DELETE": {
+                "HEADER": "Kontakt löschen",
+                "TEXT": "Wollen Sie den Kontakt wirklich löschen?"
+            },
+            "DELETE_FRIENDREQUEST": {
+                "HEADER": "Kontaktanfrage löschen",
+                "TEXT": "Wollen Sie diese Kontaktanfrage wirklich löschen?"
             }
         },
         "FOOTER": {
@@ -410,11 +452,11 @@
         },
         "INFO":{
             "CREATE": {
-                "HEADLINE_SMALL": "Anlegen Ihrer ersten Identität..",
+                "HEADLINE_SMALL": "Anlegen Ihrer ersten Identität (mehr..)",
                 "HEADLINE": "In Ihrer Identität legen Sie fest, wie Sie sich anderen Nutzern präsentieren. Wenn Sie eine Kontaktanfrage eines anderen Nutzers akzeptieren, sieht dieser in seinen Kontakten anschließend alle Daten, die Sie in Ihr Identitätsprofil eingegeben haben.\nIhre Identität kann über die cameoID oder den Anzeigenamen gefunden werden.",
                 "CAMEOID": "Jede Identität besitzt eine eindeutige cameoID, über die sie im cameoNet gefunden werden kann.",
                 "AVATAR": "cameoNet erzeugt ein zufälliges Profilbild. Zum Hochladen eines eigenen Bildes klicken Sie auf das Zahnrad in der unteren linken Ecke.",
-                "DISPLAYNAME": "Wenn Sie Ihrer Identität einen Anzeigenamen geben, wird dieser überall anstatt der cameoID angezeigt. Ihre Identität kann im cameoNet auch über den Anzeigenamen gefunden werden. Der Anzeigename muss aber nicht eindeutig sein.",
+                "DISPLAYNAME": "Wenn Sie Ihrer Identität einen Anzeigenamen geben, wird dieser überall anstelle der cameoID angezeigt. Ihre Identität kann im cameoNet auch über den Anzeigenamen gefunden werden. Der Anzeigename muss aber nicht eindeutig sein.",
                 "PHONE": "Hier können Sie eine Mobilfunknummer eingeben. Sie wird anderen Nutzern in Ihrem Identitätsprofil angezeigt aber weder verifiziert noch weiter verwendet. Sie erhalten Benachrichtigungen für diese Identität an die in Ihrem Benutzerkonto eingetragenen Mobilfunknummer.",
                 "EMAIL": "Hier können Sie eine E-Mail-Adresse eingeben. Sie wird anderen Nutzern in Ihrem Identitätsprofil angezeigt aber weder verifiziert noch weiter verwendet. Sie erhalten Benachrichtigungen für diese Identität an die in Ihrem Benutzerkonto eingetragenen E-Mail-Adresse."
             }
@@ -447,7 +489,7 @@
                 },
                 "GENERATING": {
                     "HEADLINE": "cameoKey Generierung läuft!",
-                    "EXPLANATION": "Bitte haben Sie einen Moment Geduld. Dieser Prozess kann je nach Gerät und Schlüssellänge einige Zeit in Anspruch nehmen.\n Bei Wartenzeiten von über 5 Minuten  sollten Sie den Prozess abbrechen und erneut starten.\nBei einer Schlüssellänge von 4096 Bit, kann die Wartezeit bis zu 15 Minuten betragen.",
+                    "EXPLANATION": "Sie benötigen einen lokalen cameoKey um sicher kommunizieren zu können. Bitte haben Sie einen Moment Geduld. Die Erzeugung kann je nach Gerät und Schlüssellänge einige Zeit in Anspruch nehmen.\n Bei Wartenzeiten von über 5 Minuten  sollten Sie den Prozess abbrechen und erneut starten.\nBei einer Schlüssellänge von 4096 Bit, kann die Wartezeit bis zu 15 Minuten betragen.",
                     "TIME_PASSED": "Verbrauchte Zeit:",
                     "GENERATION_TIMER": " {{time}}",
                     "STOP_BUTTON": "Generierung abbrechen"
@@ -639,11 +681,9 @@
             },
             "ABOUT_US": {
                 "TITLE": "Über uns",
-                "TEXT": "cameoNet 2014",
+                "TEXT": "cameoNet 2015",
                 "3RD_PARTY": {
-                    "TITLE": "Eingebundene Projekte",
-                    "DATE": "1412842948000",
-                    "LIBRARIES": "AngularJS\nhttps://angularjs.org/;AngularJS translate\nhttps://github.com/angular-translate;AngularJS loading bar\nhttps://chieffancypants.github.io/angular-loading-bar;AngularJS emoji filter\nhttps://github.com/globaldev/angular-emoji-filter;captchagen\nhttps://github.com/wearefractal/captchagen;JSEncrypt\nhttps://github.com/travist/jsencrypt;Stanford Javascript Crypto Library (SJCL)\nhttps://crypto.stanford.edu/sjcl;CryptoJS\nhttps://www.code.google.com/p/crypto-js;FileSaver.js\n https://github.com/eligrey/FileSaver.js;Blob.js\nhttps://github.com/eligrey/Blob.js;passchk.js\nhttps://rumkin.com/tools/password/passchk.php;spin.js\nhttp://fgnass.github.io/spin.js;FastClick\nhttps://github.com/ftlabs/fastclick"
+                    "TITLE": "Eingebundene Projekte"
                 }
             },
 
@@ -669,9 +709,10 @@
         "CREATE": {
             "HEADER": "Benutzerkontodaten",
             "INFO": {
-                "NOTE_ABOUT_THIS_DATA_SMALL": "E-Mail-Adresse oder Telefonnummer hinterlegen..",
-                "NOTE_ABOUT_THIS_DATA": "In Ihrem Benutzerkonto können Sie eine Mobilfunknummer oder E-Mail-Adresse hinterlegen und anschließend durch eine Prüfnachricht verifizieren lassen. Wenn Sie ihr Passwort vergessen, können Sie über eine verifizierte E-Mail-Adresse oder Telefonnummer ein neues Passwort erstellen.\n\nIhre Benutzerdaten sind für andere Nutzer nicht sichtbar."
-            }
+                "NOTE_ABOUT_THIS_DATA_SMALL": "Kontaktdaten für Passwortrücksetzung (mehr..)",
+                "NOTE_ABOUT_THIS_DATA": "In Ihrem Benutzerkonto können Sie eine Mobilfunknummer oder E-Mail-Adresse hinterlegen und anschließend durch eine Prüfnachricht verifizieren lassen. Wenn Sie ihr Passwort vergessen, können Sie über eine verifizierte E-Mail-Adresse oder Telefonnummer ein neues Passwort erstellen.\n\nIhre E-Mail-Adresse und Telefonnummer sind für andere Nutzer nicht sichtbar."
+            },
+            "ERROR": "Es ist ein Fehler aufgetreten!\nBitte überprüfen Sie Ihre Eingaben."
         },
         "INFO": {
             "EMPTY": {
@@ -683,7 +724,7 @@
                 "PHONENUMBER": "@:DRTV.VALIDATE_PHONE.INFO.INVALID_PHONE_NUMBER",
                 "OLD_PASSWORD": "Das von Ihnen eingegebene Passwort ist ungültig."
             },
-            "NOTE_ABOUT_THIS_DATA_SMALL": "Daten ihres Benutzerkontos bearbeiten..",
+            "NOTE_ABOUT_THIS_DATA_SMALL": "Daten ihres Benutzerkontos bearbeiten (mehr..)",
             "NOTE_ABOUT_THIS_DATA": "Hier können Sie ihre Benutzerdaten bearbeiten. Dies umfasst:\n- Ihre Zugangsdaten, mit denen Sie sich anmelden\n- Telefonnummer oder E-Mail-Adresse für die Passwortrücksetzung und Offline-Benachrichtigungen.\n\nIhre Benutzerdaten sind für andere Nutzer nicht sichtbar.",
             "LOGINAME": "Der Loginname kann nicht geändert werden.",
             "PHONENUMBER": "Hier können Sie eine Mobilfunknummer hinterlegen. Sie erhalten eine Verifizierungs-SMS mit der Sie die Nummer für die Passwortrücksetzung aktivieren können.",
@@ -709,6 +750,9 @@
     },
 
     "DRTV": {
+      "SEARCH": {
+        "LABEL": "Suchen"
+      },
         "PASSWORD": {
             "PASSWORD": "Passwort",
             "PASSWORD_CONFIRM": "Passwort wiederholen",
@@ -720,11 +764,11 @@
         "VALIDATE_PHONE": {
             "LABEL": "Mobilfunknummer",
             "PLACEHOLDER": "Mobilfunknummer",
-            "LABEL_VERIFICATION_CODE": "Verfizierungscode",
+            "LABEL_VERIFICATION_CODE": "Code (zum Verifizieren der Telefonnummer)",
             "INFO": {
                 "INVALID_PHONE_NUMBER": "Die Nummer scheint keine gültige Mobilfunknummer zu sein.",
                 "EMPTY": "Sie haben keine Mobilfunknummer eingegeben.",
-                "ISNT_VERIFIED": "Diese Telefonnummer wurde noch nicht verifiziert!\nEs wurde eine SMS mit einem Verfizierungscode an diese Nummer gesendet. Tragen Sie den Code hier ein oder klicken Sie auf den Link in der SMS. Um erneut eine SMS an diese Nummer zu senden, klicken Sie auf das {{icon}}-Icon.",
+                "ISNT_VERIFIED": "Diese Telefonnummer wurde noch nicht verifiziert!\nEs wurde eine SMS mit einem Code zum Verifizieren an dieser Telefonnummer gesendet. Tragen Sie den Code hier ein oder klicken Sie auf den Link in der SMS. Um erneut eine SMS an diese Nummer zu senden, klicken Sie auf das {{icon}}-Icon.",
                 "EMPTY_CODE": "Bitte tragen Sie hier den Code ein, der Ihnen in der Verifizierungs-SMS mitgeteilt wurde.",
                 "INVALID_CODE": "Der Code den Sie eingegeben haben ist falsch oder abgelaufen."
             }
@@ -732,11 +776,11 @@
         "VALIDATE_EMAIL": {
             "LABEL": "E-Mail",
             "PLACEHOLDER": "E-Mail",
-            "LABEL_VERIFICATION_CODE": "Verfizierungscode",
+            "LABEL_VERIFICATION_CODE": "Code (zum Verifizieren der E-Mail-Adresse)",
             "INFO": {
                 "INVALID": "Bitte geben Sie eine korrekte E-Mail-Adresse ein!",
                 "EMPTY": "Sie haben keine E-Mail-Adresse eingegeben.",
-                "ISNT_VERIFIED": "Diese E-Mail-Adresse wurde noch nicht verifiziert!\nEs wurde eine E-Mail mit einem Verfizierungscode an diese Adresse gesendet. Tragen Sie den Code hier ein oder klicken Sie auf den Link in der E-Mail. Um erneut eine E-Mail an diese Adresse zu senden, klicken Sie auf das {{icon}}-Icon.",
+                "ISNT_VERIFIED": "Diese E-Mail-Adresse wurde noch nicht verifiziert!\nEs wurde eine E-Mail mit einem Code zum Verifizieren an diese Adresse gesendet. Tragen Sie den Code hier ein oder klicken Sie auf den Link in der E-Mail. Um erneut eine E-Mail an diese Adresse zu senden, klicken Sie auf das {{icon}}-Icon.",
                 "EMPTY_CODE": "Bitte tragen Sie hier den Code ein, der Ihnen in der Verifizierungs-E-Mail mitgeteilt wurde.",
                 "INVALID_CODE": "Der Code den Sie eingegeben haben ist falsch oder abgelaufen."
             }
@@ -783,8 +827,8 @@
             "FAX": "Fax"
         },
         "BULK_REKEYING": {
-            "HEADER": "Neuverschlüsselung",
-            "CONTENT": "Die Talks auf diesem Gerät werden für den neuen cameoKey verschlüsselt.",
+            "HEADER": "Aktualisierung der Verschlüsselung",
+            "CONTENT": "Die Verschlüsselung Ihrer Talks wird für Ihren neuen cameoKey erweitert.",
             "START": "Start"
         },
         "FOOTER": {
@@ -912,7 +956,7 @@
             },
             "AUTHENTIC_RECIPIENT_LIST": {
                 "NAME": "Die Empfängerliste ist signiert und authentisch.",
-                "DESCRIPTION": "Der Nutzer der diesen Talk gestartet hat, hat die Empfängerliste signiert. Sie vertrauen allen Empfängern dieses Talks. Zur Überprüfung hier die Liste der Empfänger mit cameoIDs:"
+                "DESCRIPTION": "Der Nutzer der diesen Talk gestartet hat, hat die Empfängerliste signiert. Sie vertrauen allen Empfängern dieses Talks. Zur Überprüfung die Liste der Empfänger mit cameoIDs:"
             },
             "AUTHENTIC_RECIPIENTS": {
                 "NAME": "Empfänger sind authentisch.",
@@ -929,7 +973,8 @@
         },
         "ERROR": {
             "EMPTY_INPUT": "Eingabe ist leer!",
-            "WRONG_INPUT": "Bitte überprüfen Sie Ihre Eingabe!"
+            "WRONG_INPUT": "Bitte überprüfen Sie Ihre Eingabe!",
+            "MESSAGE": "Es ist ein Fehler aufgetreten"
         },
         "EVENTS": {
             "NEW_MESSAGE": {
@@ -940,6 +985,24 @@
                 "TITLE": "neue Freundschaftsanfrage",
                 "MSG": "Freundschaftsanfrage von {{sender}}"
             }
+        },
+        "CONTEXT": {
+            "MODAL": {
+                "CONFIRM": {
+                    "DELETE": {
+                        "TITLE": "Löschen",
+                        "ONE_ITEM": "Wollen Sie den ausgewählten Eintrag aus der Liste wirklich löschen?",
+                        "MORE_ITEMS": "Wollen Sie die ausgewählten Einträge aus der Liste wirklich löschen?"
+
+                    }
+                },
+                "NOTIFY": {
+                    "DELETE_ERROR": "Es ist ein Fehler aufgetreten. Die ausgewählten Einträge konnten nicht gelöscht werden."
+                }
+            }
+        },
+        "CONVERSATION":{
+            "DELETE": "Talk verlassen"
         }
     },
 
@@ -968,11 +1031,11 @@
         "VERIFICATION": {
             "SMS": {
                 "SENDER": "cameoNet",
-                "MESSAGE": "Der Code zur Verifizierung lautet \"{{code}}\". Sie können auch auf folgenden Link klicken: {{link}}"
+                "MESSAGE": "Hallo, zum Verifizieren hier klicken {{link}} oder \"{{code}}\" in Einst>Benutzerkonto>Code(TelefonNr) eingeben"
             },
             "MAIL": {
                 "SENDER": "cameoNet",
-                "MESSAGE": "Willkommen bei cameoNet,\nder Code zur Verifizierung dieser E-Mail-Adresse lautet \"{{code}}\". Alternativ können Sie auch auf folgenden Link klicken:\n{{link}}",
+                "MESSAGE": "Hallo,\num diese E-Mail-Adresse bei cameoNet zu verifizieren, klicken Sie bitte auf folgenden Link:\n{{link}}\nAlternativ können Sie in camenoNet auch folgenden Code unter Menü > Einstellungen > Benutzerkonto-Einstellungen in das Feld Code zum Verifizieren der E-Mail-Adresse eintragen:\n\"{{code}}\"",
                 "SUBJECT": "Verifizierung Ihrer E-Mail-Adresse bei cameoNet"
             },
             "LANDING_PAGE": {
@@ -984,11 +1047,11 @@
         "RESET_PASSWORD": {
             "SMS": {
                 "SENDER": "cameoNet",
-                "MESSAGE": "Der Code zur Passwortrücksetzung lautet \"{{code}}\". Sie können auch auf folgenden Link klicken: {{link}}"
+                "MESSAGE": "Hallo, zur Passwortrücksetzung hier klicken: {{link}} oder den Code \"{{code}}\" in cameoNet eingeben"
             },
             "MAIL": {
                 "SENDER": "cameoNet",
-                "MESSAGE": "Willkommen bei cameoNet,\nder Code zur Passwortrücksetzung lautet \"{{code}}\". Alternativ können Sie auch auf folgenden Link klicken:\n{{link}}",
+                "MESSAGE": "Hallo,\nbitte klicken Sie auf folgenden Link, um ein neues Passwort zu setzen:\n{{link}}\nAlternativ können Sie auch folgenden Code in cameoNet eingeben:\n\"{{code}}\"",
                 "SUBJECT": "Passwortrücksetzung für Ihr cameoNet-Benutzerkonto"
             }
         }

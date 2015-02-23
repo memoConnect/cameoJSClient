@@ -1,6 +1,5 @@
 var config = require("../config/specs.js")
-var util = require("../../lib/e2e/cmTestUtil.js")
-
+var util = require("../cmUtil.js")
 
 describe('Conversation encryption -', function () {
 
@@ -58,12 +57,14 @@ describe('Conversation encryption -', function () {
 
         it("add message text", function () {
             var text = "moep_message_" + Math.floor(Math.random() * 1000000);
-            $("[data-qa='input-answer']").sendKeys(text)
+            util.setVal('input-answer',text)
             var message = {
                 text: text,
                 author: sender.login
             }
             messages.push(message)
+
+            expect(util.getVal('input-answer')).toBe(text)
         })
 
         it("show modal when security settings need to be adjusted", function () {
@@ -120,9 +121,7 @@ describe('Conversation encryption -', function () {
             it("check security aspects", function () {
                 util.waitForElement('cm-header:not(.ng-hide)')
 
-                ptor.debugger()
-
-                var p,n 
+                var p,n
 
                 ptor.wait(function(){
 
@@ -151,15 +150,17 @@ describe('Conversation encryption -', function () {
 
             $("[data-qa='btn-send-answer']").click()
             util.waitForElement('cm-message')
-            util.getConversation(subject)
-
-            // get conversation Id
-            ptor.wait(function () {
-                return ptor.getCurrentUrl().then(function (url) {
-                    conversationId = url.split("/").pop()
-                    return conversationId != "new"
-                })
-            }, 5000, 'unable to get conversation id')
+            .then(function(){
+                return util.getConversation(subject)
+            }).then(function() {
+                // get conversation Id
+                return ptor.wait(function () {
+                    return ptor.getCurrentUrl().then(function (url) {
+                        conversationId = url.split("/").pop()
+                        return conversationId != "new"
+                    })
+                }, 5000, 'unable to get conversation id')
+            })
 
         })
 
@@ -180,7 +181,7 @@ describe('Conversation encryption -', function () {
 
         var checkMessages = function (recipient, index) {
 
-            describe("recipient number " + (index + 1) + " -", function () {
+            describe("recipient number " + index + " -", function () {
 
                 var conversationRoute
 
@@ -223,18 +224,22 @@ describe('Conversation encryption -', function () {
                             util.setVal('input-password', password)
 
                             ptor.wait(function(){
-                                return util.getVal('input-password').then(function(val){
+                                return util.getVal('input-password')
+                                .then(function(val){
                                     return val == password
                                 })
+                            }).then(function(){
+                                // make sure that the input loses focus and ng-blur gets fired:
+                                $("[data-qa='input-password']").sendKeys(protractor.Key.TAB)
+                                $("#cm-app").click()
+
+                                return util.waitForElement("[data-qa='icon-conversation-decrypted']")
+                                    .then(function(){
+                                        return $("[data-qa='btn-security-done']").click()
+                                    })
+                            }).then(function(){
+                                return util.waitForPageLoad(conversationRoute)
                             })
-
-                            //make sure that the input loses focus and ng-blur gets fired:
-                            $("[data-qa='input-password']").sendKeys(protractor.Key.TAB)
-                            $("#cm-app").click()
-
-                            util.waitForElement("[data-qa='icon-conversation-decrypted']")
-                            $("[data-qa='btn-security-done']").click()
-                            util.waitForElementDisappear("[data-qa='btn-security-done']")
                         }
                     }
                 })

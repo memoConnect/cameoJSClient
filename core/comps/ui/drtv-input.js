@@ -1,5 +1,78 @@
 'use strict';
 
+/**
+ * @ngdoc directive
+ * @name cmUi.directive:input
+ * @description
+ * a drtv for all input-tags
+ * every input with attr name and ng-model get registred at cmPristine service
+ *
+ * @restrict A
+ * @requires cmPristine
+ * @requires $rootScope
+ * @requires $timeout
+ *
+ * @example
+ <example module="cmDemo">
+ <file name="index.html">
+ <article class="content">
+     <div class="cm-input-ctn">
+        <input type="text" value="whoop whoop" />
+     </div>
+ </article>
+
+ <article class="content">
+     <div class="cm-input-ctn with-inside-icon">
+         <input type="text" value="whoop whoop" />
+         <i class="fa cm-write"></i>
+     </div>
+ </article>
+
+ <article class="content">
+     <div class="cm-input-ctn with-inside-icons">
+         <input type="text" value="whoop whoop" />
+         <i class="fa cm-rhino-bubble-glyph"></i>
+         <i class="fa cm-write"></i>
+     </div>
+ </article>
+
+ <article class="content">
+     <div class="cm-input-ctn with-inside-left-icon">
+         <i class="fa cm-checker"></i>
+         <input type="text" value="whoop whoop" />
+     </div>
+ </article>
+
+ <article class="content">
+     <div class="cm-input-ctn with-inside-left-icons">
+         <i class="fa cm-checker"></i>
+         <i class="fa cm-checkbox-wrong"></i>
+         <input type="text" value="whoop whoop" />
+     </div>
+ </article>
+
+ <article class="content">
+     <div class="cm-input-ctn with-inside-left-icon with-inside-icon">
+         <i class="fa cm-checker"></i>
+         <input type="text" value="whoop whoop" />
+         <i class="fa cm-checkbox-wrong"></i>
+     </div>
+ </article>
+
+ <article class="content">
+     <div class="cm-input-ctn with-inside-left-icons with-inside-icons">
+         <i class="fa cm-checker"></i>
+         <i class="fa cm-checker"></i>
+         <input type="text" value="whoop whoop" />
+         <i class="fa cm-checkbox-wrong"></i>
+         <i class="fa cm-checkbox-wrong"></i>
+     </div>
+ </article>
+
+ </file>
+ </example>
+ */
+
 angular.module('cmUi')
 .directive('input', [
     'cmPristine',
@@ -44,7 +117,7 @@ angular.module('cmUi')
                     ngModel.$commitViewValue();
                 }
 
-                function handleChange(event){
+                function handleChange(event, forceSet){
                     // check defaultValue
                     if(initValue == undefined) {
                         reinit();
@@ -58,7 +131,7 @@ angular.module('cmUi')
                     }
 
                     // handle adaptive change
-                    if('cmAdaptiveChange' in attrs){
+                    if('cmAdaptiveChange' in attrs && !forceSet){
                         $timeout.cancel(timeout);
                         timeout = $timeout(function(){
                             setValue()
@@ -85,6 +158,12 @@ angular.module('cmUi')
                     .on('keyup', handleChange)
                     .on('blur', handleChange);
 
+                if('cmEnter' in attrs){
+                    var killWatcher = scope.$on('cmEnter:pressed', function(){
+                        handleChange({},true);
+                    });
+                }
+
                 scope.$on('$destroy', function(){
                     element
                         .off('focus', handleChange)
@@ -94,6 +173,9 @@ angular.module('cmUi')
                     cmPristine.remove(ngModel);
 
                     cmPristine.off('reinit', reinit);
+
+                    if(killWatcher)
+                        killWatcher();
                 });
             }
         }

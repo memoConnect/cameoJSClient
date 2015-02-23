@@ -169,7 +169,7 @@ angular.module('cmCore').factory('cmFactory',[
              */
             self.on('register', function(event, instance){
                 if(typeof instance.trigger == 'function'){
-                    instance.trigger('init:ready'); // Todo: ieses event sollte die instance eher selber triggern oder?
+                    instance.trigger('init:ready'); // Todo: dieses event sollte die instance eher selber triggern oder?
                 }
             });
 

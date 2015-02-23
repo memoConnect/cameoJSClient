@@ -53,6 +53,9 @@ angular.module('cmCore')
 
                 /* reset validate Token */
                 _TOKEN_ = undefined;
+                if(_TOKEN_ != undefined){
+                    cmLogger.warn('cmAuth.removeToken - validate Token not removed')
+                }
 
                 /* remove Token from LocalStorage */
                 LocalStorageAdapter.remove('token');
@@ -114,7 +117,7 @@ angular.module('cmCore')
                     if(token !== undefined && token !== 'undefined' && token !== null && token.length > 0){
                         if(_TOKEN_ != undefined && _TOKEN_ != token){
                             $rootScope.$broadcast('logout',{where: 'cmAuth getToken failure'});
-                            cmLogger.debug('cmAuth.storeToken - Error - validateToken is different');
+                            cmLogger.debug('cmAuth.getToken - Error - validateToken is different');
 
                             return false;
                         }
@@ -428,7 +431,7 @@ angular.module('cmCore')
              * @returns {Boolean} for removing succeed
              */
             removeTwoFactorToken: function(){
-                return localStorage.removeItem('twoFactorToken');
+                return LocalStorageAdapter.remove('twoFactorToken');
             },
             /**
              * @ngdoc method
@@ -442,7 +445,7 @@ angular.module('cmCore')
              * @returns {Boolean} for setting succeed
              */
             storeTwoFactorToken: function(twoFactorToken){
-                return localStorage.setItem('twoFactorToken', twoFactorToken);
+                return LocalStorageAdapter.save('twoFactorToken', twoFactorToken);
             },
             /**
              * @ngdoc method
@@ -455,7 +458,7 @@ angular.module('cmCore')
              * @returns {String} twoFactorToken
              */
             getTwoFactorToken: function(){
-                return localStorage.getItem('twoFactorToken');
+                return LocalStorageAdapter.get('twoFactorToken');
             },
 
             sendPasswordLost: function(data){

@@ -17,8 +17,8 @@ angular.module('cmCore')
                     break;
                     case 'FILE.UPLOAD.FILESIZE.EXCEEDED':
                         i18n = {
-                            fileSize: data.header['X-File-Size'],
-                            fileName: data.header['X-File-Name'],
+                            fileSize: data.headers['X-File-Size'],
+                            fileName: data.headers['X-File-Name'],
                             maxFileSize: data.error.maxFileSize
                         };
                     break;

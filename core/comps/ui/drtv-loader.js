@@ -1,8 +1,17 @@
 'use strict';
 
-// http://fgnass.github.io/spin.js/
+/**
+ * @ngdoc directive
+ * @name cmUi.directive:cmLoader
+ *
+ * @description
+ * shows default a spinner and with attr
+ * http://fgnass.github.io/spin.js/
+ *
+ */
 
-angular.module('cmUi').directive('cmLoader',[
+angular.module('cmUi')
+.directive('cmLoader',[
     function (){
         return {
             restrict:   'AE',
@@ -93,9 +102,9 @@ angular.module('cmUi').directive('cmLoader',[
                 /**
                  * @ngdoc event
                  * @name start
-                 * @eventOf cmUi.directive:cmSpinner
+                 * @eventOf cmUi.directive:cmLoader
                  * @description
-                 * $scope.$on('cmSpinner:start',...)
+                 * $scope.$on('cmLoader:start',...)
                  */
                 $scope.$on('cmLoader:start', function(){
                     $scope.animate(true);
@@ -104,9 +113,9 @@ angular.module('cmUi').directive('cmLoader',[
                 /**
                  * @ngdoc event
                  * @name stop
-                 * @eventOf cmUi.directive:cmSpinner
+                 * @eventOf cmUi.directive:cmLoader
                  * @description
-                 * $scope.$on('cmSpinner:stop',...)
+                 * $scope.$on('cmLoader:stop',...)
                  */
                 $scope.$on('cmLoader:stop', function(){
                     $scope.animate(false);

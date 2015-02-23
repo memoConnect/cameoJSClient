@@ -17,8 +17,8 @@ module.exports = function(config) {
         ],
 
         preprocessors: {
-            'dist/app/i18n/*.json': ['json2js'],
-            'build/i18n/language-keys.json': ['json2js']
+            'dist/app/i18n/*.json': ['ng-json2js'],
+            'build/i18n/language-keys.json': ['ng-json2js']
         },
         // for all i18n json strip to ->/i18n
         ngJson2JsPreprocessor: {
@@ -58,6 +58,7 @@ module.exports = function(config) {
 
         // If browser does not capture in given timeout [ms], kill it
         captureTimeout: 60000,
+        browserNoActivityTimeout: 60000,
 
         // Continuous Integration mode
         // if true, it capture browsers, run tests and exit

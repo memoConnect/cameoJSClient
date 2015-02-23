@@ -11,19 +11,31 @@
 
 angular.module('cmContacts')
 .directive('cmContactCreate', [
-    'cmContactsModel', 'cmUtil', 'cmNotify', 'cmLoader', 'cmModalContactImport',
-    '$q',
-    function(cmContactsModel, cmUtil, cmNotify, cmLoader, cmModalContactImport,
-             $q){
-
+    'cmLocalContacts', 'cmContactsModel', 'cmUtil', 'cmNotify', 'cmLoader', 'cmModalContactImport', 'cmFilter',
+    '$rootScope','$q',
+    function(cmLocalContacts, cmContactsModel, cmUtil, cmNotify, cmLoader, cmModalContactImport, cmFilter,
+             $rootScope, $q){
         return {
             restrict:       'AE',
             scope:          true,
             templateUrl:    'comps/contacts/drtv-contact-create.html',
-
             controller: function($scope, $element, $attrs){
                 $scope.cmUtil = cmUtil;
                 var loader = new cmLoader($scope);
+
+                $scope.canReadLocalContacts = function(){
+                    return cmLocalContacts.canRead();
+                };
+
+                $scope.goToSearch = function(){
+                    if($scope.formData.displayName != ''){
+                        cmFilter.set($scope.formData.displayName)
+                    }
+
+                    cmFilter.setSearchVisibility(true);
+
+                    $rootScope.goTo('/contact/list');
+                };
 
                 $scope.disabled = false;
                 $scope.chooseAvatar = true;

@@ -14,12 +14,12 @@ angular.module('cmConversations')
 
     'cmConversationFactory', 'cmUserModel', 'cmCrypt', 'cmLogger', 'cmNotify',
     'cmModal', 'cmEnv', 'cmSettings', 'cmKeyStorageService', 'cmTransferScopeData',
-    'cmErrorCodes', 'cmAnswerFiles',
+    'cmErrorCodes', 'cmAnswerFiles', 'cmKeyboard',
     '$location', '$rootScope', '$document', '$routeParams', '$q',
 
     function (cmConversationFactory, cmUserModel, cmCrypt, cmLogger, cmNotify,
               cmModal, cmEnv, cmSettings, cmKeyStorageService, cmTransferScopeData,
-              cmErrorCodes, cmAnswerFiles,
+              cmErrorCodes, cmAnswerFiles, cmKeyboard,
               $location, $rootScope, $document, $routeParams, $q) {
         return {
             restrict: 'AE',
@@ -27,7 +27,9 @@ angular.module('cmConversations')
             scope: true,
 
             controller: function ($scope, $element, $attrs) {
-                
+
+                $scope.checkPurlRoute = $rootScope.checkPurlRoute;
+
                 var self                 = this,
                     conversation_subject = $scope.$eval($attrs.cmSubject),
                     conversation_offset  = $attrs.offset,
@@ -67,6 +69,20 @@ angular.module('cmConversations')
                     $scope.showGrid = storageService.get($scope.conversation.id)
                 }
 
+                $scope.gotoRecipients = function(){
+                    var obj = {};
+
+                    if('purlId' in $routeParams){
+                        obj.type = 'purl';
+                        obj.typeId = $routeParams.purlId;
+                    } else {
+                        obj.type = 'conversation';
+                        obj.typeId = $scope.conversation.id||'new';
+                    }
+
+                    $rootScope.goto(obj.type+'/'+obj.typeId+'/recipients')
+                };
+
                 $scope.toggleRecipientView = function(){
                     if($scope.showGrid){
                         $scope.showGrid = false;
@@ -86,7 +102,6 @@ angular.module('cmConversations')
                 };
 
                 function checkConversationSetup(){
-
                     $scope.isSending        = true;
                     $scope.isSendingAbort   = false;
 
@@ -96,13 +111,12 @@ angular.module('cmConversations')
                         return $q.reject('conversation unreliable.')
                     }
 
-                    //Is the conversation newly created and has not been saved to the backend yet?                  
-                    
+                    // Is the conversation newly created and has not been saved to the backend yet?
                     return  $scope.conversation.state.is('new')
-                                //The conversations has not been saved to the Backend, do it now:
+                                // the conversations has not been saved to the Backend, do it now:
                             ?   $scope.conversation.save()
-                                //When that is done try again to send the message:
-                                .then( function(conversation_data){ 
+                                // when that is done try again to send the message:
+                                .then(function(conversation_data){
                                     $scope.conversation.importData(conversation_data)
                                     cmConversationFactory.register($scope.conversation);
                                     //$rootScope.$broadcast('new-conversation:ready')
@@ -128,29 +142,23 @@ angular.module('cmConversations')
                                 filesForMessage = files;
                             deferred.resolve()
                         },
-                        function(data){
+                        function(error){
                             $scope.isSending = false;
                             $scope.isSendingAbort = true;
 
-                            if(!data.errorCode){
-                                deferred.reject('problem with file and none errorCode is give');
-                            } else {
-                                deferred.reject('problem with prepare file upload');
+                            cmNotify.warn(error.codes[0], {
+                                ttl: 0,
+                                i18n: cmErrorCodes.toI18n(error.codes[0], {
+                                    error: error.data,
+                                    headers: error.headers
+                                })
+                            });
 
-                                cmNotify.warn(data.errorCode, {
-                                    ttl: 0,
-                                    i18n: cmErrorCodes.toI18n(data.errorCode, {
-                                        error: data.error,
-                                        header: data.headers
-                                    })
-                                });
-
-                                deferred.reject(data.errorCode);
-                            }
+                            deferred.reject(data.errorCodes);
                         }
                     );
 
-                    return deferred.promise
+                    return deferred.promise;
                 }
 
                 /**
@@ -158,26 +166,29 @@ angular.module('cmConversations')
                  * with preparing files for upload
                  * after preparation send message
                  */
-                $scope.send = function(){
+                $scope.send = function(event){
+                    /**
+                     * reset focus to answer textarea
+                     */
+                    cmKeyboard.focusLast(event);
 
                     if((!$scope.newMessageText || $scope.newMessageText.length == 0)
-                    && cmAnswerFiles.files.length  == 0
-                    ){
+                    && cmAnswerFiles.files.length  == 0){
                         cmNotify.warn('CONVERSATION.WARN.MESSAGE_EMPTY', {ttl:5000});
                         return $q.reject('message invalid.')
                     }      
 
-                    if($scope.isSending)
+                    if($scope.isSending) {
                         return $q.reject('message upload already in progress.');
-
+                    }
 
                     var new_message = $scope.conversation.messages
-                                        .create({
-                                            conversation:$scope.conversation,
-                                            id:'#new_message',
-                                            fromIdentity:cmUserModel.data.identity
-                                        })
-                                        .setText($scope.newMessageText)
+                    					.create({
+                        					conversation:$scope.conversation,
+                        					id:'#new_message',
+                       						 fromIdentity:cmUserModel.data.identity
+                    					})
+                    					.setText($scope.newMessageText);
 
                     new_message.state.set('sending');
 
@@ -188,70 +199,62 @@ angular.module('cmConversations')
                         new_message.state.set('waitForFiles');
                     }
 
+
+
                     return checkConversationSetup()
-                            .then(function(){
-                                return  $scope.conversation.getPassphrase()
-                                        .catch(function(){
-                                                return  $scope.conversation.isEncrypted()
-                                                        ?   $q.reject('access denied')
-                                                        :   $q.when(null);
-                                        //Todo: null for 'not encrypted' old convention
-                                        })
-                                        .then(function(passphrase){
-                                            return  $q.when()
-                                                    .then(function(){
-                                                        return prepareFiles(passphrase)
-                                                    })
-                                                    .then(function(){
-                                                        return  $scope.conversation.isEncrypted()
+                    .then(function(){
+                        return  $scope.conversation.getPassphrase()
+                                .catch(function(){
+                                        return  $scope.conversation.isEncrypted()
+                                                ?   $q.reject('access denied')
+                                                :   $q.when(null);
+                                //Todo: null for 'not encrypted' old convention
+                                })
+                                .then(function(passphrase){
+                                    return  $q.when()
+                                            .then(function(){
+                                                return prepareFiles(passphrase)
+                                            })
+                                            .then(function(){
+                                                return $scope.conversation.sendMessage(new_message, filesForMessage);
+                                            })
 
-                                                                ?   new_message
-                                                                    .setText($scope.newMessageText)
-                                                                    .addFiles(filesForMessage)
-                                                                    .getSignatures()
-                                                                    .then(function(){
-                                                                        return new_message.encrypt(passphrase)
-                                                                    })
-                                                                    .then(function(){
-                                                                        return new_message.save()
-                                                                    })
+                                })
+                    })
+                    .then(
+                        function(){
+                            // tidy up:
+                            clearTransferScopeData();
+                            $scope.newMessageText = '';
+                            filesForMessage = [];
+                            cmAnswerFiles.reset();
+                            $rootScope.$broadcast('cmAnswer:reset');
+                        },
+                        function(){
+                            $scope.conversation.messages.deregister(new_message)
+                        }
+                    )
+                    .finally(function(){
+                        new_message.state.unset('sending');
+                        new_message.state.unset('waitForFiles');
+                        $scope.isSending = false;
+                    });
+                };
 
-                                                                :   new_message
-                                                                    .setText($scope.newMessageText)
-                                                                    .addFiles(filesForMessage)
-                                                                    .setPublicData(['text','fileIds'])
-                                                                    .revealSignatures()
-                                                                    .getSignatures()
-                                                                    .then(function(){
-                                                                        return new_message.save()
-                                                                    })
-                                                    })
+                $scope.showTrustError = function(){
+                    //cmLogger.debug('cmConversationDRTV.showTrustError');
 
-                                        })
-                            })
-                            .then(
-                                function(){
-                                    // tidy up:
-                                    clearTransferScopeData();
-                                    $scope.newMessageText = '';
-                                    filesForMessage = [];
-                                    cmAnswerFiles.reset();
-                                    $rootScope.$broadcast('cmAnswer:reset');
-                                    
-                                    //Todo: This is not the right place to count messages:
-                                    $scope.conversation.numberOfMessages ++;
-                                },
-                                function(){
-                                    $scope.conversation.messages.deregister(new_message)
-                                }
-                            )
-                            .finally(function(){
-                                new_message.state.unset('sending');
-                                new_message.state.unset('waitForFiles');
-                                $scope.isSending = false;
-                            })                                    
+                    if(!$scope.conversation.state.is('new')
+                        && $scope.conversation.getKeyTransmission() == 'asymmetric'
+                        && $scope.conversation.userHasPrivateKey() == true
+                        && !$scope.conversation.userHasAccess()){
 
-                  
+                        cmModal.open('handshake-info');
+
+                        return true;
+                    }
+
+                    return false;
                 };
 
                 $scope.showAsymmetricKeyError = function(){
@@ -312,6 +315,7 @@ angular.module('cmConversations')
 
                     /** Event callbacks **/
                     function callback_update_finished(){
+                        $scope.showTrustError();
                         $scope.showAsymmetricKeyError();
                         $scope.showGoToSettingsModal();
                     }

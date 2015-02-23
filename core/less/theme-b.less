@@ -38,7 +38,7 @@
   article.item {
     .content;
     .with-cursor;
-    position: relative;
+    .pos-rel;
     min-height: @cm-unit;
     .body{
       .w100;
@@ -57,6 +57,10 @@
           font-size: 3rem;
         }
       }
+    }
+
+    .icon-list{
+      .pos-tr;
     }
   }
 
@@ -111,9 +115,6 @@
     border: none;
     margin: 1em 0.1rem;
     height:1px;
-    &.margin-small {
-      margin: 0.5em 0.1rem;
-    }
   }
 
   cm-info-bubble{
@@ -157,10 +158,6 @@
   }
 
   .icon-list{
-    .pos-tr;
-    .tar;
-    height: @cm-unit;
-    line-height: @cm-unit;
     i {
       .no-margin !important;
       .tac;

@@ -16,7 +16,7 @@
 
     <preference name="phonegap-version" value="3.6.3" />
 
-    <gap:platform name="android" />
+    <!--<gap:platform name="android" />-->
     <gap:platform name="winphone" />
     <gap:platform name="ios" />
 
@@ -29,7 +29,7 @@
     <preference name="HideKeyboardFormAccessoryBar" value="true" />
 
     <!-- android -->
-    <preference name="KeepRunning" value="true"/>
+    <preference name="keepRunning" value="false"/>
     <preference name="LoadUrlTimeoutValue" value="5000" />
     <preference name="ErrorUrl" value=""/>
     <preference name="AndroidPersistentFileLocation" value="Internal" />

@@ -53,6 +53,17 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
                 })
             },
 
+            searchConversations: function(search, limit, offset){
+                var queryString = cmUtil.handleLimitOffset(limit,offset);
+
+                return cmApi.post({
+                    path: '/conversations/search' + queryString,
+                    data: {
+                        search: search
+                    }
+                })
+            },
+
             getConversationSummary: function(id){
                 //cmLogger.warn('cmConversationAdapter: .getConversationSummary is deprecated; use .getConversation(id, 1, 0) instead')
                 //return this.getConversation(id, 1, 0)
@@ -133,6 +144,12 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
                             path:    "/conversation/%1/aePassphrases".replace(/%1/, id),
                             data:   {aePassphraseList : aePassphraseList}
                         })
+            },
+
+            deleteConversation: function(idConversation){
+                return  cmApi.delete({
+                            path: "/conversation/" + idConversation + "/recipient"
+                        })
             }
         };
 
@@ -148,6 +165,10 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
 
         cmApi.on('conversation:update', function(event, data){
             adapter.trigger('conversation:update', data)
+        });
+
+        cmApi.on('conversation:deleted', function(event, data){
+            adapter.trigger('conversation:deleted', data)
         });
 
         cmApi.on('rekeying:finished', function(event, data){

@@ -1,18 +1,22 @@
 'use strict';
 
 angular.module('cmFiles').directive('cmBlobVideoAudio',[
-    'cmEnv', 'cmFilesAdapter',
-    '$rootScope',
-    function (cmEnv, cmFilesAdapter,
-              $rootScope) {
+    'cmDevice', 'cmFilesAdapter',
+    function (cmDevice, cmFilesAdapter) {
         return {
             restrict: 'A',
             link: function(scope, element, attrs){
                 function showFile(file){
-                    if(typeof file.blob == 'object'){
+                    // mocked
+                    if('url' in file && 'src' in file.url){
+                        element.attr('src', file.url.src);
+                        if(file.url.src && file.url.src != ' ')
+                            fileReady(file);
+                    // loaded
+                    } else if(typeof file.blob == 'object'){
                         var canPlay = element[0].canPlayType(file.type);
                         // browser supports file
-                        if(!cmEnv.isiOS && canPlay) {
+                        if(!cmDevice.isiOS() && canPlay) {
                             cmFilesAdapter.getBlobUrl(file.blob).then(function(objUrl){
                                 file.url = objUrl;
                                 element.attr('src', file.url.src);
@@ -57,10 +61,6 @@ angular.module('cmFiles').directive('cmBlobVideoAudio',[
                 function fileReady(file){
                     // hide spinner
                     file.loaded = true;
-
-                    if (attrs.cmScrollToTarget) {
-                        $rootScope.$broadcast('scroll:to', attrs.cmScrollToTarget)
-                    }
                 }
 
                 // load image via fileapi

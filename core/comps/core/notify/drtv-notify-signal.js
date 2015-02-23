@@ -12,17 +12,18 @@ angular.module('cmCore')
                 $scope.ring = false;
 
                 function init(){
-                    if(cmNotify.bellCounter > 0){
+                    if(cmNotify.isBimmel()){
                         $scope.ring = true;
                     }
                 }
 
                 cmNotify.on('bell:ring', function(){
-                    $scope.ring = true;
+                    if(cmNotify.isBimmel()){
+                        $scope.ring = true;
+                    }
                 });
 
                 cmNotify.on('bell:unring', function(){
-                    cmNotify.bellCounter = 0;
                     $scope.ring = false;
                 });
 

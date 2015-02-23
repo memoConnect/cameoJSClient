@@ -1,0 +1,16 @@
+<cm-modal
+        id="{{modalId}}"
+        cm-title="CONVERSATION.MODAL.ASYMMETRIC_KEY_TRUST_ERROR.HEADER"
+        type="plain"
+        nose="top-right"
+        severity="info"
+        nose-position="{{nosePosition||0}}"
+        class="no-padding">
+    <div class="modal-row taj">
+        <span ng-bind-html="::'CONVERSATION.MODAL.ASYMMETRIC_KEY_TRUST_ERROR.TEXT' | cmParse"></span>
+    </div>
+    <div class="modal-row modal-link" ng-click="goTo('/authentication')" cm-reactive data-qa="btn-modal-handshake-link">
+        <i class="fa cm-handshake"></i>
+        {{::'IDENTITY.KEYS.AUTHENTICATION.HEADLINE'|cmTranslate}}
+    </div>
+</cm-modal>

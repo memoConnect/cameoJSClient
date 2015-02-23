@@ -39,10 +39,10 @@
 
 angular.module('cmPhonegap')
 .service('cmCamera', [
-    'cmPhonegap', 'cmFilesAdapter',
-    '$navigator', '$window', '$phonegapCameoConfig',
-    function (cmPhonegap, cmFilesAdapter,
-              $navigator, $window, $phonegapCameoConfig) {
+    'cmPhonegap', 'cmFilesAdapter', 'cmFileTypes',
+    '$navigator', '$window',
+    function (cmPhonegap, cmFilesAdapter, cmFileTypes,
+              $navigator, $window) {
 
         function FileError(e){
             var msg;
@@ -127,11 +127,7 @@ angular.module('cmPhonegap')
             plugin: null,
 
             init: function () {
-                if ($phonegapCameoConfig == 'undefined'){
-                    return false;
-                }
-
-                cmPhonegap.isReady(function () {
+                cmPhonegap.isReady('cmCamera',function () {
                     if($navigator == 'undefined'
                     || !('camera' in $navigator)) {
                         //cmLogger.info('CAMERA PLUGIN IS MISSING');
@@ -148,6 +144,11 @@ angular.module('cmPhonegap')
                 return this.plugin != null;
             },
 
+            getDateForName: function(){
+                var date = new Date();
+                return date.getFullYear()+''+(date.getMonth()+1)+''+date.getDate();
+            },
+
             takePhoto: function (callback, useFrontCamera) {
                 if (!this.existsPlugin()) {
                     return false;
@@ -160,7 +161,8 @@ angular.module('cmPhonegap')
                 this.plugin.getPicture(
                     function (base64) {
                         var blob = cmFilesAdapter.base64ToBlob(base64, 'image/jpeg');
-                        blob.name = 'NewCameoPicture.jpg';
+
+                        blob.name = 'cmPicture_'+self.getDateForName()+'.jpg';
                         callback(blob);
                     },
                     null,
@@ -207,6 +209,12 @@ angular.module('cmPhonegap')
 //                            }, FileError)
 
                             fileEntry.file(function (blob) {
+
+                                if(blob.name == 'content') {
+                                    var extension = cmFileTypes.find(blob.type);
+                                    blob.name = 'cmFile_' + self.getDateForName() + '.'+extension;
+                                }
+
                                 callback(blob);
                             }, FileError);
                         });

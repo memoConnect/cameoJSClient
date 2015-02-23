@@ -3,12 +3,21 @@ button {
 }
 
 .genSelectable(@schmusi){
-  -webkit-user-select: @schmusi;
-  -khtml-user-select: @schmusi;
-  -moz-user-select: @schmusi;
-  -o-user-select: @schmusi;
-  user-select: @schmusi;
+  -webkit-user-select:@schmusi;
+  -khtml-user-select:@schmusi;
+  -moz-user-select:@schmusi;
+  -o-user-select:@schmusi;
+  user-select:@schmusi;
 }
+.genSelectableImportant(@schmusi){
+  -webkit-user-select:@schmusi !important;
+  -khtml-user-select:@schmusi !important;
+  -moz-user-select:@schmusi !important;
+  -o-user-select:@schmusi !important;
+  user-select:@schmusi !important;
+}
+
+// TODO ios bug can't select single word in span.is-selectable
 
 * {
   outline: 0;
@@ -17,23 +26,31 @@ button {
   -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 .is-selectable {
-  .genSelectable(text);
+  .genSelectableImportant(text);
   &-all{
     * {
-      .genSelectable(text);
+      .genSelectableImportant(text);
     }
   }
 }
 cm-info-bubble, input, textarea{
-  .genSelectable(text);
+  .genSelectableImportant(text);
   * {
-    .genSelectable(text);
+    .genSelectableImportant(text);
   }
 }
 
 .transition(@transition-property:all){
   /* [transition-property] [transition-duration] [transition-timing-function] [transition-delay] */
   @values:@transition-property 250ms ease;
+  transition:@values;
+  -webkit-transition:@values;
+  -moz-transition:@values;
+  -o-transition:@values;
+}
+.transitions(@one; @two){
+/* [transition-property] [transition-duration] [transition-timing-function] [transition-delay] */
+  @values:@one 250ms ease, @two 250ms ease;
   transition:@values;
   -webkit-transition:@values;
   -moz-transition:@values;

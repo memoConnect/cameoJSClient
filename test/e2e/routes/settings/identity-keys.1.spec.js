@@ -1,5 +1,5 @@
 var config = require("../../config/specs.js")
-var util = require("../../../lib/e2e/cmTestUtil.js")
+var util = require("../../cmUtil.js")
 
 describe('Identity key settings: ', function () {
     var ptor = util.getPtorInstance()
@@ -46,9 +46,10 @@ describe('Identity key settings: ', function () {
         expect($("[data-qa='btn-cancel-key-generation']").isDisplayed()).toBe(true)
     })
 
-    it('cancel generation', function () {
-        util.waitAndClickQa("btn-cancel-key-generation")
-        util.waitForPageLoad("/settings/identity/key/list")
+    it('cancel generation because of no key  talks', function() {
+        util.waitAndClickQa("btn-cancel-key-generation").then(function(){
+            util.waitForPageLoad("/settings/identity/key/list")
+        })
     })
 
     it('start generation again', function () {
@@ -93,13 +94,13 @@ describe('Identity key settings: ', function () {
     })
 
     it('there should be no info and no footer bubble concerning keys needing authentication.', function(){
-        expect($('[data-qa="bubble-some-key-needs-authentication"').isPresent()).toBe(false)
-        expect($('[data-qa="li-some-key-needs-authentication"').isPresent()).toBe(false)
+        expect($('[data-qa="bubble-some-key-needs-authentication"]').isPresent()).toBe(false)
+        expect($('[data-qa="li-some-key-needs-authentication"]').isPresent()).toBe(false)
     })
 
     it('the key should still be there after logout/login', function () {
         util.logout()
-        util.login(login, password, '/talks')
+        util.login(login, password)
         util.get('/settings/identity/key/list')
 
         $$("[data-qa='key-list-item']").then(function (elements) {

@@ -3,7 +3,7 @@
     {{::'SETTINGS.PAGES.ABOUT_US.TITLE'|cmTranslate}}
 </h2>
 
-<article class="about-us content tac">
+<article class="about-us content tac is-selectable">
     <i class="fa cm-rhino-bubble-glyph"></i><br />
     {{version}}<br />
     {{::'SETTINGS.PAGES.ABOUT_US.TEXT'|cmTranslate}}
@@ -11,19 +11,22 @@
 
 <hr>
 
-<h4 ng-bind-html="::'DRTV.IMPRINT.HEADLINE'|cmParse" cm-html-compile class="content"></h4>
+<h4 ng-bind-html="::'DRTV.IMPRINT.HEADLINE'|cmParse" cm-html-compile class="content is-selectable"></h4>
 
-<article ng-bind-html="::'DRTV.IMPRINT.CONTENT'|cmParse" cm-html-compile class="content"></article>
+<article ng-bind-html="::'DRTV.IMPRINT.CONTENT'|cmParse" cm-html-compile class="content is-selectable"></article>
 
 <hr>
 
 <h3 class="content">
     {{::'SETTINGS.PAGES.ABOUT_US.3RD_PARTY.TITLE'|cmTranslate}}&nbsp;
-    (<cm-time-converter cm-timestamp="::'SETTINGS.PAGES.ABOUT_US.3RD_PARTY.DATE'|cmTranslate" cm-special-type="date-seperator"></cm-time-converter>)
+    (<cm-time-converter cm-timestamp="thirdPartyLibraries.date" cm-special-type="date-seperator"></cm-time-converter>)
 </h3>
 
-<ul>
-    <li ng-repeat="lib in ('SETTINGS.PAGES.ABOUT_US.3RD_PARTY.LIBRARIES'|cmTranslate).split(';')">
-        <span class="item text mb5" ng-bind-html="lib|cmParse" cm-html-compile></span>
+<ul class="is-selectable-all">
+    <li ng-repeat="lib in thirdPartyLibraries.libraries">
+        <span class="item text mb5">
+            {{::lib.name}}<br />
+            <a href="{{::lib.url}}" target="_blank">{{::lib.url}}</a>
+        </span>
     </li>
 </ul>

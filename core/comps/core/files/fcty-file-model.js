@@ -309,6 +309,7 @@ angular.module('cmCore')
                 /**
                  * start upload with first chunk in array
                  */
+                this.state.set('onUpload');
                 this._uploadChunk(0);
 
                 return this;
@@ -373,8 +374,11 @@ angular.module('cmCore')
             };
 
             this.startDownloadChunks = function(){
-                self.state.unset('readyForDownload');
-                self._downloadChunk(0);
+                if(!self.state.is('onDownload') && !self.state.is('onUpload')){
+                    self.state.unset('readyForDownload');
+                    self.state.set('onDownload');
+                    self._downloadChunk(0);
+                }
             };
 
             this.downloadStart = function(autoDownload){
@@ -494,6 +498,7 @@ angular.module('cmCore')
                 } else if(index.error) {
                     //cmLogger.warn('chunk not found');
                     self.state.set('cached');
+                    self.state.unset('onDownload');
                 }
             });
 
@@ -504,6 +509,7 @@ angular.module('cmCore')
             this.on('upload:finish', function(){
 //                cmLogger.debug('upload:finish');
                 self.state.set('cached');
+                self.state.unset('onUpload');
             });
 
             this.on('encrypt:chunk', function(event, index){
@@ -525,6 +531,7 @@ angular.module('cmCore')
             this.on('file:cached', function(){
 //                cmLogger.debug('file:cached');
                 self.state.set('cached');
+                self.state.unset('onDownload');
 
                 self
                     .decryptName()

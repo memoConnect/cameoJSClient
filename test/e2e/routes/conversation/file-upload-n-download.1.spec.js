@@ -1,5 +1,5 @@
 var config = require("../../config/specs.js"),
-    util = require("../../../lib/e2e/cmTestUtil.js"),
+    util = require("../../cmUtil.js"),
     path = require('path'),
     subjectUnsafe = 'subjectUnsafe FileUpload',
     subjectSafe = 'subjectSafe FileUpload',
@@ -177,7 +177,6 @@ describe('FileUpload create TestUser', function(){
                 return false
 
             util.login(testUser, 'password')
-            util.waitForPageLoad('/setup/keyinfo')
 
             util.get('/talks')
             util.waitForPageLoad('/talks')

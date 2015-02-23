@@ -9,14 +9,10 @@ angular.module('cmPhonegap')
 
         var $cordova = init();
 
-        cmPhonegap.isReady(function(){
+        cmPhonegap.isReady('$cordova',function(){
             $cordova = init();
         });
 
-        return {
-            get: function () {
-                return $cordova;
-            }
-        }
+        return $cordova;
     }
 ]);

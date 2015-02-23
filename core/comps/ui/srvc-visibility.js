@@ -14,7 +14,8 @@ example:
  })
 */
 
-angular.module('cmUi').factory('cmVisibility',[
+angular.module('cmUi')
+.factory('cmVisibility',[
     'cmLogger',
     '$document', '$window',
     function(cmLogger,

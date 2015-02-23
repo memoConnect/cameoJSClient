@@ -1,5 +1,5 @@
 var config = require("../config/specs.js")
-var util = require("../../lib/e2e/cmTestUtil.js")
+var util = require("../cmUtil.js")
 
 describe('help route', function () {
     var ptor = util.getPtorInstance()
@@ -22,7 +22,7 @@ describe('help route', function () {
 
     it('two elements should be in list', function(){
         $$('cm-widget-help-list li').then(function(elements){
-            expect(elements.length).toEqual(2)
+            expect(elements.length).toEqual(3)
         })
     })
 

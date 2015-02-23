@@ -35,16 +35,20 @@ angular.module('cmWidgets')
                         cmPushNotificationAdapter.deleteDevice();
                         cmPushNotificationAdapter.one('device:unregistrated',function(){
                             $scope.changePushNotifications = false;
+
+                            if(cmSettings.set(key, newValue)){
+                                $scope.settings[key] = newValue;
+                            }
                         });
                     } else {
                         cmPushNotificationAdapter.registerDevice();
                         cmPushNotificationAdapter.one('device:registrated',function(){
                             $scope.changePushNotifications = false;
-                        });
-                    }
 
-                    if(cmSettings.set(key, newValue)){
-                        $scope.settings[key] = newValue;
+                            if(cmSettings.set(key, newValue)){
+                                $scope.settings[key] = newValue;
+                            }
+                        });
                     }
                 };
 

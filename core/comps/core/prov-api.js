@@ -4,7 +4,7 @@
 angular.module('cmCore').provider('cmApi',[
 
 //Service to handle all api calls
-
+    '$injector',
     function($injector){
         var rest_api            = "",
             without_api_url   = false,
@@ -233,6 +233,10 @@ angular.module('cmCore').provider('cmApi',[
                     cmLogger.error('Api call failed: \n '+response.config.method+' '+JSON.stringify(response, null, 2))
 //                    window.location.href='#/server_down' //@ Todo
                     //error messages should come trough backend
+
+                    if(response && 'data' in response && 'errorCodes' in response.data)
+                        $rootScope.$broadcast('cmValidate:error',response.data.errorCodes);
+
                     deferred.reject(response)
                 }
 
@@ -429,7 +433,8 @@ angular.module('cmCore').provider('cmApi',[
 
                 }
 
-                if(!call_stack_disabled && commit_interval) $interval(function(){ api.commit() }, commit_interval, false)
+                if(!call_stack_disabled && commit_interval)
+                    $interval(function(){ api.commit() }, commit_interval, false)
 
                 //API EVENTS:
 
@@ -453,19 +458,19 @@ angular.module('cmCore').provider('cmApi',[
                     if(!api.state.is('event_call_running')){
                         api.state.set('event_call_running');
 
-                        return  api.post({
+                        return api.post({
                             path: events_path,
                             exp_ok: 'id',
                             data:{
                                 secret: 'b4plIJMNITRDeJ9vl0JG' //only working on dev
                             }
                         }, true)
-                            .then(function(id){
-                                api.setSubscriptionId(id);
-                            })
-                            .finally(function(){
-                                api.state.unset('event_call_running');
-                            })
+                        .then(function(id){
+                            api.setSubscriptionId(id);
+                        })
+                        .finally(function(){
+                            api.state.unset('event_call_running');
+                        })
                     } else {
                         return $q.reject('event_call_running');
                     }
@@ -477,13 +482,18 @@ angular.module('cmCore').provider('cmApi',[
                         if (!api.subscriptionId) {
                             //if no subscriptionId is present, get one and try again later:
                             api.subscribeToEventStream()
-                                .then(function () {
-                                    api.getEvents();
-                                })
-
+                            .then(function(){
+                                api.getEvents();
+                            });
+                            /*
+                            ,
+                            function(){
+                                // test failed...
+                                //api.stopListeningToEvents();
+                            }
+                            */
                         } else {
                             api.state.set('event_call_running');
-
                             api.get({
                                 path: events_path + '/' + api.subscriptionId,
                                 exp_ok: 'events'
@@ -539,7 +549,20 @@ angular.module('cmCore').provider('cmApi',[
                         api.stopListeningToEvents();
                         api.resetSubscriptionId();
                     });
-                };
+                }
+
+                $rootScope.$on('cmApi:sleep', function(){
+                    cmLogger.info('cmApi:sleep > stopListeningToEvents');
+                    api.stopListeningToEvents();
+                });
+
+                $rootScope.$on('cmApi:wakeup', function(){
+                    var token = $injector.has('cmAuth') ? $injector.get('cmAuth').getToken() : undefined;
+                    if(token){
+                        cmLogger.info('cmApi:wakeup > listenToEvents');
+                        api.listenToEvents();
+                    }
+                });
 
                 /**
                  * @ngdoc method

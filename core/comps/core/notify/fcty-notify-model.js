@@ -2,17 +2,12 @@
 
 angular.module('cmCore')
 .factory('cmNotifyModel', [
-    'cmStateManagement',
-    'cmObject',
-    'cmModal',
-    'cmUtil',
-    'cmTranslate',
-    'cmLogger',
-    '$timeout',
-    '$rootScope',
-    '$sce',
-    function(cmStateManagement, cmObject, cmModal, cmUtil, cmTranslate, cmLogger,
-             $timeout, $rootScope, $sce){
+    'cmStateManagement', 'cmObject', 'cmModal', 'cmUtil',
+    'cmTranslate', 'cmLogger',
+    '$timeout', '$rootScope', '$injector',
+    function(cmStateManagement, cmObject, cmModal, cmUtil,
+             cmTranslate, cmLogger,
+             $timeout, $rootScope, $injector){
         function cmNotifyModel(data){
             var self = this;
 
@@ -20,6 +15,7 @@ angular.module('cmCore')
 
             this.state = new cmStateManagement(['new','read','error']);
 
+            this.type = undefined;
             this.label = undefined;
             this.severity = 'none';
             this.icon = undefined;
@@ -55,6 +51,8 @@ angular.module('cmCore')
 //                cmLogger.debug('cmNotifyModel.importData');
 //                
                 if(typeof data == 'object') { //typeof never equals 'array': || typeof data == 'array'){
+                    this.type = data.type || this.type;
+
                     this.label = data.label || this.label;
 
                     this.severity = data.severity || this.severity;
@@ -85,7 +83,7 @@ angular.module('cmCore')
             this.render = function(){
 //                cmLogger.debug('cmNotifyModel.render');
                 if(this.bell !== false){
-                    this.trigger('bell:ring');
+                    $injector.get('cmNotify').ringBimmel(this.type);
                 }
 
                 if(this.displayType == 'modal'){
@@ -95,7 +93,7 @@ angular.module('cmCore')
 
             this.renderModal = function() {
 //                cmLogger.debug('cmNotifyModel.renderModal');
-                var modalId = 'modal-notification-' + new Date().getTime();
+                var modalId = 'modal-notification';
 
                 if (!this.templateScope)
                     this.templateScope = $rootScope.$new();

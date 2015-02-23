@@ -7,7 +7,7 @@ describe('cmCrypt', function () {
 
     beforeEach(module('cmCore'))
     beforeEach(inject(function(_cmCrypt_) {
-       cmCrypt = _cmCrypt_;
+        cmCrypt = _cmCrypt_;
     }))
 
     describe('should provide the function',function(){
@@ -49,14 +49,14 @@ describe('cmCrypt', function () {
     describe('.hashObject()', function(){
         var obj_0 = { 1: undefined },
             obj_1 = {
-                        key_1:      "my first value",
-                        key_2:      {
-                                        "key in a box": "value in a box"
-                                    }, 
-                        _:          "value with funny key",
-                        1:          "value with numerical key",
-                        array:      [1, "2A", { 'my_key' : 'my_value' }]
-                    }
+                key_1:      "my first value",
+                key_2:      {
+                    "key in a box": "value in a box"
+                },
+                _:          "value with funny key",
+                1:          "value with numerical key",
+                array:      [1, "2A", { 'my_key' : 'my_value' }]
+            }
 
         function shuffleKeys(obj){
 
@@ -88,9 +88,9 @@ describe('cmCrypt', function () {
             size = size < min_size ? min_size : size
 
             while(size-i > 0){
-                obj[cmCrypt.hash(Math.random().toString())] =   Math.random() > 0.5 
-                                                                ?   cmCrypt.hash(cmCrypt.hash(Math.random().toString())) 
-                                                                :   getRandomObject(max_size-1)
+                obj[cmCrypt.hash(Math.random().toString())] =   Math.random() > 0.5
+                    ?   cmCrypt.hash(cmCrypt.hash(Math.random().toString()))
+                    :   getRandomObject(max_size-1)
                 i++
             }
 
@@ -109,7 +109,7 @@ describe('cmCrypt', function () {
             expect(function(){ cmCrypt.hashObject( new Date()   )}).toThrow()
             expect(function(){ cmCrypt.hashObject( Math         )}).toThrow()
 
-            
+
         })
 
         it('should throw an error if it encounters a cyclic object.', function(){
@@ -122,27 +122,31 @@ describe('cmCrypt', function () {
         })
 
         it('should calculate a proper hash for a proper object.', function(){
-
-            
             //different strings should have different hashes:
             expect(cmCrypt.hashObject("my string")).toBeTruthy()
             expect(cmCrypt.hashObject("my string")).not.toBe(cmCrypt.hashObject(cmCrypt.hashObject("my other string")))
 
             //same data, same order:
             expect(cmCrypt.hashObject({A:1, B:2})).toBe(cmCrypt.hashObject({A:1, B:2}))
+            expect(cmCrypt.hashObject({'A':1, 'B':2, 'C':{'A':1,'B':2}})).toBe(cmCrypt.hashObject({'A':1, 'B':2, 'C':{'A':1,'B':2}}))
+            //expect(cmCrypt.hashObject({'A':1, 'B':2, 'C':[{'A':1},{'B':2}]})).toBe(cmCrypt.hashObject({'A':1, 'B':2, 'C':[{'A':1},{'B':2}]}))
+            //expect(cmCrypt.hashObject(obj_example_1,sortHelper)).toBe(cmCrypt.hashObject(obj_example_1,sortHelper))
 
             //same data, different order:
             expect(cmCrypt.hashObject({A:1, B:2})).toBe(cmCrypt.hashObject({B:2, A:1}))
+            expect(cmCrypt.hashObject({'A':1, 'C':{'B':2,'A':1}, 'B':2 })).toBe(cmCrypt.hashObject({'A':1, 'B':2, 'C':{'A':1,'B':2}}))
+            //expect(cmCrypt.hashObject({'A':1, 'C':[{'B':2},{'A':1}], 'B':2 })).not.toBe(cmCrypt.hashObject({'A':1, 'B':2, 'C':[{'A':1},{'B':2}]}))
+            //expect(cmCrypt.hashObject(obj_example_1,sortHelper)).toBe(cmCrypt.hashObject(obj_example_2,sortHelper))
 
-            //different, data;
+            ////different, data;
             expect(cmCrypt.hashObject({A:1, B:2})).not.toBe(cmCrypt.hashObject({A:2, B:1}))
-            
+
             //array:
             expect(cmCrypt.hashObject({0:'A', 1:'B'})).toBe(cmCrypt.hashObject(['A','B']))
 
             //test object;
             expect(cmCrypt.hashObject(obj_1)).toBe("44QIT/asE9ZhRn8/jT5P+te3FrJrA/7i0G6zqSde2Pw=")
-            
+
             //random objects:
 
             for(var i = 0; i < 10; i++){
@@ -154,6 +158,43 @@ describe('cmCrypt', function () {
                 // copy with shuffled keys should have the same hash
                 expect(cmCrypt.hashObject(randomObject)).toBe(cmCrypt.hashObject(shuffledObject))
             }
+        })
+
+        it('should calculate a proper hash for a proper objects which have a sortHelper.', function(){
+            var obj_example_1 = {
+                keyTransmission:"asymmetric",
+                passphrase: "TFJzm0C0MtGIkc-Ef4_UVpDklgPGYBtozB5LnfjEZo7nwikioDqqEqSblahy",
+                recipientKeyList: [
+                    {identityId:"tHw6j8gma4STDhgir1e8",keys:{id:"FuuJ-LyGBcmpWtyK-aSUf425-Y34wX-EE5Qbgz-kBp8"}},
+                    {identityId:"ZyUtvXTKuJdOnLC6PFt6",keys:{id:"GPLFLhY-5PeebaSQspYjebPLkNSTgRVWbHu0soctSKM"}},
+                    {identityId:"jW1LQLmL8gAnCWdzAZaG",keys:{id:"UFeFdPNfYqXihkwaZgJnMJOmZV8xfwMlCTSUN_hPGTc"}}
+                ]
+            };
+
+            var obj_example_2 = {
+                keyTransmission:"asymmetric",
+                passphrase: "TFJzm0C0MtGIkc-Ef4_UVpDklgPGYBtozB5LnfjEZo7nwikioDqqEqSblahy",
+                recipientKeyList: [
+                    {identityId:"tHw6j8gma4STDhgir1e8",keys:{id:"FuuJ-LyGBcmpWtyK-aSUf425-Y34wX-EE5Qbgz-kBp8"}},
+                    {identityId:"jW1LQLmL8gAnCWdzAZaG",keys:{id:"UFeFdPNfYqXihkwaZgJnMJOmZV8xfwMlCTSUN_hPGTc"}},
+                    {identityId:"ZyUtvXTKuJdOnLC6PFt6",keys:{id:"GPLFLhY-5PeebaSQspYjebPLkNSTgRVWbHu0soctSKM"}}
+                ]
+            };
+
+            var sortHelper = {'recipientKeyList':'identityId'};
+
+            //same data, same order without sortHelper
+            expect(cmCrypt.hashObject(obj_example_1)).toBe(cmCrypt.hashObject(obj_example_1))
+
+            //same data, same order with sortHelper
+            expect(cmCrypt.hashObject(obj_example_1,sortHelper)).toBe(cmCrypt.hashObject(obj_example_1,sortHelper))
+
+            //same data, different order without sortHelper:
+            expect(cmCrypt.hashObject(obj_example_1)).not.toBe(cmCrypt.hashObject(obj_example_2))
+
+            //same data, different order with sortHelper:
+            expect(cmCrypt.hashObject(obj_example_1,sortHelper)).toBe(cmCrypt.hashObject(obj_example_2,sortHelper))
+
         })
     })
 
@@ -208,7 +249,7 @@ describe('cmCrypt', function () {
 
     describe('asymmetric encryption', function(){
         var key              = undefined,
-            publicKey        = undefined, 
+            publicKey        = undefined,
             privateKey       = undefined,
             secret           = 'priv',      //test key is too short to encrypt anything much longer
             encrypted_secret = undefined,
@@ -231,8 +272,8 @@ describe('cmCrypt', function () {
             runs(function(){
                 inject(function($rootScope){
                     cmCrypt
-                    .generateAsyncKeypair(128)
-                    .then(
+                        .generateAsyncKeypair(128)
+                        .then(
                         function(result){
                             key        = result.key
                             publicKey  = key.getPublicKey()
@@ -243,7 +284,7 @@ describe('cmCrypt', function () {
                 })
             })
 
-            waitsFor(function() {                    
+            waitsFor(function() {
                 return publicKey && privateKey
             }, 'public and private key to be defined', 3000);
         })
@@ -253,7 +294,7 @@ describe('cmCrypt', function () {
             expect(cmCrypt.generateAsyncKeypair('huhu')).toBeFalsy()
             expect(cmCrypt.generateAsyncKeypair({test:1})).toBeFalsy()
             expect(cmCrypt.generateAsyncKeypair(['pups'])).toBeFalsy()
-        })     
+        })
 
     })
 

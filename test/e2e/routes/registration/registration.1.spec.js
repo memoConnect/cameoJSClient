@@ -1,5 +1,5 @@
 var config = require("../../config/specs.js")
-var util = require("../../../lib/e2e/cmTestUtil.js")
+var util = require("../../cmUtil.js")
 
 var password = "PWD_Z" + Date.now();
 
@@ -15,6 +15,18 @@ describe('Registration: ', function () {
         $$("input").then(function (elements) {
             expect(elements.length).toBe(4)
         })
+    })
+
+    it('should contain link to terms', function() {
+        util.waitForElement("[data-qa='link-terms']")
+        $("[data-qa='link-terms']").click()
+        util.waitForPageLoad("/terms")
+    })
+
+    it('should go back to registration',function(){
+        util.waitForElement('cm-back div.back-wrap')
+        $('cm-back div.back-wrap').click()
+        util.waitForPageLoad("/registration")
     })
 
     it('should display errors if required fields are empty', function () {
@@ -79,15 +91,6 @@ describe('Registration: ', function () {
         })
 
     })
-
-    it('should link to term of use', function() {
-        util.scrollToBottom()
-
-        util.waitForElement("[data-qa='link-terms']")
-        $("[data-qa='link-terms']").click()
-        util.waitForPageLoad("/terms")
-    })
-
 
     it('should create account with valid credentials and have a support talk', function() {
         util.createTestUser()
