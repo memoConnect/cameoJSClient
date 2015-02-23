@@ -22,10 +22,12 @@ angular.module('cmNodeWebkit').service('cmNodeWebkitEventWrapper', [
 
         this.on('goto-quickstart', function(){
             $rootScope.goTo('/start/quickstart');
+            $rootScope.$apply();
         });
 
         this.on('goto-about-us', function(){
             $rootScope.goTo('/settings/about');
+            $rootScope.$apply();
         });
 
         this.one('app-close', function(){

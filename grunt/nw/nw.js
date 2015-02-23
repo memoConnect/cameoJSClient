@@ -60,6 +60,10 @@ module.exports = function (grunt, options) {
                             dest: 'dist/nodeWebkit/favicon.ico'
                         },
                         {
+                            src: 'core/desktopNotification.html',
+                            dest: 'dist/nodeWebkit/desktopNotification.html'
+                        },
+                        {
                             expand: true,
                             cwd: 'core/gfx/',
                             src: ['**'],

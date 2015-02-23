@@ -88,11 +88,37 @@ angular.module('cmPhonegap')
                 return !this.isDesktop(where+' isMobile');
             },
 
+            /**
+             * https://gist.github.com/videlais/c426ff8d40d2ca35790f#file-detectnodewebkit-js
+             * @returns {boolean}
+             */
+            isNodeWebkit: function(){
+                var isNode = false;
+
+                try {
+                    isNode = (typeof process !== "undefined" && typeof require !== "undefined");
+                } catch(e){
+                    //
+                }
+
+
+                if(isNode){
+                    try {
+                        return (typeof require('nw.gui') !== "undefined");
+                    } catch(e){
+                        //
+                    }
+                }
+
+                return false;
+            },
+
             is: function(deviceType){
                 var acceptedTypes = {
                     'android': 'isAndroid',
                     'ios': 'isiOS',
-                    'winphone': 'isWinPhone'
+                    'winphone': 'isWinPhone',
+                    'nodeWebkit': 'isNodeWebkit'
                 };
                 if(Object.keys(acceptedTypes).indexOf(deviceType) >= 0
                 && acceptedTypes[deviceType] in self){

@@ -88,11 +88,11 @@ angular.module('cameoClient', [
 }])
 .run(['cmUserModel', 'cmBrowserNotifications', '$rootScope', function(cmUserModel, cmBrowserNotifications, $rootScope){
     if(cmUserModel.isAuth()){
-        cmBrowserNotifications.askPermission();
+        cmBrowserNotifications.init();
     }
 
     $rootScope.$on('login', function(){
-        cmBrowserNotifications.askPermission();
+        cmBrowserNotifications.init();
     })
 }])
 // router passing wrong route calls

@@ -1,7 +1,7 @@
 'use strict';
 
-describe('cmBrowserNotifications', function(){
-    var cmBrowserNotifications, cmDevice, cmSettings, window, $rootScope
+describe('cmHTML5Notifications', function(){
+    var cmHTML5Notifications, cmDevice, cmSettings, window, $rootScope
 
     function emulateEvent(target,eventName){
         var event = document.createEvent('HTMLEvents')
@@ -12,34 +12,26 @@ describe('cmBrowserNotifications', function(){
     beforeEach(function(){
         module('cmCore')
         module('cmConfig')
-        inject(function (_cmBrowserNotifications_) {
-            cmBrowserNotifications = _cmBrowserNotifications_
+        inject(function (_cmHTML5Notifications_) {
+            cmHTML5Notifications = new _cmHTML5Notifications_()
         })
     })
 
     describe('check service api', function(){
         it('should exists a "checkBrowser" method', function(){
-            expect(typeof cmBrowserNotifications.checkBrowser).toBe('function')
+            expect(typeof cmHTML5Notifications.checkBrowser).toBe('function')
         })
 
         it('should exists a "checkPermission" method', function(){
-            expect(typeof cmBrowserNotifications.checkPermission).toBe('function')
+            expect(typeof cmHTML5Notifications.checkPermission).toBe('function')
         })
 
         it('should exists a "askPermission" method', function(){
-            expect(typeof cmBrowserNotifications.askPermission).toBe('function')
+            expect(typeof cmHTML5Notifications.askPermission).toBe('function')
         })
 
         it('should exists a "show" method', function(){
-            expect(typeof cmBrowserNotifications.show).toBe('function')
-        })
-
-        it('should exists a "showFriendRequest" method', function(){
-            expect(typeof cmBrowserNotifications.showFriendRequest).toBe('function')
-        })
-
-        it('should exists a "showNewMessage" method', function(){
-            expect(typeof cmBrowserNotifications.showNewMessage).toBe('function')
+            expect(typeof cmHTML5Notifications.show).toBe('function')
         })
     })
 
@@ -60,7 +52,7 @@ describe('cmBrowserNotifications', function(){
 
             spyOn(cmDevice, 'isApp').andReturn(false)
 
-            expect(cmBrowserNotifications.checkBrowser()).toBe(true);
+            expect(cmHTML5Notifications.checkBrowser()).toBe(true);
         })
 
         it('should be return false, if device is not an App and Notification is not in $window object', function(){
@@ -71,7 +63,7 @@ describe('cmBrowserNotifications', function(){
 
             spyOn(cmDevice, 'isApp').andReturn(false)
 
-            expect(cmBrowserNotifications.checkBrowser()).toBe(false);
+            expect(cmHTML5Notifications.checkBrowser()).toBe(false);
         })
 
         it('should be return false, if device is an App and Notification is in $window object', function(){
@@ -82,7 +74,7 @@ describe('cmBrowserNotifications', function(){
 
             spyOn(cmDevice, 'isApp').andReturn(true)
 
-            expect(cmBrowserNotifications.checkBrowser()).toBe(false);
+            expect(cmHTML5Notifications.checkBrowser()).toBe(false);
         })
     })
 
@@ -105,7 +97,7 @@ describe('cmBrowserNotifications', function(){
             })
 
             it('should be return true, if Notification.permission is "granted"', function(){
-                expect(cmBrowserNotifications.checkPermission()).toBe(true);
+                expect(cmHTML5Notifications.checkPermission()).toBe(true);
             })
         })
 
@@ -120,7 +112,7 @@ describe('cmBrowserNotifications', function(){
             })
 
             it('should be return false, if Notification.permission is not "granted"', function () {
-                expect(cmBrowserNotifications.checkPermission()).toBe(false);
+                expect(cmHTML5Notifications.checkPermission()).toBe(false);
             })
         })
     })
@@ -143,18 +135,18 @@ describe('cmBrowserNotifications', function(){
         })
 
         it('should be set "browserNotifications" in cmSettings, if "Notification.requestPermission" gaves permission response', function(){
-            spyOn(cmBrowserNotifications,'checkBrowser').andReturn(true)
-            spyOn(cmBrowserNotifications,'checkPermission').andReturn(false)
+            spyOn(cmHTML5Notifications,'checkBrowser').andReturn(true)
+            spyOn(cmHTML5Notifications,'checkPermission').andReturn(false)
 
             spyOn(cmSettings,'set')
 
-            cmBrowserNotifications.askPermission() // wird nicht ausgeführt
+            cmHTML5Notifications.askPermission() // wird nicht ausgeführt
 
             expect(cmSettings.set).toHaveBeenCalledWith('browserNotifications', true)
         })
     })
 
-    describe('check "showFriendRequest" method', function() {
+    xdescribe('check "showFriendRequest" method', function() {
 
         var identity, cmUserModel, cmIdentityFactory
 
@@ -175,11 +167,11 @@ describe('cmBrowserNotifications', function(){
             })
 
             it('should be call "show" method, if everything is right', function(){
-                spyOn(cmBrowserNotifications,'show')
+                spyOn(cmHTML5Notifications,'show')
 
-                cmBrowserNotifications.showFriendRequest(identity);
+                cmHTML5Notifications.showFriendRequest(identity);
 
-                expect(cmBrowserNotifications.show).toHaveBeenCalled()
+                expect(cmHTML5Notifications.show).toHaveBeenCalled()
             })
         })
 
@@ -189,11 +181,11 @@ describe('cmBrowserNotifications', function(){
             })
 
             it('should be call "show" method, if everything is right', function(){
-                spyOn(cmBrowserNotifications,'show')
+                spyOn(cmHTML5Notifications,'show')
 
-                cmBrowserNotifications.showFriendRequest(identity);
+                cmHTML5Notifications.showFriendRequest(identity);
 
-                expect(cmBrowserNotifications.show).not.toHaveBeenCalled()
+                expect(cmHTML5Notifications.show).not.toHaveBeenCalled()
             })
         })
 
@@ -206,16 +198,16 @@ describe('cmBrowserNotifications', function(){
             })
 
             it('should be call "show" method, if everything is right', function(){
-                spyOn(cmBrowserNotifications,'show')
+                spyOn(cmHTML5Notifications,'show')
 
-                cmBrowserNotifications.showFriendRequest(identity);
+                cmHTML5Notifications.showFriendRequest(identity);
 
-                expect(cmBrowserNotifications.show).not.toHaveBeenCalled()
+                expect(cmHTML5Notifications.show).not.toHaveBeenCalled()
             })
         })
     })
 
-    describe('check "showNewMessage" method', function() {
+    xdescribe('check "showNewMessage" method', function() {
 
         var identity, cmUserModel, cmIdentityFactory
 
@@ -241,11 +233,11 @@ describe('cmBrowserNotifications', function(){
             })
 
             it('should be call "show" method, if checkConversationRoute is true', function(){
-                spyOn(cmBrowserNotifications,'show')
+                spyOn(cmHTML5Notifications,'show')
 
-                cmBrowserNotifications.showNewMessage(identity,'moep');
+                cmHTML5Notifications.showNewMessage(identity,'moep');
 
-                expect(cmBrowserNotifications.show).toHaveBeenCalled()
+                expect(cmHTML5Notifications.show).toHaveBeenCalled()
             })
         })
 
@@ -259,11 +251,11 @@ describe('cmBrowserNotifications', function(){
             })
 
             it('should be call "show" method, if checkConversationRoute is false', function(){
-                spyOn(cmBrowserNotifications,'show')
+                spyOn(cmHTML5Notifications,'show')
 
-                cmBrowserNotifications.showNewMessage(identity,'moep');
+                cmHTML5Notifications.showNewMessage(identity,'moep');
 
-                expect(cmBrowserNotifications.show).toHaveBeenCalled()
+                expect(cmHTML5Notifications.show).toHaveBeenCalled()
             })
         })
 
@@ -277,11 +269,11 @@ describe('cmBrowserNotifications', function(){
             })
 
             it('should not be call "show" method, if checkConversationRoute is true', function(){
-                spyOn(cmBrowserNotifications,'show')
+                spyOn(cmHTML5Notifications,'show')
 
-                cmBrowserNotifications.showNewMessage(identity,'moep');
+                cmHTML5Notifications.showNewMessage(identity,'moep');
 
-                expect(cmBrowserNotifications.show).not.toHaveBeenCalled()
+                expect(cmHTML5Notifications.show).not.toHaveBeenCalled()
             })
         })
 
@@ -295,11 +287,11 @@ describe('cmBrowserNotifications', function(){
             })
 
             it('should not be call "show" method, if checkConversationRoute is false', function(){
-                spyOn(cmBrowserNotifications,'show')
+                spyOn(cmHTML5Notifications,'show')
 
-                cmBrowserNotifications.showNewMessage(identity,'moep');
+                cmHTML5Notifications.showNewMessage(identity,'moep');
 
-                expect(cmBrowserNotifications.show).toHaveBeenCalled()
+                expect(cmHTML5Notifications.show).toHaveBeenCalled()
             })
         })
 
@@ -316,11 +308,11 @@ describe('cmBrowserNotifications', function(){
             })
 
             it('should be call "show" method, if checkConversationRoute is true', function(){
-                spyOn(cmBrowserNotifications,'show')
+                spyOn(cmHTML5Notifications,'show')
 
-                cmBrowserNotifications.showNewMessage(identity,'moep');
+                cmHTML5Notifications.showNewMessage(identity,'moep');
 
-                expect(cmBrowserNotifications.show).not.toHaveBeenCalled()
+                expect(cmHTML5Notifications.show).not.toHaveBeenCalled()
             })
         })
 
@@ -334,27 +326,27 @@ describe('cmBrowserNotifications', function(){
             })
 
             it('should be not call "show" method, if conversationId is undefined', function(){
-                spyOn(cmBrowserNotifications,'show')
+                spyOn(cmHTML5Notifications,'show')
 
-                cmBrowserNotifications.showNewMessage(identity);
+                cmHTML5Notifications.showNewMessage(identity);
 
-                expect(cmBrowserNotifications.show).not.toHaveBeenCalled()
+                expect(cmHTML5Notifications.show).not.toHaveBeenCalled()
             })
 
             it('should be not call "show" method, if conversationId is an Object', function(){
-                spyOn(cmBrowserNotifications,'show')
+                spyOn(cmHTML5Notifications,'show')
 
-                cmBrowserNotifications.showNewMessage(identity,{});
+                cmHTML5Notifications.showNewMessage(identity,{});
 
-                expect(cmBrowserNotifications.show).not.toHaveBeenCalled()
+                expect(cmHTML5Notifications.show).not.toHaveBeenCalled()
             })
 
             it('should be not call "show" method, if conversationId is a Boolean', function(){
-                spyOn(cmBrowserNotifications,'show')
+                spyOn(cmHTML5Notifications,'show')
 
-                cmBrowserNotifications.showNewMessage(identity,true);
+                cmHTML5Notifications.showNewMessage(identity,true);
 
-                expect(cmBrowserNotifications.show).not.toHaveBeenCalled()
+                expect(cmHTML5Notifications.show).not.toHaveBeenCalled()
             })
         })
 
