@@ -14,6 +14,7 @@ module.exports = function(grunt, options){
                     files: [
                         'config/*.json',
                         'resource/templates/nodeWebkit/*',
+                        'resource/nodeWebkit/vendor/**/*',
                         'resource/nodeWebkit/**/*',
                         'desktop/**/*',
                         'core/**/*'
