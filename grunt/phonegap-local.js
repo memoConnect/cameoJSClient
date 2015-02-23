@@ -48,10 +48,13 @@ module.exports = function (grunt, options) {
 
     function genPlugins(useRepo) {
         var plugins = options.globalCameoPhonegapConfig.plugins,
+            useLocalPlugins = options.globalCameoPhonegapConfig.useLocalPlugins,
             array = [];
 
         plugins.forEach(function (plugin) {
-            if ('repo' in plugin) {
+            if(useLocalPlugins){
+                array.push('./resource/phonegap/plugins/'+plugin.name);
+            } else if ('repo' in plugin) {
                 var repo = grunt.template.process(plugin.repo, {
                     data: {
                         'appProtocol': options.globalCameoBuildConfig.static.appProtocol

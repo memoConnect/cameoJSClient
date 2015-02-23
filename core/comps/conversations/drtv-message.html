@@ -10,11 +10,12 @@
         </div>
 
         <div 
-            class       = "text"
-            ng-class    = "{'own-message':is_my_own_message}"
+            class="text"
+            ng-class="{'own-message':is_my_own_message}"
+            cm-context="{longTap:messageToClipboard(message)}"
         >
-            <span ng-if="!displayEncrypted() && message.text != ''" ng-bind-html="message.text|cmParse" cm-html-compile class="is-selectable"></span>
-            <span ng-if="displayEncrypted()" class="is-selectable">{{'CONVERSATION.TEXT.ENCRYPTED'|cmTranslate}}</span>
+            <span ng-if="!displayEncrypted() && message.text != ''" ng-bind-html="message.text|cmParse" cm-html-compile></span>
+            <span ng-if="displayEncrypted()">{{'CONVERSATION.TEXT.ENCRYPTED'|cmTranslate}}</span>
         </div>
 
         <div>

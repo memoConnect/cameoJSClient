@@ -235,7 +235,8 @@
 */
 angular.module('cmConversations')
 .directive('cmMessage', [
-    function () {
+    'cmClipboard',
+    function (cmClipboard) {
         return {
             restrict: 'AE',
             scope: {
@@ -349,6 +350,11 @@ angular.module('cmConversations')
                         return false;
 
                     return filesAvailable || textAvailable || encrypted || isSending;
+                };
+
+                $scope.messageToClipboard = function(message){
+                    console.log('messageToClipboard',message);
+                    cmClipboard.copy(message.text,'copied message');
                 }
             }
         }
