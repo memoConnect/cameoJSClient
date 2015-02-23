@@ -3197,8 +3197,6 @@ forEach({
       eventFnsCopy = shallowCopy(eventFns);
       handlerArgs = extraParameters ? [dummyEvent].concat(extraParameters) : [dummyEvent];
 
-        console.log(handlerArgs)
-
       forEach(eventFnsCopy, function(fn) {
         if (!dummyEvent.isImmediatePropagationStopped()) {
           fn.apply(element, handlerArgs);

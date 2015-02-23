@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('cmContacts').directive('cmContactList',[
-    'cmContactsModel', 'cmIdentityFactory', 'cmFilter',
+    'cmContactsModel', 'cmIdentityFactory', 'cmFilter', 'cmKeyboard',
     'cmLoader', 'cmLogger', 'cmModal', 'cmNotify', 'cmContactsAdapter',
     '$rootScope', '$timeout',
-    function (cmContactsModel, cmIdentityFactory, cmFilter,
+    function (cmContactsModel, cmIdentityFactory, cmFilter, cmKeyboard,
               cmLoader, cmLogger, cmModal, cmNotify, cmContactsAdapter,
               $rootScope, $timeout) {
         return {
@@ -106,6 +106,9 @@ angular.module('cmContacts').directive('cmContactList',[
                  */
                 $scope.sendRequest = function(contact){
                     if(angular.isDefined(contact.id)){
+
+                        cmKeyboard.close();
+
                         cmContactsModel
                             .sendFriendRequest(contact.id, contact.message)
                             .then(

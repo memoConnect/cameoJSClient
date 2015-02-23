@@ -57,7 +57,7 @@
         </div>
     </div>
     <div class="modal-row">
-        <textarea placeholder="{{::'CONTACTS.PLACEHOLDER.REQUEST_MESSAGE'|cmTranslate}}" ng-model="contact.message" data-qa="input-friendrequestMessage"></textarea>
+        <textarea placeholder="{{::'CONTACTS.PLACEHOLDER.REQUEST_MESSAGE'|cmTranslate}}" ng-model="contact.message" data-qa="input-friendrequestMessage" cm-enter="sendRequest(contact)"></textarea>
     </div>
     <button class="cm-btn-grey" ng-click="sendRequest(contact)" data-qa="btn-sendRequest" cm-reactive>
         {{::'CONTACTS.LABEL.SEND_REQUEST'|cmTranslate}}

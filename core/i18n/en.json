@@ -174,6 +174,9 @@
       }
   },
   "DRTV": {
+    "SEARCH": {
+      "LABEL": "SEARCH"
+    },
     "IMPRINT": {
       "HEADLINE": "Imprint",
       "CONTENT": "cameoNet is provided by:\nmemo Connect GmbH\nGroße Nikolaistraße 7 06108 Halle (Saale) / Germany\nFon: +49 345 213 79 66 5\nFax: +49 345 213 79 66 59\nLegal Court: Stendal HRB 20018\nDirectors: Michael Merz, Dr. Holger Haedrich"

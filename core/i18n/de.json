@@ -750,6 +750,9 @@
     },
 
     "DRTV": {
+      "SEARCH": {
+        "LABEL": "Suchen"
+      },
         "PASSWORD": {
             "PASSWORD": "Passwort",
             "PASSWORD_CONFIRM": "Passwort wiederholen",

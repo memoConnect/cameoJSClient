@@ -103,6 +103,10 @@ angular.module('cmPhonegap')
                         function(){
                             self.deviceIsRegistrated = true;
                             self.trigger('device:registrated');
+                        },
+                        function(){
+                            cmLogger.error('cmPushNotificationAdapter.registerDevice',arguments);
+                            self.trigger('device:unregistrated');
                         }
                     );
                 });
@@ -124,10 +128,16 @@ angular.module('cmPhonegap')
                         data.overrideToken = token;
 
                     cmApi.delete(data)
-                    .then(function(){
-                        self.deviceIsRegistrated = false;
-                        self.trigger('device:unregistrated');
-                    });
+                    .then(
+                        function(){
+                            self.deviceIsRegistrated = false;
+                            self.trigger('device:unregistrated');
+                        },
+                        function(){
+                            cmLogger.error('cmPushNotificationAdapter.deleteDevice',arguments);
+                            self.trigger('device:registrated');
+                        }
+                    );
                 }
             }
         };

@@ -330,14 +330,6 @@ angular.module('cmConfig',[])
                 'settings/about': {i18n:'SETTINGS.PAGES.ABOUT_US.TITLE', icon:'cm-rhino-positive'}
             }
         };
-        // performance page
-        if('<%= performancePage %>' == 'true') {
-            self.menu['performance'] = {
-                i18n: 'SETTINGS.PAGES.PERFORMANCE.TITLE',
-                icon: 'cm-not-connected',
-                link: 'performance.html'
-            };
-        }
 
         this.get = function(key){
             return self[key];
