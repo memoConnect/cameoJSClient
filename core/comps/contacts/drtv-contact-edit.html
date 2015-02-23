@@ -6,7 +6,7 @@
         <div class="cm-fl w72">
             <ul class="no-border">
                 <li>
-                    <article class="item">
+                    <article class="item without-cursor">
                          <span class="clearfix">
                             <cm-contact-trust cm-data="contact" cm-with-text></cm-contact-trust>
                          </span>
@@ -16,7 +16,7 @@
                     </article>
                 </li>
 
-                <li class="no-border" data-qa="start-trust-handshake-btn" ng-click="goToAuthentication(contact.identity)" ng-if="!isTrusted && hasKeys && hasLocalKey">
+                <li class="no-border" data-qa="start-trust-handshake-btn" ng-click="goToAuthentication(contact.identity)" ng-if="!isTrusted && hasKeys && hasLocalKey" cm-reactive>
                     <article class="item">
                         <span class="clearfix">
                             <i  class="fa cm-handshake"></i>
@@ -63,9 +63,9 @@
             <label>{{'CONTACT.PLACEHOLDER.DISPLAYNAME'|cmTranslate}}</label>
             <div class="cm-input-ctn" ng-class="{'cm-input-disabled':disabled,'with-inside-icon':!disabled}">
                 <input
-                        tabindex="1" data-qa="input-displayname"
-                        type="text" name="displayName" ng-model="formData.displayName"
-                        ng-disabled="disabled" required />
+                    tabindex="1" data-qa="input-displayname"
+                    type="text" name="displayName" ng-model="formData.displayName"
+                    ng-disabled="disabled" required />
                 <i class="fa cm-write" ng-show="!disabled"></i>
             </div>
 

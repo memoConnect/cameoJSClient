@@ -4,6 +4,11 @@
 # RC 0.5.1 - 10.02.2015
 #########
 
+## WW 23.05.2015
+* fixxed conversation menu in desktop
+* closed keyboard on friendrequest
+* new pushplugin version
+
 ## BS 13.02.2015
 * update for CAM-1625, load information after stand-by
 
