@@ -15,8 +15,7 @@ angular.module('cmPhonegap')
 
             init: function(){
                 cmPhonegap.isReady('cmToastNotifcations',function(){
-                    if(!('plugins' in $window)
-                        || !('toast' in $window.plugins)) {
+                    if(!('plugins' in $window) || !('toast' in $window.plugins)) {
                         //cmLogger.info('TOAST PLUGIN IS MISSING');
                         return false;
                     }
@@ -27,14 +26,13 @@ angular.module('cmPhonegap')
             },
 
             show: function(message, position){
-                console.log('cmToastNotifcations.show',this.available,arguments)
                 if(!this.available)
                     return false;
 
                 this.plugin.show(
                     message,
                     'short',
-                    position || 'bottom'
+                    position || 'bottom' // top center bottom
                 );
             }
         };

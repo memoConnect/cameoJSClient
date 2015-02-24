@@ -108,6 +108,7 @@ angular.module('cmPhonegap').service('cmLocalContacts', [
                             }
                         ]
                     });// return mock use above
+
                     return loaded.promise;
                 }
 

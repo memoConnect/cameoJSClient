@@ -5,35 +5,33 @@
 angular.module('cmPhonegap')
 .service('cmClipboard', [
     'cmPhonegap', 'cmToastNotifcations',
-    '$cordova',
+    '$window',
     function (cmPhonegap, cmToastNotifcations,
-              $cordova) {
+              $window) {
         var self = {
             plugin: null,
             available: false,
 
             init: function(){
                 cmPhonegap.isReady('cmClipboard',function(){
-                    if(!('plugins' in $cordova) || !('clipboard' in $cordova.plugins)) {
+                    if(!('plugins' in $window) || !('clipboard' in $window.plugins)) {
                         //cmLogger.info('CLIPBOARD PLUGIN IS MISSING');
                         return false;
                     }
 
                     self.available = true;
-                    self.plugin = $cordova.plugins.clipboard;
+                    self.plugin = $window.plugins.clipboard;
                 })
             },
 
             copy: function(text, toastMessage){
-                console.log('cmClipboard',this.available,arguments)
                 if(!this.available)
                     return false;
 
                 this.plugin.copy(
                     text,
                     function(){
-                        console.log('copied')
-                        cmToastNotifcations.show(toastMessage||'jooo clipboard dude')
+                        cmToastNotifcations.show(toastMessage,'center');
                     },
                     function(){
                         // onError

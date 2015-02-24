@@ -753,6 +753,9 @@
       "SEARCH": {
         "LABEL": "Suchen"
       },
+      "MESSAGE": {
+        "COPIED": "Nachricht wurde kopiert"
+      },
         "PASSWORD": {
             "PASSWORD": "Passwort",
             "PASSWORD_CONFIRM": "Passwort wiederholen",

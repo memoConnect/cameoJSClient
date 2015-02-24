@@ -175,7 +175,10 @@
   },
   "DRTV": {
     "SEARCH": {
-      "LABEL": "SEARCH"
+      "LABEL": "Search"
+    },
+    "MESSAGE": {
+      "COPIED": "Nachricht wurde kopiert"
     },
     "IMPRINT": {
       "HEADLINE": "Imprint",

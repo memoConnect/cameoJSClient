@@ -57,7 +57,7 @@ angular.module('cmContacts')
                             if(contact.displayName == '')
                                 contact.displayName = undefined;
 
-                            $scope.formData.displayName = contact.displayName || 'name' in contact ? contact.name.formatted : '';
+                            $scope.formData.displayName = contact.displayName || 'name' in contact && 'formatted' in contact.name ? contact.name.formatted : '';
 
                             if(contact.phoneNumbers != null && contact.phoneNumbers.length > 0) {
                                 $scope.formData.phoneNumbers = contact.phoneNumbers;

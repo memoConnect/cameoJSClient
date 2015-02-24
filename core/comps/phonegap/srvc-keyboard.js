@@ -5,9 +5,9 @@
 angular.module('cmPhonegap')
 .service('cmKeyboard', [
     'cmPhonegap', 'cmObject',
-    '$cordova', '$window', '$rootScope', '$timeout',
+    '$cordova', '$window', '$rootScope',
     function (cmPhonegap, cmObject,
-              $cordova, $window, $rootScope, $timeout){
+              $cordova, $window, $rootScope){
 
         var self = {
             plugin: null,

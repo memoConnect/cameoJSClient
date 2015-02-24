@@ -235,8 +235,10 @@
 */
 angular.module('cmConversations')
 .directive('cmMessage', [
-    'cmClipboard',
-    function (cmClipboard) {
+    'cmClipboard', 'cmDevice',
+    '$filter',
+    function (cmClipboard, cmDevice,
+              $filter) {
         return {
             restrict: 'AE',
             scope: {
@@ -353,8 +355,9 @@ angular.module('cmConversations')
                 };
 
                 $scope.messageToClipboard = function(message){
-                    console.log('messageToClipboard',message);
-                    cmClipboard.copy(message.text,'copied message');
+                    if(cmDevice.isApp() && cmDevice.isiOS()) {
+                        cmClipboard.copy(message.text, $filter('cmTranslate')('DRTV.MESSAGE.COPIED'));
+                    }
                 }
             }
         }

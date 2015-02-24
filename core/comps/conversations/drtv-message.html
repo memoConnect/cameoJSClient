@@ -12,7 +12,7 @@
         <div 
             class="text"
             ng-class="{'own-message':is_my_own_message}"
-            cm-context="{longTap:messageToClipboard(message)}"
+            cm-long-tap="messageToClipboard(message)"
         >
             <span ng-if="!displayEncrypted() && message.text != ''" ng-bind-html="message.text|cmParse" cm-html-compile></span>
             <span ng-if="displayEncrypted()">{{'CONVERSATION.TEXT.ENCRYPTED'|cmTranslate}}</span>
