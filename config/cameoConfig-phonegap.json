@@ -3,7 +3,7 @@
   "build": {
     "android_minSdkVersion": 15,
     "android_maxSdkVersion": 21,
-    "android_targetSdkVersion": 19
+    "android_targetSdkVersion": 15
   },
   "plugins": [
     {"name":"de.cameonet.cordova.contacts.readonly","version":"0.2.13","repo":"https://github.com/memoConnect/cordova-plugin-contacts.git"},
