@@ -4,6 +4,14 @@
 * fix CAM-1754 - update getDisplayName Method in IdentityModel
 
 #########
+# HF 0.5.2 - 24.02.2015
+#########
+
+## WW 24.20.2015
+* add desktop detect standby interval
+* add paste detection to import key
+
+#########
 # RC 0.5.1 - 10.02.2015
 #########
 

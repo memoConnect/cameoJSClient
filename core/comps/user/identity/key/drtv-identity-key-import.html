@@ -2,7 +2,7 @@
     <article class="content cm-form-style">
         <h3 ng-show="!isError">{{'SETTINGS.PAGES.IDENTITY.KEYS.PRIVATE_KEY'|cmTranslate}}</h3>
 
-        <textarea ng-model="privKey" ng-readonly="isValid" data-qa="display-private-key" ng-show="!isError"></textarea>
+        <textarea ng-model="privKey" ng-readonly="isValid" data-qa="display-private-key" ng-show="!isError" cm-paste></textarea>
 
         <h3 ng-if="isValid && keySize && !isError" class="mt15">{{'SETTINGS.PAGES.IDENTITY.KEYS.KEY_SIZE'|cmTranslate}}: {{keySize}}</h3>
         <div ng-show="isValid && !isError">
