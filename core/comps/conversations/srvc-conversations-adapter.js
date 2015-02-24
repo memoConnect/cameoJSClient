@@ -56,6 +56,12 @@ angular.module('cmConversations').service('cmConversationsAdapter', [
             searchConversations: function(search, limit, offset){
                 var queryString = cmUtil.handleLimitOffset(limit,offset);
 
+                if(queryString == ''){
+                    queryString += '?' + cmUserModel.getLocalKeyIdsForRequest();
+                } else {
+                    queryString += cmUserModel.getLocalKeyIdsForRequest();
+                }
+
                 return cmApi.post({
                     path: '/conversations/search' + queryString,
                     data: {
