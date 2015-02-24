@@ -3,58 +3,59 @@
 // https://github.com/VersoSolutions/CordovaClipboard
 
 angular.module('cmPhonegap')
-    .service('cmClipboard', [
-        'cmPhonegap',
-        '$cordova',
-        function (cmPhonegap,
-                  $cordova) {
-            var self = {
-                plugin: null,
-                available: false,
+.service('cmClipboard', [
+    'cmPhonegap', 'cmToastNotifcations',
+    '$window',
+    function (cmPhonegap, cmToastNotifcations,
+              $window) {
+        var self = {
+            plugin: null,
+            available: false,
 
-                init: function(){
-                    cmPhonegap.isReady('cmClipboard',function(){
-                        if(!('plugins' in $cordova)
-                            || !('clipboard' in $cordova.plugins)) {
-                            //cmLogger.info('NETWORK-INFORMATION PLUGIN IS MISSING');
-                            return false;
-                        }
-
-                        self.available = true;
-                        self.plugin = $cordova.plugins.clipboard;
-                    })
-                },
-
-                copy: function(text){
-                    if(!this.available)
+            init: function(){
+                cmPhonegap.isReady('cmClipboard',function(){
+                    if(!('plugins' in $window) || !('clipboard' in $window.plugins)) {
+                        //cmLogger.info('CLIPBOARD PLUGIN IS MISSING');
                         return false;
+                    }
 
-                    this.plugin.copy(
-                        text,
-                        function(){
-                            // onSuccess
-                        },
-                        function(){
-                            // onError
-                        }
-                    );
-                },
+                    self.available = true;
+                    self.plugin = $window.plugins.clipboard;
+                })
+            },
 
-                paste: function(){
-                    if(!this.available)
-                        return false;
+            copy: function(text, toastMessage){
+                if(!this.available)
+                    return false;
 
-                    this.plugin.paste(
-                        function(){
-                            // onSuccess
-                        },
-                        function(){
-                            // onError
-                        }
-                    );
-                }
-            };
+                this.plugin.copy(
+                    text,
+                    function(){
+                        cmToastNotifcations.show(toastMessage,'center');
+                    },
+                    function(){
+                        // onError
+                    }
+                );
+            },
 
-            return self;
-        }
-    ]);
+            paste: function(){
+                if(!this.available)
+                    return false;
+
+                this.plugin.paste(
+                    function(){
+                        // onSuccess
+                    },
+                    function(){
+                        // onError
+                    }
+                );
+            }
+        };
+
+        self.init();
+
+        return self;
+    }
+]);

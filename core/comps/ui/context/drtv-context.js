@@ -70,7 +70,7 @@ angular.module('cmUi')
                 var contextData = attrs.cmContext,
                     hammer;
 
-                // init cm-selecter
+                // init cm-selecter about cm-avatar
                 if(element.find('cm-avatar').length == 1 &&
                     element.find('cm-selecter').length == 0){
                     angular.element(element.find('cm-avatar'))
@@ -79,8 +79,8 @@ angular.module('cmUi')
 
                 function getContext(){
                     return {
-                        model: getOption('model')(scope),
-                        type: getOption('type')()
+                        model: getOption('model', true)(scope),
+                        type: getOption('type', true)()
                     }
                 }
 
@@ -91,7 +91,7 @@ angular.module('cmUi')
                     },100);
                 }
 
-                function getOption(type){
+                function getOption(type, shouldBeFunction){
 
                     var matches = contextData.match('('+type+'):([0-9a-zA-Z\\(\\)/"\'+\\.$ ]+,{.+\\)|[0-9a-zA-Z\\(\\)/"\'+\\.$ ]+)'),
                         value = undefined;
@@ -99,6 +99,8 @@ angular.module('cmUi')
                     if(matches && matches.length > 2)
                         value = $parse(matches[2]);
 
+                    if(!value && shouldBeFunction)
+                        value = function(){}
 
                     return value || undefined;
                 }

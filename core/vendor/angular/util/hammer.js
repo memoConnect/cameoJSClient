@@ -9,7 +9,7 @@
     var hmTouchEvents = angular.module('cmTouchEvents', []),
         hmGestures = ['cmHold:hold',
             'cmTap:tap',
-            'cmPress:press',
+            'cmLongTap:press',
             'cmDoubletap:doubletap',
             'cmDrag:drag',
             'cmDragstart:dragstart',

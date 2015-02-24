@@ -48,10 +48,13 @@ module.exports = function (grunt, options) {
 
     function genPlugins(useRepo) {
         var plugins = options.globalCameoPhonegapConfig.plugins,
+            useLocalPlugins = options.globalCameoPhonegapConfig.useLocalPlugins,
             array = [];
 
         plugins.forEach(function (plugin) {
-            if ('repo' in plugin) {
+            if(useLocalPlugins){
+                array.push('./resource/phonegap/plugins/'+plugin.name);
+            } else if ('repo' in plugin) {
                 var repo = grunt.template.process(plugin.repo, {
                     data: {
                         'appProtocol': options.globalCameoBuildConfig.static.appProtocol
@@ -59,13 +62,19 @@ module.exports = function (grunt, options) {
                 });
                 array.push(repo);
             } else {
-                var version = plugin.version;
-                if(plugin.localVersion) {
-                    version = plugin.localVersion;
+                if (plugin.version) {
+                    var version = plugin.version;
+                    if (plugin.localVersion) {
+                        version = plugin.localVersion;
+                    }
+                    array.push(plugin.name + "@" + version);
+                } else {
+                    array.push(plugin.name);
                 }
-                array.push(plugin.name + "@" + version);
             }
         });
+
+        console.log("plugins")
 
         return array;
     }
@@ -90,8 +99,8 @@ module.exports = function (grunt, options) {
                             cwd: 'build/phonegap-tmp/platforms/android/ant-build/',
                             src: ['*-release.apk'],
                             dest: 'dist/dl/',
-                            rename: function(dest, src) {
-                                return dest  + options.globalCameoBuildConfig.phonegap.phonegapBaseFilename + '.apk';
+                            rename: function (dest, src) {
+                                return dest + options.globalCameoBuildConfig.phonegap.phonegapBaseFilename + '.apk';
                             }
                         }
                     ]
@@ -103,8 +112,8 @@ module.exports = function (grunt, options) {
                             cwd: 'build/phonegap-tmp/platforms/android/ant-build/',
                             src: ['*-release-unsigned.apk'],
                             dest: 'dist/dl/',
-                            rename: function(dest, src) {
-                                return dest  + options.globalCameoBuildConfig.phonegap.phonegapBaseFilename + '.apk';
+                            rename: function (dest, src) {
+                                return dest + options.globalCameoBuildConfig.phonegap.phonegapBaseFilename + '.apk';
                             }
                         }
                     ]
@@ -143,7 +152,7 @@ module.exports = function (grunt, options) {
                         return (15)
                     },
                     targetSdkVersion: function () {
-                        return (19)
+                        return (15)
                     }
                 }
             },

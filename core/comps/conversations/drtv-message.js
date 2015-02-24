@@ -349,7 +349,7 @@ angular.module('cmConversations')
                         return false;
 
                     return filesAvailable || textAvailable || encrypted || isSending;
-                }
+                };
             }
         }
     }

@@ -31,7 +31,7 @@
             <strong>{{'SETTINGS.PAGES.IDENTITY.KEYS.FINGERPRINT'|cmTranslate}}:</strong>
         </h4>
         <cm-info-bubble nose-x="15%">
-            <section class="cm-key-view" data-qa="fingerprint-public-key" cm-clipboard>
+            <section class="cm-key-view" data-qa="fingerprint-public-key">
                 {{fingerprint}}
             </section>
         </cm-info-bubble>
@@ -41,7 +41,7 @@
         <div ng-if="privKey">
             <h3>{{'SETTINGS.PAGES.IDENTITY.KEYS.PRIVATE_KEY'|cmTranslate}}</h3>
             <cm-info-bubble nose-x="15%">
-                <section id="ctn-privKey" class="cm-key-view" data-qa="input-private-key" cm-clipboard>
+                <section id="ctn-privKey" class="cm-key-view" data-qa="input-private-key">
                     {{privKey}}
                 </section>
             </cm-info-bubble>
@@ -49,7 +49,7 @@
         <div ng-if="pubKey">
             <h3>{{'SETTINGS.PAGES.IDENTITY.KEYS.PUBLIC_KEY'|cmTranslate}}</h3>
             <cm-info-bubble nose-x="15%">
-                <section class="cm-key-view" data-qa="input-public-key" cm-clipboard>
+                <section class="cm-key-view" data-qa="input-public-key">
                     {{pubKey}}
                 </section>
             </cm-info-bubble>

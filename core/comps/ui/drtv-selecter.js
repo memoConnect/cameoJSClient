@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('cmUi').directive('cmClipboard',[
+angular.module('cmUi').directive('cmSelecter',[
     function (){
         return{
             restrict: 'A',

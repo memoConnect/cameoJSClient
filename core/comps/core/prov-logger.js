@@ -27,9 +27,7 @@ angular.module('cmCore')
             }
 
             function log_object(obj) {
-                console.groupCollapsed();
-                console.dir(obj);
-                console.groupEnd();
+                console.log(obj);
             }
 
             return {

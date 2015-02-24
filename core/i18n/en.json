@@ -175,7 +175,13 @@
   },
   "DRTV": {
     "SEARCH": {
-      "LABEL": "SEARCH"
+      "LABEL": "Search"
+<<<<<<< HEAD
+    },
+    "MESSAGE": {
+      "COPIED": "Nachricht wurde kopiert"
+=======
+>>>>>>> hotfix-0.5.4
     },
     "IMPRINT": {
       "HEADLINE": "Imprint",
