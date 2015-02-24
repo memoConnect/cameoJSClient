@@ -53,7 +53,6 @@ angular.module('cmContacts')
                     cmLocalContacts.selectOne().then(
                         function (contact) {
                             reset();
-
                             if(contact.displayName == '')
                                 contact.displayName = undefined;
 
@@ -128,7 +127,7 @@ angular.module('cmContacts')
                     checkDisplayName();
                     checkSelection();
 
-                    if($scope.cmForm.$valid !== false && isValid !== false && Object.keys(objectChange).length > 0){
+                    if(isValid !== false && Object.keys(objectChange).length > 0){
                         deferred.resolve(objectChange);
                     } else {
                         deferred.reject();
