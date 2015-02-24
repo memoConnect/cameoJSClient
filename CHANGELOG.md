@@ -1,5 +1,8 @@
 # Dev
 
+## BS 24.02.2015
+* fix CAM-1754 - update getDisplayName Method in IdentityModel
+
 #########
 # RC 0.5.1 - 10.02.2015
 #########
