@@ -1,19 +1,14 @@
 'use strict';
 
-angular.module('cmCore').service('cmBrowserNotifications', [
-    'cmConfig',
-    'cmSettings',
-    'cmApi',
-    'cmDevice',
-    'cmVisibility',
-    'cmLogger',
-    'cmUserModel',
-    'cmIdentityModel',
-    '$rootScope',
-    '$window',
-    '$filter',
-    '$timeout',
-    function(cmConfig, cmSettings, cmApi, cmDevice, cmVisibility, cmLogger, cmUserModel, cmIdentityModel, $rootScope, $window, $filter, $timeout){
+angular.module('cmCore')
+.service('cmBrowserNotifications', [
+    'cmConfig', 'cmSettings', 'cmApi', 'cmDevice', 'cmVisibility',
+    'cmLogger', 'cmUserModel', 'cmIdentityModel',
+    '$rootScope', '$window', '$filter', '$timeout',
+    function(cmConfig, cmSettings, cmApi, cmDevice, cmVisibility,
+             cmLogger, cmUserModel, cmIdentityModel,
+             $rootScope, $window, $filter, $timeout){
+
         var self = this,
             tabVisibility = true;
 
@@ -22,7 +17,7 @@ angular.module('cmCore').service('cmBrowserNotifications', [
          */
         function init(){
             //cmLogger.debug('cmBrowserNotifications.init');
-            cmVisibility.add('cmBrowserNotifications', checkBrowserVisibility)
+            cmVisibility.add('cmBrowserNotifications', checkBrowserVisibility);
         }
 
         /**
