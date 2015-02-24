@@ -46,6 +46,11 @@ if [ -e ${antProperties} ]; then
     cp -v ${antProperties} ./platforms/android/
 fi
 
-cordova build android --release
+if [ -e ./platforms/android/ant.properties ]; then
+    cordova build android --release
+else
+    cordova build android
+fi
+
 
 
