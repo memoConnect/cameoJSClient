@@ -2,10 +2,10 @@
 
 angular.module('cmUi')
 .directive('cmModal', [
-    'cmModal', 'cmTranslate',
-    '$rootScope', '$timeout', '$q',
-    function (cmModal, cmTranslate,
-              $rootScope, $timeout, $q){
+    'cmModal', 'cmTranslate', 'cmKeyboard',
+    '$rootScope', '$timeout',
+    function (cmModal, cmTranslate, cmKeyboard,
+              $rootScope, $timeout){
 
         // handle nose position
         function addNose(element, attrs){
@@ -104,8 +104,11 @@ angular.module('cmUi')
                 };
 
                 // open modal
-                scope.open = function(ttl){
+                scope.open = function(){
                     scope.toggle(true);
+
+                    cmKeyboard.close();
+
                     return scope;
                 };
                 // close modal

@@ -9,7 +9,9 @@
 
 ## WW 24.20.2015
 * add desktop detect standby interval
-* add paste detection to import key
+* CAM-1805 add paste detection to import key
+* CAM-1812 close keyboard on modal shown
+* CAM-1747 ios now accept whitespace in phonenumber
 
 #########
 # RC 0.5.1 - 10.02.2015
