@@ -41,9 +41,9 @@ module.exports = function (grunt, options) {
     })
 
     grunt.registerTask('generate-ant-properties', function () {
-        //if (options.globalCameoBuildConfig.target != "default") {
-        //    grunt.task.run('template:cordova-ant-properties')
-        //}
+        if (options.globalCameoBuildConfig.target != "default") {
+            grunt.task.run('template:cordova-ant-properties')
+        }
     })
 
     function genPlugins(useRepo) {
