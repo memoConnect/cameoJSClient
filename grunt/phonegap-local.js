@@ -152,7 +152,7 @@ module.exports = function (grunt, options) {
                         return (15)
                     },
                     targetSdkVersion: function () {
-                        return (19)
+                        return (15)
                     }
                 }
             },

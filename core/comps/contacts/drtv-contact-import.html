@@ -26,17 +26,18 @@
 
         <hr class="margin-small" />
 
-        <article class="content with-radiobutton" ng-repeat="item in formData.phoneNumbers">
+        <article class="content with-radiobutton" ng-repeat="item in formData.phoneNumbers"
+                 ng-class="{'ng-invalid':cmForm['phoneNumber_'+$index].$invalid}">
             <label>
                 {{'CONTACT.PLACEHOLDER.PHONENUMBER'|cmTranslate }}
                 <span ng-if="item.type">&nbsp;{{item.type}}</span>
             </label>
             <div class="cm-input-ctn with-inside-icon cm-icon-grey">
                 <input
-                        tabindex="2" data-qa="input-phonenumber"
-                        type="text" name="phoneNumber_{{$index}}" ng-model="item.value"
-                        cm-validate-phone
-                        />
+                    tabindex="2" data-qa="input-phonenumber"
+                    type="text" name="phoneNumber_{{$index}}" ng-model="item.value"
+                    cm-validate-phone
+                    />
                 <i class="fa cm-write"></i>
             </div>
             <cm-info-bubble class="cm-alert" ng-show="cmForm.phoneNumber_{{$index}}.$dirty && cmForm.phoneNumber_{{$index}}.$invalid">
@@ -57,16 +58,17 @@
 
         <hr class="margin-small" />
 
-        <article class="content with-radiobutton" ng-repeat="item in formData.emails">
+        <article class="content with-radiobutton" ng-repeat="item in formData.emails"
+                 ng-class="{'ng-invalid':cmForm['email_'+$index].$invalid}">
             <label>
-                {{'CONTACT.PLACEHOLDER.EMAIL'|cmTranslate }}
+                {{'CONTACT.PLACEHOLDER.EMAIL'|cmTranslate}}
                 <span ng-if="item.type">&nbsp;{{item.type}}</span>
             </label>
             <div class="cm-input-ctn with-inside-icon cm-icon-grey">
                 <input
-                        tabindex="3" data-qa="input-email"
-                        name="email_{{$index}}" ng-model="item.value"
-                        cm-validate-email />
+                    tabindex="3" data-qa="input-email"
+                    name="email_{{$index}}" ng-model="item.value"
+                    cm-validate-email />
                 <i class="fa cm-write"></i>
             </div>
             <cm-info-bubble class="cm-alert" ng-show="cmForm.email_{{$index}}.$dirty && cmForm.email_{{$index}}.$invalid">

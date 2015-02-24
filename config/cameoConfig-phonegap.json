@@ -3,7 +3,7 @@
   "build": {
     "android_minSdkVersion": 15,
     "android_maxSdkVersion": 21,
-    "android_targetSdkVersion": 19
+    "android_targetSdkVersion": 15
   },
   "useLocalPlugins": true,
   "plugins": [

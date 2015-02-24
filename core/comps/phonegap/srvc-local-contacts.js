@@ -77,6 +77,12 @@ angular.module('cmPhonegap').service('cmLocalContacts', [
                             {
                                 id: "2343",
                                 pref: false,
+                                type: "home", // mobile | work | fax
+                                value: "0123 45678903"
+                            },
+                            {
+                                id: "2343",
+                                pref: false,
                                 type: "work", // mobile | work | fax
                                 value: "+49 123 "
                             },
