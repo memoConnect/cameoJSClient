@@ -234,7 +234,7 @@ angular.module('cmCore').provider('cmApi',[
 //                    window.location.href='#/server_down' //@ Todo
                     //error messages should come trough backend
 
-                    if(response && typeof response.data != 'undefined' && typeof response.data.errorCodes != 'undefined')
+                    if(response && typeof response.data != 'undefined' && response.data != null && typeof response.data.errorCodes != 'undefined')
                         $rootScope.$broadcast('cmValidate:error',response.data.errorCodes);
 
                     deferred.reject(response)
