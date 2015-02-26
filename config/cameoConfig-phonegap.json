@@ -5,7 +5,7 @@
     "android_maxSdkVersion": 21,
     "android_targetSdkVersion": 15
   },
-  "useLocalPlugins": true,
+  "useLocalPlugins": false,
   "plugins": [
     {"name":"de.cameonet.cordova.contacts.readonly","version":"0.2.13","repo":"https://github.com/memoConnect/cordova-plugin-contacts.git"},
     {"name":"de.cameonet.cordova.crypto","version":"0.1","repo":"https://github.com/memoConnect/de.cameonet.cordova.crypto.git"},
