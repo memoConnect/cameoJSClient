@@ -15,6 +15,7 @@
 /dist/
 /build/
 /docs/
+/cache/
 *.iml
 *.log
 *.fcp
