@@ -5,7 +5,7 @@
     "android_maxSdkVersion": 21,
     "android_targetSdkVersion": 15
   },
-  "useLocalPlugins": true,
+  "useLocalPlugins": false,
   "plugins": [
     {"name":"de.cameonet.cordova.contacts.readonly","version":"0.2.13","repo":"https://github.com/memoConnect/cordova-plugin-contacts.git"},
     {"name":"de.cameonet.cordova.crypto","version":"0.1","repo":"https://github.com/memoConnect/de.cameonet.cordova.crypto.git"},
@@ -26,6 +26,7 @@
     {"name":"nl.x-services.plugins.sslcertificatechecker","version":"3.3.1","repo":"https://github.com/EddyVerbruggen/SSLCertificateChecker-PhoneGap-Plugin.git "},
 
     {"name":"de.appplant.cordova.plugin.hidden-statusbar-overlay","version":"1.2.0"},
+
     {"name":"com.jamiestarke.webviewdebug","version":"1.0.8"},
     {"name":"com.verso.cordova.clipboard","version":"0.1.0"},
     {"name":"nl.x-services.plugins.toast","version":"2.0.2"},
@@ -54,16 +55,17 @@
       "platform": "android",
       "icons": [
         {"src":"icon-36-ldpi.png","density":"ldpi","qualifier":"ldpi"},
+        {"src":"icon-48-mdpi.png","density":"mdpi","qualifier":"mdpi"},
         {"src":"icon-72-hdpi.png","density":"hdpi","qualifier":"hdpi"},
         {"src":"icon-96-xhdpi.png","density":"xhdpi","qualifier":"xhdpi"},
         {"src":"icon-144-xhdpi.png","density":"xxhdpi","qualifier":"xxhdpi"}
       ],
       "screens": [
-        {"src":"drawable-ldpi/screen.9.png","density":"port-ldpi","qualifier":"ldpi"},
-        {"src":"drawable-mdpi/screen.9.png","density":"port-mdpi","qualifier":"mdpi"},
-        {"src":"drawable-hdpi/screen.9.png","density":"port-hdpi","qualifier":"hdpi"},
-        {"src":"drawable-xhdpi/screen.9.png","density":"port-xhdpi","qualifier":"xhdpi"},
-        {"src":"drawable-xxhdpi/screen.9.png","density":"port-xxhdpi","qualifier":"xxhdpi"}
+        {"src":"drawable-ldpi/screen.9.png","qualifier":"ldpi"},
+        {"src":"drawable-mdpi/screen.9.png","qualifier":"mdpi"},
+        {"src":"drawable-hdpi/screen.9.png","qualifier":"hdpi"},
+        {"src":"drawable-xhdpi/screen.9.png","qualifier":"xhdpi"},
+        {"src":"drawable-xxhdpi/screen.9.png","qualifier":"xxhdpi"}
       ]
     },
     {
